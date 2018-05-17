@@ -1,0 +1,12 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+
+  <interface name="org.ofono.VoiceCall"><method name="GetProperties"><arg name="properties" type="a{sv}" direction="out"/>
+</method><method name="Deflect"><arg name="number" type="s" direction="in"/>
+</method><method name="Hangup"></method><method name="Answer"></method><signal name="PropertyChanged"><arg name="name" type="s"/>
+<arg name="value" type="v"/>
+</signal>
+<signal name="DisconnectReason"><arg name="reason" type="s"/>
+</signal>
+</interface></node>
