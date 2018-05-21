@@ -27,7 +27,5 @@ project('call', 'c',
 )
 
 
-topdir_includes = include_directories('.')
-
 subdir('libgdbofono')
 subdir('src')

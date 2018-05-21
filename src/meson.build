@@ -69,4 +69,4 @@ calls_resources = gnome.compile_resources(
 executable('calls', sources, enum_sources, calls_resources,
            dependencies : deps,
            link_with : gdbofono_lib,
-           include_directories : topdir_includes)
+           include_directories : include_directories('..'))
