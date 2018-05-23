@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+  <!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent">
+  %gtkdocentities;
+]>
+<book id="index">
+  <bookinfo>
+    <title>&package_name; Reference Manual</title>
+    <releaseinfo>
+      <para>This document is the API reference for &package_name; &package_version;</para>
+      <para>
+        <ulink type="http" url="&package_url;">Calls</ulink> is a dialer program for telephony calls.
+      </para>
+      <para>
+        If you find any issues in this API reference, please report it
+        using <ulink type="http" url="&package_bugreport;">at the
+        bugtracker</ulink>
+      </para>
+    </releaseinfo>
+
+    <copyright>
+      <year>2018</year>
+      <holder>Purism SPC</holder>
+    </copyright>
+  </bookinfo>
+
+  <chapter id="provider-abstraction">
+    <title>Provider abstraction</title>
+    <xi:include href="xml/calls-message-source.xml"/>
+    <xi:include href="xml/calls-provider.xml"/>
+    <xi:include href="xml/calls-origin.xml"/>
+    <xi:include href="xml/calls-call.xml"/>
+  </chapter>
+
+</book>

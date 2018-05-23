@@ -40,11 +40,38 @@ struct _CallsMessageSourceInterface
   GTypeInterface parent_iface;
 };
 
-#define CALLS_ERROR(obj,error) \
-  CALLS_EMIT_ERROR (CALLS_MESSAGE_SOURCE (obj), error)
 
-/** Array of GTypes for message signals */
-GType * calls_message_signal_arg_types();
+
+/**
+ * CALLS_EMIT_MESSAGE:
+ * @obj: an object which can be cast to a #CallsMesssageSource
+ * @text: the message text as a string
+ * @type: the type of the message
+ *
+ * Emit a message signal with the specified information.  This is a
+ * convenience macro for objects implementing interfaces that
+ * require #CallsMessageSource.
+ *
+ */
+#define CALLS_EMIT_MESSAGE(obj,text,type)               \
+  g_signal_emit_by_name (CALLS_MESSAGE_SOURCE(obj),     \
+                         "message", text, type)
+
+
+/**
+ * CALLS_ERROR:
+ * @obj: an object which can be cast to a #CallsMesssageSource
+ * @error: a pointer to a #GError containing the error message
+ *
+ * Emit a message signal with an error type, the text of which is
+ * contained as the message in a #GError.  This is a convenience
+ * macro for objects implementing interfaces that require
+ * #CallsMessageSource.
+ *
+ */
+#define CALLS_ERROR(obj,error)                                  \
+  CALLS_EMIT_MESSAGE (obj, error->message, GTK_MESSAGE_ERROR)
+
 
 G_END_DECLS
 

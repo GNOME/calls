@@ -177,10 +177,8 @@ set_properties (CallsOfonoCall *self,
   g_variant_lookup (props, "Name", "s", &self->name);
 
   g_variant_lookup (props, "State", "&s", &str);
-  if (str)
-    {
-      calls_call_state_parse_nick (&self->state, str);
-    }
+  g_return_if_fail (str != NULL);
+  calls_call_state_parse_nick (&self->state, str);
 }
 
 

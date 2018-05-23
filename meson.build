@@ -29,3 +29,4 @@ project('call', 'c',
 
 subdir('libgdbofono')
 subdir('src')
+subdir('doc')

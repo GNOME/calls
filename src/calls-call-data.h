@@ -34,9 +34,10 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsCallData, calls_call_data, CALLS, CALL_DATA, GObject);
 
-CallsCallData *calls_call_data_new (CallsCall *call, CallsParty *party);
-CallsCall *calls_call_data_get_call (CallsCallData *data);
-CallsParty *calls_call_data_get_party (CallsCallData *data);
+CallsCallData *calls_call_data_new       (CallsCall     *call,
+                                          CallsParty    *party);
+CallsCall     *calls_call_data_get_call  (CallsCallData *data);
+CallsParty    *calls_call_data_get_party (CallsCallData *data);
 
 G_END_DECLS
 

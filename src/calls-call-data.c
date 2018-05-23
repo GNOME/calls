@@ -31,7 +31,9 @@
 /**
  * SECTION:calls-call-data
  * @short_description: An object to hold both a #CallsCall object and
- * the #CallsParty participating in the call
+ * the #CallsParty participating in the call.  These data are passed
+ * to both #CallsCallDisplay and #CallsCallSelectorItem so we create a
+ * convenient object to keep them together.
  * @Title: CallsCallData
  */
 
@@ -54,52 +56,9 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 
-CallsCallData *
-calls_call_data_new (CallsCall *call, CallsParty *party)
-{
-  return g_object_new (CALLS_TYPE_CALL_DATA,
-                       "call", call,
-                       "party", party,
-                       NULL);
-}
-
-CallsCall *
-calls_call_data_get_call (CallsCallData *data)
-{
-  g_return_val_if_fail (CALLS_IS_CALL_DATA (data), NULL);
-  return data->call;
-}
-
-
-CallsParty *
-calls_call_data_get_party (CallsCallData *data)
-{
-  g_return_val_if_fail (CALLS_IS_CALL_DATA (data), NULL);
-  return data->party;
-}
-
-
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+calls_call_data_init (CallsCallData *self)
 {
-  CallsCallData *self = CALLS_CALL_DATA (object);
-
-  switch (property_id) {
-  case PROP_CALL:
-    g_value_set_object (value, self->call);
-    break;
-
-  case PROP_PARTY:
-    g_value_set_object (value, self->party);
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
 }
 
 
@@ -128,8 +87,26 @@ set_property (GObject      *object,
 
 
 static void
-calls_call_data_init (CallsCallData *self)
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
 {
+  CallsCallData *self = CALLS_CALL_DATA (object);
+
+  switch (property_id) {
+  case PROP_CALL:
+    g_value_set_object (value, self->call);
+    break;
+
+  case PROP_PARTY:
+    g_value_set_object (value, self->party);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
 }
 
 
@@ -151,8 +128,8 @@ calls_call_data_class_init (CallsCallDataClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->get_property = get_property;
   object_class->set_property = set_property;
+  object_class->get_property = get_property;
   object_class->dispose = dispose;
 
   props[PROP_CALL] =
@@ -170,4 +147,54 @@ calls_call_data_class_init (CallsCallDataClass *klass)
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+}
+
+
+/**
+ * calls_call_data_new:
+ *
+ * Create a new #CallsCallData object.
+ *
+ * Returns: the newly created #CallsCallData
+ */
+CallsCallData *
+calls_call_data_new (CallsCall  *call,
+                     CallsParty *party)
+{
+  return g_object_new (CALLS_TYPE_CALL_DATA,
+                       "call", call,
+                       "party", party,
+                       NULL);
+}
+
+
+/**
+ * calls_call_data_get_call:
+ * @self: a #CallsCallData
+ *
+ * Get the #CallsCall stored in the object.
+ *
+ * Returns: the #CallsCall
+ */
+CallsCall *
+calls_call_data_get_call (CallsCallData *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL_DATA (self), NULL);
+  return self->call;
+}
+
+
+/**
+ * calls_call_data_get_party:
+ * @self: a #CallsCallData
+ *
+ * Get the #CallsParty stored in the object.
+ *
+ * Returns: the #CallsParty
+ */
+CallsParty *
+calls_call_data_get_party (CallsCallData *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL_DATA (self), NULL);
+  return self->party;
 }

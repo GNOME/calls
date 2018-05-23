@@ -99,13 +99,6 @@ G_BEGIN_DECLS
   ptr = new_value;
 
 
-#define CALLS_EMIT_MESSAGE(obj,text,type) \
-  g_signal_emit_by_name (obj, "message", text, type)
-  
-#define CALLS_EMIT_ERROR(obj,error) \
-  CALLS_EMIT_MESSAGE (obj, error->message, GTK_MESSAGE_ERROR)
-
-
 /** Find a particular pointer value in a GtkListStore */
 gboolean
 calls_list_store_find (GtkListStore *store,

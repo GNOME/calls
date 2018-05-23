@@ -23,19 +23,10 @@
 
 gnome = import('gnome')
 
-#libgd = subproject('libgd',
-#  default_options: [
-#    'with-main-box=true'
-#  ]
-#)
-
-
-#libgd_dep = libgd.get_variable('libgd_dep')
-deps = [ dependency('gobject-2.0'),
-         dependency('gtk+-3.0'),
-         dependency('libhandy-0.0'),
-#         libgd.get_variable('libgd_dep')
-       ]
+calls_deps = [ dependency('gobject-2.0'),
+               dependency('gtk+-3.0'),
+               dependency('libhandy-0.0'),
+             ]
 
 enum_headers = ['calls-call.h']
 sources = ['calls-message-source.c', 'calls-message-source.h',
@@ -64,9 +55,7 @@ calls_resources = gnome.compile_resources(
    c_name: 'call',
 )
 
-# Pass as dependency to another target
-
 executable('calls', sources, enum_sources, calls_resources,
-           dependencies : deps,
+           dependencies : calls_deps,
            link_with : gdbofono_lib,
            include_directories : include_directories('..'))

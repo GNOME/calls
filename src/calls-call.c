@@ -29,8 +29,8 @@
 
 
 void
-calls_call_state_to_string (GString *string,
-                            CallsCallState state)
+calls_call_state_to_string (GString        *string,
+                            CallsCallState  state)
 {
   GEnumClass *klass;
   GEnumValue *value;
@@ -78,6 +78,15 @@ calls_call_state_parse_nick (CallsCallState *state,
  * SECTION:calls-call
  * @short_description: A call.
  * @Title: CallsCall
+ *
+ * This is the interface to a call.  It has a number, name and a
+ * state.  Only the state changes after creation.  If the state is
+ * #CALL_CALL_STATE_INCOMING, the call can be answered with #answer.
+ * The call can also be hung up at any time with #hang_up.
+ *
+ * DTMF tones can be played the call using #tone_start and
+ * #tone_stop.  Valid characters for the key are 0-9, '*', '#', 'A',
+ * 'B', 'C' and 'D'.
  */
 
 
@@ -89,11 +98,20 @@ enum {
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
 
+
 static void
 calls_call_default_init (CallsCallInterface *iface)
 {
   GType arg_types = CALLS_TYPE_CALL_STATE;
 
+  /**
+   * CallsCall::state-changed:
+   * @self: The #CallsCall instance.
+   * @state: The new state of the call.
+   *
+   * This signal is emitted when the state of the call changes, for
+   * example when it's answered or when the call is disconnected.
+   */
   signals[SIGNAL_STATE_CHANGED] =
     g_signal_newv ("state-changed",
 		   G_TYPE_FROM_INTERFACE (iface),
@@ -112,20 +130,55 @@ calls_call_default_init (CallsCallInterface *iface)
   CALLS_DEFINE_IFACE_FUNC_VOID(call, Call, CALL, function)
 
 
+/**
+ * calls_call_get_number:
+ * @self: a #CallsCall
+ *
+ * Get the number the call is connected to.  It is possible that this
+ * could return NULL if the number is not known, for example if an
+ * incoming PTSN call has no caller ID information.
+ *
+ * Returns: the number, or NULL
+ */
 DEFINE_CALL_FUNC(get_number, const gchar *, NULL);
+
+/**
+ * calls_call_get_name:
+ * @self: a #CallsCall
+ *
+ * Get the name of the party the call is connected to, if the network
+ * provides it.
+ *
+ * Returns: the number, or NULL
+ */
 DEFINE_CALL_FUNC(get_name, const gchar *, NULL);
 
 /**
  * calls_call_get_state:
  * @self: a #CallsCall
  *
- * Get the current state of the call
+ * Get the current state of the call.
  *
  * Returns: the state
  */
 DEFINE_CALL_FUNC(get_state, CallsCallState, ((CallsCallState)0));
 
+/**
+ * calls_call_answer:
+ * @self: a #CallsCall
+ *
+ * If the call is incoming, answer it.
+ *
+ */
 DEFINE_CALL_FUNC_VOID(answer);
+
+/**
+ * calls_call_hang_up:
+ * @self: a #CallsCall
+ *
+ * Hang up the call.
+ *
+ */
 DEFINE_CALL_FUNC_VOID(hang_up);
 
 
@@ -155,5 +208,25 @@ tone_key_is_valid (gchar key)
     return iface->tone_##which (self, key);             \
   }
 
+/**
+ * calls_call_tone_start:
+ * @self: a #CallsCall
+ * @key: which tone to start
+ *
+ * Start playing a DTMF tone for the specified key.  Implementations
+ * will stop playing the tone either after an implementation-specific
+ * timeout, or after #calls_call_tone_stop is called with the same
+ * value for @key.
+ *
+ */
 DEFINE_CALL_TONE_FUNC (start);
+
+/**
+ * calls_call_tone_stop:
+ * @self: a #CallsCall
+ * @key: which tone to stop
+ *
+ * Stop playing a DTMF tone previously started with #calls_call_tone_start.
+ *
+ */
 DEFINE_CALL_TONE_FUNC (stop);

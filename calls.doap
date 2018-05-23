@@ -10,7 +10,7 @@
   <shortdesc>A phone call dialer</shortdesc>
   <description>Calls is a dialer for phone calls, initially PSTN calls
   but eventually other systems like SIP in future.</description>
-  <homepage rdf:resource="https://gitlab.gnome.org/Community/Purism/calls" />
+  <homepage rdf:resource="https://code.puri.sm/Librem5/calls" />
   <license rdf:resource="http://usefulinc.com/doap/licenses/gpl" />
 
   <programming-language>C</programming-language>

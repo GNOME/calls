@@ -44,8 +44,8 @@ typedef enum
   CALLS_CALL_STATE_DISCONNECTED
 } CallsCallState;
 
-void calls_call_state_to_string (GString       *string,
-                                 CallsCallState state);
+void     calls_call_state_to_string  (GString        *string,
+                                      CallsCallState  state);
 gboolean calls_call_state_parse_nick (CallsCallState *state,
                                       const gchar    *nick);
 
@@ -53,23 +53,28 @@ struct _CallsCallInterface
 {
   GTypeInterface parent_iface;
 
-  const gchar * (*get_number) (CallsCall *self);
-  const gchar * (*get_name) (CallsCall *self);
-  CallsCallState (*get_state) (CallsCall *self);
-  void (*answer) (CallsCall *self);
-  void (*hang_up) (CallsCall *self);
-  void (*tone_start) (CallsCall *self, gchar key);
-  void (*tone_stop) (CallsCall *self, gchar key);
+  const gchar *  (*get_number) (CallsCall *self);
+  const gchar *  (*get_name)   (CallsCall *self);
+  CallsCallState (*get_state)  (CallsCall *self);
+  void           (*answer)     (CallsCall *self);
+  void           (*hang_up)    (CallsCall *self);
+  void           (*tone_start) (CallsCall *self,
+                                gchar      key);
+  void           (*tone_stop)  (CallsCall *self,
+                                gchar      key);
 };
 
 
-const gchar * calls_call_get_number (CallsCall *self);
-const gchar * calls_call_get_name (CallsCall *self);
-CallsCallState calls_call_get_state (CallsCall *self);
-void calls_call_answer (CallsCall *self);
-void calls_call_hang_up (CallsCall *self);
-void calls_call_tone_start (CallsCall *self, gchar key);
-void calls_call_tone_stop (CallsCall *self, gchar key);
+const gchar *  calls_call_get_number (CallsCall *self);
+const gchar *  calls_call_get_name   (CallsCall *self);
+CallsCallState calls_call_get_state  (CallsCall *self);
+void           calls_call_answer     (CallsCall *self);
+void           calls_call_hang_up    (CallsCall *self);
+void           calls_call_tone_start (CallsCall *self,
+                                      gchar      key);
+void           calls_call_tone_stop  (CallsCall *self,
+                                      gchar      key);
+
 
 G_END_DECLS
 
