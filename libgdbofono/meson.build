@@ -13,7 +13,7 @@ deps = [ dependency('gio-2.0'),
          dependency('gio-unix-2.0'),
        ]
 
-gdbofono_lib = shared_library('gdbofono',
-                               gdbus_src,
-                               include_directories : include_directories('..'),
-                               dependencies : deps )
+gdbofono_lib = static_library('gdbofono',
+                              gdbus_src,
+                              include_directories : include_directories('..'),
+                              dependencies : deps )
