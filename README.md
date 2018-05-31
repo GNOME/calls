@@ -26,8 +26,8 @@ oFono with useful output:
 
     sudo OFONO_AT_DEBUG=1 ofonod -n -d
 
-The test programs within the (oFono source
-tree)[https://git.kernel.org/pub/scm/network/ofono/ofono.git] are
+The test programs within the [oFono source
+tree](https://git.kernel.org/pub/scm/network/ofono/ofono.git) are
 useful to bring up a modem to a suitable state.  For example:
 
     cd $OFONO_SOURCE/test
