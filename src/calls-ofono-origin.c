@@ -110,27 +110,6 @@ dial (CallsOrigin *origin, const gchar *number)
      NULL,
      (GAsyncReadyCallback) dial_cb,
      self);
-  /*
-  CallsOfonoCall *ofono_call;
-  CallsCall *call;
-
-  g_return_if_fail (number != NULL);
-  g_return_if_fail (CALLS_IS_OFONO_ORIGIN (origin));
-
-  self = CALLS_OFONO_ORIGIN (origin);
-
-  ofono_call = calls_ofono_call_new (number);
-  g_return_if_fail (ofono_call != NULL);
-
-  call = CALLS_CALL (ofono_call);
-  g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (call_state_changed_cb),
-                            self);
-
-  self->calls = g_list_append (self->calls, ofono_call);
-
-  g_signal_emit_by_name (origin, "call-added", call);
-  */
 }
 
 
