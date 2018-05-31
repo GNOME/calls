@@ -37,6 +37,8 @@ struct _CallsOfonoOrigin
   GDBOModem *modem;
   gchar *name;
   GDBOVoiceCallManager *voice;
+  gboolean sending_tones;
+  GString *tone_queue;
   GHashTable *calls;
 };
 
@@ -211,6 +213,78 @@ struct CallsVoiceCallProxyNewData
 
 
 static void
+send_tones_cb (GDBOVoiceCallManager *voice,
+               GAsyncResult         *res,
+               CallsOfonoOrigin     *self)
+{
+  gboolean ok;
+  GError *error = NULL;
+
+  /* Deal with old tones */
+  ok = gdbo_voice_call_manager_call_send_tones_finish
+    (voice, res, &error);
+  if (!ok)
+    {
+      g_warning ("Error sending DTMF tones to network on modem `%s': %s",
+                 self->name, error->message);
+      CALLS_EMIT_MESSAGE (self, error->message, GTK_MESSAGE_WARNING);
+    }
+
+  /* Possibly send new tones */
+  if (self->tone_queue)
+    {
+      g_debug ("Sending queued DTMF tones `%s'", self->tone_queue->str);
+
+      gdbo_voice_call_manager_call_send_tones
+        (voice,
+         self->tone_queue->str,
+         NULL,
+         (GAsyncReadyCallback) send_tones_cb,
+         self);
+
+      g_string_free (self->tone_queue, TRUE);
+      self->tone_queue = NULL;
+    }
+  else
+    {
+      self->sending_tones = FALSE;
+    }
+}
+
+
+static void
+tone_cb (CallsOfonoOrigin *self,
+         gchar             key)
+{
+  const gchar key_str[2] = { key, '\0' };
+
+  if (self->sending_tones)
+    {
+      if (self->tone_queue)
+        {
+          g_string_append_c (self->tone_queue, key);
+        }
+      else
+        {
+          self->tone_queue = g_string_new (key_str);
+        }
+    }
+  else
+    {
+      g_debug ("Sending immediate DTMF tone `%c'", key);
+
+      gdbo_voice_call_manager_call_send_tones
+        (self->voice,
+         key_str,
+         NULL,
+         (GAsyncReadyCallback) send_tones_cb,
+         self);
+
+      self->sending_tones = TRUE;
+    }
+}
+
+static void
 voice_call_proxy_new_cb (GDBusConnection *connection,
                          GAsyncResult *res,
                          struct CallsVoiceCallProxyNewData *data)
@@ -233,6 +307,8 @@ voice_call_proxy_new_cb (GDBusConnection *connection,
     }
 
   call = calls_ofono_call_new (voice_call, data->properties);
+  g_signal_connect_swapped (call, "tone",
+                            G_CALLBACK (tone_cb), self);
 
   path = g_dbus_proxy_get_object_path (G_DBUS_PROXY (voice_call));
   g_hash_table_insert (self->calls, g_strdup(path), call);
@@ -447,10 +523,11 @@ finalize (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
-  if (self->name)
+  if (self->tone_queue)
     {
-      g_free (self->name);
+      g_string_free (self->tone_queue, TRUE);
     }
+  CALLS_FREE_PTR_PROPERTY (self->name);
 
   parent_class->finalize (object);
 }

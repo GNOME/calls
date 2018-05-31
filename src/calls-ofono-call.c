@@ -57,6 +57,12 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+enum {
+  SIGNAL_TONE,
+  SIGNAL_LAST_SIGNAL,
+};
+static guint signals [SIGNAL_LAST_SIGNAL];
+
 
 #define DEFINE_GET_BODY(member)                         \
   get_##member (CallsCall *iface)                       \
@@ -154,14 +160,15 @@ hang_up (CallsCall *call)
 static void
 tone_start (CallsCall *call, gchar key)
 {
-  g_info ("Beep! (%c)", (int)key);
-}
+  CallsOfonoCall *self = CALLS_OFONO_CALL (call);
+  if (self->state != CALLS_CALL_STATE_ACTIVE)
+    {
+      g_warning ("Tone start requested for non-active call to `%s'",
+                 self->number);
+      return;
+    }
 
-
-static void
-tone_stop (CallsCall *call, gchar key)
-{
-  g_info ("Beep end (%c)", (int)key);
+  g_signal_emit_by_name (self, "tone", key);
 }
 
 
@@ -308,6 +315,7 @@ static void
 calls_ofono_call_class_init (CallsOfonoCallClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GType tone_arg_types = G_TYPE_CHAR;
 
   object_class->set_property = set_property;
   object_class->constructed = constructed;
@@ -330,6 +338,15 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+
+  signals[SIGNAL_TONE] =
+    g_signal_newv ("tone",
+		   G_TYPE_FROM_CLASS (klass),
+		   G_SIGNAL_RUN_LAST,
+		   NULL, NULL, NULL, NULL,
+		   G_TYPE_NONE,
+		   1, &tone_arg_types);
 }
 
 
@@ -348,7 +365,6 @@ calls_ofono_call_call_interface_init (CallsCallInterface *iface)
   iface->answer = answer;
   iface->hang_up = hang_up;
   iface->tone_start = tone_start;
-  iface->tone_stop = tone_stop;
 }
 
 
