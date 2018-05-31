@@ -192,21 +192,6 @@ tone_key_is_valid (gchar key)
     ||  key == '#';
 }
 
-#define DEFINE_CALL_TONE_FUNC(which)                    \
-  void                                                  \
-  calls_call_tone_##which (CallsCall *self,             \
-                           gchar      key)              \
-  {                                                     \
-    CallsCallInterface *iface;                          \
-                                                        \
-    g_return_if_fail (CALLS_IS_CALL (self));            \
-    g_return_if_fail (tone_key_is_valid (key));         \
-                                                        \
-    iface = CALLS_CALL_GET_IFACE (self);                \
-    g_return_if_fail (iface->tone_##which != NULL);     \
-                                                        \
-    return iface->tone_##which (self, key);             \
-  }
 
 /**
  * calls_call_tone_start:
@@ -219,14 +204,68 @@ tone_key_is_valid (gchar key)
  * value for @key.
  *
  */
-DEFINE_CALL_TONE_FUNC (start);
+void
+calls_call_tone_start (CallsCall *self,
+                       gchar      key)
+{
+  CallsCallInterface *iface;
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+  g_return_if_fail (tone_key_is_valid (key));
+
+  iface = CALLS_CALL_GET_IFACE (self);
+  g_return_if_fail (iface->tone_start != NULL);
+
+  iface->tone_start (self, key);
+}
+
+/**
+ * calls_call_tone_stoppable:
+ * @self: a #CallsCall
+ *
+ * Determine whether tones for this call can be stopped by calling
+ * #calls_call_tone_stop.  Some implementations will only allow
+ * fixed-length tones to be played.  In that case, this function
+ * should return FALSE.
+ *
+ * Returns: whether calls to #calls_call_tone_stop will do anything
+ *
+ */
+gboolean
+calls_call_tone_stoppable (CallsCall *self)
+{
+  CallsCallInterface *iface;
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
+
+  iface = CALLS_CALL_GET_IFACE (self);
+
+  return iface->tone_stop != NULL;
+}
 
 /**
  * calls_call_tone_stop:
  * @self: a #CallsCall
  * @key: which tone to stop
  *
- * Stop playing a DTMF tone previously started with #calls_call_tone_start.
+ * Stop playing a DTMF tone previously started with
+ * #calls_call_tone_start.
  *
  */
-DEFINE_CALL_TONE_FUNC (stop);
+void
+calls_call_tone_stop (CallsCall *self,
+                      gchar      key)
+{
+  CallsCallInterface *iface;
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+  g_return_if_fail (tone_key_is_valid (key));
+
+  iface = CALLS_CALL_GET_IFACE (self);
+  if (!iface->tone_stop)
+    {
+      return;
+    }
+
+  iface->tone_stop (self, key);
+}
