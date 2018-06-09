@@ -1,0 +1,145 @@
+{
+    "app-id" : "sm.puri.Calls",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "3.28",
+    "sdk" : "org.gnome.Sdk",
+    "command" : "calls",
+    "finish-args" : [
+        "--share=ipc",
+        "--socket=x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--share=network",
+        "--device=all",
+        
+        /* Doesn't matter what the name is, just need to call system-talk-name? */
+        "--system-talk-name=sm.puri.Calls",
+        
+        "--talk-name=org.ofono",
+        "--talk-name=org.ofono.VoiceCall",
+        "--talk-name=org.ofono.Manager",
+        "--talk-name=org.ofono.Modem",
+        "--talk-name=org.ofono.SimManager",
+        "--talk-name=org.ofono.VoiceCallManager",
+        "--talk-name=org.ofono.AllowedAccessPoints",
+        "--talk-name=org.ofono.SimAuthentication",
+        "--talk-name=org.ofono.SimToolkit",
+        "--talk-name=org.ofono.CallForwarding",
+        "--talk-name=org.ofono.RadioSettings",
+        "--talk-name=org.ofono.TextTelephony",
+        "--talk-name=org.ofono.Phonebook",
+        "--talk-name=org.ofono.MessageManager",
+        "--talk-name=org.ofono.PushNotification",
+        "--talk-name=org.ofono.SmartMessaging",
+        "--talk-name=org.ofono.MessageWaiting",
+        "--talk-name=org.ofono.CallSettings",
+        "--talk-name=org.ofono.CallBarring",
+        "--talk-name=org.ofono.SupplementaryServices",
+        "--talk-name=org.ofono.CallMeter",
+        "--talk-name=org.ofono.CallVolume",
+        "--talk-name=org.ofono.NetworkRegistration",
+        "--talk-name=org.ofono.CellBroadcast",
+        "--talk-name=org.ofono.AssistedSatelliteNavigation",
+        "--talk-name=org.ofono.ConnectionManager"
+    ],
+    "build-options" : {
+        "cflags" : "-O2 -g",
+        "cxxflags" : "-O2 -g",
+        "env" : {
+            "V" : "1"
+        }
+    },
+    "modules" : [
+        {
+            "name" : "mobile-broadband-provider-info",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://git.gnome.org/browse/mobile-broadband-provider-info"
+                }
+            ]
+        },
+        {
+            "name" : "ofono",
+            "config-opts": [
+                "--prefix=/app",
+                "--mandir=/app/share/man",
+				"--sysconfdir=/app/etc",
+				"--with-dbusconfdir=/app/etc/dbus-1/system.d",
+				"--localstatedir=/app/var"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://git.kernel.org/pub/scm/network/ofono/ofono.git"
+                }
+            ],
+            "modules": [
+                {
+                    "name": "udev",
+                    "rm-configure": true,
+                    "config-opts": [
+                        "--disable-hwdb",
+                        "--disable-logging",
+                        "--disable-gudev",
+                        "--disable-introspection",
+                        "--disable-keymap",
+                        "--disable-mtd_probe"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/etc",
+                        "/libexec",
+                        "/sbin",
+                        "/lib/pkgconfig",
+                        "/man",
+                        "/share/aclocal",
+                        "/share/doc",
+                        "/share/gtk-doc",
+                        "/share/man",
+                        "/share/pkgconfig",
+                        "*.la",
+                        "*.a"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-175.tar.bz2",
+                            "sha256": "4c7937fe5a1521316ea571188745b9a00a9fdf314228cffc53a7ba9e5968b7ab"
+                        },
+                        {
+                            "type": "script",
+                            "dest-filename": "autogen.sh",
+                            "commands": [
+                                "autoreconf -vfi"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name" : "libhandy",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://source.puri.sm/Librem5/libhandy.git"
+                }
+            ],
+            "cleanup" : [
+                "/bin"
+            ]
+        },
+        {
+            "name" : "calls",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://source.puri.sm/Librem5/calls.git"
+                }
+            ]
+        }
+    ]
+}
