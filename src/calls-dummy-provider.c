@@ -49,7 +49,7 @@ static GList *
 get_origins (CallsProvider *iface)
 {
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (iface);
-  return self->origins;
+  return g_list_copy (self->origins);
 }
 
 CallsDummyProvider *
