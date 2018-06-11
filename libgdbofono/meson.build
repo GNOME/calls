@@ -16,5 +16,4 @@ deps = [ dependency('gio-2.0'),
 gdbofono_lib = static_library('gdbofono',
                               gdbus_src,
                               include_directories : include_directories('..'),
-                              install: true,
                               dependencies : deps )
