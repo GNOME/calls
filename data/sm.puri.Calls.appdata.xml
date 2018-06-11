@@ -8,11 +8,11 @@
     
     <description>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</description>
 
-    <url type="homepage">https://gitlab.gnome.org/Community/Purism/calls</url>
-    <url type="bugtracker">https://gitlab.gnome.org/Community/Purism/calls/issues</url>
+    <url type="homepage">https://source.puri.sm/Librem5/calls</url>
+    <url type="bugtracker">https://source.puri.sm/Librem5/calls/issues</url>
     
     <project_group>GNOME</project_group>
-    <developer_name>Purism Developers</developer_name>
+    <developer_name>Bob Ham</developer_name>
 
     <kudos>
         <kudo>ModernToolkit</kudo>
