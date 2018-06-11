@@ -23,6 +23,7 @@
  */
 
 #include "calls-dummy-origin.h"
+#include "calls-message-source.h"
 #include "calls-origin.h"
 #include "calls-dummy-call.h"
 
@@ -37,9 +38,12 @@ struct _CallsDummyOrigin
   GList *calls;
 };
 
+static void calls_dummy_origin_message_source_interface_init (CallsOriginInterface *iface);
 static void calls_dummy_origin_origin_interface_init (CallsOriginInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (CallsDummyOrigin, calls_dummy_origin, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                                                calls_dummy_origin_message_source_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_ORIGIN,
                                                 calls_dummy_origin_origin_interface_init))
 
@@ -150,36 +154,9 @@ dial (CallsOrigin *origin, const gchar *number)
 CallsDummyOrigin *
 calls_dummy_origin_new (const gchar *name)
 {
-  /*
-  guint n_properties, i;
-  const gchar *names[1] = { NULL };
-  GValue values[1] = { G_VALUE_INIT };
-  GObject *object;
-
-  if (name == NULL)
-    {
-      n_properties = 0;
-    }
-  else
-    {
-      n_properties = 1;
-      names[0] = "name";
-      g_value_init (&values[0], G_TYPE_STRING);
-      g_value_set_string (&values[0], name);
-    }
-
-  object = g_object_new_with_properties (CALLS_TYPE_DUMMY_ORIGIN,
-                                         n_properties, names, values);
-
-  for (i = 0; i < n_properties; ++i)
-    {
-      g_value_unset (&values[i]);
-    }
-
-  return CALLS_DUMMY_ORIGIN(object);
-  */
-  // FIXME
-  return NULL;
+  return g_object_new (CALLS_TYPE_DUMMY_ORIGIN,
+                       "name", name,
+                       NULL);
 }
 
 
@@ -244,6 +221,12 @@ calls_dummy_origin_class_init (CallsDummyOriginClass *klass)
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+}
+
+
+static void
+calls_dummy_origin_message_source_interface_init (CallsOriginInterface *iface)
+{
 }
 
 

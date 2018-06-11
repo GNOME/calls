@@ -23,6 +23,7 @@
  */
 
 #include "calls-dummy-call.h"
+#include "calls-message-source.h"
 #include "calls-call.h"
 
 #include <glib/gi18n.h>
@@ -35,9 +36,12 @@ struct _CallsDummyCall
   CallsCallState state;
 };
 
+static void calls_dummy_call_message_source_interface_init (CallsCallInterface *iface);
 static void calls_dummy_call_call_interface_init (CallsCallInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (CallsDummyCall, calls_dummy_call, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                                                calls_dummy_call_message_source_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_CALL,
                                                 calls_dummy_call_call_interface_init))
 
@@ -191,6 +195,13 @@ calls_dummy_call_call_interface_init (CallsCallInterface *iface)
   iface->tone_start = tone_start;
   iface->tone_stop = tone_stop;
 }
+
+
+static void
+calls_dummy_call_message_source_interface_init (CallsCallInterface *iface)
+{
+}
+
 
 static void
 calls_dummy_call_init (CallsDummyCall *self)

@@ -23,6 +23,7 @@
  */
 
 #include "calls-dummy-provider.h"
+#include "calls-message-source.h"
 #include "calls-provider.h"
 #include "calls-dummy-origin.h"
 
@@ -33,11 +34,15 @@ struct _CallsDummyProvider
   GList *origins;
 };
 
+static void calls_dummy_provider_message_source_interface_init (CallsProviderInterface *iface);
 static void calls_dummy_provider_provider_interface_init (CallsProviderInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (CallsDummyProvider, calls_dummy_provider, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                                                calls_dummy_provider_message_source_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_PROVIDER,
                                                 calls_dummy_provider_provider_interface_init))
+
 
 static const gchar *
 get_name (CallsProvider *iface)
@@ -45,12 +50,14 @@ get_name (CallsProvider *iface)
   return "Dummy provider";
 }
 
+
 static GList *
 get_origins (CallsProvider *iface)
 {
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (iface);
   return g_list_copy (self->origins);
 }
+
 
 CallsDummyProvider *
 calls_dummy_provider_new ()
@@ -71,6 +78,7 @@ dispose (GObject *object)
   parent_class->dispose (object);
 }
 
+
 static void
 calls_dummy_provider_class_init (CallsDummyProviderClass *klass)
 {
@@ -79,6 +87,13 @@ calls_dummy_provider_class_init (CallsDummyProviderClass *klass)
   object_class->dispose = dispose;
 }
 
+
+static void
+calls_dummy_provider_message_source_interface_init (CallsProviderInterface *iface)
+{
+}
+
+
 static void
 calls_dummy_provider_provider_interface_init (CallsProviderInterface *iface)
 {
@@ -86,11 +101,17 @@ calls_dummy_provider_provider_interface_init (CallsProviderInterface *iface)
   iface->get_origins = get_origins;
 }
 
+
 static void
 calls_dummy_provider_init (CallsDummyProvider *self)
 {
+}
+
+
+void
+calls_dummy_provider_add_origin (CallsDummyProvider *self,
+                                 const gchar        *name)
+{
   self->origins = g_list_append (self->origins,
-                                 calls_dummy_origin_new (NULL));
-  self->origins = g_list_append (self->origins,
-                                 calls_dummy_origin_new ("Dummy origin 2"));
+                                 calls_dummy_origin_new (name));
 }
