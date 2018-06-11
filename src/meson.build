@@ -28,25 +28,30 @@ calls_deps = [ dependency('gobject-2.0'),
                dependency('libhandy-0.0'),
              ]
 
-enum_headers = ['calls-call.h']
-sources = ['calls-message-source.c', 'calls-message-source.h',
-           'calls-call.c',
-           'calls-origin.c', 'calls-origin.h',
-           'calls-provider.c', 'calls-provider.h',
-           'calls-ofono-call.c', 'calls-ofono-call.h',
-           'calls-ofono-origin.c', 'calls-ofono-origin.h',
-           'calls-ofono-provider.c', 'calls-ofono-provider.h',
-           'calls-party.c', 'calls-party.h',
-           'calls-call-data.c', 'calls-call-data.h',
-           'calls-call-holder.c', 'calls-call-holder.h',
-           'calls-call-display.c', 'calls-call-display.h',
-           'calls-call-selector-item.c', 'calls-call-selector-item.h',
-           'calls-main-window.c', 'calls-main-window.h',
-           'util.c', 'util.h',
-           'main.c'
-          ]
+calls_sources = ['calls-message-source.c', 'calls-message-source.h',
+                 'calls-call.c',
+                 'calls-origin.c', 'calls-origin.h',
+                 'calls-provider.c', 'calls-provider.h',
+                 'calls-ofono-call.c', 'calls-ofono-call.h',
+                 'calls-ofono-origin.c', 'calls-ofono-origin.h',
+                 'calls-ofono-provider.c', 'calls-ofono-provider.h',
+                 'calls-party.c', 'calls-party.h',
+                 'calls-call-data.c', 'calls-call-data.h',
+                 'calls-call-holder.c', 'calls-call-holder.h',
+                 'calls-call-display.c', 'calls-call-display.h',
+                 'calls-call-selector-item.c', 'calls-call-selector-item.h',
+                 'calls-main-window.c', 'calls-main-window.h',
+                 'util.c', 'util.h',
+                ]
 
-enum_sources = gnome.mkenums_simple('enum-types', sources : enum_headers)
+calls_dummy_sources = ['calls-dummy-call.c', 'calls-dummy-call.h',
+                       'calls-dummy-origin.c', 'calls-dummy-origin.h',
+                       'calls-dummy-provider.c', 'calls-dummy-provider.h',
+                      ]
+
+calls_enum_headers = ['calls-call.h']
+calls_enum_sources = gnome.mkenums_simple('enum-types',
+                                          sources : calls_enum_headers)
 
 calls_resources = gnome.compile_resources(
    'calls-resources',
@@ -55,7 +60,8 @@ calls_resources = gnome.compile_resources(
    c_name: 'call',
 )
 
-executable('calls', sources, enum_sources, calls_resources,
+executable('calls',
+           calls_sources, calls_enum_sources, calls_resources, 'main.c',
            dependencies : calls_deps,
            link_with : gdbofono_lib,
            include_directories : include_directories('..'),

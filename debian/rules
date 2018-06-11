@@ -4,3 +4,8 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 %:
 	dh $@ -- -B_build
+
+override_dh_auto_test:
+ifeq ($(filter nocheck,$(DEB_BUILD_OPTIONS)),)
+	xvfb-run ninja -C _build test
+endif
