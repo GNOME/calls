@@ -30,35 +30,35 @@ calls_deps = [ dependency('gobject-2.0'),
                dependency('mm-glib'),
              ]
 
-calls_sources = ['calls-message-source.c', 'calls-message-source.h',
-                 'calls-call.c',
-                 'calls-origin.c', 'calls-origin.h',
-                 'calls-provider.c', 'calls-provider.h',
-                 'calls-ofono-call.c', 'calls-ofono-call.h',
-                 'calls-ofono-origin.c', 'calls-ofono-origin.h',
-                 'calls-ofono-provider.c', 'calls-ofono-provider.h',
-                 'calls-mm-call.c', 'calls-mm-call.h',
-                 'calls-mm-origin.c', 'calls-mm-origin.h',
-                 'calls-mm-provider.c', 'calls-mm-provider.h',
-                 'calls-party.c', 'calls-party.h',
-                 'calls-call-data.c', 'calls-call-data.h',
-                 'calls-call-holder.c', 'calls-call-holder.h',
-                 'calls-call-display.c', 'calls-call-display.h',
-                 'calls-call-selector-item.c', 'calls-call-selector-item.h',
-                 'calls-call-window.c', 'calls-call-window.h',
-                 'calls-encryption-indicator.c', 'calls-encryption-indicator.h',
-                 'calls-history-box.c', 'calls-history-box.h',
-                 'calls-history-header-bar.c', 'calls-history-header-bar.h',
-                 'calls-new-call-box.c', 'calls-new-call-box.h',
-                 'calls-new-call-header-bar.c', 'calls-new-call-header-bar.h',
-                 'calls-main-window.c', 'calls-main-window.h',
-                 'util.c', 'util.h',
-                ]
+calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
+                       'calls-call.c',
+                       'calls-origin.c', 'calls-origin.h',
+                       'calls-provider.c', 'calls-provider.h',
+                       'calls-ofono-call.c', 'calls-ofono-call.h',
+                       'calls-ofono-origin.c', 'calls-ofono-origin.h',
+                       'calls-ofono-provider.c', 'calls-ofono-provider.h',
+                       'calls-mm-call.c', 'calls-mm-call.h',
+                       'calls-mm-origin.c', 'calls-mm-origin.h',
+                       'calls-mm-provider.c', 'calls-mm-provider.h',
+                       'calls-party.c', 'calls-party.h',
+                       'calls-call-data.c', 'calls-call-data.h',
+                       'calls-call-holder.c', 'calls-call-holder.h',
+                       'calls-call-display.c', 'calls-call-display.h',
+                       'calls-call-selector-item.c', 'calls-call-selector-item.h',
+                       'calls-call-window.c', 'calls-call-window.h',
+                       'calls-encryption-indicator.c', 'calls-encryption-indicator.h',
+                       'calls-history-box.c', 'calls-history-box.h',
+                       'calls-history-header-bar.c', 'calls-history-header-bar.h',
+                       'calls-new-call-box.c', 'calls-new-call-box.h',
+                       'calls-new-call-header-bar.c', 'calls-new-call-header-bar.h',
+                       'calls-main-window.c', 'calls-main-window.h',
+                       'util.c', 'util.h',
+                      ])
 
-calls_dummy_sources = ['calls-dummy-call.c', 'calls-dummy-call.h',
-                       'calls-dummy-origin.c', 'calls-dummy-origin.h',
-                       'calls-dummy-provider.c', 'calls-dummy-provider.h',
-                      ]
+calls_dummy_sources = files(['calls-dummy-call.c', 'calls-dummy-call.h',
+                             'calls-dummy-origin.c', 'calls-dummy-origin.h',
+                             'calls-dummy-provider.c', 'calls-dummy-provider.h',
+                            ])
 
 prefix = get_option('prefix')
 config_data = configuration_data()
@@ -80,7 +80,7 @@ config_h = vcs_tag(
       output: 'config.h',
 )
 
-calls_enum_headers = ['calls-call.h']
+calls_enum_headers = files(['calls-call.h'])
 calls_enum_sources = gnome.mkenums_simple('enum-types',
                                           sources : calls_enum_headers)
 
