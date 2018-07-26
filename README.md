@@ -35,7 +35,11 @@ useful to bring up a modem to a suitable state.  For example:
     ./enable-modem /sim7100
     ./online-modem /sim7100
 
-Then run Calls.
+Then run Calls:
+
+    cd $CALLS_SOURCE
+    ../calls-build/src/calls
+
 
 ### Phonesim
 One can also make use of the modem simulator, phonesim (in the
