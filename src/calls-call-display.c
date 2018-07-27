@@ -135,7 +135,7 @@ timeout_cb (CallsCallDisplay *self)
     }
 
   minutes = (guint)(elapsed / MINUTE);
-  g_string_append_printf (str, "%u:", minutes);
+  g_string_append_printf (str, "%02u:", minutes);
   elapsed -= (minutes * MINUTE);
 
   g_string_append_printf (str, "%02u", (guint)elapsed);
