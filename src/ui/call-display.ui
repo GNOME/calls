@@ -55,6 +55,11 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">00:00</property>
+            <property name="margin_top">30</property>
+            <property name="margin_bottom">40</property>
+            <attributes>
+              <attribute name="scale" value="1.6"/>
+            </attributes>
           </object>
         </child>
         <child>
