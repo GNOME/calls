@@ -27,6 +27,7 @@
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
+#include "calls-encryption-indicator.h"
 #include "calls-main-window.h"
 #include "calls-ofono-provider.h"
 
@@ -38,6 +39,7 @@ show_window (GtkApplication *app)
   CallsProvider *provider;
   CallsMainWindow *main_window;
 
+  CALLS_TYPE_ENCRYPTION_INDICATOR;
   HDY_TYPE_DIALER;
 
   connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
