@@ -26,16 +26,12 @@
           </object>
           <packing>
             <property name="expand">True</property>
-            <property name="fill">True</property>
             <property name="pack_type">end</property>
-            <property name="position">1</property>
           </packing>
         </child>
       </object>
       <packing>
         <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
       </packing>
     </child>
     <child>
@@ -49,12 +45,6 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Active</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="padding">3</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="time">
@@ -62,12 +52,6 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">0:00</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="padding">6</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="answer">
@@ -78,11 +62,6 @@
             <property name="no_show_all">True</property>
             <signal name="clicked" handler="answer_clicked_cb" swapped="no"/>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox">
@@ -97,11 +76,6 @@
                 <property name="no_show_all">True</property>
                 <signal name="toggled" handler="hold_toggled_cb" swapped="no"/>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="hang_up">
@@ -113,8 +87,6 @@
               </object>
               <packing>
                 <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -126,25 +98,13 @@
                 <property name="no_show_all">True</property>
                 <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
           <packing>
             <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
           </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
     </child>
   </template>
   <object class="GtkSizeGroup" id="action_buttons">
