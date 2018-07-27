@@ -135,6 +135,13 @@
           </object>
         </child>
         <child>
+          <object class="CallsEncryptionIndicator" id="encryption_indicator">
+            <property name="can_focus">False</property>
+            <property name="margin_bottom">30</property>
+            <property name="visible">True</property>
+          </object>
+        </child>
+        <child>
           <object class="GtkButton" id="hang_up">
             <property name="always_show_image">True</property>
             <property name="can_focus">True</property>
