@@ -18,25 +18,27 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="homogeneous">True</property>
         <child>
-          <object class="GtkLabel" id="name">
+          <object class="GtkLabel" id="primary_contact_info">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">John</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
             <attributes>
-              <attribute name="scale" value="3"/>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1.6"/>
             </attributes>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="pack_type">end</property>
-          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="secondary_contact_info">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
+          </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox">

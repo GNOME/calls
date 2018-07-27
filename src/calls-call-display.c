@@ -42,7 +42,8 @@ struct _CallsCallDisplay
   guint timeout;
 
   GtkBox *party_box;
-  GtkLabel *name;
+  GtkLabel *primary_contact_info;
+  GtkLabel *secondary_contact_info;
   GtkLabel *status;
   GtkLabel *time;
 
@@ -209,13 +210,18 @@ static void
 set_party (CallsCallDisplay *self, CallsParty *party)
 {
   GtkWidget *image;
+  const gchar *name, *number;
 
   image = calls_party_create_image (party);
   gtk_box_pack_start (self->party_box, image, TRUE, TRUE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
   gtk_widget_show (image);
 
-  gtk_label_set_text (self->name, calls_party_get_label (party));
+  name = calls_party_get_name (party);
+  number = calls_party_get_number (party);
+
+  gtk_label_set_text (self->primary_contact_info, name != NULL ? name : number);
+  gtk_label_set_text (self->secondary_contact_info, name != NULL ? number : NULL);
 }
 
 
@@ -313,7 +319,8 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-display.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, party_box);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, name);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, primary_contact_info);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, secondary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, status);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
