@@ -1,0 +1,38 @@
+variables:
+  DEPS: build-essential git
+  WANT_BUILD_DEPS: "true"
+
+before_script:
+  - export DEBIAN_FRONTEND=noninteractive
+  - apt-get -y update
+  - apt-get -y install wget ca-certificates gnupg eatmydata
+  - echo "deb http://ci.puri.sm/ scratch librem5" > /etc/apt/sources.list.d/ci.list
+  - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
+  - eatmydata apt-get -y update
+  - eatmydata apt-get -y build-dep .
+  - eatmydata apt-get -y install $DEPS
+  - ulimit -c unlimited
+
+.tags: &tags
+  tags:
+    - librem5
+
+build:native:
+  <<: *tags
+  stage: build
+  artifacts:
+    paths:
+      - _build
+  script:
+    - meson --werror . _build
+    - ninja -C _build
+
+test:native:
+  <<: *tags
+  stage: test
+  dependencies:
+    - build:native
+  script:
+    - export LC_ALL=C.UTF-8
+    - xvfb-run ninja -C _build test
+
