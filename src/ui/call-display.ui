@@ -78,32 +78,61 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="spacing">12</property>
             <property name="homogeneous">True</property>
+            <property name="height_request">65</property>
             <property name="margin_bottom">65</property>
             <child>
-              <object class="GtkToggleButton" id="hold">
-                <property name="label" translatable="yes">Hold</property>
+              <object class="GtkToggleButton" id="mute">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="no_show_all">True</property>
-                <signal name="toggled" handler="hold_toggled_cb" swapped="no"/>
+                <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">microphone-sensitivity-muted-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="dial_pad">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="no_show_all">True</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">input-dialpad-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
               <object class="GtkToggleButton" id="speaker">
-                <property name="label" translatable="yes">Speaker</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="no_show_all">True</property>
                 <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">audio-volume-high-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-          </packing>
         </child>
         <child>
           <object class="GtkButton" id="hang_up">
@@ -137,10 +166,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup" id="action_buttons">
-    <widgets>
-      <widget name="hold"/>
-      <widget name="speaker"/>
-    </widgets>
-  </object>
 </interface>

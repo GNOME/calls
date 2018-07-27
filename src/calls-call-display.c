@@ -48,7 +48,7 @@ struct _CallsCallDisplay
   GtkLabel *time;
 
   GtkButton *answer;
-  GtkToggleButton *hold;
+  GtkToggleButton *mute;
   GtkButton *hang_up;
   GtkToggleButton *speaker;
 };
@@ -87,7 +87,7 @@ hang_up_clicked_cb (GtkButton        *button,
 }
 
 static void
-hold_toggled_cb (GtkToggleButton  *togglebutton,
+mute_toggled_cb (GtkToggleButton  *togglebutton,
                  CallsCallDisplay *self)
 {
 }
@@ -167,7 +167,7 @@ call_state_changed_cb (CallsCallDisplay *self,
     {
     case CALLS_CALL_STATE_INCOMING:
       gtk_widget_show (GTK_WIDGET (self->answer));
-      gtk_widget_hide (GTK_WIDGET (self->hold));
+      gtk_widget_hide (GTK_WIDGET (self->mute));
       gtk_widget_hide (GTK_WIDGET (self->speaker));
       break;
     case CALLS_CALL_STATE_ACTIVE:
@@ -176,7 +176,7 @@ call_state_changed_cb (CallsCallDisplay *self,
     case CALLS_CALL_STATE_ALERTING:
     case CALLS_CALL_STATE_WAITING:
       gtk_widget_hide (GTK_WIDGET (self->answer));
-      gtk_widget_show (GTK_WIDGET (self->hold));
+      gtk_widget_show (GTK_WIDGET (self->mute));
       gtk_widget_show (GTK_WIDGET (self->speaker));
       break;
     case CALLS_CALL_STATE_DISCONNECTED:
@@ -324,11 +324,11 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, status);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hold);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, speaker);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
 }
