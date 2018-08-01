@@ -5,31 +5,40 @@
   <template class="CallsCallDisplay" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="margin_bottom">8</property>
+    <property name="margin_left">12</property>
+    <property name="margin_right">12</property>
+    <property name="margin_top">8</property>
     <property name="orientation">vertical</property>
+    <property name="valign">center</property>
+    <property name="width_request">300</property>
     <child>
       <object class="GtkBox" id="party_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="homogeneous">True</property>
         <child>
-          <object class="GtkLabel" id="name">
+          <object class="GtkLabel" id="primary_contact_info">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">John</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
             <attributes>
-              <attribute name="scale" value="3"/>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1.6"/>
             </attributes>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="pack_type">end</property>
-          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="secondary_contact_info">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
+          </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox">
@@ -47,7 +56,12 @@
           <object class="GtkLabel" id="time">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">0:00</property>
+            <property name="label" translatable="yes">00:00</property>
+            <property name="margin_top">30</property>
+            <property name="margin_bottom">40</property>
+            <attributes>
+              <attribute name="scale" value="1.6"/>
+            </attributes>
           </object>
         </child>
         <child>
@@ -64,50 +78,99 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="spacing">12</property>
+            <property name="homogeneous">True</property>
+            <property name="height_request">65</property>
+            <property name="margin_bottom">65</property>
             <child>
-              <object class="GtkToggleButton" id="hold">
-                <property name="label" translatable="yes">Hold</property>
+              <object class="GtkToggleButton" id="mute">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="no_show_all">True</property>
-                <signal name="toggled" handler="hold_toggled_cb" swapped="no"/>
+                <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">microphone-sensitivity-muted-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
-              <object class="GtkButton" id="hang_up">
-                <property name="label" translatable="yes">Hang up</property>
+              <object class="GtkToggleButton" id="dial_pad">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="hang_up_clicked_cb" swapped="no"/>
+                <property name="no_show_all">True</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">input-dialpad-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
               </object>
-              <packing>
-                <property name="expand">True</property>
-              </packing>
             </child>
             <child>
               <object class="GtkToggleButton" id="speaker">
-                <property name="label" translatable="yes">Speaker</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="no_show_all">True</property>
                 <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">audio-volume-high-symbolic</property>
+                    <property name="icon_size">3</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-          </packing>
+        </child>
+        <child>
+          <object class="CallsEncryptionIndicator" id="encryption_indicator">
+            <property name="can_focus">False</property>
+            <property name="margin_bottom">30</property>
+            <property name="visible">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="hang_up">
+            <property name="always_show_image">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">center</property>
+            <property name="height_request">65</property>
+            <property name="receives_default">False</property>
+            <property name="valign">start</property>
+            <property name="visible">True</property>
+            <property name="width_request">150</property>
+            <signal name="clicked" handler="hang_up_clicked_cb" swapped="no"/>
+            <style>
+              <class name="destructive-action"/>
+              <class name="image-button"/>
+            </style>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="a11y-hang-up">
+                <property name="accessible-name" translatable="yes">Hang up</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">call-stop-symbolic</property>
+                <property name="icon-size">5</property>
+              </object>
+            </child>
+          </object>
         </child>
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup" id="action_buttons">
-    <widgets>
-      <widget name="hold"/>
-      <widget name="speaker"/>
-    </widgets>
-  </object>
 </interface>

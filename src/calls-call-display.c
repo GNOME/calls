@@ -42,12 +42,13 @@ struct _CallsCallDisplay
   guint timeout;
 
   GtkBox *party_box;
-  GtkLabel *name;
+  GtkLabel *primary_contact_info;
+  GtkLabel *secondary_contact_info;
   GtkLabel *status;
   GtkLabel *time;
 
   GtkButton *answer;
-  GtkToggleButton *hold;
+  GtkToggleButton *mute;
   GtkButton *hang_up;
   GtkToggleButton *speaker;
 };
@@ -86,7 +87,7 @@ hang_up_clicked_cb (GtkButton        *button,
 }
 
 static void
-hold_toggled_cb (GtkToggleButton  *togglebutton,
+mute_toggled_cb (GtkToggleButton  *togglebutton,
                  CallsCallDisplay *self)
 {
 }
@@ -135,7 +136,7 @@ timeout_cb (CallsCallDisplay *self)
     }
 
   minutes = (guint)(elapsed / MINUTE);
-  g_string_append_printf (str, "%u:", minutes);
+  g_string_append_printf (str, "%02u:", minutes);
   elapsed -= (minutes * MINUTE);
 
   g_string_append_printf (str, "%02u", (guint)elapsed);
@@ -166,7 +167,7 @@ call_state_changed_cb (CallsCallDisplay *self,
     {
     case CALLS_CALL_STATE_INCOMING:
       gtk_widget_show (GTK_WIDGET (self->answer));
-      gtk_widget_hide (GTK_WIDGET (self->hold));
+      gtk_widget_hide (GTK_WIDGET (self->mute));
       gtk_widget_hide (GTK_WIDGET (self->speaker));
       break;
     case CALLS_CALL_STATE_ACTIVE:
@@ -175,7 +176,7 @@ call_state_changed_cb (CallsCallDisplay *self,
     case CALLS_CALL_STATE_ALERTING:
     case CALLS_CALL_STATE_WAITING:
       gtk_widget_hide (GTK_WIDGET (self->answer));
-      gtk_widget_show (GTK_WIDGET (self->hold));
+      gtk_widget_show (GTK_WIDGET (self->mute));
       gtk_widget_show (GTK_WIDGET (self->speaker));
       break;
     case CALLS_CALL_STATE_DISCONNECTED:
@@ -209,13 +210,18 @@ static void
 set_party (CallsCallDisplay *self, CallsParty *party)
 {
   GtkWidget *image;
+  const gchar *name, *number;
 
   image = calls_party_create_image (party);
   gtk_box_pack_start (self->party_box, image, TRUE, TRUE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
   gtk_widget_show (image);
 
-  gtk_label_set_text (self->name, calls_party_get_label (party));
+  name = calls_party_get_name (party);
+  number = calls_party_get_number (party);
+
+  gtk_label_set_text (self->primary_contact_info, name != NULL ? name : number);
+  gtk_label_set_text (self->secondary_contact_info, name != NULL ? number : NULL);
 }
 
 
@@ -313,15 +319,16 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-display.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, party_box);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, name);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, primary_contact_info);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, secondary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, status);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hold);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, speaker);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
 }

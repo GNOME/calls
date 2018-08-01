@@ -73,7 +73,7 @@ calls_party_new (const gchar *name, const gchar *number)
 GtkWidget *
 calls_party_create_image (CallsParty *party)
 {
-  return gtk_image_new_from_icon_name ("face-smile", GTK_ICON_SIZE_DIALOG);
+  return gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
 }
 
 
