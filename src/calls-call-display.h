@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_CALL_DISPLAY (calls_call_display_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsCallDisplay, calls_call_display, CALLS, CALL_DISPLAY, GtkBox);
+G_DECLARE_FINAL_TYPE (CallsCallDisplay, calls_call_display, CALLS, CALL_DISPLAY, GtkOverlay);
 
 CallsCallDisplay *calls_call_display_new (CallsCallData *data);
 
