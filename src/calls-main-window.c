@@ -71,6 +71,14 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 
+enum {
+  SIGNAL_CALL_ADDED,
+  SIGNAL_CALL_REMOVED,
+  SIGNAL_LAST_SIGNAL,
+};
+static guint signals [SIGNAL_LAST_SIGNAL];
+
+
 CallsMainWindow *
 calls_main_window_new (GtkApplication *application, CallsProvider *provider)
 {
@@ -262,6 +270,8 @@ add_call (CallsMainWindow *self, CallsCall *call)
   CallsCallHolder *holder;
   CallsCallDisplay *display;
 
+  g_signal_emit (self, signals[SIGNAL_CALL_ADDED], 0, call);
+
   g_signal_connect_swapped (call, "message",
                             G_CALLBACK (show_message), self);
 
@@ -308,6 +318,8 @@ remove_call (CallsMainWindow *self, CallsCall *call, const gchar *reason)
 
   g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
+
+  g_signal_emit (self, signals[SIGNAL_CALL_REMOVED], 0, call, reason);
 
   found = find_call_holder (self, &n_items, &position, &holder,
                             find_call_holder_by_call, call);
@@ -564,6 +576,28 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+
+  signals[SIGNAL_CALL_ADDED] =
+    g_signal_new ("call-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  CALLS_TYPE_CALL);
+
+  signals[SIGNAL_CALL_REMOVED] =
+    g_signal_new ("call-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  2,
+                  CALLS_TYPE_CALL,
+                  G_TYPE_STRING);
 
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/main-window.ui");
