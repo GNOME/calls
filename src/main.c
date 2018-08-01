@@ -27,6 +27,7 @@
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
+#include "calls-call-window.h"
 #include "calls-encryption-indicator.h"
 #include "calls-history-box.h"
 #include "calls-main-window.h"
@@ -41,6 +42,7 @@ show_window (GtkApplication *app)
   GDBusConnection *connection;
   CallsProvider *provider;
   CallsMainWindow *main_window;
+  CallsCallWindow *call_window;
 
   CALLS_TYPE_ENCRYPTION_INDICATOR;
   CALLS_TYPE_HISTORY_BOX;
@@ -63,6 +65,13 @@ show_window (GtkApplication *app)
   gtk_window_set_title (GTK_WINDOW (main_window), "Calls");
 
   gtk_widget_show_all (GTK_WIDGET (main_window));
+
+  call_window = calls_call_window_new (app);
+
+  g_signal_connect_swapped (main_window, "call-added",
+                            G_CALLBACK (calls_call_window_add_call), call_window);
+  g_signal_connect_swapped (main_window, "call-removed",
+                            G_CALLBACK (calls_call_window_remove_call), call_window);
 }
 
 int
