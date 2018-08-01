@@ -47,6 +47,7 @@ calls_sources = ['calls-message-source.c', 'calls-message-source.h',
                  'calls-call-selector-item.c', 'calls-call-selector-item.h',
                  'calls-encryption-indicator.c', 'calls-encryption-indicator.h',
                  'calls-history-box.c', 'calls-history-box.h',
+                 'calls-new-call-box.c', 'calls-new-call-box.h',
                  'calls-main-window.c', 'calls-main-window.h',
                  'util.c', 'util.h',
                 ]
