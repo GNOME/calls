@@ -212,30 +212,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkExpander" id="new_call">
-                    <property name="can_focus">True</property>
-                    <property name="no_show_all">True</property>
-                    <property name="expanded">True</property>
-                    <signal name="notify::expanded" handler="new_call_expanded_notify_cb" swapped="no"/>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child type="label">
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">New call</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="padding">6</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="HdyDialer" id="dial_pad">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
