@@ -59,7 +59,6 @@ struct _CallsMainWindow
   HdyDialer *dial_pad;
 
   GtkListStore *origin_store;
-  GtkListStore *history_store;
 };
 
 enum {
@@ -730,7 +729,6 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, search);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, dial_pad);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin_store);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, history_store);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_call_expanded_notify_cb);
   gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);

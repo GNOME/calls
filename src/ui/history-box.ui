@@ -6,7 +6,7 @@
   <object class="GtkListStore" id="history_store"/>
   <template class="CallsHistoryBox" parent="GtkTreeView">
     <property name="can_focus">False</property>
-      <property name="model">history_store</property>
+    <property name="model">history_store</property>
     <property name="visible">True</property>
     <child internal-child="selection">
       <object class="GtkTreeSelection"/>
