@@ -48,10 +48,6 @@ struct _CallsMainWindow
   GtkLabel *info_label;
 
   GtkStack *main_stack;
-  GtkButton *back;
-  GtkStack *call_stack;
-  GtkScrolledWindow *call_scroll;
-  GtkFlowBox *call_selector;
 
   GtkListStore *origin_store;
 };
@@ -118,14 +114,6 @@ new_call_submitted_cb (CallsMainWindow *self,
   g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
 
   calls_origin_dial (origin, number);
-}
-
-
-static GtkWidget *
-call_holders_create_widget_cb (CallsCallHolder *holder,
-                               CallsMainWindow *self)
-{
-  return GTK_WIDGET (calls_call_holder_get_selector_item (holder));
 }
 
 
@@ -201,66 +189,6 @@ set_focus (CallsMainWindow *self, CallsCallHolder *holder)
     }
 
   self->focus = holder;
-
-  gtk_stack_set_visible_child
-    (self->call_stack,
-     GTK_WIDGET (calls_call_holder_get_display (holder)));
-}
-
-
-static void
-back_clicked_cb (GtkButton       *back,
-                 CallsMainWindow *self)
-{
-  gtk_stack_set_visible_child (self->call_stack, GTK_WIDGET (self->call_scroll));
-  gtk_stack_set_visible_child (self->main_stack, GTK_WIDGET (self->call_stack));
-}
-
-
-static void
-call_selector_child_activated_cb (GtkFlowBox      *box,
-                                  GtkFlowBoxChild *child,
-                                  CallsMainWindow *self)
-{
-  GtkWidget *widget = gtk_bin_get_child (GTK_BIN (child));
-  CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
-  CallsCallHolder *holder = calls_call_selector_item_get_holder (item);
-
-  set_focus (self, holder);
-}
-
-
-/** Possibly show various call widgets */
-static void
-show_calls (CallsMainWindow *self, guint old_call_count)
-{
-  if (old_call_count == 0)
-    {
-      gtk_stack_add_titled (self->main_stack,
-                            GTK_WIDGET (self->call_stack),
-                            "call", "Call");
-    }
-
-  if (old_call_count > 0)
-    {
-      gtk_widget_show (GTK_WIDGET (self->back));
-    }
-}
-
-
-static void
-hide_calls (CallsMainWindow *self, guint call_count)
-{
-  if (call_count == 0)
-    {
-      gtk_container_remove (GTK_CONTAINER (self->main_stack),
-                            GTK_WIDGET (self->call_stack));
-    }
-
-  if (call_count <= 1)
-    {
-      gtk_widget_hide (GTK_WIDGET (self->back));
-    }
 }
 
 
@@ -268,21 +196,13 @@ static void
 add_call (CallsMainWindow *self, CallsCall *call)
 {
   CallsCallHolder *holder;
-  CallsCallDisplay *display;
 
   g_signal_emit (self, signals[SIGNAL_CALL_ADDED], 0, call);
 
   g_signal_connect_swapped (call, "message",
                             G_CALLBACK (show_message), self);
 
-  show_calls (self, g_list_model_get_n_items (G_LIST_MODEL (self->call_holders)));
-
   holder = calls_call_holder_new (call);
-
-  display = calls_call_holder_get_display (holder);
-  gtk_stack_add_named (self->call_stack, GTK_WIDGET (display),
-                       calls_call_get_number (call));
-  gtk_stack_set_visible_child (self->main_stack, GTK_WIDGET (self->call_stack));
 
   g_list_store_append (self->call_holders, holder);
 
@@ -298,15 +218,11 @@ remove_call_holder (CallsMainWindow *self,
                     CallsCallHolder *holder)
 {
   g_list_store_remove (self->call_holders, position);
-  gtk_container_remove (GTK_CONTAINER (self->call_stack),
-                        GTK_WIDGET (calls_call_holder_get_display (holder)));
 
   if (self->focus == holder)
     {
       set_focus (self, NULL);
     }
-
-  hide_calls (self, n_items - 1);
 }
 
 static void
@@ -509,24 +425,6 @@ set_property (GObject      *object,
 
 
 static void
-constructed (GObject *object)
-{
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
-  CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
-
-  gtk_container_remove (GTK_CONTAINER (self->main_stack),
-                        GTK_WIDGET (self->call_stack));
-
-  gtk_flow_box_bind_model (self->call_selector,
-                           G_LIST_MODEL (self->call_holders),
-                           (GtkFlowBoxCreateWidgetFunc) call_holders_create_widget_cb,
-                           NULL, NULL);
-
-  parent_class->constructed (object);
-}
-
-
-static void
 calls_main_window_init (CallsMainWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
@@ -565,7 +463,6 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->set_property = set_property;
-  object_class->constructed = constructed;
   object_class->dispose = dispose;
 
   props[PROP_PROVIDER] =
@@ -604,13 +501,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_label);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, back);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_stack);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_scroll);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_selector);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin_store);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
-  gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);
-  gtk_widget_class_bind_template_callback (widget_class, back_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
 }

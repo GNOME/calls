@@ -26,26 +26,6 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="back">
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="no_show_all">True</property>
-                <signal name="clicked" handler="back_clicked_cb" swapped="no"/>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">go-previous-symbolic</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkStackSwitcher">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -122,45 +102,6 @@
           <object class="GtkStack" id="main_stack">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkStack" id="call_stack">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkScrolledWindow" id="call_scroll">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="hscrollbar_policy">never</property>
-                    <child>
-                      <object class="GtkViewport">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkFlowBox" id="call_selector">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <property name="homogeneous">True</property>
-                            <property name="column_spacing">12</property>
-                            <property name="row_spacing">12</property>
-                            <property name="selection_mode">none</property>
-                            <signal name="child-activated" handler="call_selector_child_activated_cb" swapped="no"/>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="name">page0</property>
-                    <property name="title" translatable="yes">page0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">call</property>
-                <property name="title" translatable="yes">Call</property>
-              </packing>
-            </child>
             <child>
               <object class="CallsNewCallBox" id="new_call_box">
                 <property name="visible">True</property>
