@@ -31,6 +31,7 @@
 #include "calls-history-box.h"
 #include "calls-main-window.h"
 #include "calls-mm-provider.h"
+#include "calls-new-call-box.h"
 
 static void
 show_window (GtkApplication *app)
@@ -42,6 +43,7 @@ show_window (GtkApplication *app)
 
   CALLS_TYPE_ENCRYPTION_INDICATOR;
   CALLS_TYPE_HISTORY_BOX;
+  CALLS_TYPE_NEW_CALL_BOX;
   HDY_TYPE_DIALER;
 
   connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);

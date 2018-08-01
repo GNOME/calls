@@ -162,75 +162,15 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="dial_box">
+              <object class="CallsNewCallBox" id="new_call_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkBox" id="dial_controls">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkComboBox" id="origin">
-                        <property name="can_focus">False</property>
-                        <property name="no_show_all">True</property>
-                        <property name="model">origin_store</property>
-                        <property name="id_column">0</property>
-                        <child>
-                          <object class="GtkCellRendererText"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSearchEntry" id="search">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="primary_icon_name">edit-find-symbolic</property>
-                        <property name="primary_icon_activatable">False</property>
-                        <property name="primary_icon_sensitive">False</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="HdyDialer" id="dial_pad">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <signal name="deleted" handler="dial_pad_deleted_cb" swapped="yes"/>
-                    <signal name="submitted" handler="dial_pad_submitted_cb" swapped="yes"/>
-                    <signal name="symbol-clicked" handler="dial_pad_symbol_clicked_cb" swapped="yes"/>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
+                <property name="origin_store">origin_store</property>
+                <signal name="submitted" handler="new_call_submitted_cb" swapped="yes"/>
               </object>
               <packing>
-                <property name="name">dial-pad</property>
-                <property name="title" translatable="yes">Dial pad</property>
-                <property name="position">1</property>
+                <property name="name">new-call</property>
+                <property name="title" translatable="yes">New call</property>
               </packing>
             </child>
             <child>
@@ -241,7 +181,7 @@
               <packing>
                 <property name="name">history</property>
                 <property name="title" translatable="yes">History</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>
