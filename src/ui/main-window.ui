@@ -78,6 +78,16 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
+              <object class="CallsHistoryBox" id="history_view">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="name">history</property>
+                <property name="title" translatable="yes">History</property>
+              </packing>
+            </child>
+            <child>
               <object class="CallsNewCallBox" id="new_call_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -87,17 +97,6 @@
               <packing>
                 <property name="name">new-call</property>
                 <property name="title" translatable="yes">New call</property>
-              </packing>
-            </child>
-            <child>
-              <object class="CallsHistoryBox" id="history_view">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </object>
-              <packing>
-                <property name="name">history</property>
-                <property name="title" translatable="yes">History</property>
-                <property name="position">3</property>
               </packing>
             </child>
           </object>
