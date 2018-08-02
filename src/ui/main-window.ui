@@ -13,7 +13,7 @@
   </object>
   <template class="CallsMainWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Call</property>
+    <property name="title" translatable="yes">Calls</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
     <child>
