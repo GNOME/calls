@@ -50,6 +50,7 @@ calls_sources = ['calls-message-source.c', 'calls-message-source.h',
                  'calls-history-box.c', 'calls-history-box.h',
                  'calls-history-header-bar.c', 'calls-history-header-bar.h',
                  'calls-new-call-box.c', 'calls-new-call-box.h',
+                 'calls-new-call-header-bar.c', 'calls-new-call-header-bar.h',
                  'calls-main-window.c', 'calls-main-window.h',
                  'util.c', 'util.h',
                 ]
