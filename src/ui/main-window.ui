@@ -22,31 +22,6 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkStackSwitcher">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="icon_size">0</property>
-                <property name="stack">main_stack</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkInfoBar" id="info">
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
@@ -135,7 +110,29 @@
       </object>
     </child>
     <child type="titlebar">
-      <placeholder/>
+      <object class="GtkStack" id="header_bar_stack">
+        <property name="can_focus">False</property>
+        <property name="visible">True</property>
+        <property name="visible_child_name" bind-source="main_stack" bind-property="visible_child_name" bind-flags="bidirectional|sync-create"/>
+        <child>
+          <object class="CallsHistoryHeaderBar" id="history_header_bar">
+            <property name="can_focus">False</property>
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">history</property>
+          </packing>
+        </child>
+        <child>
+          <object class="CallsNewCallHeaderBar" id="new_call_header_bar">
+            <property name="can_focus">False</property>
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">new-call</property>
+          </packing>
+        </child>
+      </object>
     </child>
   </template>
 </interface>
