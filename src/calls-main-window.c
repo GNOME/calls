@@ -49,6 +49,7 @@ struct _CallsMainWindow
   GtkLabel *info_label;
 
   GtkStack *main_stack;
+  GtkStack *header_bar_stack;
 
   GtkListStore *origin_store;
 };
@@ -120,9 +121,33 @@ about_action (GSimpleAction *action,
 }
 
 
+static void
+new_call_action (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
+{
+  CallsMainWindow *self = user_data;
+
+  gtk_stack_set_visible_child_name (self->header_bar_stack, "new-call");
+}
+
+
+static void
+back_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  CallsMainWindow *self = user_data;
+
+  gtk_stack_set_visible_child_name (self->header_bar_stack, "history");
+}
+
+
 static const GActionEntry window_entries [] =
 {
   { "about", about_action },
+  { "new-call", new_call_action },
+  { "back", back_action },
 };
 
 
@@ -575,6 +600,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_label);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, header_bar_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin_store);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
