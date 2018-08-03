@@ -1,5 +1,5 @@
 variables:
-  DEPS: build-essential git
+  DEPS: build-essential git modemmanager-dev libmm-glib-dev
   WANT_BUILD_DEPS: "true"
 
 before_script:
