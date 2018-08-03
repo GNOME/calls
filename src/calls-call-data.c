@@ -72,11 +72,11 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_CALL:
-    CALLS_SET_OBJECT_PROPERTY (self->call, CALLS_CALL (g_value_get_object (value)));
+    g_set_object (&self->call, CALLS_CALL (g_value_get_object (value)));
     break;
 
   case PROP_PARTY:
-    CALLS_SET_OBJECT_PROPERTY (self->party, CALLS_PARTY (g_value_get_object (value)));
+    g_set_object (&self->party, CALLS_PARTY (g_value_get_object (value)));
     break;
 
   default:
@@ -116,8 +116,8 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallData *self = CALLS_CALL_DATA (object);
 
-  CALLS_DISPOSE_OBJECT (self->call);
-  CALLS_DISPOSE_OBJECT (self->party);
+  g_clear_object (&self->call);
+  g_clear_object (&self->party);
 
   parent_class->dispose (object);
 }

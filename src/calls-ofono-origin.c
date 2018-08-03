@@ -134,8 +134,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_MODEM:
-    CALLS_SET_OBJECT_PROPERTY
-      (self->modem, GDBO_MODEM (g_value_get_object (value)));
+    g_set_object
+      (&self->modem, GDBO_MODEM (g_value_get_object (value)));
     break;
 
   default:
@@ -476,7 +476,7 @@ constructed (GObject *object)
      (GAsyncReadyCallback)voice_new_cb,
      self);
 
-  CALLS_DISPOSE_OBJECT (self->modem);
+  g_clear_object (&self->modem);
      
   parent_class->constructed (object);
 }
@@ -489,8 +489,8 @@ dispose (GObject *object)
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   remove_calls (self, NULL);
-  CALLS_DISPOSE_OBJECT (self->modem);
-  CALLS_DISPOSE_OBJECT (self->connection);
+  g_clear_object (&self->modem);
+  g_clear_object (&self->connection);
 
   parent_class->dispose (object);
 }
@@ -506,7 +506,7 @@ finalize (GObject *object)
     {
       g_string_free (self->tone_queue, TRUE);
     }
-  CALLS_FREE_PTR_PROPERTY (self->name);
+  g_free (self->name);
 
   parent_class->finalize (object);
 }

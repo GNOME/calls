@@ -199,8 +199,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_VOICE_CALL:
-    CALLS_SET_OBJECT_PROPERTY
-      (self->voice_call, GDBO_VOICE_CALL (g_value_get_object (value)));
+    g_set_object
+      (&self->voice_call, GDBO_VOICE_CALL (g_value_get_object (value)));
     break;
 
   case PROP_PROPERTIES:
@@ -291,7 +291,7 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
-  CALLS_DISPOSE_OBJECT (self->voice_call);
+  g_clear_object (&self->voice_call);
 
   parent_class->dispose (object);
 }
@@ -303,9 +303,9 @@ finalize (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
-  CALLS_FREE_PTR_PROPERTY (self->disconnect_reason);
-  CALLS_FREE_PTR_PROPERTY (self->name);
-  CALLS_FREE_PTR_PROPERTY (self->number);
+  g_free (self->disconnect_reason);
+  g_free (self->name);
+  g_free (self->number);
 
   parent_class->finalize (object);
 }

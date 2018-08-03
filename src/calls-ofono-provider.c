@@ -111,8 +111,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_CONNECTION:
-    CALLS_SET_OBJECT_PROPERTY (self->connection,
-                               g_value_get_object (value));
+    g_set_object (&self->connection,
+                  g_value_get_object (value));
     break;
 
   default:
@@ -442,8 +442,8 @@ dispose (GObject *object)
 
   // FIXME
 
-  CALLS_DISPOSE_OBJECT (self->manager);
-  CALLS_DISPOSE_OBJECT (self->connection);
+  g_clear_object (&self->manager);
+  g_clear_object (&self->connection);
 
   parent_class->dispose (object);
 }
