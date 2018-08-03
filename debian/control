@@ -6,6 +6,8 @@ Build-Depends:
  debhelper (>= 11),
  libhandy-0.0-dev,
  libgtk-3-dev,
+ modemmanager-dev,
+ libmm-glib-dev,
  meson,
  pkg-config,
 # to run the tests
