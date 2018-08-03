@@ -476,7 +476,7 @@ constructed (GObject *object)
      (GAsyncReadyCallback)voice_new_cb,
      self);
 
-  CALLS_DISPOSE_OBJECT (self->modem);
+  g_clear_object (&self->modem);
      
   parent_class->constructed (object);
 }
@@ -489,8 +489,8 @@ dispose (GObject *object)
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   remove_calls (self, NULL);
-  CALLS_DISPOSE_OBJECT (self->modem);
-  CALLS_DISPOSE_OBJECT (self->connection);
+  g_clear_object (&self->modem);
+  g_clear_object (&self->connection);
 
   parent_class->dispose (object);
 }

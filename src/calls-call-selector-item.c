@@ -191,7 +191,7 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_EVENT_BOX);
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
-  CALLS_DISPOSE_OBJECT (self->holder);
+  g_clear_object (&self->holder);
 
   parent_class->dispose (object);
 }

@@ -442,8 +442,8 @@ dispose (GObject *object)
 
   // FIXME
 
-  CALLS_DISPOSE_OBJECT (self->manager);
-  CALLS_DISPOSE_OBJECT (self->connection);
+  g_clear_object (&self->manager);
+  g_clear_object (&self->connection);
 
   parent_class->dispose (object);
 }

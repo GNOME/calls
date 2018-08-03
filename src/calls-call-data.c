@@ -116,8 +116,8 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallData *self = CALLS_CALL_DATA (object);
 
-  CALLS_DISPOSE_OBJECT (self->call);
-  CALLS_DISPOSE_OBJECT (self->party);
+  g_clear_object (&self->call);
+  g_clear_object (&self->party);
 
   parent_class->dispose (object);
 }

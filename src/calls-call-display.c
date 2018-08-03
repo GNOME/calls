@@ -279,7 +279,7 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
-  CALLS_DISPOSE_OBJECT (self->call);
+  g_clear_object (&self->call);
 
   parent_class->dispose (object);
 }

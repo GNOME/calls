@@ -291,7 +291,7 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
-  CALLS_DISPOSE_OBJECT (self->voice_call);
+  g_clear_object (&self->voice_call);
 
   parent_class->dispose (object);
 }

@@ -688,8 +688,8 @@ dispose (GObject *object)
     remove_origins (self);
   }
 
-  CALLS_DISPOSE_OBJECT (self->call_holders);
-  CALLS_DISPOSE_OBJECT (self->provider);
+  g_clear_object (&self->call_holders);
+  g_clear_object (&self->provider);
 
   parent_class->dispose (object);
 }
