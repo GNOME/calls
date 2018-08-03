@@ -506,7 +506,7 @@ finalize (GObject *object)
     {
       g_string_free (self->tone_queue, TRUE);
     }
-  CALLS_FREE_PTR_PROPERTY (self->name);
+  g_free (self->name);
 
   parent_class->finalize (object);
 }

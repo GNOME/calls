@@ -303,9 +303,9 @@ finalize (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
-  CALLS_FREE_PTR_PROPERTY (self->disconnect_reason);
-  CALLS_FREE_PTR_PROPERTY (self->name);
-  CALLS_FREE_PTR_PROPERTY (self->number);
+  g_free (self->disconnect_reason);
+  g_free (self->name);
+  g_free (self->number);
 
   parent_class->finalize (object);
 }

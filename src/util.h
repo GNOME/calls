@@ -80,14 +80,8 @@ G_BEGIN_DECLS
   g_object_ref (G_OBJECT (obj_ptr));
   
 
-#define CALLS_FREE_PTR_PROPERTY(ptr)            \
-  if (ptr)                                      \
-    {                                           \
-      g_free (ptr);                             \
-    }                                           \
-
 #define CALLS_SET_PTR_PROPERTY(ptr,new_value)   \
-  CALLS_FREE_PTR_PROPERTY (ptr)                 \
+  g_free (ptr);                                 \
   ptr = new_value;
 
 
