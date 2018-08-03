@@ -26,6 +26,8 @@ gnome = import('gnome')
 calls_deps = [ dependency('gobject-2.0'),
                dependency('gtk+-3.0'),
                dependency('libhandy-0.0'),
+               dependency('ModemManager'),
+               dependency('mm-glib'),
              ]
 
 calls_sources = ['calls-message-source.c', 'calls-message-source.h',
@@ -35,6 +37,9 @@ calls_sources = ['calls-message-source.c', 'calls-message-source.h',
                  'calls-ofono-call.c', 'calls-ofono-call.h',
                  'calls-ofono-origin.c', 'calls-ofono-origin.h',
                  'calls-ofono-provider.c', 'calls-ofono-provider.h',
+                 'calls-mm-call.c', 'calls-mm-call.h',
+                 'calls-mm-origin.c', 'calls-mm-origin.h',
+                 'calls-mm-provider.c', 'calls-mm-provider.h',
                  'calls-party.c', 'calls-party.h',
                  'calls-call-data.c', 'calls-call-data.h',
                  'calls-call-holder.c', 'calls-call-holder.h',

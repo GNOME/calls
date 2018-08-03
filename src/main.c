@@ -29,7 +29,7 @@
 
 #include "calls-encryption-indicator.h"
 #include "calls-main-window.h"
-#include "calls-ofono-provider.h"
+#include "calls-mm-provider.h"
 
 static void
 show_window (GtkApplication *app)
@@ -50,7 +50,8 @@ show_window (GtkApplication *app)
       return;
     }
 
-  provider = CALLS_PROVIDER (calls_ofono_provider_new (connection));
+  provider = CALLS_PROVIDER (calls_mm_provider_new (connection));
+  g_assert (provider != NULL);
 
   main_window = calls_main_window_new (app, provider);
 

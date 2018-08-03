@@ -8,7 +8,7 @@ Calls is licensed under the GPLv3+.
 
 ## Dependencies
 
-    sudo apt-get install libgtk-3-dev libhandy-0.0-dev
+    sudo apt-get install libgtk-3-dev libhandy-0.0-dev modemmanager-dev libmm-glib-dev
 
 ## Building
 
