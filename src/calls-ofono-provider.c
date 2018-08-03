@@ -111,8 +111,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_CONNECTION:
-    CALLS_SET_OBJECT_PROPERTY (self->connection,
-                               g_value_get_object (value));
+    g_set_object (&self->connection,
+                  g_value_get_object (value));
     break;
 
   default:

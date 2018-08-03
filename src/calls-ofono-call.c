@@ -199,8 +199,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_VOICE_CALL:
-    CALLS_SET_OBJECT_PROPERTY
-      (self->voice_call, GDBO_VOICE_CALL (g_value_get_object (value)));
+    g_set_object
+      (&self->voice_call, GDBO_VOICE_CALL (g_value_get_object (value)));
     break;
 
   case PROP_PROPERTIES:

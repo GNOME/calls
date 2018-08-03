@@ -134,8 +134,8 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_MODEM:
-    CALLS_SET_OBJECT_PROPERTY
-      (self->modem, GDBO_MODEM (g_value_get_object (value)));
+    g_set_object
+      (&self->modem, GDBO_MODEM (g_value_get_object (value)));
     break;
 
   default:

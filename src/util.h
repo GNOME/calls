@@ -71,15 +71,6 @@ G_BEGIN_DECLS
 
 
 
-#define CALLS_SET_OBJECT_PROPERTY(obj_ptr,new_value)    \
-  if (obj_ptr)                                          \
-    {                                                   \
-      g_object_unref (G_OBJECT (obj_ptr));              \
-    }                                                   \
-  obj_ptr = new_value;                                  \
-  g_object_ref (G_OBJECT (obj_ptr));
-  
-
 #define CALLS_SET_PTR_PROPERTY(ptr,new_value)   \
   g_free (ptr);                                 \
   ptr = new_value;

@@ -72,11 +72,11 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_CALL:
-    CALLS_SET_OBJECT_PROPERTY (self->call, CALLS_CALL (g_value_get_object (value)));
+    g_set_object (&self->call, CALLS_CALL (g_value_get_object (value)));
     break;
 
   case PROP_PARTY:
-    CALLS_SET_OBJECT_PROPERTY (self->party, CALLS_PARTY (g_value_get_object (value)));
+    g_set_object (&self->party, CALLS_PARTY (g_value_get_object (value)));
     break;
 
   default:
