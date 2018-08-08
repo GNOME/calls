@@ -15,6 +15,7 @@
         /* Doesn't matter what the name is, just need to call system-talk-name? */
         "--system-talk-name=sm.puri.Calls",
         
+        "--talk-name=org.freedesktop.ModemManager1",
         "--talk-name=org.ofono",
         "--talk-name=org.ofono.VoiceCall",
         "--talk-name=org.ofono.Manager",
@@ -50,6 +51,22 @@
         }
     },
     "modules" : [
+        {
+            "name" : "modem-manager",
+            "config-opts" : [
+                "--without-udev",
+                "--without-mbim",
+                "--without-qmi",
+                "--with-udev-base-dir=/app/lib/udev"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.8.0.tar.xz",
+                    "sha256" : "18abe34421aa3b52ff47d4ba93aa282f8f8944717dd644a5c0c81eeeac9c7eb1"
+                }
+            ]
+        },
         {
             "name" : "mobile-broadband-provider-info",
             "sources" : [
