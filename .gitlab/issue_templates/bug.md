@@ -1,17 +1,17 @@
 # What problem did you encounter
 
-## What is the current behaviour?
+## What is the actual behaviour?
 
 ## What is the expected behaviour?
 
 ## How to reproduce
 
   Please provide steps to reproduce the issue. If it's a graphical issue please
-  attach screenshot.
+  attach screenshots.
 
 # Which version of Calls did you encounter the bug in?
 
- - [ ] I Compiled it myself. If you compiled Calls from source please provide the
+ - [ ] I compiled it myself. If you compiled Calls from source please provide the
    git revision via e.g. by running ``git log -1 --pretty=oneline`` and pasting
    the output below.
 
@@ -26,7 +26,7 @@
 
  - [ ] amd64 qemu image
  - [ ] Librem5 devkit
- - [ ] other (please elaborte)
+ - [ ] other (please elaborate)
 
 # What modem are you using?
 
