@@ -16,27 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Bob Ham <bob.ham@puri.sm>
+ * Author: Adrien Plazas <adrien.plazas@puri.sm>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
 
-#ifndef CALLS_CALL_DISPLAY_H__
-#define CALLS_CALL_DISPLAY_H__
+#ifndef CALLS_HISTORY_BOX_H__
+#define CALLS_HISTORY_BOX_H__
 
 #include <gtk/gtk.h>
 
-#include "calls-call-data.h"
+#define HANDY_USE_UNSTABLE_API
+#include <handy.h>
 
 G_BEGIN_DECLS
 
-#define CALLS_TYPE_CALL_DISPLAY (calls_call_display_get_type ())
+#define CALLS_TYPE_HISTORY_BOX (calls_history_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsCallDisplay, calls_call_display, CALLS, CALL_DISPLAY, GtkOverlay);
-
-CallsCallDisplay *calls_call_display_new (CallsCallData *data);
+G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkTreeView);
 
 G_END_DECLS
 
-#endif /* CALLS_CALL_DISPLAY_H__ */
+#endif /* CALLS_HISTORY_BOX_H__ */

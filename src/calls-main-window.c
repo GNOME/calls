@@ -26,6 +26,7 @@
 #include "calls-origin.h"
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
+#include "calls-new-call-box.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -51,15 +52,8 @@ struct _CallsMainWindow
   GtkStack *call_stack;
   GtkScrolledWindow *call_scroll;
   GtkFlowBox *call_selector;
-  GtkBox *dial_box;
-  GtkExpander *new_call;
-  GtkBox *dial_controls;
-  GtkComboBox *origin;
-  GtkSearchEntry *search;
-  HdyDialer *dial_pad;
 
   GtkListStore *origin_store;
-  GtkListStore *history_store;
 };
 
 enum {
@@ -107,76 +101,23 @@ info_response_cb (GtkInfoBar      *infobar,
 }
 
 
+static void
+new_call_submitted_cb (CallsMainWindow *self,
+                       CallsOrigin     *origin,
+                       const gchar     *number,
+                       CallsNewCallBox *new_call_box)
+{
+  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
+
+  calls_origin_dial (origin, number);
+}
+
+
 static GtkWidget *
 call_holders_create_widget_cb (CallsCallHolder *holder,
                                CallsMainWindow *self)
 {
   return GTK_WIDGET (calls_call_holder_get_selector_item (holder));
-}
-
-static void
-search_append_symbol (CallsMainWindow *self, gchar symbol)
-{
-  GtkEntryBuffer *buf = gtk_entry_get_buffer (GTK_ENTRY (self->search));
-  guint len = gtk_entry_buffer_get_length (buf);
-
-  gtk_entry_buffer_insert_text (buf, len, &symbol, 1);
-}
-
-static void
-dial_pad_symbol_clicked_cb (CallsMainWindow *self, gchar symbol, HdyDialer *dialer)
-{
-  if (self->focus && !gtk_expander_get_expanded (self->new_call))
-    {
-      CallsCallData *data = calls_call_holder_get_data (self->focus);
-      CallsCall *call = calls_call_data_get_call (data);
-
-      calls_call_tone_start (call, symbol);
-    }
-  else
-    {
-      search_append_symbol (self, symbol);
-    }
-}
-
-
-static void
-dial_pad_deleted_cb (CallsMainWindow *self, HdyDialer *dialer)
-{
-  GtkEntryBuffer *buf = gtk_entry_get_buffer (GTK_ENTRY (self->search));
-  guint len = gtk_entry_buffer_get_length (buf);
-
-  gtk_entry_buffer_delete_text (buf, len - 1, 1);
-}
-
-
-static void
-dial_pad_submitted_cb (CallsMainWindow *self, const gchar *unused, HdyDialer *dialer)
-{
-  GtkTreeIter iter;
-  gboolean ok;
-  CallsOrigin *origin;
-  const gchar *number;
-
-  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
-
-  if (gtk_widget_get_visible (GTK_WIDGET (self->new_call))
-      && !gtk_expander_get_expanded (self->new_call))
-    {
-      return;
-    }
-
-  ok = gtk_combo_box_get_active_iter (self->origin, &iter);
-  g_return_if_fail (ok);
-
-  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store), &iter,
-                      ORIGIN_STORE_COLUMN_ORIGIN, &origin,
-                      -1);
-  g_return_if_fail (CALLS_IS_ORIGIN (origin));
-
-  number = gtk_entry_get_text (GTK_ENTRY (self->search));
-
-  calls_origin_dial (origin, number);
 }
 
 
@@ -259,65 +200,6 @@ set_focus (CallsMainWindow *self, CallsCallHolder *holder)
 }
 
 
-/* When we have an active call, we hide the dialpad action buttons and
- * put the dial_controls inside the new_call expander and use the
- * expanded state to determine whether key presses should be
- * considered dialing a new call or entering DTMF tones for the active
- * call.
- */
-static void
-show_new_call (CallsMainWindow *self)
-{
-  GtkWidget *dial_controls_widget = GTK_WIDGET (self->dial_controls);
-  GObject *dial_controls_object = G_OBJECT (dial_controls_widget);
-
-  hdy_dialer_set_show_action_buttons (self->dial_pad, FALSE);
-
-  g_object_ref (dial_controls_object);
-  gtk_container_remove (GTK_CONTAINER (self->dial_box), dial_controls_widget);
-
-  gtk_container_add (GTK_CONTAINER (self->new_call), dial_controls_widget);
-  g_object_unref (dial_controls_object);
-
-  gtk_expander_set_expanded (self->new_call, FALSE);
-  gtk_widget_show (GTK_WIDGET (self->new_call));
-
-  gtk_widget_queue_allocate (GTK_WIDGET (self));
-}
-
-
-static void
-hide_new_call (CallsMainWindow *self)
-{
-  GtkWidget *dial_controls_widget = GTK_WIDGET (self->dial_controls);
-  GObject *dial_controls_object = G_OBJECT (dial_controls_widget);
-
-  gtk_widget_hide (GTK_WIDGET (self->new_call));
-
-  g_object_ref (dial_controls_object);
-  gtk_container_remove (GTK_CONTAINER (self->new_call), dial_controls_widget);
-
-  gtk_box_pack_start (self->dial_box, dial_controls_widget, FALSE, TRUE, 0);
-  g_object_unref (dial_controls_object);
-
-  gtk_box_reorder_child (self->dial_box, dial_controls_widget, 0);
-
-  hdy_dialer_set_show_action_buttons (self->dial_pad, TRUE);
-
-  gtk_widget_queue_allocate (GTK_WIDGET (self));
-}
-
-
-static void
-new_call_expanded_notify_cb (GtkExpander     *new_call,
-                             GParamSpec      *param_spec,
-                             CallsMainWindow *self)
-{
-  hdy_dialer_set_show_action_buttons (self->dial_pad,
-                                      gtk_expander_get_expanded (new_call));
-}
-
-
 static void
 back_clicked_cb (GtkButton       *back,
                  CallsMainWindow *self)
@@ -349,7 +231,6 @@ show_calls (CallsMainWindow *self, guint old_call_count)
       gtk_stack_add_titled (self->main_stack,
                             GTK_WIDGET (self->call_stack),
                             "call", "Call");
-      show_new_call (self);
     }
 
   if (old_call_count > 0)
@@ -364,7 +245,6 @@ hide_calls (CallsMainWindow *self, guint call_count)
 {
   if (call_count == 0)
     {
-      hide_new_call (self);
       gtk_container_remove (GTK_CONTAINER (self->main_stack),
                             GTK_WIDGET (self->call_stack));
     }
@@ -478,27 +358,13 @@ add_origin_calls (CallsMainWindow *self, CallsOrigin *origin)
 static void
 add_origin (CallsMainWindow *self, CallsOrigin *origin)
 {
-  const gint n_origins = gtk_tree_model_iter_n_children
-    (GTK_TREE_MODEL (self->origin_store), NULL);
   GtkTreeIter iter;
-
-  if (n_origins == 1)
-    {
-      /* We have more than one origin now so show the origin combo box */
-      gtk_widget_show (GTK_WIDGET (self->origin));
-    }
 
   gtk_list_store_append (self->origin_store, &iter);
   gtk_list_store_set (self->origin_store, &iter,
                       ORIGIN_STORE_COLUMN_NAME, calls_origin_get_name(origin),
                       ORIGIN_STORE_COLUMN_ORIGIN, G_OBJECT (origin),
                       -1);
-
-  if (gtk_combo_box_get_active (self->origin) == -1)
-    {
-      /* We always want an item active */
-      gtk_combo_box_set_active (self->origin, 0);
-    }
 
 
   g_signal_connect_swapped (origin, "message",
@@ -539,17 +405,6 @@ dump_list_store (GtkListStore *store)
 
 
 static void
-update_origin (CallsMainWindow *self)
-{
-  if (gtk_tree_model_iter_n_children
-      (GTK_TREE_MODEL (self->origin_store), NULL) < 2)
-    {
-      /* User has only one choice so hide the origin combo box */
-      gtk_widget_hide (GTK_WIDGET (self->origin));
-    }
-}
-
-static void
 remove_origin (CallsMainWindow *self, CallsOrigin *origin)
 {
   GtkTreeIter iter;
@@ -560,8 +415,6 @@ remove_origin (CallsMainWindow *self, CallsOrigin *origin)
   g_return_if_fail (ok);
 
   gtk_list_store_remove (self->origin_store, &iter);
-
-  update_origin (self);
 }
 
 
@@ -575,8 +428,6 @@ remove_origins (CallsMainWindow *self)
     {
       gtk_list_store_remove (self->origin_store, &iter);
     }
-
-  update_origin (self);
 }
 
 
@@ -723,19 +574,9 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_scroll);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, call_selector);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, dial_box);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, new_call);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, dial_controls);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, search);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, dial_pad);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin_store);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, history_store);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
-  gtk_widget_class_bind_template_callback (widget_class, new_call_expanded_notify_cb);
   gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, back_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_submitted_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_deleted_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
 }

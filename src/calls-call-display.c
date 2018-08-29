@@ -35,7 +35,7 @@
 
 struct _CallsCallDisplay
 {
-  GtkBox parent_instance;
+  GtkOverlay parent_instance;
 
   CallsCall *call;
   GTimer *timer;
@@ -51,9 +51,11 @@ struct _CallsCallDisplay
   GtkToggleButton *mute;
   GtkButton *hang_up;
   GtkToggleButton *speaker;
+
+  GtkRevealer *dial_pad_revealer;
 };
 
-G_DEFINE_TYPE (CallsCallDisplay, calls_call_display, GTK_TYPE_BOX);
+G_DEFINE_TYPE (CallsCallDisplay, calls_call_display, GTK_TYPE_OVERLAY);
 
 enum {
   PROP_0,
@@ -98,6 +100,20 @@ speaker_toggled_cb (GtkToggleButton  *togglebutton,
 {
 }
 
+
+static void
+dial_pad_symbol_clicked_cb (CallsCallDisplay *self,
+                            gchar             symbol,
+                            HdyDialer        *dialer)
+{
+  calls_call_tone_start (self->call, symbol);
+}
+
+static void
+hide_dial_pad_clicked_cb (CallsCallDisplay *self)
+{
+  gtk_revealer_set_reveal_child (self->dial_pad_revealer, FALSE);
+}
 
 static gboolean
 timeout_cb (CallsCallDisplay *self)
@@ -213,7 +229,7 @@ set_party (CallsCallDisplay *self, CallsParty *party)
   const gchar *name, *number;
 
   image = calls_party_create_image (party);
-  gtk_box_pack_start (self->party_box, image, TRUE, TRUE, 0);
+  gtk_box_pack_end (self->party_box, image, TRUE, FALSE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
   gtk_widget_show (image);
 
@@ -255,7 +271,7 @@ set_property (GObject      *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
+  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   self->timer = g_timer_new ();
@@ -276,7 +292,7 @@ calls_call_display_init (CallsCallDisplay *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
+  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   g_clear_object (&self->call);
@@ -287,7 +303,7 @@ dispose (GObject *object)
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
+  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   g_source_remove (self->timeout);
@@ -327,8 +343,11 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, speaker);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_revealer);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
 }

@@ -16,27 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Bob Ham <bob.ham@puri.sm>
+ * Author: Adrien Plazas <adrien.plazas@puri.sm>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
 
-#ifndef CALLS_CALL_DISPLAY_H__
-#define CALLS_CALL_DISPLAY_H__
+#ifndef CALLS_NEW_CALL_BOX_H__
+#define CALLS_NEW_CALL_BOX_H__
 
 #include <gtk/gtk.h>
 
-#include "calls-call-data.h"
-
 G_BEGIN_DECLS
 
-#define CALLS_TYPE_CALL_DISPLAY (calls_call_display_get_type ())
+#define CALLS_TYPE_NEW_CALL_BOX (calls_new_call_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsCallDisplay, calls_call_display, CALLS, CALL_DISPLAY, GtkOverlay);
-
-CallsCallDisplay *calls_call_display_new (CallsCallData *data);
+G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox);
 
 G_END_DECLS
 
-#endif /* CALLS_CALL_DISPLAY_H__ */
+#endif /* CALLS_NEW_CALL_BOX_H__ */
