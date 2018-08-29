@@ -70,6 +70,7 @@ main (int    argc,
   int status;
 
   app = gtk_application_new (APP_ID, G_APPLICATION_FLAGS_NONE);
+  g_set_prgname (APP_ID);
   g_signal_connect (app, "activate", G_CALLBACK (show_window), NULL);
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);
