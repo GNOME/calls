@@ -31,6 +31,8 @@
 #include "calls-main-window.h"
 #include "calls-mm-provider.h"
 
+#define APP_ID "sm.puri.Calls"
+
 static void
 show_window (GtkApplication *app)
 {
@@ -67,7 +69,7 @@ main (int    argc,
   GtkApplication *app;
   int status;
 
-  app = gtk_application_new ("sm.puri.Calls", G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new (APP_ID, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "activate", G_CALLBACK (show_window), NULL);
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);
