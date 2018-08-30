@@ -32,8 +32,7 @@
 #include "calls-main-window.h"
 #include "calls-mm-provider.h"
 #include "calls-new-call-box.h"
-
-#define APP_ID "sm.puri.Calls"
+#include "config.h"
 
 static void
 show_window (GtkApplication *app)
