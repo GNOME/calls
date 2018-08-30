@@ -60,6 +60,9 @@ calls_dummy_sources = ['calls-dummy-call.c', 'calls-dummy-call.h',
 
 config_data = configuration_data()
 config_data.set_quoted('APP_ID', calls_id)
+config_data.set_quoted('PACKAGE_URL', calls_homepage)
+config_data.set_quoted('PACKAGE_VERSION', calls_version)
+config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
 
 config_h_in = configure_file(
   output: 'config.h.in',

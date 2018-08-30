@@ -27,6 +27,8 @@ project('call', 'c',
 )
 
 calls_id = 'sm.puri.Calls'
+calls_homepage = 'https://source.puri.sm/Librem5/calls'
+calls_version = meson.project_version()
 
 subdir('libgdbofono')
 subdir('src')

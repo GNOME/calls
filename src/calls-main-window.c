@@ -27,6 +27,7 @@
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "config.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -73,6 +74,56 @@ enum {
   SIGNAL_LAST_SIGNAL,
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
+
+
+static void
+about_action (GSimpleAction *action,
+              GVariant      *parameter,
+              gpointer       user_data)
+{
+  CallsMainWindow *self = user_data;
+
+  const gchar *version = NULL;
+
+  static const gchar *authors[] = {
+    "Adrien Plazas <kekun.plazas@laposte.net>",
+    "Bob Ham <rah@settrans.net>",
+    "Guido Günther <agx@sigxcpu.org>",
+    NULL
+  };
+
+  static const gchar *artists[] = {
+    "Tobias Bernard <tbernard@gnome.org>",
+    NULL
+  };
+
+  static const gchar *documenters[] = {
+    "Heather Ellsworth <heather.ellsworth@puri.sm>",
+    NULL
+  };
+
+  version = g_str_equal (VCS_TAG, "") ? PACKAGE_VERSION:
+                                        PACKAGE_VERSION "-" VCS_TAG;
+
+  gtk_show_about_dialog (GTK_WINDOW (self),
+                         "artists", artists,
+                         "authors", authors,
+                         "copyright", "Copyright © 2018 Purism",
+                         "documenters", documenters,
+                         "license-type", GTK_LICENSE_GPL_3_0,
+                         "logo-icon-name", APP_ID,
+                         "program-name", _("Calls"),
+                         "translator-credits", _("translator-credits"),
+                         "version", version,
+                         "website", PACKAGE_URL,
+                         NULL);
+}
+
+
+static const GActionEntry window_entries [] =
+{
+  { "about", about_action },
+};
 
 
 CallsMainWindow *
@@ -425,6 +476,28 @@ set_property (GObject      *object,
 
 
 static void
+constructed (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
+  CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
+  GSimpleActionGroup *simple_action_group;
+
+  /* Add actions */
+  simple_action_group = g_simple_action_group_new ();
+  g_action_map_add_action_entries (G_ACTION_MAP (simple_action_group),
+                                   window_entries,
+                                   G_N_ELEMENTS (window_entries),
+                                   self);
+  gtk_widget_insert_action_group (GTK_WIDGET (self),
+                                  "win",
+                                  G_ACTION_GROUP (simple_action_group));
+  g_object_unref (simple_action_group);
+
+  parent_class->constructed (object);
+}
+
+
+static void
 calls_main_window_init (CallsMainWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
@@ -463,6 +536,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->set_property = set_property;
+  object_class->constructed = constructed;
   object_class->dispose = dispose;
 
   props[PROP_PROVIDER] =
