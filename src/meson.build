@@ -57,6 +57,20 @@ calls_dummy_sources = ['calls-dummy-call.c', 'calls-dummy-call.h',
                        'calls-dummy-provider.c', 'calls-dummy-provider.h',
                       ]
 
+config_data = configuration_data()
+config_data.set_quoted('APP_ID', calls_id)
+
+config_h_in = configure_file(
+  output: 'config.h.in',
+  configuration: config_data
+)
+
+config_h = vcs_tag(
+    fallback: '',
+       input: config_h_in,
+      output: 'config.h',
+)
+
 calls_enum_headers = ['calls-call.h']
 calls_enum_sources = gnome.mkenums_simple('enum-types',
                                           sources : calls_enum_headers)

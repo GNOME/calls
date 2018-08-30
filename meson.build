@@ -26,6 +26,7 @@ project('call', 'c',
   default_options: [ 'warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11' ],
 )
 
+calls_id = 'sm.puri.Calls'
 
 subdir('libgdbofono')
 subdir('src')
