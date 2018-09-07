@@ -22,6 +22,7 @@
  *
  */
 
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
 #define HANDY_USE_UNSTABLE_API
@@ -84,6 +85,10 @@ main (int    argc,
 {
   GtkApplication *app;
   int status;
+
+  textdomain (GETTEXT_PACKAGE);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 
   app = gtk_application_new (APP_ID, G_APPLICATION_FLAGS_NONE);
   g_set_prgname (APP_ID);
