@@ -1,5 +1,6 @@
-/*
- * Copyright (C) 2018 Purism SPC
+/* calls-application.c
+ *
+ * Copyright (C) 2018 Mohammed Sadiq <sadiq@sadiqpk.org>
  *
  * This file is part of Calls.
  *
@@ -16,32 +17,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Author: Bob Ham <bob.ham@puri.sm>
+ * Authors:
+ *      Mohammed Sadiq <sadiq@sadiqpk.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
- *
  */
 
-#include <glib/gi18n.h>
+#pragma once
+
 #include <gtk/gtk.h>
 
-#include "calls-application.h"
-#include "config.h"
+G_BEGIN_DECLS
 
-int
-main (int    argc,
-      char **argv)
-{
-  GtkApplication *app;
-  int status;
+#define CALLS_TYPE_APPLICATION (calls_application_get_type ())
 
-  textdomain (GETTEXT_PACKAGE);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+G_DECLARE_FINAL_TYPE (CallsApplication, calls_application, CALLS, APPLICATION, GtkApplication)
 
-  app = GTK_APPLICATION (calls_application_new ());
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
+CallsApplication   *calls_application_new    (void);
 
-  return status;
-}
+G_END_DECLS

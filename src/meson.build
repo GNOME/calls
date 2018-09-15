@@ -52,6 +52,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-new-call-box.c', 'calls-new-call-box.h',
                        'calls-new-call-header-bar.c', 'calls-new-call-header-bar.h',
                        'calls-main-window.c', 'calls-main-window.h',
+                       'calls-application.c', 'calls-application.h',
                        'util.c', 'util.h',
                       ])
 
