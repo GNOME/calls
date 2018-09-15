@@ -38,6 +38,8 @@
         <property name="primary_icon_activatable">False</property>
         <property name="primary_icon_name">edit-find-symbolic</property>
         <property name="primary_icon_sensitive">False</property>
+        <property name="input-purpose">phone</property>
+        <property name="input-hints">no-emoji|inhibit-osk</property>
         <property name="visible">True</property>
       </object>
       <packing>
