@@ -21,6 +21,6 @@ Architecture: any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
- ofono,
+ modemmanager,
 Description: Make and receive PSTN phone calls
  A GTK+ user interface for PSTN phone calls using oFono.
