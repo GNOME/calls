@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_HISTORY_BOX (calls_history_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkTreeView);
+G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack)
 
 G_END_DECLS
 
