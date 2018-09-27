@@ -161,8 +161,8 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
   { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM }      \
 
   row (DIALING, DIALING),
-  row (RINGING_OUT, INCOMING),
-  row (RINGING_IN, ALERTING),
+  row (RINGING_OUT, ALERTING),
+  row (RINGING_IN, INCOMING),
   row (ACTIVE, ACTIVE),
   row (HELD, HELD),
   row (WAITING, INCOMING),
