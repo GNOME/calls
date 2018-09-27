@@ -299,6 +299,7 @@ constructed (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMCall *self = CALLS_MM_CALL (object);
   MmGdbusCall *gdbus_call = MM_GDBUS_CALL (self->mm_call);
+  MMCallState state;
 
   g_signal_connect_swapped (gdbus_call, "notify::number",
                             G_CALLBACK (notify_number_cb), self);
@@ -307,8 +308,14 @@ constructed (GObject *object)
 
   notify_number_cb (self, mm_call_get_number (self->mm_call));
 
+  state = mm_call_get_state (self->mm_call);
+  state_changed_cb (self,
+                    MM_MODEM_STATE_UNKNOWN,
+                    state,
+                    mm_call_get_state_reason (self->mm_call));
+
   /* Start outgoing call */
-  if (mm_call_get_state (self->mm_call) == MM_CALL_STATE_UNKNOWN
+  if (state == MM_CALL_STATE_UNKNOWN
       && mm_call_get_direction (self->mm_call) == MM_CALL_DIRECTION_OUTGOING)
     {
       start_call (CALLS_CALL (self));
