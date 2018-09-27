@@ -151,22 +151,23 @@ set_disconnect_reason (CallsMMCall       *self,
 
 struct CallsMMCallStateMap
 {
-  MMCallState    mm;
-  CallsCallState calls;
+  MMCallState     mm;
+  CallsCallState  calls;
+  const gchar    *name;
 };
 
 static const struct CallsMMCallStateMap STATE_MAP[] = {
 
-#define row(MMENUM,CALLSENUM)                                   \
-  { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM }      \
+#define row(MMENUM,CALLSENUM)                                           \
+  { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM, #MMENUM }     \
 
-  row (DIALING, DIALING),
+  row (DIALING,     DIALING),
   row (RINGING_OUT, ALERTING),
-  row (RINGING_IN, INCOMING),
-  row (ACTIVE, ACTIVE),
-  row (HELD, HELD),
-  row (WAITING, INCOMING),
-  row (TERMINATED, DISCONNECTED),
+  row (RINGING_IN,  INCOMING),
+  row (ACTIVE,      ACTIVE),
+  row (HELD,        HELD),
+  row (WAITING,     INCOMING),
+  row (TERMINATED,  DISCONNECTED),
 
 #undef row
 
@@ -191,6 +192,8 @@ state_changed_cb (CallsMMCall       *self,
     {
       if (map_row->mm == mm_new)
         {
+          g_debug ("MM call state changed to `%s'",
+                   map_row->name);
           change_state (self, map_row->calls);
           return;
         }
