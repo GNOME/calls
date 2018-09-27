@@ -182,19 +182,13 @@ delete_call_cb (MMModemVoice                       *voice,
 
 
 static void
-call_state_changed_cb (CallsMMOrigin  *self,
-                       CallsCallState  state,
-                       CallsCall      *call)
+delete_call (CallsMMOrigin  *self,
+             CallsMMCall    *call)
 {
   const gchar *path;
   struct CallsMMOriginDeleteCallData *data;
 
-  if (state != CALLS_CALL_STATE_DISCONNECTED)
-    {
-      return;
-    }
-
-  path = calls_mm_call_get_object_path (CALLS_MM_CALL (call));
+  path = calls_mm_call_get_object_path (call);
 
   data = g_new0 (struct CallsMMOriginDeleteCallData, 1);
   data->self = self;
@@ -204,8 +198,21 @@ call_state_changed_cb (CallsMMOrigin  *self,
     (self->voice,
      path,
      NULL,
-     (GAsyncReadyCallback) delete_call_cb,
+     (GAsyncReadyCallback)delete_call_cb,
      data);
+}
+
+static void
+call_state_changed_cb (CallsMMOrigin  *self,
+                       CallsCallState  state,
+                       CallsCall      *call)
+{
+  if (state != CALLS_CALL_STATE_DISCONNECTED)
+    {
+      return;
+    }
+
+  delete_call (self, CALLS_MM_CALL (call));
 }
 
 
@@ -227,6 +234,12 @@ add_call (CallsMMOrigin *self,
 
   g_signal_emit_by_name (CALLS_ORIGIN(self), "call-added",
                          CALLS_CALL(call));
+
+  if (mm_call_get_state (mm_call) == MM_CALL_STATE_TERMINATED)
+    {
+      // Delete any remnant disconnected call
+      delete_call (self, call);
+    }
 
   g_debug ("Call `%s' added", path);
 }

@@ -151,22 +151,23 @@ set_disconnect_reason (CallsMMCall       *self,
 
 struct CallsMMCallStateMap
 {
-  MMCallState    mm;
-  CallsCallState calls;
+  MMCallState     mm;
+  CallsCallState  calls;
+  const gchar    *name;
 };
 
 static const struct CallsMMCallStateMap STATE_MAP[] = {
 
-#define row(MMENUM,CALLSENUM)                                   \
-  { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM }      \
+#define row(MMENUM,CALLSENUM)                                           \
+  { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM, #MMENUM }     \
 
-  row (DIALING, DIALING),
-  row (RINGING_OUT, INCOMING),
-  row (RINGING_IN, ALERTING),
-  row (ACTIVE, ACTIVE),
-  row (HELD, HELD),
-  row (WAITING, INCOMING),
-  row (TERMINATED, DISCONNECTED),
+  row (DIALING,     DIALING),
+  row (RINGING_OUT, ALERTING),
+  row (RINGING_IN,  INCOMING),
+  row (ACTIVE,      ACTIVE),
+  row (HELD,        HELD),
+  row (WAITING,     INCOMING),
+  row (TERMINATED,  DISCONNECTED),
 
 #undef row
 
@@ -191,6 +192,8 @@ state_changed_cb (CallsMMCall       *self,
     {
       if (map_row->mm == mm_new)
         {
+          g_debug ("MM call state changed to `%s'",
+                   map_row->name);
           change_state (self, map_row->calls);
           return;
         }
@@ -296,6 +299,7 @@ constructed (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMCall *self = CALLS_MM_CALL (object);
   MmGdbusCall *gdbus_call = MM_GDBUS_CALL (self->mm_call);
+  MMCallState state;
 
   g_signal_connect_swapped (gdbus_call, "notify::number",
                             G_CALLBACK (notify_number_cb), self);
@@ -304,8 +308,14 @@ constructed (GObject *object)
 
   notify_number_cb (self, mm_call_get_number (self->mm_call));
 
+  state = mm_call_get_state (self->mm_call);
+  state_changed_cb (self,
+                    MM_MODEM_STATE_UNKNOWN,
+                    state,
+                    mm_call_get_state_reason (self->mm_call));
+
   /* Start outgoing call */
-  if (mm_call_get_state (self->mm_call) == MM_CALL_STATE_UNKNOWN
+  if (state == MM_CALL_STATE_UNKNOWN
       && mm_call_get_direction (self->mm_call) == MM_CALL_DIRECTION_OUTGOING)
     {
       start_call (CALLS_CALL (self));

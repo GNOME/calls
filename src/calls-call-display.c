@@ -177,6 +177,7 @@ call_state_changed_cb (CallsCallDisplay *self,
 
   calls_call_state_to_string (state_str, state);
   gtk_label_set_text (self->status, state_str->str);
+  g_debug ("Call state changed to `%s'", state_str->str);
   g_string_free (state_str, TRUE);
 
   switch (state)
