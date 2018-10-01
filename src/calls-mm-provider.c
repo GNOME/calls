@@ -229,7 +229,7 @@ mm_manager_new_cb (GDBusConnection *connection,
   add_mm_objects (self);
   if (g_hash_table_size (self->origins) == 0)
     {
-      g_warning ("No modems available");
+      g_warning ("No modem with voice capability available");
       CALLS_EMIT_MESSAGE (self, "No modems available",
                           GTK_MESSAGE_WARNING);
     }
