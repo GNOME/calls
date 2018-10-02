@@ -518,6 +518,11 @@ constructed (GObject *object)
                                   G_ACTION_GROUP (simple_action_group));
   g_object_unref (simple_action_group);
 
+  // FIXME: if (no history)
+  {
+    new_call_action (NULL, NULL, self);
+  }
+
   parent_class->constructed (object);
 }
 
