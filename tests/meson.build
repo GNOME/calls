@@ -17,30 +17,36 @@ test_link_args = [
   '-fPIC',
 ]
 
-test_names = [
-  'test-provider',
+tests = [
+  [ 'provider', []                       ],
+  [ 'origin',   [ 'provider' ]           ],
+  [ 'call',     [ 'provider', 'origin' ] ],
 ]
 
-test_calls_source_arrays = [ calls_sources, calls_dummy_sources ]
+foreach test : tests
+  name = test[0]
 
-test_calls_sources = []
-foreach source_array : test_calls_source_arrays
-  foreach source : source_array
-    test_calls_sources += join_paths('..', 'src', source)
+  setup_bases = test[1]
+  setup_bases += name
+
+  test_sources = []
+  foreach base : setup_bases
+    test_sources += [ 'setup-' + base + '.c',
+                      'setup-' + base + '.h' ]
   endforeach
-endforeach
+  test_sources += [ 'test-' + name + '.c',
+                    'common.h' ]
 
-foreach test_name : test_names
-  t = executable(test_name, test_name + '.c',
-                 test_calls_sources, calls_enum_sources, calls_resources,
-		 c_args : test_cflags,
-		 link_args: test_link_args,
+  t = executable(name, test_sources,
+                 calls_sources, calls_dummy_sources, calls_enum_sources, calls_resources,
+                 c_args : test_cflags,
+                 link_args: test_link_args,
                  link_with : gdbofono_lib,
-	         dependencies: calls_deps,
+                 dependencies: calls_deps,
                  include_directories : include_directories('..',
                                                            join_paths('..', 'src')),
-		)
-  test(test_name, t, env: test_env)
+                )
+  test(name, t, env: test_env)
 endforeach
 
 endif
