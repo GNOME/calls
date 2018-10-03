@@ -26,6 +26,9 @@ project('call', 'c',
   default_options: [ 'warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11' ],
 )
 
+calls_id = 'sm.puri.Calls'
+calls_homepage = 'https://source.puri.sm/Librem5/calls'
+calls_version = meson.project_version()
 
 subdir('libgdbofono')
 subdir('src')

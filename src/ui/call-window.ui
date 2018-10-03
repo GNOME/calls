@@ -3,19 +3,12 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="0.0"/>
-  <object class="GtkListStore" id="origin_store">
-    <columns>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name origin -->
-      <column type="GObject"/>
-    </columns>
-  </object>
-  <template class="CallsMainWindow" parent="GtkApplicationWindow">
+  <template class="CallsCallWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Calls</property>
+    <!-- <property name="decorated">False</property> -->
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
+    <property name="title" translatable="yes">Calls</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -39,7 +32,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">0</property>
               </packing>
             </child>
             <child internal-child="content_area">
@@ -56,79 +48,103 @@
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
                   </packing>
                 </child>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
               </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkStack" id="main_stack">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="CallsHistoryBox" id="history_view">
+              <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
+                <child>
+                  <object class="GtkViewport">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkFlowBox" id="call_selector">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="homogeneous">True</property>
+                        <property name="column_spacing">12</property>
+                        <property name="row_spacing">12</property>
+                        <property name="selection_mode">none</property>
+                        <signal name="child-activated" handler="call_selector_child_activated_cb" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
               <packing>
-                <property name="name">history</property>
-                <property name="title" translatable="yes">History</property>
+                <property name="name">calls</property>
               </packing>
             </child>
             <child>
-              <object class="CallsNewCallBox" id="new_call_box">
+              <object class="GtkStack" id="call_stack">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="origin_store">origin_store</property>
-                <signal name="submitted" handler="new_call_submitted_cb" swapped="yes"/>
+                <property name="expand">True</property>
               </object>
               <packing>
-                <property name="name">new-call</property>
-                <property name="title" translatable="yes">New call</property>
+                <property name="name">active-call</property>
               </packing>
             </child>
           </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
           </packing>
         </child>
       </object>
     </child>
     <child type="titlebar">
       <object class="GtkStack" id="header_bar_stack">
-        <property name="can_focus">False</property>
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="visible_child_name" bind-source="main_stack" bind-property="visible_child_name" bind-flags="bidirectional|sync-create"/>
         <child>
-          <object class="CallsHistoryHeaderBar" id="history_header_bar">
-            <property name="can_focus">False</property>
+          <object class="GtkHeaderBar">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
           </object>
           <packing>
-            <property name="name">history</property>
+            <property name="name">calls</property>
           </packing>
         </child>
         <child>
-          <object class="CallsNewCallHeaderBar" id="new_call_header_bar">
-            <property name="can_focus">False</property>
+          <object class="GtkHeaderBar">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkButton" id="show_calls">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="no_show_all">True</property>
+                <signal name="clicked" handler="show_calls_clicked_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">system-switch-user-symbolic</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
           <packing>
-            <property name="name">new-call</property>
+            <property name="name">active-call</property>
           </packing>
         </child>
       </object>

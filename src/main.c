@@ -27,13 +27,15 @@
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
+#include "calls-call-window.h"
 #include "calls-encryption-indicator.h"
 #include "calls-history-box.h"
+#include "calls-history-header-bar.h"
 #include "calls-main-window.h"
 #include "calls-mm-provider.h"
 #include "calls-new-call-box.h"
-
-#define APP_ID "sm.puri.Calls"
+#include "calls-new-call-header-bar.h"
+#include "config.h"
 
 static void
 show_window (GtkApplication *app)
@@ -42,10 +44,13 @@ show_window (GtkApplication *app)
   GDBusConnection *connection;
   CallsProvider *provider;
   CallsMainWindow *main_window;
+  CallsCallWindow *call_window;
 
   CALLS_TYPE_ENCRYPTION_INDICATOR;
   CALLS_TYPE_HISTORY_BOX;
+  CALLS_TYPE_HISTORY_HEADER_BAR;
   CALLS_TYPE_NEW_CALL_BOX;
+  CALLS_TYPE_NEW_CALL_HEADER_BAR;
   HDY_TYPE_DIALER;
 
   connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
@@ -64,6 +69,13 @@ show_window (GtkApplication *app)
   gtk_window_set_title (GTK_WINDOW (main_window), "Calls");
 
   gtk_widget_show_all (GTK_WIDGET (main_window));
+
+  call_window = calls_call_window_new (app);
+
+  g_signal_connect_swapped (main_window, "call-added",
+                            G_CALLBACK (calls_call_window_add_call), call_window);
+  g_signal_connect_swapped (main_window, "call-removed",
+                            G_CALLBACK (calls_call_window_remove_call), call_window);
 }
 
 int
