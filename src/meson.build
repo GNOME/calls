@@ -60,8 +60,11 @@ calls_dummy_sources = ['calls-dummy-call.c', 'calls-dummy-call.h',
                        'calls-dummy-provider.c', 'calls-dummy-provider.h',
                       ]
 
+prefix = get_option('prefix')
 config_data = configuration_data()
 config_data.set_quoted('APP_ID', calls_id)
+config_data.set_quoted('GETTEXT_PACKAGE', calls_name)
+config_data.set_quoted('LOCALEDIR', join_paths(prefix, get_option('localedir')))
 config_data.set_quoted('PACKAGE_URL', calls_homepage)
 config_data.set_quoted('PACKAGE_VERSION', calls_version)
 config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
