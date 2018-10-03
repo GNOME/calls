@@ -37,12 +37,12 @@
 
 struct _CallsHistoryBox
 {
-  GtkTreeView parent_instance;
+  GtkStack parent_instance;
 
   GtkListStore *history_store;
 };
 
-G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_TREE_VIEW);
+G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK)
 
 
 static void
