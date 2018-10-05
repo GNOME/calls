@@ -50,13 +50,6 @@ struct _CallsMainWindow
 
   GtkStack *main_stack;
   GtkStack *header_bar_stack;
-
-  GtkListStore *origin_store;
-};
-
-enum {
-  ORIGIN_STORE_COLUMN_NAME,
-  ORIGIN_STORE_COLUMN_ORIGIN
 };
 
 G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -178,18 +171,6 @@ info_response_cb (GtkInfoBar      *infobar,
 {
   gtk_widget_hide (GTK_WIDGET (self->info));
   gtk_widget_queue_allocate (GTK_WIDGET (self));
-}
-
-
-static void
-new_call_submitted_cb (CallsMainWindow *self,
-                       CallsOrigin     *origin,
-                       const gchar     *number,
-                       CallsNewCallBox *new_call_box)
-{
-  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
-
-  calls_origin_dial (origin, number);
 }
 
 
@@ -362,15 +343,6 @@ add_origin_calls (CallsMainWindow *self, CallsOrigin *origin)
 static void
 add_origin (CallsMainWindow *self, CallsOrigin *origin)
 {
-  GtkTreeIter iter;
-
-  gtk_list_store_append (self->origin_store, &iter);
-  gtk_list_store_set (self->origin_store, &iter,
-                      ORIGIN_STORE_COLUMN_NAME, calls_origin_get_name(origin),
-                      ORIGIN_STORE_COLUMN_ORIGIN, G_OBJECT (origin),
-                      -1);
-
-
   g_signal_connect_swapped (origin, "message",
                             G_CALLBACK (show_message), self);
   g_signal_connect_swapped (origin, "call-added",
@@ -379,59 +351,6 @@ add_origin (CallsMainWindow *self, CallsOrigin *origin)
                             G_CALLBACK (remove_call), self);
 
   add_origin_calls(self, origin);
-}
-
-
-static void
-dump_list_store (GtkListStore *store)
-{
-  GtkTreeIter iter;
-  GtkTreeModel *model = GTK_TREE_MODEL (store);
-  gboolean ok;
-
-  ok = gtk_tree_model_get_iter_first (model, &iter);
-  if (!ok)
-    {
-      return;
-    }
-
-  g_debug ("List store:");
-  do
-    {
-      gchararray name;
-      gtk_tree_model_get (model, &iter,
-                          ORIGIN_STORE_COLUMN_NAME, &name,
-                          -1);
-      g_debug (" name: `%s'", name);
-    }
-  while (gtk_tree_model_iter_next (model, &iter));
-}
-
-
-static void
-remove_origin (CallsMainWindow *self, CallsOrigin *origin)
-{
-  GtkTreeIter iter;
-  gboolean ok;
-
-  ok = calls_list_store_find (self->origin_store, origin,
-                              ORIGIN_STORE_COLUMN_ORIGIN, &iter);
-  g_return_if_fail (ok);
-
-  gtk_list_store_remove (self->origin_store, &iter);
-}
-
-
-static void
-remove_origins (CallsMainWindow *self)
-{
-  GtkTreeModel *model = GTK_TREE_MODEL (self->origin_store);
-  GtkTreeIter iter;
-
-  while (gtk_tree_model_get_iter_first (model, &iter))
-    {
-      gtk_list_store_remove (self->origin_store, &iter);
-    }
 }
 
 
@@ -448,8 +367,6 @@ add_provider_origins (CallsMainWindow *self, CallsProvider *provider)
     }
 
   g_list_free (origins);
-
-  dump_list_store (self->origin_store);
 }
 
 
@@ -460,11 +377,8 @@ set_provider (CallsMainWindow *self, CallsProvider *provider)
                             G_CALLBACK (show_message), self);
   g_signal_connect_swapped (provider, "origin-added",
                             G_CALLBACK (add_origin), self);
-  g_signal_connect_swapped (provider, "origin-removed",
-                            G_CALLBACK (remove_origin), self);
 
-  self->provider = provider;
-  g_object_ref (G_OBJECT (provider));
+  g_set_object (&self->provider, provider);
 
   add_provider_origins (self, provider);
 }
@@ -506,6 +420,12 @@ constructed (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
+  CallsNewCallBox *new_call_box;
+
+  /* Add new call box */
+  new_call_box = calls_new_call_box_new (self->provider);
+  gtk_stack_add_titled (self->main_stack, GTK_WIDGET (new_call_box),
+                        "new-call", _("New call"));
 
   /* Add actions */
   simple_action_group = g_simple_action_group_new ();
@@ -546,11 +466,6 @@ dispose (GObject *object)
     {
       remove_calls (self);
     }
-
-  if (self->origin_store)
-  {
-    remove_origins (self);
-  }
 
   g_clear_object (&self->call_holders);
   g_clear_object (&self->provider);
@@ -606,7 +521,5 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_label);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, header_bar_stack);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, origin_store);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
-  gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
 }

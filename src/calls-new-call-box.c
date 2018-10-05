@@ -35,12 +35,9 @@ struct _CallsNewCallBox
 {
   GtkBox parent_instance;
 
+  GtkListStore *origin_store;
   GtkComboBox *origin_box;
   GtkSearchEntry *number_entry;
-  HdyDialer *dial_pad;
-
-  gulong origin_store_row_deleted_id;
-  gulong origin_store_row_inserted_id;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
@@ -48,17 +45,10 @@ G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
 
 enum {
   PROP_0,
-  PROP_ORIGIN_STORE,
+  PROP_PROVIDER,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
-
-
-enum {
-  SIGNAL_SUBMITTED,
-  SIGNAL_LAST_SIGNAL,
-};
-static guint signals[SIGNAL_LAST_SIGNAL];
 
 
 enum {
@@ -96,55 +86,50 @@ dial_clicked_cb (CallsNewCallBox *self,
                  GtkButton       *button)
 {
   GtkTreeIter iter;
-  GtkTreeModel *origin_store;
+  gboolean ok;
   CallsOrigin *origin;
   const gchar *number;
 
-  gtk_combo_box_get_active_iter (self->origin_box, &iter);
-  if (!gtk_combo_box_get_active_iter (self->origin_box, &iter))
+  ok = gtk_combo_box_get_active_iter (self->origin_box, &iter);
+  if (!ok)
     {
-      g_debug ("Can't submit call with no origin.");
-
+      g_debug ("Can't submit call with no origin");
       return;
     }
 
-  origin_store = gtk_combo_box_get_model (self->origin_box);
-  gtk_tree_model_get (origin_store, &iter,
+  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store), &iter,
                       ORIGIN_STORE_COLUMN_ORIGIN, &origin,
                       -1);
   g_assert (CALLS_IS_ORIGIN (origin));
 
   number = gtk_entry_get_text (GTK_ENTRY (self->number_entry));
 
-  g_signal_emit (self, signals[SIGNAL_SUBMITTED], 0, origin, number);
+  calls_origin_dial (origin, number);
 }
 
 
 void
 update_origin_box (CallsNewCallBox *self)
 {
-  GtkTreeModel *origin_store = gtk_combo_box_get_model (self->origin_box);
+  GtkTreeModel *origin_store = GTK_TREE_MODEL (self->origin_store);
   GtkTreeIter iter;
 
-  if (origin_store == NULL ||
-      !gtk_tree_model_get_iter_first (origin_store, &iter))
+  if (!gtk_tree_model_get_iter_first (origin_store, &iter))
     {
       gtk_widget_hide (GTK_WIDGET (self->origin_box));
-
       return;
     }
 
-  /* We know there is a model and it's not empty. */
+  /* We know there is at least one origin. */
 
   if (!gtk_tree_model_iter_next (origin_store, &iter))
     {
       gtk_combo_box_set_active (self->origin_box, 0);
       gtk_widget_hide (GTK_WIDGET (self->origin_box));
-
       return;
     }
 
-  /* We know there are multiple origins in the model. */
+  /* We know there are multiple origins. */
 
   if (gtk_combo_box_get_active (self->origin_box) < 0)
     {
@@ -158,31 +143,93 @@ update_origin_box (CallsNewCallBox *self)
 
 
 static void
-calls_new_call_box_set_origin_store (CallsNewCallBox *self,
-                                     GtkListStore    *origin_store)
+add_origin (CallsNewCallBox *self, CallsOrigin *origin)
 {
-  g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
-  g_return_if_fail (origin_store == NULL || GTK_IS_LIST_STORE (origin_store));
+  GtkTreeIter iter;
 
-  if (self->origin_store_row_deleted_id != 0)
+  gtk_list_store_append (self->origin_store, &iter);
+  gtk_list_store_set (self->origin_store, &iter,
+                      ORIGIN_STORE_COLUMN_NAME, calls_origin_get_name (origin),
+                      ORIGIN_STORE_COLUMN_ORIGIN, G_OBJECT (origin),
+                      -1);
+
+  update_origin_box (self);
+}
+
+
+static void
+remove_origin (CallsNewCallBox *self, CallsOrigin *origin)
+{
+  GtkTreeIter iter;
+  gboolean ok;
+
+  ok = calls_list_store_find (self->origin_store, origin,
+                              ORIGIN_STORE_COLUMN_ORIGIN, &iter);
+  g_return_if_fail (ok);
+
+  gtk_list_store_remove (self->origin_store, &iter);
+
+  update_origin_box (self);
+}
+
+
+static void
+remove_origins (CallsNewCallBox *self)
+{
+  GtkTreeModel *model = GTK_TREE_MODEL (self->origin_store);
+  GtkTreeIter iter;
+
+  while (gtk_tree_model_get_iter_first (model, &iter))
     {
-      g_signal_handler_disconnect (gtk_combo_box_get_model (self->origin_box),
-                                   self->origin_store_row_deleted_id);
-      g_signal_handler_disconnect (gtk_combo_box_get_model (self->origin_box),
-                                   self->origin_store_row_inserted_id);
+      gtk_list_store_remove (self->origin_store, &iter);
+    }
+}
+
+
+static void
+add_provider_origins (CallsNewCallBox *self, CallsProvider *provider)
+{
+  GList *origins, *node;
+
+  origins = calls_provider_get_origins (provider);
+
+  for (node = origins; node; node = node->next)
+    {
+      add_origin (self, CALLS_ORIGIN (node->data));
     }
 
-  gtk_combo_box_set_model (self->origin_box, GTK_TREE_MODEL (origin_store));
+  g_list_free (origins);
+}
 
-  if (origin_store != NULL)
+
+static void
+set_provider (CallsNewCallBox *self, CallsProvider *provider)
+{
+  g_signal_connect_swapped (provider, "origin-added",
+                            G_CALLBACK (add_origin), self);
+  g_signal_connect_swapped (provider, "origin-removed",
+                            G_CALLBACK (remove_origin), self);
+
+  add_provider_origins (self, provider);
+}
+
+static void
+set_property (GObject      *object,
+              guint         property_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
+
+  switch (property_id)
     {
-      self->origin_store_row_deleted_id = g_signal_connect_swapped (origin_store, "row-deleted", G_CALLBACK (update_origin_box), self);
-      self->origin_store_row_inserted_id = g_signal_connect_swapped (origin_store, "row-inserted", G_CALLBACK (update_origin_box), self);
-    }
-  else
-    {
-      self->origin_store_row_deleted_id = 0;
-      self->origin_store_row_inserted_id = 0;
+      case PROP_PROVIDER:
+        set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
     }
 }
 
@@ -197,45 +244,17 @@ calls_new_call_box_init (CallsNewCallBox *self)
 
 
 static void
-calls_new_call_box_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+dispose (GObject *object)
 {
+  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
-  switch (property_id)
+  if (self->origin_store)
     {
-      case PROP_ORIGIN_STORE:
-        calls_new_call_box_set_origin_store (self, g_value_get_object (value));
-        g_object_notify_by_pspec (object, pspec);
-        break;
-
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+      remove_origins (self);
     }
-}
 
-
-static void
-calls_new_call_box_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
-{
-  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
-
-  switch (property_id)
-    {
-      case PROP_ORIGIN_STORE:
-        g_value_set_object (value, gtk_combo_box_get_model (self->origin_box));
-        break;
-
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
-    }
+  parent_class->dispose (object);
 }
 
 
@@ -245,44 +264,34 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property = calls_new_call_box_set_property;
-  object_class->get_property = calls_new_call_box_get_property;
+  object_class->set_property = set_property;
+  object_class->dispose = dispose;
 
-  props[PROP_ORIGIN_STORE] =
-    g_param_spec_object ("origin-store",
-                         _("Origin store"),
-                         _("The storage for origins"),
-                         GTK_TYPE_LIST_STORE,
-                         G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
+
+  props[PROP_PROVIDER] =
+    g_param_spec_object ("provider",
+                         _("Provider"),
+                         _("An object implementing low-level call-making functionality"),
+                         CALLS_TYPE_PROVIDER,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
-  /**
-   *  CallsNewCallBox::submitted:
-   * @self: The # CallsNewCallBox instance.
-   * @origin: The origin of the call.
-   * @number: The number at the time of activation.
-   *
-   * This signal is emitted when the dialer's 'dial' button is activated.
-   * Connect to this signal to perform to get notified when the user
-   * wants to submit the dialed number for a given call origin.
-   */
-  signals[SIGNAL_SUBMITTED] =
-    g_signal_new ("submitted",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE,
-                  2,
-                  CALLS_TYPE_ORIGIN,
-                  G_TYPE_STRING);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/new-call-box.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_store);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_box);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, number_entry);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial_pad);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_pad_deleted_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
+}
+
+
+CallsNewCallBox *
+calls_new_call_box_new (CallsProvider *provider)
+{
+  return g_object_new (CALLS_TYPE_NEW_CALL_BOX,
+                       "provider", provider,
+                       NULL);
 }
