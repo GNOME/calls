@@ -42,8 +42,6 @@ struct _CallsMainWindow
   GtkApplicationWindow parent_instance;
 
   CallsProvider *provider;
-  GListStore *call_holders;
-  CallsCallHolder *focus;
 
   GtkInfoBar *info;
   GtkLabel *info_label;
@@ -174,153 +172,25 @@ info_response_cb (GtkInfoBar      *infobar,
 }
 
 
-typedef gboolean (*FindCallHolderFunc) (CallsCallHolder *holder,
-                                        gpointer user_data);
-
-
-static gboolean
-find_call_holder_by_call (CallsCallHolder *holder,
-                          gpointer user_data)
-{
-  CallsCallData *data = calls_call_holder_get_data (holder);
-
-  return calls_call_data_get_call (data) == user_data;
-}
-
-
-/** Search through the list of call holders, returning the total
-    number of items in the list, the position of the holder within the
-    list and a pointer to the holder itself. */
-static gboolean
-find_call_holder (CallsMainWindow *self,
-                  guint *n_itemsp,
-                  guint *positionp,
-                  CallsCallHolder **holderp,
-                  FindCallHolderFunc predicate,
-                  gpointer user_data)
-{
-  GListModel * const model = G_LIST_MODEL (self->call_holders);
-  const guint n_items = g_list_model_get_n_items (model);
-  guint position = 0;
-  CallsCallHolder *holder;
-
-  for (position = 0; position < n_items; ++position)
-    {
-      holder = CALLS_CALL_HOLDER (g_list_model_get_item (model, position));
-
-      if (predicate (holder, user_data))
-        {
-#define out(var)                                \
-          if (var##p)                           \
-            {                                   \
-              *var##p = var ;                   \
-            }
-
-          out (n_items);
-          out (position);
-          out (holder);
-
-#undef out
-          
-          return TRUE;
-        }
-    }
-
-  return FALSE;
-}
-
-
-static void
-set_focus (CallsMainWindow *self, CallsCallHolder *holder)
-{
-  if (!holder)
-    {
-      holder = g_list_model_get_item (G_LIST_MODEL (self->call_holders), 0);
-
-      if (!holder)
-        {
-          /* No calls */
-          self->focus = NULL;
-          return;
-        }
-    }
-
-  self->focus = holder;
-}
-
-
 static void
 add_call (CallsMainWindow *self, CallsCall *call)
 {
-  CallsCallHolder *holder;
-
   g_signal_emit (self, signals[SIGNAL_CALL_ADDED], 0, call);
 
   g_signal_connect_swapped (call, "message",
                             G_CALLBACK (show_message), self);
-
-  holder = calls_call_holder_new (call);
-
-  g_list_store_append (self->call_holders, holder);
-
-  set_focus (self, holder);
-
 }
 
-
-static void
-remove_call_holder (CallsMainWindow *self,
-                    guint n_items,
-                    guint position,
-                    CallsCallHolder *holder)
-{
-  g_list_store_remove (self->call_holders, position);
-
-  if (self->focus == holder)
-    {
-      set_focus (self, NULL);
-    }
-}
 
 static void
 remove_call (CallsMainWindow *self, CallsCall *call, const gchar *reason)
 {
-  guint n_items, position;
-  CallsCallHolder *holder;
-  gboolean found;
-
   g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
   g_signal_emit (self, signals[SIGNAL_CALL_REMOVED], 0, call, reason);
 
-  found = find_call_holder (self, &n_items, &position, &holder,
-                            find_call_holder_by_call, call);
-  g_return_if_fail (found);
-
-  remove_call_holder (self, n_items, position, holder);
-
-  if (!reason)
-    {
-      reason = "Call ended for unknown reason";
-    }
   show_message(self, reason, GTK_MESSAGE_INFO);
-}
-
-
-static void
-remove_calls (CallsMainWindow *self)
-{
-  GListModel * model = G_LIST_MODEL (self->call_holders);
-  guint n_items = g_list_model_get_n_items (model);
-  gpointer *item;
-  CallsCallHolder *holder;
-
-  while ( (item = g_list_model_get_item (model, 0)) )
-    {
-      holder = CALLS_CALL_HOLDER (item);
-      remove_call_holder (self, n_items--, 0, holder);
-    }
 }
 
 
@@ -350,7 +220,7 @@ add_origin (CallsMainWindow *self, CallsOrigin *origin)
   g_signal_connect_swapped (origin, "call-removed",
                             G_CALLBACK (remove_call), self);
 
-  add_origin_calls(self, origin);
+  add_origin_calls (self, origin);
 }
 
 
@@ -390,21 +260,10 @@ set_property (GObject      *object,
               GParamSpec   *pspec)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
-  GObject *val_obj;
 
   switch (property_id) {
   case PROP_PROVIDER:
-    val_obj = g_value_get_object (value);
-    if (val_obj == NULL)
-      {
-        g_warning("Null provider");
-        self->provider = NULL;
-      }
-    else
-      {
-        g_return_if_fail (CALLS_IS_PROVIDER (val_obj));
-        set_provider (self, CALLS_PROVIDER (val_obj));
-      }
+    set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
     break;
 
   default:
@@ -451,8 +310,6 @@ static void
 calls_main_window_init (CallsMainWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
-
-  self->call_holders = g_list_store_new (CALLS_TYPE_CALL_HOLDER);
 }
 
 
@@ -462,12 +319,6 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
-  if (self->call_holders)
-    {
-      remove_calls (self);
-    }
-
-  g_clear_object (&self->call_holders);
   g_clear_object (&self->provider);
 
   parent_class->dispose (object);
