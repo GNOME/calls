@@ -229,19 +229,6 @@ add_provider_origins (CallsMainWindow *self, CallsProvider *provider)
 
 
 static void
-set_provider (CallsMainWindow *self, CallsProvider *provider)
-{
-  g_signal_connect_swapped (provider, "message",
-                            G_CALLBACK (show_message), self);
-  g_signal_connect_swapped (provider, "origin-added",
-                            G_CALLBACK (add_origin), self);
-
-  g_set_object (&self->provider, provider);
-
-  add_provider_origins (self, provider);
-}
-
-static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -251,7 +238,7 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_PROVIDER:
-    set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
+    g_set_object (&self->provider, CALLS_PROVIDER (g_value_get_object (value)));
     break;
 
   default:
@@ -268,6 +255,14 @@ constructed (GObject *object)
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
   CallsNewCallBox *new_call_box;
+
+  /* Set up provider */
+  g_signal_connect_swapped (self->provider, "message",
+                            G_CALLBACK (show_message), self);
+  g_signal_connect_swapped (self->provider, "origin-added",
+                            G_CALLBACK (add_origin), self);
+
+  add_provider_origins (self, self->provider);
 
   /* Add new call box */
   new_call_box = calls_new_call_box_new (self->provider);
