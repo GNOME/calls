@@ -238,6 +238,7 @@ add_call (CallsCallWindow *self,
                        calls_call_get_number (call));
 
   g_list_store_append (self->call_holders, holder);
+  g_object_unref (holder);
 
   update_visibility (self);
   set_focus (self, holder);
