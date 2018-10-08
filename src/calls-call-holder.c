@@ -97,8 +97,11 @@ set_call (CallsCallHolder *self, CallsCall *call)
   g_object_unref (party);
 
   self->display = calls_call_display_new (self->data);
+  g_object_ref_sink (self->display);
+
   self->selector_item =
     calls_call_selector_item_new (self);
+  g_object_ref_sink (self->selector_item);
 }
 
 
