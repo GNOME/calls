@@ -25,6 +25,8 @@
 #ifndef CALLS_NEW_CALL_BOX_H__
 #define CALLS_NEW_CALL_BOX_H__
 
+#include "calls-provider.h"
+
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
@@ -32,6 +34,8 @@ G_BEGIN_DECLS
 #define CALLS_TYPE_NEW_CALL_BOX (calls_new_call_box_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox);
+
+CallsNewCallBox * calls_new_call_box_new (CallsProvider *provider);
 
 G_END_DECLS
 

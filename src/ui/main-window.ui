@@ -3,14 +3,6 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="0.0"/>
-  <object class="GtkListStore" id="origin_store">
-    <columns>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name origin -->
-      <column type="GObject"/>
-    </columns>
-  </object>
   <template class="CallsMainWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Calls</property>
@@ -85,18 +77,6 @@
               <packing>
                 <property name="name">history</property>
                 <property name="title" translatable="yes">History</property>
-              </packing>
-            </child>
-            <child>
-              <object class="CallsNewCallBox" id="new_call_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="origin_store">origin_store</property>
-                <signal name="submitted" handler="new_call_submitted_cb" swapped="yes"/>
-              </object>
-              <packing>
-                <property name="name">new-call</property>
-                <property name="title" translatable="yes">New call</property>
               </packing>
             </child>
           </object>

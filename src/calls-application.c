@@ -97,7 +97,6 @@ activate (GApplication *application)
 {
   CallsApplication *self = (CallsApplication *)application;
   GtkApplication *app = (GtkApplication *)application;
-  CallsCallWindow *call_window;
   GtkWindow *window;
 
   g_assert (GTK_IS_APPLICATION (app));
@@ -112,12 +111,7 @@ activate (GApplication *application)
        * window.  In that case, GTK+ frees the resources right.
        */
       window = GTK_WINDOW (calls_main_window_new (app, self->provider));
-      call_window = calls_call_window_new (app);
-
-      g_signal_connect_swapped (window, "call-added",
-                                G_CALLBACK (calls_call_window_add_call), call_window);
-      g_signal_connect_swapped (window, "call-removed",
-                                G_CALLBACK (calls_call_window_remove_call), call_window);
+      calls_call_window_new (app, self->provider);
     }
 
   gtk_window_present (window);

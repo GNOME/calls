@@ -55,21 +55,15 @@ struct _CallsCallWindow
   GtkFlowBox *call_selector;
 };
 
-enum {
-  ORIGIN_STORE_COLUMN_NAME,
-  ORIGIN_STORE_COLUMN_ORIGIN
-};
-
 G_DEFINE_TYPE (CallsCallWindow, calls_call_window, GTK_TYPE_APPLICATION_WINDOW);
 
 
-CallsCallWindow *
-calls_call_window_new (GtkApplication *application)
-{
-  return g_object_new (CALLS_TYPE_CALL_WINDOW,
-                       "application", application,
-                       NULL);
-}
+enum {
+  PROP_0,
+  PROP_PROVIDER,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
@@ -240,8 +234,8 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 
 
 void
-calls_call_window_add_call (CallsCallWindow *self,
-                            CallsCall       *call)
+add_call (CallsCallWindow *self,
+          CallsCall       *call)
 {
   CallsCallHolder *holder;
   CallsCallDisplay *display;
@@ -283,9 +277,9 @@ remove_call_holder (CallsCallWindow *self,
 }
 
 void
-calls_call_window_remove_call (CallsCallWindow *self,
-                               CallsCall       *call,
-                               const gchar     *reason)
+remove_call (CallsCallWindow *self,
+             CallsCall       *call,
+             const gchar     *reason)
 {
   guint n_items, position;
   CallsCallHolder *holder;
@@ -300,10 +294,6 @@ calls_call_window_remove_call (CallsCallWindow *self,
 
   remove_call_holder (self, n_items, position, holder);
 
-  if (!reason)
-    {
-      reason = "Call ended for unknown reason";
-    }
   show_message(self, reason, GTK_MESSAGE_INFO);
 }
 
@@ -323,6 +313,80 @@ remove_calls (CallsCallWindow *self)
   g_list_store_remove_all (self->call_holders);
 
   update_visibility (self);
+}
+
+
+static void
+add_origin_calls (CallsCallWindow *self, CallsOrigin *origin)
+{
+  GList *calls, *node;
+
+  calls = calls_origin_get_calls (origin);
+
+  for (node = calls; node; node = node->next)
+    {
+      add_call (self, CALLS_CALL (node->data));
+    }
+
+  g_list_free (calls);
+}
+
+
+static void
+add_origin (CallsCallWindow *self, CallsOrigin *origin)
+{
+  g_signal_connect_swapped (origin, "call-added",
+                            G_CALLBACK (add_call), self);
+  g_signal_connect_swapped (origin, "call-removed",
+                            G_CALLBACK (remove_call), self);
+
+  add_origin_calls (self, origin);
+}
+
+
+static void
+add_provider_origins (CallsCallWindow *self, CallsProvider *provider)
+{
+  GList *origins, *node;
+
+  origins = calls_provider_get_origins (provider);
+
+  for (node = origins; node; node = node->next)
+    {
+      add_origin (self, CALLS_ORIGIN (node->data));
+    }
+
+  g_list_free (origins);
+}
+
+
+static void
+set_provider (CallsCallWindow *self, CallsProvider *provider)
+{
+  g_signal_connect_swapped (provider, "origin-added",
+                            G_CALLBACK (add_origin), self);
+
+  add_provider_origins (self, provider);
+}
+
+static void
+set_property (GObject      *object,
+              guint         property_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+  CallsCallWindow *self = CALLS_CALL_WINDOW (object);
+
+  switch (property_id)
+    {
+      case PROP_PROVIDER:
+        set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
 }
 
 
@@ -375,8 +439,18 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
+
+  props[PROP_PROVIDER] =
+    g_param_spec_object ("provider",
+                         _("Provider"),
+                         _("An object implementing low-level call-making functionality"),
+                         CALLS_TYPE_PROVIDER,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info);
@@ -390,4 +464,15 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, show_calls_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
+}
+
+
+CallsCallWindow *
+calls_call_window_new (GtkApplication *application,
+                       CallsProvider  *provider)
+{
+  return g_object_new (CALLS_TYPE_CALL_WINDOW,
+                       "application", application,
+                       "provider", provider,
+                       NULL);
 }
