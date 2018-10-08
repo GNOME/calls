@@ -160,6 +160,7 @@ find_call_holder (CallsCallWindow     *self,
   for (position = 0; position < n_items; ++position)
     {
       holder = CALLS_CALL_HOLDER (g_list_model_get_item (model, position));
+      g_object_unref (G_OBJECT (holder));
 
       if (predicate (holder, user_data))
         {
