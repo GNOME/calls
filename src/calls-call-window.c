@@ -228,7 +228,6 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
   CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
   CallsCallHolder *holder = calls_call_selector_item_get_holder (item);
 
-  update_visibility (self);
   set_focus (self, holder);
 }
 
