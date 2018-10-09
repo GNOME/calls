@@ -43,7 +43,6 @@ struct _CallsCallWindow
   GtkApplicationWindow parent_instance;
 
   GListStore *call_holders;
-  CallsCallHolder *focus;
 
   GtkInfoBar *info;
   GtkLabel *info_label;
@@ -188,20 +187,6 @@ static void
 set_focus (CallsCallWindow *self,
            CallsCallHolder *holder)
 {
-  if (!holder)
-    {
-      holder = g_list_model_get_item (G_LIST_MODEL (self->call_holders), 0);
-
-      if (!holder)
-        {
-          /* No calls */
-          self->focus = NULL;
-          return;
-        }
-    }
-
-  self->focus = holder;
-
   gtk_stack_set_visible_child_name (self->main_stack, "active-call");
   gtk_stack_set_visible_child_name (self->header_bar_stack, "active-call");
   gtk_stack_set_visible_child
@@ -270,10 +255,6 @@ remove_call_holder (CallsCallWindow *self,
                         GTK_WIDGET (calls_call_holder_get_display (holder)));
 
   update_visibility (self);
-  if (self->focus == holder)
-    {
-      set_focus (self, NULL);
-    }
 }
 
 void
