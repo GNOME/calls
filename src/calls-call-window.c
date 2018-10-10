@@ -251,9 +251,9 @@ remove_call_holder (CallsCallWindow *self,
                     guint            position,
                     CallsCallHolder *holder)
 {
-  g_list_store_remove (self->call_holders, position);
   gtk_container_remove (GTK_CONTAINER (self->call_stack),
                         GTK_WIDGET (calls_call_holder_get_display (holder)));
+  g_list_store_remove (self->call_holders, position);
 
   update_visibility (self);
 }
