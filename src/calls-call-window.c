@@ -110,7 +110,10 @@ static GtkWidget *
 call_holders_create_widget_cb (CallsCallHolder *holder,
                                CallsCallWindow *self)
 {
-  return GTK_WIDGET (calls_call_holder_get_selector_item (holder));
+  CallsCallSelectorItem *item =
+    calls_call_holder_get_selector_item (holder);
+  g_object_ref (G_OBJECT (item));
+  return GTK_WIDGET (item);
 }
 
 
