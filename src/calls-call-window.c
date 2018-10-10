@@ -43,7 +43,6 @@ struct _CallsCallWindow
   GtkApplicationWindow parent_instance;
 
   GListStore *call_holders;
-  CallsCallHolder *focus;
 
   GtkInfoBar *info;
   GtkLabel *info_label;
@@ -111,7 +110,10 @@ static GtkWidget *
 call_holders_create_widget_cb (CallsCallHolder *holder,
                                CallsCallWindow *self)
 {
-  return GTK_WIDGET (calls_call_holder_get_selector_item (holder));
+  CallsCallSelectorItem *item =
+    calls_call_holder_get_selector_item (holder);
+  g_object_ref (G_OBJECT (item));
+  return GTK_WIDGET (item);
 }
 
 
@@ -160,6 +162,7 @@ find_call_holder (CallsCallWindow     *self,
   for (position = 0; position < n_items; ++position)
     {
       holder = CALLS_CALL_HOLDER (g_list_model_get_item (model, position));
+      g_object_unref (G_OBJECT (holder));
 
       if (predicate (holder, user_data))
         {
@@ -187,20 +190,6 @@ static void
 set_focus (CallsCallWindow *self,
            CallsCallHolder *holder)
 {
-  if (!holder)
-    {
-      holder = g_list_model_get_item (G_LIST_MODEL (self->call_holders), 0);
-
-      if (!holder)
-        {
-          /* No calls */
-          self->focus = NULL;
-          return;
-        }
-    }
-
-  self->focus = holder;
-
   gtk_stack_set_visible_child_name (self->main_stack, "active-call");
   gtk_stack_set_visible_child_name (self->header_bar_stack, "active-call");
   gtk_stack_set_visible_child
@@ -228,7 +217,6 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
   CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
   CallsCallHolder *holder = calls_call_selector_item_get_holder (item);
 
-  update_visibility (self);
   set_focus (self, holder);
 }
 
@@ -253,6 +241,7 @@ add_call (CallsCallWindow *self,
                        calls_call_get_number (call));
 
   g_list_store_append (self->call_holders, holder);
+  g_object_unref (holder);
 
   update_visibility (self);
   set_focus (self, holder);
@@ -265,15 +254,11 @@ remove_call_holder (CallsCallWindow *self,
                     guint            position,
                     CallsCallHolder *holder)
 {
-  g_list_store_remove (self->call_holders, position);
   gtk_container_remove (GTK_CONTAINER (self->call_stack),
                         GTK_WIDGET (calls_call_holder_get_display (holder)));
+  g_list_store_remove (self->call_holders, position);
 
   update_visibility (self);
-  if (self->focus == holder)
-    {
-      set_focus (self, NULL);
-    }
 }
 
 void
