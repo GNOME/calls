@@ -137,10 +137,17 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallHolder *self = CALLS_CALL_HOLDER (object);
 
-  g_clear_object (&self->selector_item);
+  // Mutual reference
+  if (self->selector_item)
+    {
+      GObject *selector_item = G_OBJECT (self->selector_item);
+      self->selector_item = NULL;
+      g_object_unref (selector_item);
+    }
+
   g_clear_object (&self->display);
   g_clear_object (&self->data);
-  
+
   parent_class->dispose (object);
 }
 
