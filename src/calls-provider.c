@@ -27,6 +27,8 @@
 #include "calls-message-source.h"
 #include "util.h"
 
+#include <glib/gi18n.h>
+
 /**
  * SECTION:calls-provider
  * @short_description: An abstraction of call providers, such as
@@ -44,6 +46,14 @@
 G_DEFINE_INTERFACE (CallsProvider, calls_provider, CALLS_TYPE_MESSAGE_SOURCE);
 
 enum {
+  PROP_0,
+  PROP_STATUS,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
+
+enum {
   SIGNAL_ORIGIN_ADDED,
   SIGNAL_ORIGIN_REMOVED,
   SIGNAL_LAST_SIGNAL,
@@ -54,6 +64,15 @@ static void
 calls_provider_default_init (CallsProviderInterface *iface)
 {
   GType arg_types = CALLS_TYPE_ORIGIN;
+
+  props[PROP_STATUS] =
+    g_param_spec_string ("status",
+                         _("Status"),
+                         _("A text string describing the status for display to the user"),
+                         "",
+                         G_PARAM_READABLE);
+
+  g_object_interface_install_property (iface, props[PROP_STATUS]);
 
   signals[SIGNAL_ORIGIN_ADDED] =
     g_signal_newv ("origin-added",
@@ -85,6 +104,21 @@ calls_provider_default_init (CallsProviderInterface *iface)
  * Returns: A string containing the name.
  */
 DEFINE_PROVIDER_FUNC(get_name, const gchar *, NULL);
+
+gchar *
+calls_provider_get_status (CallsProvider *self)
+{
+  gchar *status;
+
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
+
+  g_object_get (G_OBJECT (self),
+                "status", &status,
+                NULL);
+
+  return status;
+}
+
 
 /**
  * calls_provider_get_origins:

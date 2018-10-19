@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsMMProvider, calls_mm_provider, CALLS, MM_PROVIDER, GObject);
 
-CallsMMProvider *calls_mm_provider_new (GDBusConnection *connection);
+CallsMMProvider *calls_mm_provider_new ();
 
 G_END_DECLS
 

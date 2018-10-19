@@ -35,8 +35,10 @@ struct _CallsMMProvider
 {
   GObject parent_instance;
 
-  /** D-Bus connection */
-  GDBusConnection *connection;
+  /* The status property */
+  gchar *status;
+  /** ID for the D-Bus watch */
+  guint watch_id;
   /** ModemManager object proxy */
   MMManager *mm;
   /** Map of D-Bus object paths to origins */
@@ -52,13 +54,11 @@ G_DEFINE_TYPE_WITH_CODE (CallsMMProvider, calls_mm_provider, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_PROVIDER,
                                                 calls_mm_provider_provider_interface_init))
 
-
 enum {
   PROP_0,
-  PROP_CONNECTION,
+  PROP_STATUS,
   PROP_LAST_PROP,
 };
-static GParamSpec *props[PROP_LAST_PROP];
 
 
 static const gchar *
@@ -77,14 +77,60 @@ get_origins (CallsProvider *iface)
 
 
 static void
+set_status (CallsMMProvider *self,
+            const gchar     *new_status)
+{
+  if (strcmp (self->status, new_status) == 0)
+    {
+      return;
+    }
+
+  g_free (self->status);
+  self->status = g_strdup (new_status);
+  g_object_notify (G_OBJECT (self), "status");
+}
+
+
+static void
+update_status (CallsMMProvider *self)
+{
+  const gchar *s;
+
+  if (!self->mm)
+    {
+      s = _("ModemManager unavailable");
+    }
+  else if (g_hash_table_size (self->origins) == 0)
+    {
+      s = _("No voice-capable modem available");
+    }
+  else
+    {
+      s = _("Normal");
+    }
+
+  set_status (self, s);
+}
+
+
+static void
 add_origin (CallsMMProvider *self,
             GDBusObject     *object)
 {
   MMObject *mm_obj;
   CallsMMOrigin *origin;
+  const gchar *path;
 
-  g_debug ("Adding new voice-cable modem `%s'",
-           g_dbus_object_get_object_path (object));
+  path = g_dbus_object_get_object_path (object);
+  if (g_hash_table_contains (self->origins, path))
+    {
+      g_warning ("New voice interface on existing"
+                 " origin with path `%s'", path);
+      return;
+    }
+
+  g_debug ("Adding new voice-capable modem `%s'",
+           path);
 
   g_assert (MM_IS_OBJECT (object));
   mm_obj = MM_OBJECT (object);
@@ -97,6 +143,7 @@ add_origin (CallsMMProvider *self,
 
   g_signal_emit_by_name (CALLS_PROVIDER (self),
                          "origin-added", origin);
+  update_status (self);
 }
 
 
@@ -109,6 +156,10 @@ interface_added_cb (CallsMMProvider *self,
 
   info = g_dbus_interface_get_info (interface);
 
+  g_debug ("ModemManager interface `%s' found on object `%s'",
+           info->name,
+           g_dbus_object_get_object_path (object));
+
   if (g_strcmp0 (info->name,
                  "org.freedesktop.ModemManager1.Modem.Voice") == 0)
     {
@@ -118,21 +169,26 @@ interface_added_cb (CallsMMProvider *self,
 
 
 static void
-remove_origin (CallsMMProvider *self,
-               GDBusObject     *object)
+remove_modem_object (CallsMMProvider *self,
+                     const gchar     *path,
+                     GDBusObject     *object)
 {
-  const gchar *path;
   gpointer *origin;
 
-  path = g_dbus_object_get_object_path (object);
-
   origin = g_hash_table_lookup (self->origins, path);
-  g_assert (origin != NULL && CALLS_IS_ORIGIN (origin));
+  if (!origin)
+    {
+      return;
+    }
+
+  g_assert (CALLS_IS_ORIGIN (origin));
 
   g_signal_emit_by_name (CALLS_PROVIDER (self),
                          "origin-removed", CALLS_ORIGIN (origin));
 
   g_hash_table_remove (self->origins, path);
+
+  update_status (self);
 }
 
 
@@ -141,36 +197,20 @@ interface_removed_cb (CallsMMProvider *self,
                       GDBusObject     *object,
                       GDBusInterface  *interface)
 {
+  const gchar *path;
   GDBusInterfaceInfo *info;
 
+  path = g_dbus_object_get_object_path (object);
   info = g_dbus_interface_get_info (interface);
+
+  g_debug ("ModemManager interface `%s' removed on object `%s'",
+           info->name, path);
 
   if (g_strcmp0 (info->name,
                  "org.freedesktop.ModemManager1.Modem.Voice") != 0)
     {
-      remove_origin (self, object);
+      remove_modem_object (self, path, object);
     }
-}
-
-
-static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-  CallsMMProvider *self = CALLS_MM_PROVIDER (object);
-
-  switch (property_id) {
-  case PROP_CONNECTION:
-    g_set_object (&self->connection,
-                  g_value_get_object (value));
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
 }
 
 
@@ -205,6 +245,30 @@ add_mm_objects (CallsMMProvider *self)
 }
 
 
+void
+object_added_cb (CallsMMProvider *self,
+                 GDBusObject     *object)
+{
+  g_debug ("ModemManager object `%s' added",
+           g_dbus_object_get_object_path (object));
+
+  add_mm_object (self, object);
+}
+
+
+void
+object_removed_cb (CallsMMProvider *self,
+                   GDBusObject     *object)
+{
+  const gchar *path;
+
+  path = g_dbus_object_get_object_path (object);
+  g_debug ("ModemManager object `%s' removed", path);
+
+  remove_modem_object (self, path, object);
+}
+
+
 static void
 mm_manager_new_cb (GDBusConnection *connection,
                    GAsyncResult *res,
@@ -221,18 +285,69 @@ mm_manager_new_cb (GDBusConnection *connection,
     }
 
 
-  g_signal_connect_swapped (self->mm, "interface-added",
+  g_signal_connect_swapped (G_DBUS_OBJECT_MANAGER (self->mm),
+                            "interface-added",
                             G_CALLBACK (interface_added_cb), self);
-  g_signal_connect_swapped (self->mm, "interface-removed",
+  g_signal_connect_swapped (G_DBUS_OBJECT_MANAGER (self->mm),
+                            "interface-removed",
                             G_CALLBACK (interface_removed_cb), self);
+  g_signal_connect_swapped (G_DBUS_OBJECT_MANAGER (self->mm),
+                            "object-added",
+                            G_CALLBACK (object_added_cb), self);
+  g_signal_connect_swapped (G_DBUS_OBJECT_MANAGER (self->mm),
+                            "object-removed",
+                            G_CALLBACK (object_removed_cb), self);
 
+  update_status (self);
   add_mm_objects (self);
-  if (g_hash_table_size (self->origins) == 0)
-    {
-      g_warning ("No modem with voice capability available");
-      CALLS_EMIT_MESSAGE (self, "No modems available",
-                          GTK_MESSAGE_WARNING);
-    }
+}
+
+
+static void
+mm_appeared_cb (GDBusConnection *connection,
+                const gchar *name,
+                const gchar *name_owner,
+                CallsMMProvider *self)
+{
+  g_debug ("ModemManager appeared on D-Bus");
+
+  mm_manager_new (connection,
+                  G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE,
+                  NULL,
+                  (GAsyncReadyCallback) mm_manager_new_cb,
+                  self);
+}
+
+
+static gboolean
+remove_origins_cb (const gchar     *path,
+                   CallsMMOrigin   *origin,
+                   CallsMMProvider *self)
+{
+  g_signal_emit_by_name (CALLS_PROVIDER (self),
+                         "origin-removed", CALLS_ORIGIN (origin));
+  return TRUE;
+}
+
+
+static void
+clear_dbus (CallsMMProvider *self)
+{
+  g_hash_table_foreach_remove (self->origins,
+                               (GHRFunc)remove_origins_cb,
+                               self);
+  g_clear_object (&self->mm);
+}
+
+
+void
+mm_vanished_cb (GDBusConnection *connection,
+                const gchar *name,
+                CallsMMProvider *self)
+{
+  g_debug ("ModemManager vanished from D-Bus");
+  clear_dbus (self);
+  update_status (self);
 }
 
 
@@ -242,13 +357,37 @@ constructed (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
-  mm_manager_new (self->connection,
-                  G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE,
-                  NULL,
-                  (GAsyncReadyCallback) mm_manager_new_cb,
-                  self);
+  self->watch_id =
+    g_bus_watch_name (G_BUS_TYPE_SYSTEM,
+                      MM_DBUS_SERVICE,
+                      G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                      (GBusNameAppearedCallback)mm_appeared_cb,
+                      (GBusNameVanishedCallback)mm_vanished_cb,
+                      self, NULL);
+
+  g_debug ("Watching for ModemManager");
 
   parent_class->constructed (object);
+}
+
+
+static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsMMProvider *self = CALLS_MM_PROVIDER (object);
+
+  switch (property_id) {
+  case PROP_STATUS:
+    g_value_set_string (value, self->status);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
 }
 
 
@@ -258,9 +397,13 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
-  g_hash_table_remove_all (self->origins);
-  g_clear_object (&self->mm);
-  g_clear_object (&self->connection);
+  if (self->watch_id)
+    {
+      g_bus_unwatch_name (self->watch_id);
+      self->watch_id = 0;
+    }
+
+  clear_dbus (self);
 
   parent_class->dispose (object);
 }
@@ -273,6 +416,7 @@ finalize (GObject *object)
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
   g_hash_table_unref (self->origins);
+  g_free (self->status);
 
   parent_class->finalize (object);
 }
@@ -283,19 +427,12 @@ calls_mm_provider_class_init (CallsMMProviderClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->constructed = constructed;
+  object_class->get_property = get_property;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  props[PROP_CONNECTION] =
-    g_param_spec_object ("connection",
-                         _("Connection"),
-                         _("The D-Bus connection to use for communication with ModemManager"),
-                         G_TYPE_DBUS_CONNECTION,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+  g_object_class_override_property (object_class, PROP_STATUS, "status");
 }
 
 
@@ -316,17 +453,14 @@ calls_mm_provider_provider_interface_init (CallsProviderInterface *iface)
 static void
 calls_mm_provider_init (CallsMMProvider *self)
 {
+  self->status = g_strdup (_("Initialised"));
   self->origins = g_hash_table_new_full (g_str_hash, g_str_equal,
                                          g_free, g_object_unref);
 }
 
 
 CallsMMProvider *
-calls_mm_provider_new (GDBusConnection *connection)
+calls_mm_provider_new ()
 {
-  g_return_val_if_fail (G_IS_DBUS_CONNECTION (connection), NULL);
-
-  return g_object_new (CALLS_TYPE_MM_PROVIDER,
-                       "connection", connection,
-                       NULL);
+  return g_object_new (CALLS_TYPE_MM_PROVIDER, NULL);
 }

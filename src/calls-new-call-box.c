@@ -38,6 +38,8 @@ struct _CallsNewCallBox
   GtkListStore *origin_store;
   GtkComboBox *origin_box;
   GtkSearchEntry *number_entry;
+  GtkButton *dial;
+  GtkLabel *status;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
@@ -109,6 +111,21 @@ dial_clicked_cb (CallsNewCallBox *self,
 
 
 void
+notify_status_cb (CallsNewCallBox *self,
+                  GParamSpec      *pspec,
+                  CallsProvider   *provider)
+{
+  gchar *status;
+
+  g_assert (CALLS_IS_PROVIDER (provider));
+
+  status = calls_provider_get_status (provider);
+  gtk_label_set_text (self->status, status);
+  g_free (status);
+}
+
+
+void
 update_origin_box (CallsNewCallBox *self)
 {
   GtkTreeModel *origin_store = GTK_TREE_MODEL (self->origin_store);
@@ -117,10 +134,15 @@ update_origin_box (CallsNewCallBox *self)
   if (!gtk_tree_model_get_iter_first (origin_store, &iter))
     {
       gtk_widget_hide (GTK_WIDGET (self->origin_box));
+      gtk_widget_set_sensitive (GTK_WIDGET (self->dial), FALSE);
+      gtk_widget_set_visible (GTK_WIDGET (self->status), TRUE);
       return;
     }
 
   /* We know there is at least one origin. */
+
+  gtk_widget_set_sensitive (GTK_WIDGET (self->dial), TRUE);
+  gtk_widget_set_visible (GTK_WIDGET (self->status), FALSE);
 
   if (!gtk_tree_model_iter_next (origin_store, &iter))
     {
@@ -205,6 +227,8 @@ add_provider_origins (CallsNewCallBox *self, CallsProvider *provider)
 static void
 set_provider (CallsNewCallBox *self, CallsProvider *provider)
 {
+  g_signal_connect_swapped (provider, "notify::status",
+                            G_CALLBACK (notify_status_cb), self);
   g_signal_connect_swapped (provider, "origin-added",
                             G_CALLBACK (add_origin), self);
   g_signal_connect_swapped (provider, "origin-removed",
@@ -282,6 +306,8 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_store);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_box);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, number_entry);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, status);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_pad_deleted_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);

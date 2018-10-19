@@ -45,6 +45,7 @@ struct _CallsProviderInterface
 
 
 const gchar * calls_provider_get_name (CallsProvider *self);
+gchar * calls_provider_get_status (CallsProvider *self);
 GList * calls_provider_get_origins (CallsProvider *self);
 
 G_END_DECLS

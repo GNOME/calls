@@ -52,7 +52,6 @@ struct _CallsApplication
 {
   GtkApplication parent_instance;
 
-  GDBusConnection *connection;
   CallsProvider *provider;
 };
 
@@ -60,12 +59,11 @@ G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION)
 
 
 static void
-finalize (GObject *object)
+dispose (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
 
   g_clear_object (&self->provider);
-  g_clear_object (&self->connection);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
 }
@@ -78,14 +76,7 @@ startup (GApplication *application)
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
-  self->connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-
-  if (!self->connection)
-    {
-      g_error ("Error creating D-Bus connection: %s", error->message);
-    }
-
-  self->provider = CALLS_PROVIDER (calls_mm_provider_new (self->connection));
+  self->provider = CALLS_PROVIDER (calls_mm_provider_new ());
   g_assert (self->provider != NULL);
 
   g_set_prgname (APP_ID);
@@ -123,7 +114,7 @@ calls_application_class_init (CallsApplicationClass *klass)
   GApplicationClass *application_class = G_APPLICATION_CLASS (klass);
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = finalize;
+  object_class->dispose = dispose;
 
   application_class->startup = startup;
   application_class->activate = activate;
