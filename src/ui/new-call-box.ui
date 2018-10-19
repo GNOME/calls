@@ -109,5 +109,17 @@
         <property name="fill">True</property>
       </packing>
     </child>
+    <child>
+      <object class="GtkLabel" id="status">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="wrap">True</property>
+       </object>
+       <packing>
+         <property name="expand">False</property>
+         <property name="fill">True</property>
+         <property name="padding">16</property>
+       </packing>
+     </child>
   </template>
 </interface>

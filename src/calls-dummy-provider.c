@@ -44,6 +44,12 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyProvider, calls_dummy_provider, G_TYPE_OBJECT
                                                 calls_dummy_provider_provider_interface_init))
 
 
+enum {
+  PROP_0,
+  PROP_STATUS,
+  PROP_LAST_PROP,
+};
+
 static const gchar *
 get_name (CallsProvider *iface)
 {
@@ -67,6 +73,24 @@ calls_dummy_provider_new ()
 
 
 static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  switch (property_id) {
+  case PROP_STATUS:
+    g_value_set_string (value, "Normal");
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
 dispose (GObject *object)
 {
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
@@ -85,6 +109,9 @@ calls_dummy_provider_class_init (CallsDummyProviderClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->dispose = dispose;
+  object_class->get_property = get_property;
+
+  g_object_class_override_property (object_class, PROP_STATUS, "status");
 }
 
 
