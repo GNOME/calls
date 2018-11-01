@@ -29,6 +29,7 @@
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "calls-enumerate.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -231,9 +232,6 @@ add_call (CallsCallWindow *self,
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  g_signal_connect_swapped (call, "message",
-                            G_CALLBACK (show_message), self);
-
   holder = calls_call_holder_new (call);
 
   display = calls_call_holder_get_display (holder);
@@ -288,7 +286,7 @@ remove_calls (CallsCallWindow *self)
 {
   GList *children, *child;
 
- /* Safely remove the call stack's children. */
+  /* Safely remove the call stack's children. */
   children = gtk_container_get_children (GTK_CONTAINER (self->call_stack));
   for (child = children; child != NULL; child = child->next)
     gtk_container_remove (GTK_CONTAINER (self->call_stack),
@@ -302,56 +300,23 @@ remove_calls (CallsCallWindow *self)
 
 
 static void
-add_origin_calls (CallsCallWindow *self, CallsOrigin *origin)
-{
-  GList *calls, *node;
-
-  calls = calls_origin_get_calls (origin);
-
-  for (node = calls; node; node = node->next)
-    {
-      add_call (self, CALLS_CALL (node->data));
-    }
-
-  g_list_free (calls);
-}
-
-
-static void
-add_origin (CallsCallWindow *self, CallsOrigin *origin)
-{
-  g_signal_connect_swapped (origin, "call-added",
-                            G_CALLBACK (add_call), self);
-  g_signal_connect_swapped (origin, "call-removed",
-                            G_CALLBACK (remove_call), self);
-
-  add_origin_calls (self, origin);
-}
-
-
-static void
-add_provider_origins (CallsCallWindow *self, CallsProvider *provider)
-{
-  GList *origins, *node;
-
-  origins = calls_provider_get_origins (provider);
-
-  for (node = origins; node; node = node->next)
-    {
-      add_origin (self, CALLS_ORIGIN (node->data));
-    }
-
-  g_list_free (origins);
-}
-
-
-static void
 set_provider (CallsCallWindow *self, CallsProvider *provider)
 {
-  g_signal_connect_swapped (provider, "origin-added",
-                            G_CALLBACK (add_origin), self);
+  CallsEnumerateParams *params;
 
-  add_provider_origins (self, provider);
+  params = calls_enumerate_params_new (self);
+
+  calls_enumerate_params_add
+    (params, CALLS_TYPE_ORIGIN, "call-added", G_CALLBACK (add_call));
+  calls_enumerate_params_add
+    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (remove_call));
+
+  calls_enumerate_params_add
+    (params, CALLS_TYPE_CALL, "message", G_CALLBACK (show_message));
+
+  calls_enumerate (provider, params);
+
+  g_object_unref (params);
 }
 
 static void
