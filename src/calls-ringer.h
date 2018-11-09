@@ -22,26 +22,19 @@
  *
  */
 
-#include <glib/gi18n.h>
-#include <gtk/gtk.h>
+#ifndef CALLS_RINGER_H__
+#define CALLS_RINGER_H__
 
-#include "calls-application.h"
-#include "config.h"
+#include "calls-provider.h"
 
-int
-main (int    argc,
-      char **argv)
-{
-  GApplication *app;
-  int status;
+G_BEGIN_DECLS
 
-  textdomain (GETTEXT_PACKAGE);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+#define CALLS_TYPE_RINGER (calls_ringer_get_type ())
 
-  app = G_APPLICATION (calls_application_new ());
-  status = g_application_run (app, argc, argv);
-  g_object_unref (app);
+G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject);
 
-  return status;
-}
+CallsRinger *calls_ringer_new (CallsProvider *provider);
+
+G_END_DECLS
+
+#endif /* CALLS_RINGER_H__ */

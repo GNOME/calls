@@ -22,26 +22,19 @@
  *
  */
 
-#include <glib/gi18n.h>
-#include <gtk/gtk.h>
+#ifndef CALLS_ENUMERATE_H__
+#define CALLS_ENUMERATE_H__
 
-#include "calls-application.h"
-#include "config.h"
+#include "calls-provider.h"
+#include "calls-enumerate-params.h"
 
-int
-main (int    argc,
-      char **argv)
-{
-  GApplication *app;
-  int status;
+#include <glib-object.h>
 
-  textdomain (GETTEXT_PACKAGE);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+G_BEGIN_DECLS
 
-  app = G_APPLICATION (calls_application_new ());
-  status = g_application_run (app, argc, argv);
-  g_object_unref (app);
+void calls_enumerate (CallsProvider        *provider,
+                      CallsEnumerateParams *params);
 
-  return status;
-}
+G_END_DECLS
+
+#endif /* CALLS_ENUMERATE_H__ */

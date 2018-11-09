@@ -27,6 +27,7 @@
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "calls-enumerate.h"
 #include "config.h"
 #include "util.h"
 
@@ -165,66 +166,9 @@ info_response_cb (GtkInfoBar      *infobar,
 
 
 static void
-add_call (CallsMainWindow *self, CallsCall *call)
+call_removed_cb (CallsMainWindow *self, CallsCall *call, const gchar *reason)
 {
-  g_signal_connect_swapped (call, "message",
-                            G_CALLBACK (show_message), self);
-}
-
-
-static void
-remove_call (CallsMainWindow *self, CallsCall *call, const gchar *reason)
-{
-  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
-  g_return_if_fail (CALLS_IS_CALL (call));
-
   show_message(self, reason, GTK_MESSAGE_INFO);
-}
-
-
-static void
-add_origin_calls (CallsMainWindow *self, CallsOrigin *origin)
-{
-  GList *calls, *node;
-
-  calls = calls_origin_get_calls (origin);
-
-  for (node = calls; node; node = node->next)
-    {
-      add_call (self, CALLS_CALL (node->data));
-    }
-
-  g_list_free (calls);
-}
-
-
-static void
-add_origin (CallsMainWindow *self, CallsOrigin *origin)
-{
-  g_signal_connect_swapped (origin, "message",
-                            G_CALLBACK (show_message), self);
-  g_signal_connect_swapped (origin, "call-added",
-                            G_CALLBACK (add_call), self);
-  g_signal_connect_swapped (origin, "call-removed",
-                            G_CALLBACK (remove_call), self);
-
-  add_origin_calls (self, origin);
-}
-
-
-static void
-add_provider_origins (CallsMainWindow *self, CallsProvider *provider)
-{
-  GList *origins, *node;
-
-  origins = calls_provider_get_origins (provider);
-
-  for (node = origins; node; node = node->next)
-    {
-      add_origin (self, CALLS_ORIGIN (node->data));
-    }
-
-  g_list_free (origins);
 }
 
 
@@ -249,6 +193,35 @@ set_property (GObject      *object,
 
 
 static void
+set_up_provider (CallsMainWindow *self)
+{
+  const GType msg_obj_types[3] =
+    {
+      CALLS_TYPE_PROVIDER,
+      CALLS_TYPE_ORIGIN,
+      CALLS_TYPE_CALL
+    };
+  CallsEnumerateParams *params;
+  unsigned i;
+
+  params = calls_enumerate_params_new (self);
+
+  for (i = 0; i < 3; ++i)
+    {
+      calls_enumerate_params_add
+        (params, msg_obj_types[i], "message", G_CALLBACK (show_message));
+    }
+
+  calls_enumerate_params_add
+    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (call_removed_cb));
+
+  calls_enumerate (self->provider, params);
+
+  g_object_unref (params);
+}
+
+
+static void
 constructed (GObject *object)
 {
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
@@ -256,13 +229,7 @@ constructed (GObject *object)
   GSimpleActionGroup *simple_action_group;
   CallsNewCallBox *new_call_box;
 
-  /* Set up provider */
-  g_signal_connect_swapped (self->provider, "message",
-                            G_CALLBACK (show_message), self);
-  g_signal_connect_swapped (self->provider, "origin-added",
-                            G_CALLBACK (add_origin), self);
-
-  add_provider_origins (self, self->provider);
+  set_up_provider (self);
 
   /* Add new call box */
   new_call_box = calls_new_call_box_new (self->provider);

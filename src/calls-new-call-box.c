@@ -23,8 +23,7 @@
  */
 
 #include "calls-new-call-box.h"
-
-#include "calls-origin.h"
+#include "calls-enumerate.h"
 
 #include <glib/gi18n.h>
 #define HANDY_USE_UNSTABLE_API
@@ -209,32 +208,26 @@ remove_origins (CallsNewCallBox *self)
 
 
 static void
-add_provider_origins (CallsNewCallBox *self, CallsProvider *provider)
-{
-  GList *origins, *node;
-
-  origins = calls_provider_get_origins (provider);
-
-  for (node = origins; node; node = node->next)
-    {
-      add_origin (self, CALLS_ORIGIN (node->data));
-    }
-
-  g_list_free (origins);
-}
-
-
-static void
 set_provider (CallsNewCallBox *self, CallsProvider *provider)
 {
-  g_signal_connect_swapped (provider, "notify::status",
-                            G_CALLBACK (notify_status_cb), self);
-  g_signal_connect_swapped (provider, "origin-added",
-                            G_CALLBACK (add_origin), self);
-  g_signal_connect_swapped (provider, "origin-removed",
-                            G_CALLBACK (remove_origin), self);
+  CallsEnumerateParams *params;
 
-  add_provider_origins (self, provider);
+  params = calls_enumerate_params_new (self);
+
+#define add(detail,cb)                          \
+  calls_enumerate_params_add                    \
+    (params, CALLS_TYPE_PROVIDER, detail,       \
+     G_CALLBACK (cb));
+
+  add ("notify::status", notify_status_cb);
+  add ("origin-added",   add_origin);
+  add ("origin-removed", remove_origin);
+
+#undef add
+
+  calls_enumerate (provider, params);
+
+  g_object_unref (params);
 }
 
 static void

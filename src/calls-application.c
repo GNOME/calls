@@ -37,6 +37,7 @@
 #include "calls-new-call-box.h"
 #include "calls-encryption-indicator.h"
 #include "calls-mm-provider.h"
+#include "calls-ringer.h"
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-application.h"
@@ -53,6 +54,7 @@ struct _CallsApplication
   GtkApplication parent_instance;
 
   CallsProvider *provider;
+  CallsRinger   *ringer;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION)
@@ -63,6 +65,7 @@ dispose (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
 
+  g_clear_object (&self->ringer);
   g_clear_object (&self->provider);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
@@ -76,11 +79,14 @@ startup (GApplication *application)
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
+  g_set_prgname (APP_ID);
+  g_set_application_name (_("Calls"));
+
   self->provider = CALLS_PROVIDER (calls_mm_provider_new ());
   g_assert (self->provider != NULL);
 
-  g_set_prgname (APP_ID);
-  g_set_application_name (_("Calls"));
+  self->ringer = calls_ringer_new (self->provider);
+  g_assert (self->ringer != NULL);
 }
 
 static void

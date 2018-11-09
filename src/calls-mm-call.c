@@ -81,12 +81,21 @@ get_state (CallsCall *call)
 
 
 static void
-change_state (CallsMMCall *self,
-              MMCallState  state)
+change_state (CallsMMCall    *self,
+              CallsCallState  state)
 {
+  CallsCallState old_state = self->state;
+
+  if (old_state == state)
+    {
+      return;
+    }
+
   self->state = state;
   g_signal_emit_by_name (CALLS_CALL (self),
-                         "state-changed", state);
+                         "state-changed",
+                         state,
+                         old_state);
 }
 
 
