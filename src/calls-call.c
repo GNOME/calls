@@ -102,12 +102,17 @@ static guint signals [SIGNAL_LAST_SIGNAL];
 static void
 calls_call_default_init (CallsCallInterface *iface)
 {
-  GType arg_types = CALLS_TYPE_CALL_STATE;
+  GType arg_types[2] =
+    {
+      CALLS_TYPE_CALL_STATE,
+      CALLS_TYPE_CALL_STATE
+    };
 
   /**
    * CallsCall::state-changed:
    * @self: The #CallsCall instance.
-   * @state: The new state of the call.
+   * @new_state: The new state of the call.
+   * @old_state: The old state of the call.
    *
    * This signal is emitted when the state of the call changes, for
    * example when it's answered or when the call is disconnected.
@@ -118,7 +123,7 @@ calls_call_default_init (CallsCallInterface *iface)
 		   G_SIGNAL_RUN_LAST,
 		   NULL, NULL, NULL, NULL,
 		   G_TYPE_NONE,
-		   1, &arg_types);
+		   2, arg_types);
 }
 
 

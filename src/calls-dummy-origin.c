@@ -110,10 +110,11 @@ remove_calls (CallsDummyOrigin *self, const gchar *reason)
 
 static void
 call_state_changed_cb (CallsDummyOrigin *self,
-                       CallsCallState    state,
+                       CallsCallState    new_state,
+                       CallsCallState    old_state,
                        CallsCall        *call)
 {
-  if (state != CALLS_CALL_STATE_DISCONNECTED)
+  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
     {
       return;
     }

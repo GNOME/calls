@@ -85,8 +85,18 @@ change_state (CallsCall      *call,
               CallsDummyCall *self,
               CallsCallState  state)
 {
+  CallsCallState old_state = self->state;
+
+  if (old_state == state)
+    {
+      return;
+    }
+
   self->state = state;
-  g_signal_emit_by_name (call, "state-changed", state);
+  g_signal_emit_by_name (call,
+                         "state-changed",
+                         state,
+                         old_state);
 }
 
 static void
