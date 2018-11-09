@@ -32,15 +32,15 @@ int
 main (int    argc,
       char **argv)
 {
-  GtkApplication *app;
+  GApplication *app;
   int status;
 
   textdomain (GETTEXT_PACKAGE);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 
-  app = GTK_APPLICATION (calls_application_new ());
-  status = g_application_run (G_APPLICATION (app), argc, argv);
+  app = G_APPLICATION (calls_application_new ());
+  status = g_application_run (app, argc, argv);
   g_object_unref (app);
 
   return status;
