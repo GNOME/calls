@@ -27,6 +27,9 @@
 #include "calls-provider.h"
 #include "calls-dummy-origin.h"
 
+#include <libpeas/peas.h>
+
+
 struct _CallsDummyProvider
 {
   GObject parent_instance;
@@ -37,12 +40,26 @@ struct _CallsDummyProvider
 static void calls_dummy_provider_message_source_interface_init (CallsProviderInterface *iface);
 static void calls_dummy_provider_provider_interface_init (CallsProviderInterface *iface);
 
-G_DEFINE_TYPE_WITH_CODE (CallsDummyProvider, calls_dummy_provider, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                                                calls_dummy_provider_message_source_interface_init)
-                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_PROVIDER,
-                                                calls_dummy_provider_provider_interface_init))
 
+#ifdef FOR_TESTING
+
+G_DEFINE_TYPE_WITH_CODE
+(CallsDummyProvider, calls_dummy_provider, G_TYPE_OBJECT,
+ G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                        calls_dummy_provider_message_source_interface_init)
+ G_IMPLEMENT_INTERFACE (CALLS_TYPE_PROVIDER,
+                        calls_dummy_provider_provider_interface_init))
+
+#else
+
+G_DEFINE_DYNAMIC_TYPE_EXTENDED
+(CallsDummyProvider, calls_dummy_provider, G_TYPE_OBJECT, 0,
+ G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
+                                calls_dummy_provider_message_source_interface_init)
+ G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_PROVIDER,
+                                calls_dummy_provider_provider_interface_init))
+
+#endif /* FOR_TESTING */
 
 enum {
   PROP_0,
@@ -65,10 +82,15 @@ get_origins (CallsProvider *iface)
 }
 
 
-CallsDummyProvider *
-calls_dummy_provider_new ()
+static void
+constructed (GObject *object)
 {
-  return g_object_new (CALLS_TYPE_DUMMY_PROVIDER, NULL);
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
+
+  calls_dummy_provider_add_origin (self, "Dummy origin");
+
+  parent_class->constructed (object);
 }
 
 
@@ -108,8 +130,9 @@ calls_dummy_provider_class_init (CallsDummyProviderClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = dispose;
+  object_class->constructed = constructed;
   object_class->get_property = get_property;
+  object_class->dispose = dispose;
 
   g_object_class_override_property (object_class, PROP_STATUS, "status");
 }
@@ -142,3 +165,31 @@ calls_dummy_provider_add_origin (CallsDummyProvider *self,
   self->origins = g_list_append (self->origins,
                                  calls_dummy_origin_new (name));
 }
+
+
+CallsDummyProvider *
+calls_dummy_provider_new ()
+{
+  return g_object_new (CALLS_TYPE_DUMMY_PROVIDER, NULL);
+}
+
+
+#ifndef FOR_TESTING
+
+static void
+calls_dummy_provider_class_finalize (CallsDummyProviderClass *klass)
+{
+}
+
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+  calls_dummy_provider_register_type (G_TYPE_MODULE (module));
+
+  peas_object_module_register_extension_type (module,
+                                              CALLS_TYPE_PROVIDER,
+                                              CALLS_TYPE_DUMMY_PROVIDER);
+}
+
+#endif /* FOR_TESTING */

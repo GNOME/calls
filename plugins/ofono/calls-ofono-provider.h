@@ -34,8 +34,6 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsOfonoProvider, calls_ofono_provider, CALLS, OFONO_PROVIDER, GObject);
 
-CallsOfonoProvider *calls_ofono_provider_new (GDBusConnection *connection);
-
 G_END_DECLS
 
 #endif /* CALLS_OFONO_PROVIDER_H__ */

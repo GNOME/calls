@@ -29,6 +29,7 @@
 #include "calls-origin.h"
 
 #include <libmm-glib.h>
+#include <libpeas/peas.h>
 #include <glib/gi18n.h>
 
 struct _CallsMMProvider
@@ -48,11 +49,13 @@ struct _CallsMMProvider
 static void calls_mm_provider_message_source_interface_init (CallsProviderInterface *iface);
 static void calls_mm_provider_provider_interface_init (CallsProviderInterface *iface);
 
-G_DEFINE_TYPE_WITH_CODE (CallsMMProvider, calls_mm_provider, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                                                calls_mm_provider_message_source_interface_init)
-                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_PROVIDER,
-                                                calls_mm_provider_provider_interface_init))
+G_DEFINE_DYNAMIC_TYPE_EXTENDED
+(CallsMMProvider, calls_mm_provider, G_TYPE_OBJECT, 0,
+ G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
+                                calls_mm_provider_message_source_interface_init)
+ G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_PROVIDER,
+                                calls_mm_provider_provider_interface_init))
+
 
 enum {
   PROP_0,
@@ -437,6 +440,11 @@ calls_mm_provider_class_init (CallsMMProviderClass *klass)
 
 
 static void
+calls_mm_provider_class_finalize (CallsMMProviderClass *klass)
+{
+}
+
+static void
 calls_mm_provider_message_source_interface_init (CallsProviderInterface *iface)
 {
 }
@@ -459,8 +467,12 @@ calls_mm_provider_init (CallsMMProvider *self)
 }
 
 
-CallsMMProvider *
-calls_mm_provider_new ()
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
 {
-  return g_object_new (CALLS_TYPE_MM_PROVIDER, NULL);
+  calls_mm_provider_register_type (G_TYPE_MODULE (module));
+
+  peas_object_module_register_extension_type (module,
+                                              CALLS_TYPE_PROVIDER,
+                                              CALLS_TYPE_MM_PROVIDER);
 }

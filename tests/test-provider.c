@@ -43,14 +43,9 @@ test_dummy_provider_origins (ProviderFixture *fixture,
 {
   GList *origins;
 
-  calls_dummy_provider_add_origin (fixture->dummy_provider,
-                                   "Test origin 1");
-  calls_dummy_provider_add_origin (fixture->dummy_provider,
-                                   "Test origin 2");
-
   origins = calls_provider_get_origins
     (CALLS_PROVIDER (fixture->dummy_provider));
-  g_assert_cmpuint (g_list_length (origins), ==, 2);
+  g_assert_cmpuint (g_list_length (origins), ==, 1);
   g_list_free (origins);
 }
 
