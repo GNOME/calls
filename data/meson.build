@@ -27,5 +27,23 @@ if appstream_util.found()
 endif
 
 # Icons
-install_data('sm.puri.Calls.png',
-             install_dir : join_paths(datadir, 'icons', 'hicolor', '256x256', 'apps'))
+install_data(
+  'sm.puri.Calls.svg',
+  install_dir: join_paths(
+    datadir,
+    'icons',
+    'hicolor',
+    'scalable',
+    'apps'
+  )
+)
+install_data(
+  'sm.puri.Calls-symbolic.svg',
+  install_dir: join_paths(
+    datadir,
+    'icons',
+    'hicolor',
+    'symbolic',
+    'apps'
+  )
+)
