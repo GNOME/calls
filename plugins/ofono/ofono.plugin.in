@@ -1,0 +1,7 @@
+[Plugin]
+Module=ofono
+Name=oFono
+Description=oFono calls provider
+Authors=Bob Ham <rah@settrans.net>
+Copyright=Copyright (C) 2018 Purism SPC
+Website=@PACKAGE_URL_RAW@

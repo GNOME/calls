@@ -11,6 +11,7 @@ test_env = [
 
 test_cflags = [
   '-fPIE',
+  '-DFOR_TESTING'
 ]
 
 test_link_args = [
@@ -38,13 +39,16 @@ foreach test : tests
                     'common.h' ]
 
   t = executable(name, test_sources,
-                 calls_sources, calls_dummy_sources, calls_enum_sources, calls_resources,
+                 calls_sources, dummy_sources, calls_enum_sources, calls_resources,
                  c_args : test_cflags,
                  link_args: test_link_args,
                  link_with : gdbofono_lib,
                  dependencies: calls_deps,
-                 include_directories : include_directories('..',
-                                                           join_paths('..', 'src')),
+                 include_directories : [
+                   top_include,
+                   src_include,
+                   dummy_include
+                 ]
                 )
   test(name, t, env: test_env)
 endforeach

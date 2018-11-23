@@ -9,6 +9,7 @@ Build-Depends:
  modemmanager-dev,
  libmm-glib-dev,
  libgsound-dev,
+ libpeas-dev,
  meson,
  pkg-config,
 # to run the tests

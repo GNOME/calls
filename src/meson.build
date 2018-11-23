@@ -23,12 +23,13 @@
 
 gnome = import('gnome')
 
+src_include = include_directories('.')
+
 calls_deps = [ dependency('gobject-2.0'),
                dependency('gtk+-3.0'),
                dependency('libhandy-0.0'),
-               dependency('ModemManager'),
-               dependency('mm-glib'),
                dependency('gsound'),
+               dependency('libpeas-1.0'),
              ]
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
@@ -37,12 +38,6 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-provider.c', 'calls-provider.h',
                        'calls-enumerate-params.c', 'calls-enumerate-params.h',
                        'calls-enumerate.c', 'calls-enumerate.h',
-                       'calls-ofono-call.c', 'calls-ofono-call.h',
-                       'calls-ofono-origin.c', 'calls-ofono-origin.h',
-                       'calls-ofono-provider.c', 'calls-ofono-provider.h',
-                       'calls-mm-call.c', 'calls-mm-call.h',
-                       'calls-mm-origin.c', 'calls-mm-origin.h',
-                       'calls-mm-provider.c', 'calls-mm-provider.h',
                        'calls-party.c', 'calls-party.h',
                        'calls-call-data.c', 'calls-call-data.h',
                        'calls-call-holder.c', 'calls-call-holder.h',
@@ -60,23 +55,12 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'util.c', 'util.h',
                       ])
 
-calls_dummy_sources = files(['calls-dummy-call.c', 'calls-dummy-call.h',
-                             'calls-dummy-origin.c', 'calls-dummy-origin.h',
-                             'calls-dummy-provider.c', 'calls-dummy-provider.h',
-                            ])
-
-prefix = get_option('prefix')
-config_data = configuration_data()
-config_data.set_quoted('APP_ID', calls_id)
-config_data.set_quoted('GETTEXT_PACKAGE', calls_name)
-config_data.set_quoted('LOCALEDIR', join_paths(prefix, get_option('localedir')))
-config_data.set_quoted('PACKAGE_URL', calls_homepage)
-config_data.set_quoted('PACKAGE_VERSION', calls_version)
-config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
+calls_config_data = config_data
+calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
 
 config_h_in = configure_file(
   output: 'config.h.in',
-  configuration: config_data
+  configuration: calls_config_data
 )
 
 config_h = vcs_tag(
@@ -99,6 +83,6 @@ calls_resources = gnome.compile_resources(
 executable('calls',
            calls_sources, calls_enum_sources, calls_resources, 'main.c',
            dependencies : calls_deps,
-           link_with : gdbofono_lib,
+           export_dynamic : true,
            include_directories : include_directories('..'),
            install : true)

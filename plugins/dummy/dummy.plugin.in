@@ -1,0 +1,7 @@
+[Plugin]
+Module=dummy
+Name=Dummy
+Description=Dummy calls provider
+Authors=Bob Ham <rah@settrans.net>
+Copyright=Copyright (C) 2018 Purism SPC
+Website=@PACKAGE_URL_RAW@

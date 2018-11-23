@@ -19,11 +19,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-project('call', 'c',
-          version: '0.0.0',
-          license: 'GPLv3+',
-    meson_version: '>= 0.42.0',
-  default_options: [ 'warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11' ],
+project(
+  'calls',
+  'c',
+  version: '0.0.0',
+  license: 'GPLv3+',
+  meson_version: '>= 0.46.0',
+  default_options: [
+    'warning_level=1',
+    'buildtype=debugoptimized',
+    'c_std=gnu11'
+  ]
 )
 
 calls_id = 'sm.puri.Calls'
@@ -31,9 +37,26 @@ calls_homepage = 'https://source.puri.sm/Librem5/calls'
 calls_name = meson.project_name()
 calls_version = meson.project_version()
 
-subdir('libgdbofono')
+top_include = include_directories('.')
+
+prefix = get_option('prefix')
+libdir = get_option('libdir')
+localedir = get_option('localedir')
+full_localedir = join_paths(prefix, localedir)
+full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
+
+config_data = configuration_data()
+config_data.set_quoted('APP_ID', calls_id)
+config_data.set_quoted('GETTEXT_PACKAGE', calls_name)
+config_data.set_quoted('LOCALEDIR', full_localedir)
+config_data.set_quoted('PLUGIN_LIBDIR', full_calls_plugin_libdir)
+config_data.set_quoted('PACKAGE_URL', calls_homepage)
+config_data.set_quoted('PACKAGE_VERSION', calls_version)
+config_data.set('PACKAGE_URL_RAW', calls_homepage)
+
 subdir('po')
 subdir('src')
+subdir('plugins')
 subdir('doc')
 subdir('data')
 subdir('tests')
