@@ -50,6 +50,9 @@
         {
             "name" : "libhandy",
             "buildsystem" : "meson",
+            "config-opts": [
+                "-Dglade_catalog=false"
+            ],
             "sources" : [
                 {
                     "type" : "git",
