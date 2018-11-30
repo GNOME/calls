@@ -37,7 +37,7 @@ struct _CallsCallSelectorItem
 {
   GtkEventBox parent_instance;
 
-  CallsCallHolder *holder;
+  CallsCallDisplay *display;
 
   GtkBox *main_box;
   GtkLabel *name;
@@ -75,31 +75,12 @@ calls_call_selector_item_new (CallsCallHolder *holder)
                        NULL);
 }
 
-CallsCallHolder *
-calls_call_selector_item_get_holder (CallsCallSelectorItem *item)
+
+CallsCallDisplay *
+calls_call_selector_item_get_display (CallsCallSelectorItem *item)
 {
   g_return_val_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (item), NULL);
-  return item->holder;
-}
-
-
-static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
-{
-  CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
-
-  switch (property_id) {
-  case PROP_HOLDER:
-    g_value_set_object (value, self->holder);
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
+  return item->display;
 }
 
 
@@ -127,20 +108,16 @@ set_party (CallsCallSelectorItem *self, CallsParty *party)
 
 
 static void
-set_call_data (CallsCallSelectorItem *self, CallsCallData *data)
+set_call_holder (CallsCallSelectorItem *self, CallsCallHolder *holder)
 {
+  CallsCallData *data = calls_call_holder_get_data (holder);
   CallsCall *call = calls_call_data_get_call (data);
 
   set_call (self, call);
   set_party (self, calls_call_data_get_party (data));
-}
+  call_state_changed_cb (self, calls_call_get_state (call));
 
-
-static void
-set_call_holder (CallsCallSelectorItem *self, CallsCallHolder *holder)
-{
-  set_call_data (self, calls_call_holder_get_data (holder));
-  g_set_object (&self->holder, holder);
+  g_set_object (&self->display, calls_call_holder_get_display (holder));
 }
 
 
@@ -171,19 +148,6 @@ calls_call_selector_item_init (CallsCallSelectorItem *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 }
 
-static void
-constructed (GObject *object)
-{
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_EVENT_BOX);
-  CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
-  CallsCallData *data = calls_call_holder_get_data (self->holder);
-  CallsCall *call = calls_call_data_get_call (data);
-
-  call_state_changed_cb (self, calls_call_get_state (call));
-
-  parent_class->constructed (object);
-}
-
 
 static void
 dispose (GObject *object)
@@ -191,16 +155,11 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_EVENT_BOX);
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
-  // Mutual reference
-  if (self->holder)
-    {
-      GObject *holder = G_OBJECT (self->holder);
-      self->holder = NULL;
-      g_object_unref (holder);
-    }
+  g_clear_object (&self->display);
 
   parent_class->dispose (object);
 }
+
 
 static void
 calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
@@ -208,9 +167,7 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->get_property = get_property;
   object_class->set_property = set_property;
-  object_class->constructed = constructed;
   object_class->dispose = dispose;
 
   props[PROP_HOLDER] =
@@ -218,7 +175,7 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
                          _("Call holder"),
                          _("The holder for this call"),
                          CALLS_TYPE_CALL_HOLDER,
-                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
    
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
