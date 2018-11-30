@@ -48,6 +48,26 @@
             ]
         },
         {
+            "name" : "gsound",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/gsound/1.0/gsound-1.0.2.tar.xz",
+                    "sha256" : "bba8ff30eea815037e53bee727bbd5f0b6a2e74d452a7711b819a7c444e78e53"
+                }
+            ]
+        },
+        {
+            "name" : "libpeas",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/libpeas/1.22/libpeas-1.22.0.tar.xz",
+                    "sha256" : "5b2fc0f53962b25bca131a5ec0139e6fef8e254481b6e777975f7a1d2702a962"
+                }
+            ]
+        },
+        {
             "name" : "libhandy",
             "buildsystem" : "meson",
             "config-opts": [
