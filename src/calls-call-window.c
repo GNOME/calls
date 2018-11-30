@@ -188,14 +188,12 @@ find_call_holder (CallsCallWindow     *self,
 
 
 static void
-set_focus (CallsCallWindow *self,
-           CallsCallHolder *holder)
+set_focus (CallsCallWindow  *self,
+           CallsCallDisplay *display)
 {
   gtk_stack_set_visible_child_name (self->main_stack, "active-call");
   gtk_stack_set_visible_child_name (self->header_bar_stack, "active-call");
-  gtk_stack_set_visible_child
-    (self->call_stack,
-     GTK_WIDGET (calls_call_holder_get_display (holder)));
+  gtk_stack_set_visible_child (self->call_stack, GTK_WIDGET (display));
 }
 
 
@@ -216,9 +214,9 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 {
   GtkWidget *widget = gtk_bin_get_child (GTK_BIN (child));
   CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
-  CallsCallHolder *holder = calls_call_selector_item_get_holder (item);
+  CallsCallDisplay *display = calls_call_selector_item_get_display (item);
 
-  set_focus (self, holder);
+  set_focus (self, display);
 }
 
 
@@ -242,7 +240,7 @@ add_call (CallsCallWindow *self,
   g_object_unref (holder);
 
   update_visibility (self);
-  set_focus (self, holder);
+  set_focus (self, display);
 }
 
 

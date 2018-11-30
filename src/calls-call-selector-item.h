@@ -25,6 +25,8 @@
 #ifndef CALLS_CALL_SELECTOR_ITEM_H__
 #define CALLS_CALL_SELECTOR_ITEM_H__
 
+#include "calls-call-display.h"
+
 #include <gtk/gtk.h>
 
 typedef struct _CallsCallHolder CallsCallHolder;
@@ -36,8 +38,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsCallSelectorItem, calls_call_selector_item,
                       CALLS, CALL_SELECTOR_ITEM, GtkEventBox);
 
-CallsCallSelectorItem *calls_call_selector_item_new (CallsCallHolder *holder);
-CallsCallHolder *calls_call_selector_item_get_holder (CallsCallSelectorItem *item);
+CallsCallSelectorItem *calls_call_selector_item_new         (CallsCallHolder       *holder);
+CallsCallDisplay *     calls_call_selector_item_get_display (CallsCallSelectorItem *item);
 
 G_END_DECLS
 
