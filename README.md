@@ -8,21 +8,40 @@ Calls is licensed under the GPLv3+.
 
 ## Dependencies
 
-    sudo apt-get install libgtk-3-dev libhandy-0.0-dev modemmanager-dev libmm-glib-dev
+    sudo apt-get install libgtk-3-dev libhandy-0.0-dev \
+    modemmanager-dev libmm-glib-dev libgsound-dev libpeas-dev
 
 ## Building
 
 We use the meson and thereby Ninja.  The quickest way to get going is
 to do the following:
 
-    meson ../calls-build
+    meson -Dprefix=/usr/local/stow/calls-git ../calls-build
     ninja -C ../calls-build
     ninja -C ../calls-build install
 
 
 ## Running
-Calls depends on oFono Modem objects being present on D-Bus.  To run
-oFono with useful output:
+Calls has a variety of backends.  The default backend is "mm", which
+utilises ModemManager.  To choose a different backend, use the -p
+command-line option.  For example, to run with the dummy backend and
+some useful debugging output:
+
+    export G_MESSAGES_DEBUG=all
+    /usr/local/stow/calls-git/bin/calls -p dummy
+
+If using ModemManager, Calls will wait for ModemManager to appear on
+D-Bus and then wait for usable modems to appear.  The UI will be
+inactive and display a status message until a usable modem appears.
+
+
+### oFono
+There is also an oFono backend, "ofono".  This was the first backend
+developed but has been superceded by the ModemManager backend so it
+may suffer from a lack of attention.
+
+The ofono backend depends on oFono Modem objects being present on
+D-Bus.  To run oFono with useful output:
 
     sudo OFONO_AT_DEBUG=1 ofonod -n -d
 
@@ -37,12 +56,11 @@ useful to bring up a modem to a suitable state.  For example:
 
 Then run Calls:
 
-    cd $CALLS_SOURCE
-    ../calls-build/src/calls
+    /usr/local/stow/calls-git/bin/calls -p ofono
 
 
-### Phonesim
-One can also make use of the modem simulator, phonesim (in the
+#### Phonesim
+One can also make use of the oFono modem simulator, phonesim (in the
 ofono-phonesim package in Debian):
 
     ofono-phonesim -p 12345 -gui /usr/local/share/phonesim/default.xml
