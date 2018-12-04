@@ -22,7 +22,7 @@
 project(
   'calls',
   'c',
-  version: '0.0.0',
+  version: '0.0.1',
   license: 'GPLv3+',
   meson_version: '>= 0.46.0',
   default_options: [
