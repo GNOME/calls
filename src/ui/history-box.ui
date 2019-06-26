@@ -22,7 +22,7 @@
         <child>
           <object class="GtkLabel" id="primary_label">
             <property name="visible">1</property>
-            <property name="label" translatable="yes">Call list empty</property>
+            <property name="label" translatable="yes">No Recent Calls</property>
             <property name="halign">start</property>
             <attributes>
               <attribute name="weight" value="bold"/>
