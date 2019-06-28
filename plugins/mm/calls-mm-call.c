@@ -52,6 +52,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsMMCall, calls_mm_call, G_TYPE_OBJECT,
 enum {
   PROP_0,
   PROP_MM_CALL,
+  PROP_INBOUND,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -335,6 +336,28 @@ constructed (GObject *object)
 
 
 static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsMMCall *self = CALLS_MM_CALL (object);
+
+  switch (property_id) {
+  case PROP_INBOUND:
+    g_value_set_boolean (value,
+                         mm_call_get_direction (self->mm_call)
+                         == MM_CALL_DIRECTION_INCOMING);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
 dispose (GObject *object)
 {
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
@@ -364,6 +387,7 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->get_property = get_property;
   object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
@@ -375,8 +399,17 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
                          _("A libmm-glib proxy object for the underlying call object"),
                          MM_TYPE_CALL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_MM_CALL,
+                                   props[PROP_MM_CALL]);
 
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+  props[PROP_INBOUND] =
+    g_param_spec_boolean ("inbound",
+                          _("Inbound"),
+                          _("Whether the call is inbound"),
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_CONSTRUCT);
+  g_object_class_override_property (object_class, PROP_INBOUND, "inbound");
 }
 
 

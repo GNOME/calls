@@ -45,6 +45,8 @@ struct _CallsCallWindow
 
   GListStore *call_holders;
 
+  GtkRevealer *info_revealer;
+  guint info_timeout;
   GtkInfoBar *info;
   GtkLabel *info_label;
 
@@ -85,6 +87,15 @@ update_visibility (CallsCallWindow *self)
 }
 
 
+static gboolean
+show_message_timeout_cb (CallsCallWindow *self)
+{
+  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
+  self->info_timeout = 0;
+  return FALSE;
+}
+
+
 static void
 show_message (CallsCallWindow *self,
               const gchar     *text,
@@ -92,8 +103,27 @@ show_message (CallsCallWindow *self,
 {
   gtk_info_bar_set_message_type (self->info, type);
   gtk_label_set_text (self->info_label, text);
-  gtk_widget_show (GTK_WIDGET (self->info));
-  gtk_widget_queue_allocate (GTK_WIDGET (self));
+  gtk_revealer_set_reveal_child (self->info_revealer, TRUE);
+
+  if (self->info_timeout)
+    {
+      g_source_remove (self->info_timeout);
+    }
+  self->info_timeout = g_timeout_add_seconds
+    (3,
+     (GSourceFunc)show_message_timeout_cb,
+     self);
+}
+
+
+static inline void
+stop_info_timeout (CallsCallWindow *self)
+{
+  if (self->info_timeout)
+    {
+      g_source_remove (self->info_timeout);
+      self->info_timeout = 0;
+    }
 }
 
 
@@ -102,8 +132,8 @@ info_response_cb (GtkInfoBar      *infobar,
                   gint             response_id,
                   CallsCallWindow *self)
 {
-  gtk_widget_hide (GTK_WIDGET (self->info));
-  gtk_widget_queue_allocate (GTK_WIDGET (self));
+  stop_info_timeout (self);
+  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
 }
 
 
@@ -376,6 +406,7 @@ dispose (GObject *object)
     }
 
   g_clear_object (&self->call_holders);
+  stop_info_timeout (self);
 
   parent_class->dispose (object);
 }
@@ -401,6 +432,7 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-window.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info_revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info_label);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, main_stack);

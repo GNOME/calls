@@ -39,7 +39,7 @@ test_dummy_call_get_state (CallFixture   *fixture,
 {
   CallsCallState state;
   state = calls_call_get_state (CALLS_CALL (fixture->dummy_call));
-  g_assert_true (state == CALLS_CALL_STATE_ACTIVE);
+  g_assert_true (state == CALLS_CALL_STATE_DIALING);
 }
 
 

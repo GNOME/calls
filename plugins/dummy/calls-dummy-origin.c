@@ -127,19 +127,13 @@ call_state_changed_cb (CallsDummyOrigin *self,
 
 
 static void
-dial (CallsOrigin *origin, const gchar *number)
+add_call (CallsDummyOrigin *self, const gchar *number, gboolean inbound)
 {
-  CallsDummyOrigin *self;
   CallsDummyCall *dummy_call;
   CallsCall *call;
 
-  g_return_if_fail (number != NULL);
-  g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (origin));
-
-  self = CALLS_DUMMY_ORIGIN (origin);
-
-  dummy_call = calls_dummy_call_new (number);
-  g_return_if_fail (dummy_call != NULL);
+  dummy_call = calls_dummy_call_new (number, inbound);
+  g_assert (dummy_call != NULL);
 
   call = CALLS_CALL (dummy_call);
   g_signal_connect_swapped (call, "state-changed",
@@ -148,7 +142,17 @@ dial (CallsOrigin *origin, const gchar *number)
 
   self->calls = g_list_append (self->calls, dummy_call);
 
-  g_signal_emit_by_name (origin, "call-added", call);
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
+}
+
+
+static void
+dial (CallsOrigin *origin, const gchar *number)
+{
+  g_return_if_fail (number != NULL);
+  g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (origin));
+
+  add_call (CALLS_DUMMY_ORIGIN (origin), number, FALSE);
 }
 
 
@@ -244,4 +248,15 @@ static void
 calls_dummy_origin_init (CallsDummyOrigin *self)
 {
   self->name = g_string_new (NULL);
+}
+
+
+void
+calls_dummy_origin_create_inbound (CallsDummyOrigin *self,
+                                   const gchar      *number)
+{
+  g_return_if_fail (number != NULL);
+  g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (self));
+
+  add_call (self, number, TRUE);
 }

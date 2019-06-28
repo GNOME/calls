@@ -28,6 +28,7 @@
 #include "calls-dummy-origin.h"
 
 #include <libpeas/peas.h>
+#include <glib-unix.h>
 
 
 struct _CallsDummyProvider
@@ -82,6 +83,22 @@ get_origins (CallsProvider *iface)
 }
 
 
+static gboolean
+usr1_handler (CallsDummyProvider *self)
+{
+  CallsDummyOrigin *origin;
+
+  g_return_val_if_fail (self->origins != NULL, FALSE);
+
+  g_debug ("Received SIGUSR1, adding new incoming call");
+
+  origin = CALLS_DUMMY_ORIGIN (self->origins->data);
+  calls_dummy_origin_create_inbound (origin, "0987654321");
+
+  return TRUE;
+}
+
+
 static void
 constructed (GObject *object)
 {
@@ -89,6 +106,10 @@ constructed (GObject *object)
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
 
   calls_dummy_provider_add_origin (self, "Dummy origin");
+
+  g_unix_signal_add (SIGUSR1,
+                     (GSourceFunc)usr1_handler,
+                     self);
 
   parent_class->constructed (object);
 }

@@ -41,16 +41,17 @@ struct _CallsCallDisplay
   GTimer *timer;
   guint timeout;
 
+  GtkLabel *incoming_phone_call;
   GtkBox *party_box;
   GtkLabel *primary_contact_info;
   GtkLabel *secondary_contact_info;
   GtkLabel *status;
-  GtkLabel *time;
 
-  GtkButton *answer;
-  GtkToggleButton *mute;
+  GtkBox *controls;
+  GtkBox *gsm_controls;
+  GtkBox *general_controls;
   GtkButton *hang_up;
-  GtkToggleButton *speaker;
+  GtkButton *answer;
 
   GtkRevealer *dial_pad_revealer;
 };
@@ -89,6 +90,12 @@ hang_up_clicked_cb (GtkButton        *button,
 }
 
 static void
+hold_toggled_cb (GtkToggleButton  *togglebutton,
+                 CallsCallDisplay *self)
+{
+}
+
+static void
 mute_toggled_cb (GtkToggleButton  *togglebutton,
                  CallsCallDisplay *self)
 {
@@ -97,6 +104,13 @@ mute_toggled_cb (GtkToggleButton  *togglebutton,
 static void
 speaker_toggled_cb (GtkToggleButton  *togglebutton,
                     CallsCallDisplay *self)
+{
+}
+
+
+static void
+add_call_clicked_cb (GtkButton  *button,
+                     CallsCallDisplay *self)
 {
 }
 
@@ -157,7 +171,7 @@ timeout_cb (CallsCallDisplay *self)
 
   g_string_append_printf (str, "%02u", (guint)elapsed);
 
-  gtk_label_set_text (self->time, str->str);
+  gtk_label_set_text (self->status, str->str);
 
   g_string_free (str, TRUE);
   return TRUE;
@@ -167,36 +181,89 @@ timeout_cb (CallsCallDisplay *self)
 #undef MINUTE
 }
 
+
+static void
+stop_timeout (CallsCallDisplay *self)
+{
+  if (self->timeout == 0)
+    {
+      return;
+    }
+
+  g_source_remove (self->timeout);
+  self->timeout = 0;
+}
+
+
 static void
 call_state_changed_cb (CallsCallDisplay *self,
                        CallsCallState    state)
 {
-  GString *state_str = g_string_new("");
+  GtkStyleContext *hang_up_style;
 
   g_return_if_fail (CALLS_IS_CALL_DISPLAY (self));
 
-  calls_call_state_to_string (state_str, state);
-  gtk_label_set_text (self->status, state_str->str);
-  g_debug ("Call state changed to `%s'", state_str->str);
-  g_string_free (state_str, TRUE);
+  hang_up_style = gtk_widget_get_style_context
+    (GTK_WIDGET (self->hang_up));
 
+  /* Widgets */
   switch (state)
     {
     case CALLS_CALL_STATE_INCOMING:
+      gtk_widget_hide (GTK_WIDGET (self->status));
+      gtk_widget_hide (GTK_WIDGET (self->controls));
+      gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
       gtk_widget_show (GTK_WIDGET (self->answer));
-      gtk_widget_hide (GTK_WIDGET (self->mute));
-      gtk_widget_hide (GTK_WIDGET (self->speaker));
+      gtk_style_context_remove_class
+        (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
       break;
-    case CALLS_CALL_STATE_ACTIVE:
-    case CALLS_CALL_STATE_HELD:
+
     case CALLS_CALL_STATE_DIALING:
     case CALLS_CALL_STATE_ALERTING:
+    case CALLS_CALL_STATE_ACTIVE:
+    case CALLS_CALL_STATE_HELD:
     case CALLS_CALL_STATE_WAITING:
+      gtk_style_context_add_class
+        (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
       gtk_widget_hide (GTK_WIDGET (self->answer));
-      gtk_widget_show (GTK_WIDGET (self->mute));
-      gtk_widget_show (GTK_WIDGET (self->speaker));
+      gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
+      gtk_widget_show (GTK_WIDGET (self->controls));
+      gtk_widget_show (GTK_WIDGET (self->status));
+
+      gtk_widget_set_visible
+        (GTK_WIDGET (self->gsm_controls),
+         state != CALLS_CALL_STATE_DIALING
+         && state != CALLS_CALL_STATE_ALERTING);
       break;
+
     case CALLS_CALL_STATE_DISCONNECTED:
+      break;
+    }
+
+  /* Status text */
+  switch (state)
+    {
+    case CALLS_CALL_STATE_INCOMING:
+      break;
+
+    case CALLS_CALL_STATE_DIALING:
+    case CALLS_CALL_STATE_ALERTING:
+      gtk_label_set_text (self->status, _("Calling..."));
+      break;
+
+    case CALLS_CALL_STATE_ACTIVE:
+    case CALLS_CALL_STATE_HELD:
+    case CALLS_CALL_STATE_WAITING:
+      if (self->timeout == 0)
+        {
+          self->timeout = g_timeout_add
+            (500, (GSourceFunc)timeout_cb, self);
+          timeout_cb (self);
+        }
+      break;
+
+    case CALLS_CALL_STATE_DISCONNECTED:
+      stop_timeout (self);
       break;
     }
 }
@@ -230,7 +297,7 @@ set_party (CallsCallDisplay *self, CallsParty *party)
   const gchar *name, *number;
 
   image = calls_party_create_image (party);
-  gtk_box_pack_end (self->party_box, image, TRUE, FALSE, 0);
+  gtk_box_pack_end (self->party_box, image, TRUE, TRUE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
   gtk_widget_show (image);
 
@@ -276,8 +343,6 @@ constructed (GObject *object)
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   self->timer = g_timer_new ();
-  self->timeout = g_timeout_add (500, (GSourceFunc)timeout_cb, self);
-  timeout_cb (self);
 
   call_state_changed_cb (self, calls_call_get_state (self->call));
 
@@ -296,6 +361,7 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
+  stop_timeout (self);
   g_clear_object (&self->call);
 
   parent_class->dispose (object);
@@ -307,7 +373,6 @@ finalize (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
-  g_source_remove (self->timeout);
   g_timer_destroy (self->timer);
 
   parent_class->finalize (object);
@@ -335,20 +400,23 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
 
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-display.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, incoming_phone_call);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, party_box);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, secondary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, status);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, time);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, mute);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, controls);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, gsm_controls);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, general_controls);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, speaker);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_revealer);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, add_call_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
 }

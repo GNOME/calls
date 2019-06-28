@@ -27,6 +27,8 @@
 #include "enum-types.h"
 #include "util.h"
 
+#include <glib/gi18n.h>
+
 
 void
 calls_call_state_to_string (GString        *string,
@@ -93,6 +95,13 @@ calls_call_state_parse_nick (CallsCallState *state,
 G_DEFINE_INTERFACE (CallsCall, calls_call, CALLS_TYPE_MESSAGE_SOURCE);
 
 enum {
+  PROP_0,
+  PROP_INBOUND,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
+enum {
   SIGNAL_STATE_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
@@ -107,6 +116,15 @@ calls_call_default_init (CallsCallInterface *iface)
       CALLS_TYPE_CALL_STATE,
       CALLS_TYPE_CALL_STATE
     };
+
+  props[PROP_INBOUND] =
+    g_param_spec_boolean ("inbound",
+                          _("Inbound"),
+                          _("Whether the call is inbound"),
+                          FALSE,
+                          G_PARAM_READABLE);
+
+  g_object_interface_install_property (iface, props[PROP_INBOUND]);
 
   /**
    * CallsCall::state-changed:
