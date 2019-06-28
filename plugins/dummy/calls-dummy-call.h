@@ -33,7 +33,8 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsDummyCall, calls_dummy_call, CALLS, DUMMY_CALL, GObject);
 
-CallsDummyCall *calls_dummy_call_new (const gchar *number);
+CallsDummyCall *calls_dummy_call_new (const gchar *number,
+                                      gboolean     inbound);
 
 G_END_DECLS
 

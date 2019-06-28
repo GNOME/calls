@@ -33,7 +33,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsDummyOrigin, calls_dummy_origin, CALLS, DUMMY_ORIGIN, GObject);
 
-CallsDummyOrigin *calls_dummy_origin_new (const gchar *name);
+CallsDummyOrigin *calls_dummy_origin_new            (const gchar      *name);
+void              calls_dummy_origin_create_inbound (CallsDummyOrigin *self,
+                                                     const gchar      *number);
 
 G_END_DECLS
 

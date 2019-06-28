@@ -33,6 +33,7 @@ struct _CallsDummyCall
 {
   GObject parent_instance;
   gchar *number;
+  gboolean inbound;
   CallsCallState state;
 };
 
@@ -48,6 +49,8 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyCall, calls_dummy_call, G_TYPE_OBJECT,
 enum {
   PROP_0,
   PROP_NUMBER,
+  PROP_INBOUND_CONSTRUCTOR,
+  PROP_INBOUND,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -135,15 +138,44 @@ tone_stop (CallsCall *call, gchar key)
   g_info ("Beep end (%c)", (int)key);
 }
 
+
+static gboolean
+outbound_timeout_cb (CallsDummyCall *self)
+{
+  switch (self->state)
+    {
+    case CALLS_CALL_STATE_DIALING:
+      change_state (CALLS_CALL (self), self,
+                    CALLS_CALL_STATE_ALERTING);
+      g_timeout_add_seconds
+        (3, (GSourceFunc)outbound_timeout_cb, self);
+      break;
+
+    case CALLS_CALL_STATE_ALERTING:
+      change_state (CALLS_CALL (self), self,
+                    CALLS_CALL_STATE_ACTIVE);
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+
 CallsDummyCall *
-calls_dummy_call_new (const gchar *number)
+calls_dummy_call_new (const gchar *number,
+                      gboolean     inbound)
 {
   g_return_val_if_fail (number != NULL, NULL);
 
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
                        "number", number,
+                       "inbound-constructor", inbound,
                        NULL);
 }
+
 
 static void
 set_property (GObject      *object,
@@ -158,11 +190,56 @@ set_property (GObject      *object,
     self->number = g_value_dup_string (value);
     break;
 
+  case PROP_INBOUND_CONSTRUCTOR:
+    self->inbound = g_value_get_boolean (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
   }
 }
+
+
+static void
+constructed (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsDummyCall *self = CALLS_DUMMY_CALL (object);
+
+  if (self->inbound)
+    {
+      self->state = CALLS_CALL_STATE_INCOMING;
+    }
+  else
+    {
+      self->state = CALLS_CALL_STATE_DIALING;
+      g_timeout_add_seconds (1, (GSourceFunc)outbound_timeout_cb, self);
+    }
+
+  parent_class->constructed (object);
+}
+
+
+static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsDummyCall *self = CALLS_DUMMY_CALL (object);
+
+  switch (property_id) {
+  case PROP_INBOUND:
+    g_value_set_boolean (value, self->inbound);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
 
 static void
 finalize (GObject *object)
@@ -181,8 +258,10 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = finalize;
+  object_class->get_property = get_property;
   object_class->set_property = set_property;
+  object_class->constructed = constructed;
+  object_class->finalize = finalize;
 
   props[PROP_NUMBER] =
     g_param_spec_string ("number",
@@ -190,8 +269,25 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
                          _("The dialed number"),
                          "+441234567890",
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_NUMBER,
+                                   props[PROP_NUMBER]);
 
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+  props[PROP_INBOUND_CONSTRUCTOR] =
+    g_param_spec_boolean ("inbound-constructor",
+                          _("Inbound (constructor)"),
+                          _("Whether the calls is inbound (dummy class constructor)"),
+                          FALSE,
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_INBOUND_CONSTRUCTOR,
+                                   props[PROP_INBOUND_CONSTRUCTOR]);
+
+  props[PROP_INBOUND] =
+    g_param_spec_boolean ("inbound",
+                          _("Inbound"),
+                          _("Whether the call is inbound"),
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_CONSTRUCT);
+  g_object_class_override_property (object_class, PROP_INBOUND, "inbound");
 }
 
 static void
