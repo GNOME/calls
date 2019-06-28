@@ -76,7 +76,7 @@ calls_enum_sources = gnome.mkenums_simple('enum-types',
 calls_resources = gnome.compile_resources(
    'calls-resources',
    'calls.gresources.xml',
-   source_dir: 'ui',
+   source_dir: ['ui', '../data'],
    c_name: 'call',
 )
 

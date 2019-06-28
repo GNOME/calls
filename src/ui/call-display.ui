@@ -9,144 +9,302 @@
       <object class="GtkBox">
         <property name="can_focus">False</property>
         <property name="halign">center</property>
-        <property name="margin_bottom">8</property>
+        <property name="margin_bottom">12</property>
         <property name="margin_left">12</property>
         <property name="margin_right">12</property>
-        <property name="margin_top">8</property>
+        <property name="margin_top">12</property>
         <property name="orientation">vertical</property>
-        <property name="valign">center</property>
+        <property name="vexpand">True</property>
         <property name="visible">True</property>
         <property name="width_request">300</property>
         <property name="sensitive" bind-source="dial_pad_revealer" bind-property="reveal-child" bind-flags="invert-boolean|bidirectional|sync-create"/>
-        <child>
-          <object class="GtkBox" id="party_box">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkLabel" id="primary_contact_info">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">6</property>
-                <property name="margin_bottom">6</property>
-                <attributes>
-                  <attribute name="weight" value="bold"/>
-                  <attribute name="scale" value="1.6"/>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="secondary_contact_info">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_top">4</property>
-                <property name="margin_bottom">4</property>
-              </object>
-            </child>
-          </object>
-        </child>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
+            <property name="vexpand">True</property>
             <child>
-              <object class="GtkLabel" id="status">
-                <property name="visible">True</property>
+              <object class="GtkLabel" id="incoming_phone_call">
+                <property name="visible">False</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Active</property>
+                <property name="margin_top">40</property>
+                <property name="margin_bottom">12</property>
+                <property name="label" translatable="yes">Incoming phone call</property>
               </object>
             </child>
             <child>
-              <object class="GtkLabel" id="time">
+              <object class="GtkBox" id="party_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">00:00</property>
-                <property name="margin_top">30</property>
-                <property name="margin_bottom">40</property>
-                <attributes>
-                  <attribute name="scale" value="1.6"/>
-                </attributes>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="answer">
-                <property name="label" translatable="yes">Answer</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="no_show_all">True</property>
-                <signal name="clicked" handler="answer_clicked_cb" swapped="no"/>
+                <property name="orientation">vertical</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkLabel" id="primary_contact_info">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">6</property>
+                    <property name="margin_bottom">6</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                      <attribute name="scale" value="1.6"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="secondary_contact_info">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">4</property>
+                    <property name="margin_bottom">4</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="spacing">12</property>
-                <property name="homogeneous">True</property>
-                <property name="height_request">65</property>
-                <property name="margin_bottom">65</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkToggleButton" id="mute">
+                  <object class="GtkLabel" id="status">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="no_show_all">True</property>
-                    <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_name">microphone-sensitivity-muted-symbolic</property>
-                        <property name="icon_size">3</property>
-                      </object>
-                    </child>
+                    <property name="can_focus">False</property>
+                    <property name="margin_top">30</property>
+                    <property name="margin_bottom">40</property>
+                    <attributes>
+                      <attribute name="scale" value="1.6"/>
+                    </attributes>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkToggleButton" id="dial_pad">
+                  <object class="GtkBox" id="controls">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="no_show_all">True</property>
-                    <property name="active" bind-source="dial_pad_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">12</property>
+                    <property name="homogeneous">True</property>
+                    <property name="orientation">vertical</property>
+                    <property name="vexpand">False</property>
                     <child>
-                      <object class="GtkImage">
+                      <object class="GtkBox" id="general_controls">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">input-dialpad-symbolic</property>
-                        <property name="icon_size">3</property>
+                        <property name="spacing">12</property>
+                        <property name="height_request">65</property>
+                        <property name="homogeneous">True</property>
+                        <property name="hexpand">True</property>
+                        <child>
+                          <object class="GtkToggleButton" id="mute">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="sensitive">False</property>
+                            <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="icon_name">microphone-sensitivity-muted-symbolic</property>
+                                    <property name="icon_size">3</property>
+                                    <property name="vexpand">True</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_bottom">4</property>
+                                    <property name="label" translatable="yes">Mute</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="speaker">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="sensitive">False</property>
+                            <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="icon_name">audio-volume-high-symbolic</property>
+                                    <property name="icon_size">3</property>
+                                    <property name="vexpand">True</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_bottom">4</property>
+                                    <property name="label" translatable="yes">Speaker</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="add_call">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="sensitive">False</property>
+                            <signal name="clicked" handler="add_call_clicked_cb" swapped="no"/>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="resource">/sm/puri/calls/new-call-symbolic.svg</property>
+                                    <property name="icon_size">3</property>
+                                    <property name="vexpand">True</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_bottom">4</property>
+                                    <property name="label" translatable="yes">Add call</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkToggleButton" id="speaker">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="no_show_all">True</property>
-                    <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
                     <child>
-                      <object class="GtkImage">
+                      <object class="GtkBox" id="gsm_controls">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">audio-volume-high-symbolic</property>
-                        <property name="icon_size">3</property>
+                        <property name="spacing">12</property>
+                        <property name="height_request">65</property>
+                        <child>
+                          <object class="GtkToggleButton" id="hold">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="sensitive">False</property>
+                            <signal name="toggled" handler="hold_toggled_cb" swapped="no"/>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="icon_name">media-playback-pause-symbolic</property>
+                                    <property name="icon_size">3</property>
+                                    <property name="vexpand">True</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_bottom">4</property>
+                                    <property name="label" translatable="yes">Hold</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="dial_pad">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="active" bind-source="dial_pad_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
+                            <property name="hexpand">True</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="icon_name">input-dialpad-symbolic</property>
+                                    <property name="icon_size">3</property>
+                                    <property name="vexpand">True</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_bottom">4</property>
+                                    <property name="label" translatable="yes">Dial pad</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="blank">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="no_show_all">True</property>
+                            <property name="hexpand">True</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
             </child>
-            <child>
-              <object class="CallsEncryptionIndicator" id="encryption_indicator">
-                <property name="can_focus">False</property>
-                <property name="margin_bottom">30</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
+          </object>
+        </child>
+        <child>
+          <object class="CallsEncryptionIndicator" id="encryption_indicator">
+            <property name="can_focus">False</property>
+            <property name="margin_top">50</property>
+            <property name="margin_bottom">30</property>
+            <property name="visible">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="action_box">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">horizontal</property>
+            <property name="hexpand">True</property>
             <child>
               <object class="GtkButton" id="hang_up">
                 <property name="always_show_image">True</property>
@@ -157,6 +315,7 @@
                 <property name="valign">start</property>
                 <property name="visible">True</property>
                 <property name="width_request">150</property>
+                <property name="hexpand">True</property>
                 <signal name="clicked" handler="hang_up_clicked_cb" swapped="no"/>
                 <style>
                   <class name="destructive-action"/>
@@ -171,6 +330,37 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="icon-name">call-stop-symbolic</property>
+                    <property name="icon-size">5</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="answer">
+                <property name="always_show_image">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">center</property>
+                <property name="height_request">65</property>
+                <property name="receives_default">False</property>
+                <property name="valign">start</property>
+                <property name="visible">True</property>
+                <property name="width_request">150</property>
+                <property name="hexpand">True</property>
+                <property name="margin_left">12</property>
+                <signal name="clicked" handler="answer_clicked_cb" swapped="no"/>
+                <style>
+                  <class name="suggested-action"/>
+                  <class name="image-button"/>
+                </style>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="a11y-answer">
+                    <property name="accessible-name" translatable="yes">Answer</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">call-start-symbolic</property>
                     <property name="icon-size">5</property>
                   </object>
                 </child>
@@ -254,4 +444,14 @@
       </object>
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <widgets>
+      <widget name="mute"/>
+      <widget name="speaker"/>
+      <widget name="add_call"/>
+      <widget name="dial_pad"/>
+      <widget name="hold"/>
+      <widget name="blank"/>
+    </widgets>
+  </object>
 </interface>

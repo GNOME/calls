@@ -11,4 +11,7 @@
     <file preprocess="xml-stripblanks">new-call-box.ui</file>
     <file preprocess="xml-stripblanks">new-call-header-bar.ui</file>
   </gresource>
+  <gresource prefix="/sm/puri/calls/">
+    <file>new-call-symbolic.svg</file>
+  </gresource>
 </gresources>
