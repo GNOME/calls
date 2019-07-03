@@ -26,8 +26,6 @@
  */
 
 #include "config.h"
-#include "calls-new-call-header-bar.h"
-#include "calls-history-header-bar.h"
 #include "calls-history-box.h"
 #include "calls-new-call-box.h"
 #include "calls-encryption-indicator.h"
@@ -313,10 +311,12 @@ calls_application_class_init (CallsApplicationClass *klass)
 
   g_type_ensure (CALLS_TYPE_ENCRYPTION_INDICATOR);
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);
-  g_type_ensure (CALLS_TYPE_HISTORY_HEADER_BAR);
   g_type_ensure (CALLS_TYPE_NEW_CALL_BOX);
-  g_type_ensure (CALLS_TYPE_NEW_CALL_HEADER_BAR);
   g_type_ensure (HDY_TYPE_DIALER);
+  g_type_ensure (HDY_TYPE_HEADER_BAR);
+  g_type_ensure (HDY_TYPE_SQUEEZER);
+  g_type_ensure (HDY_TYPE_VIEW_SWITCHER);
+  g_type_ensure (HDY_TYPE_VIEW_SWITCHER_BAR);
 }
 
 
