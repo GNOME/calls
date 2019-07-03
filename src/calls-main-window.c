@@ -49,8 +49,12 @@ struct _CallsMainWindow
   GtkInfoBar *info;
   GtkLabel *info_label;
 
+  HdySqueezer *squeezer;
+  GtkLabel *title_label;
+  HdyViewSwitcher *wide_switcher;
+  HdyViewSwitcher *narrow_switcher;
+  HdyViewSwitcherBar *switcher_bar;
   GtkStack *main_stack;
-  GtkStack *header_bar_stack;
 };
 
 G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -107,44 +111,10 @@ about_action (GSimpleAction *action,
 }
 
 
-static void
-new_call_action (GSimpleAction *action,
-                 GVariant      *parameter,
-                 gpointer       user_data)
-{
-  CallsMainWindow *self = user_data;
-
-  gtk_stack_set_visible_child_name (self->header_bar_stack, "new-call");
-}
-
-
-static void
-back_action (GSimpleAction *action,
-             GVariant      *parameter,
-             gpointer       user_data)
-{
-  CallsMainWindow *self = user_data;
-
-  gtk_stack_set_visible_child_name (self->header_bar_stack, "history");
-}
-
-
 static const GActionEntry window_entries [] =
 {
   { "about", about_action },
-  { "new-call", new_call_action },
-  { "back", back_action },
 };
-
-
-CallsMainWindow *
-calls_main_window_new (GtkApplication *application, CallsProvider *provider)
-{
-  return g_object_new (CALLS_TYPE_MAIN_WINDOW,
-                       "application", application,
-                       "provider", provider,
-                       NULL);
-}
 
 
 static gboolean
@@ -199,6 +169,18 @@ static void
 call_removed_cb (CallsMainWindow *self, CallsCall *call, const gchar *reason)
 {
   show_message(self, reason, GTK_MESSAGE_INFO);
+}
+
+
+static gboolean
+set_switcher_bar_reveal (GBinding     *binding,
+                         const GValue *from_value,
+                         GValue       *to_value,
+                         gpointer      title_label)
+{
+  g_value_set_boolean (to_value, g_value_get_object (from_value) == title_label);
+
+  return TRUE;
 }
 
 
@@ -264,7 +246,12 @@ constructed (GObject *object)
   /* Add new call box */
   new_call_box = calls_new_call_box_new (self->provider);
   gtk_stack_add_titled (self->main_stack, GTK_WIDGET (new_call_box),
-                        "new-call", _("New call"));
+                        "dial-pad", _("Dial pad"));
+  gtk_container_child_set (GTK_CONTAINER (self->main_stack),
+                           GTK_WIDGET (new_call_box),
+                           "icon-name", "input-dialpad-symbolic",
+                           NULL);
+  gtk_stack_set_visible_child_name (self->main_stack, "dial-pad");
 
   /* Add actions */
   simple_action_group = g_simple_action_group_new ();
@@ -277,19 +264,18 @@ constructed (GObject *object)
                                   G_ACTION_GROUP (simple_action_group));
   g_object_unref (simple_action_group);
 
-  // FIXME: if (no history)
-  {
-    new_call_action (NULL, NULL, self);
-  }
+
+  g_object_bind_property_full (self->squeezer,
+                               "visible-child",
+                               self->switcher_bar,
+                               "reveal",
+                               G_BINDING_SYNC_CREATE,
+                               set_switcher_bar_reveal,
+                               NULL,
+                               self->title_label,
+                               NULL);
 
   parent_class->constructed (object);
-}
-
-
-static void
-calls_main_window_init (CallsMainWindow *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 
@@ -303,6 +289,24 @@ dispose (GObject *object)
   g_clear_object (&self->provider);
 
   parent_class->dispose (object);
+}
+
+
+static void
+size_allocate (GtkWidget     *widget,
+               GtkAllocation *allocation)
+{
+  CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (calls_main_window_parent_class);
+
+  hdy_squeezer_set_child_enabled (self->squeezer,
+                                  GTK_WIDGET (self->wide_switcher),
+                                  allocation->width > 600);
+  hdy_squeezer_set_child_enabled (self->squeezer,
+                                  GTK_WIDGET (self->narrow_switcher),
+                                  allocation->width > 400);
+
+  widget_class->size_allocate (widget, allocation);
 }
 
 
@@ -326,11 +330,37 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
+  widget_class->size_allocate = size_allocate;
+
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/main-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, squeezer);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, wide_switcher);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, narrow_switcher);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, switcher_bar);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, header_bar_stack);
   gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
+}
+
+
+static void
+calls_main_window_init (CallsMainWindow *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+}
+
+
+CallsMainWindow *
+calls_main_window_new (GtkApplication *application, CallsProvider *provider)
+{
+  g_return_val_if_fail (GTK_IS_APPLICATION (application), NULL);
+  g_return_val_if_fail (CALLS_IS_PROVIDER (provider), NULL);
+
+  return g_object_new (CALLS_TYPE_MAIN_WINDOW,
+                       "application", application,
+                       "provider", provider,
+                       NULL);
 }
