@@ -83,6 +83,11 @@ calls_list_store_find (GtkListStore *store,
                        gint needle_column,
                        GtkTreeIter *iter);
 
+/** Append a single character to a GtkEntry's contents */
+void
+calls_entry_append (GtkEntry *entry,
+                    gchar     character);
+
 G_END_DECLS
 
 #endif /* CALLS__UTIL_H__ */

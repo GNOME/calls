@@ -68,3 +68,20 @@ calls_list_store_find (GtkListStore *store,
 
   return find_data.found;
 }
+
+
+void
+calls_entry_append (GtkEntry *entry,
+                    gchar     character)
+{
+  const gchar str[] = {character, '\0'};
+  GtkEntryBuffer *buf;
+  guint len;
+
+  g_return_if_fail (GTK_IS_ENTRY (entry));
+
+  buf = gtk_entry_get_buffer (entry);
+  len = gtk_entry_buffer_get_length (buf);
+
+  gtk_entry_buffer_insert_text (buf, len - 1, str, 1);
+}
