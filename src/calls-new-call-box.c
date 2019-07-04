@@ -63,11 +63,7 @@ dial_pad_symbol_clicked_cb (CallsNewCallBox *self,
                             gchar            symbol,
                             HdyDialer       *dialer)
 {
-  GtkEntryBuffer *buf = gtk_entry_get_buffer (GTK_ENTRY (self->number_entry));
-  guint len = gtk_entry_buffer_get_length (buf);
-  const gchar str[] = {symbol, '\0'};
-
-  gtk_entry_buffer_insert_text (buf, len, str, 1);
+  calls_entry_append (GTK_ENTRY (self->number_entry), symbol);
 }
 
 

@@ -54,6 +54,7 @@ struct _CallsCallDisplay
   GtkButton *answer;
 
   GtkRevealer *dial_pad_revealer;
+  GtkEntry *dial_pad_display;
 };
 
 G_DEFINE_TYPE (CallsCallDisplay, calls_call_display, GTK_TYPE_OVERLAY);
@@ -121,6 +122,8 @@ dial_pad_symbol_clicked_cb (CallsCallDisplay *self,
                             HdyDialer        *dialer)
 {
   calls_call_tone_start (self->call, symbol);
+
+  calls_entry_append (self->dial_pad_display, symbol);
 }
 
 static void
@@ -411,6 +414,7 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_display);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
