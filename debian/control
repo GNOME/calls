@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Bob Ham <rah@settrans.net>
 Build-Depends:
  debhelper (>= 11),
- libhandy-0.0-dev,
+ libhandy-0.0-dev (>= 0.0.10),
  libgtk-3-dev,
  modemmanager-dev,
  libmm-glib-dev,
