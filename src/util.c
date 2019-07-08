@@ -83,5 +83,5 @@ calls_entry_append (GtkEntry *entry,
   buf = gtk_entry_get_buffer (entry);
   len = gtk_entry_buffer_get_length (buf);
 
-  gtk_entry_buffer_insert_text (buf, len - 1, str, 1);
+  gtk_entry_buffer_insert_text (buf, len, str, 1);
 }
