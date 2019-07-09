@@ -246,7 +246,7 @@ constructed (GObject *object)
   /* Add new call box */
   new_call_box = calls_new_call_box_new (self->provider);
   gtk_stack_add_titled (self->main_stack, GTK_WIDGET (new_call_box),
-                        "dial-pad", _("Dial pad"));
+                        "dial-pad", _("Dial Pad"));
   gtk_container_child_set (GTK_CONTAINER (self->main_stack),
                            GTK_WIDGET (new_call_box),
                            "icon-name", "input-dialpad-symbolic",

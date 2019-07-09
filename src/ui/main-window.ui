@@ -84,7 +84,7 @@
                   <packing>
                     <property name="name">recent</property>
                     <property name="title" translatable="yes">Recent</property>
-                    <property name="icon_name">document-open-recent</property>
+                    <property name="icon_name">document-open-recent-symbolic</property>
                   </packing>
                 </child>
                 <child>
@@ -95,7 +95,7 @@
                   <packing>
                     <property name="name">contacts</property>
                     <property name="title" translatable="yes">Contacts</property>
-                    <property name="icon_name">system-users</property>
+                    <property name="icon_name">system-users-symbolic</property>
                   </packing>
                 </child>
               </object>
