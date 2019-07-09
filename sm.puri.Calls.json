@@ -37,6 +37,7 @@
                 "--without-udev",
                 "--without-mbim",
                 "--without-qmi",
+                "--with-systemdsystemunitdir=/app/lib/systemd/system",
                 "--with-udev-base-dir=/app/lib/udev"
             ],
             "sources" : [
