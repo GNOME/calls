@@ -30,6 +30,7 @@
 #include "calls-new-call-box.h"
 #include "calls-encryption-indicator.h"
 #include "calls-ringer.h"
+#include "calls-record-store.h"
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-application.h"
@@ -53,9 +54,10 @@ struct _CallsApplication
 {
   GtkApplication parent_instance;
 
-  GString       *provider_name;
-  CallsProvider *provider;
-  CallsRinger   *ringer;
+  GString          *provider_name;
+  CallsProvider    *provider;
+  CallsRinger      *ringer;
+  CallsRecordStore *record_store;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION)
@@ -241,6 +243,9 @@ activate (GApplication *application)
 
           self->ringer = calls_ringer_new (self->provider);
           g_assert (self->ringer != NULL);
+
+          self->record_store = calls_record_store_new (self->provider);
+          g_assert (self->record_store != NULL);
         }
 
       /*

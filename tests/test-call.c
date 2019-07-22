@@ -43,14 +43,22 @@ test_dummy_call_get_state (CallFixture   *fixture,
 }
 
 
+static gboolean
+test_dummy_call_hang_up_idle_cb (CallsDummyOrigin *origin)
+{
+  g_assert_null (calls_origin_get_calls (CALLS_ORIGIN (origin)));
+  return FALSE;
+}
+
 static void
 test_dummy_call_hang_up (CallFixture   *fixture,
                          gconstpointer  user_data)
 {
   calls_call_hang_up (CALLS_CALL (fixture->dummy_call));
 
-  g_assert_null (calls_origin_get_calls
-                 (CALLS_ORIGIN (fixture->parent.dummy_origin)));
+  // Mirror the dummy origin's use of an idle callback
+  g_idle_add ((GSourceFunc)test_dummy_call_hang_up_idle_cb,
+              fixture->parent.dummy_origin);
 }
 
 gint

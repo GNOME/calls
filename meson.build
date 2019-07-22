@@ -47,6 +47,7 @@ full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
 
 config_data = configuration_data()
 config_data.set_quoted('APP_ID', calls_id)
+config_data.set_quoted('APP_DATA_NAME', calls_name)
 config_data.set_quoted('GETTEXT_PACKAGE', calls_name)
 config_data.set_quoted('LOCALEDIR', full_localedir)
 config_data.set_quoted('PLUGIN_LIBDIR', full_calls_plugin_libdir)
