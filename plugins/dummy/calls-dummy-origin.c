@@ -108,12 +108,32 @@ remove_calls (CallsDummyOrigin *self, const gchar *reason)
 }
 
 
+struct DisconnectedData
+{
+  CallsDummyOrigin *self;
+  CallsCall        *call;
+};
+
+
+static gboolean
+disconnected_cb (struct DisconnectedData *data)
+{
+  remove_call (data->self, data->call, "Disconnected");
+  g_object_unref (G_OBJECT (data->call));
+  g_object_unref (G_OBJECT (data->self));
+  g_free (data);
+  return FALSE;
+}
+
+
 static void
 call_state_changed_cb (CallsDummyOrigin *self,
                        CallsCallState    new_state,
                        CallsCallState    old_state,
                        CallsCall        *call)
 {
+  struct DisconnectedData *data;
+
   if (new_state != CALLS_CALL_STATE_DISCONNECTED)
     {
       return;
@@ -122,7 +142,16 @@ call_state_changed_cb (CallsDummyOrigin *self,
   g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  remove_call (self, call, "Disconnected");
+  // We add an idle callback so that all of the state change handlers
+  // are dealt with before the removal
+
+  data = g_new (struct DisconnectedData, 1);
+  data->self = self;
+  data->call = call;
+  g_object_ref (G_OBJECT (self));
+  g_object_ref (G_OBJECT (call));
+
+  g_idle_add ((GSourceFunc)disconnected_cb, data);
 }
 
 
