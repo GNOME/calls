@@ -171,6 +171,7 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
 #define row(MMENUM,CALLSENUM)                                           \
   { MM_CALL_STATE_##MMENUM, CALLS_CALL_STATE_##CALLSENUM, #MMENUM }     \
 
+  row (UNKNOWN,     DIALING),
   row (DIALING,     DIALING),
   row (RINGING_OUT, ALERTING),
   row (RINGING_IN,  INCOMING),
@@ -181,7 +182,6 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
 
 #undef row
 
-  { MM_CALL_STATE_UNKNOWN, (CallsCallState)0 },
   { -1, -1 }
 };
 
