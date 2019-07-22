@@ -10,6 +10,7 @@ Build-Depends:
  libmm-glib-dev,
  libgsound-dev,
  libpeas-dev,
+ libgom-1.0-dev,
  meson,
  pkg-config,
 # to run the tests

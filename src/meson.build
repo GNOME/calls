@@ -30,6 +30,7 @@ calls_deps = [ dependency('gobject-2.0'),
                dependency('libhandy-0.0', version: '>= 0.0.10'),
                dependency('gsound'),
                dependency('libpeas-1.0'),
+               dependency('gom-1.0'),
              ]
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
@@ -51,6 +52,8 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-ringer.c', 'calls-ringer.h',
                        'calls-application.c', 'calls-application.h',
                        'util.c', 'util.h',
+                       'calls-call-record.c', 'calls-call-record.h',
+                       'calls-record-store.c', 'calls-record-store.h',
                       ])
 
 calls_config_data = config_data
