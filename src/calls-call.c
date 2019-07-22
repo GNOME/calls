@@ -212,6 +212,29 @@ DEFINE_CALL_FUNC_VOID(answer);
 DEFINE_CALL_FUNC_VOID(hang_up);
 
 
+/**
+ * calls_call_get_inbound:
+ * @self: a #CallsCall
+ *
+ * Get the direction of the call.
+ *
+ * Returns: TRUE if inbound, FALSE if outbound.
+ */
+gboolean
+calls_call_get_inbound (CallsCall *self)
+{
+  gboolean inbound;
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
+
+  g_object_get (self,
+                "inbound", &inbound,
+                NULL);
+
+  return inbound;
+}
+
+
 static inline gboolean
 tone_key_is_valid (gchar key)
 {

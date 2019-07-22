@@ -68,6 +68,7 @@ struct _CallsCallInterface
 const gchar *  calls_call_get_number     (CallsCall *self);
 const gchar *  calls_call_get_name       (CallsCall *self);
 CallsCallState calls_call_get_state      (CallsCall *self);
+gboolean       calls_call_get_inbound    (CallsCall *self);
 void           calls_call_answer         (CallsCall *self);
 void           calls_call_hang_up        (CallsCall *self);
 void           calls_call_tone_start     (CallsCall *self,
