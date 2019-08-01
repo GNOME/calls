@@ -35,8 +35,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, GtkApplicationWindow);
 
-CallsMainWindow *calls_main_window_new (GtkApplication *application,
-                                        CallsProvider *provider);
+CallsMainWindow *calls_main_window_new  (GtkApplication  *application,
+                                         CallsProvider   *provider,
+                                         GListModel      *record_store);
 
 G_END_DECLS
 

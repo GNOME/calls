@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018, 2019 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -76,6 +76,27 @@ G_BEGIN_DECLS
   ptr = new_value;
 
 
+#define calls_clear_source(source_id_ptr)       \
+  if (*source_id_ptr != 0)                      \
+    {                                           \
+      g_source_remove (*source_id_ptr);         \
+      *source_id_ptr = 0;                       \
+    }
+
+#define calls_clear_signal(object,handler_id_ptr)               \
+  if (*handler_id_ptr != 0)                                     \
+    {                                                           \
+      g_signal_handler_disconnect (object, *handler_id_ptr);    \
+      *handler_id_ptr = 0;                                      \
+    }
+
+#define calls_date_time_unref(date_time)        \
+  if (date_time)                                \
+    {                                           \
+      g_date_time_unref (date_time);            \
+    }
+
+
 /** Find a particular pointer value in a GtkListStore */
 gboolean
 calls_list_store_find (GtkListStore *store,
@@ -87,6 +108,14 @@ calls_list_store_find (GtkListStore *store,
 void
 calls_entry_append (GtkEntry *entry,
                     gchar     character);
+
+
+gboolean calls_date_time_is_same_day  (GDateTime *a,
+                                       GDateTime *b);
+gboolean calls_date_time_is_yesterday (GDateTime *now,
+                                       GDateTime *t);
+gboolean calls_date_time_is_same_year (GDateTime *a,
+                                       GDateTime *b);
 
 G_END_DECLS
 

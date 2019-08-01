@@ -79,30 +79,11 @@ dial_pad_deleted_cb (CallsNewCallBox *self,
 
 
 static void
-dial_clicked_cb (CallsNewCallBox *self,
-                 const gchar     *unused,
-                 GtkButton       *button)
+dial_clicked_cb (CallsNewCallBox *self)
 {
-  GtkTreeIter iter;
-  gboolean ok;
-  CallsOrigin *origin;
-  const gchar *number;
-
-  ok = gtk_combo_box_get_active_iter (self->origin_box, &iter);
-  if (!ok)
-    {
-      g_debug ("Can't submit call with no origin");
-      return;
-    }
-
-  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store), &iter,
-                      ORIGIN_STORE_COLUMN_ORIGIN, &origin,
-                      -1);
-  g_assert (CALLS_IS_ORIGIN (origin));
-
-  number = gtk_entry_get_text (GTK_ENTRY (self->number_entry));
-
-  calls_origin_dial (origin, number);
+  calls_new_call_box_dial
+    (self,
+     gtk_entry_get_text (GTK_ENTRY (self->number_entry)));
 }
 
 
@@ -310,4 +291,30 @@ calls_new_call_box_new (CallsProvider *provider)
   return g_object_new (CALLS_TYPE_NEW_CALL_BOX,
                        "provider", provider,
                        NULL);
+}
+
+void
+calls_new_call_box_dial (CallsNewCallBox *self,
+                         const gchar     *target)
+{
+  GtkTreeIter iter;
+  gboolean ok;
+  CallsOrigin *origin;
+
+  g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
+  g_return_if_fail (target != NULL);
+
+  ok = gtk_combo_box_get_active_iter (self->origin_box, &iter);
+  if (!ok)
+    {
+      g_debug ("Can't submit call with no origin");
+      return;
+    }
+
+  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store), &iter,
+                      ORIGIN_STORE_COLUMN_ORIGIN, &origin,
+                      -1);
+  g_assert (CALLS_IS_ORIGIN (origin));
+
+  calls_origin_dial (origin, target);
 }

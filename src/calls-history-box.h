@@ -25,6 +25,8 @@
 #ifndef CALLS_HISTORY_BOX_H__
 #define CALLS_HISTORY_BOX_H__
 
+#include "calls-new-call-box.h"
+
 #include <gtk/gtk.h>
 
 #define HANDY_USE_UNSTABLE_API
@@ -34,7 +36,10 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_HISTORY_BOX (calls_history_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack)
+G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack);
+
+CallsHistoryBox * calls_history_box_new (GListModel      *model,
+                                         CallsNewCallBox *new_call);
 
 G_END_DECLS
 

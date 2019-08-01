@@ -22,19 +22,25 @@
  *
  */
 
-#ifndef CALLS_RECORD_STORE_H__
-#define CALLS_RECORD_STORE_H__
+#ifndef CALLS_CALL_RECORD_ROW_H__
+#define CALLS_CALL_RECORD_ROW_H__
 
-#include "calls-provider.h"
+#include "calls-call-record.h"
+#include "calls-new-call-box.h"
+
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define CALLS_TYPE_RECORD_STORE (calls_record_store_get_type ())
+#define CALLS_TYPE_CALL_RECORD_ROW (calls_call_record_row_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsRecordStore, calls_record_store, CALLS, RECORD_STORE, GListStore);
+G_DECLARE_FINAL_TYPE (CallsCallRecordRow, calls_call_record_row,
+                      CALLS, CALL_RECORD_ROW, GtkBox);
 
-CallsRecordStore *calls_record_store_new (CallsProvider *provider);
+CallsCallRecordRow *calls_call_record_row_new        (CallsCallRecord    *record,
+                                                      CallsNewCallBox    *new_call);
+CallsCallRecord *   calls_call_record_row_get_record (CallsCallRecordRow *self);
 
 G_END_DECLS
 
-#endif /* CALLS_RECORD_STORE_H__ */
+#endif /* CALLS_CALL_RECORD_ROW_H__ */

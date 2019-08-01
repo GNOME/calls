@@ -54,6 +54,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'util.c', 'util.h',
                        'calls-call-record.c', 'calls-call-record.h',
                        'calls-record-store.c', 'calls-record-store.h',
+                       'calls-call-record-row.c', 'calls-call-record-row.h',
                       ])
 
 calls_config_data = config_data

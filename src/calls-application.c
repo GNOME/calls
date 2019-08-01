@@ -1,6 +1,6 @@
 /* calls-application.c
  *
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018, 2019 Purism SPC
  * Copyright (C) 2018 Mohammed Sadiq <sadiq@sadiqpk.org>
  *
  * This file is part of Calls.
@@ -126,10 +126,15 @@ static const GActionEntry actions[] =
 static void
 startup (GApplication *application)
 {
+  GtkIconTheme *icon_theme;
+
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
   g_set_prgname (APP_ID);
   g_set_application_name (_("Calls"));
+
+  icon_theme = gtk_icon_theme_get_default ();
+  gtk_icon_theme_add_resource_path (icon_theme, "/sm/puri/calls/");
 
   g_action_map_add_action_entries (G_ACTION_MAP (application),
                                    actions,
@@ -253,7 +258,9 @@ activate (GApplication *application)
        * But we assume that the application is closed by closing the
        * window.  In that case, GTK+ frees the resources right.
        */
-      window = GTK_WINDOW (calls_main_window_new (gtk_app, self->provider));
+      window = GTK_WINDOW
+        (calls_main_window_new (gtk_app, self->provider,
+                                G_LIST_MODEL (self->record_store)));
       calls_call_window_new (gtk_app, self->provider);
     }
 
@@ -282,6 +289,7 @@ dispose (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
 
+  g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->provider);
 
