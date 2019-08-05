@@ -40,6 +40,7 @@
 
 #include <libpeas/peas.h>
 #include <glib/gi18n.h>
+#include <libebook-contacts/libebook-contacts.h>
 
 /**
  * SECTION: calls-application
@@ -58,6 +59,8 @@ struct _CallsApplication
   CallsProvider    *provider;
   CallsRinger      *ringer;
   CallsRecordStore *record_store;
+  CallsMainWindow  *main_window;
+  CallsCallWindow  *call_window;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION)
@@ -215,56 +218,133 @@ load_provider_plugin (CallsApplication *self)
 }
 
 
+static gboolean
+start_proper (CallsApplication  *self)
+{
+  GtkApplication *gtk_app;
+
+  if (self->main_window)
+    {
+      return TRUE;
+    }
+
+  gtk_app = GTK_APPLICATION (self);
+
+  // Later we will make provider loading/unloaded a dynamic
+  // process but that will have far-reaching consequences and is
+  // of no use immediately so for now, we just load one provider
+  // at startup.  We can't put this in the actual startup() method
+  // though, because we need to be able to set the provider name
+  // from the command line and we use actions to do that, which
+  // depend on the application already being started up.
+  load_provider_plugin (self);
+  if (!self->provider)
+    {
+      g_application_quit (G_APPLICATION (self));
+      return FALSE;
+    }
+
+  self->ringer = calls_ringer_new (self->provider);
+  g_assert (self->ringer != NULL);
+
+  self->record_store = calls_record_store_new (self->provider);
+  g_assert (self->record_store != NULL);
+
+  self->main_window = calls_main_window_new
+    (gtk_app,
+     self->provider,
+     G_LIST_MODEL (self->record_store));
+  g_assert (self->main_window != NULL);
+
+  self->call_window = calls_call_window_new
+    (gtk_app, self->provider);
+  g_assert (self->call_window != NULL);
+
+  return TRUE;
+}
+
+
 static void
 activate (GApplication *application)
 {
-  GtkApplication *gtk_app;
-  GtkWindow *window;
+  CallsApplication *self = CALLS_APPLICATION (application);
+  gboolean ok;
 
-  g_assert (GTK_IS_APPLICATION (application));
-  gtk_app = GTK_APPLICATION (application);
+  g_debug ("Activated");
 
-  window = gtk_application_get_active_window (gtk_app);
-
-  if (window == NULL)
+  ok = start_proper (self);
+  if (!ok)
     {
-      CallsApplication *self = CALLS_APPLICATION (application);
-
-      // Later we will make provider loading/unloaded a dynamic
-      // process but that will have far-reaching consequences and is
-      // of no use immediately so for now, we just load one provider
-      // at startup.  We can't put this in the actual startup() method
-      // though, because we need to be able to set the provider name
-      // from the command line and we use actions to do that, which
-      // depend on the application already being started up.
-      if (!self->provider)
-        {
-          load_provider_plugin (self);
-          if (!self->provider)
-            {
-              g_application_quit (application);
-              return;
-            }
-
-          self->ringer = calls_ringer_new (self->provider);
-          g_assert (self->ringer != NULL);
-
-          self->record_store = calls_record_store_new (self->provider);
-          g_assert (self->record_store != NULL);
-        }
-
-      /*
-       * We don't track the memory created.  Ideally, we might have to.
-       * But we assume that the application is closed by closing the
-       * window.  In that case, GTK+ frees the resources right.
-       */
-      window = GTK_WINDOW
-        (calls_main_window_new (gtk_app, self->provider,
-                                G_LIST_MODEL (self->record_store)));
-      calls_call_window_new (gtk_app, self->provider);
+      return;
     }
 
-  gtk_window_present (window);
+  gtk_window_present (GTK_WINDOW (self->main_window));
+}
+
+
+static void
+open_tel_uri (CallsApplication *self,
+              const gchar      *uri)
+{
+  EPhoneNumber *number;
+  GError *error = NULL;
+  gchar *dial_str;
+
+  g_debug ("Opening tel URI `%s'", uri);
+
+  number = e_phone_number_from_string (uri, NULL, &error);
+  if (!number)
+    {
+      g_warning ("Ignoring unparsable tel URI `%s': %s",
+                 uri, error->message);
+      g_error_free (error);
+      return;
+    }
+
+  dial_str = e_phone_number_to_string
+    (number, E_PHONE_NUMBER_FORMAT_E164);
+  e_phone_number_free (number);
+
+  calls_main_window_dial (self->main_window,
+                          dial_str);
+  g_free (dial_str);
+}
+
+
+static void
+app_open (GApplication  *application,
+          GFile        **files,
+          gint           n_files,
+          const gchar   *hint)
+{
+  CallsApplication *self = CALLS_APPLICATION (application);
+  gint i;
+
+  g_assert (n_files > 0);
+
+  g_debug ("Opened (%i files)", n_files);
+
+  start_proper (self);
+
+  for (i = 0; i < n_files; ++i)
+    {
+      gchar *uri;
+      if (g_file_has_uri_scheme (files[i], "tel"))
+        {
+          uri = g_file_get_uri (files[i]);
+
+          open_tel_uri (self, uri);
+        }
+      else
+        {
+          uri = g_file_get_parse_name (files[i]);
+          g_warning ("Don't know how to"
+                     " open file `%s', ignoring",
+                     uri);
+        }
+
+      g_free (uri);
+    }
 }
 
 
@@ -289,6 +369,8 @@ dispose (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
 
+  g_clear_object (&self->call_window);
+  g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->provider);
@@ -321,6 +403,7 @@ calls_application_class_init (CallsApplicationClass *klass)
   application_class->handle_local_options = handle_local_options;
   application_class->startup = startup;
   application_class->activate = activate;
+  application_class->open = app_open;
 
   g_type_ensure (CALLS_TYPE_ENCRYPTION_INDICATOR);
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);
@@ -359,6 +442,6 @@ calls_application_new (void)
 {
   return g_object_new (CALLS_TYPE_APPLICATION,
                        "application-id", APP_ID,
-                       "flags", G_APPLICATION_FLAGS_NONE,
+                       "flags", G_APPLICATION_HANDLES_OPEN,
                        NULL);
 }
