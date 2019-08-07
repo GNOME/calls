@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018, 2019 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -84,4 +84,50 @@ calls_entry_append (GtkEntry *entry,
   len = gtk_entry_buffer_get_length (buf);
 
   gtk_entry_buffer_insert_text (buf, len, str, 1);
+}
+
+
+gboolean
+calls_date_time_is_same_day (GDateTime *a,
+                             GDateTime *b)
+{
+#define eq(member)                              \
+  (g_date_time_get_##member (a) ==              \
+   g_date_time_get_##member (b))
+
+  return
+    eq (year)
+    &&
+    eq (month)
+    &&
+    eq (day_of_month);
+
+#undef eq
+}
+
+
+gboolean
+calls_date_time_is_yesterday (GDateTime *now,
+                              GDateTime *t)
+{
+  GDateTime *yesterday;
+  gboolean same_day;
+
+  yesterday = g_date_time_add_days (now, -1);
+
+  same_day = calls_date_time_is_same_day (yesterday, t);
+
+  g_date_time_unref (yesterday);
+
+  return same_day;
+}
+
+
+gboolean
+calls_date_time_is_same_year (GDateTime *a,
+                              GDateTime *b)
+{
+  return
+    g_date_time_get_year (a) ==
+    g_date_time_get_year (b);
 }

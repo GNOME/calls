@@ -79,7 +79,7 @@ struct _CallsRecordStore
   GomRepository *repository;
 };
 
-G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_OBJECT);
+G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_LIST_STORE);
 
 
 enum {
@@ -88,6 +88,133 @@ enum {
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
+
+
+static void
+load_calls_fetch_cb (GomResourceGroup *group,
+                     GAsyncResult     *res,
+                     CallsRecordStore *self)
+{
+  gboolean ok;
+  GError *error = NULL;
+  guint count, i;
+  gpointer *records;
+
+  ok = gom_resource_group_fetch_finish (group,
+                                        res,
+                                        &error);
+  if (error)
+    {
+      g_debug ("Error fetching call records: %s",
+               error->message);
+      g_error_free (error);
+      return;
+    }
+  g_assert (ok);
+
+  count = gom_resource_group_get_count (group);
+  g_debug ("Fetched %u call records from database `%s'",
+           count, self->filename);
+  records = g_new (gpointer, count);
+
+  for (i = 0; i < count; ++i)
+    {
+      GomResource *resource;
+      CallsCallRecord *record;
+      GDateTime *end = NULL;
+
+      resource = gom_resource_group_get_index (group, i);
+      g_assert (resource != NULL);
+      g_assert (CALLS_IS_CALL_RECORD (resource));
+      record = CALLS_CALL_RECORD (resource);
+
+      records[i] = record;
+
+      g_object_get (G_OBJECT (record),
+                    "end", &end,
+                    NULL);
+      if (end)
+        {
+          g_date_time_unref (end);
+        }
+    }
+
+  g_list_store_splice (G_LIST_STORE (self),
+                       0,
+                       0,
+                       records,
+                       count);
+
+  g_free (records);
+  g_object_unref (group);
+}
+
+
+static void
+load_calls_find_cb (GomRepository    *repository,
+                    GAsyncResult     *res,
+                    CallsRecordStore *self)
+{
+  GomResourceGroup *group;
+  GError *error = NULL;
+  guint count;
+
+  group = gom_repository_find_finish (repository,
+                                      res,
+                                      &error);
+  if (error)
+    {
+      g_debug ("Error finding call records in database `%s': %s",
+               self->filename, error->message);
+      g_error_free (error);
+      return;
+    }
+  g_assert (group != NULL);
+
+  count = gom_resource_group_get_count (group);
+  if (count == 0)
+    {
+      g_debug ("No call records found in database `%s'",
+               self->filename);
+      return;
+    }
+
+  g_debug ("Found %u call records in database `%s', fetching",
+           count, self->filename);
+  gom_resource_group_fetch_async
+    (group,
+     0,
+     count,
+     (GAsyncReadyCallback)load_calls_fetch_cb,
+     self);
+}
+
+
+static void
+load_calls (CallsRecordStore *self)
+{
+  GomFilter *filter;
+  GomSorting *sorting;
+
+  filter = gom_filter_new_is_not_null
+    (CALLS_TYPE_CALL_RECORD, "start");
+
+  sorting = gom_sorting_new (CALLS_TYPE_CALL_RECORD,
+                             "start",
+                             GOM_SORTING_DESCENDING,
+                             NULL);
+
+  g_debug ("Finding records in call record database `%s'",
+           self->filename);
+  gom_repository_find_sorted_async (self->repository,
+                                    CALLS_TYPE_CALL_RECORD,
+                                    filter,
+                                    sorting,
+                                    (GAsyncReadyCallback)load_calls_find_cb,
+                                    self);
+
+  g_object_unref (G_OBJECT (filter));
+}
 
 
 static void
@@ -120,6 +247,7 @@ set_up_repo_migrate_cb (GomRepository *repo,
     {
       g_debug ("Successfully migrated call record database `%s'",
                self->filename);
+      load_calls (self);
     }
 }
 
@@ -256,12 +384,19 @@ open_repo (CallsRecordStore *self)
 }
 
 
-static void
-record_call_save_cb (GomResource *resource,
-                     GAsyncResult *res,
-                     CallsCall *call)
+struct CallsRecordCallData
 {
-  GObject * const call_obj = G_OBJECT (call);
+  CallsRecordStore *self;
+  CallsCall *call;
+};
+
+
+static void
+record_call_save_cb (GomResource                *resource,
+                     GAsyncResult               *res,
+                     struct CallsRecordCallData *data)
+{
+  GObject * const call_obj = G_OBJECT (data->call);
   GError *error = NULL;
   gboolean ok;
 
@@ -284,8 +419,15 @@ record_call_save_cb (GomResource *resource,
   else
     {
       g_debug ("Successfully saved new call record to database");
+      g_list_store_insert (G_LIST_STORE (data->self),
+                           0,
+                           CALLS_CALL_RECORD (resource));
       g_object_set_data (call_obj, "calls-call-start", NULL);
     }
+
+  g_object_unref (data->call);
+  g_object_unref (data->self);
+  g_free (data);
 }
 
 
@@ -296,6 +438,7 @@ record_call (CallsRecordStore *self,
   GObject * const call_obj = G_OBJECT (call);
   GDateTime *start;
   CallsCallRecord *record;
+  struct CallsRecordCallData *data;
 
   g_assert (g_object_get_data (call_obj, "calls-call-record") == NULL);
 
@@ -312,10 +455,15 @@ record_call (CallsRecordStore *self,
   g_object_set_data_full (call_obj, "calls-call-record",
                           record, g_object_unref);
 
+  data = g_new (struct CallsRecordCallData, 1);
+  g_object_ref (self);
+  g_object_ref (call);
+  data->self = self;
+  data->call = call;
 
   gom_resource_save_async (GOM_RESOURCE (record),
                            (GAsyncReadyCallback)record_call_save_cb,
-                           call);
+                           data);
 }
 
 
@@ -550,6 +698,8 @@ dispose (GObject *object)
 
   g_clear_object (&self->provider);
 
+  g_list_store_remove_all (G_LIST_STORE (self));
+
   g_clear_object (&self->repository);
   close_adapter (self);
 
@@ -604,6 +754,7 @@ CallsRecordStore *
 calls_record_store_new (CallsProvider *provider)
 {
   return g_object_new (CALLS_TYPE_RECORD_STORE,
+                       "item-type", CALLS_TYPE_CALL_RECORD,
                        "provider", provider,
                        NULL);
 }

@@ -27,6 +27,7 @@
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "calls-history-box.h"
 #include "calls-enumerate.h"
 #include "config.h"
 #include "util.h"
@@ -43,6 +44,7 @@ struct _CallsMainWindow
   GtkApplicationWindow parent_instance;
 
   CallsProvider *provider;
+  GListModel *record_store;
 
   GtkRevealer *info_revealer;
   guint info_timeout;
@@ -55,6 +57,8 @@ struct _CallsMainWindow
   HdyViewSwitcher *narrow_switcher;
   HdyViewSwitcherBar *switcher_bar;
   GtkStack *main_stack;
+
+  CallsNewCallBox *new_call;
 };
 
 G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -62,6 +66,7 @@ G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
 enum {
   PROP_0,
   PROP_PROVIDER,
+  PROP_RECORD_STORE,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -194,7 +199,13 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_PROVIDER:
-    g_set_object (&self->provider, CALLS_PROVIDER (g_value_get_object (value)));
+    g_set_object (&self->provider,
+                  CALLS_PROVIDER (g_value_get_object (value)));
+    break;
+
+  case PROP_RECORD_STORE:
+    g_set_object (&self->record_store,
+                  G_LIST_MODEL (g_value_get_object (value)));
     break;
 
   default:
@@ -236,24 +247,39 @@ set_up_provider (CallsMainWindow *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
-  CallsNewCallBox *new_call_box;
+  GtkContainer *main_stack = GTK_CONTAINER (self->main_stack);
+  GtkWidget *widget;
+  CallsHistoryBox *history;
 
   set_up_provider (self);
 
-  /* Add new call box */
-  new_call_box = calls_new_call_box_new (self->provider);
-  gtk_stack_add_titled (self->main_stack, GTK_WIDGET (new_call_box),
+  // Add new call box
+  self->new_call = calls_new_call_box_new (self->provider);
+  widget = GTK_WIDGET (self->new_call);
+  gtk_stack_add_titled (self->main_stack, widget,
                         "dial-pad", _("Dial Pad"));
-  gtk_container_child_set (GTK_CONTAINER (self->main_stack),
-                           GTK_WIDGET (new_call_box),
+  gtk_container_child_set (main_stack, widget,
                            "icon-name", "input-dialpad-symbolic",
                            NULL);
-  gtk_stack_set_visible_child_name (self->main_stack, "dial-pad");
 
-  /* Add actions */
+  // Add call records
+  history = calls_history_box_new (self->record_store,
+                                   self->new_call);
+  widget = GTK_WIDGET (history);
+  gtk_stack_add_titled (self->main_stack, widget,
+                        "recent", _("Recent"));
+  gtk_container_child_set
+    (main_stack, widget,
+     "icon-name", "document-open-recent-symbolic",
+     "position", 0,
+     NULL);
+  gtk_widget_set_visible (widget, TRUE);
+  gtk_stack_set_visible_child_name (self->main_stack, "recent");
+
+  // Add actions
   simple_action_group = g_simple_action_group_new ();
   g_action_map_add_action_entries (G_ACTION_MAP (simple_action_group),
                                    window_entries,
@@ -279,13 +305,15 @@ constructed (GObject *object)
 }
 
 
+
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   stop_info_timeout (self);
+  g_clear_object (&self->record_store);
   g_clear_object (&self->provider);
 
   parent_class->dispose (object);
@@ -327,6 +355,13 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
                          CALLS_TYPE_PROVIDER,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
+  props[PROP_RECORD_STORE] =
+    g_param_spec_object ("record-store",
+                         _("Record store"),
+                         _("The store of call records"),
+                         G_TYPE_LIST_MODEL,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
@@ -354,13 +389,17 @@ calls_main_window_init (CallsMainWindow *self)
 
 
 CallsMainWindow *
-calls_main_window_new (GtkApplication *application, CallsProvider *provider)
+calls_main_window_new (GtkApplication *application,
+                       CallsProvider  *provider,
+                       GListModel     *record_store)
 {
   g_return_val_if_fail (GTK_IS_APPLICATION (application), NULL);
   g_return_val_if_fail (CALLS_IS_PROVIDER (provider), NULL);
+  g_return_val_if_fail (G_IS_LIST_MODEL (record_store), NULL);
 
   return g_object_new (CALLS_TYPE_MAIN_WINDOW,
                        "application", application,
                        "provider", provider,
+                       "record-store", record_store,
                        NULL);
 }

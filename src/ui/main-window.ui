@@ -77,17 +77,6 @@
                 <property name="can_focus">False</property>
                 <property name="expand">True</property>
                 <child>
-                  <object class="CallsHistoryBox" id="history_view">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </object>
-                  <packing>
-                    <property name="name">recent</property>
-                    <property name="title" translatable="yes">Recent</property>
-                    <property name="icon_name">document-open-recent-symbolic</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkBox" id="contacts">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

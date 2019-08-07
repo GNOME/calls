@@ -10,8 +10,13 @@
     <file preprocess="xml-stripblanks">history-header-bar.ui</file>
     <file preprocess="xml-stripblanks">new-call-box.ui</file>
     <file preprocess="xml-stripblanks">new-call-header-bar.ui</file>
+    <file preprocess="xml-stripblanks">call-record-row.ui</file>
   </gresource>
   <gresource prefix="/sm/puri/calls/">
     <file>new-call-symbolic.svg</file>
+    <file>call-arrow-incoming-symbolic.svg</file>
+    <file>call-arrow-incoming-missed-symbolic.svg</file>
+    <file>call-arrow-outgoing-symbolic.svg</file>
+    <file>call-arrow-outgoing-missed-symbolic.svg</file>
   </gresource>
 </gresources>

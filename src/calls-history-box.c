@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018, 2019 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -23,9 +23,8 @@
  */
 
 #include "calls-history-box.h"
-#include "calls-origin.h"
-#include "calls-call-holder.h"
-#include "calls-call-selector-item.h"
+#include "calls-call-record.h"
+#include "calls-call-record-row.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -39,10 +38,179 @@ struct _CallsHistoryBox
 {
   GtkStack parent_instance;
 
-  GtkListStore *history_store;
+  GtkListBox *history;
+
+  GListModel *model;
+  gulong model_changed_handler_id;
+
+  CallsNewCallBox *new_call;
 };
 
-G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK)
+G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK);
+
+
+enum {
+  PROP_0,
+  PROP_MODEL,
+  PROP_NEW_CALL,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
+
+static void
+update (CallsHistoryBox *self)
+{
+  gchar *child_name;
+
+  if (g_list_model_get_n_items (self->model) == 0)
+    {
+      child_name = "empty";
+    }
+  else
+    {
+      child_name = "history";
+
+      /* Transition should only ever be from empty to non-empty */
+      if (self->model_changed_handler_id != 0)
+        {
+          calls_clear_signal (self->model,
+                              &self->model_changed_handler_id);
+        }
+    }
+
+  gtk_stack_set_visible_child_name (GTK_STACK (self), child_name);
+}
+
+
+static void
+header_cb (GtkListBoxRow   *row,
+           GtkListBoxRow   *before,
+           CallsHistoryBox *self)
+{
+  if (!before)
+    {
+      return;
+    }
+
+  if (!gtk_list_box_row_get_header (row))
+    {
+      GtkWidget *header =
+        gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+
+      gtk_list_box_row_set_header (row, header);
+    }
+}
+
+
+static GtkWidget *
+create_row_cb (CallsCallRecord *record,
+               CallsHistoryBox *self)
+{
+  return GTK_WIDGET (calls_call_record_row_new (record, self->new_call));
+}
+
+
+static void
+set_property (GObject      *object,
+              guint         property_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+  CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
+
+  switch (property_id)
+    {
+      case PROP_MODEL:
+        g_set_object (&self->model,
+                      G_LIST_MODEL (g_value_get_object (value)));
+        break;
+
+      case PROP_NEW_CALL:
+        g_set_object (&self->new_call,
+                      CALLS_NEW_CALL_BOX (g_value_get_object (value)));
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
+}
+
+
+static void
+constructed (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
+
+  g_assert (self->model != NULL);
+
+  self->model_changed_handler_id =
+    g_signal_connect_swapped
+    (self->model, "items-changed", G_CALLBACK (update), self);
+  g_assert (self->model_changed_handler_id != 0);
+
+  gtk_list_box_set_header_func (self->history,
+                                (GtkListBoxUpdateHeaderFunc)header_cb,
+                                self,
+                                NULL);
+
+  gtk_list_box_bind_model (self->history,
+                           self->model,
+                           (GtkListBoxCreateWidgetFunc)create_row_cb,
+                           self,
+                           NULL);
+
+  update (self);
+
+  parent_class->constructed (object);
+}
+
+
+static void
+dispose (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
+
+  g_clear_object (&self->new_call);
+  g_clear_object (&self->model);
+
+  parent_class->dispose (object);
+}
+
+
+static void
+calls_history_box_class_init (CallsHistoryBoxClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->set_property = set_property;
+  object_class->constructed = constructed;
+  object_class->dispose = dispose;
+
+  props[PROP_MODEL] =
+    g_param_spec_object ("model",
+                         _("model"),
+                         _("The data store containing call records"),
+                         G_TYPE_LIST_MODEL,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_NEW_CALL] =
+    g_param_spec_object ("new-call",
+                         _("New call"),
+                         _("The UI box for making calls"),
+                         CALLS_TYPE_NEW_CALL_BOX,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+
+  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/history-box.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, history);
+}
 
 
 static void
@@ -52,12 +220,12 @@ calls_history_box_init (CallsHistoryBox *self)
 }
 
 
-static void
-calls_history_box_class_init (CallsHistoryBoxClass *klass)
+CallsHistoryBox *
+calls_history_box_new (GListModel      *model,
+                       CallsNewCallBox *new_call)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/history-box.ui");
-  gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, history_store);
+  return g_object_new (CALLS_TYPE_HISTORY_BOX,
+                       "model", model,
+                       "new-call", new_call,
+                       NULL);
 }

@@ -35,7 +35,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox);
 
-CallsNewCallBox * calls_new_call_box_new (CallsProvider *provider);
+CallsNewCallBox * calls_new_call_box_new  (CallsProvider   *provider);
+void              calls_new_call_box_dial (CallsNewCallBox *self,
+                                           const gchar     *target);
 
 G_END_DECLS
 
