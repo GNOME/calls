@@ -38,6 +38,8 @@ G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, Gt
 CallsMainWindow *calls_main_window_new  (GtkApplication  *application,
                                          CallsProvider   *provider,
                                          GListModel      *record_store);
+void             calls_main_window_dial (CallsMainWindow *self,
+                                         const gchar     *target);
 
 G_END_DECLS
 

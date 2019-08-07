@@ -403,3 +403,11 @@ calls_main_window_new (GtkApplication *application,
                        "record-store", record_store,
                        NULL);
 }
+
+
+void
+calls_main_window_dial (CallsMainWindow *self,
+                        const gchar     *target)
+{
+  calls_new_call_box_dial (self->new_call, target);
+}

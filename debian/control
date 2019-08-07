@@ -11,6 +11,7 @@ Build-Depends:
  libgsound-dev,
  libpeas-dev,
  libgom-1.0-dev,
+ libebook-contacts1.2-dev,
  meson,
  pkg-config,
 # to run the tests

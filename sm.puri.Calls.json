@@ -3,6 +3,9 @@
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
+    "sdk-extensions" : [
+        "org.freedesktop.Sdk.Extension.openjdk11"
+    ],
     "command" : "calls",
     "finish-args" : [
         "--share=ipc",
@@ -21,7 +24,10 @@
         /* Doesn't matter what the name is, just need to call system-talk-name? */
         "--system-talk-name=sm.puri.Calls",
         
-        "--talk-name=org.freedesktop.ModemManager1"
+        "--talk-name=org.freedesktop.ModemManager1",
+
+        /* For openjdk */
+        "--env=PATH=/app/jre/bin:/usr/bin"
     ],
     "build-options" : {
         "cflags" : "-O2 -g",
@@ -82,6 +88,138 @@
             ],
             "cleanup" : [
                 "/bin"
+            ]
+        },
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2",
+                    "sha256": "2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba"
+                }
+            ],
+            "build-commands": [
+                "./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,thread,system",
+                "./b2 -j ${FLATPAK_BUILDER_N_JOBS} install"
+            ],
+            "cleanup": ["*"]
+        },
+        {
+            "name": "GTest",
+            "buildsystem": "cmake-ninja",
+            "cleanup": ["*"],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://archive.ubuntu.com/ubuntu/pool/universe/g/googletest/googletest_1.8.0.orig.tar.gz",
+                    "md5": "16877098823401d1bf2ed7891d7dce36"
+                }
+            ]
+        },
+        {
+            "name": "protobuf",
+            "cleanup": [
+                "protoc",
+                "/bin",
+                "/doc",
+                "/lib/plugins"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-cpp-3.6.1.tar.gz",
+                    "sha256": "b3732e471a9bb7950f090fd0457ebd2536a9ba0891b7f3785919c654fe2a2529"
+                }
+            ]
+        },
+        {
+            "name": "openjdk",
+            "buildsystem": "simple",
+            "build-commands": [
+                "/usr/lib/sdk/openjdk11/install.sh"
+            ]
+        },
+        {
+            "name" : "libphonenumber",
+            "buildsystem" : "cmake-ninja",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://github.com/google/libphonenumber/archive/v8.10.16.tar.gz",
+                    "sha256" : "0cd9baf788dc7a7cca94ecbd43d0a562c4acf21f234d66d756574be89edf14c5"
+                },
+                {
+                    "type" : "shell",
+                    "commands" : [
+                        "sed -i -e 's/\${\${NAME}_BIN}-NOTFOUND/\${NAME}_BIN-NOTFOUND/' cpp/CMakeLists.txt"
+                    ]
+                }
+            ],
+            "subdir" : "cpp",
+            "build-options" : {
+                "append-path" : "/app/jre/bin"
+            }
+        },
+        {
+            "name" : "libical",
+            "cleanup" : [
+                "/lib/cmake"
+            ],
+            "buildsystem" : "cmake-ninja",
+            "config-opts" : [
+                "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib",
+                "-DBUILD_SHARED_LIBS=On",
+                "-DICAL_BUILD_DOCS=False",
+                "-DWITH_CXX_BINDINGS=False"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://github.com/libical/libical/releases/download/v3.0.5/libical-3.0.5.tar.gz",
+                    "sha256" : "7ad550c8c49c9b9983658e3ab3e68b1eee2439ec17b169a6b1e6ecb5274e78e6"
+                }
+            ]
+        },
+        {
+            "name" : "evolution-data-server",
+            "cleanup": [ "/share/GConf" ],
+            "buildsystem" : "cmake-ninja",
+            "config-opts" : [
+                "-DENABLE_PHONENUMBER=ON",
+                "-DENABLE_DOT_LOCKING=OFF",
+                "-DENABLE_FILE_LOCKING=fcntl",
+                "-DENABLE_GOA=OFF",
+                "-DENABLE_GTK=ON",
+                "-DENABLE_GOOGLE=OFF",
+                "-DENABLE_VALA_BINDINGS=OFF",
+                "-DENABLE_WEATHER=OFF",
+                "-DWITH_OPENLDAP=OFF",
+                "-DWITH_LIBDB=OFF",
+                "-DENABLE_INTROSPECTION=OFF",
+                "-DENABLE_INSTALLED_TESTS=OFF",
+                "-DENABLE_GTK_DOC=OFF",
+                "-DENABLE_EXAMPLES=OFF",
+                "-DWITH_PHONENUMBER:PATH=/"
+             ],
+             "sources" : [
+                 {
+                     "type" : "git",
+                     "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git"
+                 }
+             ]
+        },
+        {
+            "name": "gom",
+            "buildsystem": "meson",
+            "config-opts": [ "-Denable-introspection=false" ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gom.git",
+                    "commit": "320df01c77c5cf6327040421454837277e4d6ee3"
+                }
             ]
         },
         {

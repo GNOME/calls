@@ -7,8 +7,9 @@ Keywords=Telephone;Call;Phone;Dial;Dialer;PTSN;
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=sm.puri.Calls
 TryExec=calls
-Exec=calls
+Exec=calls %u
 Type=Application
 StartupNotify=true
 Terminal=false
 Categories=GNOME;GTK;Telephony;
+MimeType=x-scheme-handler/tel

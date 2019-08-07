@@ -39,6 +39,8 @@ struct _CallsNewCallBox
   GtkSearchEntry *number_entry;
   GtkButton *dial;
   GtkLabel *status;
+
+  GList *dial_queue;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
@@ -56,6 +58,29 @@ enum {
   ORIGIN_STORE_COLUMN_NAME,
   ORIGIN_STORE_COLUMN_ORIGIN
 };
+
+
+static CallsOrigin *
+get_origin (CallsNewCallBox *self)
+{
+  GtkTreeIter iter;
+  gboolean ok;
+  CallsOrigin *origin;
+
+  ok = gtk_combo_box_get_active_iter (self->origin_box, &iter);
+  if (!ok)
+    {
+      return NULL;
+    }
+
+  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store),
+                      &iter,
+                      ORIGIN_STORE_COLUMN_ORIGIN, &origin,
+                      -1);
+  g_assert (CALLS_IS_ORIGIN (origin));
+
+  return origin;
+}
 
 
 static void
@@ -102,6 +127,48 @@ notify_status_cb (CallsNewCallBox *self,
 }
 
 
+static void
+dial_queued_cb (gchar       *target,
+                CallsOrigin *origin)
+{
+  g_debug ("Dialing queued target `%s'", target);
+  calls_origin_dial (origin, target);
+}
+
+
+static void
+clear_dial_queue (CallsNewCallBox *self)
+{
+  g_list_free_full (self->dial_queue, g_free);
+  self->dial_queue = NULL;
+}
+
+
+static void
+dial_queued (CallsNewCallBox *self)
+{
+  CallsOrigin *origin;
+
+  if (!self->dial_queue)
+    {
+      return;
+    }
+
+  g_debug ("Dialing %u queued targets",
+           g_list_length (self->dial_queue));
+
+  origin = get_origin (self);
+  g_assert (origin != NULL);
+
+  g_list_foreach (self->dial_queue,
+                  (GFunc)dial_queued_cb,
+                  origin);
+  g_object_unref (origin);
+
+  clear_dial_queue (self);
+}
+
+
 void
 update_origin_box (CallsNewCallBox *self)
 {
@@ -125,19 +192,22 @@ update_origin_box (CallsNewCallBox *self)
     {
       gtk_combo_box_set_active (self->origin_box, 0);
       gtk_widget_hide (GTK_WIDGET (self->origin_box));
-      return;
     }
-
-  /* We know there are multiple origins. */
-
-  if (gtk_combo_box_get_active (self->origin_box) < 0)
+  else
     {
-      gtk_combo_box_set_active (self->origin_box, 0);
+      /* We know there are multiple origins. */
+
+      if (gtk_combo_box_get_active (self->origin_box) < 0)
+        {
+          gtk_combo_box_set_active (self->origin_box, 0);
+        }
+
+      /* We know there are multiple origins and one is selected. */
+
+      gtk_widget_show (GTK_WIDGET (self->origin_box));
     }
 
-  /* We know there are multiple origins and one is selected. */
-
-  gtk_widget_show (GTK_WIDGET (self->origin_box));
+  dial_queued (self);
 }
 
 
@@ -244,6 +314,8 @@ dispose (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
+  clear_dial_queue (self);
+
   if (self->origin_store)
     {
       remove_origins (self);
@@ -293,28 +365,26 @@ calls_new_call_box_new (CallsProvider *provider)
                        NULL);
 }
 
+
 void
 calls_new_call_box_dial (CallsNewCallBox *self,
                          const gchar     *target)
 {
-  GtkTreeIter iter;
-  gboolean ok;
   CallsOrigin *origin;
 
   g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
   g_return_if_fail (target != NULL);
 
-  ok = gtk_combo_box_get_active_iter (self->origin_box, &iter);
-  if (!ok)
+  origin = get_origin (self);
+  if (!origin)
     {
-      g_debug ("Can't submit call with no origin");
+      // Queue for dialing when an origin appears
+      g_debug ("Can't submit call with no origin, queuing for later");
+      self->dial_queue = g_list_append (self->dial_queue,
+                                        g_strdup (target));
       return;
     }
 
-  gtk_tree_model_get (GTK_TREE_MODEL (self->origin_store), &iter,
-                      ORIGIN_STORE_COLUMN_ORIGIN, &origin,
-                      -1);
-  g_assert (CALLS_IS_ORIGIN (origin));
-
   calls_origin_dial (origin, target);
+  g_object_unref (origin);
 }
