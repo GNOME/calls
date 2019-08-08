@@ -1,14 +1,22 @@
 datadir = get_option('datadir')
+sysconfdir = get_option('sysconfdir')
 
 # Desktop file
 install_data('sm.puri.Calls.desktop',
              install_dir : join_paths(datadir, 'applications'))
+install_data('sm.puri.Calls-daemon.desktop',
+             rename : 'sm.puri.Calls.desktop',
+             install_dir : join_paths(sysconfdir, 'xdg/autostart'))
 
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   test('Validate desktop file', desktop_utils,
        args: [join_paths(meson.current_source_dir(),
                          'sm.puri.Calls.desktop')
+             ])
+  test('Validate daemon desktop file', desktop_utils,
+       args: [join_paths(meson.current_source_dir(),
+                         'sm.puri.Calls-daemon.desktop')
              ])
 endif
 
