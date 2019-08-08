@@ -55,6 +55,7 @@ struct _CallsApplication
 {
   GtkApplication parent_instance;
 
+  gboolean          daemon;
   GString          *provider_name;
   CallsProvider    *provider;
   CallsRinger      *ringer;
@@ -90,6 +91,14 @@ handle_local_options (GApplication *application,
                                       g_variant_new_string (name));
     }
 
+  ok = g_variant_dict_contains (options, "daemon");
+  if (ok)
+    {
+      g_action_group_activate_action (G_ACTION_GROUP (application),
+                                      "set-daemon",
+                                      NULL);
+    }
+
   return -1; // Continue processing signal
 }
 
@@ -120,9 +129,30 @@ set_provider_name_action (GSimpleAction *action,
 }
 
 
+static void
+set_daemon_action (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
+{
+  CallsApplication *self = CALLS_APPLICATION (user_data);
+
+  if (self->main_window)
+    {
+      g_warning ("Cannot set application as a daemon"
+                 " because application is already started");
+      return;
+    }
+
+  self->daemon = TRUE;
+
+  g_debug ("Application marked as daemon");
+}
+
+
 static const GActionEntry actions[] =
 {
   { "set-provider-name", set_provider_name_action, "s" },
+  { "set-daemon", set_daemon_action, NULL },
 };
 
 
@@ -268,17 +298,29 @@ static void
 activate (GApplication *application)
 {
   CallsApplication *self = CALLS_APPLICATION (application);
-  gboolean ok;
+  gboolean present;
 
   g_debug ("Activated");
 
-  ok = start_proper (self);
-  if (!ok)
+  if (self->main_window)
     {
-      return;
+      present = TRUE;
+    }
+  else
+    {
+      gboolean ok = start_proper (self);
+      if (!ok)
+        {
+          return;
+        }
+
+      present = !self->daemon;
     }
 
-  gtk_window_present (GTK_WINDOW (self->main_window));
+  if (present)
+    {
+      gtk_window_present (GTK_WINDOW (self->main_window));
+    }
 }
 
 
@@ -425,6 +467,12 @@ calls_application_init (CallsApplication *self)
       G_OPTION_ARG_STRING, NULL,
       _("The name of the plugin to use for the call Provider"),
       _("PLUGIN")
+    },
+    {
+      "daemon", 'd', G_OPTION_FLAG_NONE,
+      G_OPTION_ARG_NONE, NULL,
+      _("Whether to present the main window on startup"),
+      NULL
     },
     {
       NULL
