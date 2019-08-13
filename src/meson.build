@@ -21,9 +21,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
+subdir('wayland')
+
 gnome = import('gnome')
 
 src_include = include_directories('.')
+calls_includes = [ top_include, src_include ]
 
 calls_deps = [ dependency('gobject-2.0'),
                dependency('gtk+-3.0'),
@@ -33,6 +36,11 @@ calls_deps = [ dependency('gobject-2.0'),
                dependency('gom-1.0'),
                dependency('libebook-contacts-1.2'),
              ]
+
+if wl_scanner.found()
+  calls_includes += include_directories('wayland')
+  calls_deps += dependency('wayland-client', version: '>=1.14')
+endif
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call.c',
@@ -60,6 +68,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
 
 calls_config_data = config_data
 calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
+calls_config_data.set10('WL_SCANNER_FOUND', wl_scanner.found())
 
 config_h_in = configure_file(
   output: 'config.h.in',
@@ -84,8 +93,9 @@ calls_resources = gnome.compile_resources(
 )
 
 executable('calls',
-           calls_sources, calls_enum_sources, calls_resources, 'main.c',
+           calls_sources, calls_enum_sources, calls_resources,
+           wl_proto_sources, wayland_sources, 'main.c',
            dependencies : calls_deps,
            export_dynamic : true,
-           include_directories : include_directories('..'),
+           include_directories : calls_includes,
            install : true)
