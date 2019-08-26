@@ -34,7 +34,6 @@
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-application.h"
-#include "session.h"
 
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
@@ -403,8 +402,6 @@ constructed (GObject *object)
                                    actions, G_N_ELEMENTS (actions), self);
   g_object_unref (action_group);
 
-  calls_session_register (APP_ID);
-
   parent_class->constructed (object);
 }
 
@@ -413,8 +410,6 @@ static void
 dispose (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
-
-  calls_session_unregister ();
 
   g_clear_object (&self->call_window);
   g_clear_object (&self->main_window);
@@ -496,5 +491,6 @@ calls_application_new (void)
   return g_object_new (CALLS_TYPE_APPLICATION,
                        "application-id", APP_ID,
                        "flags", G_APPLICATION_HANDLES_OPEN,
+                       "register-session", TRUE,
                        NULL);
 }
