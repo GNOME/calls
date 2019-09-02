@@ -36,7 +36,9 @@ struct _CallsNewCallBox
 
   GtkListStore *origin_store;
   GtkComboBox *origin_box;
-  GtkSearchEntry *number_entry;
+  GtkEntry *number_entry;
+  GtkButton *backspace;
+  HdyDialer *dial_pad;
   GtkButton *dial;
   GtkLabel *status;
 
@@ -84,22 +86,40 @@ get_origin (CallsNewCallBox *self)
 
 
 static void
-dial_pad_symbol_clicked_cb (CallsNewCallBox *self,
-                            gchar            symbol,
-                            HdyDialer       *dialer)
+backspace_clicked_cb (CallsNewCallBox *self)
 {
-  calls_entry_append (GTK_ENTRY (self->number_entry), symbol);
+  const gchar *old;
+  size_t len;
+  gchar *new;
+
+  old = hdy_dialer_get_number (self->dial_pad);
+  g_assert (old != NULL);
+
+  len = strlen (old);
+  if (len == 0)
+    {
+      return;
+    }
+
+  new = g_strndup (old, strlen (old) - 1);
+  hdy_dialer_set_number (self->dial_pad, new);
+  g_free (new);
 }
 
 
 static void
-dial_pad_deleted_cb (CallsNewCallBox *self,
-                     HdyDialer       *dialer)
+dial_pad_notify_number_cb (CallsNewCallBox *self,
+                           GParamSpec      *pspec,
+                           GObject         *gobject)
 {
-  GtkEntryBuffer *buf = gtk_entry_get_buffer (GTK_ENTRY (self->number_entry));
-  guint len = gtk_entry_buffer_get_length (buf);
+  const gchar *number;
 
-  gtk_entry_buffer_delete_text (buf, len - 1, 1);
+  g_assert (strcmp(g_param_spec_get_name (pspec), "number") == 0);
+
+  number = hdy_dialer_get_number (self->dial_pad);
+  gtk_entry_set_text (self->number_entry, number);
+  gtk_widget_set_visible (GTK_WIDGET (self->backspace),
+                          strlen (number) > 0);
 }
 
 
@@ -309,9 +329,26 @@ calls_new_call_box_init (CallsNewCallBox *self)
 
 
 static void
+constructed (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
+  PangoAttrList *attrs;
+
+  // Increase the size of the number entry text
+  attrs = pango_attr_list_new ();
+  pango_attr_list_insert (attrs, pango_attr_scale_new (1.2));
+  gtk_entry_set_attributes (self->number_entry, attrs);
+  pango_attr_list_unref (attrs);
+
+  parent_class->constructed (object);
+}
+
+
+static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_BOX);
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
   clear_dial_queue (self);
@@ -332,6 +369,7 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->set_property = set_property;
+  object_class->constructed = constructed;
   object_class->dispose = dispose;
 
 
@@ -349,11 +387,13 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_store);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_box);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, number_entry);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, backspace);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial_pad);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, status);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_deleted_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, dial_pad_notify_number_cb);
+  gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
 }
 
 
