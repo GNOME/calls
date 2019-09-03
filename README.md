@@ -7,9 +7,11 @@ A phone dialer and call handler.
 Calls is licensed under the GPLv3+.
 
 ## Dependencies
+To build Calls you need to first install the build-deps defined by [the debian/control file](https://source.puri.sm/Librem5/calls/blob/master/debian/control#L6)
 
-    sudo apt-get install libgtk-3-dev libhandy-0.0-dev \
-    modemmanager-dev libmm-glib-dev libgsound-dev libpeas-dev
+If you are running a Debian based distribution, you can easily install all those the dependencies making use of the following command
+
+    sudo apt-get build-dep .
 
 ## Building
 
