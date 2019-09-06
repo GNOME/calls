@@ -40,14 +40,14 @@ foreach test : tests
 
   t = executable(name, test_sources,
                  calls_sources, dummy_sources, calls_enum_sources, calls_resources,
+                 wl_proto_sources, wayland_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
                  link_with : gdbofono_lib,
                  dependencies: calls_deps,
                  include_directories : [
-                   top_include,
-                   src_include,
-                   dummy_include
+                   calls_includes,
+                   dummy_include,
                  ]
                 )
   test(name, t, env: test_env)
