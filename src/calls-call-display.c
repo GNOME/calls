@@ -56,7 +56,6 @@ struct _CallsCallDisplay
   GtkButton *answer;
 
   GtkRevealer *dial_pad_revealer;
-  GtkEntry *dial_pad_display;
 };
 
 G_DEFINE_TYPE (CallsCallDisplay, calls_call_display, GTK_TYPE_OVERLAY);
@@ -117,16 +116,6 @@ add_call_clicked_cb (GtkButton  *button,
 {
 }
 
-
-static void
-dial_pad_symbol_clicked_cb (CallsCallDisplay *self,
-                            gchar             symbol,
-                            HdyDialer        *dialer)
-{
-  calls_call_tone_start (self->call, symbol);
-
-  calls_entry_append (self->dial_pad_display, symbol);
-}
 
 static void
 hide_dial_pad_clicked_cb (CallsCallDisplay *self)
@@ -536,6 +525,37 @@ constructed (GObject *object)
   parent_class->constructed (object);
 }
 
+
+static void
+block_delete_cb (GtkWidget *widget)
+{
+  g_signal_stop_emission_by_name (widget, "delete-text");
+}
+
+
+static void
+insert_text_cb (GtkEditable      *editable,
+                gchar            *text,
+                gint              length,
+                gint             *position,
+                CallsCallDisplay *self)
+{
+  gint end_pos = -1;
+
+  calls_call_tone_start (self->call, *text);
+
+  // Make sure that new chars are inserted at the end of the input
+  *position = end_pos;
+  g_signal_handlers_block_by_func (editable,
+                                   (gpointer) insert_text_cb, self);
+  gtk_editable_insert_text (editable, text, length, &end_pos);
+  g_signal_handlers_unblock_by_func (editable,
+                                     (gpointer) insert_text_cb, self);
+
+  g_signal_stop_emission_by_name (editable, "insert-text");
+}
+
+
 static void
 calls_call_display_init (CallsCallDisplay *self)
 {
@@ -600,13 +620,13 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_revealer);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_display);
   gtk_widget_class_bind_template_callback (widget_class, answer_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hang_up_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, add_call_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dial_pad_symbol_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, block_delete_cb);
+  gtk_widget_class_bind_template_callback (widget_class, insert_text_cb);
 }

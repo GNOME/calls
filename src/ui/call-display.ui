@@ -388,7 +388,7 @@
               <class name="background"/>
             </style>
             <child type="center">
-              <object class="GtkBox">
+              <object class="GtkBox" id="box_keypad">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
@@ -397,24 +397,23 @@
                 <property name="margin_top">12</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkEntry" id="dial_pad_display">
+                  <object class="GtkEntry" id="keypad_entry">
                     <property name="visible">True</property>
-                    <property name="editable">False</property>
+                    <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
                     <property name="xalign">0.5</property>
-                    <property name="margin_bottom">8</property>
-                    <property name="im-module">simple</property>
+                    <signal name="delete-text" handler="block_delete_cb"/>
+                    <signal name="insert-text" handler="insert_text_cb"/>
                   </object>
                 </child>
                 <child>
-                  <object class="HdyDialer">
+                  <object class="HdyKeypad" id="keypad">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="column_spacing">10</property>
-                    <property name="receives_default">True</property>
-                    <property name="row_spacing">8</property>
-                    <property name="show_action_buttons">False</property>
-                    <property name="hexpand">False</property>
-                    <signal name="symbol-clicked" handler="dial_pad_symbol_clicked_cb" swapped="yes"/>
+                    <property name="can_focus">False</property>
+                    <property name="column_spacing">16</property>
+                    <property name="row_spacing">10</property>
+                    <property name="halign">center</property>
+                    <property name="entry">keypad_entry</property>
                   </object>
                 </child>
                 <child>
