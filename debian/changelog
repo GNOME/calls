@@ -1,4 +1,56 @@
-calls (0.0.1) UNRELEASED; urgency=low
+calls (0.1.0) purple; urgency=medium
+
+  [ David Cordero ]
+  * sm.puri.Calls.json: Fix libhandy config option type
+
+  [ Mohammed Sadiq ]
+  * window: hide windows on delete
+  * new-call-box: Use null-terminated string to set as buffer text
+
+  [ Christopher Davis ]
+  * history-header-bar: Change "About" to "About Calls"
+
+  [ Tobias Bernard ]
+  * Minor: Change recent calls empty state label
+  * Switcher: symbolic icons, label capitalization
+
+  [ Bob Ham ]
+  * calls-call: Add inbound property
+  * plugins/mm: Implement inbound property
+  * plugins/dummy: Implement inbound property
+  * calls-dummy-provider: Create an inbound call on SIGUSR1
+  * Update UI to better reflect the design
+  * calls-call: Fix crash with null call state
+  * calls-main-window: Use HdyViewSwitcher and friends
+  * src: Remove extraneous classes, Calls{History,NewCall}HeaderBar
+  * Specify minimum libhandy version in meson and Debian packaging
+  * calls-call-display: Add a display of dial pad digits
+  * util: Fix off-by-one in calls_entry_append
+  * calls-mm-call: Map MM_CALL_STATE_UNKNOWN to CALLS_CALL_STATE_DIALING instead of 0
+  * calls-call: Add calls_call_get_inbound function
+  * calls-dummy-origin: Fix ordering of state change and call removal callbacks
+  * Record calls to an SQLite database via libgom
+  * Hook up Recent Calls list to database
+  * appdata: Fix application ID
+  * Support opening of tel: URIs
+  * calls-application: Add --daemon option to not display main window
+  * Start up in daemon mode when GNOME starts
+  * calls-new-call-box: Allow entering of "+" symbol
+  * Use GtkApplication::register-session property to register
+  * Display call window over the phosh lockscreen
+  * ui/main-window: Hide contacts pane
+  * Release calls 0.1.0
+
+  [ Julian Sparber ]
+  * flatpak: fix ModemManager
+  * docs: update depedencies instructions
+
+  [ David Boddie ]
+  * Override the input method for entry widgets
+
+ -- Bob Ham <bob.ham@puri.sm>  Wed, 18 Sep 2019 15:13:00 +0100
+
+calls (0.0.1) purple; urgency=low
 
   * Initial release.
 
