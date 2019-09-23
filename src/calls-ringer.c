@@ -36,6 +36,7 @@ struct _CallsRinger
   GtkApplicationWindow parent_instance;
 
   CallsProvider *provider;
+  gchar         *theme_name;
   GSoundContext *ctx;
   unsigned       ring_count;
   GCancellable  *playing;
@@ -63,11 +64,72 @@ ringer_error (CallsRinger *self,
 }
 
 
+void
+get_theme_name (CallsRinger *self,
+                GtkSettings *settings)
+{
+  gchar *theme_name = NULL;
+
+  g_object_get (settings,
+                "gtk-sound-theme-name", &theme_name,
+                NULL);
+
+  g_free (self->theme_name);
+  self->theme_name = theme_name;
+
+  g_debug ("Got GTK sound theme name `%s'", theme_name);
+}
+
+
+void
+notify_sound_theme_name_cb (GtkSettings   *settings,
+                            GParamSpec  *pspec,
+                            CallsRinger *self)
+{
+  get_theme_name (self, settings);
+
+  if (self->ctx)
+    {
+      GError *error = NULL;
+      gboolean ok;
+
+      ok = gsound_context_set_attributes
+        (self->ctx,
+         &error,
+         GSOUND_ATTR_CANBERRA_XDG_THEME_NAME, self->theme_name,
+         NULL);
+
+      if (!ok)
+        {
+          g_warning ("Could not set GSound theme name: %s",
+                     error->message);
+          g_error_free (error);
+        }
+    }
+}
+
+
+static void
+monitor_theme_name (CallsRinger *self)
+{
+  GtkSettings *settings = gtk_settings_get_default ();
+  g_assert (settings != NULL);
+
+  g_signal_connect (settings,
+                    "notify::gtk-sound-theme-name",
+                    G_CALLBACK (notify_sound_theme_name_cb),
+                    self);
+
+  get_theme_name (self, settings);
+}
+
+
 static gboolean
 create_ctx (CallsRinger *self)
 {
   GError *error = NULL;
   gboolean ok;
+  GHashTable *attrs;
 
   self->ctx = gsound_context_new (NULL, &error);
   if (!self->ctx)
@@ -76,11 +138,18 @@ create_ctx (CallsRinger *self)
       return FALSE;
     }
 
-  ok = gsound_context_set_attributes
-    (self->ctx,
-     &error,
-     GSOUND_ATTR_APPLICATION_ICON_NAME, APP_ID,
-     NULL);
+  attrs = g_hash_table_new (g_str_hash, g_str_equal);
+  g_hash_table_insert
+    (attrs, GSOUND_ATTR_APPLICATION_ICON_NAME, APP_ID);
+  if (self->theme_name)
+    {
+      g_hash_table_insert
+        (attrs, GSOUND_ATTR_CANBERRA_XDG_THEME_NAME,
+         self->theme_name);
+    }
+
+  ok = gsound_context_set_attributesv (self->ctx, attrs, &error);
+  g_hash_table_unref (attrs);
   if (!ok)
     {
       ringer_error (self, "Error setting GSound attributes", error);
@@ -323,6 +392,7 @@ constructed (GObject *object)
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRinger *self = CALLS_RINGER (object);
 
+  monitor_theme_name (self);
   create_ctx (self);
   set_up_provider (self);
 
@@ -343,6 +413,18 @@ dispose (GObject *object)
 
 
 static void
+finalize (GObject *object)
+{
+  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
+  CallsRinger *self = CALLS_RINGER (object);
+
+  g_free (self->theme_name);
+
+  parent_class->finalize (object);
+}
+
+
+static void
 calls_ringer_class_init (CallsRingerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -350,6 +432,7 @@ calls_ringer_class_init (CallsRingerClass *klass)
   object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
+  object_class->finalize = finalize;
 
   props[PROP_PROVIDER] =
     g_param_spec_object ("provider",
