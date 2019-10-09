@@ -6,7 +6,9 @@
     <name>Calls</name>
     <summary>A phone dialer and call handler</summary>
     
-    <description>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</description>
+    <description>
+        <p>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</p>
+    </description>
 
     <url type="homepage">https://source.puri.sm/Librem5/calls</url>
     <url type="bugtracker">https://source.puri.sm/Librem5/calls/issues</url>
