@@ -43,7 +43,7 @@ foreach test : tests
                  wl_proto_sources, wayland_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
-                 link_with : gdbofono_lib,
+                 link_with : calls_vala,
                  dependencies: calls_deps,
                  include_directories : [
                    calls_includes,

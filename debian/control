@@ -12,6 +12,8 @@ Build-Depends:
  libpeas-dev,
  libgom-1.0-dev,
  libebook-contacts1.2-dev,
+ valac,
+ libfolks-dev,
  meson,
  pkg-config,
 # to run the tests

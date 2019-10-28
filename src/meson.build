@@ -35,12 +35,34 @@ calls_deps = [ dependency('gobject-2.0'),
                dependency('libpeas-1.0'),
                dependency('gom-1.0'),
                dependency('libebook-contacts-1.2'),
+               dependency('folks'),
              ]
 
 if wl_scanner.found()
   calls_includes += include_directories('wayland')
   calls_deps += dependency('wayland-client', version: '>=1.14')
 endif
+
+
+calls_vala_deps = [
+  dependency('libebook-contacts-1.2'),
+  dependency('folks'),
+]
+
+calls_vala_sources = files (
+  [
+    'calls-phone-number-query.vala',
+    'calls-best-match-view.vala',
+  ]
+)
+
+calls_vala = static_library (
+  'calls-vala',
+  calls_vala_sources,
+  vala_header : 'calls-vala.h',
+  dependencies : calls_vala_deps,
+)
+
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call.c',
@@ -64,6 +86,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call-record.c', 'calls-call-record.h',
                        'calls-record-store.c', 'calls-record-store.h',
                        'calls-call-record-row.c', 'calls-call-record-row.h',
+                       'calls-contacts.c', 'calls-contacts.h',
                       ])
 
 calls_config_data = config_data
@@ -92,10 +115,13 @@ calls_resources = gnome.compile_resources(
    c_name: 'call',
 )
 
-executable('calls',
-           calls_sources, calls_enum_sources, calls_resources,
-           wl_proto_sources, wayland_sources, 'main.c',
-           dependencies : calls_deps,
-           export_dynamic : true,
-           include_directories : calls_includes,
-           install : true)
+executable (
+  'calls',
+  calls_sources, calls_enum_sources, calls_resources,
+  wl_proto_sources, wayland_sources, 'main.c',
+  dependencies : calls_deps,
+  export_dynamic : true,
+  include_directories : calls_includes,
+  install : true,
+  link_with : calls_vala
+)
