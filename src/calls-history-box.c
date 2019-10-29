@@ -43,6 +43,8 @@ struct _CallsHistoryBox
   GListModel *model;
   gulong model_changed_handler_id;
 
+  CallsContacts *contacts;
+
   CallsNewCallBox *new_call;
 };
 
@@ -52,6 +54,7 @@ G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK);
 enum {
   PROP_0,
   PROP_MODEL,
+  PROP_CONTACTS,
   PROP_NEW_CALL,
   PROP_LAST_PROP,
 };
@@ -107,7 +110,9 @@ static GtkWidget *
 create_row_cb (CallsCallRecord *record,
                CallsHistoryBox *self)
 {
-  return GTK_WIDGET (calls_call_record_row_new (record, self->new_call));
+  return GTK_WIDGET (calls_call_record_row_new (record,
+                                                self->contacts,
+                                                self->new_call));
 }
 
 
@@ -124,6 +129,11 @@ set_property (GObject      *object,
       case PROP_MODEL:
         g_set_object (&self->model,
                       G_LIST_MODEL (g_value_get_object (value)));
+        break;
+
+      case PROP_CONTACTS:
+        g_set_object (&self->contacts,
+                      CALLS_CONTACTS (g_value_get_object (value)));
         break;
 
       case PROP_NEW_CALL:
@@ -175,6 +185,7 @@ dispose (GObject *object)
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
   g_clear_object (&self->new_call);
+  g_clear_object (&self->contacts);
   g_clear_object (&self->model);
 
   parent_class->dispose (object);
@@ -196,6 +207,13 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
                          _("model"),
                          _("The data store containing call records"),
                          G_TYPE_LIST_MODEL,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_CONTACTS] =
+    g_param_spec_object ("contacts",
+                         _("Contacts"),
+                         _("Interface for libfolks"),
+                         CALLS_TYPE_CONTACTS,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_NEW_CALL] =
@@ -222,10 +240,12 @@ calls_history_box_init (CallsHistoryBox *self)
 
 CallsHistoryBox *
 calls_history_box_new (GListModel      *model,
+                       CallsContacts   *contacts,
                        CallsNewCallBox *new_call)
 {
   return g_object_new (CALLS_TYPE_HISTORY_BOX,
                        "model", model,
+                       "contacts", contacts,
                        "new-call", new_call,
                        NULL);
 }

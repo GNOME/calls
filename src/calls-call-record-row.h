@@ -26,6 +26,7 @@
 #define CALLS_CALL_RECORD_ROW_H__
 
 #include "calls-call-record.h"
+#include "calls-contacts.h"
 #include "calls-new-call-box.h"
 
 #include <gtk/gtk.h>
@@ -38,6 +39,7 @@ G_DECLARE_FINAL_TYPE (CallsCallRecordRow, calls_call_record_row,
                       CALLS, CALL_RECORD_ROW, GtkBox);
 
 CallsCallRecordRow *calls_call_record_row_new        (CallsCallRecord    *record,
+                                                      CallsContacts      *contacts,
                                                       CallsNewCallBox    *new_call);
 CallsCallRecord *   calls_call_record_row_get_record (CallsCallRecordRow *self);
 

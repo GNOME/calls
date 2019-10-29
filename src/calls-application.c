@@ -31,6 +31,7 @@
 #include "calls-encryption-indicator.h"
 #include "calls-ringer.h"
 #include "calls-record-store.h"
+#include "calls-contacts.h"
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-application.h"
@@ -60,6 +61,7 @@ struct _CallsApplication
   CallsProvider    *provider;
   CallsRinger      *ringer;
   CallsRecordStore *record_store;
+  CallsContacts    *contacts;
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
 };
@@ -280,10 +282,14 @@ start_proper (CallsApplication  *self)
   self->record_store = calls_record_store_new (self->provider);
   g_assert (self->record_store != NULL);
 
+  self->contacts = calls_contacts_new ();
+  g_assert (self->contacts != NULL);
+
   self->main_window = calls_main_window_new
     (gtk_app,
      self->provider,
-     G_LIST_MODEL (self->record_store));
+     G_LIST_MODEL (self->record_store),
+     self->contacts);
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new

@@ -23,6 +23,7 @@
  */
 
 #include "calls-call-record-row.h"
+#include "calls-vala.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -47,6 +48,11 @@ struct _CallsCallRecordRow
   gulong end_notify_handler_id;
   guint date_change_timeout;
 
+  CallsContacts *contacts;
+  CallsBestMatchView *contact_view;
+  FolksIndividual *contact;
+  gulong contact_notify_handler_id;
+
   CallsNewCallBox *new_call;
 };
 
@@ -56,6 +62,7 @@ G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_BOX);
 enum {
   PROP_0,
   PROP_RECORD,
+  PROP_CONTACTS,
   PROP_NEW_CALL,
   PROP_LAST_PROP,
 };
@@ -122,9 +129,9 @@ nice_time (GDateTime *t,
 
 
 static void
-update_time (CallsCallRecordRow *self,
-             GDateTime          *end,
-             gboolean           *final)
+update_time_text (CallsCallRecordRow *self,
+                  GDateTime          *end,
+                  gboolean           *final)
 {
   gchar *nice;
   nice_time (end, &nice, final);
@@ -204,7 +211,7 @@ date_change_cb (CallsCallRecordRow *self)
                 NULL);
   g_assert (end != NULL);
 
-  update_time (self, end, &final);
+  update_time_text (self, end, &final);
   g_date_time_unref (end);
 
   if (final)
@@ -221,10 +228,10 @@ date_change_cb (CallsCallRecordRow *self)
 
 
 static void
-update (CallsCallRecordRow *self,
-        gboolean            inbound,
-        GDateTime          *answered,
-        GDateTime          *end)
+update_time (CallsCallRecordRow *self,
+             gboolean            inbound,
+             GDateTime          *answered,
+             GDateTime          *end)
 {
   gboolean missed = FALSE;
   gchar *type_icon_name;
@@ -233,7 +240,7 @@ update (CallsCallRecordRow *self,
     {
       gboolean time_final;
 
-      update_time (self, end, &time_final);
+      update_time_text (self, end, &time_final);
 
       if (!time_final && !self->date_change_timeout)
         {
@@ -258,9 +265,9 @@ update (CallsCallRecordRow *self,
 
 
 static void
-notify_cb (CallsCallRecordRow *self,
-           GParamSpec *pspec,
-           CallsCallRecord *record)
+notify_time_cb (CallsCallRecordRow *self,
+                GParamSpec         *pspec,
+                CallsCallRecord    *record)
 {
   gboolean inbound;
   GDateTime *answered;
@@ -272,7 +279,7 @@ notify_cb (CallsCallRecordRow *self,
                 "end", &end,
                 NULL);
 
-  update (self, inbound, answered, end);
+  update_time (self, inbound, answered, end);
 
   if (answered)
     {
@@ -283,6 +290,177 @@ notify_cb (CallsCallRecordRow *self,
     {
       g_date_time_unref (end);
       calls_clear_signal (record, &self->end_notify_handler_id);
+    }
+}
+
+
+static void
+setup_time (CallsCallRecordRow *self,
+            gboolean            inbound,
+            GDateTime          *answered,
+            GDateTime          *end)
+{
+  if (!end)
+    {
+      self->end_notify_handler_id =
+        g_signal_connect_swapped (self->record,
+                                  "notify::end",
+                                  G_CALLBACK (notify_time_cb),
+                                  self);
+
+      if (!answered)
+        {
+          self->answered_notify_handler_id =
+            g_signal_connect_swapped (self->record,
+                                      "notify::answered",
+                                      G_CALLBACK (notify_time_cb),
+                                      self);
+        }
+    }
+
+  update_time (self, inbound, answered, end);
+}
+
+
+static void
+update_target (CallsCallRecordRow *self)
+{
+  if (self->contact)
+    {
+      const gchar *name =
+        folks_individual_get_display_name (self->contact);
+
+      gtk_label_set_text (self->target, name);
+    }
+  else
+    {
+      gchar *target;
+
+      g_object_get (G_OBJECT (self->record),
+                    "target", &target,
+                    NULL);
+
+      gtk_label_set_text (self->target, target);
+
+      g_free (target);
+    }
+}
+
+
+inline static void
+clear_contact (CallsCallRecordRow *self)
+{
+  calls_clear_signal (self->contact,
+                      &self->contact_notify_handler_id);
+  g_clear_object (&self->contact);
+}
+
+
+inline static void
+set_contact (CallsCallRecordRow *self,
+             FolksIndividual    *contact)
+{
+  self->contact = contact;
+  g_object_ref (contact);
+
+  self->contact_notify_handler_id =
+    g_signal_connect_swapped (self->contact,
+                              "notify::display-name",
+                              G_CALLBACK (update_target),
+                              self);
+}
+
+
+static void
+update_contact (CallsCallRecordRow *self)
+{
+  FolksIndividual *best_match;
+
+  best_match = calls_best_match_view_get_best_match
+    (self->contact_view);
+
+  if (best_match)
+    {
+      if (self->contact)
+        {
+          if (self->contact == best_match)
+            {
+              // No change
+              return;
+            }
+          else
+            {
+              // Different best match object
+              clear_contact (self);
+              set_contact (self, best_match);
+            }
+        }
+      else
+        {
+          // New best match
+          set_contact (self, best_match);
+        }
+    }
+  else
+    {
+      if (self->contact)
+        {
+          // Best match disappeared
+          clear_contact (self);
+        }
+      else
+        {
+          // No change
+          return;
+        }
+    }
+
+  update_target (self);
+}
+
+
+static void
+setup_contact_view (CallsCallRecordRow *self)
+{
+  g_autofree gchar *target = NULL;
+  EPhoneNumber *phone_number;
+  GError *error = NULL;
+
+  // Get the target number
+  g_object_get (G_OBJECT (self->record),
+                "target", &target,
+                NULL);
+  g_assert (target != NULL);
+
+  // Parse it
+  phone_number = e_phone_number_from_string
+    (target, NULL, &error);
+  if (!phone_number)
+    {
+      g_warning ("Error parsing phone number `%s': %s",
+                 target, error->message);
+      g_error_free (error);
+      update_target (self);
+      return;
+    }
+
+  // Look up the search view
+  self->contact_view = calls_contacts_lookup_phone_number
+    (self->contacts, phone_number);
+  g_assert (self->contact_view != NULL);
+  g_clear_object (&self->contacts);
+  e_phone_number_free (phone_number);
+
+  g_object_ref (self->contact_view);
+  g_signal_connect_swapped (self->contact_view,
+                            "notify::best-match",
+                            G_CALLBACK (update_contact),
+                            self);
+
+  update_contact (self);
+  if (!self->contact)
+    {
+      update_target (self);
     }
 }
 
@@ -299,6 +477,11 @@ set_property (GObject      *object,
   case PROP_RECORD:
     g_set_object (&self->record,
                   CALLS_CALL_RECORD (g_value_get_object (value)));
+    break;
+
+  case PROP_CONTACTS:
+    g_set_object (&self->contacts,
+                  CALLS_CONTACTS (g_value_get_object (value)));
     break;
 
   case PROP_NEW_CALL:
@@ -318,42 +501,21 @@ constructed (GObject *object)
 {
   GObjectClass *obj_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
-  gchar *target;
   gboolean inbound;
   GDateTime *answered;
   GDateTime *end;
 
   g_object_get (G_OBJECT (self->record),
-                "target", &target,
                 "inbound", &inbound,
                 "answered", &answered,
                 "end", &end,
                 NULL);
 
-  gtk_label_set_text (self->target, target);
-  g_free (target);
-
-  if (!end)
-    {
-      self->end_notify_handler_id =
-        g_signal_connect_swapped (self->record,
-                                  "notify::end",
-                                  G_CALLBACK (notify_cb),
-                                  self);
-
-      if (!answered)
-        {
-          self->answered_notify_handler_id =
-            g_signal_connect_swapped (self->record,
-                                      "notify::answered",
-                                      G_CALLBACK (notify_cb),
-                                      self);
-        }
-    }
-
-  update (self, inbound, answered, end);
+  setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
   calls_date_time_unref (end);
+
+  setup_contact_view (self);
 
   obj_class->constructed (object);
 }
@@ -387,6 +549,10 @@ dispose (GObject *object)
 
   g_clear_object (&self->new_call);
 
+  g_clear_object (&self->contacts);
+  g_clear_object (&self->contact_view);
+  clear_contact (self);
+
   calls_clear_source (&self->date_change_timeout);
   calls_clear_signal (self->record, &self->answered_notify_handler_id);
   calls_clear_signal (self->record, &self->end_notify_handler_id);
@@ -413,6 +579,13 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
                          _("The call record for this row"),
                          CALLS_TYPE_CALL_RECORD,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_CONTACTS] =
+    g_param_spec_object ("contacts",
+                         _("Contacts"),
+                         _("Interface for libfolks"),
+                         CALLS_TYPE_CONTACTS,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_NEW_CALL] =
     g_param_spec_object ("new-call",
@@ -442,10 +615,12 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
 CallsCallRecordRow *
 calls_call_record_row_new (CallsCallRecord *record,
+                           CallsContacts   *contacts,
                            CallsNewCallBox *new_call)
 {
   return g_object_new (CALLS_TYPE_CALL_RECORD_ROW,
                        "record", record,
+                       "contacts", contacts,
                        "new-call", new_call,
                        NULL);
 }

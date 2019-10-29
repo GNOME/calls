@@ -45,6 +45,7 @@ struct _CallsMainWindow
 
   CallsProvider *provider;
   GListModel *record_store;
+  CallsContacts *contacts;
 
   GtkRevealer *info_revealer;
   guint info_timeout;
@@ -67,6 +68,7 @@ enum {
   PROP_0,
   PROP_PROVIDER,
   PROP_RECORD_STORE,
+  PROP_CONTACTS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -208,6 +210,11 @@ set_property (GObject      *object,
                   G_LIST_MODEL (g_value_get_object (value)));
     break;
 
+  case PROP_CONTACTS:
+    g_set_object (&self->contacts,
+                  CALLS_CONTACTS (g_value_get_object (value)));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -267,6 +274,7 @@ constructed (GObject *object)
 
   // Add call records
   history = calls_history_box_new (self->record_store,
+                                   self->contacts,
                                    self->new_call);
   widget = GTK_WIDGET (history);
   gtk_stack_add_titled (self->main_stack, widget,
@@ -313,6 +321,7 @@ dispose (GObject *object)
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   stop_info_timeout (self);
+  g_clear_object (&self->contacts);
   g_clear_object (&self->record_store);
   g_clear_object (&self->provider);
 
@@ -362,6 +371,13 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
                          G_TYPE_LIST_MODEL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
+  props[PROP_CONTACTS] =
+    g_param_spec_object ("contacts",
+                         _("Contacts"),
+                         _("Interface for libfolks"),
+                         CALLS_TYPE_CONTACTS,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
@@ -391,16 +407,19 @@ calls_main_window_init (CallsMainWindow *self)
 CallsMainWindow *
 calls_main_window_new (GtkApplication *application,
                        CallsProvider  *provider,
-                       GListModel     *record_store)
+                       GListModel     *record_store,
+                       CallsContacts  *contacts)
 {
   g_return_val_if_fail (GTK_IS_APPLICATION (application), NULL);
   g_return_val_if_fail (CALLS_IS_PROVIDER (provider), NULL);
   g_return_val_if_fail (G_IS_LIST_MODEL (record_store), NULL);
+  g_return_val_if_fail (CALLS_IS_CONTACTS (contacts), NULL);
 
   return g_object_new (CALLS_TYPE_MAIN_WINDOW,
                        "application", application,
                        "provider", provider,
                        "record-store", record_store,
+                       "contacts", contacts,
                        NULL);
 }
 
