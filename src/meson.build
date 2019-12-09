@@ -123,5 +123,6 @@ executable (
   export_dynamic : true,
   include_directories : calls_includes,
   install : true,
-  link_with : calls_vala
+  link_with : calls_vala,
+  c_args : '-Wno-error=deprecated-declarations',
 )

@@ -11,7 +11,8 @@ test_env = [
 
 test_cflags = [
   '-fPIE',
-  '-DFOR_TESTING'
+  '-DFOR_TESTING',
+  '-Wno-error=deprecated-declarations'
 ]
 
 test_link_args = [
