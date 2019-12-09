@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018, 2019 Purism SPC
+ * Copyright (C) 2019 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -22,25 +22,24 @@
  *
  */
 
-#ifndef CALLS_CONTACTS_H__
-#define CALLS_CONTACTS_H__
+#ifndef CALLS_BEST_MATCH_H__
+#define CALLS_BEST_MATCH_H__
 
-#include "calls-best-match.h"
+#include "calls-vala.h"
 
-#include <glib-object.h>
-#include <libebook-contacts/libebook-contacts.h>
-
+#include <gdk/gdk.h>
 
 G_BEGIN_DECLS
 
-#define CALLS_TYPE_CONTACTS (calls_contacts_get_type ())
+#define CALLS_TYPE_BEST_MATCH (calls_best_match_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsContacts, calls_contacts, CALLS, CONTACTS, GObject);
+G_DECLARE_FINAL_TYPE (CallsBestMatch, calls_best_match, CALLS, BEST_MATCH, GObject);
 
-CallsContacts *      calls_contacts_new                 ();
-CallsBestMatch *     calls_contacts_lookup_phone_number (CallsContacts *self,
-                                                         EPhoneNumber  *number);
+CallsBestMatch  *calls_best_match_new            (CallsBestMatchView *view);
+const gchar *    calls_best_match_get_name       (CallsBestMatch     *self);
+GdkPixbuf *      calls_best_match_request_avatar (CallsBestMatch     *self,
+                                                  gint                size);
 
 G_END_DECLS
 
-#endif /* CALLS_CONTACTS_H__ */
+#endif /* CALLS_BEST_MATCH_H__ */

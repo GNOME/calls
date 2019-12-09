@@ -23,7 +23,7 @@
  */
 
 #include "calls-call-record-row.h"
-#include "calls-vala.h"
+#include "calls-best-match.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -32,6 +32,9 @@
 
 #include <sys/time.h>
 #include <errno.h>
+
+
+#define AVATAR_SIZE 32
 
 
 struct _CallsCallRecordRow
@@ -49,9 +52,7 @@ struct _CallsCallRecordRow
   guint date_change_timeout;
 
   CallsContacts *contacts;
-  CallsBestMatchView *contact_view;
-  FolksIndividual *contact;
-  gulong contact_notify_handler_id;
+  CallsBestMatch *contact;
 
   CallsNewCallBox *new_call;
 };
@@ -323,13 +324,17 @@ setup_time (CallsCallRecordRow *self,
 
 
 static void
-update_target (CallsCallRecordRow *self)
+contact_name_cb (CallsCallRecordRow *self)
 {
+  const gchar *name = NULL;
+
   if (self->contact)
     {
-      const gchar *name =
-        folks_individual_get_display_name (self->contact);
+      name = calls_best_match_get_name (self->contact);
+    }
 
+  if (name)
+    {
       gtk_label_set_text (self->target, name);
     }
   else
@@ -347,80 +352,57 @@ update_target (CallsCallRecordRow *self)
 }
 
 
-inline static void
-clear_contact (CallsCallRecordRow *self)
-{
-  calls_clear_signal (self->contact,
-                      &self->contact_notify_handler_id);
-  g_clear_object (&self->contact);
-}
-
-
-inline static void
-set_contact (CallsCallRecordRow *self,
-             FolksIndividual    *contact)
-{
-  self->contact = contact;
-  g_object_ref (contact);
-
-  self->contact_notify_handler_id =
-    g_signal_connect_swapped (self->contact,
-                              "notify::display-name",
-                              G_CALLBACK (update_target),
-                              self);
-}
-
-
 static void
-update_contact (CallsCallRecordRow *self)
+set_avatar (CallsCallRecordRow *self,
+            GdkPixbuf *avatar)
 {
-  FolksIndividual *best_match;
-
-  best_match = calls_best_match_view_get_best_match
-    (self->contact_view);
-
-  if (best_match)
+  if (avatar)
     {
-      if (self->contact)
-        {
-          if (self->contact == best_match)
-            {
-              // No change
-              return;
-            }
-          else
-            {
-              // Different best match object
-              clear_contact (self);
-              set_contact (self, best_match);
-            }
-        }
-      else
-        {
-          // New best match
-          set_contact (self, best_match);
-        }
+      gtk_image_set_from_pixbuf (self->avatar, avatar);
     }
   else
     {
-      if (self->contact)
-        {
-          // Best match disappeared
-          clear_contact (self);
-        }
-      else
-        {
-          // No change
-          return;
-        }
+      gtk_image_set_from_icon_name (self->avatar,
+                                    "avatar-default-symbolic",
+                                    GTK_ICON_SIZE_DND);
     }
-
-  update_target (self);
 }
 
 
 static void
-setup_contact_view (CallsCallRecordRow *self)
+contact_avatar_cb (CallsCallRecordRow *self,
+                   gint size,
+                   GdkPixbuf *avatar,
+                   CallsBestMatch *contact)
+{
+  if (size != AVATAR_SIZE)
+    {
+      return;
+    }
+
+  set_avatar (self, avatar);
+}
+
+
+static void
+request_contact_avatar (CallsCallRecordRow *self)
+{
+  GdkPixbuf *avatar;
+
+  if (!self->contact)
+    {
+      return;
+    }
+
+  avatar = calls_best_match_request_avatar
+    (self->contact, AVATAR_SIZE);
+
+  set_avatar (self, avatar);
+}
+
+
+static void
+setup_contact (CallsCallRecordRow *self)
 {
   g_autofree gchar *target = NULL;
   EPhoneNumber *phone_number;
@@ -440,28 +422,24 @@ setup_contact_view (CallsCallRecordRow *self)
       g_warning ("Error parsing phone number `%s': %s",
                  target, error->message);
       g_error_free (error);
-      update_target (self);
       return;
     }
 
-  // Look up the search view
-  self->contact_view = calls_contacts_lookup_phone_number
+  // Look up the best match object
+  self->contact = calls_contacts_lookup_phone_number
     (self->contacts, phone_number);
-  g_assert (self->contact_view != NULL);
+  g_assert (self->contact != NULL);
   g_clear_object (&self->contacts);
   e_phone_number_free (phone_number);
 
-  g_object_ref (self->contact_view);
-  g_signal_connect_swapped (self->contact_view,
-                            "notify::best-match",
-                            G_CALLBACK (update_contact),
+  g_signal_connect_swapped (self->contact,
+                            "notify::name",
+                            G_CALLBACK (contact_name_cb),
                             self);
-
-  update_contact (self);
-  if (!self->contact)
-    {
-      update_target (self);
-    }
+  g_signal_connect_swapped (self->contact,
+                            "avatar",
+                            G_CALLBACK (contact_avatar_cb),
+                            self);
 }
 
 
@@ -515,7 +493,9 @@ constructed (GObject *object)
   calls_date_time_unref (answered);
   calls_date_time_unref (end);
 
-  setup_contact_view (self);
+  setup_contact (self);
+  contact_name_cb (self);
+  request_contact_avatar (self);
 
   obj_class->constructed (object);
 }
@@ -549,9 +529,8 @@ dispose (GObject *object)
 
   g_clear_object (&self->new_call);
 
+  g_clear_object (&self->contact);
   g_clear_object (&self->contacts);
-  g_clear_object (&self->contact_view);
-  clear_contact (self);
 
   calls_clear_source (&self->date_change_timeout);
   calls_clear_signal (self->record, &self->answered_notify_handler_id);

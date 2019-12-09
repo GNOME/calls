@@ -32,8 +32,8 @@ struct _CallsContacts
   GObject parent_instance;
 
   FolksIndividualAggregator *big_pile_of_contacts;
-  /** Map of call target (EPhoneNumber) to CallsBestMatchView */
-  GHashTable                *phone_number_views;
+  /** Map of call target (EPhoneNumber) to CallsBestMatch */
+  GHashTable                *phone_number_best_matches;
 };
 
 G_DEFINE_TYPE (CallsContacts, calls_contacts, G_TYPE_OBJECT);
@@ -56,9 +56,12 @@ static gboolean
 phone_number_equal (const EPhoneNumber *a,
                     const EPhoneNumber *b)
 {
+  EPhoneNumberMatch match = e_phone_number_compare (a, b);
+
   return
-    e_phone_number_compare (a, b)
-    == E_PHONE_NUMBER_MATCH_EXACT;
+    match == E_PHONE_NUMBER_MATCH_EXACT
+    ||
+    match == E_PHONE_NUMBER_MATCH_NATIONAL;
 }
 
 
@@ -97,7 +100,7 @@ constructed (GObject *object)
                                        (GAsyncReadyCallback)prepare_cb,
                                        self);
 
-  self->phone_number_views = g_hash_table_new_full
+  self->phone_number_best_matches = g_hash_table_new_full
     ((GHashFunc)phone_number_hash,
      (GEqualFunc)phone_number_equal,
      (GDestroyNotify)e_phone_number_free,
@@ -112,11 +115,8 @@ dispose (GObject *object)
 {
   CallsContacts *self = CALLS_CONTACTS (object);
 
-  if (self->phone_number_views)
-    {
-      g_hash_table_unref (self->phone_number_views);
-      self->phone_number_views = NULL;
-    }
+  g_clear_pointer (&self->phone_number_best_matches,
+                   g_hash_table_unref);
 
   g_clear_object (&self->big_pile_of_contacts);
 
@@ -165,24 +165,21 @@ search_view_prepare_cb (FolksSearchView *view,
 }
 
 
-CallsBestMatchView *
+CallsBestMatch *
 calls_contacts_lookup_phone_number (CallsContacts *self,
                                     EPhoneNumber  *number)
 {
-  CallsBestMatchView *view;
+  CallsBestMatch *best_match;
   CallsPhoneNumberQuery *query;
+  CallsBestMatchView *view;
 
-  view = g_hash_table_lookup (self->phone_number_views, number);
-  if (view)
+  best_match = g_hash_table_lookup (self->phone_number_best_matches, number);
+  if (best_match)
     {
-      return view;
+      return best_match;
     }
 
   query = calls_phone_number_query_new (number);
-  if (!query)
-    {
-      return NULL;
-    }
 
   view = calls_best_match_view_new
     (self->big_pile_of_contacts, FOLKS_QUERY (query));
@@ -193,9 +190,13 @@ calls_contacts_lookup_phone_number (CallsContacts *self,
      (GAsyncReadyCallback)search_view_prepare_cb,
      self);
 
-  g_hash_table_insert (self->phone_number_views,
-                       e_phone_number_copy (number),
-                       view);
+  best_match = calls_best_match_new (view);
+  g_assert (best_match != NULL);
+  g_object_unref (view);
 
-  return view;
+  g_hash_table_insert (self->phone_number_best_matches,
+                       e_phone_number_copy (number),
+                       best_match);
+
+  return best_match;
 }

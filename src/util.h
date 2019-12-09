@@ -97,6 +97,10 @@ G_BEGIN_DECLS
     }
 
 
+/** If the GObject object is non-NULL, unref it */
+void calls_object_unref (gpointer object);
+
+
 /** Find a particular pointer value in a GtkListStore */
 gboolean
 calls_list_store_find (GtkListStore *store,

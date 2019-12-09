@@ -24,6 +24,17 @@
 
 #include "util.h"
 
+
+void
+calls_object_unref (gpointer object)
+{
+  if (object)
+    {
+      g_object_unref (object);
+    }
+}
+
+
 typedef struct
 {
   gpointer needle;
