@@ -50,6 +50,8 @@ struct _CallsCallDisplay
   GtkBox *controls;
   GtkBox *gsm_controls;
   GtkBox *general_controls;
+  GtkToggleButton *speaker;
+  GtkToggleButton *mute;
   GtkButton *hang_up;
   GtkButton *answer;
 
@@ -339,6 +341,194 @@ set_property (GObject      *object,
   }
 }
 
+
+//#define UGLY_SOURCE "alsa_input.platform-sound.VoiceCall__hw_CARD_sgtl5000__source"
+//#define UGLY_SINK   "alsa_output.platform-sound.VoiceCall__hw_CARD_sgtl5000__sink"
+//#define UGLY_SPEAKER_PORT "Headset"
+#define UGLY_SOURCE "alsa_input.platform-sound.Audio__hw_CARD_wm8962__source"
+#define UGLY_SINK   "alsa_output.platform-sound.Audio__hw_CARD_wm8962__sink"
+#define UGLY_SPEAKER_PORT "SpeakerPhone"
+
+
+static gboolean
+ugly_system (const gchar *cmd)
+{
+  gchar *out = NULL, *err = NULL;
+  gint status;
+  GError *error = NULL;
+  gboolean ok;
+
+  g_debug ("Executing command `%s'", cmd);
+
+  ok = g_spawn_command_line_sync
+    (cmd, &out, &err, &status, &error);
+
+  if (!ok)
+    {
+      g_warning ("Error spawning command `%s': %s'",
+                 cmd, error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+
+  ok = g_spawn_check_exit_status (status, &error);
+  if (ok)
+    {
+      g_debug ("Command `%s' executed successfully"
+               "; stdout: `%s'; stderr: `%s'",
+               cmd, out, err);
+    }
+  else
+    {
+      g_warning ("Command `%s' failed: %s"
+                 "; stdout: `%s'; stderr: `%s'",
+                 cmd, error->message, out, err);
+      g_error_free (error);
+    }
+
+  g_free (out);
+  g_free (err);
+
+  return ok;
+}
+
+
+static gboolean
+ugly_set_pa_port (const gchar *type,
+                  const gchar *name,
+                  const gchar *port_dir,
+                  const gchar *port_name)
+{
+  g_autofree gchar *cmd = NULL;
+
+  cmd = g_strdup_printf
+    ("pactl set-%s-port '%s' '[%s] %s'",
+     type, name, port_dir, port_name);
+
+  return ugly_system (cmd);
+}
+
+
+static gboolean
+ugly_speaker_pressed_cb (CallsCallDisplay *self,
+                         GdkEvent         *event,
+                         GtkToggleButton  *speaker)
+{
+  const gchar *port;
+  gboolean ok;
+
+  if (event->type != GDK_BUTTON_PRESS)
+    {
+      return FALSE;
+    }
+
+  if (gtk_toggle_button_get_active (speaker))
+    {
+      port = "Handset";
+    }
+  else
+    {
+      port = UGLY_SPEAKER_PORT;
+    }
+
+  ok = ugly_set_pa_port ("source", UGLY_SOURCE,
+                         "In", port);
+  if (!ok)
+    {
+      /* Stop other handlers */
+      return TRUE;
+    }
+
+  ok = ugly_set_pa_port ("sink", UGLY_SINK,
+                         "Out", port);
+  if (!ok)
+    {
+      /* Stop other handlers */
+      return TRUE;
+    }
+
+
+  /* Continue with other handlers */
+  return FALSE;
+}
+
+
+static gboolean
+ugly_pa_mute (const gchar *type,
+              const gchar *name,
+              gboolean     mute)
+{
+  g_autofree gchar *cmd = NULL;
+
+  cmd = g_strdup_printf
+    ("pactl set-%s-mute '%s' %s",
+     type, name, mute ? "1" : "0");
+
+  return ugly_system (cmd);
+}
+
+
+static gboolean
+ugly_mute_pressed_cb (CallsCallDisplay *self,
+                      GdkEvent         *event,
+                      GtkToggleButton  *mute)
+{
+  gboolean want_mute;
+  gboolean ok;
+
+  if (event->type != GDK_BUTTON_PRESS)
+    {
+      return FALSE;
+    }
+
+  want_mute = !gtk_toggle_button_get_active (mute);
+
+  ok = ugly_pa_mute ("source", UGLY_SOURCE, want_mute);
+  if (!ok)
+    {
+      /* Stop other handlers */
+      return TRUE;
+    }
+
+  ok = ugly_pa_mute ("sink", UGLY_SINK, want_mute);
+  if (!ok)
+    {
+      /* Stop other handlers */
+      return TRUE;
+    }
+
+
+  /* Continue with other handlers */
+  return FALSE;
+}
+
+
+static void
+ugly_hacks (CallsCallDisplay *self)
+{
+  GtkWidget *speaker = GTK_WIDGET (self->speaker);
+  GtkWidget *mute = GTK_WIDGET (self->mute);
+
+  g_message ("########################################################");
+  g_message ("########################################################");
+  g_message ("############ THIS CALLS CONTAINS UGLY HACKS ############");
+  g_message ("########################################################");
+  g_message ("########################################################");
+
+  gtk_widget_set_sensitive (speaker, TRUE);
+  g_signal_connect_swapped (speaker,
+                            "button-press-event",
+                            G_CALLBACK (ugly_speaker_pressed_cb),
+                            self);
+
+  gtk_widget_set_sensitive (mute, TRUE);
+  g_signal_connect_swapped (mute,
+                            "button-press-event",
+                            G_CALLBACK (ugly_mute_pressed_cb),
+                            self);
+}
+
+
 static void
 constructed (GObject *object)
 {
@@ -348,6 +538,8 @@ constructed (GObject *object)
   self->timer = g_timer_new ();
 
   call_state_changed_cb (self, calls_call_get_state (self->call));
+
+  ugly_hacks (self);
 
   parent_class->constructed (object);
 }
@@ -411,6 +603,8 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, controls);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, gsm_controls);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, general_controls);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, speaker);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, dial_pad_revealer);
