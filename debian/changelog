@@ -1,3 +1,18 @@
+calls (0.1.1) purple; urgency=medium
+
+  [ Bob Ham ]
+  * ringer: Use the GTK sound theme
+  * Add phone number lookup using libfolks
+  * Use libfolks phone number lookup in call record display
+  * Add -Wno-error=deprecated-declarations to build arguments
+  * call-display: Add ugly, ugly hacks to enable speakerphone/mute buttons
+  * Add initial avatar support
+
+  [ Lubomir Rintel ]
+  * appdata.xml: fix a validation error
+
+ -- Bob Ham <bob.ham@puri.sm>  Tue, 10 Dec 2019 14:51:21 +0000
+
 calls (0.1.0) purple; urgency=medium
 
   [ David Cordero ]
