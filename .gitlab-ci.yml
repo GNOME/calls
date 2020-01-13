@@ -1,3 +1,7 @@
+stages:
+ - build
+ - test
+
 variables:
   DEPS: build-essential git modemmanager-dev libmm-glib-dev
   WANT_BUILD_DEPS: "true"
