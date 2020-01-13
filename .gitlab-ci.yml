@@ -1,6 +1,11 @@
+include:
+ - 'https://source.puri.sm/Librem5/librem5-ci/raw/master/librem5-pipeline-definitions.yml'
+
 stages:
  - build
  - test
+ - package
+ - test-package
 
 variables:
   DEPS: build-essential git modemmanager-dev libmm-glib-dev
@@ -39,4 +44,22 @@ test:native:
   script:
     - export LC_ALL=C.UTF-8
     - xvfb-run ninja -C _build test
+
+package:deb-debian-buster:
+  extends: .l5-build-debian-package
+
+package:deb-debian-buster:arm64:
+  tags:
+    - librem5:arm64
+  extends: .l5-build-debian-package
+
+autopkgtest-debian-buster-package:
+  dependencies:
+    - package:deb-debian-buster
+  extends: .l5-autopkgtest-debian-package
+
+lintian-debian-buster-package:
+  dependencies:
+    - package:deb-debian-buster
+  extends: .l5-lintian-debian-package
 
