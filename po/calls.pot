@@ -1,0 +1,345 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: calls\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-14 18:18+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/calls-application.c:169 src/calls-main-window.c:113
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr ""
+
+#: src/calls-application.c:474
+msgid "The name of the plugin to use for the call Provider"
+msgstr ""
+
+#: src/calls-application.c:475
+msgid "PLUGIN"
+msgstr ""
+
+#: src/calls-application.c:480
+msgid "Whether to present the main window on startup"
+msgstr ""
+
+#: src/calls-best-match.c:487
+msgid "View"
+msgstr ""
+
+#: src/calls-best-match.c:488
+msgid "The CallsBestMatchView to monitor"
+msgstr ""
+
+#: src/calls-best-match.c:494 src/calls-party.c:187
+msgid "Name"
+msgstr ""
+
+#: src/calls-best-match.c:495
+msgid "The display name of the best match"
+msgstr ""
+
+#: src/calls-call.c:129 src/calls-call-record.c:207
+msgid "Inbound"
+msgstr ""
+
+#: src/calls-call.c:130
+msgid "Whether the call is inbound"
+msgstr ""
+
+#: src/calls-call-data.c:137 src/calls-call-holder.c:158
+msgid "Call"
+msgstr ""
+
+#: src/calls-call-data.c:138
+msgid "The call"
+msgstr ""
+
+#: src/calls-call-data.c:144
+msgid "Party"
+msgstr ""
+
+#: src/calls-call-data.c:145 src/calls-encryption-indicator.c:129
+msgid "The party participating in the call"
+msgstr ""
+
+#: src/calls-call-display.c:256
+msgid "Calling..."
+msgstr ""
+
+#: src/calls-call-display.c:589
+msgid "Call data"
+msgstr ""
+
+#: src/calls-call-display.c:590
+msgid "Data for the call this display will be associated with"
+msgstr ""
+
+#: src/calls-call-holder.c:159
+msgid "The call to hold"
+msgstr ""
+
+#: src/calls-call-record.c:190
+msgid "ID"
+msgstr ""
+
+#: src/calls-call-record.c:191
+msgid "The row ID"
+msgstr ""
+
+#: src/calls-call-record.c:199
+msgid "Target"
+msgstr ""
+
+#: src/calls-call-record.c:200
+msgid "The PTSN phone number or other address of the call"
+msgstr ""
+
+#: src/calls-call-record.c:208
+msgid "Whether the call was an inbound call"
+msgstr ""
+
+#: src/calls-call-record.c:215
+msgid "Start"
+msgstr ""
+
+#: src/calls-call-record.c:216
+msgid "Time stamp of the start of the call"
+msgstr ""
+
+#: src/calls-call-record.c:223
+msgid "Answered"
+msgstr ""
+
+#: src/calls-call-record.c:224
+msgid "Time stamp of when the call was answered"
+msgstr ""
+
+#: src/calls-call-record.c:231
+msgid "End"
+msgstr ""
+
+#: src/calls-call-record.c:232
+msgid "Time stamp of the end of the call"
+msgstr ""
+
+#: src/calls-call-record-row.c:109
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+
+#: src/calls-call-record-row.c:557
+msgid "Record"
+msgstr ""
+
+#: src/calls-call-record-row.c:558
+msgid "The call record for this row"
+msgstr ""
+
+#: src/calls-call-record-row.c:564 src/calls-history-box.c:214
+#: src/calls-main-window.c:376 src/ui/main-window.ui:86
+msgid "Contacts"
+msgstr ""
+
+#: src/calls-call-record-row.c:565 src/calls-history-box.c:215
+#: src/calls-main-window.c:377
+msgid "Interface for libfolks"
+msgstr ""
+
+#: src/calls-call-record-row.c:571 src/calls-history-box.c:221
+msgid "New call"
+msgstr ""
+
+#: src/calls-call-record-row.c:572 src/calls-history-box.c:222
+msgid "The UI box for making calls"
+msgstr ""
+
+#: src/calls-call-selector-item.c:175
+msgid "Call holder"
+msgstr ""
+
+#: src/calls-call-selector-item.c:176
+msgid "The holder for this call"
+msgstr ""
+
+#: src/calls-call-window.c:701 src/calls-main-window.c:362
+#: src/calls-new-call-box.c:378 src/calls-record-store.c:734
+#: src/calls-ringer.c:439
+msgid "Provider"
+msgstr ""
+
+#: src/calls-call-window.c:702 src/calls-main-window.c:363
+#: src/calls-new-call-box.c:379 src/calls-record-store.c:735
+#: src/calls-ringer.c:440
+msgid "An object implementing low-level call-making functionality"
+msgstr ""
+
+#: src/calls-encryption-indicator.c:128
+msgid "Encrypted"
+msgstr ""
+
+#: src/calls-enumerate-params.c:124
+msgid "User data"
+msgstr ""
+
+#: src/calls-enumerate-params.c:125
+msgid "The pointer to be provided as user data for signal connections"
+msgstr ""
+
+#: src/calls-history-box.c:207
+msgid "model"
+msgstr ""
+
+#: src/calls-history-box.c:208
+msgid "The data store containing call records"
+msgstr ""
+
+#: src/calls-main-window.c:114
+msgid "translator-credits"
+msgstr ""
+
+#: src/calls-main-window.c:270 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr ""
+
+#: src/calls-main-window.c:281
+msgid "Recent"
+msgstr ""
+
+#: src/calls-main-window.c:369
+msgid "Record store"
+msgstr ""
+
+#: src/calls-main-window.c:370
+msgid "The store of call records"
+msgstr ""
+
+#: src/calls-party.c:188
+msgid "The party's name"
+msgstr ""
+
+#: src/calls-party.c:194
+msgid "Number"
+msgstr ""
+
+#: src/calls-party.c:195
+msgid "The party's telephone number"
+msgstr ""
+
+#: src/calls-provider.c:70
+msgid "Status"
+msgstr ""
+
+#: src/calls-provider.c:71
+msgid "A text string describing the status for display to the user"
+msgstr ""
+
+#: src/calls-ringer.c:212
+msgid "Incoming call"
+msgstr ""
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr ""
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr ""
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr ""
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr ""
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr ""
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr ""
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr ""
+
+#: src/ui/call-display.ui:437
+msgid "Hide the dial pad"
+msgstr ""
+
+#: src/ui/call-record-row.ui:57
+msgid "Call the party"
+msgstr ""
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr ""
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr ""
+
+#: src/ui/call-window.ui:52 src/ui/main-window.ui:51
+msgid "label"
+msgstr ""
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr ""
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr ""
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr ""
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr ""
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr ""
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr ""
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr ""
+
+#: src/ui/new-call-box.ui:74
+msgid "Backspace through number"
+msgstr ""
+
+#: src/ui/new-call-box.ui:128
+msgid "Dial"
+msgstr ""
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr ""
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr ""
