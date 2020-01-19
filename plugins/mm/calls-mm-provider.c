@@ -210,7 +210,7 @@ interface_removed_cb (CallsMMProvider *self,
            info->name, path);
 
   if (g_strcmp0 (info->name,
-                 "org.freedesktop.ModemManager1.Modem.Voice") != 0)
+                 "org.freedesktop.ModemManager1.Modem.Voice") == 0)
     {
       remove_modem_object (self, path, object);
     }
