@@ -490,14 +490,6 @@ ugly_mute_pressed_cb (CallsCallDisplay *self,
       return TRUE;
     }
 
-  ok = ugly_pa_mute ("sink", UGLY_SINK, want_mute);
-  if (!ok)
-    {
-      /* Stop other handlers */
-      return TRUE;
-    }
-
-
   /* Continue with other handlers */
   return FALSE;
 }
