@@ -34,7 +34,7 @@ mm_deps = [
   dependency('gobject-2.0'),
   dependency('gtk+-3.0'),
   dependency('ModemManager'),
-  dependency('mm-glib'),
+  dependency('mm-glib', version: '>= 1.12.0'),
   dependency('libpeas-1.0'),
 ]
 

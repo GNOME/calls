@@ -119,13 +119,16 @@ static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
 #define row(ENUMVALUE,DESCRIPTION)              \
   { MM_CALL_STATE_REASON_##ENUMVALUE, DESCRIPTION }    \
 
-  row (UNKNOWN,          "Outgoing call created"),
-  row (OUTGOING_STARTED, "Outgoing call started"),
-  row (INCOMING_NEW,     "Incoming call"),
-  row (ACCEPTED,         "Call accepted"),
-  row (TERMINATED,       "Call terminated"),
-  row (REFUSED_OR_BUSY,  "Busy or call refused"),
-  row (ERROR,            "Wrong number or network problem"),
+  row (UNKNOWN,              N_("Call disconnected (unknown reason)")),
+  row (OUTGOING_STARTED,     N_("Outgoing call started")),
+  row (INCOMING_NEW,         N_("New incoming call")),
+  row (ACCEPTED,             N_("Call accepted")),
+  row (TERMINATED,           N_("Call ended")),
+  row (REFUSED_OR_BUSY,      N_("Call disconnected (busy or call refused)")),
+  row (ERROR,                N_("Call disconnected (wrong number or network problem)")),
+  row (AUDIO_SETUP_FAILED,   N_("Call disconnected (error setting up audio channel)")),
+  row (TRANSFERRED,          N_("Call transferred")),
+  row (DEFLECTED,            N_("Call deflected")),
 
 #undef row
 
@@ -137,25 +140,27 @@ set_disconnect_reason (CallsMMCall       *self,
                        MMCallStateReason  reason)
 {
   const struct CallsMMCallStateReasonMap *map_row;
-  GString *reason_str;
+
+  if (self->disconnect_reason)
+    {
+      g_free (self->disconnect_reason);
+    }
 
   for (map_row = STATE_REASON_MAP; map_row->desc; ++map_row)
     {
       if (map_row->value == reason)
         {
-          self->disconnect_reason = g_strdup(map_row->desc);
+          self->disconnect_reason =
+            g_strdup (gettext (map_row->desc));
           return;
         }
     }
 
-  reason_str = g_string_new ("Unknown disconnect reason ");
-  g_string_append_printf (reason_str, "(%i)", (int)reason);
+  self->disconnect_reason =
+    g_strdup_printf (_("Call disconnected (unknown reason code %i)"),
+                     (int)reason);
 
-  g_warning ("%s", reason_str->str);
-  CALLS_SET_PTR_PROPERTY (self->disconnect_reason,
-                          reason_str->str);
-
-  g_string_free (reason_str, FALSE);
+  g_warning ("%s", self->disconnect_reason);
 }
 
 
