@@ -1,41 +1,34 @@
 {
     "app-id" : "sm.puri.Calls",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "3.34",
     "sdk" : "org.gnome.Sdk",
-    "sdk-extensions" : [
-        "org.freedesktop.Sdk.Extension.openjdk11"
-    ],
     "command" : "calls",
     "finish-args" : [
         "--share=ipc",
-        "--socket=x11",
+        "--socket=fallback-x11",
         "--socket=wayland",
         "--socket=pulseaudio",
         "--share=network",
-        "--device=all",
-        
-        /* Needed to use the GTK+ Inspector. */
-        "--filesystem=xdg-run/dconf",
-        "--filesystem=~/.config/dconf:ro",
-        "--talk-name=ca.desrt.dconf",
-        "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-
-        /* Doesn't matter what the name is, just need to call system-talk-name? */
-        "--system-talk-name=sm.puri.Calls",
-        
-        "--talk-name=org.freedesktop.ModemManager1",
-
-        /* For openjdk */
-        "--env=PATH=/app/jre/bin:/usr/bin"
+        "--system-talk-name=org.freedesktop.ModemManager1",
+        "--talk-name=org.gnome.evolution.dataserver.AddressBook10",
+        "--talk-name=org.gnome.evolution.dataserver.Sources5",
+        "--talk-name=im.pidgin.purple.PurpleService",
+        "--talk-name=org.gnome.evolution.dataserver.Subprocess.Backend.*"
     ],
-    "build-options" : {
-        "cflags" : "-O2 -g",
-        "cxxflags" : "-O2 -g",
-        "env" : {
-            "V" : "1"
-        }
-    },
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/man",
+        "/share/doc",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "/share/aclocal",
+        "/share/vala",
+        "*.la",
+        "*.a"
+    ],
     "modules" : [
         {
             "name" : "modem-manager",
@@ -49,8 +42,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.8.0.tar.xz",
-                    "sha256" : "18abe34421aa3b52ff47d4ba93aa282f8f8944717dd644a5c0c81eeeac9c7eb1"
+                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.12.4.tar.xz",
+                    "sha256" : "852d61755e0c1a8d0c609b17192d742b324fdd2e513f3ed64b228befb859a95b"
                 }
             ]
         },
@@ -66,11 +59,12 @@
         },
         {
             "name" : "libpeas",
+            "buildsystem" : "meson",
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/libpeas/1.22/libpeas-1.22.0.tar.xz",
-                    "sha256" : "5b2fc0f53962b25bca131a5ec0139e6fef8e254481b6e777975f7a1d2702a962"
+                    "url" : "https://download.gnome.org/sources/libpeas/1.25/libpeas-1.25.3.tar.xz",
+                    "sha256": "1c9bbb29740c29cd6e1dd0c9964722ff08cd5e6f68f1b5c135bc391a6ce97639"
                 }
             ]
         },
@@ -82,8 +76,9 @@
             ],
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "https://source.puri.sm/Librem5/libhandy.git"
+                    "type" : "archive",
+                    "url" : "https://source.puri.sm/Librem5/libhandy/-/archive/v0.0.13/libhandy-v0.0.13.tar.gz",
+                    "sha256" : "138bec94e66d15a7a19350b65845d4529bcd969ea913ab3eb438f56fe47d5d37"
                 }
             ],
             "cleanup" : [
@@ -96,15 +91,18 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2",
-                    "sha256" : "2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba"
+                    "url" : "https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.bz2",
+                    "sha256" : "59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722"
                 }
             ],
             "build-commands" : [
                 "./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,thread,system",
                 "./b2 -j ${FLATPAK_BUILDER_N_JOBS} install"
             ],
-            "cleanup" : ["*"]
+            "cleanup" : [
+                "/share",
+                "/bin"
+            ]
         },
         {
             "name" : "GTest",
@@ -135,13 +133,6 @@
             ]
         },
         {
-            "name" : "openjdk",
-            "buildsystem" : "simple",
-            "build-commands" : [
-                "/usr/lib/sdk/openjdk11/install.sh"
-            ]
-        },
-        {
             "name" : "libphonenumber",
             "buildsystem" : "cmake-ninja",
             "sources" : [
@@ -155,12 +146,13 @@
                     "commands" : [
                         "sed -i -e 's/\${\${NAME}_BIN}-NOTFOUND/\${NAME}_BIN-NOTFOUND/' cpp/CMakeLists.txt"
                     ]
+                },
+                {
+                    "type" : "patch",
+                    "path" : "build-aux/fix-libphonenumber-build.patch"
                 }
             ],
-            "subdir" : "cpp",
-            "build-options" : {
-                "append-path" : "/app/jre/bin"
-            }
+            "subdir" : "cpp"
         },
         {
             "name" : "libical",
@@ -169,16 +161,30 @@
             ],
             "buildsystem" : "cmake-ninja",
             "config-opts" : [
-                "-DCMAKE_INSTALL_LIBDIR:PATH=/app/lib",
-                "-DBUILD_SHARED_LIBS=On",
-                "-DICAL_BUILD_DOCS=False",
-                "-DWITH_CXX_BINDINGS=False"
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_INSTALL_LIBDIR=lib",
+                "-DBUILD_SHARED_LIBS:BOOL=ON",
+                "-DICAL_GLIB=true",
+                "-DGOBJECT_INTROSPECTION=true",
+                "-DICAL_GLIB_VAPI=true",
+                "-DICAL_BUILD_DOCS=false"
             ],
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://github.com/libical/libical/releases/download/v3.0.5/libical-3.0.5.tar.gz",
-                    "sha256" : "7ad550c8c49c9b9983658e3ab3e68b1eee2439ec17b169a6b1e6ecb5274e78e6"
+                    "url" : "https://github.com/libical/libical/releases/download/v3.0.7/libical-3.0.7.tar.gz",
+                    "sha256" : "0abe66df1ea826e57db7f281c704ede834c84139012e6c686ea7adafd4e763fc"
+                }
+            ]
+        },
+        {
+            "name" : "intltool",
+            "cleanup" : [ "*" ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+                    "sha256" : "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd"
                 }
             ]
         },
@@ -193,22 +199,23 @@
                 "-DENABLE_GOA=OFF",
                 "-DENABLE_GTK=ON",
                 "-DENABLE_GOOGLE=OFF",
-                "-DENABLE_VALA_BINDINGS=OFF",
+                "-DENABLE_VALA_BINDINGS=ON",
                 "-DENABLE_WEATHER=OFF",
                 "-DWITH_OPENLDAP=OFF",
                 "-DWITH_LIBDB=OFF",
-                "-DENABLE_INTROSPECTION=OFF",
+                "-DENABLE_INTROSPECTION=ON",
                 "-DENABLE_INSTALLED_TESTS=OFF",
                 "-DENABLE_GTK_DOC=OFF",
                 "-DENABLE_EXAMPLES=OFF",
                 "-DWITH_PHONENUMBER:PATH=/"
-             ],
-             "sources" : [
-                 {
-                     "type" : "git",
-                     "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git"
-                 }
-             ]
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/evolution-data-server/3.35/evolution-data-server-3.35.90.tar.xz",
+                    "sha256" : "f7444e53228ecdae0f71c37846ff8e59ca7e54522dda040d889769d6fbd976fc"
+                }
+            ]
         },
         {
             "name" : "gom",
@@ -216,9 +223,29 @@
             "config-opts" : [ "-Denable-introspection=false" ],
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/gom.git",
-                    "commit" : "320df01c77c5cf6327040421454837277e4d6ee3"
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz",
+                    "sha256" : "ac57e34b5fe273ed306efaeabb346712c264e341502913044a782cdf8c1036d8"
+                }
+            ]
+        },
+        {
+            "name" : "folks",
+            "buildsystem" : "meson",
+            "cleanup" : [
+                "/bin"
+            ],
+            "config-opts" : [
+                "-Dtelepathy_backend=false",
+                "-Dinspect_tool=false",
+                "-Dimport_tool=false",
+                "-Dbluez_backend=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/folks/0.13/folks-0.13.2.tar.xz",
+                    "sha256" : "0263d6b8de41acabbc95e9a2418374271fb649412a1de3e3ef6ad4a3a5270173"
                 }
             ]
         },
