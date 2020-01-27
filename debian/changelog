@@ -1,3 +1,24 @@
+calls (0.1.2) amber-phone; urgency=medium
+
+  [ Guido Günther ]
+  * debian: Add superficial autopkgtest
+  * gitlab-ci: Specify stages
+  * gitlab-ci: Build package and run autopkgtest / lintian
+  * po: Update pofiles.in (Closes: #76)
+  * Add potfile
+
+  [ Mohammed Sadiq ]
+  * mm-provider: Fix a check to remove device
+
+  [ Bob Ham ]
+  * call-display: Only mute the microphone with the Mute button
+  * mm-call: Sanitise disconnect messages
+
+  [ Julian Sparber ]
+  * Replace HdyDialer with HdyKeypad and bump libhandy to 0.0.12
+
+ -- Bob Ham <bob.ham@puri.sm>  Mon, 27 Jan 2020 14:55:08 +0000
+
 calls (0.1.1) amber-phone; urgency=medium
 
   [ Bob Ham ]
