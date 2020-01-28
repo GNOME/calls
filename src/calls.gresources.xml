@@ -13,6 +13,7 @@
     <file preprocess="xml-stripblanks">call-record-row.ui</file>
   </gresource>
   <gresource prefix="/sm/puri/calls/">
+    <file>style.css</file>
     <file>new-call-symbolic.svg</file>
     <file>call-arrow-incoming-symbolic.svg</file>
     <file>call-arrow-incoming-missed-symbolic.svg</file>

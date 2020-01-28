@@ -299,24 +299,6 @@ calls_new_call_box_init (CallsNewCallBox *self)
 
 
 static void
-constructed (GObject *object)
-{
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
-  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
-  GtkWidget *entry = hdy_keypad_get_entry (self->keypad);
-  PangoAttrList *attrs;
-
-  // Increase the size of the number entry text
-  attrs = pango_attr_list_new ();
-  pango_attr_list_insert (attrs, pango_attr_scale_new (1.2));
-  gtk_entry_set_attributes (GTK_ENTRY (entry), attrs);
-  pango_attr_list_unref (attrs);
-
-  parent_class->constructed (object);
-}
-
-
-static void
 dispose (GObject *object)
 {
   GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
@@ -340,7 +322,6 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->set_property = set_property;
-  object_class->constructed = constructed;
   object_class->dispose = dispose;
 
 

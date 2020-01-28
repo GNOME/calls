@@ -404,6 +404,9 @@
                     <property name="xalign">0.5</property>
                     <signal name="delete-text" handler="block_delete_cb"/>
                     <signal name="insert-text" handler="insert_text_cb"/>
+                    <style>
+                      <class name="phone-number-entry"/>
+                    </style>
                   </object>
                 </child>
                 <child>
