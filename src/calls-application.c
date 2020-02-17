@@ -66,7 +66,10 @@ struct _CallsApplication
   CallsCallWindow  *call_window;
 };
 
-G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION)
+G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
+
+
+static gboolean start_proper (CallsApplication *self);
 
 
 static gint
@@ -75,7 +78,7 @@ handle_local_options (GApplication *application,
 {
   gboolean ok;
   g_autoptr(GError) error = NULL;
-  const gchar *name;
+  const gchar *arg;
 
   g_debug ("Registering application");
   ok = g_application_register (application, NULL, &error);
@@ -85,12 +88,12 @@ handle_local_options (GApplication *application,
                error->message);
     }
 
-  ok = g_variant_dict_lookup (options, "provider", "&s", &name);
+  ok = g_variant_dict_lookup (options, "provider", "&s", &arg);
   if (ok)
     {
       g_action_group_activate_action (G_ACTION_GROUP (application),
                                       "set-provider-name",
-                                      g_variant_new_string (name));
+                                      g_variant_new_string (arg));
     }
 
   ok = g_variant_dict_contains (options, "daemon");
@@ -99,6 +102,14 @@ handle_local_options (GApplication *application,
       g_action_group_activate_action (G_ACTION_GROUP (application),
                                       "set-daemon",
                                       NULL);
+    }
+
+  ok = g_variant_dict_lookup (options, "dial", "&s", &arg);
+  if (ok)
+    {
+      g_action_group_activate_action (G_ACTION_GROUP (application),
+                                      "dial",
+                                      g_variant_new_string (arg));
     }
 
   return -1; // Continue processing signal
@@ -151,10 +162,112 @@ set_daemon_action (GSimpleAction *action,
 }
 
 
+#define DIALLING    "0-9*#+ABCD"
+#define SIGNALLING  ",TP!W@X"
+#define VISUAL      "[:space:]\\-.()t/"
+#define REJECT_RE   "[^" DIALLING SIGNALLING VISUAL "]"
+#define VISUAL_RE   "[" VISUAL "]"
+
+static gboolean
+check_dial_number (const gchar *number)
+{
+  GError *error = NULL;
+  GRegex *reject;
+  gboolean matches;
+
+  reject = g_regex_new (REJECT_RE, 0, 0, &error);
+  if (!reject)
+    {
+      g_warning ("Could not compile regex for"
+                 " dial number checking: %s",
+                 error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+
+  matches = g_regex_match (reject, number, 0, NULL);
+
+  g_regex_unref (reject);
+
+  return !matches;
+}
+
+
+static gchar *
+extract_dial_string (const gchar *number)
+{
+  g_autoptr(GError) error = NULL;
+  g_autoptr(GRegex) replace_visual;
+  gchar *dial_string;
+
+  replace_visual = g_regex_new (VISUAL_RE, 0, 0, &error);
+  if (!replace_visual)
+    {
+      g_warning ("Could not compile regex for"
+                 " dial number extracting: %s",
+                 error->message);
+      return NULL;
+    }
+
+  dial_string = g_regex_replace_literal
+    (replace_visual, number, -1, 0, "", 0, &error);
+
+  if (!dial_string)
+    {
+      g_warning ("Error replacing visual separators"
+                 " in dial number: %s",
+                 error->message);
+      return NULL;
+    }
+
+  return dial_string;
+}
+
+
+static void
+dial_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  CallsApplication *self = CALLS_APPLICATION (user_data);
+  const gchar *number;
+  gboolean number_ok;
+  gchar *dial_string;
+
+  number = g_variant_get_string (parameter, NULL);
+  g_return_if_fail (number != NULL);
+
+  number_ok = check_dial_number (number);
+  if (!number_ok)
+    {
+      g_warning ("Dial number `%s' is not a valid dial string",
+                 number);
+      return;
+    }
+
+  dial_string = extract_dial_string (number);
+  if (!dial_string)
+    {
+      return;
+    }
+
+  g_debug ("Dialing dial string `%s' extracted from number `%s'",
+           dial_string, number);
+
+
+  start_proper (self);
+
+  calls_main_window_dial (self->main_window,
+                          dial_string);
+  g_free (dial_string);
+}
+
+
 static const GActionEntry actions[] =
 {
   { "set-provider-name", set_provider_name_action, "s" },
   { "set-daemon", set_daemon_action, NULL },
+  { "dial", dial_action, "s" },
 };
 
 
@@ -502,6 +615,12 @@ calls_application_init (CallsApplication *self)
       G_OPTION_ARG_NONE, NULL,
       _("Whether to present the main window on startup"),
       NULL
+    },
+    {
+      "dial", 'l', G_OPTION_FLAG_NONE,
+      G_OPTION_ARG_STRING, NULL,
+      _("Dial a number"),
+      _("NUMBER")
     },
     {
       NULL
