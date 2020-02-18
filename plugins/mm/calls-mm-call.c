@@ -311,7 +311,6 @@ set_property (GObject      *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMCall *self = CALLS_MM_CALL (object);
   MmGdbusCall *gdbus_call = MM_GDBUS_CALL (self->mm_call);
   MMCallState state;
@@ -336,7 +335,7 @@ constructed (GObject *object)
       start_call (CALLS_CALL (self));
     }
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_mm_call_parent_class)->constructed (object);
 }
 
 
@@ -365,25 +364,23 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMCall *self = CALLS_MM_CALL (object);
 
   g_clear_object (&self->mm_call);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_mm_call_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMCall *self = CALLS_MM_CALL (object);
 
   g_free (self->disconnect_reason);
   g_string_free (self->number, TRUE);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_mm_call_parent_class)->finalize (object);
 }
 
 

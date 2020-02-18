@@ -163,13 +163,12 @@ set_property (GObject      *object,
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsParty *self = CALLS_PARTY (object);
 
   CALLS_SET_PTR_PROPERTY (self->number, NULL);
   CALLS_SET_PTR_PROPERTY (self->name, NULL);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_party_parent_class)->finalize (object);
 }
 
 

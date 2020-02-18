@@ -380,7 +380,6 @@ get_modems_cb (GDBOManager *manager,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
   GError *error = NULL;
 
@@ -415,33 +414,31 @@ constructed (GObject *object)
      (GAsyncReadyCallback) get_modems_cb,
      self);
      
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_ofono_provider_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
 
   g_clear_object (&self->manager);
   g_clear_object (&self->connection);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_ofono_provider_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
 
   g_hash_table_unref (self->origins);
   g_hash_table_unref (self->modems);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_ofono_provider_parent_class)->finalize (object);
 }
 
 

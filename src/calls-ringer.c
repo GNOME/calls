@@ -389,38 +389,35 @@ set_up_provider (CallsRinger *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRinger *self = CALLS_RINGER (object);
 
   monitor_theme_name (self);
   create_ctx (self);
   set_up_provider (self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_ringer_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRinger *self = CALLS_RINGER (object);
 
   g_clear_object (&self->provider);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRinger *self = CALLS_RINGER (object);
 
   g_free (self->theme_name);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_ringer_parent_class)->finalize (object);
 }
 
 

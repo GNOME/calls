@@ -680,20 +680,18 @@ set_up_provider (CallsRecordStore *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
   open_repo (self);
   set_up_provider (self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_record_store_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
   g_clear_object (&self->provider);
@@ -703,19 +701,18 @@ dispose (GObject *object)
   g_clear_object (&self->repository);
   close_adapter (self);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_record_store_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
   g_free (self->filename);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_record_store_parent_class)->finalize (object);
 }
 
 

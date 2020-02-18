@@ -301,7 +301,6 @@ calls_new_call_box_init (CallsNewCallBox *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
   clear_dial_queue (self);
@@ -311,7 +310,7 @@ dispose (GObject *object)
       remove_origins (self);
     }
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_new_call_box_parent_class)->dispose (object);
 }
 
 

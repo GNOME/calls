@@ -152,12 +152,11 @@ calls_call_selector_item_init (CallsCallSelectorItem *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_EVENT_BOX);
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
   g_clear_object (&self->display);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_selector_item_parent_class)->dispose (object);
 }
 
 

@@ -204,7 +204,6 @@ set_property (GObject      *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   if (self->inbound)
@@ -217,7 +216,7 @@ constructed (GObject *object)
       g_timeout_add_seconds (1, (GSourceFunc)outbound_timeout_cb, self);
     }
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_dummy_call_parent_class)->constructed (object);
 }
 
 
@@ -244,12 +243,11 @@ get_property (GObject      *object,
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   g_free (self->number);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_dummy_call_parent_class)->finalize (object);
 }
 
 

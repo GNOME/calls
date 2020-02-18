@@ -423,7 +423,6 @@ app_open (GApplication  *application,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION);
   CallsApplication *self = CALLS_APPLICATION (object);
   GSimpleActionGroup *action_group;
 
@@ -432,7 +431,7 @@ constructed (GObject *object)
                                    actions, G_N_ELEMENTS (actions), self);
   g_object_unref (action_group);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_application_parent_class)->constructed (object);
 }
 
 

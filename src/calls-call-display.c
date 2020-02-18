@@ -513,7 +513,6 @@ ugly_hacks (CallsCallDisplay *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   self->timer = g_timer_new ();
@@ -522,7 +521,7 @@ constructed (GObject *object)
 
   ugly_hacks (self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_call_display_parent_class)->constructed (object);
 }
 
 
@@ -565,24 +564,22 @@ calls_call_display_init (CallsCallDisplay *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   stop_timeout (self);
   g_clear_object (&self->call);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_display_parent_class)->dispose (object);
 }
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_OVERLAY);
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   g_timer_destroy (self->timer);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_call_display_parent_class)->finalize (object);
 }
 
 static void

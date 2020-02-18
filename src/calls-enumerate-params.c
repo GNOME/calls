@@ -98,7 +98,6 @@ set_property (GObject      *object,
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsEnumerateParams *self = CALLS_ENUMERATE_PARAMS (object);
 
   unsigned i;
@@ -107,7 +106,7 @@ finalize (GObject *object)
       g_hash_table_unref (self->callbacks[i]);
     }
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_enumerate_params_parent_class)->finalize (object);
 }
 
 

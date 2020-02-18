@@ -280,7 +280,6 @@ disconnect_reason_cb (CallsOfonoCall *self,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
   g_return_if_fail (self->voice_call != NULL);
@@ -290,33 +289,31 @@ constructed (GObject *object)
   g_signal_connect_swapped (self->voice_call, "disconnect-reason",
                             G_CALLBACK (disconnect_reason_cb), self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_ofono_call_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
   g_clear_object (&self->voice_call);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_ofono_call_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
   g_free (self->disconnect_reason);
   g_free (self->name);
   g_free (self->number);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_ofono_call_parent_class)->finalize (object);
 }
 
 

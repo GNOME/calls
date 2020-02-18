@@ -151,7 +151,6 @@ set_property (GObject      *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
   g_assert (self->model != NULL);
@@ -174,21 +173,20 @@ constructed (GObject *object)
 
   update (self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
   g_clear_object (&self->new_call);
   g_clear_object (&self->contacts);
   g_clear_object (&self->model);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_history_box_parent_class)->dispose (object);
 }
 
 

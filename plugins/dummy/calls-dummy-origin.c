@@ -217,24 +217,22 @@ set_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 
   remove_calls (self, NULL);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_dummy_origin_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 
   g_string_free (self->name, TRUE);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_dummy_origin_parent_class)->finalize (object);
 }
 
 

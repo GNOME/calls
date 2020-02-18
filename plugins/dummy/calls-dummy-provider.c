@@ -102,7 +102,6 @@ usr1_handler (CallsDummyProvider *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
 
   calls_dummy_provider_add_origin (self, "Dummy origin");
@@ -111,7 +110,7 @@ constructed (GObject *object)
                      (GSourceFunc)usr1_handler,
                      self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_dummy_provider_parent_class)->constructed (object);
 }
 
 
@@ -136,13 +135,12 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
 
   g_list_free_full (self->origins, g_object_unref);
   self->origins = NULL;
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_dummy_provider_parent_class)->dispose (object);
 }
 
 

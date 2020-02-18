@@ -146,7 +146,6 @@ set_property (GObject      *object,
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallRecord *self = CALLS_CALL_RECORD (object);
 
   g_clear_pointer (&self->end, g_date_time_unref);
@@ -154,7 +153,7 @@ finalize (GObject *object)
   g_clear_pointer (&self->start, g_date_time_unref);
   g_free (self->target);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_call_record_parent_class)->finalize (object);
 }
 
 

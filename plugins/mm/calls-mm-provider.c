@@ -357,7 +357,6 @@ mm_vanished_cb (GDBusConnection *connection,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
   self->watch_id =
@@ -370,7 +369,7 @@ constructed (GObject *object)
 
   g_debug ("Watching for ModemManager");
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_mm_provider_parent_class)->constructed (object);
 }
 
 
@@ -397,7 +396,6 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
   if (self->watch_id)
@@ -408,20 +406,19 @@ dispose (GObject *object)
 
   clear_dbus (self);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_mm_provider_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
   g_hash_table_unref (self->origins);
   g_free (self->status);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_mm_provider_parent_class)->finalize (object);
 }
 
 

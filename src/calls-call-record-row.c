@@ -477,7 +477,6 @@ set_property (GObject      *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *obj_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
   gboolean inbound;
   GDateTime *answered;
@@ -497,7 +496,7 @@ constructed (GObject *object)
   contact_name_cb (self);
   request_contact_avatar (self);
 
-  obj_class->constructed (object);
+  G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 }
 
 
@@ -524,7 +523,6 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *obj_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
 
   g_clear_object (&self->new_call);
@@ -537,7 +535,7 @@ dispose (GObject *object)
   calls_clear_signal (self->record, &self->end_notify_handler_id);
   g_clear_object (&self->record);
 
-  obj_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_record_row_parent_class)->dispose (object);
 }
 
 

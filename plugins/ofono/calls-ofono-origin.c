@@ -448,7 +448,6 @@ voice_new_cb (GDBusConnection  *connection,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
   GDBusProxy *modem_proxy;
   gchar *name;
@@ -478,28 +477,26 @@ constructed (GObject *object)
 
   g_clear_object (&self->modem);
      
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_ofono_origin_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   remove_calls (self, NULL);
   g_clear_object (&self->modem);
   g_clear_object (&self->connection);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_ofono_origin_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   if (self->tone_queue)
@@ -508,7 +505,7 @@ finalize (GObject *object)
     }
   g_free (self->name);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_ofono_origin_parent_class)->finalize (object);
 }
 
 

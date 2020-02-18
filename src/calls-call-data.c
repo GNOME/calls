@@ -113,13 +113,12 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallData *self = CALLS_CALL_DATA (object);
 
   g_clear_object (&self->call);
   g_clear_object (&self->party);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_data_parent_class)->dispose (object);
 }
 
 

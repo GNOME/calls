@@ -639,7 +639,6 @@ notify (GObject    *object,
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
   CallsCallWindow *self = CALLS_CALL_WINDOW (object);
 
   gtk_flow_box_bind_model (self->call_selector,
@@ -649,7 +648,7 @@ constructed (GObject *object)
 
   update_visibility (self);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_call_window_parent_class)->constructed (object);
 }
 
 
@@ -665,7 +664,6 @@ calls_call_window_init (CallsCallWindow *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (GTK_TYPE_APPLICATION_WINDOW);
   CallsCallWindow *self = CALLS_CALL_WINDOW (object);
 
   if (self->call_holders)
@@ -676,7 +674,7 @@ dispose (GObject *object)
   g_clear_object (&self->call_holders);
   stop_info_timeout (self);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_window_parent_class)->dispose (object);
 }
 
 

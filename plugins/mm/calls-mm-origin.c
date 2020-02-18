@@ -446,7 +446,6 @@ modem_get_name (MMModem *modem)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
   MmGdbusModemVoice *gdbus_voice;
 
@@ -466,33 +465,31 @@ constructed (GObject *object)
      NULL,
      (GAsyncReadyCallback) list_calls_cb,
      self);
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
 }
 
 
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
   remove_calls (self, NULL);
   g_clear_object (&self->mm_obj);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_mm_origin_parent_class)->dispose (object);
 }
 
 
 static void
 finalize (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
   g_hash_table_unref (self->calls);
   g_free (self->name);
 
-  parent_class->finalize (object);
+  G_OBJECT_CLASS (calls_mm_origin_parent_class)->finalize (object);
 }
 
 

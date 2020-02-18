@@ -254,7 +254,6 @@ set_up_provider (CallsMainWindow *self)
 static void
 constructed (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
   GtkContainer *main_stack = GTK_CONTAINER (self->main_stack);
@@ -309,7 +308,7 @@ constructed (GObject *object)
                                self->title_label,
                                NULL);
 
-  parent_class->constructed (object);
+  G_OBJECT_CLASS (calls_main_window_parent_class)->constructed (object);
 }
 
 
@@ -317,7 +316,6 @@ constructed (GObject *object)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   stop_info_timeout (self);
@@ -325,7 +323,7 @@ dispose (GObject *object)
   g_clear_object (&self->record_store);
   g_clear_object (&self->provider);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_main_window_parent_class)->dispose (object);
 }
 
 
@@ -334,7 +332,6 @@ size_allocate (GtkWidget     *widget,
                GtkAllocation *allocation)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (calls_main_window_parent_class);
 
   hdy_squeezer_set_child_enabled (self->squeezer,
                                   GTK_WIDGET (self->wide_switcher),
@@ -343,7 +340,7 @@ size_allocate (GtkWidget     *widget,
                                   GTK_WIDGET (self->narrow_switcher),
                                   allocation->width > 400);
 
-  widget_class->size_allocate (widget, allocation);
+  GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, allocation);
 }
 
 

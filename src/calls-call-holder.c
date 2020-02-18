@@ -134,14 +134,13 @@ calls_call_holder_init (CallsCallHolder *self)
 static void
 dispose (GObject *object)
 {
-  GObjectClass *parent_class = g_type_class_peek (G_TYPE_OBJECT);
   CallsCallHolder *self = CALLS_CALL_HOLDER (object);
 
   g_clear_object (&self->selector_item);
   g_clear_object (&self->display);
   g_clear_object (&self->data);
 
-  parent_class->dispose (object);
+  G_OBJECT_CLASS (calls_call_holder_parent_class)->dispose (object);
 }
 
 
