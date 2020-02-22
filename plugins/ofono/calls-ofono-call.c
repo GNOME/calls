@@ -38,6 +38,10 @@ struct _CallsOfonoCall
   gchar *name;
   CallsCallState state;
   gchar *disconnect_reason;
+  /* `inbound` is derived from `state` at construction time.
+   * If the call was already somehow accepted and thus state=active,
+   * then it's not possible to know the correct value for `inbound`. */
+  gboolean inbound;
 };
 
 static void calls_ofono_call_message_source_interface_init (CallsCallInterface *iface);
@@ -53,35 +57,20 @@ enum {
   PROP_0,
   PROP_VOICE_CALL,
   PROP_PROPERTIES,
+
+  PROP_CALL_NUMBER,
+  PROP_CALL_INBOUND,
+  PROP_CALL_STATE,
+  PROP_CALL_NAME,
+
   PROP_LAST_PROP,
 };
-static GParamSpec *props[PROP_LAST_PROP];
 
 enum {
   SIGNAL_TONE,
   SIGNAL_LAST_SIGNAL,
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
-
-
-#define DEFINE_GET_BODY(member)                         \
-  get_##member (CallsCall *iface)                       \
-  {                                                     \
-    CallsOfonoCall *self = CALLS_OFONO_CALL (iface);    \
-    return self-> member ;                              \
-  }
-  
-static const gchar *
-DEFINE_GET_BODY(number);
-
-static const gchar *
-DEFINE_GET_BODY(name);
-
-static CallsCallState
-DEFINE_GET_BODY(state);
-
-#undef DEFINE_GET_BODY
-
 
 static void
 change_state (CallsOfonoCall *self,
@@ -95,6 +84,7 @@ change_state (CallsOfonoCall *self,
     }
 
   self->state = state;
+  g_object_notify (G_OBJECT (self), "state");
   g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
@@ -195,6 +185,11 @@ set_properties (CallsOfonoCall *self,
   g_variant_lookup (props, "State", "&s", &str);
   g_return_if_fail (str != NULL);
   calls_call_state_parse_nick (&self->state, str);
+
+  if (self->state == CALLS_CALL_STATE_INCOMING)
+    {
+      self->inbound = TRUE;
+    }
 }
 
 
@@ -222,6 +217,36 @@ set_property (GObject      *object,
   }
 }
 
+static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsOfonoCall *self = CALLS_OFONO_CALL (object);
+
+  switch (property_id) {
+  case PROP_CALL_INBOUND:
+    g_value_set_boolean (value, self->state);
+    break;
+
+  case PROP_CALL_NAME:
+    g_value_set_string(value, self->name);
+    break;
+
+  case PROP_CALL_NUMBER:
+    g_value_set_string(value, self->number);
+    break;
+
+  case PROP_CALL_STATE:
+    g_value_set_enum (value, self->state);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
 
 static void
 property_changed_cb (CallsOfonoCall *self,
@@ -324,27 +349,34 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   GType tone_arg_types = G_TYPE_CHAR;
 
   object_class->set_property = set_property;
+  object_class->get_property = get_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  props[PROP_VOICE_CALL] =
+  g_object_class_install_property (
+    object_class,
+    PROP_VOICE_CALL,
     g_param_spec_object ("voice-call",
                          _("Voice call"),
                          _("A GDBO proxy object for the underlying call object"),
                          GDBO_TYPE_VOICE_CALL,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
-  props[PROP_PROPERTIES] =
+  g_object_class_install_property (
+    object_class,
+    PROP_PROPERTIES,
     g_param_spec_variant ("properties",
                           _("Properties"),
                           _("The a{sv} dictionary of properties for the voice call object"),
                           G_VARIANT_TYPE_ARRAY,
                           NULL,
-                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
-
+  g_object_class_override_property (object_class, PROP_CALL_NUMBER, "number");
+  g_object_class_override_property (object_class, PROP_CALL_INBOUND, "inbound");
+  g_object_class_override_property (object_class, PROP_CALL_STATE, "state");
+  g_object_class_override_property (object_class, PROP_CALL_NAME, "name");
 
   signals[SIGNAL_TONE] =
     g_signal_newv ("tone",
@@ -365,9 +397,6 @@ calls_ofono_call_message_source_interface_init (CallsCallInterface *iface)
 static void
 calls_ofono_call_call_interface_init (CallsCallInterface *iface)
 {
-  iface->get_number = get_number;
-  iface->get_name = get_name;
-  iface->get_state = get_state;
   iface->answer = answer;
   iface->hang_up = hang_up;
   iface->tone_start = tone_start;

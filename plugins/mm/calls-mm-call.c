@@ -52,33 +52,14 @@ G_DEFINE_TYPE_WITH_CODE (CallsMMCall, calls_mm_call, G_TYPE_OBJECT,
 enum {
   PROP_0,
   PROP_MM_CALL,
-  PROP_INBOUND,
+
+  PROP_CALL_NUMBER,
+  PROP_CALL_INBOUND,
+  PROP_CALL_STATE,
+  PROP_CALL_NAME,
+
   PROP_LAST_PROP,
 };
-static GParamSpec *props[PROP_LAST_PROP];
-
-
-static const gchar *
-get_name (CallsCall *call)
-{
-  return NULL;
-}
-
-
-static const gchar *
-get_number (CallsCall *call)
-{
-  CallsMMCall *self = CALLS_MM_CALL (call);
-  return self->number->str;
-}
-
-
-static CallsCallState
-get_state (CallsCall *call)
-{
-  CallsMMCall *self = CALLS_MM_CALL (call);
-  return self->state;
-}
 
 
 static void
@@ -93,6 +74,7 @@ change_state (CallsMMCall    *self,
     }
 
   self->state = state;
+  g_object_notify (G_OBJECT (self), "state");
   g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
@@ -117,7 +99,7 @@ struct CallsMMCallStateReasonMap
 static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
 
 #define row(ENUMVALUE,DESCRIPTION)              \
-  { MM_CALL_STATE_REASON_##ENUMVALUE, DESCRIPTION }    \
+  { MM_CALL_STATE_REASON_##ENUMVALUE, DESCRIPTION }
 
   row (UNKNOWN,              N_("Call disconnected (unknown reason)")),
   row (OUTGOING_STARTED,     N_("Outgoing call started")),
@@ -348,10 +330,22 @@ get_property (GObject      *object,
   CallsMMCall *self = CALLS_MM_CALL (object);
 
   switch (property_id) {
-  case PROP_INBOUND:
+  case PROP_CALL_INBOUND:
     g_value_set_boolean (value,
                          mm_call_get_direction (self->mm_call)
                          == MM_CALL_DIRECTION_INCOMING);
+    break;
+
+  case PROP_CALL_NAME:
+    g_value_set_string(value, NULL);
+    break;
+
+  case PROP_CALL_NUMBER:
+    g_value_set_string(value, self->number->str);
+    break;
+
+  case PROP_CALL_STATE:
+    g_value_set_enum (value, self->state);
     break;
 
   default:
@@ -395,23 +389,20 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  props[PROP_MM_CALL] =
+  g_object_class_install_property (
+    object_class,
+    PROP_MM_CALL,
     g_param_spec_object ("mm-call",
                          _("MM call"),
                          _("A libmm-glib proxy object for the underlying call object"),
                          MM_TYPE_CALL,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_MM_CALL,
-                                   props[PROP_MM_CALL]);
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_override_property (object_class, PROP_CALL_NUMBER, "number");
+  g_object_class_override_property (object_class, PROP_CALL_INBOUND, "inbound");
+  g_object_class_override_property (object_class, PROP_CALL_STATE, "state");
+  g_object_class_override_property (object_class, PROP_CALL_NAME, "name");
 
-  props[PROP_INBOUND] =
-    g_param_spec_boolean ("inbound",
-                          _("Inbound"),
-                          _("Whether the call is inbound"),
-                          FALSE,
-                          G_PARAM_READABLE | G_PARAM_CONSTRUCT);
-  g_object_class_override_property (object_class, PROP_INBOUND, "inbound");
 }
 
 
@@ -424,9 +415,6 @@ calls_mm_call_message_source_interface_init (CallsCallInterface *iface)
 static void
 calls_mm_call_call_interface_init (CallsCallInterface *iface)
 {
-  iface->get_number = get_number;
-  iface->get_name   = get_name;
-  iface->get_state  = get_state;
   iface->answer     = answer;
   iface->hang_up    = hang_up;
   iface->tone_start = tone_start;

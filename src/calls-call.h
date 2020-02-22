@@ -53,9 +53,6 @@ struct _CallsCallInterface
 {
   GTypeInterface parent_iface;
 
-  const gchar *  (*get_number) (CallsCall *self);
-  const gchar *  (*get_name)   (CallsCall *self);
-  CallsCallState (*get_state)  (CallsCall *self);
   void           (*answer)     (CallsCall *self);
   void           (*hang_up)    (CallsCall *self);
   void           (*tone_start) (CallsCall *self,

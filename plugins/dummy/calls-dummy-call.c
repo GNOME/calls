@@ -48,40 +48,16 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyCall, calls_dummy_call, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
-  PROP_NUMBER,
+  PROP_NUMBER_CONSTRUCTOR,
   PROP_INBOUND_CONSTRUCTOR,
-  PROP_INBOUND,
-  PROP_LAST_PROP,
+
+  PROP_CALL_NUMBER,
+  PROP_CALL_INBOUND,
+  PROP_CALL_STATE,
+  PROP_CALL_NAME,
+
+  PROP_LAST_PROP
 };
-static GParamSpec *props[PROP_LAST_PROP];
-
-static const gchar *
-get_number (CallsCall *iface)
-{
-  CallsDummyCall *self;
-
-  g_return_val_if_fail (CALLS_IS_DUMMY_CALL (iface), NULL);
-  self = CALLS_DUMMY_CALL (iface);
-
-  return self->number;
-}
-
-static const gchar *
-get_name (CallsCall *iface)
-{
-  return NULL;
-}
-
-static CallsCallState
-get_state (CallsCall *call)
-{
-  CallsDummyCall *self;
-
-  g_return_val_if_fail (CALLS_IS_DUMMY_CALL (call), 0);
-  self = CALLS_DUMMY_CALL (call);
-
-  return self->state;
-}
 
 static void
 change_state (CallsCall      *call,
@@ -96,6 +72,7 @@ change_state (CallsCall      *call,
     }
 
   self->state = state;
+  g_object_notify (G_OBJECT (call), "state");
   g_signal_emit_by_name (call,
                          "state-changed",
                          state,
@@ -171,7 +148,7 @@ calls_dummy_call_new (const gchar *number,
   g_return_val_if_fail (number != NULL, NULL);
 
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
-                       "number", number,
+                       "number-constructor", number,
                        "inbound-constructor", inbound,
                        NULL);
 }
@@ -186,7 +163,7 @@ set_property (GObject      *object,
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   switch (property_id) {
-  case PROP_NUMBER:
+  case PROP_NUMBER_CONSTRUCTOR:
     self->number = g_value_dup_string (value);
     break;
 
@@ -229,8 +206,20 @@ get_property (GObject      *object,
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   switch (property_id) {
-  case PROP_INBOUND:
+  case PROP_CALL_INBOUND:
     g_value_set_boolean (value, self->inbound);
+    break;
+
+  case PROP_CALL_NUMBER:
+    g_value_set_string (value, self->number);
+    break;
+
+  case PROP_CALL_STATE:
+    g_value_set_enum (value, self->state);
+    break;
+
+  case PROP_CALL_NAME:
+    g_value_set_string (value, NULL);
     break;
 
   default:
@@ -261,39 +250,34 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   object_class->constructed = constructed;
   object_class->finalize = finalize;
 
-  props[PROP_NUMBER] =
-    g_param_spec_string ("number",
-                         _("Number"),
-                         _("The dialed number"),
+  g_object_class_install_property (
+    object_class,
+    PROP_NUMBER_CONSTRUCTOR,
+    g_param_spec_string ("number-constructor",
+                         _("Number (constructor)"),
+                         _("The dialed number (dummy class constructor)"),
                          "+441234567890",
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_NUMBER,
-                                   props[PROP_NUMBER]);
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
-  props[PROP_INBOUND_CONSTRUCTOR] =
+  g_object_class_install_property (
+    object_class,
+    PROP_INBOUND_CONSTRUCTOR,
     g_param_spec_boolean ("inbound-constructor",
                           _("Inbound (constructor)"),
                           _("Whether the calls is inbound (dummy class constructor)"),
                           FALSE,
-                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_INBOUND_CONSTRUCTOR,
-                                   props[PROP_INBOUND_CONSTRUCTOR]);
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
-  props[PROP_INBOUND] =
-    g_param_spec_boolean ("inbound",
-                          _("Inbound"),
-                          _("Whether the call is inbound"),
-                          FALSE,
-                          G_PARAM_READABLE | G_PARAM_CONSTRUCT);
-  g_object_class_override_property (object_class, PROP_INBOUND, "inbound");
+  g_object_class_override_property (object_class, PROP_CALL_NUMBER, "number");
+  g_object_class_override_property (object_class, PROP_CALL_INBOUND, "inbound");
+  g_object_class_override_property (object_class, PROP_CALL_STATE, "state");
+  g_object_class_override_property (object_class, PROP_CALL_NAME, "name");
+
 }
 
 static void
 calls_dummy_call_call_interface_init (CallsCallInterface *iface)
 {
-  iface->get_number = get_number;
-  iface->get_name = get_name;
-  iface->get_state = get_state;
   iface->answer = answer;
   iface->hang_up = hang_up;
   iface->tone_start = tone_start;

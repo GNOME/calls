@@ -70,6 +70,23 @@ G_BEGIN_DECLS
   CALLS_DEFINE_IFACE_FUNC_VOID_BASE(calls,iface,Calls,Iface,CALLS,IFACE,function)
 
 
+/*
+ * For defining simple getters for properties
+ */
+#define CALLS_DEFINE_IFACE_GETTER_BASE(prefix,iface,Prefix,Iface,PREFIX,IFACE,prop,rettype,errval) \
+   rettype                                                              \
+   prefix##_##iface##_get_ ## prop (Prefix##Iface *self)                \
+   {                                                                    \
+     rettype result;                                                    \
+     g_return_val_if_fail (PREFIX##_IS_##IFACE (self), errval);         \
+     g_object_get (self, #prop, &result, NULL);                         \
+     return result;                                                     \
+   }
+
+
+#define CALLS_DEFINE_IFACE_GETTER(iface,Iface,IFACE,prop,rettype,errval) \
+  CALLS_DEFINE_IFACE_GETTER_BASE(calls,iface,Calls,Iface,CALLS,IFACE,prop,rettype,errval)
+
 
 #define CALLS_SET_PTR_PROPERTY(ptr,new_value)   \
   g_free (ptr);                                 \

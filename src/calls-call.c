@@ -102,13 +102,6 @@ calls_call_state_parse_nick (CallsCallState *state,
 G_DEFINE_INTERFACE (CallsCall, calls_call, CALLS_TYPE_MESSAGE_SOURCE);
 
 enum {
-  PROP_0,
-  PROP_INBOUND,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
-enum {
   SIGNAL_STATE_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
@@ -124,14 +117,38 @@ calls_call_default_init (CallsCallInterface *iface)
       CALLS_TYPE_CALL_STATE
     };
 
-  props[PROP_INBOUND] =
+  g_object_interface_install_property (
+    iface,
     g_param_spec_boolean ("inbound",
                           _("Inbound"),
                           _("Whether the call is inbound"),
                           FALSE,
-                          G_PARAM_READABLE);
+                          G_PARAM_READABLE));
 
-  g_object_interface_install_property (iface, props[PROP_INBOUND]);
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_string ("number",
+                          _("Number"),
+                          _("The number the call is connected to if known"),
+                          NULL,
+                          G_PARAM_READABLE));
+
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_string ("name",
+                          _("Name"),
+                          _("The name of the party the call is connected to, if the network provides it"),
+                          NULL,
+                          G_PARAM_READABLE));
+
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_enum ("state",
+                          _("State"),
+                          _("The current state of the call"),
+                          CALLS_TYPE_CALL_STATE,
+                          CALLS_CALL_STATE_ACTIVE,
+                          G_PARAM_READABLE));
 
   /**
    * CallsCall::state-changed:
@@ -152,9 +169,8 @@ calls_call_default_init (CallsCallInterface *iface)
 }
 
 
-#define DEFINE_CALL_FUNC(function,rettype,errval)       \
-  CALLS_DEFINE_IFACE_FUNC(call, Call, CALL,             \
-                          function, rettype, errval)
+#define DEFINE_CALL_GETTER(prop,rettype,errval) \
+  CALLS_DEFINE_IFACE_GETTER(call, Call, CALL, prop, rettype, errval)
 
 #define DEFINE_CALL_FUNC_VOID(function)                         \
   CALLS_DEFINE_IFACE_FUNC_VOID(call, Call, CALL, function)
@@ -170,7 +186,7 @@ calls_call_default_init (CallsCallInterface *iface)
  *
  * Returns: the number, or NULL
  */
-DEFINE_CALL_FUNC(get_number, const gchar *, NULL);
+DEFINE_CALL_GETTER(number, const gchar *, NULL);
 
 /**
  * calls_call_get_name:
@@ -181,7 +197,7 @@ DEFINE_CALL_FUNC(get_number, const gchar *, NULL);
  *
  * Returns: the number, or NULL
  */
-DEFINE_CALL_FUNC(get_name, const gchar *, NULL);
+DEFINE_CALL_GETTER(name, const gchar *, NULL);
 
 /**
  * calls_call_get_state:
@@ -191,7 +207,7 @@ DEFINE_CALL_FUNC(get_name, const gchar *, NULL);
  *
  * Returns: the state
  */
-DEFINE_CALL_FUNC(get_state, CallsCallState, ((CallsCallState)0));
+DEFINE_CALL_GETTER(state, CallsCallState, ((CallsCallState)0));
 
 /**
  * calls_call_answer:
@@ -220,20 +236,7 @@ DEFINE_CALL_FUNC_VOID(hang_up);
  *
  * Returns: TRUE if inbound, FALSE if outbound.
  */
-gboolean
-calls_call_get_inbound (CallsCall *self)
-{
-  gboolean inbound;
-
-  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
-
-  g_object_get (self,
-                "inbound", &inbound,
-                NULL);
-
-  return inbound;
-}
-
+DEFINE_CALL_GETTER(inbound, gboolean, FALSE);
 
 static inline gboolean
 tone_key_is_valid (gchar key)
