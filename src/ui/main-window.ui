@@ -50,7 +50,7 @@
                 <property name="expand">True</property>
                 <child>
                   <object class="GtkBox" id="contacts">
-                    <property name="visible">False</property>
+                    <property name="visible">True</property>
                     <property name="can_focus">True</property>
                   </object>
                   <packing>
