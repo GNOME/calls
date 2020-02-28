@@ -39,7 +39,7 @@
 
 struct _CallsCallRecordRow
 {
-  GtkOverlay parent_instance;
+  GtkListBoxRow parent_instance;
 
   GtkImage *avatar;
   GtkImage *type;
@@ -57,7 +57,7 @@ struct _CallsCallRecordRow
   CallsNewCallBox *new_call;
 };
 
-G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_BOX);
+G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_LIST_BOX_ROW)
 
 
 enum {

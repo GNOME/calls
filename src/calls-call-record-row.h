@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 #define CALLS_TYPE_CALL_RECORD_ROW (calls_call_record_row_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsCallRecordRow, calls_call_record_row,
-                      CALLS, CALL_RECORD_ROW, GtkBox);
+                      CALLS, CALL_RECORD_ROW, GtkListBoxRow)
 
 CallsCallRecordRow *calls_call_record_row_new        (CallsCallRecord    *record,
                                                       CallsContacts      *contacts,
