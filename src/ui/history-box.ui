@@ -38,19 +38,25 @@
     </child>
 
     <child>
-      <object class="HdyColumn">
+      <object class="GtkScrolledWindow">
         <property name="can_focus">False</property>
         <property name="visible">True</property>
-        <property name="maximum-width">720</property>
-        <property name="linear-growth-width">720</property>
+        <property name="hscrollbar-policy">never</property>
         <child>
-          <object class="GtkScrolledWindow">
+          <object class="HdyColumn">
             <property name="can_focus">False</property>
             <property name="visible">True</property>
+            <property name="maximum-width">600</property>
+            <property name="linear-growth-width">450</property>
             <child>
               <object class="GtkListBox" id="history">
                 <property name="can_focus">False</property>
                 <property name="visible">True</property>
+                <property name="margin">12</property>
+                <property name="valign">start</property>
+                <style>
+                  <class name="frame"/>
+                </style>
               </object>
             </child>
           </object>
