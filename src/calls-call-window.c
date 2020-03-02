@@ -29,6 +29,7 @@
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "calls-in-app-notification.h"
 #include "calls-enumerate.h"
 #include "calls-wayland-config.h"
 #include "util.h"
@@ -51,10 +52,7 @@ struct _CallsCallWindow
 
   GListStore *call_holders;
 
-  GtkRevealer *info_revealer;
-  guint info_timeout;
-  GtkInfoBar *info;
-  GtkLabel *info_label;
+  CallsInAppNotification *in_app_notification;
 
   GtkStack *main_stack;
   GtkStack *header_bar_stack;
@@ -194,56 +192,6 @@ update_visibility (CallsCallWindow *self)
     {
       gtk_stack_set_visible_child_name (self->main_stack, "active-call");
     }
-}
-
-
-static gboolean
-show_message_timeout_cb (CallsCallWindow *self)
-{
-  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
-  self->info_timeout = 0;
-  return FALSE;
-}
-
-
-static void
-show_message (CallsCallWindow *self,
-              const gchar     *text,
-              GtkMessageType   type)
-{
-  gtk_info_bar_set_message_type (self->info, type);
-  gtk_label_set_text (self->info_label, text);
-  gtk_revealer_set_reveal_child (self->info_revealer, TRUE);
-
-  if (self->info_timeout)
-    {
-      g_source_remove (self->info_timeout);
-    }
-  self->info_timeout = g_timeout_add_seconds
-    (3,
-     (GSourceFunc)show_message_timeout_cb,
-     self);
-}
-
-
-static inline void
-stop_info_timeout (CallsCallWindow *self)
-{
-  if (self->info_timeout)
-    {
-      g_source_remove (self->info_timeout);
-      self->info_timeout = 0;
-    }
-}
-
-
-static void
-info_response_cb (GtkInfoBar      *infobar,
-                  gint             response_id,
-                  CallsCallWindow *self)
-{
-  stop_info_timeout (self);
-  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
 }
 
 
@@ -415,7 +363,7 @@ remove_call (CallsCallWindow *self,
 
   remove_call_holder (self, n_items, position, holder);
 
-  show_message(self, reason, GTK_MESSAGE_INFO);
+  calls_in_app_notification_show (self->in_app_notification, reason);
 }
 
 
@@ -436,6 +384,14 @@ remove_calls (CallsCallWindow *self)
   update_visibility (self);
 }
 
+static void
+call_message_cb (CallsCallWindow *self, gchar *reason)
+{
+  g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
+
+  calls_in_app_notification_show (self->in_app_notification, reason);
+}
+
 
 static void
 set_provider (CallsCallWindow *self, CallsProvider *provider)
@@ -450,7 +406,7 @@ set_provider (CallsCallWindow *self, CallsProvider *provider)
     (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (remove_call));
 
   calls_enumerate_params_add
-    (params, CALLS_TYPE_CALL, "message", G_CALLBACK (show_message));
+    (params, CALLS_TYPE_CALL, "message", G_CALLBACK (call_message_cb));
 
   calls_enumerate (provider, params);
 
@@ -672,7 +628,6 @@ dispose (GObject *object)
     }
 
   g_clear_object (&self->call_holders);
-  stop_info_timeout (self);
 
   G_OBJECT_CLASS (calls_call_window_parent_class)->dispose (object);
 }
@@ -704,15 +659,12 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info_revealer);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, info_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, in_app_notification);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, header_bar_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, show_calls);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, call_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, call_selector);
-  gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
   gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, show_calls_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
