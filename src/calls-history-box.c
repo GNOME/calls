@@ -44,8 +44,6 @@ struct _CallsHistoryBox
   gulong model_changed_handler_id;
 
   CallsContacts *contacts;
-
-  CallsNewCallBox *new_call;
 };
 
 G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK);
@@ -111,8 +109,7 @@ create_row_cb (CallsCallRecord *record,
                CallsHistoryBox *self)
 {
   return GTK_WIDGET (calls_call_record_row_new (record,
-                                                self->contacts,
-                                                self->new_call));
+                                                self->contacts));
 }
 
 
@@ -134,11 +131,6 @@ set_property (GObject      *object,
       case PROP_CONTACTS:
         g_set_object (&self->contacts,
                       CALLS_CONTACTS (g_value_get_object (value)));
-        break;
-
-      case PROP_NEW_CALL:
-        g_set_object (&self->new_call,
-                      CALLS_NEW_CALL_BOX (g_value_get_object (value)));
         break;
 
       default:
@@ -182,7 +174,6 @@ dispose (GObject *object)
 {
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
-  g_clear_object (&self->new_call);
   g_clear_object (&self->contacts);
   g_clear_object (&self->model);
 
@@ -238,12 +229,10 @@ calls_history_box_init (CallsHistoryBox *self)
 
 CallsHistoryBox *
 calls_history_box_new (GListModel      *model,
-                       CallsContacts   *contacts,
-                       CallsNewCallBox *new_call)
+                       CallsContacts   *contacts)
 {
   return g_object_new (CALLS_TYPE_HISTORY_BOX,
                        "model", model,
                        "contacts", contacts,
-                       "new-call", new_call,
                        NULL);
 }

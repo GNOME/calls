@@ -40,8 +40,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack);
 
 CallsHistoryBox * calls_history_box_new (GListModel      *model,
-                                         CallsContacts   *contacts,
-                                         CallsNewCallBox *new_call);
+                                         CallsContacts   *contacts);
 
 G_END_DECLS
 

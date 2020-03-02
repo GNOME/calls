@@ -54,8 +54,6 @@ struct _CallsCallRecordRow
 
   CallsContacts *contacts;
   CallsBestMatch *contact;
-
-  CallsNewCallBox *new_call;
 };
 
 G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_LIST_BOX_ROW)
@@ -461,11 +459,6 @@ set_property (GObject      *object,
                   CALLS_CONTACTS (g_value_get_object (value)));
     break;
 
-  case PROP_NEW_CALL:
-    g_set_object (&self->new_call,
-                  CALLS_NEW_CALL_BOX (g_value_get_object (value)));
-    break;
-
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -534,8 +527,6 @@ dispose (GObject *object)
 {
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
 
-  g_clear_object (&self->new_call);
-
   g_clear_object (&self->contact);
   g_clear_object (&self->contacts);
 
@@ -601,13 +592,11 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
 CallsCallRecordRow *
 calls_call_record_row_new (CallsCallRecord *record,
-                           CallsContacts   *contacts,
-                           CallsNewCallBox *new_call)
+                           CallsContacts   *contacts)
 {
   return g_object_new (CALLS_TYPE_CALL_RECORD_ROW,
                        "record", record,
                        "contacts", contacts,
-                       "new-call", new_call,
                        NULL);
 }
 

@@ -233,8 +233,7 @@ constructed (GObject *object)
 
   // Add call records
   history = calls_history_box_new (self->record_store,
-                                   self->contacts,
-                                   self->new_call);
+                                   self->contacts);
   widget = GTK_WIDGET (history);
   gtk_stack_add_titled (self->main_stack, widget,
                         "recent", _("Recent"));
