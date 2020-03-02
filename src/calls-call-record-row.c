@@ -45,6 +45,7 @@ struct _CallsCallRecordRow
   GtkImage *type;
   GtkLabel *target;
   GtkLabel *time;
+  GtkButton *button;
 
   CallsCallRecord *record;
   gulong answered_notify_handler_id;
@@ -70,18 +71,16 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 
-static void
-redial_clicked_cb (CallsCallRecordRow *self)
+static gboolean
+string_to_variant (GBinding *binding,
+                   const GValue *from_value,
+                   GValue *to_value)
 {
-  gchar *target;
+  const gchar *target = g_value_get_string (from_value);
+  GVariant *variant = g_variant_new_string (target);
 
-  g_object_get (self->record,
-                "target", &target,
-                NULL);
-  g_assert (target != NULL);
-
-  calls_new_call_box_dial (self->new_call, target);
-  g_free (target);
+  g_value_take_variant (to_value, variant);
+  return TRUE;
 }
 
 
@@ -488,6 +487,16 @@ constructed (GObject *object)
                 "end", &end,
                 NULL);
 
+  g_object_bind_property_full (self->record,
+                               "target",
+                               self->button,
+                               "action-target",
+                               G_BINDING_SYNC_CREATE,
+                               (GBindingTransformFunc) string_to_variant,
+                               NULL,
+                               NULL,
+                               NULL);
+
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
   calls_date_time_unref (end);
@@ -579,7 +588,7 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, type);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, target);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, time);
-  gtk_widget_class_bind_template_callback (widget_class, redial_clicked_cb);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, button);
 }
 
 

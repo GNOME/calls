@@ -47,7 +47,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="redial">
+          <object class="GtkButton" id="button">
             <property name="visible">True</property>
             <property name="margin_left">12</property>
             <property name="margin_right">8</property>
@@ -55,7 +55,7 @@
             <property name="margin_bottom">8</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <signal name="clicked" handler="redial_clicked_cb" swapped="yes"/>
+            <property name="action-name">app.dial</property>
             <style>
               <class name="image-button"/>
             </style>
