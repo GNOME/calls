@@ -28,6 +28,7 @@
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
 #include "calls-history-box.h"
+#include "calls-in-app-notification.h"
 #include "calls-enumerate.h"
 #include "config.h"
 #include "util.h"
@@ -47,10 +48,7 @@ struct _CallsMainWindow
   GListModel *record_store;
   CallsContacts *contacts;
 
-  GtkRevealer *info_revealer;
-  guint info_timeout;
-  GtkInfoBar *info;
-  GtkLabel *info_label;
+  CallsInAppNotification *in_app_notification;
 
   HdySqueezer *squeezer;
   GtkLabel *title_label;
@@ -124,58 +122,20 @@ static const GActionEntry window_entries [] =
 };
 
 
-static gboolean
-show_message_timeout_cb (CallsMainWindow *self)
-{
-  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
-  self->info_timeout = 0;
-  return FALSE;
-}
-
-
 static void
-show_message (CallsMainWindow *self, const gchar *text, GtkMessageType type)
+call_message_cb (CallsMainWindow *self, const gchar *reason)
 {
-  gtk_info_bar_set_message_type (self->info, type);
-  gtk_label_set_text (self->info_label, text);
-  gtk_revealer_set_reveal_child (self->info_revealer, TRUE);
+  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
 
-  if (self->info_timeout)
-    {
-      g_source_remove (self->info_timeout);
-    }
-  self->info_timeout = g_timeout_add_seconds
-    (3,
-     (GSourceFunc)show_message_timeout_cb,
-     self);
+  calls_in_app_notification_show (self->in_app_notification, reason);
 }
-
-
-static inline void
-stop_info_timeout (CallsMainWindow *self)
-{
-  if (self->info_timeout)
-    {
-      g_source_remove (self->info_timeout);
-      self->info_timeout = 0;
-    }
-}
-
-
-static void
-info_response_cb (GtkInfoBar      *infobar,
-                  gint             response_id,
-                  CallsMainWindow *self)
-{
-  stop_info_timeout (self);
-  gtk_revealer_set_reveal_child (self->info_revealer, FALSE);
-}
-
 
 static void
 call_removed_cb (CallsMainWindow *self, CallsCall *call, const gchar *reason)
 {
-  show_message(self, reason, GTK_MESSAGE_INFO);
+  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
+
+  calls_in_app_notification_show (self->in_app_notification, reason);
 }
 
 
@@ -239,7 +199,7 @@ set_up_provider (CallsMainWindow *self)
   for (i = 0; i < 3; ++i)
     {
       calls_enumerate_params_add
-        (params, msg_obj_types[i], "message", G_CALLBACK (show_message));
+        (params, msg_obj_types[i], "message", G_CALLBACK (call_message_cb));
     }
 
   calls_enumerate_params_add
@@ -318,7 +278,6 @@ dispose (GObject *object)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
-  stop_info_timeout (self);
   g_clear_object (&self->contacts);
   g_clear_object (&self->record_store);
   g_clear_object (&self->provider);
@@ -381,16 +340,13 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   widget_class->size_allocate = size_allocate;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/main-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_revealer);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, info_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, in_app_notification);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, squeezer);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_label);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, wide_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, narrow_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, switcher_bar);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
-  gtk_widget_class_bind_template_callback (widget_class, info_response_cb);
 }
 
 
