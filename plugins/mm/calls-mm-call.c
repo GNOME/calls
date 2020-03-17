@@ -87,6 +87,7 @@ notify_number_cb (CallsMMCall *self,
                   const gchar *number)
 {
   g_string_assign (self->number, number);
+  g_object_notify (G_OBJECT (self), "number");
 }
 
 
