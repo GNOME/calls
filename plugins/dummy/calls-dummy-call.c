@@ -58,6 +58,7 @@ enum {
 
   PROP_LAST_PROP
 };
+static GParamSpec *props[PROP_LAST_PROP];
 
 static void
 change_state (CallsCall      *call,
@@ -72,7 +73,7 @@ change_state (CallsCall      *call,
     }
 
   self->state = state;
-  g_object_notify (G_OBJECT (call), "state");
+  g_object_notify_by_pspec (G_OBJECT (call), props[PROP_CALL_STATE]);
   g_signal_emit_by_name (call,
                          "state-changed",
                          state,
@@ -250,28 +251,32 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   object_class->constructed = constructed;
   object_class->finalize = finalize;
 
-  g_object_class_install_property (
-    object_class,
-    PROP_NUMBER_CONSTRUCTOR,
+  props[PROP_NUMBER_CONSTRUCTOR] =
     g_param_spec_string ("number-constructor",
                          _("Number (constructor)"),
                          _("The dialed number (dummy class constructor)"),
                          "+441234567890",
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_NUMBER_CONSTRUCTOR, props[PROP_NUMBER_CONSTRUCTOR]);
 
-  g_object_class_install_property (
-    object_class,
-    PROP_INBOUND_CONSTRUCTOR,
+  props[PROP_INBOUND_CONSTRUCTOR] =
     g_param_spec_boolean ("inbound-constructor",
                           _("Inbound (constructor)"),
                           _("Whether the calls is inbound (dummy class constructor)"),
                           FALSE,
-                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_INBOUND_CONSTRUCTOR, props[PROP_INBOUND_CONSTRUCTOR]);
 
-  g_object_class_override_property (object_class, PROP_CALL_NUMBER, "number");
-  g_object_class_override_property (object_class, PROP_CALL_INBOUND, "inbound");
-  g_object_class_override_property (object_class, PROP_CALL_STATE, "state");
-  g_object_class_override_property (object_class, PROP_CALL_NAME, "name");
+#define IMPLEMENTS(ID, NAME) \
+  g_object_class_override_property (object_class, ID, NAME);    \
+  props[ID] = g_object_class_find_property(object_class, NAME);
+
+  IMPLEMENTS(PROP_CALL_NUMBER, "number");
+  IMPLEMENTS(PROP_CALL_INBOUND, "inbound");
+  IMPLEMENTS(PROP_CALL_STATE, "state");
+  IMPLEMENTS(PROP_CALL_NAME, "name");
+
+#undef IMPLEMENTS
 
 }
 

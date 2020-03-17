@@ -65,6 +65,7 @@ enum {
 
   PROP_LAST_PROP,
 };
+static GParamSpec *props[PROP_LAST_PROP];
 
 enum {
   SIGNAL_TONE,
@@ -84,7 +85,7 @@ change_state (CallsOfonoCall *self,
     }
 
   self->state = state;
-  g_object_notify (G_OBJECT (self), "state");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL_STATE]);
   g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
@@ -354,29 +355,33 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  g_object_class_install_property (
-    object_class,
-    PROP_VOICE_CALL,
+  props[PROP_VOICE_CALL] =
     g_param_spec_object ("voice-call",
                          _("Voice call"),
                          _("A GDBO proxy object for the underlying call object"),
                          GDBO_TYPE_VOICE_CALL,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_VOICE_CALL, props[PROP_VOICE_CALL]);
 
-  g_object_class_install_property (
-    object_class,
-    PROP_PROPERTIES,
+  props[PROP_PROPERTIES] =
     g_param_spec_variant ("properties",
                           _("Properties"),
                           _("The a{sv} dictionary of properties for the voice call object"),
                           G_VARIANT_TYPE_ARRAY,
                           NULL,
-                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_PROPERTIES, props[PROP_PROPERTIES]);
 
-  g_object_class_override_property (object_class, PROP_CALL_NUMBER, "number");
-  g_object_class_override_property (object_class, PROP_CALL_INBOUND, "inbound");
-  g_object_class_override_property (object_class, PROP_CALL_STATE, "state");
-  g_object_class_override_property (object_class, PROP_CALL_NAME, "name");
+#define IMPLEMENTS(ID, NAME) \
+  g_object_class_override_property (object_class, ID, NAME);    \
+  props[ID] = g_object_class_find_property(object_class, NAME);
+
+  IMPLEMENTS(PROP_CALL_NUMBER, "number");
+  IMPLEMENTS(PROP_CALL_INBOUND, "inbound");
+  IMPLEMENTS(PROP_CALL_STATE, "state");
+  IMPLEMENTS(PROP_CALL_NAME, "name");
+
+#undef IMPLEMENTS
 
   signals[SIGNAL_TONE] =
     g_signal_newv ("tone",
