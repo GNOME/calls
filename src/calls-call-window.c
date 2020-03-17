@@ -30,8 +30,8 @@
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
 #include "calls-in-app-notification.h"
-#include "calls-enumerate.h"
 #include "calls-wayland-config.h"
+#include "calls-manager.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -69,14 +69,6 @@ struct _CallsCallWindow
 };
 
 G_DEFINE_TYPE (CallsCallWindow, calls_call_window, GTK_TYPE_APPLICATION_WINDOW);
-
-
-enum {
-  PROP_0,
-  PROP_PROVIDER,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 
 #ifdef CALLS_WAYLAND
@@ -362,8 +354,6 @@ remove_call (CallsCallWindow *self,
   g_return_if_fail (found);
 
   remove_call_holder (self, n_items, position, holder);
-
-  calls_in_app_notification_show (self->in_app_notification, reason);
 }
 
 
@@ -383,57 +373,6 @@ remove_calls (CallsCallWindow *self)
 
   update_visibility (self);
 }
-
-static void
-call_message_cb (CallsCallWindow *self, gchar *reason)
-{
-  g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
-
-  calls_in_app_notification_show (self->in_app_notification, reason);
-}
-
-
-static void
-set_provider (CallsCallWindow *self, CallsProvider *provider)
-{
-  CallsEnumerateParams *params;
-
-  params = calls_enumerate_params_new (self);
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-added", G_CALLBACK (add_call));
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (remove_call));
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_CALL, "message", G_CALLBACK (call_message_cb));
-
-  calls_enumerate (provider, params);
-
-  g_object_unref (params);
-}
-
-
-static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-  CallsCallWindow *self = CALLS_CALL_WINDOW (object);
-
-  switch (property_id)
-    {
-      case PROP_PROVIDER:
-        set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
-        break;
-
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
-    }
-}
-
 
 #ifdef CALLS_WAYLAND
 static void
@@ -611,9 +550,32 @@ constructed (GObject *object)
 static void
 calls_call_window_init (CallsCallWindow *self)
 {
+  g_autoptr (GList) calls = NULL;
+  GList *c;
   gtk_widget_init_template (GTK_WIDGET (self));
 
   self->call_holders = g_list_store_new (CALLS_TYPE_CALL_HOLDER);
+
+  // Show errors in in-app-notification
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "error",
+                            G_CALLBACK (calls_in_app_notification_show),
+                            self->in_app_notification);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-add",
+                            G_CALLBACK (add_call),
+                            self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-remove",
+                            G_CALLBACK (remove_call),
+                            self);
+
+  calls = calls_manager_get_calls (calls_manager_get_default ());
+  for (c = calls; c != NULL; c = c->next) {
+    add_call (self, c->data);
+  }
 }
 
 
@@ -639,7 +601,6 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
 
@@ -648,15 +609,6 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   // have to wait for it to be set before setting up wayland & co.
   object_class->notify = notify;
 #endif // CALLS_WAYLAND
-
-  props[PROP_PROVIDER] =
-    g_param_spec_object ("provider",
-                         _("Provider"),
-                         _("An object implementing low-level call-making functionality"),
-                         CALLS_TYPE_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, in_app_notification);
@@ -672,11 +624,9 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
 
 
 CallsCallWindow *
-calls_call_window_new (GtkApplication *application,
-                       CallsProvider  *provider)
+calls_call_window_new (GtkApplication *application)
 {
   return g_object_new (CALLS_TYPE_CALL_WINDOW,
                        "application", application,
-                       "provider", provider,
                        NULL);
 }

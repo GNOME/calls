@@ -30,7 +30,6 @@
 #include <gtk/gtk.h>
 
 #include "calls-call.h"
-#include "calls-provider.h"
 
 G_BEGIN_DECLS
 
@@ -38,8 +37,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsCallWindow, calls_call_window, CALLS, CALL_WINDOW, GtkApplicationWindow);
 
-CallsCallWindow *calls_call_window_new (GtkApplication *application,
-                                        CallsProvider  *provider);
+CallsCallWindow *calls_call_window_new (GtkApplication *application);
 
 G_END_DECLS
 

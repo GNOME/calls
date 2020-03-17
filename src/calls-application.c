@@ -350,8 +350,7 @@ start_proper (CallsApplication  *self)
      self->contacts);
   g_assert (self->main_window != NULL);
 
-  self->call_window = calls_call_window_new
-    (gtk_app, provider);
+  self->call_window = calls_call_window_new (gtk_app);
   g_assert (self->call_window != NULL);
 
   return TRUE;
