@@ -34,12 +34,12 @@
 #include "calls-contacts.h"
 #include "calls-call-window.h"
 #include "calls-main-window.h"
+#include "calls-manager.h"
 #include "calls-application.h"
 
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
-#include <libpeas/peas.h>
 #include <glib/gi18n.h>
 #include <libebook-contacts/libebook-contacts.h>
 
@@ -57,8 +57,7 @@ struct _CallsApplication
   GtkApplication parent_instance;
 
   gboolean          daemon;
-  GString          *provider_name;
-  CallsProvider    *provider;
+  CallsManager     *manager;
   CallsRinger      *ringer;
   CallsRecordStore *record_store;
   CallsContacts    *contacts;
@@ -95,6 +94,12 @@ handle_local_options (GApplication *application,
                                       "set-provider-name",
                                       g_variant_new_string (arg));
     }
+  else
+    {
+      g_action_group_activate_action (G_ACTION_GROUP (application),
+                                      "set-provider-name",
+                                      g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
+    }
 
   ok = g_variant_dict_contains (options, "daemon");
   if (ok)
@@ -121,13 +126,14 @@ set_provider_name_action (GSimpleAction *action,
                           GVariant      *parameter,
                           gpointer       user_data)
 {
-  CallsApplication *self = CALLS_APPLICATION (user_data);
   const gchar *name;
 
   name = g_variant_get_string (parameter, NULL);
   g_return_if_fail (name != NULL);
 
-  if (self->provider)
+  /* FIXME: allow to set a new provider, we need to make sure that the
+     provider is unloaded correctly from the CallsManager */
+  if (calls_manager_get_provider (calls_manager_get_default ()) != NULL)
     {
       g_warning ("Cannot set provider name to `%s'"
                  " because provider is already created",
@@ -135,10 +141,8 @@ set_provider_name_action (GSimpleAction *action,
       return;
     }
 
-  g_string_assign (self->provider_name, name);
-
-  g_debug ("Provider name set to `%s'",
-           self->provider_name->str);
+  g_debug ("Start loading provider `%s'", name);
+  calls_manager_set_provider (calls_manager_get_default (), name);
 }
 
 
@@ -315,82 +319,11 @@ startup (GApplication *application)
 }
 
 
-static void
-load_provider_plugin (CallsApplication *self)
-{
-  const gchar * const name = self->provider_name->str;
-  PeasEngine *plugins;
-  PeasPluginInfo *info;
-  PeasExtension *extension;
-
-  g_assert (self->provider == NULL);
-
-  // Add Calls search path and rescan
-  plugins = peas_engine_get_default ();
-  peas_engine_add_search_path (plugins, PLUGIN_LIBDIR, PLUGIN_LIBDIR);
-  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
-
-  // Find the plugin
-  info = peas_engine_get_plugin_info (plugins, name);
-  if (!info)
-    {
-      g_critical ("Could not find plugin `%s'", name);
-      return;
-    }
-
-  // Possibly load the plugin
-  if (!peas_plugin_info_is_loaded (info))
-    {
-      g_autoptr(GError) error = NULL;
-
-      peas_engine_load_plugin (plugins, info);
-
-      if (!peas_plugin_info_is_available (info, &error))
-        {
-          if (error)
-            {
-              g_critical ("Error loading plugin `%s': %s",
-                          name, error->message);
-            }
-          else
-            {
-              g_critical ("Could not load plugin `%s'", name);
-            }
-
-          return;
-        }
-
-      g_debug ("Loaded plugin `%s'", name);
-    }
-
-  // Check the plugin provides CallsProvider
-  if (!peas_engine_provides_extension
-      (plugins, info, CALLS_TYPE_PROVIDER))
-    {
-      g_critical ("Plugin `%s' does not have a provider extension",
-                  name);
-      return;
-    }
-
-  // Get the extension
-  extension = peas_engine_create_extensionv
-    (plugins, info, CALLS_TYPE_PROVIDER, 0, NULL);
-  if (!extension)
-    {
-      g_critical ("Could not create provider from plugin `%s'",
-                  name);
-      return;
-    }
-
-  g_debug ("Created provider from plugin `%s'", name);
-  self->provider = CALLS_PROVIDER (extension);
-}
-
-
 static gboolean
 start_proper (CallsApplication  *self)
 {
   GtkApplication *gtk_app;
+  CallsProvider *provider;
 
   if (self->main_window)
     {
@@ -399,24 +332,13 @@ start_proper (CallsApplication  *self)
 
   gtk_app = GTK_APPLICATION (self);
 
-  // Later we will make provider loading/unloaded a dynamic
-  // process but that will have far-reaching consequences and is
-  // of no use immediately so for now, we just load one provider
-  // at startup.  We can't put this in the actual startup() method
-  // though, because we need to be able to set the provider name
-  // from the command line and we use actions to do that, which
-  // depend on the application already being started up.
-  load_provider_plugin (self);
-  if (!self->provider)
-    {
-      g_application_quit (G_APPLICATION (self));
-      return FALSE;
-    }
+  provider = calls_manager_get_real_provider (calls_manager_get_default ());
+  g_assert (provider != NULL);
 
-  self->ringer = calls_ringer_new (self->provider);
+  self->ringer = calls_ringer_new (provider);
   g_assert (self->ringer != NULL);
 
-  self->record_store = calls_record_store_new (self->provider);
+  self->record_store = calls_record_store_new (provider);
   g_assert (self->record_store != NULL);
 
   self->contacts = calls_contacts_new ();
@@ -424,13 +346,13 @@ start_proper (CallsApplication  *self)
 
   self->main_window = calls_main_window_new
     (gtk_app,
-     self->provider,
+     provider,
      G_LIST_MODEL (self->record_store),
      self->contacts);
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new
-    (gtk_app, self->provider);
+    (gtk_app, provider);
   g_assert (self->call_window != NULL);
 
   return TRUE;
@@ -549,7 +471,7 @@ constructed (GObject *object)
 
 
 static void
-dispose (GObject *object)
+finalize (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
 
@@ -557,20 +479,8 @@ dispose (GObject *object)
   g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
-  g_clear_object (&self->provider);
 
   G_OBJECT_CLASS (calls_application_parent_class)->dispose (object);
-}
-
-
-static void
-finalize (GObject *object)
-{
-  CallsApplication *self = (CallsApplication *)object;
-
-  g_string_free (self->provider_name, TRUE);
-
-  G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
 }
 
 
@@ -581,7 +491,6 @@ calls_application_class_init (CallsApplicationClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed = constructed;
-  object_class->dispose = dispose;
   object_class->finalize = finalize;
 
   application_class->handle_local_options = handle_local_options;
@@ -628,8 +537,6 @@ calls_application_init (CallsApplication *self)
   };
 
   g_application_add_main_option_entries (G_APPLICATION (self), options);
-
-  self->provider_name = g_string_new (DEFAULT_PROVIDER_PLUGIN);
 }
 
 

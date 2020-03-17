@@ -89,6 +89,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-contacts.c', 'calls-contacts.h',
                        'calls-best-match.c', 'calls-best-match.h',
                        'calls-in-app-notification.c', 'calls-in-app-notification.h',
+                       'calls-manager.c', 'calls-manager.h',
                       ])
 
 calls_config_data = config_data
@@ -106,7 +107,7 @@ config_h = vcs_tag(
       output: 'config.h',
 )
 
-calls_enum_headers = files(['calls-call.h'])
+calls_enum_headers = files(['calls-call.h', 'calls-manager.h'])
 calls_enum_sources = gnome.mkenums_simple('enum-types',
                                           sources : calls_enum_headers)
 
