@@ -23,7 +23,7 @@
  */
 
 #include "calls-new-call-box.h"
-#include "calls-enumerate.h"
+#include "calls-manager.h"
 
 #include <glib/gi18n.h>
 #define HANDY_USE_UNSTABLE_API
@@ -39,20 +39,11 @@ struct _CallsNewCallBox
   GtkButton *backspace;
   HdyKeypad *keypad;
   GtkButton *dial;
-  GtkLabel *status;
 
   GList *dial_queue;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
-
-
-enum {
-  PROP_0,
-  PROP_PROVIDER,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 
 enum {
@@ -99,21 +90,6 @@ dial_clicked_cb (CallsNewCallBox *self)
   calls_new_call_box_dial
     (self,
      gtk_entry_get_text (GTK_ENTRY (entry)));
-}
-
-
-void
-notify_status_cb (CallsNewCallBox *self,
-                  GParamSpec      *pspec,
-                  CallsProvider   *provider)
-{
-  gchar *status;
-
-  g_assert (CALLS_IS_PROVIDER (provider));
-
-  status = calls_provider_get_status (provider);
-  gtk_label_set_text (self->status, status);
-  g_free (status);
 }
 
 
@@ -169,14 +145,12 @@ update_origin_box (CallsNewCallBox *self)
     {
       gtk_widget_hide (GTK_WIDGET (self->origin_box));
       gtk_widget_set_sensitive (GTK_WIDGET (self->dial), FALSE);
-      gtk_widget_set_visible (GTK_WIDGET (self->status), TRUE);
       return;
     }
 
   /* We know there is at least one origin. */
 
   gtk_widget_set_sensitive (GTK_WIDGET (self->dial), TRUE);
-  gtk_widget_set_visible (GTK_WIDGET (self->status), FALSE);
 
   if (!gtk_tree_model_iter_next (origin_store, &iter))
     {
@@ -246,53 +220,27 @@ remove_origins (CallsNewCallBox *self)
 
 
 static void
-set_provider (CallsNewCallBox *self, CallsProvider *provider)
-{
-  CallsEnumerateParams *params;
-
-  params = calls_enumerate_params_new (self);
-
-#define add(detail,cb)                          \
-  calls_enumerate_params_add                    \
-    (params, CALLS_TYPE_PROVIDER, detail,       \
-     G_CALLBACK (cb));
-
-  add ("notify::status", notify_status_cb);
-  add ("origin-added",   add_origin);
-  add ("origin-removed", remove_origin);
-
-#undef add
-
-  calls_enumerate (provider, params);
-
-  g_object_unref (params);
-}
-
-static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
-
-  switch (property_id)
-    {
-      case PROP_PROVIDER:
-        set_provider (self, CALLS_PROVIDER (g_value_get_object (value)));
-        break;
-
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
-    }
-}
-
-
-static void
 calls_new_call_box_init (CallsNewCallBox *self)
 {
+  g_autoptr (GList) origins = NULL;
+  GList *o;
+
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "origin-add",
+                            G_CALLBACK (add_origin),
+                            self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "origin-remove",
+                            G_CALLBACK (remove_origin),
+                            self);
+
+  origins = calls_manager_get_origins (calls_manager_get_default ());
+  for (o = origins; o != NULL; o = o->next) {
+    add_origin (self, o->data);
+  }
 
   update_origin_box (self);
 }
@@ -320,19 +268,7 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->dispose = dispose;
-
-
-  props[PROP_PROVIDER] =
-    g_param_spec_object ("provider",
-                         _("Provider"),
-                         _("An object implementing low-level call-making functionality"),
-                         CALLS_TYPE_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
-
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/new-call-box.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_store);
@@ -340,18 +276,15 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, backspace);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, keypad);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, status);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
 }
 
 
 CallsNewCallBox *
-calls_new_call_box_new (CallsProvider *provider)
+calls_new_call_box_new (void)
 {
-  return g_object_new (CALLS_TYPE_NEW_CALL_BOX,
-                       "provider", provider,
-                       NULL);
+  return g_object_new (CALLS_TYPE_NEW_CALL_BOX, NULL);
 }
 
 

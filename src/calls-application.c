@@ -346,7 +346,6 @@ start_proper (CallsApplication  *self)
 
   self->main_window = calls_main_window_new
     (gtk_app,
-     provider,
      G_LIST_MODEL (self->record_store),
      self->contacts);
   g_assert (self->main_window != NULL);

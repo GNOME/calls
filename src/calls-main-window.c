@@ -29,7 +29,7 @@
 #include "calls-new-call-box.h"
 #include "calls-history-box.h"
 #include "calls-in-app-notification.h"
-#include "calls-enumerate.h"
+#include "calls-manager.h"
 #include "config.h"
 #include "util.h"
 
@@ -44,7 +44,6 @@ struct _CallsMainWindow
 {
   GtkApplicationWindow parent_instance;
 
-  CallsProvider *provider;
   GListModel *record_store;
   CallsContacts *contacts;
 
@@ -64,7 +63,6 @@ G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
 
 enum {
   PROP_0,
-  PROP_PROVIDER,
   PROP_RECORD_STORE,
   PROP_CONTACTS,
   PROP_LAST_PROP,
@@ -122,23 +120,6 @@ static const GActionEntry window_entries [] =
 };
 
 
-static void
-call_message_cb (CallsMainWindow *self, const gchar *reason)
-{
-  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
-
-  calls_in_app_notification_show (self->in_app_notification, reason);
-}
-
-static void
-call_removed_cb (CallsMainWindow *self, CallsCall *call, const gchar *reason)
-{
-  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
-
-  calls_in_app_notification_show (self->in_app_notification, reason);
-}
-
-
 static gboolean
 set_switcher_bar_reveal (GBinding     *binding,
                          const GValue *from_value,
@@ -160,11 +141,6 @@ set_property (GObject      *object,
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   switch (property_id) {
-  case PROP_PROVIDER:
-    g_set_object (&self->provider,
-                  CALLS_PROVIDER (g_value_get_object (value)));
-    break;
-
   case PROP_RECORD_STORE:
     g_set_object (&self->record_store,
                   G_LIST_MODEL (g_value_get_object (value)));
@@ -183,35 +159,6 @@ set_property (GObject      *object,
 
 
 static void
-set_up_provider (CallsMainWindow *self)
-{
-  const GType msg_obj_types[3] =
-    {
-      CALLS_TYPE_PROVIDER,
-      CALLS_TYPE_ORIGIN,
-      CALLS_TYPE_CALL
-    };
-  CallsEnumerateParams *params;
-  unsigned i;
-
-  params = calls_enumerate_params_new (self);
-
-  for (i = 0; i < 3; ++i)
-    {
-      calls_enumerate_params_add
-        (params, msg_obj_types[i], "message", G_CALLBACK (call_message_cb));
-    }
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (call_removed_cb));
-
-  calls_enumerate (self->provider, params);
-
-  g_object_unref (params);
-}
-
-
-static void
 constructed (GObject *object)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
@@ -220,10 +167,14 @@ constructed (GObject *object)
   GtkWidget *widget;
   CallsHistoryBox *history;
 
-  set_up_provider (self);
+  // Show errors in in-app-notification
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "error",
+                            G_CALLBACK (calls_in_app_notification_show),
+                            self->in_app_notification);
 
   // Add new call box
-  self->new_call = calls_new_call_box_new (self->provider);
+  self->new_call = calls_new_call_box_new ();
   widget = GTK_WIDGET (self->new_call);
   gtk_stack_add_titled (self->main_stack, widget,
                         "dial-pad", _("Dial Pad"));
@@ -279,7 +230,6 @@ dispose (GObject *object)
 
   g_clear_object (&self->contacts);
   g_clear_object (&self->record_store);
-  g_clear_object (&self->provider);
 
   G_OBJECT_CLASS (calls_main_window_parent_class)->dispose (object);
 }
@@ -311,13 +261,6 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
-
-  props[PROP_PROVIDER] =
-    g_param_spec_object ("provider",
-                         _("Provider"),
-                         _("An object implementing low-level call-making functionality"),
-                         CALLS_TYPE_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_RECORD_STORE] =
     g_param_spec_object ("record-store",
@@ -358,18 +301,15 @@ calls_main_window_init (CallsMainWindow *self)
 
 CallsMainWindow *
 calls_main_window_new (GtkApplication *application,
-                       CallsProvider  *provider,
                        GListModel     *record_store,
                        CallsContacts  *contacts)
 {
   g_return_val_if_fail (GTK_IS_APPLICATION (application), NULL);
-  g_return_val_if_fail (CALLS_IS_PROVIDER (provider), NULL);
   g_return_val_if_fail (G_IS_LIST_MODEL (record_store), NULL);
   g_return_val_if_fail (CALLS_IS_CONTACTS (contacts), NULL);
 
   return g_object_new (CALLS_TYPE_MAIN_WINDOW,
                        "application", application,
-                       "provider", provider,
                        "record-store", record_store,
                        "contacts", contacts,
                        NULL);
