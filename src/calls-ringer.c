@@ -33,7 +33,7 @@
 
 struct _CallsRinger
 {
-  GtkApplicationWindow parent_instance;
+  GObject parent_instance;
 
   CallsProvider *provider;
   gchar         *theme_name;
