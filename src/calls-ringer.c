@@ -23,7 +23,7 @@
  */
 
 #include "calls-ringer.h"
-#include "calls-enumerate.h"
+#include "calls-manager.h"
 #include "config.h"
 
 #include <gsound.h>
@@ -35,7 +35,6 @@ struct _CallsRinger
 {
   GObject parent_instance;
 
-  CallsProvider *provider;
   gchar         *theme_name;
   GSoundContext *ctx;
   unsigned       ring_count;
@@ -43,13 +42,6 @@ struct _CallsRinger
 };
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
-
-enum {
-  PROP_0,
-  PROP_PROVIDER,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
@@ -330,13 +322,20 @@ static void
 call_added_cb (CallsRinger *self, CallsCall *call)
 {
   update_count (self, call, +1);
+
+  g_signal_connect_swapped (call,
+                            "state-changed",
+                            G_CALLBACK (state_changed_cb),
+                            self);
 }
 
 
 static void
-call_removed_cb (CallsRinger *self, CallsCall *call, const gchar *reason)
+call_removed_cb (CallsRinger *self, CallsCall *call)
 {
   update_count (self, call, -1);
+
+  g_signal_handlers_disconnect_by_data (call, self);
 }
 
 
@@ -347,66 +346,31 @@ calls_ringer_init (CallsRinger *self)
 
 
 static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-  CallsRinger *self = CALLS_RINGER (object);
-
-  switch (property_id) {
-  case PROP_PROVIDER:
-    g_set_object (&self->provider, CALLS_PROVIDER (g_value_get_object (value)));
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
-}
-
-
-static void
-set_up_provider (CallsRinger *self)
-{
-  CallsEnumerateParams *params;
-
-  params = calls_enumerate_params_new (self);
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-added", G_CALLBACK (call_added_cb));
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (call_removed_cb));
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_CALL, "state-changed", G_CALLBACK (state_changed_cb));
-
-  calls_enumerate (self->provider, params);
-
-  g_object_unref (params);
-}
-
-static void
 constructed (GObject *object)
 {
+  g_autoptr (GList) calls = NULL;
+  GList *c;
   CallsRinger *self = CALLS_RINGER (object);
 
   monitor_theme_name (self);
   create_ctx (self);
-  set_up_provider (self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-add",
+                            G_CALLBACK (call_added_cb),
+                            self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-remove",
+                            G_CALLBACK (call_removed_cb),
+                            self);
+
+  calls = calls_manager_get_calls (calls_manager_get_default ());
+  for (c = calls; c != NULL; c = c->next) {
+    call_added_cb (self, c->data);
+  }
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->constructed (object);
-}
-
-
-static void
-dispose (GObject *object)
-{
-  CallsRinger *self = CALLS_RINGER (object);
-
-  g_clear_object (&self->provider);
-
-  G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
 
 
@@ -426,25 +390,12 @@ calls_ringer_class_init (CallsRingerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->constructed = constructed;
-  object_class->dispose = dispose;
   object_class->finalize = finalize;
-
-  props[PROP_PROVIDER] =
-    g_param_spec_object ("provider",
-                         _("Provider"),
-                         _("An object implementing low-level call-making functionality"),
-                         CALLS_TYPE_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 CallsRinger *
-calls_ringer_new (CallsProvider *provider)
+calls_ringer_new (void)
 {
-  return g_object_new (CALLS_TYPE_RINGER,
-                       "provider", provider,
-                       NULL);
+  return g_object_new (CALLS_TYPE_RINGER, NULL);
 }

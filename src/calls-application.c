@@ -335,7 +335,7 @@ start_proper (CallsApplication  *self)
   provider = calls_manager_get_real_provider (calls_manager_get_default ());
   g_assert (provider != NULL);
 
-  self->ringer = calls_ringer_new (provider);
+  self->ringer = calls_ringer_new ();
   g_assert (self->ringer != NULL);
 
   self->record_store = calls_record_store_new (provider);

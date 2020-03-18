@@ -25,7 +25,7 @@
 #ifndef CALLS_RINGER_H__
 #define CALLS_RINGER_H__
 
-#include "calls-provider.h"
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject);
 
-CallsRinger *calls_ringer_new (CallsProvider *provider);
+CallsRinger *calls_ringer_new (void);
 
 G_END_DECLS
 
