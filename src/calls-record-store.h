@@ -25,7 +25,7 @@
 #ifndef CALLS_RECORD_STORE_H__
 #define CALLS_RECORD_STORE_H__
 
-#include "calls-provider.h"
+#include "gtk/gtk.h"
 
 G_BEGIN_DECLS
 
@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsRecordStore, calls_record_store, CALLS, RECORD_STORE, GListStore);
 
-CallsRecordStore *calls_record_store_new (CallsProvider *provider);
+CallsRecordStore *calls_record_store_new (void);
 
 G_END_DECLS
 

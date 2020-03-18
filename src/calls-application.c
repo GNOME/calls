@@ -323,7 +323,6 @@ static gboolean
 start_proper (CallsApplication  *self)
 {
   GtkApplication *gtk_app;
-  CallsProvider *provider;
 
   if (self->main_window)
     {
@@ -332,13 +331,10 @@ start_proper (CallsApplication  *self)
 
   gtk_app = GTK_APPLICATION (self);
 
-  provider = calls_manager_get_real_provider (calls_manager_get_default ());
-  g_assert (provider != NULL);
-
   self->ringer = calls_ringer_new ();
   g_assert (self->ringer != NULL);
 
-  self->record_store = calls_record_store_new (provider);
+  self->record_store = calls_record_store_new ();
   g_assert (self->record_store != NULL);
 
   self->contacts = calls_contacts_new ();

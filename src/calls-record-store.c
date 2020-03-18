@@ -24,7 +24,7 @@
 
 #include "calls-record-store.h"
 #include "calls-call-record.h"
-#include "calls-enumerate.h"
+#include "calls-manager.h"
 #include "calls-call.h"
 #include "config.h"
 
@@ -74,20 +74,11 @@ struct _CallsRecordStore
   GtkApplicationWindow parent_instance;
 
   gchar *filename;
-  CallsProvider *provider;
   GomAdapter *adapter;
   GomRepository *repository;
 };
 
 G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_LIST_STORE);
-
-
-enum {
-  PROP_0,
-  PROP_PROVIDER,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
@@ -468,28 +459,6 @@ record_call (CallsRecordStore *self,
 
 
 static void
-call_added_cb (CallsRecordStore *self,
-               CallsCall        *call)
-{
-  GObject * const call_obj = G_OBJECT (call);
-  GDateTime *start;
-
-  g_assert (g_object_get_data (call_obj, "calls-call-start") == NULL);
-  start = g_date_time_new_now_local ();
-  g_object_set_data_full (call_obj, "calls-call-start",
-                          start, (GDestroyNotify)g_date_time_unref);
-
-  if (!self->repository)
-    {
-      open_repo (self);
-      return;
-    }
-
-  record_call (self, call);
-}
-
-
-static void
 update_cb (GomResource  *resource,
            GAsyncResult *res,
            gpointer     *unused)
@@ -545,22 +514,6 @@ stamp_call (CallsCallRecord  *record,
   gom_resource_save_async (GOM_RESOURCE (record),
                            (GAsyncReadyCallback)update_cb,
                            NULL);
-}
-
-
-static void
-call_removed_cb (CallsRecordStore *self,
-                 CallsCall        *call,
-                 const gchar      *reason)
-{
-  /* Stamp the call as ended if it hasn't already been done */
-  CallsCallRecord *record =
-    g_object_get_data (G_OBJECT (call), "calls-call-record");
-
-  if (record)
-    {
-      stamp_call (record, "end");
-    }
 }
 
 
@@ -637,53 +590,73 @@ state_changed_cb (CallsRecordStore *self,
 
 
 static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
+call_added_cb (CallsRecordStore *self,
+               CallsCall        *call)
 {
-  CallsRecordStore *self = CALLS_RECORD_STORE (object);
+  GObject * const call_obj = G_OBJECT (call);
+  GDateTime *start;
 
-  switch (property_id) {
-  case PROP_PROVIDER:
-    g_set_object (&self->provider, CALLS_PROVIDER (g_value_get_object (value)));
-    break;
+  g_assert (g_object_get_data (call_obj, "calls-call-start") == NULL);
+  start = g_date_time_new_now_local ();
+  g_object_set_data_full (call_obj, "calls-call-start",
+                          start, (GDestroyNotify)g_date_time_unref);
 
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
+  if (!self->repository)
+    {
+      open_repo (self);
+      return;
+    }
+
+  record_call (self, call);
+
+  g_signal_connect_swapped (call,
+                            "state-changed",
+                            G_CALLBACK (state_changed_cb),
+                            self);
 }
 
 
 static void
-set_up_provider (CallsRecordStore *self)
+call_removed_cb (CallsRecordStore *self,
+                 CallsCall        *call,
+                 const gchar      *reason)
 {
-  CallsEnumerateParams *params;
+  /* Stamp the call as ended if it hasn't already been done */
+  CallsCallRecord *record =
+    g_object_get_data (G_OBJECT (call), "calls-call-record");
 
-  params = calls_enumerate_params_new (self);
+  if (record)
+    {
+      stamp_call (record, "end");
+    }
 
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-added", G_CALLBACK (call_added_cb));
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_ORIGIN, "call-removed", G_CALLBACK (call_removed_cb));
-
-  calls_enumerate_params_add
-    (params, CALLS_TYPE_CALL, "state-changed", G_CALLBACK (state_changed_cb));
-
-  calls_enumerate (self->provider, params);
-
-  g_object_unref (params);
+  g_signal_handlers_disconnect_by_data (call, self);
 }
 
 
 static void
 constructed (GObject *object)
 {
+  g_autoptr (GList) calls = NULL;
+  GList *c;
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
   open_repo (self);
-  set_up_provider (self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-add",
+                            G_CALLBACK (call_added_cb),
+                            self);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "call-remove",
+                            G_CALLBACK (call_removed_cb),
+                            self);
+
+  calls = calls_manager_get_calls (calls_manager_get_default ());
+  for (c = calls; c != NULL; c = c->next) {
+    call_added_cb (self, c->data);
+  }
 
   G_OBJECT_CLASS (calls_record_store_parent_class)->constructed (object);
 }
@@ -693,8 +666,6 @@ static void
 dispose (GObject *object)
 {
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
-
-  g_clear_object (&self->provider);
 
   g_list_store_remove_all (G_LIST_STORE (self));
 
@@ -721,19 +692,9 @@ calls_record_store_class_init (CallsRecordStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
-
-  props[PROP_PROVIDER] =
-    g_param_spec_object ("provider",
-                         _("Provider"),
-                         _("An object implementing low-level call-making functionality"),
-                         CALLS_TYPE_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
@@ -748,10 +709,9 @@ calls_record_store_init (CallsRecordStore *self)
 
 
 CallsRecordStore *
-calls_record_store_new (CallsProvider *provider)
+calls_record_store_new ()
 {
   return g_object_new (CALLS_TYPE_RECORD_STORE,
                        "item-type", CALLS_TYPE_CALL_RECORD,
-                       "provider", provider,
                        NULL);
 }
