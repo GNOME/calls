@@ -56,6 +56,9 @@ struct _CallsMainWindow
   HdyViewSwitcherBar *switcher_bar;
   GtkStack *main_stack;
 
+  GtkRevealer *permanent_error_revealer;
+  GtkLabel *permanent_error_label;
+
   CallsNewCallBox *new_call;
 };
 
@@ -159,6 +162,36 @@ set_property (GObject      *object,
 
 
 static void
+state_changed_cb (CallsMainWindow *self,
+                  GParamSpec      *pspec,
+                  CallsManager    *manager)
+{
+  const gchar *error = NULL;
+  switch (calls_manager_get_state (manager))
+    {
+    case CALLS_MANAGER_STATE_READY:
+      break;
+
+    case CALLS_MANAGER_STATE_NO_ORIGIN:
+      error = _("Can't place calls: No SIM card");
+      break;
+
+    case CALLS_MANAGER_STATE_UNKNOWN:
+    case CALLS_MANAGER_STATE_NO_PROVIDER:
+      error = _("Can't place calls: No backend service");
+      break;
+
+    case CALLS_MANAGER_STATE_NO_PLUGIN:
+      error = _("Can't place calls: No plugin");
+      break;
+    }
+
+  gtk_label_set_text (self->permanent_error_label, error);
+  gtk_revealer_set_reveal_child (self->permanent_error_revealer, error != NULL);
+}
+
+
+static void
 constructed (GObject *object)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
@@ -217,6 +250,13 @@ constructed (GObject *object)
                                NULL,
                                self->title_label,
                                NULL);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "notify::state",
+                            G_CALLBACK (state_changed_cb),
+                            self);
+
+  state_changed_cb (self, NULL, calls_manager_get_default ());
 
   G_OBJECT_CLASS (calls_main_window_parent_class)->constructed (object);
 }
@@ -289,6 +329,8 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, narrow_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, switcher_bar);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_label);
 }
 
 

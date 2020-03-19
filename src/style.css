@@ -14,3 +14,10 @@ hdykeypad > button, .dial-button, .delete-button {
 .phone-number-entry {
   font-size: 24px;
 }
+
+.error-state-message {
+  background-color: @error_color;
+  border-bottom: 1px solid darker(@error_color);
+  color: @theme_base_color;
+  padding: 6px;
+}
