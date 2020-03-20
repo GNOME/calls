@@ -87,9 +87,10 @@ remove_call (CallsDummyOrigin *self,
   CallsOrigin *origin;
 
   origin = CALLS_ORIGIN (self);
+  self->calls = g_list_remove (self->calls, call);
+
   g_signal_emit_by_name (origin, "call-removed", call, reason);
 
-  self->calls = g_list_remove (self->calls, call);
   g_object_unref (G_OBJECT (call));
 }
 
@@ -97,14 +98,18 @@ remove_call (CallsDummyOrigin *self,
 static void
 remove_calls (CallsDummyOrigin *self, const gchar *reason)
 {
-  GList *node, *next;
+  gpointer call;
+  GList *next;
 
-  for (node = self->calls; node; node = next)
-    {
-      next = node->next;
+  while (self->calls != NULL) {
+    call = self->calls->data;
+    next = self->calls->next;
+    g_list_free_1 (self->calls);
+    self->calls = next;
 
-      remove_call (self, CALLS_CALL (node->data), reason);
-    }
+    g_signal_emit_by_name (self, "call-removed", call, reason);
+    g_object_unref (call);
+  }
 }
 
 
@@ -115,25 +120,12 @@ struct DisconnectedData
 };
 
 
-static gboolean
-disconnected_cb (struct DisconnectedData *data)
-{
-  remove_call (data->self, data->call, "Disconnected");
-  g_object_unref (G_OBJECT (data->call));
-  g_object_unref (G_OBJECT (data->self));
-  g_free (data);
-  return FALSE;
-}
-
-
 static void
 call_state_changed_cb (CallsDummyOrigin *self,
                        CallsCallState    new_state,
                        CallsCallState    old_state,
                        CallsCall        *call)
 {
-  struct DisconnectedData *data;
-
   if (new_state != CALLS_CALL_STATE_DISCONNECTED)
     {
       return;
@@ -142,16 +134,7 @@ call_state_changed_cb (CallsDummyOrigin *self,
   g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  // We add an idle callback so that all of the state change handlers
-  // are dealt with before the removal
-
-  data = g_new (struct DisconnectedData, 1);
-  data->self = self;
-  data->call = call;
-  g_object_ref (G_OBJECT (self));
-  g_object_ref (G_OBJECT (call));
-
-  g_idle_add ((GSourceFunc)disconnected_cb, data);
+  remove_call (self, call, "Disconnected");
 }
 
 

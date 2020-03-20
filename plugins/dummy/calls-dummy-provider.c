@@ -135,10 +135,19 @@ get_property (GObject      *object,
 static void
 dispose (GObject *object)
 {
+  gpointer origin;
+  GList *next;
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
 
-  g_list_free_full (self->origins, g_object_unref);
-  self->origins = NULL;
+  while (self->origins != NULL) {
+    origin = self->origins->data;
+    next = self->origins->next;
+    g_list_free_1 (self->origins);
+    self->origins = next;
+
+    g_signal_emit_by_name (self, "origin-removed", origin);
+    g_object_unref (origin);
+  }
 
   G_OBJECT_CLASS (calls_dummy_provider_parent_class)->dispose (object);
 }
@@ -181,8 +190,10 @@ void
 calls_dummy_provider_add_origin (CallsDummyProvider *self,
                                  const gchar        *name)
 {
-  self->origins = g_list_append (self->origins,
-                                 calls_dummy_origin_new (name));
+  CallsDummyOrigin *origin = calls_dummy_origin_new (name);
+  self->origins = g_list_append (self->origins, origin);
+
+  g_signal_emit_by_name (CALLS_PROVIDER (self), "origin-added", CALLS_ORIGIN (origin));
 }
 
 
