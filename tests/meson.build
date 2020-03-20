@@ -12,7 +12,8 @@ test_env = [
 test_cflags = [
   '-fPIE',
   '-DFOR_TESTING',
-  '-Wno-error=deprecated-declarations'
+  '-Wno-error=deprecated-declarations',
+  '-DPLUGIN_BUILDDIR="@0@"'.format(full_calls_plugin_builddir),
 ]
 
 test_link_args = [
@@ -53,5 +54,21 @@ foreach test : tests
                 )
   test(name, t, env: test_env)
 endforeach
+
+test_sources = [ 'test-manager.c' ]
+
+t = executable('manager', test_sources,
+                 calls_sources, calls_enum_sources, calls_resources,
+                 wl_proto_sources, wayland_sources,
+                 c_args : test_cflags,
+                 link_args: test_link_args,
+                 link_with : calls_vala,
+                 dependencies: calls_deps,
+                 include_directories : [
+                   calls_includes
+                 ]
+                )
+test('manager', t, env: test_env)
+
 
 endif

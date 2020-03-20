@@ -40,10 +40,13 @@ calls_version = meson.project_version()
 top_include = include_directories('.')
 
 prefix = get_option('prefix')
+builddir = meson.current_build_dir()
 libdir = get_option('libdir')
 localedir = get_option('localedir')
 full_localedir = join_paths(prefix, localedir)
 full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
+# Path to plugins inside the build dir, used for testing
+full_calls_plugin_builddir = join_paths(builddir, 'plugins')
 
 config_data = configuration_data()
 config_data.set_quoted('APP_ID', calls_id)
