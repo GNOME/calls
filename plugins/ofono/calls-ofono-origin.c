@@ -53,26 +53,13 @@ G_DEFINE_TYPE_WITH_CODE (CallsOfonoOrigin, calls_ofono_origin, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
+  PROP_NAME,
+  PROP_CALLS,
   PROP_MODEM,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-
-static const gchar *
-get_name (CallsOrigin *origin)
-{
-  CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (origin);
-  return self->name;
-}
-
-
-static GList *
-get_calls (CallsOrigin * origin)
-{
-  CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (origin);
-  return g_hash_table_get_values (self->calls);
-}
 
 static void
 dial_cb (GDBOVoiceCallManager  *voice,
@@ -143,6 +130,31 @@ set_property (GObject      *object,
     break;
   }
 }
+
+
+static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
+
+  switch (property_id) {
+  case PROP_NAME:
+    g_value_set_string (value, self->name);
+    break;
+
+  case PROP_CALLS:
+    g_value_set_pointer(value, g_hash_table_get_values (self->calls));
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
 
 static void
 remove_call (CallsOfonoOrigin *self,
@@ -514,6 +526,7 @@ calls_ofono_origin_class_init (CallsOfonoOriginClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->get_property = get_property;
   object_class->set_property = set_property;
   object_class->constructed = constructed;
   object_class->dispose = dispose;
@@ -525,8 +538,17 @@ calls_ofono_origin_class_init (CallsOfonoOriginClass *klass)
                          _("A GDBO proxy object for the underlying modem object"),
                          GDBO_TYPE_MODEM,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_MODEM, props[PROP_MODEM]);
 
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+#define IMPLEMENTS(ID, NAME) \
+  g_object_class_override_property (object_class, ID, NAME);    \
+  props[ID] = g_object_class_find_property(object_class, NAME);
+
+  IMPLEMENTS (PROP_NAME, "name");
+  IMPLEMENTS (PROP_CALLS, "calls");
+
+#undef IMPLEMENTS
+
 }
 
 
@@ -539,8 +561,6 @@ calls_ofono_origin_message_source_interface_init (CallsOriginInterface *iface)
 static void
 calls_ofono_origin_origin_interface_init (CallsOriginInterface *iface)
 {
-  iface->get_name = get_name;
-  iface->get_calls = get_calls;
   iface->dial = dial;
 }
 

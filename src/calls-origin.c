@@ -47,6 +47,21 @@ calls_origin_default_init (CallsOriginInterface *iface)
 {
   GType arg_types[2] = { CALLS_TYPE_CALL, G_TYPE_STRING };
 
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_string ("name",
+                         "Name",
+                         "The name of the origin",
+                         NULL,
+                         G_PARAM_READABLE));
+
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_pointer ("calls",
+                         "Calls",
+                         "The list of current calls",
+                         G_PARAM_READABLE));
+
   signals[SIGNAL_CALL_ADDED] =
     g_signal_newv ("call-added",
 		   G_TYPE_FROM_INTERFACE (iface),
@@ -64,9 +79,8 @@ calls_origin_default_init (CallsOriginInterface *iface)
 		   2, arg_types);
 }
 
-#define DEFINE_ORIGIN_FUNC(function,rettype,errval)      \
-  CALLS_DEFINE_IFACE_FUNC(origin, Origin, ORIGIN,        \
-			 function, rettype, errval)
+#define DEFINE_ORIGIN_GETTER(prop,rettype,errval) \
+  CALLS_DEFINE_IFACE_GETTER(origin, Origin, ORIGIN, prop, rettype, errval)
 
 /**
  * calls_origin_get_name:
@@ -77,7 +91,7 @@ calls_origin_default_init (CallsOriginInterface *iface)
  * Returns: A string containing the name.  The string must be freed by
  * the caller.
  */
-DEFINE_ORIGIN_FUNC(get_name, const gchar *, NULL);
+DEFINE_ORIGIN_GETTER(name, const gchar *, NULL);
 
 /**
  * calls_origin_get_calls:
@@ -89,7 +103,33 @@ DEFINE_ORIGIN_FUNC(get_name, const gchar *, NULL);
  * Returns: A newly-allocated GList of objects implementing
  * #CallsCall or NULL if there was an error.
  */
-DEFINE_ORIGIN_FUNC(get_calls, GList *, NULL);
+DEFINE_ORIGIN_GETTER(calls, GList *, NULL);
+
+
+/**
+ * calls_origin_foreach_call:
+ * @self: a #CallsOrigin
+ * @callback: function to be called for each call from the origin
+ * @param: user data for @callback
+ *
+ * Iterate over all current calls from this origin
+ **/
+void
+calls_origin_foreach_call(CallsOrigin *self,
+                          CallsOriginForeachCallFunc callback,
+                          gpointer param)
+{
+  g_autoptr(GList) calls = NULL;
+  GList *node;
+
+  calls = calls_origin_get_calls (self);
+
+  for (node = calls; node; node = node->next)
+    {
+      callback (param, CALLS_CALL (node->data), self);
+    }
+}
+
 
 /**
  * calls_origin_dial:

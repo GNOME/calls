@@ -42,15 +42,17 @@ struct _CallsOriginInterface
 {
   GTypeInterface parent_iface;
 
-  const gchar * (*get_name) (CallsOrigin *self);
-  GList * (*get_calls) (CallsOrigin *self);
   void (*dial) (CallsOrigin *self,
                 const gchar *number);
 };
 
+typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, CallsOrigin* origin);
 
 const gchar * calls_origin_get_name (CallsOrigin *self);
 GList * calls_origin_get_calls (CallsOrigin *self);
+void calls_origin_foreach_call(CallsOrigin *self,
+                               CallsOriginForeachCallFunc callback,
+                               gpointer param);
 void calls_origin_dial(CallsOrigin *self,
                        const gchar *number);
 

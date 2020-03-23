@@ -49,34 +49,18 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyOrigin, calls_dummy_origin, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
+
+  /* Property for setting the origins name upon construction */
+  PROP_DUMMY_NAME_CONSTRUCTOR,
+
+   /* The origins name. The implements the name property from CallsOrigin.
+    * Readonly property, can't be set directly. */
   PROP_NAME,
+
+  PROP_CALLS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
-
-
-static const gchar *
-get_name (CallsOrigin *origin)
-{
-  CallsDummyOrigin *self;
-
-  g_return_val_if_fail (CALLS_IS_DUMMY_ORIGIN (origin), NULL);
-  self = CALLS_DUMMY_ORIGIN (origin);
-
-  return self->name->str;
-}
-
-
-static GList *
-get_calls (CallsOrigin *origin)
-{
-  CallsDummyOrigin *self;
-
-  g_return_val_if_fail (CALLS_IS_DUMMY_ORIGIN (origin), NULL);
-  self = CALLS_DUMMY_ORIGIN (origin);
-
-  return g_list_copy (self->calls);
-}
 
 
 static void
@@ -172,7 +156,7 @@ CallsDummyOrigin *
 calls_dummy_origin_new (const gchar *name)
 {
   return g_object_new (CALLS_TYPE_DUMMY_ORIGIN,
-                       "name", name,
+                       "dummy-name-constructor", name,
                        NULL);
 }
 
@@ -186,8 +170,32 @@ set_property (GObject      *object,
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 
   switch (property_id) {
-  case PROP_NAME:
+  case PROP_DUMMY_NAME_CONSTRUCTOR:
     g_string_assign (self->name, g_value_get_string (value));
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
+get_property (GObject      *object,
+              guint         property_id,
+              GValue       *value,
+              GParamSpec   *pspec)
+{
+  CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
+
+  switch (property_id) {
+  case PROP_NAME:
+    g_value_set_string (value, self->name->str);
+    break;
+
+  case PROP_CALLS:
+    g_value_set_pointer (value, g_list_copy (self->calls));
     break;
 
   default:
@@ -226,16 +234,26 @@ calls_dummy_origin_class_init (CallsDummyOriginClass *klass)
 
   object_class->dispose = dispose;
   object_class->finalize = finalize;
+  object_class->get_property = get_property;
   object_class->set_property = set_property;
 
-  props[PROP_NAME] =
-    g_param_spec_string ("name",
+  props[PROP_DUMMY_NAME_CONSTRUCTOR] =
+    g_param_spec_string ("dummy-name-constructor",
                          _("Name"),
                          _("The name of the origin"),
                          "Dummy origin",
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_DUMMY_NAME_CONSTRUCTOR, props[PROP_DUMMY_NAME_CONSTRUCTOR]);
 
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+#define IMPLEMENTS(ID, NAME) \
+  g_object_class_override_property (object_class, ID, NAME);    \
+  props[ID] = g_object_class_find_property(object_class, NAME);
+
+  IMPLEMENTS (PROP_NAME, "name");
+  IMPLEMENTS (PROP_CALLS, "calls");
+
+#undef IMPLEMENTS
 }
 
 
@@ -248,8 +266,6 @@ calls_dummy_origin_message_source_interface_init (CallsOriginInterface *iface)
 static void
 calls_dummy_origin_origin_interface_init (CallsOriginInterface *iface)
 {
-  iface->get_name = get_name;
-  iface->get_calls = get_calls;
   iface->dial = dial;
 }
 

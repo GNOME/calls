@@ -190,11 +190,7 @@ ussd_state_changed_cb (CallsManager *self,
 static void
 add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 {
-  g_autoptr (GList) calls = NULL;
-  GList *c;
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
-
-  calls = calls_origin_get_calls (origin);
 
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
@@ -206,30 +202,28 @@ add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
       g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
     }
 
-  for (c = calls; c != NULL; c = c->next)
-    {
-      add_call (self, c->data, origin);
-    }
+  calls_origin_foreach_call(origin, (CallsOriginForeachCallFunc)add_call, self);
 
   set_state (self, CALLS_MANAGER_STATE_READY);
   g_signal_emit (self, signals[SIGNAL_ORIGIN_ADD], 0, origin);
 }
 
 static void
+remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
+{
+  remove_call(self, call, NULL, origin);
+}
+
+static void
 remove_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 {
   g_autoptr (GList) origins = NULL;
-  g_autoptr (GList) calls = NULL;
-  GList *c;
+
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
 
   g_signal_handlers_disconnect_by_data (origin, self);
 
-  calls = calls_origin_get_calls (origin);
-  for (c = calls; c != NULL; c = c->next)
-    {
-      remove_call (self, c->data, NULL, origin);
-    }
+  calls_origin_foreach_call(origin, remove_call_cb, self);
 
   if (self->default_origin == origin)
     calls_manager_set_default_origin (self, NULL);
