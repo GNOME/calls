@@ -113,43 +113,22 @@ dial (CallsOrigin *origin, const gchar *number)
 
 
 static void
-remove_call (CallsMMOrigin *self,
-             CallsMMCall   *call,
-             const gchar   *path,
-             const gchar   *reason)
-{
-  g_signal_emit_by_name (CALLS_ORIGIN(self), "call-removed",
-                         CALLS_CALL(call), reason);
-  g_hash_table_remove (self->calls, path);
-}
-
-
-struct CallsMMRemoveCallsData
-{
-  CallsOrigin *origin;
-  const gchar *reason;
-};
-
-
-static gboolean
-remove_calls_cb (const gchar                   *path,
-                 CallsMMCall                   *call,
-                 struct CallsMMRemoveCallsData *data)
-{
-  g_signal_emit_by_name (data->origin, "call-removed",
-                         CALLS_CALL(call), data->reason);
-  return TRUE;
-}
-
-
-static void
 remove_calls (CallsMMOrigin *self, const gchar *reason)
 {
-  struct CallsMMRemoveCallsData data = { CALLS_ORIGIN (self), reason };
+  GList *paths, *node;
+  gpointer call;
 
-  g_hash_table_foreach_remove (self->calls,
-                               (GHRFunc) remove_calls_cb,
-                               &data);
+  paths = g_hash_table_get_keys (self->calls);
+
+  for (node = paths; node != NULL; node = node->next)
+    {
+      g_hash_table_steal_extended (self->calls, node->data, NULL, &call);
+      g_signal_emit_by_name (self, "call-removed",
+                             CALLS_CALL(call), reason);
+      g_object_unref (call);
+    }
+
+  g_list_free_full (paths, g_free);
 }
 
 
@@ -341,13 +320,17 @@ call_deleted_cb (MMModemVoice  *voice,
                  const gchar   *path,
                  CallsMMOrigin *self)
 {
-  CallsMMCall *call;
+  gpointer call;
+  gpointer key;
   GString *reason;
   const gchar *mm_reason;
 
   g_debug ("Removing call `%s'", path);
 
-  call = g_hash_table_lookup (self->calls, path);
+  g_hash_table_steal_extended (self->calls, path, &key, &call);
+
+  g_free (key);
+
   if (!call)
     {
       g_warning ("Could not find removed call `%s'", path);
@@ -356,14 +339,15 @@ call_deleted_cb (MMModemVoice  *voice,
 
   reason = g_string_new ("Call removed");
 
-  mm_reason = calls_mm_call_get_disconnect_reason (call);
+  mm_reason = calls_mm_call_get_disconnect_reason (CALLS_MM_CALL (call));
   if (mm_reason)
     {
       g_string_assign (reason, mm_reason);
     }
 
-  remove_call (self, call, path, reason->str);
+  g_signal_emit_by_name (self, "call-removed", call, reason);
 
+  g_object_unref (call);
   g_string_free (reason, TRUE);
 
   g_debug ("Removed call `%s'", path);

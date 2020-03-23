@@ -186,10 +186,12 @@ remove_modem_object (CallsMMProvider *self,
 
   g_assert (CALLS_IS_ORIGIN (origin));
 
+  g_object_ref (origin);
+  g_hash_table_remove (self->origins, path);
+
   g_signal_emit_by_name (CALLS_PROVIDER (self),
                          "origin-removed", CALLS_ORIGIN (origin));
-
-  g_hash_table_remove (self->origins, path);
+  g_object_unref (origin);
 
   update_status (self);
 }
@@ -322,23 +324,24 @@ mm_appeared_cb (GDBusConnection *connection,
 }
 
 
-static gboolean
-remove_origins_cb (const gchar     *path,
-                   CallsMMOrigin   *origin,
-                   CallsMMProvider *self)
-{
-  g_signal_emit_by_name (CALLS_PROVIDER (self),
-                         "origin-removed", CALLS_ORIGIN (origin));
-  return TRUE;
-}
-
-
 static void
 clear_dbus (CallsMMProvider *self)
 {
-  g_hash_table_foreach_remove (self->origins,
-                               (GHRFunc)remove_origins_cb,
-                               self);
+  GList *paths, *node;
+  gpointer origin;
+
+  paths = g_hash_table_get_keys (self->origins);
+
+  for (node = paths; node != NULL; node = node->next)
+    {
+      g_hash_table_steal_extended (self->origins, node->data, NULL, &origin);
+      g_signal_emit_by_name (CALLS_PROVIDER (self),
+                             "origin-removed", CALLS_ORIGIN (origin));
+      g_object_unref (origin);
+    }
+
+  g_list_free_full (paths, g_free);
+
   g_clear_object (&self->mm);
 }
 
