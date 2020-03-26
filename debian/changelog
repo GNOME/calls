@@ -1,3 +1,34 @@
+calls (0.1.3) amber-phone; urgency=medium
+
+  [ Julian Sparber ]
+  * NewCallBox+CallDisplay: UI facelift
+  * Use correct parent class when chaining up overridden functions
+  * Flatpak: use always a space before :
+  * Flatpak: Fix flatpak manifest, remove java dep and update deps
+  * Add class for in-app notification
+  * MainWindow: use in-app notification for messages
+  * CallWindow: use in-app notification
+  * CallHistory: Use dial action for recall button
+  * CallHistory: Don't pass the CallsNewCallBox to the CallsHistory
+  * CallHistory: Add a frame to the call history
+  * CallHistory: Disable selecting/activating rows and ellipzise
+  * Add .gitignore
+  * Set Julian Sparber as maintainer
+
+  [ Bob Ham ]
+  * application: Add "--dial" command-line option
+
+  [ Daniel Abrecht ]
+  * Fix some lintian warnings regarding the debian/copyright file.
+  * Convert calls call getters to readonly properties
+  * Notify if number changes in mm plugin
+  * Reintroduce GParamSpec props arrays & replace g_object_notify with g_object_notify_by_pspec
+
+  [ tor sorensen ]
+  * Add license COPYING file for appropriate packaging.
+
+ -- Julian Sparber <julian.sparber@puri.sm>  Thu, 26 Mar 2020 10:25:00 +0100
+
 calls (0.1.2) amber-phone; urgency=medium
 
   [ Guido Günther ]
