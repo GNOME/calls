@@ -21,5 +21,9 @@
       <foaf:mbox rdf:resource="mailto:bob.ham@puri.sm" />
       <foaf:mbox rdf:resource="mailto:rah@settrans.net" />
     </foaf:Person>
+    <foaf:Person>
+      <foaf:name>Julian Sparber</foaf:name>
+      <foaf:mbox rdf:resource="mailto:julian.sparber@puri.sm" />
+    </foaf:Person>
   </maintainer>
 </Project>

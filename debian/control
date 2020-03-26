@@ -1,7 +1,9 @@
 Source: calls
 Section: comm
 Priority: optional
-Maintainer: Bob Ham <rah@settrans.net>
+Maintainer: Julian Sparber <julian.sparber@puri.sm>
+Uploaders:
+ Bob Ham <rah@settrans.net>,
 Build-Depends:
  debhelper (>= 11),
  libhandy-0.0-dev (>= 0.0.12),
