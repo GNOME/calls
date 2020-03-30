@@ -53,7 +53,6 @@ enum {
   PROP_0,
   PROP_MODEL,
   PROP_CONTACTS,
-  PROP_NEW_CALL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -203,13 +202,6 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
                          _("Contacts"),
                          _("Interface for libfolks"),
                          CALLS_TYPE_CONTACTS,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  props[PROP_NEW_CALL] =
-    g_param_spec_object ("new-call",
-                         _("New call"),
-                         _("The UI box for making calls"),
-                         CALLS_TYPE_NEW_CALL_BOX,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
