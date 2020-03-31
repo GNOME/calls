@@ -12,14 +12,15 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkImage" id="avatar">
+          <object class="HdyAvatar" id="avatar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">8</property>
             <property name="margin_top">8</property>
             <property name="margin_bottom">8</property>
-            <property name="icon-name">avatar-default-symbolic</property>
-            <property name="icon-size">6</property>
+            <property name="size">36</property>
+            <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"></property>
+            <property name="show-initials">True</property>
           </object>
           <packing>
             <property name="position">0</property>

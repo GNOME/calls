@@ -24,6 +24,7 @@
 
 #include "calls-call-record-row.h"
 #include "calls-best-match.h"
+#include "contrib/hdy-avatar.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -34,14 +35,11 @@
 #include <errno.h>
 
 
-#define AVATAR_SIZE 32
-
-
 struct _CallsCallRecordRow
 {
   GtkListBoxRow parent_instance;
 
-  GtkImage *avatar;
+  GtkWidget *avatar;
   GtkImage *type;
   GtkLabel *target;
   GtkLabel *time;
@@ -347,53 +345,11 @@ contact_name_cb (CallsCallRecordRow *self)
     }
 }
 
-
 static void
-set_avatar (CallsCallRecordRow *self,
-            GdkPixbuf *avatar)
+avatar_text_changed_cb (HdyAvatar *avatar)
 {
-  if (avatar)
-    {
-      gtk_image_set_from_pixbuf (self->avatar, avatar);
-    }
-  else
-    {
-      gtk_image_set_from_icon_name (self->avatar,
-                                    "avatar-default-symbolic",
-                                    GTK_ICON_SIZE_DND);
-    }
-}
-
-
-static void
-contact_avatar_cb (CallsCallRecordRow *self,
-                   gint size,
-                   GdkPixbuf *avatar,
-                   CallsBestMatch *contact)
-{
-  if (size != AVATAR_SIZE)
-    {
-      return;
-    }
-
-  set_avatar (self, avatar);
-}
-
-
-static void
-request_contact_avatar (CallsCallRecordRow *self)
-{
-  GdkPixbuf *avatar;
-
-  if (!self->contact)
-    {
-      return;
-    }
-
-  avatar = calls_best_match_request_avatar
-    (self->contact, AVATAR_SIZE);
-
-  set_avatar (self, avatar);
+  const gchar *text = hdy_avatar_get_text (avatar);
+  hdy_avatar_set_show_initials (avatar, !g_ascii_isdigit (*text) && !strchr("#*+", *text));
 }
 
 
@@ -431,10 +387,6 @@ setup_contact (CallsCallRecordRow *self)
   g_signal_connect_swapped (self->contact,
                             "notify::name",
                             G_CALLBACK (contact_name_cb),
-                            self);
-  g_signal_connect_swapped (self->contact,
-                            "avatar",
-                            G_CALLBACK (contact_avatar_cb),
                             self);
 }
 
@@ -495,7 +447,6 @@ constructed (GObject *object)
 
   setup_contact (self);
   contact_name_cb (self);
-  request_contact_avatar (self);
 
   G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 }
@@ -579,6 +530,11 @@ static void
 calls_call_record_row_init (CallsCallRecordRow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_signal_connect (self->avatar,
+                    "notify::text",
+                    G_CALLBACK (avatar_text_changed_cb),
+                    NULL);
 }
 
 
