@@ -1,3 +1,24 @@
+calls (0.1.4) amber-phone; urgency=medium
+
+  [ Julian Sparber ]
+  * DummyPlugin: fix events emits for call-removed, origin-*
+  * MMPlugin: emit *-removed after removing object
+  * Add a CallsManager and move Provider handling to it
+  * Manager: add test
+  * Use CallsManager in MainWindow and NewCallBox
+  * CallWindow: use Manager
+  * Ringer: fix parent instance
+  * Ringer: Use Manager
+  * RecordStore: Use Manager
+  * Remove Enumerate and EnumerateParams class
+  * HistoryBox: remove new-call property
+  * MainWindow: show error message when making calls isn't possible
+  * Add HdyAvatar
+  * History: use HdyAvatar
+  * History: Make avatars 48px big
+
+ -- Julian Sparber <julian.sparber@puri.sm>  Tue, 31 Mar 2020 17:36:42 +0200
+
 calls (0.1.3) amber-phone; urgency=medium
 
   [ Julian Sparber ]
