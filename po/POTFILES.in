@@ -10,10 +10,10 @@ src/calls-call-selector-item.c
 src/calls-call-window.c
 src/calls-contacts.c
 src/calls-encryption-indicator.c
-src/calls-enumerate.c
-src/calls-enumerate-params.c
 src/calls-history-box.c
+src/calls-in-app-notification.c
 src/calls-main-window.c
+src/calls-manager.c
 src/calls-message-source.c
 src/calls-new-call-box.c
 src/calls-origin.c
@@ -22,7 +22,6 @@ src/calls-provider.c
 src/calls-record-store.c
 src/calls-ringer.c
 src/main.c
-src/util.c
 src/ui/call-display.ui
 src/ui/call-record-row.ui
 src/ui/call-selector-item.ui
@@ -30,6 +29,8 @@ src/ui/call-window.ui
 src/ui/encryption-indicator.ui
 src/ui/history-box.ui
 src/ui/history-header-bar.ui
+src/ui/in-app-notification.ui
 src/ui/main-window.ui
 src/ui/new-call-box.ui
 src/ui/new-call-header-bar.ui
+src/util.c
