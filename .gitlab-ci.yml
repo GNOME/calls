@@ -8,18 +8,15 @@ stages:
  - test-package
 
 variables:
-  DEPS: build-essential git modemmanager-dev libmm-glib-dev
+  DEPS: build-essential git
   WANT_BUILD_DEPS: "true"
+  IMAGE: debian:bullseye
 
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
   - apt-get -y update
-  - apt-get -y install wget ca-certificates gnupg eatmydata
-  - echo "deb http://ci.puri.sm/ scratch librem5" > /etc/apt/sources.list.d/ci.list
-  - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
-  - eatmydata apt-get -y update
-  - eatmydata apt-get -y build-dep .
-  - eatmydata apt-get -y install $DEPS
+  - apt-get -y build-dep .
+  - apt-get -y install $DEPS
   - ulimit -c unlimited
 
 .tags: &tags
@@ -28,6 +25,7 @@ before_script:
 
 build:native:
   <<: *tags
+  image: $IMAGE
   stage: build
   artifacts:
     paths:
@@ -38,6 +36,7 @@ build:native:
 
 test:native:
   <<: *tags
+  image: $IMAGE
   stage: test
   dependencies:
     - build:native
