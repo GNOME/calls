@@ -20,8 +20,8 @@ if desktop_utils.found()
              ])
 endif
 
-# Appdata file
-install_data('sm.puri.Calls.appdata.xml',
+# Metainfo file
+install_data('sm.puri.Calls.metainfo.xml',
     install_dir: join_paths(datadir, 'metainfo'),
 )
 
@@ -30,7 +30,7 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util,
        args: ['validate-relax',
               join_paths(meson.current_source_dir(),
-                         'sm.puri.Calls.appdata.xml')
+                         'sm.puri.Calls.metainfo.xml')
              ])
 endif
 
