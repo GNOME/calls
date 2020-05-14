@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-04-26 03:34+0000\n"
-"PO-Revision-Date: 2020-04-26 11:56+0000\n"
+"POT-Creation-Date: 2020-05-12 15:25+0000\n"
+"PO-Revision-Date: 2020-05-14 19:27+0000\n"
+"Last-Translator: \n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: src/calls-application.c:308 src/calls-main-window.c:112
 #: src/ui/call-window.ui:11 src/ui/main-window.ui:8
@@ -48,7 +48,7 @@ msgstr "نما"
 
 #: src/calls-best-match.c:488
 msgid "The CallsBestMatchView to monitor"
-msgstr ""
+msgstr "CallsBestMatchView برای پایش"
 
 #: src/calls-best-match.c:494 src/calls-call.c:139 src/calls-party.c:186
 msgid "Name"
@@ -191,11 +191,11 @@ msgstr "واسط libfolks"
 
 #: src/calls-call-selector-item.c:174
 msgid "Call holder"
-msgstr ""
+msgstr "نگه‌دارندهٔ تماس"
 
 #: src/calls-call-selector-item.c:175
 msgid "The holder for this call"
-msgstr ""
+msgstr "نگه‌دارنده برای این تماس"
 
 #: src/calls-encryption-indicator.c:128
 msgid "Encrypted"
