@@ -11,6 +11,10 @@ Files: src/wayland/wlr-layer-shell-unstable-v1.xml
 Copyright: Copyright © 2017 Drew DeVault
 License: X11
 
+Files: data/sm.puri.Calls.metainfo.xml
+Copyright: 2018 Purism SPC
+License: CC0-1.0
+
 License: GPL-3+
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
@@ -47,3 +51,11 @@ License: X11
  RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+License: CC0-1.0
+ To the extent possible under law, the author(s) have dedicated all
+ copyright and related and neighboring rights to this software to the public
+ domain worldwide. This software is distributed without any warranty.
+ .
+ On Debian systems, the complete text of the CC0 license, version 1.0,
+ can be found in /usr/share/common-licenses/CC0-1.0.
