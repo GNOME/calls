@@ -22,6 +22,7 @@
  *
  */
 
+#include "config.h"
 #include "calls-call-display.h"
 #include "calls-call-data.h"
 #include "util.h"
@@ -330,6 +331,7 @@ set_property (GObject      *object,
   }
 }
 
+#ifdef CALLS_USE_UGLY_CODE
 
 //#define UGLY_SOURCE "alsa_input.platform-sound.VoiceCall__hw_CARD_sgtl5000__source"
 //#define UGLY_SINK   "alsa_output.platform-sound.VoiceCall__hw_CARD_sgtl5000__sink"
@@ -509,6 +511,7 @@ ugly_hacks (CallsCallDisplay *self)
                             self);
 }
 
+#endif
 
 static void
 constructed (GObject *object)
@@ -519,7 +522,9 @@ constructed (GObject *object)
 
   call_state_changed_cb (self, calls_call_get_state (self->call));
 
+#ifdef CALLS_USE_UGLY_CODE
   ugly_hacks (self);
+#endif
 
   G_OBJECT_CLASS (calls_call_display_parent_class)->constructed (object);
 }

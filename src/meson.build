@@ -95,6 +95,9 @@ calls_config_data = config_data
 calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
 calls_config_data.set10('WL_SCANNER_FOUND', wl_scanner.found())
 
+use_l5_hacks = get_option('librem5-hack')
+calls_config_data.set('CALLS_USE_UGLY_CODE', use_l5_hacks)
+
 config_h_in = configure_file(
   output: 'config.h.in',
   configuration: calls_config_data
