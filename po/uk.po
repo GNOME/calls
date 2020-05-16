@@ -1,0 +1,358 @@
+# Ukrainian translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-05-14 03:25+0000\n"
+"PO-Revision-Date: 2020-05-16 15:34+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.07.70\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Дзвінки"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Назва додатка, яку слід використовувати для надавача послуг дзвінка"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "ДОДАТОК"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Чи слід відкривати головне вікно після запуску"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Набрати номер"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "НОМЕР"
+
+#: src/calls-best-match.c:487
+msgid "View"
+msgstr "Перегляд"
+
+#: src/calls-best-match.c:488
+msgid "The CallsBestMatchView to monitor"
+msgstr "CallsBestMatchView для спостереження"
+
+#: src/calls-best-match.c:494 src/calls-call.c:139 src/calls-party.c:186
+msgid "Name"
+msgstr "Назва"
+
+#: src/calls-best-match.c:495
+msgid "The display name of the best match"
+msgstr "Назва найвідповіднішого дисплея"
+
+#: src/calls-call.c:123 src/calls-call-record.c:206
+msgid "Inbound"
+msgstr "Вхідний"
+
+#: src/calls-call.c:124
+msgid "Whether the call is inbound"
+msgstr "Чи є дзвінок вхідним"
+
+#: src/calls-call.c:131 src/calls-party.c:193
+msgid "Number"
+msgstr "Номер"
+
+#: src/calls-call.c:132
+msgid "The number the call is connected to if known"
+msgstr "Номер, з яким з'єднано дзвінок, якщо такий відомий"
+
+#: src/calls-call.c:140
+msgid ""
+"The name of the party the call is connected to, if the network provides it"
+msgstr "Співрозмовник, із яким з'єднано дзвінок, якщо мережа надає ці дані"
+
+#: src/calls-call.c:147
+msgid "State"
+msgstr "Стан"
+
+#: src/calls-call.c:148
+msgid "The current state of the call"
+msgstr "Поточний стан дзвінка"
+
+#: src/calls-call-data.c:136 src/calls-call-holder.c:157
+msgid "Call"
+msgstr "Дзвінок"
+
+#: src/calls-call-data.c:137
+msgid "The call"
+msgstr "Дзвінок"
+
+#: src/calls-call-data.c:143
+msgid "Party"
+msgstr "Співрозмовник"
+
+#: src/calls-call-data.c:144 src/calls-encryption-indicator.c:129
+msgid "The party participating in the call"
+msgstr "Співрозмовник, який бере участь у дзвінку"
+
+#: src/calls-call-display.c:245
+msgid "Calling..."
+msgstr "Виклик…"
+
+#: src/calls-call-display.c:598
+msgid "Call data"
+msgstr "Дані дзвінка"
+
+#: src/calls-call-display.c:599
+msgid "Data for the call this display will be associated with"
+msgstr "Дані дзвінка, з якими буде пов'язано цей дисплей"
+
+#: src/calls-call-holder.c:158
+msgid "The call to hold"
+msgstr "Дзвінок, який слід утримувати"
+
+#: src/calls-call-record.c:189
+msgid "ID"
+msgstr "Ідентифікатор"
+
+#: src/calls-call-record.c:190
+msgid "The row ID"
+msgstr "Ідентифікатор рядка"
+
+#: src/calls-call-record.c:198
+msgid "Target"
+msgstr "Ціль"
+
+#: src/calls-call-record.c:199
+msgid "The PTSN phone number or other address of the call"
+msgstr "Номер PTSN телефону або інша адреса дзвінка"
+
+#: src/calls-call-record.c:207
+msgid "Whether the call was an inbound call"
+msgstr "Чи був дзвінок вхідним"
+
+#: src/calls-call-record.c:214
+msgid "Start"
+msgstr "Початок"
+
+#: src/calls-call-record.c:215
+msgid "Time stamp of the start of the call"
+msgstr "Часова позначка початку дзвінка"
+
+#: src/calls-call-record.c:222
+msgid "Answered"
+msgstr "Відповіли"
+
+#: src/calls-call-record.c:223
+msgid "Time stamp of when the call was answered"
+msgstr "Часова позначка моменту відповіді на дзвінок"
+
+#: src/calls-call-record.c:230
+msgid "End"
+msgstr "Кінець"
+
+#: src/calls-call-record.c:231
+msgid "Time stamp of the end of the call"
+msgstr "Часова позначка кінця дзвінка"
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"вчора"
+
+#: src/calls-call-record-row.c:505
+msgid "Record"
+msgstr "Запис"
+
+#: src/calls-call-record-row.c:506
+msgid "The call record for this row"
+msgstr "Запис дзвінка для цього рядка"
+
+#: src/calls-call-record-row.c:512 src/calls-history-box.c:202
+#: src/calls-main-window.c:314 src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Контакти"
+
+#: src/calls-call-record-row.c:513 src/calls-history-box.c:203
+#: src/calls-main-window.c:315
+msgid "Interface for libfolks"
+msgstr "Інтерфейс до libfolks"
+
+#: src/calls-call-selector-item.c:174
+msgid "Call holder"
+msgstr "Утримувач дзвінка"
+
+#: src/calls-call-selector-item.c:175
+msgid "The holder for this call"
+msgstr "Утримувач цього дзвінка"
+
+#: src/calls-encryption-indicator.c:128
+msgid "Encrypted"
+msgstr "Зашифровано"
+
+#: src/calls-history-box.c:195
+msgid "model"
+msgstr "модель"
+
+#: src/calls-history-box.c:196
+msgid "The data store containing call records"
+msgstr "Сховище даних, що містить записи дзвінків"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Неможливо розмістити дзвінки: немає SIM-картки"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Не вдалося розмістити дзвінки: немає служби обробки"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Не вдалося розмістити дзвінки: немає додатка"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Панель набору"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Нещодавні"
+
+#: src/calls-main-window.c:307
+msgid "Record store"
+msgstr "Сховище записів"
+
+#: src/calls-main-window.c:308
+msgid "The store of call records"
+msgstr "Сховище записів дзвінків"
+
+#: src/calls-party.c:187
+msgid "The party's name"
+msgstr "Ім'я співрозмовника"
+
+#: src/calls-party.c:194
+msgid "The party's telephone number"
+msgstr "Телефонний номер співрозмовника"
+
+#: src/calls-provider.c:70
+msgid "Status"
+msgstr "Стан"
+
+#: src/calls-provider.c:71
+msgid "A text string describing the status for display to the user"
+msgstr "Текстовий рядок, який описує стан, який слід показати користувачеві"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Вхідний виклик"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Вхідний телефонний дзвінок"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Вимкнути звук"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Гучномовець"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Додати дзвінок"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Утримувати"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Розірвати зв'язок"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Відповісти"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Приховати панель набору"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Подзвонити співрозмовнику"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Очікування"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Цей дзвінок не зашифровано"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Цей дзвінок зашифровано"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Немає нещодавніх дзвінків"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Нещодавні дзвінки"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Новий дзвінок…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Меню"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Про «Дзвінки»"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Не знайдено модема"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Набір номера"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Витирання номера"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Новий дзвінок"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Назад"
