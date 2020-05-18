@@ -1,3 +1,30 @@
+calls (0.1.5) amber-phone; urgency=medium
+
+  [ Guido Günther ]
+  * Update POTFILES.in.  See: #146
+  * Build against Debian bullseye
+
+  [ Danial Behzadi ]
+  * Add Persian
+  * po: fa: Update some strings
+
+  [ David Heidelberg ]
+  * data: rename appdata to metainfo.  Appstream nowadays prefers
+    `.metainfo.xml`
+
+  [ Evangelos Ribeiro Tzaras ]
+  * data: Clarify metainfo copyright to be CC0-1.0.
+    Adust debian/copyright accordingly.
+  * Build L5 specific code in calls-call-display conditionally
+
+  [ Sebastian Rasmussen ]
+  * po: Add Swedish translation
+
+  [ Yuri Chornoivan ]
+  * po: Add Ukrainian translation
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 18 May 2020 11:00:52 +0200
+
 calls (0.1.4) amber-phone; urgency=medium
 
   [ Julian Sparber ]
