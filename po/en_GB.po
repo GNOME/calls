@@ -1,0 +1,358 @@
+# British English translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Zander Brown <zbrown@gnome.org>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-05-14 03:25+0000\n"
+"PO-Revision-Date: 2020-05-18 13:31+0100\n"
+"Last-Translator: Zander Brown <zbrown@gnome.org>\n"
+"Language-Team: English - United Kingdom <en_GB@li.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 3.36.0\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Calls"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "The name of the plug-in to use for the call Provider"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "PLUG-IN"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Whether to present the main window on startup"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Dial a number"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "NUMBER"
+
+#: src/calls-best-match.c:487
+msgid "View"
+msgstr "View"
+
+#: src/calls-best-match.c:488
+msgid "The CallsBestMatchView to monitor"
+msgstr "The CallsBestMatchView to monitor"
+
+#: src/calls-best-match.c:494 src/calls-call.c:139 src/calls-party.c:186
+msgid "Name"
+msgstr "Name"
+
+#: src/calls-best-match.c:495
+msgid "The display name of the best match"
+msgstr "The display name of the best match"
+
+#: src/calls-call.c:123 src/calls-call-record.c:206
+msgid "Inbound"
+msgstr "Inbound"
+
+#: src/calls-call.c:124
+msgid "Whether the call is inbound"
+msgstr "Whether the call is inbound"
+
+#: src/calls-call.c:131 src/calls-party.c:193
+msgid "Number"
+msgstr "Number"
+
+#: src/calls-call.c:132
+msgid "The number the call is connected to if known"
+msgstr "The number the call is connected to if known"
+
+#: src/calls-call.c:140
+msgid ""
+"The name of the party the call is connected to, if the network provides it"
+msgstr ""
+"The name of the party the call is connected to, if the network provides it"
+
+#: src/calls-call.c:147
+msgid "State"
+msgstr "State"
+
+#: src/calls-call.c:148
+msgid "The current state of the call"
+msgstr "The current state of the call"
+
+#: src/calls-call-data.c:136 src/calls-call-holder.c:157
+msgid "Call"
+msgstr "Call"
+
+#: src/calls-call-data.c:137
+msgid "The call"
+msgstr "The call"
+
+#: src/calls-call-data.c:143
+msgid "Party"
+msgstr "Party"
+
+#: src/calls-call-data.c:144 src/calls-encryption-indicator.c:129
+msgid "The party participating in the call"
+msgstr "The party participating in the call"
+
+#: src/calls-call-display.c:245
+msgid "Calling..."
+msgstr "Calling..."
+
+#: src/calls-call-display.c:598
+msgid "Call data"
+msgstr "Call data"
+
+#: src/calls-call-display.c:599
+msgid "Data for the call this display will be associated with"
+msgstr "Data for the call this display will be associated with"
+
+#: src/calls-call-holder.c:158
+msgid "The call to hold"
+msgstr "The call to hold"
+
+#: src/calls-call-record.c:189
+msgid "ID"
+msgstr "ID"
+
+#: src/calls-call-record.c:190
+msgid "The row ID"
+msgstr "The row ID"
+
+#: src/calls-call-record.c:198
+msgid "Target"
+msgstr "Target"
+
+#: src/calls-call-record.c:199
+msgid "The PTSN phone number or other address of the call"
+msgstr "The PTSN phone number or other address of the call"
+
+#: src/calls-call-record.c:207
+msgid "Whether the call was an inbound call"
+msgstr "Whether the call was an inbound call"
+
+#: src/calls-call-record.c:214
+msgid "Start"
+msgstr "Start"
+
+#: src/calls-call-record.c:215
+msgid "Time stamp of the start of the call"
+msgstr "Time stamp of the start of the call"
+
+#: src/calls-call-record.c:222
+msgid "Answered"
+msgstr "Answered"
+
+#: src/calls-call-record.c:223
+msgid "Time stamp of when the call was answered"
+msgstr "Time stamp of when the call was answered"
+
+#: src/calls-call-record.c:230
+msgid "End"
+msgstr "End"
+
+#: src/calls-call-record.c:231
+msgid "Time stamp of the end of the call"
+msgstr "Time stamp of the end of the call"
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"yesterday"
+
+#: src/calls-call-record-row.c:505
+msgid "Record"
+msgstr "Record"
+
+#: src/calls-call-record-row.c:506
+msgid "The call record for this row"
+msgstr "The call record for this row"
+
+#: src/calls-call-record-row.c:512 src/calls-history-box.c:202
+#: src/calls-main-window.c:314 src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Contacts"
+
+#: src/calls-call-record-row.c:513 src/calls-history-box.c:203
+#: src/calls-main-window.c:315
+msgid "Interface for libfolks"
+msgstr "Interface for libfolks"
+
+#: src/calls-call-selector-item.c:174
+msgid "Call holder"
+msgstr "Call holder"
+
+#: src/calls-call-selector-item.c:175
+msgid "The holder for this call"
+msgstr "The holder for this call"
+
+#: src/calls-encryption-indicator.c:128
+msgid "Encrypted"
+msgstr "Encrypted"
+
+#: src/calls-history-box.c:195
+msgid "model"
+msgstr "model"
+
+#: src/calls-history-box.c:196
+msgid "The data store containing call records"
+msgstr "The data store containing call records"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Zander Brown <zbrown@gnome.org>"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Can't place calls: No SIM card"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Can't place calls: No backend service"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Can't place calls: No plug-in"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Dial Pad"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Recent"
+
+#: src/calls-main-window.c:307
+msgid "Record store"
+msgstr "Record store"
+
+#: src/calls-main-window.c:308
+msgid "The store of call records"
+msgstr "The store of call records"
+
+#: src/calls-party.c:187
+msgid "The party's name"
+msgstr "The party's name"
+
+#: src/calls-party.c:194
+msgid "The party's telephone number"
+msgstr "The party's telephone number"
+
+#: src/calls-provider.c:70
+msgid "Status"
+msgstr "Status"
+
+#: src/calls-provider.c:71
+msgid "A text string describing the status for display to the user"
+msgstr "A text string describing the status for display to the user"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Incoming call"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Incoming phone call"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Mute"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Speaker"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Add call"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Hold"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Hang up"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Answer"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Hide the dial pad"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Call the party"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "On hold"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "This call is not encrypted"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "This call is encrypted"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "No Recent Calls"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Recent Calls"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "New call…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menu"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "About Calls"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "No modem found"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Dial"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Backspace through number"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "New Call"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Back"
