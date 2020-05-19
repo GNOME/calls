@@ -28,7 +28,7 @@ gnome = import('gnome')
 src_include = include_directories('.')
 calls_includes = [ top_include, src_include ]
 
-calls_deps = [ dependency('gobject-2.0'),
+calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('gtk+-3.0'),
                dependency('libhandy-0.0', version: '>= 0.0.12'),
                dependency('gsound'),
