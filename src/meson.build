@@ -88,6 +88,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-best-match.c', 'calls-best-match.h',
                        'calls-in-app-notification.c', 'calls-in-app-notification.h',
                        'calls-manager.c', 'calls-manager.h',
+                       'calls-notifier.c', 'calls-notifier.h',
                        'contrib/hdy-avatar.c', 'contrib/hdy-avatar.h',
                       ])
 

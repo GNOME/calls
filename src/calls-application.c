@@ -30,6 +30,7 @@
 #include "calls-new-call-box.h"
 #include "calls-encryption-indicator.h"
 #include "calls-ringer.h"
+#include "calls-notifier.h"
 #include "calls-record-store.h"
 #include "calls-contacts.h"
 #include "calls-call-window.h"
@@ -59,6 +60,7 @@ struct _CallsApplication
   gboolean          daemon;
   CallsManager     *manager;
   CallsRinger      *ringer;
+  CallsNotifier    *notifier;
   CallsRecordStore *record_store;
   CallsContacts    *contacts;
   CallsMainWindow  *main_window;
@@ -340,6 +342,9 @@ start_proper (CallsApplication  *self)
   self->contacts = calls_contacts_new ();
   g_assert (self->contacts != NULL);
 
+  self->notifier = calls_notifier_new (self->contacts);
+  g_assert (CALLS_IS_NOTIFIER (self->notifier));
+
   self->main_window = calls_main_window_new
     (gtk_app,
      G_LIST_MODEL (self->record_store),
@@ -473,6 +478,7 @@ finalize (GObject *object)
   g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
+  g_clear_object (&self->notifier);
 
   G_OBJECT_CLASS (calls_application_parent_class)->dispose (object);
 }
