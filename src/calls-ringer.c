@@ -56,7 +56,7 @@ ringer_error (CallsRinger *self,
 }
 
 
-void
+static void
 get_theme_name (CallsRinger *self,
                 GtkSettings *settings)
 {
@@ -73,7 +73,7 @@ get_theme_name (CallsRinger *self,
 }
 
 
-void
+static void
 notify_sound_theme_name_cb (GtkSettings   *settings,
                             GParamSpec  *pspec,
                             CallsRinger *self)
