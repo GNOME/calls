@@ -21,221 +21,102 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
+#define G_LOG_DOMAIN "calls-ringer"
 
 #include "calls-ringer.h"
 #include "calls-manager.h"
 #include "config.h"
 
-#include <gsound.h>
 #include <glib/gi18n.h>
 #include <glib-object.h>
+
+#define LIBFEEDBACK_USE_UNSTABLE_API
+#include <libfeedback.h>
 
 
 struct _CallsRinger
 {
   GObject parent_instance;
 
-  gchar         *theme_name;
-  GSoundContext *ctx;
-  unsigned       ring_count;
-  GCancellable  *playing;
+  unsigned  ring_count;
+  gboolean  playing;
+  LfbEvent *event;
 };
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
 
-
 static void
-ringer_error (CallsRinger *self,
-              const gchar *prefix,
-              GError      *error)
+on_event_triggered (LfbEvent     *event,
+                    GAsyncResult *res,
+                    CallsRinger  *self)
 {
-  g_warning ("%s: %s", prefix, error->message);
-  g_error_free (error);
+    g_autoptr (GError) err = NULL;
+    g_return_if_fail (LFB_IS_EVENT (event));
+    g_return_if_fail (CALLS_IS_RINGER (self));
 
-  g_clear_object (&self->ctx);
+    if (lfb_event_trigger_feedback_finish (event, res, &err))
+      {
+        self->playing = TRUE;
+      }
+    else
+      {
+        g_warning ("Failed to trigger feedback for '%s': %s",
+                   lfb_event_get_event (event), err->message);
+      }
+    g_object_unref (self);
 }
-
-
-static void
-get_theme_name (CallsRinger *self,
-                GtkSettings *settings)
-{
-  gchar *theme_name = NULL;
-
-  g_object_get (settings,
-                "gtk-sound-theme-name", &theme_name,
-                NULL);
-
-  g_free (self->theme_name);
-  self->theme_name = theme_name;
-
-  g_debug ("Got GTK sound theme name `%s'", theme_name);
-}
-
-
-static void
-notify_sound_theme_name_cb (GtkSettings   *settings,
-                            GParamSpec  *pspec,
-                            CallsRinger *self)
-{
-  get_theme_name (self, settings);
-
-  if (self->ctx)
-    {
-      GError *error = NULL;
-      gboolean ok;
-
-      ok = gsound_context_set_attributes
-        (self->ctx,
-         &error,
-         GSOUND_ATTR_CANBERRA_XDG_THEME_NAME, self->theme_name,
-         NULL);
-
-      if (!ok)
-        {
-          g_warning ("Could not set GSound theme name: %s",
-                     error->message);
-          g_error_free (error);
-        }
-    }
-}
-
-
-static void
-monitor_theme_name (CallsRinger *self)
-{
-  GtkSettings *settings = gtk_settings_get_default ();
-  g_assert (settings != NULL);
-
-  g_signal_connect (settings,
-                    "notify::gtk-sound-theme-name",
-                    G_CALLBACK (notify_sound_theme_name_cb),
-                    self);
-
-  get_theme_name (self, settings);
-}
-
-
-static gboolean
-create_ctx (CallsRinger *self)
-{
-  GError *error = NULL;
-  gboolean ok;
-  GHashTable *attrs;
-
-  self->ctx = gsound_context_new (NULL, &error);
-  if (!self->ctx)
-    {
-      ringer_error (self, "Error creating GSound context", error);
-      return FALSE;
-    }
-
-  attrs = g_hash_table_new (g_str_hash, g_str_equal);
-  g_hash_table_insert
-    (attrs, GSOUND_ATTR_APPLICATION_ICON_NAME, APP_ID);
-  if (self->theme_name)
-    {
-      g_hash_table_insert
-        (attrs, GSOUND_ATTR_CANBERRA_XDG_THEME_NAME,
-         self->theme_name);
-    }
-
-  ok = gsound_context_set_attributesv (self->ctx, attrs, &error);
-  g_hash_table_unref (attrs);
-  if (!ok)
-    {
-      ringer_error (self, "Error setting GSound attributes", error);
-      return FALSE;
-    }
-
-  g_debug ("Created ringtone context");
-
-  return TRUE;
-}
-
-
-static void play (CallsRinger *self);
-
-
-static void
-play_cb (GSoundContext *ctx,
-         GAsyncResult  *res,
-         CallsRinger   *self)
-{
-  gboolean ok;
-  GError *error = NULL;
-
-  ok = gsound_context_play_full_finish (ctx, res, &error);
-  if (!ok)
-    {
-      g_clear_object (&self->playing);
-
-      if (error->domain == G_IO_ERROR
-          && error->code == G_IO_ERROR_CANCELLED)
-        {
-          g_debug ("Ringtone cancelled");
-        }
-      else
-        {
-          ringer_error (self, "Error playing ringtone", error);
-        }
-
-      return;
-    }
-
-  g_assert (self->ring_count > 0);
-  play (self);
-}
-
-
-static void
-play (CallsRinger *self)
-{
-  g_assert (self->ctx     != NULL);
-  g_assert (self->playing != NULL);
-
-  g_debug ("Playing ringtone");
-  gsound_context_play_full (self->ctx,
-                            self->playing,
-                            (GAsyncReadyCallback)play_cb,
-                            self,
-                            GSOUND_ATTR_MEDIA_ROLE, "event",
-                            GSOUND_ATTR_EVENT_ID, "phone-incoming-call",
-                            GSOUND_ATTR_EVENT_DESCRIPTION, _("Incoming call"),
-                            NULL);
-}
-
 
 static void
 start (CallsRinger *self)
 {
-  g_assert (self->playing == NULL);
+  g_return_if_fail (self->playing == FALSE);
 
-  if (!self->ctx)
+  if (self->event)
     {
-      gboolean ok;
-
-      ok = create_ctx (self);
-      if (!ok)
-        {
-          return;
-        }
+      g_object_ref (self);
+      lfb_event_trigger_feedback_async (self->event,
+                                        NULL,
+                                        (GAsyncReadyCallback)on_event_triggered,
+                                        self);
     }
-
-  g_debug ("Starting ringtone");
-  self->playing = g_cancellable_new ();
-  play (self);
 }
 
+static void
+on_event_feedback_ended (LfbEvent     *event,
+                         GAsyncResult *res,
+                         CallsRinger  *self)
+{
+    g_autoptr (GError) err = NULL;
+    g_return_if_fail (LFB_IS_EVENT (event));
+    g_return_if_fail (CALLS_IS_RINGER (self));
+
+    if (lfb_event_end_feedback_finish (event, res, &err))
+      {
+        self->playing = FALSE;
+      }
+    else
+      {
+        g_warning ("Failed to end feedback for '%s': %s",
+                   lfb_event_get_event (event), err->message);
+      }
+}
+
+static void
+on_feedback_ended (LfbEvent *event,
+                   CallsRinger *self)
+{
+  g_debug ("Feedback ended");
+  self->playing = FALSE;
+}
 
 static void
 stop (CallsRinger *self)
 {
   g_debug ("Stopping ringtone");
-
-  g_assert (self->ctx != NULL);
-
-  g_cancellable_cancel (self->playing);
+  lfb_event_end_feedback_async (self->event,
+                                NULL,
+                                (GAsyncReadyCallback)on_event_feedback_ended,
+                                self);
 }
 
 
@@ -342,6 +223,22 @@ call_removed_cb (CallsRinger *self, CallsCall *call)
 static void
 calls_ringer_init (CallsRinger *self)
 {
+  g_autoptr(GError) err = NULL;
+
+  if (lfb_init (APP_ID, &err))
+    {
+      self->event = lfb_event_new ("phone-incoming-call");
+      /* Let feedbackd do the loop */
+      lfb_event_set_timeout (self->event, 0);
+      g_signal_connect (self->event,
+                        "feedback-ended",
+                        (GCallback)on_feedback_ended,
+                        self);
+    }
+  else
+    {
+      g_warning ("Failed to init libfeedback: %s", err->message);
+    }
 }
 
 
@@ -351,9 +248,6 @@ constructed (GObject *object)
   g_autoptr (GList) calls = NULL;
   GList *c;
   CallsRinger *self = CALLS_RINGER (object);
-
-  monitor_theme_name (self);
-  create_ctx (self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
                             "call-add",
@@ -375,13 +269,17 @@ constructed (GObject *object)
 
 
 static void
-finalize (GObject *object)
+dispose (GObject *object)
 {
   CallsRinger *self = CALLS_RINGER (object);
 
-  g_free (self->theme_name);
+  if (self->event)
+    {
+      g_clear_object (&self->event);
+      lfb_uninit ();
+    }
 
-  G_OBJECT_CLASS (calls_ringer_parent_class)->finalize (object);
+  G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
 
 
@@ -391,7 +289,7 @@ calls_ringer_class_init (CallsRingerClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed = constructed;
-  object_class->finalize = finalize;
+  object_class->dispose = dispose;
 }
 
 CallsRinger *
