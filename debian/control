@@ -6,11 +6,11 @@ Uploaders:
  Bob Ham <rah@settrans.net>,
 Build-Depends:
  debhelper (>= 11),
+ libfeedback-dev,
  libhandy-0.0-dev (>= 0.0.12),
  libgtk-3-dev,
  modemmanager-dev,
  libmm-glib-dev (>= 1.12.0),
- libgsound-dev,
  libpeas-dev,
  libgom-1.0-dev,
  libebook-contacts1.2-dev,
