@@ -811,8 +811,8 @@ calls_mm_origin_class_init (CallsMMOriginClass *klass)
 
   props[PROP_MODEM] =
     g_param_spec_object ("mm-object",
-                         _("Modem Object"),
-                         _("A libmm-glib proxy object for the modem"),
+                         "Modem Object",
+                         "A libmm-glib proxy object for the modem",
                          MM_TYPE_OBJECT,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_MODEM, props[PROP_MODEM]);

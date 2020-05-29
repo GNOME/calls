@@ -253,16 +253,16 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
 
   props[PROP_NUMBER_CONSTRUCTOR] =
     g_param_spec_string ("number-constructor",
-                         _("Number (constructor)"),
-                         _("The dialed number (dummy class constructor)"),
+                         "Number (constructor)",
+                         "The dialed number (dummy class constructor)",
                          "+441234567890",
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_NUMBER_CONSTRUCTOR, props[PROP_NUMBER_CONSTRUCTOR]);
 
   props[PROP_INBOUND_CONSTRUCTOR] =
     g_param_spec_boolean ("inbound-constructor",
-                          _("Inbound (constructor)"),
-                          _("Whether the calls is inbound (dummy class constructor)"),
+                          "Inbound (constructor)",
+                          "Whether the calls is inbound (dummy class constructor)",
                           FALSE,
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_INBOUND_CONSTRUCTOR, props[PROP_INBOUND_CONSTRUCTOR]);

@@ -239,8 +239,8 @@ calls_dummy_origin_class_init (CallsDummyOriginClass *klass)
 
   props[PROP_DUMMY_NAME_CONSTRUCTOR] =
     g_param_spec_string ("dummy-name-constructor",
-                         _("Name"),
-                         _("The name of the origin"),
+                         "Name",
+                         "The name of the origin",
                          "Dummy origin",
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_DUMMY_NAME_CONSTRUCTOR, props[PROP_DUMMY_NAME_CONSTRUCTOR]);

@@ -391,8 +391,8 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   object_class->finalize = finalize;
 
   props[PROP_MM_CALL] = g_param_spec_object ("mm-call",
-                                             _("MM call"),
-                                             _("A libmm-glib proxy object for the underlying call object"),
+                                             "MM call",
+                                             "A libmm-glib proxy object for the underlying call object",
                                              MM_TYPE_CALL,
                                              G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_MM_CALL, props[PROP_MM_CALL]);

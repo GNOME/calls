@@ -357,16 +357,16 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
 
   props[PROP_VOICE_CALL] =
     g_param_spec_object ("voice-call",
-                         _("Voice call"),
-                         _("A GDBO proxy object for the underlying call object"),
+                         "Voice call",
+                         "A GDBO proxy object for the underlying call object",
                          GDBO_TYPE_VOICE_CALL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_VOICE_CALL, props[PROP_VOICE_CALL]);
 
   props[PROP_PROPERTIES] =
     g_param_spec_variant ("properties",
-                          _("Properties"),
-                          _("The a{sv} dictionary of properties for the voice call object"),
+                          "Properties",
+                          "The a{sv} dictionary of properties for the voice call object",
                           G_VARIANT_TYPE_ARRAY,
                           NULL,
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
