@@ -484,15 +484,15 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
 
   props[PROP_VIEW] =
     g_param_spec_object ("view",
-                         _("View"),
-                         _("The CallsBestMatchView to monitor"),
+                         "View",
+                         "The CallsBestMatchView to monitor",
                          CALLS_TYPE_BEST_MATCH_VIEW,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_NAME] =
     g_param_spec_string ("name",
-                         _("Name"),
-                         _("The display name of the best match"),
+                         "Name",
+                         "The display name of the best match",
                          NULL,
                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 

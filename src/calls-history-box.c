@@ -192,15 +192,15 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
 
   props[PROP_MODEL] =
     g_param_spec_object ("model",
-                         _("model"),
-                         _("The data store containing call records"),
+                         "model",
+                         "The data store containing call records",
                          G_TYPE_LIST_MODEL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_CONTACTS] =
     g_param_spec_object ("contacts",
-                         _("Contacts"),
-                         _("Interface for libfolks"),
+                         "Contacts",
+                         "Interface for libfolks",
                          CALLS_TYPE_CONTACTS,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 

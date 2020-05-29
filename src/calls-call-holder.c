@@ -154,8 +154,8 @@ calls_call_holder_class_init (CallsCallHolderClass *klass)
 
   props[PROP_CALL] =
     g_param_spec_object ("call",
-                         _("Call"),
-                         _("The call to hold"),
+                         "Call",
+                         "The call to hold",
                          CALLS_TYPE_CALL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 

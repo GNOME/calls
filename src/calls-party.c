@@ -183,15 +183,15 @@ calls_party_class_init (CallsPartyClass *klass)
 
   props[PROP_NAME] =
     g_param_spec_string ("name",
-                         _("Name"),
-                         _("The party's name"),
+                         "Name",
+                         "The party's name",
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
   props[PROP_NUMBER] =
     g_param_spec_string ("number",
-                         _("Number"),
-                         _("The party's telephone number"),
+                         "Number",
+                         "The party's telephone number",
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 

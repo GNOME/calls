@@ -67,8 +67,8 @@ calls_provider_default_init (CallsProviderInterface *iface)
 
   props[PROP_STATUS] =
     g_param_spec_string ("status",
-                         _("Status"),
-                         _("A text string describing the status for display to the user"),
+                         "Status",
+                         "A text string describing the status for display to the user",
                          "",
                          G_PARAM_READABLE);
 

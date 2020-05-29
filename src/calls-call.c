@@ -120,35 +120,35 @@ calls_call_default_init (CallsCallInterface *iface)
   g_object_interface_install_property (
     iface,
     g_param_spec_boolean ("inbound",
-                          _("Inbound"),
-                          _("Whether the call is inbound"),
+                          "Inbound",
+                          "Whether the call is inbound",
                           FALSE,
                           G_PARAM_READABLE));
 
   g_object_interface_install_property (
     iface,
     g_param_spec_string ("number",
-                          _("Number"),
-                          _("The number the call is connected to if known"),
-                          NULL,
-                          G_PARAM_READABLE));
+                         "Number",
+                         "The number the call is connected to if known",
+                         NULL,
+                         G_PARAM_READABLE));
 
   g_object_interface_install_property (
     iface,
     g_param_spec_string ("name",
-                          _("Name"),
-                          _("The name of the party the call is connected to, if the network provides it"),
-                          NULL,
-                          G_PARAM_READABLE));
+                         "Name",
+                         "The name of the party the call is connected to, if the network provides it",
+                         NULL,
+                         G_PARAM_READABLE));
 
   g_object_interface_install_property (
     iface,
     g_param_spec_enum ("state",
-                          _("State"),
-                          _("The current state of the call"),
-                          CALLS_TYPE_CALL_STATE,
-                          CALLS_CALL_STATE_ACTIVE,
-                          G_PARAM_READABLE));
+                       "State",
+                       "The current state of the call",
+                       CALLS_TYPE_CALL_STATE,
+                       CALLS_CALL_STATE_ACTIVE,
+                       G_PARAM_READABLE));
 
   /**
    * CallsCall::state-changed:

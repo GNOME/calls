@@ -304,15 +304,15 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
 
   props[PROP_RECORD_STORE] =
     g_param_spec_object ("record-store",
-                         _("Record store"),
-                         _("The store of call records"),
+                         "Record store",
+                         "The store of call records",
                          G_TYPE_LIST_MODEL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_CONTACTS] =
     g_param_spec_object ("contacts",
-                         _("Contacts"),
-                         _("Interface for libfolks"),
+                         "Contacts",
+                         "Interface for libfolks",
                          CALLS_TYPE_CONTACTS,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 

@@ -502,15 +502,15 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
-                         _("Record"),
-                         _("The call record for this row"),
+                         "Record",
+                         "The call record for this row",
                          CALLS_TYPE_CALL_RECORD,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_CONTACTS] =
     g_param_spec_object ("contacts",
-                         _("Contacts"),
-                         _("Interface for libfolks"),
+                         "Contacts",
+                         "Interface for libfolks",
                          CALLS_TYPE_CONTACTS,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 

@@ -133,15 +133,15 @@ calls_call_data_class_init (CallsCallDataClass *klass)
 
   props[PROP_CALL] =
     g_param_spec_object ("call",
-                         _("Call"),
-                         _("The call"),
+                         "Call",
+                         "The call",
                          CALLS_TYPE_CALL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
   props[PROP_PARTY] =
     g_param_spec_object ("party",
-                         _("Party"),
-                         _("The party participating in the call"),
+                         "Party",
+                         "The party participating in the call",
                          CALLS_TYPE_PARTY,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 

@@ -125,8 +125,8 @@ calls_encryption_indicator_class_init (CallsEncryptionIndicatorClass *klass)
 
   props[PROP_ENCRYPTED] =
     g_param_spec_boolean ("encrypted",
-                          _("Encrypted"),
-                          _("The party participating in the call"),
+                          "Encrypted",
+                          "The party participating in the call",
                           FALSE,
                           G_PARAM_READWRITE);
 

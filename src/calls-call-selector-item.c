@@ -171,8 +171,8 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
 
   props[PROP_HOLDER] =
     g_param_spec_object ("holder",
-                         _("Call holder"),
-                         _("The holder for this call"),
+                         "Call holder",
+                         "The holder for this call",
                          CALLS_TYPE_CALL_HOLDER,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
    

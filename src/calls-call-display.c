@@ -600,8 +600,8 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
 
   props[PROP_CALL_DATA] =
     g_param_spec_object ("call-data",
-                         _("Call data"),
-                         _("Data for the call this display will be associated with"),
+                         "Call data",
+                         "Data for the call this display will be associated with",
                          CALLS_TYPE_CALL_DATA,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
    
