@@ -1,0 +1,308 @@
+# Brazilian Portuguese translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-05-29 13:37+0000\n"
+"PO-Revision-Date: 2020-05-29 11:24-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.36.0\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Chamadas"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "O nome do plugin para usar para o provedor de chamada"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Se deve-se apresentar a janela principal na inicialização"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Disca um número"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "NÚMERO"
+
+#: src/calls-call-display.c:246
+msgid "Calling..."
+msgstr "Chamando…"
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"ontem"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Rafael Fontenelle <rafaelff@gnome.org>"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Não é possível fazer chamadas: Nenhum cartão SIM"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Não é possível fazer chamadas: Nenhuma serviço de backend"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Não é possível fazer chamadas: Nenhum plugin"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Teclado de discagem"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Recentes"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Chamada recebida"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Chamada telefônica recebida"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Mudo"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Alto-falante"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Adicionar chamada"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Colocar em espera"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Desligar"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Atender"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Ocultar o teclado numérico"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Chamar a pessoa"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+551234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Em espera"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Esta chamada não está criptografada"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Esta chamada está criptografada"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Nenhuma chamada recente"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Chamadas recentes"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Nova chamada…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menu"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Sobre o Chamadas"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Nenhum modem encontrado"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Contatos"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Discar"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Apagar o número"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Nova chamada"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Voltar"
+
+#~ msgid "View"
+#~ msgstr "Visão"
+
+#~ msgid "The CallsBestMatchView to monitor"
+#~ msgstr "O CallsBestMatchView para monitorar"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "The display name of the best match"
+#~ msgstr "O nome exibido da melhor correspondência"
+
+#~ msgid "Inbound"
+#~ msgstr "Recebida"
+
+#~ msgid "Whether the call is inbound"
+#~ msgstr "Se a chamada foi recebida"
+
+#~ msgid "Number"
+#~ msgstr "Número"
+
+#~ msgid "The number the call is connected to if known"
+#~ msgstr "O número ao qual a chamada está conectada, se conhecido"
+
+#~ msgid ""
+#~ "The name of the party the call is connected to, if the network provides it"
+#~ msgstr ""
+#~ "O nome da pessoa à qual a chamada está conectada, se a rede fornecer"
+
+#~ msgid "State"
+#~ msgstr "Estado"
+
+#~ msgid "The current state of the call"
+#~ msgstr "O estado atual da chamada"
+
+#~ msgid "Call"
+#~ msgstr "Chamada"
+
+#~ msgid "The call"
+#~ msgstr "A chamada"
+
+#~ msgid "Party"
+#~ msgstr "Pessoa"
+
+#~ msgid "The party participating in the call"
+#~ msgstr "A pessoa participando na chamada"
+
+#~ msgid "Call data"
+#~ msgstr "Dados da chamada"
+
+#~ msgid "Data for the call this display will be associated with"
+#~ msgstr "Dados para a chamada com a qual esta exibição estará associdada"
+
+#~ msgid "The call to hold"
+#~ msgstr "A chamada a colocar em espera"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "The row ID"
+#~ msgstr "O ID da linha"
+
+#~ msgid "Target"
+#~ msgstr "Destino"
+
+# PTSN é rede de telefonia pública
+#~ msgid "The PTSN phone number or other address of the call"
+#~ msgstr "O número telefônica da RPTC ou outro endereço da chamada"
+
+#~ msgid "Whether the call was an inbound call"
+#~ msgstr "Se a chamada era uma chamada recebida"
+
+#~ msgid "Start"
+#~ msgstr "Início"
+
+#~ msgid "Time stamp of the start of the call"
+#~ msgstr "Registro de data e hora do início da chamada"
+
+#~ msgid "Answered"
+#~ msgstr "Atendida"
+
+#~ msgid "Time stamp of when the call was answered"
+#~ msgstr "Registro de data e hora de quanto a chamada foi atendida"
+
+#~ msgid "End"
+#~ msgstr "Fim"
+
+#~ msgid "Time stamp of the end of the call"
+#~ msgstr "Registro de data e hora do fim da chamada"
+
+#~ msgid "Record"
+#~ msgstr "Registro"
+
+#~ msgid "The call record for this row"
+#~ msgstr "A registro de chamadas para esta linha"
+
+#~ msgid "Interface for libfolks"
+#~ msgstr "Interface para libfolks"
+
+#~ msgid "Encrypted"
+#~ msgstr "Criptografada"
+
+#~ msgid "model"
+#~ msgstr "modelo"
+
+#~ msgid "The data store containing call records"
+#~ msgstr "O armazenamento de dados contendo registros de chamadas"
+
+#~ msgid "Record store"
+#~ msgstr "Armazenamento de registros"
+
+#~ msgid "The store of call records"
+#~ msgstr "O armazenamento dos registros de chamadas"
+
+#~ msgid "The party's name"
+#~ msgstr "O nome da pessoa"
+
+#~ msgid "The party's telephone number"
+#~ msgstr "O número telefônico da pessoa"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "A text string describing the status for display to the user"
+#~ msgstr "Um texto que descreve o status para exibição para o usuário"
