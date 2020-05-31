@@ -243,7 +243,7 @@ call_state_changed_cb (CallsCallDisplay *self,
 
     case CALLS_CALL_STATE_DIALING:
     case CALLS_CALL_STATE_ALERTING:
-      gtk_label_set_text (self->status, _("Calling..."));
+      gtk_label_set_text (self->status, _("Calling…"));
       break;
 
     case CALLS_CALL_STATE_ACTIVE:
