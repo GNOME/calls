@@ -102,6 +102,11 @@ about_action (GSimpleAction *action,
   version = g_str_equal (VCS_TAG, "") ? PACKAGE_VERSION:
                                         PACKAGE_VERSION "-" VCS_TAG;
 
+  /*
+   * “program-name” defaults to g_get_application_name().
+   * Don’t set it explicitly so that there is one less
+   * string to translate.
+   */
   gtk_show_about_dialog (GTK_WINDOW (self),
                          "artists", artists,
                          "authors", authors,
@@ -109,7 +114,6 @@ about_action (GSimpleAction *action,
                          "documenters", documenters,
                          "license-type", GTK_LICENSE_GPL_3_0,
                          "logo-icon-name", APP_ID,
-                         "program-name", _("Calls"),
                          "translator-credits", _("translator-credits"),
                          "version", version,
                          "website", PACKAGE_URL,
