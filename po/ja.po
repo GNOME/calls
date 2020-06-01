@@ -1,0 +1,183 @@
+# Japanese localization for Calls package.
+# Copyright (C) 2020 Calls' COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Scott Anecito <noreplygitlab@protonmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-05-29 14:30+0200\n"
+"PO-Revision-Date: 2020-05-29 17:31-0700\n"
+"Last-Translator: Scott Anecito <noreplygitlab@protonmail.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 20.04.1\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "通話"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "通話のプロバイダーのために使えプラグインの名前"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "プラグイン"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "起動時にメインウィンドウを表示"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "電話番号を入力"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "電話番号"
+
+#: src/calls-call-display.c:246
+msgid "Calling..."
+msgstr "発信中。。。"
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"昨日"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Scott Anecito <noreplygitlab@protonmail.com>"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "電話できない：SIMカードなし"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "電話できない：バックエンドサービスなし"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "電話できない：プラグインなし"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "ダイヤルパッド"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "最近"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "着信"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "電話の着信"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "ミュート"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "スピーカー"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "通話を追加"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "保留"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "終了"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "応答"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "ダイヤルパッドを非表示"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "人に通話する"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "保留中"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "この通話は暗号化されていません"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "この通話は暗号化されている"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "最近の通話なし"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "最近の通話"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "新しい通話。。。"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "メニュー"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "コールズについて"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "モデムを見つかりない"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "連絡先"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "ダイヤル"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "番号を削除"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "新しい通話"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "戻る"
+ 
