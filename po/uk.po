@@ -106,7 +106,7 @@ msgid "The party participating in the call"
 msgstr "Співрозмовник, який бере участь у дзвінку"
 
 #: src/calls-call-display.c:245
-msgid "Calling..."
+msgid "Calling…"
 msgstr "Виклик…"
 
 #: src/calls-call-display.c:598
