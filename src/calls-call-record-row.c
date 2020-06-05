@@ -381,6 +381,7 @@ setup_contact (CallsCallRecordRow *self)
   self->contact = calls_contacts_lookup_phone_number
     (self->contacts, phone_number);
   g_assert (self->contact != NULL);
+  g_object_ref (self->contact);
   g_clear_object (&self->contacts);
   e_phone_number_free (phone_number);
 
