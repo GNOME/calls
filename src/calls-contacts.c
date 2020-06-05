@@ -164,7 +164,15 @@ search_view_prepare_cb (FolksSearchView *view,
     }
 }
 
-
+/*
+ * calls_contacts_lookup_phone_number:
+ * @self: The #CallsContact
+ * @number: The phonenumber
+ *
+ * Get a best contact match for a phone number
+ *
+ * Returns: (transfer none): The best match as #CallsBestMatch
+ */
 CallsBestMatch *
 calls_contacts_lookup_phone_number (CallsContacts *self,
                                     EPhoneNumber  *number)
