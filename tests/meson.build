@@ -7,6 +7,7 @@ test_env = [
   'GSETTINGS_BACKEND=memory',
   'PYTHONDONTWRITEBYTECODE=yes',
   'MALLOC_CHECK_=2',
+  'NO_AT_BRIDGE=1',
 ]
 
 test_cflags = [
