@@ -138,6 +138,10 @@ gboolean calls_date_time_is_yesterday (GDateTime *now,
 gboolean calls_date_time_is_same_year (GDateTime *a,
                                        GDateTime *b);
 
+gboolean calls_find_in_store (GListModel *list,
+                              gpointer    item,
+                              guint      *position);
+
 G_END_DECLS
 
 #endif /* CALLS__UTIL_H__ */

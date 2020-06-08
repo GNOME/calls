@@ -82,6 +82,56 @@ G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_LIST_STORE);
 
 
 static void
+delete_record_cb (GomResource      *resource,
+                  GAsyncResult     *res,
+                  CallsRecordStore *self)
+{
+  g_autoptr (GError) error = NULL;
+  gboolean ok;
+  guint id;
+
+  ok = gom_resource_delete_finish (resource,
+                                   res,
+                                   &error);
+
+  g_object_get (G_OBJECT (resource),
+                "id",
+                &id,
+                NULL);
+
+  if (!ok)
+    {
+      if (error)
+        {
+          g_warning ("Error deleting call record with id %u from database %s",
+                     id, error->message);
+          return;
+        }
+      else
+        {
+          g_warning ("Unknown error deleting call record with id %u from database",
+                     id);
+        }
+    }
+  else {
+    g_debug ("Successfully deleted call record with id %u from database",
+             id);
+  }
+
+}
+
+
+static void
+delete_call_cb (CallsCallRecord    *record,
+                CallsRecordStore   *self)
+{
+  gom_resource_delete_async (GOM_RESOURCE (record),
+                             (GAsyncReadyCallback) delete_record_cb,
+                             self);
+}
+
+
+static void
 load_calls_fetch_cb (GomResourceGroup *group,
                      GAsyncResult     *res,
                      CallsRecordStore *self)
@@ -127,6 +177,11 @@ load_calls_fetch_cb (GomResourceGroup *group,
         {
           g_date_time_unref (end);
         }
+
+      g_signal_connect (record,
+                        "call-delete",
+                        G_CALLBACK (delete_call_cb),
+                        self);
     }
 
   g_list_store_splice (G_LIST_STORE (self),

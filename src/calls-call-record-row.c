@@ -44,6 +44,13 @@ struct _CallsCallRecordRow
   GtkLabel *target;
   GtkLabel *time;
   GtkButton *button;
+  GtkPopover *popover;
+  GtkGesture *gesture;
+  GtkEventBox *event_box;
+
+  GMenu *context_menu;
+
+  GActionMap *action_map;
 
   CallsCallRecord *record;
   gulong answered_notify_handler_id;
@@ -393,6 +400,45 @@ setup_contact (CallsCallRecordRow *self)
 
 
 static void
+context_menu (GtkWidget *self,
+              GdkEvent  *event)
+{
+  gtk_popover_popup (CALLS_CALL_RECORD_ROW (self)->popover);
+}
+
+
+static gboolean
+calls_call_record_row_popup_menu (GtkWidget *self)
+{
+  context_menu (self, NULL);
+  return TRUE;
+}
+
+
+static void
+long_pressed (GtkGestureLongPress *gesture,
+              gdouble              x,
+              gdouble              y,
+              GtkWidget           *self)
+{
+  context_menu (self, NULL);
+}
+
+
+static gboolean
+calls_call_record_row_button_press_event (GtkWidget      *self,
+                                          GdkEventButton *event)
+{
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
+    {
+      context_menu (self, (GdkEvent *) event);
+      return TRUE;
+    }
+  return GTK_WIDGET_CLASS (calls_call_record_row_parent_class)->button_press_event (self, event);
+}
+
+
+static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -480,6 +526,8 @@ dispose (GObject *object)
 
   g_clear_object (&self->contact);
   g_clear_object (&self->contacts);
+  g_clear_object (&self->action_map);
+  g_clear_object (&self->gesture);
 
   calls_clear_source (&self->date_change_timeout);
   calls_clear_signal (self->record, &self->answered_notify_handler_id);
@@ -500,6 +548,9 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   object_class->constructed = constructed;
   object_class->get_property = get_property;
   object_class->dispose = dispose;
+
+  widget_class->popup_menu = calls_call_record_row_popup_menu;
+  widget_class->button_press_event = calls_call_record_row_button_press_event;
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
@@ -524,18 +575,59 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, target);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, button);
+
+  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, event_box);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, popover);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, context_menu);
 }
+
+
+static void
+delete_call_activated (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       data)
+{
+  GtkWidget *self = GTK_WIDGET (data);
+  g_signal_emit_by_name (CALLS_CALL_RECORD_ROW (self)->record, "call-delete");
+}
+
+
+static GActionEntry entries[] =
+{
+ { "delete-call", delete_call_activated, NULL, NULL, NULL},
+};
 
 
 static void
 calls_call_record_row_init (CallsCallRecordRow *self)
 {
+  GAction *act;
   gtk_widget_init_template (GTK_WIDGET (self));
 
   g_signal_connect (self->avatar,
                     "notify::text",
                     G_CALLBACK (avatar_text_changed_cb),
                     NULL);
+
+  self->action_map = G_ACTION_MAP (g_simple_action_group_new ());
+  g_action_map_add_action_entries (self->action_map,
+                                   entries,
+                                   G_N_ELEMENTS (entries),
+                                   self);
+  gtk_widget_insert_action_group (GTK_WIDGET (self),
+                                  "row-history",
+                                  G_ACTION_GROUP (self->action_map));
+
+  act = g_action_map_lookup_action (self->action_map, "delete-call");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
+
+  self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
+  gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (self->gesture), TRUE);
+  g_signal_connect (self->gesture, "pressed", G_CALLBACK (long_pressed), self);
+
+  gtk_popover_bind_model (self->popover,
+                          G_MENU_MODEL (self->context_menu),
+                          "row-history");
 }
 
 

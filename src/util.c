@@ -142,3 +142,36 @@ calls_date_time_is_same_year (GDateTime *a,
     g_date_time_get_year (a) ==
     g_date_time_get_year (b);
 }
+
+
+gboolean
+calls_find_in_store (GListModel *list,
+                     gpointer    item,
+                     guint      *position)
+{
+#if GLIB_CHECK_VERSION(2, 64, 0)
+  return g_list_store_find ((GListStore *) list,
+                            item,
+                            position);
+#else
+  guint count;
+
+  g_return_val_if_fail (G_IS_LIST_MODEL (list), FALSE);
+
+  count = g_list_model_get_n_items (list);
+
+  for (guint i = 0; i < count; i++)
+    {
+      g_autoptr (GObject) object = NULL;
+
+      object = g_list_model_get_item (list, i);
+
+      if (object == item)
+        {
+          *position = i;
+          return TRUE;
+        }
+    }
+  return FALSE;
+#endif
+}

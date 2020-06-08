@@ -102,13 +102,51 @@ header_cb (GtkListBoxRow   *row,
     }
 }
 
+static void
+delete_call_cb (CallsCallRecord    *record,
+                CallsHistoryBox    *self)
+{
+  guint position;
+  guint id;
+  gboolean ok;
+
+  g_return_if_fail (CALLS_IS_CALL_RECORD (record));
+
+  ok = calls_find_in_store (self->model,
+                      record,
+                      &position);
+
+  g_object_get (G_OBJECT (record),
+                "id",
+                &id,
+                NULL);
+
+  if (!ok)
+    {
+      g_warning ("Could not find record with id %u in model",
+                 id);
+      return;
+    }
+
+  g_list_store_remove ((GListStore *) self->model, position);
+
+  update(self);
+}
+
 
 static GtkWidget *
 create_row_cb (CallsCallRecord *record,
                CallsHistoryBox *self)
 {
-  return GTK_WIDGET (calls_call_record_row_new (record,
-                                                self->contacts));
+  GtkWidget *row_widget;
+  row_widget = GTK_WIDGET (calls_call_record_row_new (record,
+                                                      self->contacts));
+
+  g_signal_connect (record,
+                    "call-delete",
+                    G_CALLBACK (delete_call_cb),
+                    self);
+  return row_widget;
 }
 
 

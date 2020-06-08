@@ -55,6 +55,12 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+enum {
+      SIGNAL_CALL_DELETE,
+      SIGNAL_LAST_SIGNAL,
+};
+static guint signals [SIGNAL_LAST_SIGNAL];
+
 
 static void
 get_property (GObject      *object,
@@ -166,6 +172,15 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
   object_class->finalize = finalize;
   object_class->get_property = get_property;
   object_class->set_property = set_property;
+
+  signals[SIGNAL_CALL_DELETE] =
+    g_signal_new ("call-delete",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  0, NULL);
 
   gom_resource_class_set_table (resource_class, "calls");
 

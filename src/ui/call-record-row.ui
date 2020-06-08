@@ -8,94 +8,110 @@
     <property name="activatable">False</property>
     <property name="selectable">False</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkEventBox" id="event_box">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <child>
-          <object class="HdyAvatar" id="avatar">
+          <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">8</property>
-            <property name="margin_top">8</property>
-            <property name="margin_bottom">8</property>
-            <property name="size">48</property>
-            <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"></property>
-            <property name="show-initials">True</property>
-          </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="type">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">8</property>
-          </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="target">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">10</property>
-            <property name="ellipsize">middle</property>
-          </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="button">
-            <property name="visible">True</property>
-            <property name="margin_left">12</property>
-            <property name="margin_right">8</property>
-            <property name="margin_top">8</property>
-            <property name="margin_bottom">8</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="action-name">app.dial</property>
-            <style>
-              <class name="image-button"/>
-            </style>
-            <child internal-child="accessible">
-              <object class="AtkObject" id="a11y-hide-dial-pad">
-                <property name="accessible-name" translatable="yes">Call the party</property>
+            <child>
+              <object class="HdyAvatar" id="avatar">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">8</property>
+                <property name="margin_top">8</property>
+                <property name="margin_bottom">8</property>
+                <property name="size">48</property>
+                <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"></property>
+                <property name="show-initials">True</property>
               </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <object class="GtkImage">
+              <object class="GtkImage" id="type">
                 <property name="visible">True</property>
-                <property name="icon-name">call-start-symbolic</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">8</property>
               </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="target">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="ellipsize">middle</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button">
+                <property name="visible">True</property>
+                <property name="margin_left">12</property>
+                <property name="margin_right">8</property>
+                <property name="margin_top">8</property>
+                <property name="margin_bottom">8</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.dial</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="a11y-hide-dial-pad">
+                    <property name="accessible-name" translatable="yes">Call the party</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">call-start-symbolic</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack_type">end</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="time">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">8</property>
+                <property name="justify">center</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+                <attributes>
+                  <attribute name="scale" value="0.7"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="pack_type">end</property>
+                <property name="position">4</property>
+              </packing>
             </child>
           </object>
-          <packing>
-            <property name="pack_type">end</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="time">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_left">8</property>
-            <property name="justify">center</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-            <attributes>
-              <attribute name="scale" value="0.7"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-            <property name="position">4</property>
-          </packing>
         </child>
       </object>
     </child>
   </template>
+  <object class="GtkPopover" id="popover">
+    <property name="relative-to">CallsCallRecordRow</property>
+  </object>
+  <menu id="context_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Delete Call</attribute>
+        <attribute name="action">delete-call</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
