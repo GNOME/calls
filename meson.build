@@ -60,7 +60,7 @@ config_data.set('PACKAGE_URL_RAW', calls_homepage)
 
 add_project_arguments([
  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_58',
- '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_60',
+ '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_64',
 ], language: 'c')
 
 subdir('po')
