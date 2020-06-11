@@ -1,3 +1,67 @@
+calls (0.1.6) amber-phone; urgency=medium
+
+  [ Guido Günther ]
+  * debian: Add gbp.conf.
+    This makes correct taging so much simpler
+  * po: Add plugins to POTFILES.skip.  They're not meant to be translated
+  * Drop translations from property names and descriptions.
+    They're never used anywhere. (Closes: #155, #121)
+  * po: Update pot file.
+  * calls-contacts: Document lookup_phone_number.
+    This makes sure we have clear ownership rules
+  * calls-call-record-row: Ref the returned contact
+    calls_contacts_lookup_phone_number is transfer-none
+  * build: Specifify glib versions.
+    This avoids deprecation warnings due to GTimeVal used in
+    libebook-contacts.h
+  * ringer: Make more functions static
+  * ringer: Use libfeedback.
+    This triggers e.g. haptic feeback as well and can later on be used
+    for LED feedback.
+    We can drop the audio theme setting completely since feedbackd picks up
+    the global GNOME setting.
+  * tests: Disable atk bridge.
+    Otherwise this can trigger test failures. Similar to what we
+    did in libhandy.
+  * Show notification on missed calls (Closes: #153)
+
+  [ Zander Brown ]
+  * po: Add British English translation
+
+  [ Antonio Pandolfo ]
+  * po: Add Italian translation
+
+  [ Daniel Șerbănescu ]
+  * po: Add Romanian translation
+
+  [ Valéry Febvre ]
+  * po: Add French translation
+
+  [ Mohammed Sadiq ]
+  * main-window: Don’t set program-name in about dialog
+    program-name will be retrieved with g_get_application_name().
+    Let’s not do it explicitly so that there is one less string
+    to translate
+  * call-display: Use real ellipsis.
+    See https://wiki.gnome.org/Design/OS/Typography
+
+  [ Rafael Fontenelle ]
+  * Add Brazilian Portuguese translation
+
+  [ Scott Anecito ]
+  * po: Add Japanese translation
+  * po: Add ja.po to LINGUAS
+
+  [ Yuri Chornoivan ]
+  * Use an ellipsis in translation for Ukrainian
+
+  [ Evangelos Ribeiro Tzaras ]
+  * record-store: Use g_autoptr(GError) to avoid having to g_error_free
+  * Implement delete call with context menu on longpress
+    (Closes: #154)
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 11 Jun 2020 09:06:40 +0200
+
 calls (0.1.5) amber-phone; urgency=medium
 
   [ Guido Günther ]
