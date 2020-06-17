@@ -24,6 +24,7 @@
 
 #include "config.h"
 #include "calls-manager.h"
+#include "calls-contacts.h"
 #include "enum-types.h"
 
 #include <glib/gi18n.h>
@@ -40,6 +41,7 @@ struct _CallsManager
 };
 
 G_DEFINE_TYPE (CallsManager, calls_manager, G_TYPE_OBJECT);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
 
 enum {
   PROP_0,
@@ -517,4 +519,44 @@ calls_manager_set_default_origin (CallsManager *self,
     self->default_origin = g_object_ref (origin);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DEFAULT_ORIGIN]);
+}
+
+/**
+ * calls_manager_get_contact_name:
+ * @call: a #CallsCall
+ *
+ * Looks up the contact name for @call. If the lookup
+ * succeeds, the contact name will be returned. NULL if
+ * no match has been found in the contact list.
+ * If no number is associated with the @call, then
+ * a translatable string will be returned.
+ *
+ * Returns: (transfer none): The caller's name, a string representing
+ * an unknown caller or %NULL
+ */
+const gchar *
+calls_manager_get_contact_name (CallsCall *call)
+{
+  g_autoptr (EPhoneNumber) phone_number = NULL;
+  g_autoptr (GError) err = NULL;
+  const gchar *number;
+  CallsBestMatch *match;
+
+  number = calls_call_get_number (call);
+  if (!number || g_strcmp0 (number, "") == 0)
+    return _("Anonymous caller");
+
+  phone_number = e_phone_number_from_string (number, NULL, &err);
+  if (!phone_number)
+    {
+      g_warning ("Failed to convert %s to a phone number: %s", number, err->message);
+      return NULL;
+    }
+
+  match = calls_contacts_lookup_phone_number (calls_contacts_get_default (),
+                                              phone_number);
+  if (!match)
+    return NULL;
+
+  return calls_best_match_get_name (match);
 }

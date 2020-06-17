@@ -60,5 +60,6 @@ void               calls_manager_dial               (CallsManager *self,
 CallsOrigin       *calls_manager_get_default_origin (CallsManager *self);
 void               calls_manager_set_default_origin (CallsManager *self,
                                                      CallsOrigin *origin);
+const gchar       *calls_manager_get_contact_name   (CallsCall *call);
 
 G_END_DECLS

@@ -23,6 +23,7 @@
  */
 
 #include "calls-call-holder.h"
+#include "calls-manager.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -90,8 +91,8 @@ calls_call_holder_get_selector_item (CallsCallHolder *holder)
 static void
 set_call (CallsCallHolder *self, CallsCall *call)
 {
-  CallsParty *party
-    = calls_party_new (NULL, calls_call_get_number (call));
+  CallsParty *party = calls_party_new (calls_manager_get_contact_name (call),
+                                       calls_call_get_number (call));
 
   self->data = calls_call_data_new (call, party);
   g_object_unref (party);

@@ -24,7 +24,6 @@
 
 #include "calls-notifier.h"
 #include "calls-manager.h"
-#include "calls-contacts.h"
 #include "config.h"
 
 #include <glib/gi18n.h>
@@ -40,8 +39,6 @@ struct _CallsNotifier
 
 G_DEFINE_TYPE (CallsNotifier, calls_notifier, G_TYPE_OBJECT);
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
-
 static void
 notify (CallsNotifier *self, CallsCall *call)
 {
@@ -49,35 +46,15 @@ notify (CallsNotifier *self, CallsCall *call)
   g_autoptr(GNotification) notification;
   g_autofree gchar *msg = NULL;
   g_autofree gchar *ref = NULL;
-  g_autoptr(EPhoneNumber) phone_number = NULL;
-  g_autoptr(GError) err = NULL;
-  const char *number, *name;
-  CallsBestMatch *match;
+  const char *name;
 
   notification = g_notification_new (_("Missed call"));
 
-  number = calls_call_get_number (call);
-  if (!number)
-    goto done;
-
-  phone_number = e_phone_number_from_string (number, NULL, &err);
-  if (!phone_number)
-    {
-      g_warning ("Failed to convert %s to a phone number: %s", number, err->message);
-      goto done;
-    }
-
-  match = calls_contacts_lookup_phone_number (calls_contacts_get_default (), phone_number);
-  if (!match)
-    goto done;
-
-  name = calls_best_match_get_name (match);
+  name = calls_manager_get_contact_name (call);
   if (name)
     msg = g_strdup_printf (_("Missed call from <b>%s</b>"), name);
-
- done:
-  if (msg == NULL)
-    msg = g_strdup_printf (_("Missed call from unknown caller"));
+  else
+    msg = g_strdup_printf (_("Missed call from %s"), calls_call_get_number (call));
 
   g_notification_set_body (notification, msg);
   ref = g_strdup_printf ("missed-call-%s", calls_call_get_number (call) ?: "unknown");
