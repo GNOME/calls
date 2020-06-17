@@ -24,17 +24,11 @@
 
 #include "calls-notifier.h"
 #include "calls-manager.h"
+#include "calls-contacts.h"
 #include "config.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
-
-enum {
-  PROP_0,
-  PROP_CONTACTS,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsNotifier
 {
@@ -42,8 +36,6 @@ struct _CallsNotifier
 
   GListStore    *unanswered;
   GList         *notifications;
-
-  CallsContacts *contacts;
 };
 
 G_DEFINE_TYPE (CallsNotifier, calls_notifier, G_TYPE_OBJECT);
@@ -75,7 +67,7 @@ notify (CallsNotifier *self, CallsCall *call)
       goto done;
     }
 
-  match = calls_contacts_lookup_phone_number (self->contacts, phone_number);
+  match = calls_contacts_lookup_phone_number (calls_contacts_get_default (), phone_number);
   if (!match)
     goto done;
 
@@ -172,31 +164,10 @@ calls_notifier_dispose (GObject *object)
 
   g_list_store_remove_all (self->unanswered);
   g_clear_object (&self->unanswered);
-  g_clear_object (&self->contacts);
 
   G_OBJECT_CLASS (calls_notifier_parent_class)->dispose (object);
 }
 
-static void
-calls_notifier_set_property (GObject      *object,
-                             guint         property_id,
-                             const GValue *value,
-                             GParamSpec   *pspec)
-{
-  CallsNotifier *self = CALLS_NOTIFIER (object);
-
-  switch (property_id)
-    {
-      case PROP_CONTACTS:
-        g_set_object (&self->contacts,
-                      CALLS_CONTACTS (g_value_get_object (value)));
-        break;
-
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
-    }
-}
 
 static void
 calls_notifier_class_init (CallsNotifierClass *klass)
@@ -205,20 +176,10 @@ calls_notifier_class_init (CallsNotifierClass *klass)
 
   object_class->constructed = calls_notifier_constructed;
   object_class->dispose = calls_notifier_dispose;
-  object_class->set_property = calls_notifier_set_property;
-
-  props[PROP_CONTACTS] =
-    g_param_spec_object ("contacts",
-                         "Contacts",
-                         "Interface for libfolks",
-                         CALLS_TYPE_CONTACTS,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 CallsNotifier *
-calls_notifier_new (CallsContacts *contacts)
+calls_notifier_new ()
 {
-  return g_object_new (CALLS_TYPE_NOTIFIER, "contacts", contacts, NULL);
+  return g_object_new (CALLS_TYPE_NOTIFIER, NULL);
 }

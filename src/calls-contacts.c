@@ -141,9 +141,15 @@ calls_contacts_init (CallsContacts *self)
 
 
 CallsContacts *
-calls_contacts_new ()
+calls_contacts_get_default ()
 {
-  return g_object_new (CALLS_TYPE_CONTACTS, NULL);
+  static CallsContacts *instance;
+  if (instance == NULL)
+    {
+      instance = g_object_new (CALLS_TYPE_CONTACTS, NULL);
+      g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *) &instance);
+    }
+  return instance;
 }
 
 

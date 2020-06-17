@@ -26,7 +26,6 @@
 #define CALLS_HISTORY_BOX_H__
 
 #include "calls-new-call-box.h"
-#include "calls-contacts.h"
 
 #include <gtk/gtk.h>
 
@@ -39,8 +38,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack);
 
-CallsHistoryBox * calls_history_box_new (GListModel      *model,
-                                         CallsContacts   *contacts);
+CallsHistoryBox * calls_history_box_new (GListModel      *model);
 
 G_END_DECLS
 

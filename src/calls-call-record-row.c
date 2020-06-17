@@ -24,6 +24,7 @@
 
 #include "calls-call-record-row.h"
 #include "calls-best-match.h"
+#include "calls-contacts.h"
 #include "contrib/hdy-avatar.h"
 #include "util.h"
 
@@ -57,7 +58,6 @@ struct _CallsCallRecordRow
   gulong end_notify_handler_id;
   guint date_change_timeout;
 
-  CallsContacts *contacts;
   CallsBestMatch *contact;
 };
 
@@ -67,7 +67,6 @@ G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_LIST_BOX_ROW)
 enum {
   PROP_0,
   PROP_RECORD,
-  PROP_CONTACTS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -386,10 +385,9 @@ setup_contact (CallsCallRecordRow *self)
 
   // Look up the best match object
   self->contact = calls_contacts_lookup_phone_number
-    (self->contacts, phone_number);
+    (calls_contacts_get_default (), phone_number);
   g_assert (self->contact != NULL);
   g_object_ref (self->contact);
-  g_clear_object (&self->contacts);
   e_phone_number_free (phone_number);
 
   g_signal_connect_swapped (self->contact,
@@ -450,11 +448,6 @@ set_property (GObject      *object,
   case PROP_RECORD:
     g_set_object (&self->record,
                   CALLS_CALL_RECORD (g_value_get_object (value)));
-    break;
-
-  case PROP_CONTACTS:
-    g_set_object (&self->contacts,
-                  CALLS_CONTACTS (g_value_get_object (value)));
     break;
 
   default:
@@ -525,7 +518,6 @@ dispose (GObject *object)
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
 
   g_clear_object (&self->contact);
-  g_clear_object (&self->contacts);
   g_clear_object (&self->action_map);
   g_clear_object (&self->gesture);
 
@@ -558,13 +550,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
                          "The call record for this row",
                          CALLS_TYPE_CALL_RECORD,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-
-  props[PROP_CONTACTS] =
-    g_param_spec_object ("contacts",
-                         "Contacts",
-                         "Interface for libfolks",
-                         CALLS_TYPE_CONTACTS,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
@@ -632,12 +617,10 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
 
 CallsCallRecordRow *
-calls_call_record_row_new (CallsCallRecord *record,
-                           CallsContacts   *contacts)
+calls_call_record_row_new (CallsCallRecord *record)
 {
   return g_object_new (CALLS_TYPE_CALL_RECORD_ROW,
                        "record", record,
-                       "contacts", contacts,
                        NULL);
 }
 

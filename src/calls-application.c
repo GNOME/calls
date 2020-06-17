@@ -339,16 +339,15 @@ start_proper (CallsApplication  *self)
   self->record_store = calls_record_store_new ();
   g_assert (self->record_store != NULL);
 
-  self->contacts = calls_contacts_new ();
+  self->contacts = calls_contacts_get_default ();
   g_assert (self->contacts != NULL);
 
-  self->notifier = calls_notifier_new (self->contacts);
+  self->notifier = calls_notifier_new ();
   g_assert (CALLS_IS_NOTIFIER (self->notifier));
 
   self->main_window = calls_main_window_new
     (gtk_app,
-     G_LIST_MODEL (self->record_store),
-     self->contacts);
+     G_LIST_MODEL (self->record_store));
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new (gtk_app);
@@ -477,6 +476,7 @@ finalize (GObject *object)
   g_clear_object (&self->call_window);
   g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
+  g_clear_object (&self->contacts);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
 

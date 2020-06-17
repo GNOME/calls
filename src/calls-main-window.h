@@ -27,8 +27,6 @@
 
 #include <gtk/gtk.h>
 
-#include "calls-contacts.h"
-
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_MAIN_WINDOW (calls_main_window_get_type ())
@@ -36,8 +34,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, GtkApplicationWindow);
 
 CallsMainWindow *calls_main_window_new  (GtkApplication  *application,
-                                         GListModel      *record_store,
-                                         CallsContacts   *contacts);
+                                         GListModel      *record_store);
 void             calls_main_window_dial (CallsMainWindow *self,
                                          const gchar     *target);
 

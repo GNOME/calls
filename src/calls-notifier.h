@@ -25,8 +25,6 @@
 #ifndef CALLS_NOTIFIER_H__
 #define CALLS_NOTIFIER_H__
 
-#include "calls-contacts.h"
-
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -35,7 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsNotifier, calls_notifier, CALLS, NOTIFIER, GObject);
 
-CallsNotifier *calls_notifier_new (CallsContacts *contacts);
+CallsNotifier *calls_notifier_new ();
 
 G_END_DECLS
 

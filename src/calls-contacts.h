@@ -37,7 +37,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsContacts, calls_contacts, CALLS, CONTACTS, GObject);
 
-CallsContacts *      calls_contacts_new                 ();
+CallsContacts *      calls_contacts_get_default         ();
 CallsBestMatch *     calls_contacts_lookup_phone_number (CallsContacts *self,
                                                          EPhoneNumber  *number);
 
