@@ -351,10 +351,12 @@ contact_name_cb (CallsCallRecordRow *self)
       if (!g_strcmp0 (target, ""))
         {
           gtk_label_set_text (self->target, ANONYMOUS_CALLER);
+          gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
         }
       else
         {
           gtk_label_set_text (self->target, target);
+          gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
         }
     }
 }
