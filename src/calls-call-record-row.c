@@ -36,6 +36,9 @@
 #include <errno.h>
 
 
+#define ANONYMOUS_CALLER _("Anonymous caller")
+
+
 struct _CallsCallRecordRow
 {
   GtkListBoxRow parent_instance;
@@ -339,15 +342,20 @@ contact_name_cb (CallsCallRecordRow *self)
     }
   else
     {
-      gchar *target;
+      g_autofree gchar *target = NULL;
 
       g_object_get (G_OBJECT (self->record),
                     "target", &target,
                     NULL);
 
-      gtk_label_set_text (self->target, target);
-
-      g_free (target);
+      if (!g_strcmp0 (target, ""))
+        {
+          gtk_label_set_text (self->target, ANONYMOUS_CALLER);
+        }
+      else
+        {
+          gtk_label_set_text (self->target, target);
+        }
     }
 }
 
@@ -355,7 +363,16 @@ static void
 avatar_text_changed_cb (HdyAvatar *avatar)
 {
   const gchar *text = hdy_avatar_get_text (avatar);
-  hdy_avatar_set_show_initials (avatar, !g_ascii_isdigit (*text) && !strchr("#*+", *text));
+  gboolean show_initials = TRUE;
+
+  if (strchr("#*+", *text)
+      || g_ascii_isdigit (*text)
+      || !g_strcmp0 (text, ANONYMOUS_CALLER))
+    {
+      show_initials = FALSE;
+    }
+
+  hdy_avatar_set_show_initials (avatar, show_initials);
 }
 
 
