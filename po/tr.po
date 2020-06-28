@@ -1,0 +1,312 @@
+# Turkish translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-06-11 15:24+0000\n"
+"PO-Revision-Date: 2020-06-25 04:10+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.3\n"
+
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Aramalar"
+
+#: src/calls-application.c:519
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Arama Sağlayıcı için kullanılacak eklentinin adı"
+
+#: src/calls-application.c:520
+msgid "PLUGIN"
+msgstr "EKLENTİ"
+
+#: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Ana ekranın başlangıçta sunulup sunulmayacağı"
+
+#: src/calls-application.c:531
+msgid "Dial a number"
+msgstr "Numara çevir"
+
+#: src/calls-application.c:532
+msgid "NUMBER"
+msgstr "NUMARA"
+
+#: src/calls-call-display.c:246
+msgid "Calling…"
+msgstr "Aranıyor…"
+
+#: src/calls-call-record-row.c:110
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"dün"
+
+#: src/calls-main-window.c:117
+msgid "translator-credits"
+msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
+
+#: src/calls-main-window.c:180
+msgid "Can't place calls: No SIM card"
+msgstr "Aranamıyor: SIM kartı yok"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No backend service"
+msgstr "Aranamıyor: Arkayüz hizmeti yok"
+
+#: src/calls-main-window.c:189
+msgid "Can't place calls: No plugin"
+msgstr "Aranamıyor: Eklenti yok"
+
+#: src/calls-main-window.c:217 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Tuş Takımı"
+
+#: src/calls-main-window.c:227
+msgid "Recent"
+msgstr "Son"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Gelen telefon araması"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Sessiz"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Hoparlör"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Arama ekle"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Beklet"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Kapat"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Yanıtla"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Tuş takımını gizle"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Tarafı ara"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "Aramayı _Sil"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+901234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Beklemede"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Bu arama şifrelenmedi"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Bu arama şifrelendi"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Son Aranan Yok"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Son Aramalar"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Yeni arama…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menü"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Aramalar Hakkında"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Modem bulunamadı"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Kişiler"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Tuşla"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Numarayı sil"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Yeni Arama"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Geri"
+
+#~ msgid "View"
+#~ msgstr "Görünüm"
+
+#~ msgid "The CallsBestMatchView to monitor"
+#~ msgstr "İzlenecek CallsBestMatchView"
+
+#~ msgid "Name"
+#~ msgstr "Ad"
+
+#~ msgid "The display name of the best match"
+#~ msgstr "En iyi uyuşmanın görüntüleme adı"
+
+#~ msgid "Inbound"
+#~ msgstr "Gelen"
+
+#~ msgid "Whether the call is inbound"
+#~ msgstr "Aramanın gelen arama olup olmaması"
+
+#~ msgid "Number"
+#~ msgstr "Numara"
+
+#~ msgid "The number the call is connected to if known"
+#~ msgstr "Eğer biliniyorsa, aramanın bağlı olduğu numara"
+
+#~ msgid ""
+#~ "The name of the party the call is connected to, if the network provides it"
+#~ msgstr "Eğer ağ sağlıyorsa, aramanın bağlı olduğu tarafın adı"
+
+#~ msgid "State"
+#~ msgstr "Durum"
+
+#~ msgid "The current state of the call"
+#~ msgstr "Aramanın geçerli durumu"
+
+#, fuzzy
+#~ msgid "Call"
+#~ msgstr "Ara"
+
+#~ msgid "The call"
+#~ msgstr "Arama"
+
+#~ msgid "Party"
+#~ msgstr "Taraf"
+
+#~ msgid "The party participating in the call"
+#~ msgstr "Aramaya katılan taraf"
+
+#~ msgid "Call data"
+#~ msgstr "Arama verisi"
+
+#~ msgid "The call to hold"
+#~ msgstr "Bekletilen arama"
+
+#~ msgid "ID"
+#~ msgstr "Kimlik"
+
+#~ msgid "The row ID"
+#~ msgstr "Satır kimliği"
+
+#~ msgid "Target"
+#~ msgstr "Hedef"
+
+#~ msgid "The PTSN phone number or other address of the call"
+#~ msgstr "Aramanın PTSN telefon numarası veya diğer adresi"
+
+#~ msgid "Whether the call was an inbound call"
+#~ msgstr "Aramanın gelen arama olup olmadığı"
+
+#~ msgid "Start"
+#~ msgstr "Başlama"
+
+#~ msgid "Time stamp of the start of the call"
+#~ msgstr "Arama başlangıcının zaman damgası"
+
+#~ msgid "Answered"
+#~ msgstr "Yanıtlama"
+
+#~ msgid "Time stamp of when the call was answered"
+#~ msgstr "Arama yanıtlanışının zaman damgası"
+
+#~ msgid "End"
+#~ msgstr "Bitme"
+
+#~ msgid "Time stamp of the end of the call"
+#~ msgstr "Arama bitişinin zaman damgası"
+
+#~ msgid "Record"
+#~ msgstr "Kayıt"
+
+#~ msgid "The call record for this row"
+#~ msgstr "Bu satır için arama kaydı"
+
+#~ msgid "Interface for libfolks"
+#~ msgstr "libfolks için arayüz"
+
+#~ msgid "Call holder"
+#~ msgstr "Arama bekleten"
+
+#~ msgid "The holder for this call"
+#~ msgstr "Bu aramayı bekleten"
+
+#~ msgid "Encrypted"
+#~ msgstr "Şifrelendi"
+
+#~ msgid "model"
+#~ msgstr "model"
+
+#~ msgid "The data store containing call records"
+#~ msgstr "Arama kayıtlarını içeren veri deposu"
+
+#~ msgid "Record store"
+#~ msgstr "Kayıt deposu"
+
+#~ msgid "The store of call records"
+#~ msgstr "Arama kayıtlarının deposu"
+
+#~ msgid "The party's name"
+#~ msgstr "Tarafın adı"
+
+#~ msgid "The party's telephone number"
+#~ msgstr "Tarafın telefon numarası"
+
+#~ msgid "Status"
+#~ msgstr "Durum"
+
+#~ msgid "A text string describing the status for display to the user"
+#~ msgstr "Kullanıcıya gösterilecek durumu tanımlayan metin dizgesi"
+
+#~ msgid "Incoming call"
+#~ msgstr "Gelen arama"
