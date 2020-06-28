@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-06-11 15:24+0000\n"
-"PO-Revision-Date: 2020-06-20 08:39+0300\n"
+"POT-Creation-Date: 2020-06-28 03:25+0000\n"
+"PO-Revision-Date: 2020-06-28 09:05+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -47,7 +47,7 @@ msgstr "НОМЕР"
 msgid "Calling…"
 msgstr "Виклик…"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:109
 #, c-format
 msgid ""
 "%s\n"
@@ -56,29 +56,33 @@ msgstr ""
 "%s\n"
 "вчора"
 
-#: src/calls-main-window.c:117
+#: src/calls-main-window.c:115
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/calls-main-window.c:180
+#: src/calls-main-window.c:173
 msgid "Can't place calls: No SIM card"
-msgstr "Неможливо розмістити дзвінки: немає SIM-картки"
+msgstr "Не вдалося розмістити дзвінки: немає SIM-картки"
 
-#: src/calls-main-window.c:185
+#: src/calls-main-window.c:178
 msgid "Can't place calls: No backend service"
 msgstr "Не вдалося розмістити дзвінки: немає служби обробки"
 
-#: src/calls-main-window.c:189
+#: src/calls-main-window.c:182
 msgid "Can't place calls: No plugin"
 msgstr "Не вдалося розмістити дзвінки: немає додатка"
 
-#: src/calls-main-window.c:217 src/ui/call-display.ui:270
+#: src/calls-main-window.c:210 src/ui/call-display.ui:270
 msgid "Dial Pad"
 msgstr "Панель набору"
 
-#: src/calls-main-window.c:227
+#: src/calls-main-window.c:219
 msgid "Recent"
 msgstr "Нещодавні"
+
+#: src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Анонімний дзвінок"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
