@@ -1,3 +1,20 @@
+calls (0.1.7) amber-phone; urgency=medium
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Make CallsContacts a singleton.
+  * Implement contact name lookup for call display
+
+  [ Emin Tufan Çetin ]
+  * po: Add Turkish translation
+
+  [ Guido Günther ]
+  * calls-call-record-row: Print 'Anonymous caller' on empty numbers.
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 02 Jul 2020 12:25:23 +0200
+
 calls (0.1.6) amber-phone; urgency=medium
 
   [ Guido Günther ]
