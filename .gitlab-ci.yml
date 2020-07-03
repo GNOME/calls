@@ -33,6 +33,9 @@ build:native:
   script:
     - meson --werror . _build
     - ninja -C _build
+  except:
+    variables:
+      - $PKG_ONLY == "1"
 
 test:native:
   <<: *tags
@@ -43,6 +46,9 @@ test:native:
   script:
     - export LC_ALL=C.UTF-8
     - xvfb-run ninja -C _build test
+  except:
+    variables:
+      - $PKG_ONLY == "1"
 
 package:deb-debian-buster:
   extends: .l5-build-debian-package
