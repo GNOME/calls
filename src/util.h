@@ -137,6 +137,7 @@ gboolean calls_date_time_is_yesterday (GDateTime *now,
                                        GDateTime *t);
 gboolean calls_date_time_is_same_year (GDateTime *a,
                                        GDateTime *b);
+gboolean calls_number_is_ussd         (const char *number);
 
 gboolean calls_find_in_store (GListModel *list,
                               gpointer    item,

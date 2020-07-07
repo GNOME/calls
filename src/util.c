@@ -145,6 +145,29 @@ calls_date_time_is_same_year (GDateTime *a,
 
 
 gboolean
+calls_number_is_ussd (const char *number)
+{
+  /* USSD numbers start with *, #, **, ## or *# and are finished by # */
+  if (!number ||
+      (*number != '*' && *number != '#'))
+    return FALSE;
+
+  number++;
+
+  if (*number == '#')
+    number++;
+
+  while (g_ascii_isdigit (*number) || *number == '*')
+    number++;
+
+  if (g_str_equal (number, "#"))
+    return TRUE;
+
+  return FALSE;
+}
+
+
+gboolean
 calls_find_in_store (GListModel *list,
                      gpointer    item,
                      guint      *position)
