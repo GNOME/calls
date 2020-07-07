@@ -23,6 +23,7 @@
  */
 
 #include "config.h"
+#include "calls-ussd.h"
 #include "calls-manager.h"
 #include "calls-contacts.h"
 #include "enum-types.h"
@@ -61,6 +62,9 @@ enum {
   /* TODO: currently this event isn't emitted since the plugins don't give use
    * a usable error or error message. */
   SIGNAL_ERROR,
+  USSD_ADDED,
+  USSD_CANCELLED,
+  USSD_STATE_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
@@ -152,6 +156,38 @@ remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *or
 }
 
 static void
+ussd_added_cb (CallsManager *self,
+               char         *response,
+               CallsUssd    *ussd)
+{
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  g_signal_emit (self, signals[USSD_ADDED], 0, ussd, response);
+}
+
+static void
+ussd_cancelled_cb (CallsManager *self,
+                   CallsUssd    *ussd,
+                   char         *response)
+{
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  g_signal_emit (self, signals[USSD_CANCELLED], 0, ussd);
+}
+
+static void
+ussd_state_changed_cb (CallsManager *self,
+                       CallsUssd    *ussd)
+{
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  g_signal_emit (self, signals[USSD_STATE_CHANGED], 0, ussd);
+}
+
+static void
 add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 {
   g_autoptr (GList) calls = NULL;
@@ -162,6 +198,13 @@ add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
+
+  if (CALLS_IS_USSD (origin))
+    {
+      g_signal_connect_swapped (origin, "ussd-added", G_CALLBACK (ussd_added_cb), self);
+      g_signal_connect_swapped (origin, "ussd-cancelled", G_CALLBACK (ussd_cancelled_cb), self);
+      g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
+    }
 
   for (c = calls; c != NULL; c = c->next)
     {
@@ -379,6 +422,37 @@ calls_manager_class_init (CallsManagerClass *klass)
                  G_TYPE_NONE,
                  1,
                  G_TYPE_STRING);
+
+  signals[USSD_ADDED] =
+    g_signal_new ("ussd-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  2,
+                  CALLS_TYPE_USSD,
+                  G_TYPE_STRING);
+
+  signals[USSD_CANCELLED] =
+    g_signal_new ("ussd-cancelled",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  CALLS_TYPE_USSD);
+
+  signals[USSD_STATE_CHANGED] =
+    g_signal_new ("ussd-state-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  CALLS_TYPE_USSD);
 
   props[PROP_PROVIDER] = g_param_spec_string ("provider",
                                               "provider", 
