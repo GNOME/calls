@@ -24,6 +24,7 @@
 
 #include "calls-main-window.h"
 #include "calls-origin.h"
+#include "calls-ussd.h"
 #include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
@@ -53,6 +54,16 @@ struct _CallsMainWindow
   GtkLabel *permanent_error_label;
 
   CallsNewCallBox *new_call;
+
+  GtkDialog  *ussd_dialog;
+  GtkStack   *ussd_stack;
+  GtkSpinner *ussd_spinner;
+  GtkBox     *ussd_content;
+  GtkLabel   *ussd_label;
+  GtkEntry   *ussd_entry;
+  GtkButton  *ussd_close_button;
+  GtkButton  *ussd_cancel_button;
+  GtkButton  *ussd_reply_button;
 };
 
 G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -120,6 +131,158 @@ static const GActionEntry window_entries [] =
 
 
 static void
+window_update_ussd_state (CallsMainWindow *self,
+                          CallsUssd       *ussd)
+{
+  CallsUssdState state;
+
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  state = calls_ussd_get_state (ussd);
+
+  /* If state changed in an active USSD session, don't update */
+  if (state == CALLS_USSD_STATE_ACTIVE &&
+      gtk_widget_get_visible (GTK_WIDGET (self->ussd_reply_button)))
+    return;
+
+  gtk_widget_set_visible (GTK_WIDGET (self->ussd_reply_button),
+                          state == CALLS_USSD_STATE_USER_RESPONSE);
+  gtk_widget_set_visible (GTK_WIDGET (self->ussd_entry),
+                          state == CALLS_USSD_STATE_USER_RESPONSE);
+
+  if (state == CALLS_USSD_STATE_USER_RESPONSE ||
+      state == CALLS_USSD_STATE_ACTIVE)
+    gtk_widget_show (GTK_WIDGET (self->ussd_cancel_button));
+  else
+    gtk_widget_show (GTK_WIDGET (self->ussd_close_button));
+}
+
+static void
+window_ussd_added_cb (CallsMainWindow *self,
+                      CallsUssd       *ussd,
+                      char            *response)
+{
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  if (!response || !*response)
+    return;
+
+  gtk_label_set_label (self->ussd_label, response);
+  g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
+                          g_object_ref (ussd), g_object_unref);
+  window_update_ussd_state (self, ussd);
+  gtk_window_present (GTK_WINDOW (self->ussd_dialog));
+}
+
+static void
+window_ussd_cancel_clicked_cb (CallsMainWindow *self)
+{
+  CallsUssd *ussd;
+
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+
+  ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
+
+  if (ussd)
+    calls_ussd_cancel_async (ussd, NULL, NULL, NULL);
+
+  gtk_window_close (GTK_WINDOW (self->ussd_dialog));
+}
+
+static void
+window_ussd_entry_changed_cb (CallsMainWindow *self,
+                              GtkEntry        *entry)
+{
+  const char *text;
+  gboolean allow_send;
+
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+  g_assert (GTK_IS_ENTRY (entry));
+
+  text = gtk_entry_get_text (entry);
+  allow_send = text && *text;
+
+  gtk_widget_set_sensitive (GTK_WIDGET (self->ussd_reply_button), allow_send);
+}
+
+static void
+window_ussd_respond_cb (GObject      *object,
+                        GAsyncResult *result,
+                        gpointer      user_data)
+{
+  CallsMainWindow *self = user_data;
+  g_autofree char *response = NULL;
+  g_autoptr(GError) error = NULL;
+  CallsUssd *ussd;
+
+  ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
+  response = calls_ussd_respond_finish (ussd, result, &error);
+
+  if (error)
+    {
+      gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+      g_warning ("USSD Error: %s", error->message);
+      return;
+    }
+
+  if (response && *response)
+    {
+      window_update_ussd_state (self, ussd);
+      gtk_label_set_text (self->ussd_label, response);
+    }
+
+  gtk_spinner_stop (self->ussd_spinner);
+  gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_content));
+}
+
+static void
+window_ussd_reply_clicked_cb (CallsMainWindow *self)
+{
+  CallsUssd *ussd;
+  g_autofree char *response = NULL;
+
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+
+  ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
+  g_assert (CALLS_IS_USSD (ussd));
+
+  response = g_strdup (gtk_entry_get_text (self->ussd_entry));
+  gtk_entry_set_text (self->ussd_entry, "");
+  calls_ussd_respond_async (ussd, response, NULL,
+                            window_ussd_respond_cb, self);
+}
+
+static void
+main_window_ussd_send_cb (GObject      *object,
+                          GAsyncResult *result,
+                          gpointer      user_data)
+{
+  CallsMainWindow *self = user_data;
+  g_autofree char *response = NULL;
+  g_autoptr(GError) error = NULL;
+  CallsUssd *ussd;
+
+  response = calls_new_call_box_send_ussd_finish (self->new_call, result, &error);
+  ussd = g_task_get_task_data (G_TASK (result));
+
+  if (error)
+    {
+      gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+      g_warning ("USSD Error: %s", error->message);
+      return;
+    }
+
+  g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
+                          g_object_ref (ussd), g_object_unref);
+  window_update_ussd_state (self, ussd);
+  gtk_label_set_text (self->ussd_label, response);
+  gtk_spinner_stop (self->ussd_spinner);
+  gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_content));
+}
+
+static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -184,6 +347,16 @@ constructed (GObject *object)
                             "error",
                             G_CALLBACK (calls_in_app_notification_show),
                             self->in_app_notification);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "ussd-added",
+                            G_CALLBACK (window_ussd_added_cb),
+                            self);
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "ussd-state-changed",
+                            G_CALLBACK (window_update_ussd_state),
+                            self);
+  gtk_window_set_transient_for (GTK_WINDOW (self->ussd_dialog), GTK_WINDOW (self));
 
   // Add new call box
   self->new_call = calls_new_call_box_new ();
@@ -283,6 +456,20 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_label);
+
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_dialog);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_stack);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_spinner);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_content);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_entry);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_close_button);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_cancel_button);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_reply_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, window_ussd_cancel_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, window_ussd_entry_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, window_ussd_reply_clicked_cb);
 }
 
 
@@ -311,5 +498,20 @@ void
 calls_main_window_dial (CallsMainWindow *self,
                         const gchar     *target)
 {
-  calls_new_call_box_dial (self->new_call, target);
+  if (calls_number_is_ussd (target))
+    {
+      gtk_widget_hide (GTK_WIDGET (self->ussd_cancel_button));
+      gtk_widget_hide (GTK_WIDGET (self->ussd_reply_button));
+      gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_spinner));
+      gtk_spinner_start (self->ussd_spinner);
+
+      calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
+                                          main_window_ussd_send_cb, self);
+
+      gtk_window_present (GTK_WINDOW (self->ussd_dialog));
+    }
+  else
+    {
+      calls_new_call_box_dial (self->new_call, target);
+    }
 }
