@@ -36,6 +36,14 @@ G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, 
 CallsNewCallBox * calls_new_call_box_new  (void);
 void              calls_new_call_box_dial (CallsNewCallBox *self,
                                            const gchar     *target);
+void              calls_new_call_box_send_ussd_async  (CallsNewCallBox     *self,
+                                                       const char          *target,
+                                                       GCancellable        *cancellable,
+                                                       GAsyncReadyCallback  callback,
+                                                       gpointer             user_data);
+char             *calls_new_call_box_send_ussd_finish (CallsNewCallBox     *self,
+                                                       GAsyncResult        *result,
+                                                       GError             **error);
 
 G_END_DECLS
 

@@ -23,6 +23,8 @@
  */
 
 #include "calls-new-call-box.h"
+#include "calls-ussd.h"
+#include "calls-main-window.h"
 #include "calls-manager.h"
 
 #include <glib/gi18n.h>
@@ -81,14 +83,46 @@ backspace_clicked_cb (CallsNewCallBox *self)
   g_signal_emit_by_name (entry, "backspace", NULL);
 }
 
+static void
+ussd_send_cb (GObject      *object,
+              GAsyncResult *result,
+              gpointer      user_data)
+{
+  CallsNewCallBox *self;
+  CallsUssd *ussd = (CallsUssd *)object;
+  g_autoptr(GTask) task = user_data;
+  GError *error = NULL;
+  char *response;
+
+  g_assert (G_IS_TASK (task));
+  self = g_task_get_source_object (task);
+
+  g_assert (CALLS_IS_NEW_CALL_BOX (self));
+  g_assert (CALLS_IS_USSD (ussd));
+
+  response = calls_ussd_initiate_finish (ussd, result, &error);
+  g_task_set_task_data (task, g_object_ref (ussd), g_object_unref);
+
+  if (error)
+    g_task_return_error (task, error);
+  else
+    g_task_return_pointer (task, response, g_free);
+}
 
 static void
 dial_clicked_cb (CallsNewCallBox *self)
 {
   GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
-  calls_new_call_box_dial
-    (self,
-     gtk_entry_get_text (GTK_ENTRY (entry)));
+  GtkWidget *window;
+  const char *text;
+
+  window = gtk_widget_get_toplevel (GTK_WIDGET (self));
+  text = gtk_entry_get_text (entry);
+
+  if (CALLS_IS_MAIN_WINDOW (window))
+    calls_main_window_dial (CALLS_MAIN_WINDOW (window), text);
+  else
+    calls_new_call_box_dial (self, text);
 }
 
 
@@ -308,4 +342,55 @@ calls_new_call_box_dial (CallsNewCallBox *self,
 
   calls_origin_dial (origin, target);
   g_object_unref (origin);
+}
+
+void
+calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
+                                    const char          *target,
+                                    GCancellable        *cancellable,
+                                    GAsyncReadyCallback  callback,
+                                    gpointer             user_data)
+{
+  g_autoptr(CallsOrigin) origin = NULL;
+  g_autoptr(GTask) task = NULL;
+  GtkEntry *entry;
+
+  g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
+  g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
+  g_return_if_fail (target && *target);
+
+  origin = get_origin (self);
+
+  task = g_task_new (self, cancellable, callback, user_data);
+
+  if (!CALLS_IS_USSD (origin))
+    {
+      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                               "No origin with USSD available");
+      return;
+    }
+
+  if (!calls_number_is_ussd (target))
+    {
+      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                               "%s is not a valid USSD code", target);
+      return;
+    }
+
+  calls_ussd_initiate_async (CALLS_USSD (origin), target, cancellable,
+                             ussd_send_cb, g_steal_pointer (&task));
+
+  entry = hdy_keypad_get_entry (self->keypad);
+  gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
+}
+
+char *
+calls_new_call_box_send_ussd_finish (CallsNewCallBox *self,
+                                     GAsyncResult    *result,
+                                     GError          **error)
+{
+  g_return_val_if_fail (CALLS_IS_NEW_CALL_BOX (self), NULL);
+  g_return_val_if_fail (G_IS_TASK (result), NULL);
+
+  return g_task_propagate_pointer (G_TASK (result), error);
 }
