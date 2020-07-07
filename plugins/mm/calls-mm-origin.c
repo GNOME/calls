@@ -24,6 +24,7 @@
 
 #include "calls-mm-origin.h"
 #include "calls-origin.h"
+#include "calls-ussd.h"
 #include "calls-mm-call.h"
 #include "calls-message-source.h"
 
@@ -35,16 +36,28 @@ struct _CallsMMOrigin
   GObject parent_instance;
   MMObject *mm_obj;
   MMModemVoice *voice;
+  MMModem3gppUssd *ussd;
+
+  /* XXX: These should be used only for pointer comparison,
+   * The content should never be used as it might be
+   * pointing to a freed location */
+  char *last_ussd_request;
+  char *last_ussd_response;
+
+  gulong           ussd_handle_id;
   gchar *name;
   GHashTable *calls;
 };
 
 static void calls_mm_origin_message_source_interface_init (CallsOriginInterface *iface);
 static void calls_mm_origin_origin_interface_init (CallsOriginInterface *iface);
+static void calls_mm_origin_ussd_interface_init (CallsUssdInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (CallsMMOrigin, calls_mm_origin, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
                                                 calls_mm_origin_message_source_interface_init)
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_USSD,
+                                                calls_mm_origin_ussd_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_ORIGIN,
                                                 calls_mm_origin_origin_interface_init))
 
@@ -55,6 +68,231 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+
+static void
+ussd_initiate_cb (GObject      *object,
+                  GAsyncResult *result,
+                  gpointer      user_data)
+{
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
+  g_autoptr(GTask) task = user_data;
+  CallsMMOrigin *self = user_data;
+  char *response = NULL;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+  self = g_task_get_source_object (task);
+
+  g_assert (MM_IS_MODEM_3GPP_USSD (ussd));
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+
+  response = mm_modem_3gpp_ussd_initiate_finish (ussd, result, &error);
+
+  if (error)
+    g_task_return_error (task, error);
+  else
+    g_task_return_pointer (task, response, g_free);
+}
+
+static void
+ussd_reinitiate_cb (GObject      *object,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  CallsUssd *ussd = (CallsUssd *)object;
+  g_autoptr(GTask) task = user_data;
+  CallsMMOrigin *self = user_data;
+  GCancellable *cancellable;
+  GError *error = NULL;
+  const char *command;
+
+  g_assert (G_IS_TASK (task));
+  self = g_task_get_source_object (task);
+
+  g_assert (CALLS_IS_USSD (ussd));
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+
+  calls_ussd_cancel_finish (ussd, result, &error);
+  cancellable = g_task_get_cancellable (task);
+  command = g_task_get_task_data (task);
+
+  if (error)
+    g_task_return_error (task, error);
+  else
+    mm_modem_3gpp_ussd_initiate (self->ussd, command, cancellable,
+                                 ussd_initiate_cb, g_steal_pointer (&task));
+}
+
+static void
+ussd_respond_cb (GObject      *object,
+                 GAsyncResult *result,
+                 gpointer      user_data)
+{
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
+  CallsMMOrigin *self;
+  g_autoptr(GTask) task = user_data;
+  char *response = NULL;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+  self = g_task_get_source_object (task);
+
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+  g_assert (MM_IS_MODEM_3GPP_USSD (ussd));
+
+  response = mm_modem_3gpp_ussd_respond_finish (ussd, result, &error);
+
+  if (error)
+    g_task_return_error (task, error);
+  else
+    g_task_return_pointer (task, response, g_free);
+}
+
+static void
+ussd_cancel_cb (GObject      *object,
+                GAsyncResult *result,
+                gpointer      user_data)
+{
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
+  CallsMMOrigin *self;
+  g_autoptr(GTask) task = user_data;
+  GError *error = NULL;
+  gboolean response;
+
+  g_assert (G_IS_TASK (task));
+  self = g_task_get_source_object (task);
+
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+  g_assert (MM_IS_MODEM_3GPP_USSD (ussd));
+
+  response = mm_modem_3gpp_ussd_cancel_finish (ussd, result, &error);
+
+  if (error)
+    g_task_return_error (task, error);
+  else
+    g_task_return_boolean (task, response);
+}
+
+static CallsUssdState
+calls_mm_ussd_get_state (CallsUssd *ussd)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
+
+  if (!self->ussd)
+    return CALLS_USSD_STATE_UNKNOWN;
+
+  return mm_modem_3gpp_ussd_get_state (self->ussd);
+}
+
+static void
+calls_mm_ussd_initiate_async (CallsUssd           *ussd,
+                              const char          *command,
+                              GCancellable        *cancellable,
+                              GAsyncReadyCallback  callback,
+                              gpointer             user_data)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
+  g_autoptr(GTask) task = NULL;
+  CallsUssdState state;
+
+  g_return_if_fail (CALLS_IS_USSD (ussd));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+
+  if (!self->ussd)
+    {
+      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_NOT_FOUND,
+                               "No USSD interface found");
+      return;
+    }
+
+  if (!command || !*command)
+    {
+      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                               "USSD command empty");
+      return;
+    }
+
+  state = calls_ussd_get_state (CALLS_USSD (self));
+  g_task_set_task_data (task, g_strdup (command), g_free);
+
+  if (state == CALLS_USSD_STATE_ACTIVE ||
+      state == CALLS_USSD_STATE_USER_RESPONSE)
+    calls_ussd_cancel_async (CALLS_USSD (self), cancellable,
+                             ussd_reinitiate_cb, g_steal_pointer (&task));
+  else
+    mm_modem_3gpp_ussd_initiate (self->ussd, command, cancellable,
+                                 ussd_initiate_cb, g_steal_pointer (&task));
+}
+
+static char *
+calls_mm_ussd_initiate_finish (CallsUssd     *ussd,
+                               GAsyncResult  *result,
+                               GError       **error)
+{
+  g_return_val_if_fail (CALLS_IS_USSD (ussd), NULL);
+  g_return_val_if_fail (G_IS_TASK (result), NULL);
+
+
+  return g_task_propagate_pointer (G_TASK (result), error);
+}
+
+static void
+calls_mm_ussd_respond_async (CallsUssd           *ussd,
+                             const char          *response,
+                             GCancellable        *cancellable,
+                             GAsyncReadyCallback  callback,
+                             gpointer             user_data)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
+  GTask *task;
+
+  g_return_if_fail (CALLS_IS_USSD (ussd));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+  mm_modem_3gpp_ussd_respond (self->ussd, response, cancellable,
+                              ussd_respond_cb, task);
+}
+
+static char *
+calls_mm_ussd_respond_finish (CallsUssd     *ussd,
+                              GAsyncResult  *result,
+                              GError       **error)
+{
+  g_return_val_if_fail (CALLS_IS_USSD (ussd), NULL);
+  g_return_val_if_fail (G_IS_TASK (result), NULL);
+
+
+  return g_task_propagate_pointer (G_TASK (result), error);
+}
+
+static void
+calls_mm_ussd_cancel_async (CallsUssd           *ussd,
+                            GCancellable        *cancellable,
+                            GAsyncReadyCallback  callback,
+                            gpointer             user_data)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
+  GTask *task;
+
+  g_return_if_fail (CALLS_IS_USSD (ussd));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+  mm_modem_3gpp_ussd_cancel (self->ussd, cancellable,
+                             ussd_cancel_cb, task);
+}
+
+static gboolean
+calls_mm_ussd_cancel_finish (CallsUssd     *ussd,
+                             GAsyncResult  *result,
+                             GError       **error)
+{
+  g_return_val_if_fail (CALLS_IS_USSD (ussd), FALSE);
+  g_return_val_if_fail (G_IS_TASK (result), FALSE);
+
+
+  return g_task_propagate_boolean (G_TASK (result), error);
+}
 
 static const gchar *
 get_name (CallsOrigin *origin)
@@ -428,12 +666,83 @@ modem_get_name (MMModem *modem)
 
 
 static void
+ussd_properties_changed_cb (CallsMMOrigin *self,
+                            GVariant      *properties)
+{
+  const char *response;
+  GVariant *value;
+  CallsUssdState state;
+
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+
+  state = calls_ussd_get_state (CALLS_USSD (self));
+
+  value = g_variant_lookup_value (properties, "State", NULL);
+  if (value)
+    g_signal_emit_by_name (self, "ussd-state-changed");
+  g_clear_pointer (&value, g_variant_unref);
+
+  /* XXX: We check for user state only because the NetworkRequest
+   * dbus property change isn't regularly emitted */
+  if (state == CALLS_USSD_STATE_USER_RESPONSE ||
+      (value = g_variant_lookup_value (properties, "NetworkRequest", NULL)))
+    {
+      response = mm_modem_3gpp_ussd_get_network_request (self->ussd);
+
+      if (response && *response && response != self->last_ussd_request)
+        g_signal_emit_by_name (self, "ussd-added", response);
+
+      if (response && *response)
+        self->last_ussd_request = (char *)response;
+      g_clear_pointer (&value, g_variant_unref);
+    }
+
+  if (state != CALLS_USSD_STATE_USER_RESPONSE &&
+      (value = g_variant_lookup_value (properties, "NetworkNotification", NULL)))
+    {
+      response = mm_modem_3gpp_ussd_get_network_notification (self->ussd);
+
+      if (response && *response && response != self->last_ussd_response)
+        g_signal_emit_by_name (self, "ussd-added", response);
+
+      if (response && *response)
+        self->last_ussd_response = (char *)response;
+      g_clear_pointer (&value, g_variant_unref);
+    }
+}
+
+static void
+call_mm_ussd_changed_cb (CallsMMOrigin *self)
+{
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+
+  if (self->ussd_handle_id)
+    g_signal_handler_disconnect (self, self->ussd_handle_id);
+
+  self->ussd_handle_id = 0;
+
+  g_clear_object (&self->ussd);
+  self->ussd = mm_object_get_modem_3gpp_ussd (self->mm_obj);
+
+  /* XXX: We hook to dbus properties changed because the regular signal emission is inconsistent  */
+  if (self->ussd)
+    self->ussd_handle_id = g_signal_connect_object (self->ussd, "g-properties-changed",
+                                                    G_CALLBACK (ussd_properties_changed_cb), self,
+                                                    G_CONNECT_SWAPPED);
+}
+
+static void
 constructed (GObject *object)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
   MmGdbusModemVoice *gdbus_voice;
 
   self->name = modem_get_name (mm_object_get_modem (self->mm_obj));
+
+  g_signal_connect_object (self->mm_obj, "notify::modem3gpp-ussd",
+                           G_CALLBACK (call_mm_ussd_changed_cb), self,
+                           G_CONNECT_SWAPPED);
+  call_mm_ussd_changed_cb (self);
 
   self->voice = mm_object_get_modem_voice (self->mm_obj);
   g_assert (self->voice != NULL);
@@ -460,6 +769,7 @@ dispose (GObject *object)
 
   remove_calls (self, NULL);
   g_clear_object (&self->mm_obj);
+  g_clear_object (&self->ussd);
 
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->dispose (object);
 }
@@ -501,6 +811,19 @@ calls_mm_origin_class_init (CallsMMOriginClass *klass)
 static void
 calls_mm_origin_message_source_interface_init (CallsOriginInterface *iface)
 {
+}
+
+
+static void
+calls_mm_origin_ussd_interface_init (CallsUssdInterface *iface)
+{
+  iface->get_state = calls_mm_ussd_get_state;
+  iface->initiate_async  = calls_mm_ussd_initiate_async;
+  iface->initiate_finish = calls_mm_ussd_initiate_finish;
+  iface->respond_async   = calls_mm_ussd_respond_async;
+  iface->respond_finish  = calls_mm_ussd_respond_finish;
+  iface->cancel_async    = calls_mm_ussd_cancel_async;
+  iface->cancel_finish   = calls_mm_ussd_cancel_finish;
 }
 
 
