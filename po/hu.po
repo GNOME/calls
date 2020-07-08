@@ -1,0 +1,185 @@
+# Hungarian translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Balázs Meskó <mesko.balazs@fsf.hu>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-07-06 03:24+0000\n"
+"PO-Revision-Date: 2020-07-08 13:04+0200\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
+"Language-Team: Hungarian <gnome-hu-list@gnome.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3.1\n"
+
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Hívások"
+
+#: src/calls-application.c:519
+msgid "The name of the plugin to use for the call Provider"
+msgstr "A hívásszolgáltatáshoz használandó bővítmény neve"
+
+#: src/calls-application.c:520
+msgid "PLUGIN"
+msgstr "BŐVÍTMÉNY"
+
+#: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Megjelenjen-e a főablak indításkor"
+
+#: src/calls-application.c:531
+msgid "Dial a number"
+msgstr "Szám tárcsázása"
+
+#: src/calls-application.c:532
+msgid "NUMBER"
+msgstr "SZÁM"
+
+#: src/calls-call-display.c:246
+msgid "Calling…"
+msgstr "Hívás…"
+
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Ismeretlen hívó"
+
+#: src/calls-call-record-row.c:112
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"tegnap"
+
+#: src/calls-main-window.c:115
+msgid "translator-credits"
+msgstr "Meskó Balázs <mesko dot balazs at fsf dot hu>"
+
+#: src/calls-main-window.c:173
+msgid "Can't place calls: No SIM card"
+msgstr "Nem lehet hívást indítani: Nincs SIM-kártya"
+
+#: src/calls-main-window.c:178
+msgid "Can't place calls: No backend service"
+msgstr "Nem lehet hívást indítani: Nincs háttérszolgáltatás"
+
+#: src/calls-main-window.c:182
+msgid "Can't place calls: No plugin"
+msgstr "Nem lehet hívást indítani: Nincs bővítmény"
+
+#: src/calls-main-window.c:210 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Tárcsázó"
+
+#: src/calls-main-window.c:219
+msgid "Recent"
+msgstr "Előzmények"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Bejövő telefonhívás"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Némítás"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Hangszóró"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Hívás hozzáadása"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Várakoztatás"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Bontás"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Felvétel"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Tárcsázó elrejtése"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Fél hívása"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "Hívás _törlése"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+36123456789"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Várakoztatva"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "A hívás nem titkosított"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "A hívás titkosított"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Nem volt hívás a közelmúltban"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Közelmúltbeli hívások"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Új hívás…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menü"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Hívások névjegye"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Nem található modem"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Névjegyek"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Tárcsázás"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Törléstől a számokig"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Új hívás"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Vissza"
