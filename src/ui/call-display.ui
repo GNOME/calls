@@ -121,6 +121,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
                                     <property name="label" translatable="yes">Mute</property>
                                   </object>
                                 </child>
@@ -156,6 +158,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
                                     <property name="label" translatable="yes">Speaker</property>
                                   </object>
                                 </child>
@@ -190,6 +194,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
                                     <property name="label" translatable="yes">Add call</property>
                                   </object>
                                 </child>
@@ -233,6 +239,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
                                     <property name="label" translatable="yes">Hold</property>
                                   </object>
                                 </child>
@@ -267,6 +275,8 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
                                     <property name="label" translatable="yes">Dial Pad</property>
                                   </object>
                                 </child>
@@ -294,8 +304,8 @@
         <child>
           <object class="CallsEncryptionIndicator" id="encryption_indicator">
             <property name="can_focus">False</property>
-            <property name="margin_top">50</property>
-            <property name="margin_bottom">30</property>
+            <property name="margin_top">30</property>
+            <property name="margin_bottom">20</property>
             <property name="visible">True</property>
           </object>
         </child>
