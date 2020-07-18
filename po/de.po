@@ -1,0 +1,321 @@
+# German translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# heiko123abc <heiko1234aaa@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-07-13 15:25+0000\n"
+"PO-Revision-Date: 2020-07-18 10:51+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"Language-Team: German <gnome-de@SPAMFREEgnome.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Telefon"
+
+#: src/calls-application.c:519
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Der Name des Plugins, das für den Telefonanbieter verwendet werden soll"
+
+#: src/calls-application.c:520
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Legt fest, ob beim Start das Hauptfenster angezeigt werden soll"
+
+#: src/calls-application.c:531
+msgid "Dial a number"
+msgstr "Eine Nummer wählen"
+
+#: src/calls-application.c:532
+msgid "NUMBER"
+msgstr "NUMMER"
+
+#: src/calls-call-display.c:246
+msgid "Calling…"
+msgstr "Anrufen …"
+
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Anonymer Anrufer"
+
+#: src/calls-call-record-row.c:112
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"Gestern"
+
+#: src/calls-main-window.c:115
+msgid "translator-credits"
+msgstr ""
+"heiko123abc <heiko1234aaa@gmail.com>, 2020\n"
+"Christian Kirbach <christian.kirbach@gmail.com>, 2020\n"
+"Tim Sabsch <tim@sabsch.com>, 2020"
+
+#: src/calls-main-window.c:173
+msgid "Can't place calls: No SIM card"
+msgstr "Anrufe nicht möglich: Keine SIM Karte"
+
+#: src/calls-main-window.c:178
+msgid "Can't place calls: No backend service"
+msgstr "Anrufe nicht möglich: Kein Backend Service"
+
+#: src/calls-main-window.c:182
+msgid "Can't place calls: No plugin"
+msgstr "Anrufe nicht möglich: Kein Plugin"
+
+#: src/calls-main-window.c:210 src/ui/call-display.ui:280
+msgid "Dial Pad"
+msgstr "Ziffernblock"
+
+#: src/calls-main-window.c:219
+msgid "Recent"
+msgstr "Letzte"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Eingehender Anruf"
+
+#: src/ui/call-display.ui:126
+msgid "Mute"
+msgstr "Stumm schalten"
+
+#: src/ui/call-display.ui:163
+msgid "Speaker"
+msgstr "Lautsprecher"
+
+#: src/ui/call-display.ui:199
+msgid "Add call"
+msgstr "Anruf hinzufügen"
+
+#: src/ui/call-display.ui:244
+msgid "Hold"
+msgstr "Halten"
+
+#: src/ui/call-display.ui:336
+msgid "Hang up"
+msgstr "Auflegen"
+
+#: src/ui/call-display.ui:367
+msgid "Answer"
+msgstr "Annehmen"
+
+#: src/ui/call-display.ui:449
+msgid "Hide the dial pad"
+msgstr "Den Ziffernblock verbergen"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Telefonkonferenz anrufen"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "Anruf _löschen"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Wird gehalten"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Dieser Anruf ist nicht verschlüsselt"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Dieser Anruf ist verschlüsselt"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Keine kürzlichen Anrufe"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Letzte Anrufe"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Neuer Anruf …"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menü"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Über Telefon"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Kein Modem gefunden"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Kontakte"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Wählen"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Rücktaste"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Neuer Anruf"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Zurück"
+
+#~ msgid "View"
+#~ msgstr "Ansicht"
+
+#~ msgid "The CallsBestMatchView to monitor"
+#~ msgstr "Das zu überwachende CallsBestMatchView"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "The display name of the best match"
+#~ msgstr "Der Anzeigenamen des besten Treffers"
+
+#~ msgid "Inbound"
+#~ msgstr "Eingehend"
+
+#~ msgid "Whether the call is inbound"
+#~ msgstr "Gibt an, ob der Anruf eingehend ist"
+
+#~ msgid "Number"
+#~ msgstr "Nummer"
+
+#~ msgid "The number the call is connected to if known"
+#~ msgstr "Die Zielrufnummer des Gesprächs, falls bekannt"
+
+#~ msgid "The name of the party the call is connected to, if the network provides it"
+#~ msgstr "Der Name des Teilnehmers, mit dem der Anruf verbunden ist, sofern vom Telefonanbieter geliefert"
+
+#~ msgid "State"
+#~ msgstr "Status"
+
+#~ msgid "The current state of the call"
+#~ msgstr "Der derzeitige Status des Anrufs"
+
+#~ msgid "Call"
+#~ msgstr "Anruf"
+
+#~ msgid "The call"
+#~ msgstr "Der Anruf"
+
+#~ msgid "Party"
+#~ msgstr "Teilnehmer"
+
+#~ msgid "The party participating in the call"
+#~ msgstr "Der Teilnehmer des Anrufs"
+
+#~ msgid "Call data"
+#~ msgstr "Anrufdaten"
+
+#~ msgid "Data for the call this display will be associated with"
+#~ msgstr "Daten für den Anruf , mit dem der Anzeigename verknüpft wird"
+
+#~ msgid "The call to hold"
+#~ msgstr "Der zu haltende Anruf"
+
+#~ msgid "ID"
+#~ msgstr "Kennung"
+
+#~ msgid "The row ID"
+#~ msgstr "Die Zeilen-Kennung"
+
+#~ msgid "Target"
+#~ msgstr "Ziel"
+
+#~ msgid "The PTSN phone number or other address of the call"
+#~ msgstr "Die herkömmliche Rufnummer oder andere Adresse des Anrufs"
+
+#~ msgid "Whether the call was an inbound call"
+#~ msgstr "Gibt an, ob der Anruf eingehend war"
+
+#~ msgid "Start"
+#~ msgstr "Start"
+
+#~ msgid "Time stamp of the start of the call"
+#~ msgstr "Zeitstempel beim Start des Anrufs"
+
+#~ msgid "Answered"
+#~ msgstr "Angenommen"
+
+#~ msgid "Time stamp of when the call was answered"
+#~ msgstr "Zeitstempel beim Annehmen des Anrufs"
+
+#~ msgid "End"
+#~ msgstr "Ende"
+
+#~ msgid "Time stamp of the end of the call"
+#~ msgstr "Zeitstempel beim Ende des Anrufs"
+
+#~ msgid "Record"
+#~ msgstr "Eintrag"
+
+#~ msgid "The call record for this row"
+#~ msgstr "Der Gesprächseintrag für diese Zeile"
+
+#~ msgid "Interface for libfolks"
+#~ msgstr "Interface für libfolks"
+
+#~ msgid "Call holder"
+#~ msgstr "Anrufinhaber"
+
+#~ msgid "The holder for this call"
+#~ msgstr "Der Inhaber des Anrufs"
+
+#~ msgid "Encrypted"
+#~ msgstr "Verschlüsselt"
+
+#~ msgid "model"
+#~ msgstr "Modell"
+
+#~ msgid "The data store containing call records"
+#~ msgstr "Der Datenspeicher mit den Anruflisten"
+
+#~ msgid "Record store"
+#~ msgstr "Anrufspeicher"
+
+#~ msgid "The store of call records"
+#~ msgstr "Der Speichern der Anruflisten"
+
+#~ msgid "The party's name"
+#~ msgstr "Name des Teilnehmers"
+
+#~ msgid "The party's telephone number"
+#~ msgstr "Nummer des Teilnehmers"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "A text string describing the status for display to the user"
+#~ msgstr "Ein Text der den Status, der für den User bestimmt ist, anzeigt"
+
+#~ msgid "Incoming call"
+#~ msgstr "Eingehender Anruf"
