@@ -382,8 +382,8 @@ static void
 setup_contact (CallsCallRecordRow *self)
 {
   g_autofree gchar *target = NULL;
+  g_autoptr(GError) error = NULL;
   EPhoneNumber *phone_number;
-  GError *error = NULL;
 
   // Get the target number
   g_object_get (G_OBJECT (self->record),
@@ -398,7 +398,6 @@ setup_contact (CallsCallRecordRow *self)
     {
       g_warning ("Error parsing phone number `%s': %s",
                  target, error->message);
-      g_error_free (error);
       return;
     }
 
