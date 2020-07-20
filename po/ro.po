@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-06-02 12:44+0000\n"
-"PO-Revision-Date: 2020-06-02 16:42+0300\n"
-"Last-Translator: Florentina Mușat <emryslokadottir [at] gmail [dot] com>\n"
+"POT-Creation-Date: 2020-07-02 15:25+0000\n"
+"PO-Revision-Date: 2020-07-02 12:42+0300\n"
+"Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
@@ -19,27 +19,27 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Poedit 2.3.1\n"
 
-#: src/calls-application.c:308 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Apeluri"
 
-#: src/calls-application.c:513
+#: src/calls-application.c:519
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Numele modulului de utilizat pentru furnizorul de apel"
 
-#: src/calls-application.c:514
+#: src/calls-application.c:520
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:519
+#: src/calls-application.c:525
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:525
+#: src/calls-application.c:531
 msgid "Dial a number"
 msgstr "Apelează un număr"
 
-#: src/calls-application.c:526
+#: src/calls-application.c:532
 msgid "NUMBER"
 msgstr "NUMĂR"
 
@@ -47,7 +47,11 @@ msgstr "NUMĂR"
 msgid "Calling…"
 msgstr "Se sună…"
 
-#: src/calls-call-record-row.c:103
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Apelant anonim"
+
+#: src/calls-call-record-row.c:112
 #, c-format
 msgid ""
 "%s\n"
@@ -56,38 +60,36 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-main-window.c:117
+#: src/calls-main-window.c:115
 msgid "translator-credits"
 msgstr ""
 "Bogdan Mințoi <mintoi.bogdan@gmail.com>, 2014\n"
 "Jobava <jobaval10n@gmail.com>, 2015\n"
 "Adelin Șerbănescu <sadelin106@gmail.com>, 2018\n"
-"Florentina Mușat <emryslokasdottir [at] gmail [dot] com>, 2019-2020\n"
+"Florentina Mușat <florentina [dot] musat [dot] 28 [at] gmail [dot] com>, "
+"2020\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019"
 
-#: src/calls-main-window.c:180
+#: src/calls-main-window.c:173
 msgid "Can't place calls: No SIM card"
 msgstr "Nu se pot plasa apeluri: nu există card SIM"
 
-#: src/calls-main-window.c:185
+#: src/calls-main-window.c:178
 msgid "Can't place calls: No backend service"
 msgstr "Nu se pot plasa apeluri: nu există serviciu de suport"
 
-#: src/calls-main-window.c:189
+#: src/calls-main-window.c:182
 msgid "Can't place calls: No plugin"
 msgstr "Nu se pot plasa apeluri: nu există modul"
 
-#: src/calls-main-window.c:217 src/ui/call-display.ui:270
+#: src/calls-main-window.c:210 src/ui/call-display.ui:270
 msgid "Dial Pad"
 msgstr "Tastatură"
 
-#: src/calls-main-window.c:227
+#: src/calls-main-window.c:219
 msgid "Recent"
 msgstr "Recent"
 
-#: src/calls-ringer.c:204
-msgid "Incoming call"
-msgstr "Apel de primit"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
@@ -121,9 +123,13 @@ msgstr "Răspunde"
 msgid "Hide the dial pad"
 msgstr "Ascunde tastatura"
 
-#: src/ui/call-record-row.ui:65
+#: src/ui/call-record-row.ui:68
 msgid "Call the party"
 msgstr "Apelează petrecerea"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "Șt_erge apelul"
 
 #: src/ui/call-selector-item.ui:31
 msgid "+441234567890"
