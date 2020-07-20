@@ -391,6 +391,9 @@ setup_contact (CallsCallRecordRow *self)
                 NULL);
   g_assert (target != NULL);
 
+  if (!target[0])
+    return;
+
   // Parse it
   phone_number = e_phone_number_from_string
     (target, NULL, &error);
