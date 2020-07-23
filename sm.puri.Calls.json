@@ -250,6 +250,18 @@
             ]
         },
         {
+            "name" : "feedbackd",
+            "buildsystem" : "meson",
+            "config-opts" : [ "-Ddaemon=false" ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.0+git20200714/feedbackd-v0.0.0+git20200714.tar.gz",
+                    "sha256" : "c64fe60926f7e2423e39c31d5d1ca05aa258504d4f504bf9658569eb25567638"
+                }
+            ]
+        },
+        {
             "name" : "calls",
             "buildsystem" : "meson",
             "sources" : [
