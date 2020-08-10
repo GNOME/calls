@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-06-11 15:24+0000\n"
-"PO-Revision-Date: 2020-06-25 04:10+0300\n"
+"POT-Creation-Date: 2020-07-02 15:25+0000\n"
+"PO-Revision-Date: 2020-08-10 14:44+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -46,7 +46,11 @@ msgstr "NUMARA"
 msgid "Calling…"
 msgstr "Aranıyor…"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Anonim çağrı"
+
+#: src/calls-call-record-row.c:112
 #, c-format
 msgid ""
 "%s\n"
@@ -55,27 +59,27 @@ msgstr ""
 "%s\n"
 "dün"
 
-#: src/calls-main-window.c:117
+#: src/calls-main-window.c:115
 msgid "translator-credits"
 msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/calls-main-window.c:180
+#: src/calls-main-window.c:173
 msgid "Can't place calls: No SIM card"
 msgstr "Aranamıyor: SIM kartı yok"
 
-#: src/calls-main-window.c:185
+#: src/calls-main-window.c:178
 msgid "Can't place calls: No backend service"
 msgstr "Aranamıyor: Arkayüz hizmeti yok"
 
-#: src/calls-main-window.c:189
+#: src/calls-main-window.c:182
 msgid "Can't place calls: No plugin"
 msgstr "Aranamıyor: Eklenti yok"
 
-#: src/calls-main-window.c:217 src/ui/call-display.ui:270
+#: src/calls-main-window.c:210 src/ui/call-display.ui:270
 msgid "Dial Pad"
 msgstr "Tuş Takımı"
 
-#: src/calls-main-window.c:227
+#: src/calls-main-window.c:219
 msgid "Recent"
 msgstr "Son"
 
