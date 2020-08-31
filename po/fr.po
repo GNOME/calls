@@ -2,52 +2,56 @@
 # Copyright (C) 2020 THE calls'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Valery Febvre <vfebvre@easter-eggs.com>, 2020.
+# Thibault Martin <mail@thibaultmart.in>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-29 14:30+0200\n"
-"PO-Revision-Date: 2020-08-04 02:12+0200\n"
-"Last-Translator: Valery Febvre <vfebvre@easter-eggs.com>\n"
-"Language-Team: French\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-07-15 03:25+0000\n"
+"PO-Revision-Date: 2020-07-15 12:29+0200\n"
+"Last-Translator: Thibault Martin <mail@thibaultmart.in>\n"
+"Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 3.36.0\n"
 
-#: src/calls-application.c:308 src/calls-main-window.c:112
-#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Appels"
 
-#: src/calls-application.c:513
+#: src/calls-application.c:519
 msgid "The name of the plugin to use for the call Provider"
-msgstr "Le nom du greffon à utiliser pour le fournisseur d'appel"
+msgstr "Le nom du greffon à utiliser pour le fournisseur d’appel"
 
-#: src/calls-application.c:514
+#: src/calls-application.c:520
 msgid "PLUGIN"
 msgstr "GREFFON"
 
-#: src/calls-application.c:519
-msgid "Whether to present the main window on startup"
-msgstr "Afficher ou non la fenêtre principale au démarrage"
-
 #: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Indique si la fenêtre principale doit être affichée au démarrage"
+
+#: src/calls-application.c:531
 msgid "Dial a number"
 msgstr "Composer un numéro"
 
-#: src/calls-application.c:526
+#: src/calls-application.c:532
 msgid "NUMBER"
 msgstr "NUMÉRO"
 
 #: src/calls-call-display.c:246
-msgid "Calling..."
-msgstr "Appel..."
+msgid "Calling…"
+msgstr "Appel…"
 
-#: src/calls-call-record-row.c:103
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Appelant anonyme"
+
+#: src/calls-call-record-row.c:112
 #, c-format
 msgid ""
 "%s\n"
@@ -56,73 +60,75 @@ msgstr ""
 "%s\n"
 "hier"
 
-#: src/calls-main-window.c:113
+#: src/calls-main-window.c:115
 msgid "translator-credits"
-msgstr "Valéry Febvre <vfebvre@easter-eggs.com>"
+msgstr ""
+"Valéry Febvre <vfebvre@easter-eggs.com>\n"
+"Thibault Martin"
 
-#: src/calls-main-window.c:176
+#: src/calls-main-window.c:173
 msgid "Can't place calls: No SIM card"
-msgstr "Impossible de passer des appels: Aucune carte SIM"
+msgstr "Impossible d’appeler : pas de carte SIM"
 
-#: src/calls-main-window.c:181
+#: src/calls-main-window.c:178
 msgid "Can't place calls: No backend service"
-msgstr "Impossible de passer des appels: Aucun service de back-end"
+msgstr "Impossible d’appeler : pas de service applicatif"
 
-#: src/calls-main-window.c:185
+#: src/calls-main-window.c:182
 msgid "Can't place calls: No plugin"
-msgstr "Impossible de passer des appels: Aucun greffon"
+msgstr "Impossible d’appeler : pas de greffon"
 
-#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+#: src/calls-main-window.c:210 src/ui/call-display.ui:280
 msgid "Dial Pad"
-msgstr "Clavier numérique"
+msgstr "Pavé numérique"
 
-#: src/calls-main-window.c:223
+#: src/calls-main-window.c:219
 msgid "Recent"
 msgstr "Récents"
-
-#: src/calls-ringer.c:204
-msgid "Incoming call"
-msgstr "Appel entrant"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Appel téléphonique entrant"
 
-#: src/ui/call-display.ui:124
+#: src/ui/call-display.ui:126
 msgid "Mute"
 msgstr "Muet"
 
-#: src/ui/call-display.ui:159
+#: src/ui/call-display.ui:163
 msgid "Speaker"
 msgstr "Haut-parleur"
 
-#: src/ui/call-display.ui:193
+#: src/ui/call-display.ui:199
 msgid "Add call"
-msgstr "Autre appel"
+msgstr "Ajouter un appel"
 
-#: src/ui/call-display.ui:236
+#: src/ui/call-display.ui:244
 msgid "Hold"
 msgstr "Mettre en attente"
 
-#: src/ui/call-display.ui:326
+#: src/ui/call-display.ui:336
 msgid "Hang up"
 msgstr "Raccrocher"
 
-#: src/ui/call-display.ui:357
+#: src/ui/call-display.ui:367
 msgid "Answer"
 msgstr "Répondre"
 
-#: src/ui/call-display.ui:439
+#: src/ui/call-display.ui:449
 msgid "Hide the dial pad"
-msgstr "Masquer le clavier numérique"
+msgstr "Masquer le pavé numérique"
 
-#: src/ui/call-record-row.ui:65
+#: src/ui/call-record-row.ui:68
 msgid "Call the party"
-msgstr "Appeler le correpsondant"
+msgstr "Appeler le correspondant"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Supprimer l’appel"
 
 #: src/ui/call-selector-item.ui:31
 msgid "+441234567890"
-msgstr "+441234567890"
+msgstr "+331234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -130,7 +136,7 @@ msgstr "En attente"
 
 #: src/ui/encryption-indicator.ui:23
 msgid "This call is not encrypted"
-msgstr "Cet appel n'est pas chiffré"
+msgstr "Cet appel n’est pas chiffré"
 
 #: src/ui/encryption-indicator.ui:45
 msgid "This call is encrypted"
@@ -155,11 +161,11 @@ msgstr "Menu"
 
 #: src/ui/history-header-bar.ui:71
 msgid "About Calls"
-msgstr "À propos d'Appels"
+msgstr "À propos d’Appels"
 
 #: src/ui/main-window.ui:36
 msgid "No modem found"
-msgstr "Aucun modem trouvé"
+msgstr "Pas de modem détecté"
 
 #: src/ui/main-window.ui:56
 msgid "Contacts"
@@ -180,3 +186,4 @@ msgstr "Nouvel appel"
 #: src/ui/new-call-header-bar.ui:21
 msgid "Back"
 msgstr "Retour"
+
