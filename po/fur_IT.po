@@ -1,0 +1,182 @@
+# Friulian translation for calls.
+# Copyright (C) 2020 calls'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Fabio Tomat <f.t.public@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-29 14:30+0200\n"
+"PO-Revision-Date: 2020-09-06 22:10+0200\n"
+"Language-Team: Furlan (f.t.public@gmail.com)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fur_IT\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Clamadis"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Il non dal plugin di doprâ pal gjestôr des clamadis"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Indiche se presentâ il barcon principâl al inviament"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Fâs un numar"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "NUMAR"
+
+#: src/calls-call-display.c:246
+msgid "Calling..."
+msgstr "Daûr a clamâ..."
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"îr"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Fabio Tomat (f.t.public@gmail.com)"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Impussibil clamâ: nissune schede SIM"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Impussibil clamâ: nissune servizi di backend"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Impussibil clamâ: nissun plugin"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Tastiere"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Resint"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Clamade in jentrade"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Telefonade in jentrade"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Cidine"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Difusôr di vôs"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Zonte clamade"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Met in spiete"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Met jù"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Rispuint"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Plate la tastiere telefoniche"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Clame il grup"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "In spiete"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Cheste clamade no je cifrade"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Cheste clamade e je cifrade"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Nissune clamade resinte"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Clamadis resintis"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Gnove clamade…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menù"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Informazions su Clamadis"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Nissun modem cjatât"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Contats"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Compon"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Va indaûr tal numar"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Gnove clamade"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Indaûr"
