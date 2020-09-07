@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: fur_IT\n"
+"Language: fur\n"
 
 #: src/calls-application.c:308 src/calls-main-window.c:112
 #: src/ui/call-window.ui:11 src/ui/main-window.ui:8
