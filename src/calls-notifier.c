@@ -46,6 +46,7 @@ notify (CallsNotifier *self, CallsCall *call)
   g_autoptr(GNotification) notification;
   g_autofree gchar *msg = NULL;
   g_autofree gchar *ref = NULL;
+  g_autofree gchar *label_callback = NULL;
   const char *name;
 
   notification = g_notification_new (_("Missed call"));
@@ -57,6 +58,12 @@ notify (CallsNotifier *self, CallsCall *call)
     msg = g_strdup_printf (_("Missed call from %s"), calls_call_get_number (call));
 
   g_notification_set_body (notification, msg);
+
+  if (calls_call_get_number (call)) {
+    label_callback = g_strdup_printf ("app.dial::%s", calls_call_get_number (call));
+    g_notification_add_button (notification, _("Call back"), label_callback);
+  }
+
   ref = g_strdup_printf ("missed-call-%s", calls_call_get_number (call) ?: "unknown");
   g_application_send_notification (app, ref, notification);
 }
