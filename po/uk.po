@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-06-28 03:25+0000\n"
-"PO-Revision-Date: 2020-06-28 09:05+0300\n"
+"POT-Creation-Date: 2020-09-10 15:42+0000\n"
+"PO-Revision-Date: 2020-09-11 09:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 
 #: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
 msgid "Calls"
@@ -47,7 +47,11 @@ msgstr "НОМЕР"
 msgid "Calling…"
 msgstr "Виклик…"
 
-#: src/calls-call-record-row.c:109
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Анонімний дзвінок"
+
+#: src/calls-call-record-row.c:112
 #, c-format
 msgid ""
 "%s\n"
@@ -61,8 +65,9 @@ msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
 #: src/calls-main-window.c:173
-msgid "Can't place calls: No SIM card"
-msgstr "Не вдалося розмістити дзвінки: немає SIM-картки"
+#| msgid "Can't place calls: No backend service"
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Не вдалося розмістити дзвінки: немає модема із голосовими можливостями"
 
 #: src/calls-main-window.c:178
 msgid "Can't place calls: No backend service"
@@ -72,7 +77,7 @@ msgstr "Не вдалося розмістити дзвінки: немає сл
 msgid "Can't place calls: No plugin"
 msgstr "Не вдалося розмістити дзвінки: немає додатка"
 
-#: src/calls-main-window.c:210 src/ui/call-display.ui:270
+#: src/calls-main-window.c:210 src/ui/call-display.ui:280
 msgid "Dial Pad"
 msgstr "Панель набору"
 
@@ -80,39 +85,35 @@ msgstr "Панель набору"
 msgid "Recent"
 msgstr "Нещодавні"
 
-#: src/calls-manager.c:547
-msgid "Anonymous caller"
-msgstr "Анонімний дзвінок"
-
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Вхідний телефонний дзвінок"
 
-#: src/ui/call-display.ui:124
+#: src/ui/call-display.ui:126
 msgid "Mute"
 msgstr "Вимкнути звук"
 
-#: src/ui/call-display.ui:159
+#: src/ui/call-display.ui:163
 msgid "Speaker"
 msgstr "Гучномовець"
 
-#: src/ui/call-display.ui:193
+#: src/ui/call-display.ui:199
 msgid "Add call"
 msgstr "Додати дзвінок"
 
-#: src/ui/call-display.ui:236
+#: src/ui/call-display.ui:244
 msgid "Hold"
 msgstr "Утримувати"
 
-#: src/ui/call-display.ui:326
+#: src/ui/call-display.ui:336
 msgid "Hang up"
 msgstr "Розірвати зв'язок"
 
-#: src/ui/call-display.ui:357
+#: src/ui/call-display.ui:367
 msgid "Answer"
 msgstr "Відповісти"
 
-#: src/ui/call-display.ui:439
+#: src/ui/call-display.ui:449
 msgid "Hide the dial pad"
 msgstr "Приховати панель набору"
 
@@ -161,11 +162,11 @@ msgstr "Меню"
 msgid "About Calls"
 msgstr "Про «Дзвінки»"
 
-#: src/ui/main-window.ui:36
+#: src/ui/main-window.ui:38
 msgid "No modem found"
 msgstr "Не знайдено модема"
 
-#: src/ui/main-window.ui:56
+#: src/ui/main-window.ui:58
 msgid "Contacts"
 msgstr "Контакти"
 
