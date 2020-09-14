@@ -25,5 +25,9 @@
       <foaf:name>Julian Sparber</foaf:name>
       <foaf:mbox rdf:resource="mailto:julian.sparber@puri.sm" />
     </foaf:Person>
+    <foaf:Person>
+      <foaf:name>Evangelos Ribeiro Tzaras</foaf:name>
+      <foaf:mbox rdf:resource="mailto:devrtz@fortysixandtwo.eu" />
+    </foaf:Person>
   </maintainer>
 </Project>
