@@ -1,0 +1,188 @@
+# Serbian translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Марко Костић <marko.m.kostic@gmail.com>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-09-15 15:24+0000\n"
+"PO-Revision-Date: 2020-09-15 23:07+0200\n"
+"Language-Team: Serbian <gnome-sr@googlegroups.com>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Позиви"
+
+#: src/calls-application.c:519
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Назив прикључка који се користи као достављач услуге позивања"
+
+#: src/calls-application.c:520
+msgid "PLUGIN"
+msgstr "ПРИКЉУЧАК"
+
+#: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Да ли треба приказати главни прозор при покретању"
+
+#: src/calls-application.c:531
+msgid "Dial a number"
+msgstr "Окрени број"
+
+#: src/calls-application.c:532
+msgid "NUMBER"
+msgstr "БРОЈ"
+
+#: src/calls-call-display.c:246
+msgid "Calling…"
+msgstr "Позивам…"
+
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr "Безимени позивалац"
+
+#: src/calls-call-record-row.c:112
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"јуче"
+
+#: src/calls-main-window.c:115
+msgid "translator-credits"
+msgstr ""
+"Марко М. Костић <marko.m.kostic@gmail.com>\n"
+"\n"
+"https://гном.срб — превод Гнома на српски језик"
+
+#: src/calls-main-window.c:173
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Не могу позивати: нема модема који је способан за пренос гласа"
+
+#: src/calls-main-window.c:178
+msgid "Can't place calls: No backend service"
+msgstr "Не могу позивати: нема позадинца"
+
+#: src/calls-main-window.c:182
+msgid "Can't place calls: No plugin"
+msgstr "Не могу позивати: нема прикључка"
+
+#: src/calls-main-window.c:210 src/ui/call-display.ui:280
+msgid "Dial Pad"
+msgstr "Бројчаник"
+
+#: src/calls-main-window.c:219
+msgid "Recent"
+msgstr "Недавно"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Долазни позив"
+
+#: src/ui/call-display.ui:126
+msgid "Mute"
+msgstr "Утишај"
+
+#: src/ui/call-display.ui:163
+msgid "Speaker"
+msgstr "Звучник"
+
+#: src/ui/call-display.ui:199
+msgid "Add call"
+msgstr "Додај позив"
+
+#: src/ui/call-display.ui:244
+msgid "Hold"
+msgstr "На чекање"
+
+#: src/ui/call-display.ui:336
+msgid "Hang up"
+msgstr "Окончај позив"
+
+#: src/ui/call-display.ui:367
+msgid "Answer"
+msgstr "Јави се"
+
+#: src/ui/call-display.ui:449
+msgid "Hide the dial pad"
+msgstr "Сакриј бројчаник"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Позови групу"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "О_бриши позив"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+3811234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "На чекању"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Овај позив није шифрован"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Овај позив је шифрован"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Нема недавних позива"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Недавни позиви"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Нови позив…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Мени"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "О Позивима"
+
+#: src/ui/main-window.ui:38
+msgid "No modem found"
+msgstr "Није пронађен модем"
+
+#: src/ui/main-window.ui:58
+msgid "Contacts"
+msgstr "Контакти"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Позови"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Дугме брисања кроз број"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Нови позив"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Назад"
