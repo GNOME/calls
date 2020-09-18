@@ -1,3 +1,78 @@
+calls (0.1.8) amber-phone; urgency=medium
+
+  [ Arnaud Ferraris ]
+  * ui: call-display: wrap toggle buttons' labels.
+    For some locales, the buttons' labels can be quite long, making the
+    window wider than the display.
+
+  [ Evangelos Ribeiro Tzaras ]
+  * src/calls-notifier.c: Add call-back button
+  * src/calls-call-window.c: Inhibit suspend during active call
+
+  [ Guido Günther ]
+  * po: Add Hungarian to LINGUAS
+  * call-record-row: Use g_autoptr for the GError
+  * calls-call-record-row: Ignore anonymous callsers.
+    These have an empty string which leads to
+        Error parsing phone number `': Keine Telefonnumme
+  * po: Add Spanish to LINGUAS
+  * gitlab-ci: Allow to only build a package
+  * main-window: Allow the in app notification to wrap.
+    Othewise we overflow the window. Center it too.
+  * calls-main-window: Bring back old error string when no modem is present.
+    Calls can't tell the difference between no SIM and no modem
+    atm. (Closes: #159, #152)
+  * doap: Add devrtz to list of maintainers.
+    He's been the most active contributor recently.
+  * doap: Fix sytnax.
+    Wrap each person within <maintainer/>
+
+  [ James Westman ]
+  * flatpak: Add feedbackd, dependencies to flatpak.
+    Added feedbackd to the Flatpak manifest, so that Calls builds again.
+    Fixes #164.
+
+  [ Daniel Șerbănescu ]
+  * po: Update Romanian translation
+
+  [ Tim Sabsch ]
+  * po: Add German translation
+
+  [ Marc Riera Irigoyen ]
+  * po: Add Catalan translation
+
+  [ scootergrisen ]
+  * po: Add Danish translation
+
+  [ Balázs Meskó ]
+  * po: Add Hungarian translation
+
+  [ Emin Tufan Çetin ]
+  * po: Update Turkish translation
+
+  [ Valéry Febvre ]
+  * po: Update French translation
+
+  [ Daniel Mustieles ]
+  * po: Add Spanish translation
+
+  [ Efstathios Iosifidis ]
+  * po: Add Greek translation
+
+  [ Thibault Martin ]
+  * po: Update French translation
+
+  [ Fabio Tomat ]
+  * po: Add friulian translations
+
+  [ Марко М. Костић (Marko M. Kostić) ]
+  * po: Add Serbian translation
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 18 Sep 2020 12:52:43 +0200
+
 calls (0.1.7) amber-phone; urgency=medium
 
   [ Yuri Chornoivan ]
