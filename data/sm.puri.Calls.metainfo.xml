@@ -16,6 +16,12 @@
     <project_group>GNOME</project_group>
     <developer_name>Bob Ham</developer_name>
 
+    <recommends>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+    </recommends>
+
     <kudos>
         <kudo>ModernToolkit</kudo>
     </kudos>
