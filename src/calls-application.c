@@ -38,10 +38,8 @@
 #include "calls-manager.h"
 #include "calls-application.h"
 
-#define HANDY_USE_UNSTABLE_API
-#include <handy.h>
-
 #include <glib/gi18n.h>
+#include <handy.h>
 #include <libebook-contacts/libebook-contacts.h>
 
 /**
@@ -306,6 +304,8 @@ startup (GApplication *application)
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
+  hdy_init ();
+
   g_set_prgname (APP_ID);
   g_set_application_name (_("Calls"));
 
@@ -501,11 +501,6 @@ calls_application_class_init (CallsApplicationClass *klass)
   g_type_ensure (CALLS_TYPE_ENCRYPTION_INDICATOR);
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);
   g_type_ensure (CALLS_TYPE_NEW_CALL_BOX);
-  g_type_ensure (HDY_TYPE_DIALER);
-  g_type_ensure (HDY_TYPE_HEADER_BAR);
-  g_type_ensure (HDY_TYPE_SQUEEZER);
-  g_type_ensure (HDY_TYPE_VIEW_SWITCHER);
-  g_type_ensure (HDY_TYPE_VIEW_SWITCHER_BAR);
 }
 
 

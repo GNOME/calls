@@ -43,11 +43,9 @@
         <property name="visible">True</property>
         <property name="hscrollbar-policy">never</property>
         <child>
-          <object class="HdyColumn">
+          <object class="HdyClamp">
             <property name="can_focus">False</property>
             <property name="visible">True</property>
-            <property name="maximum-width">600</property>
-            <property name="linear-growth-width">450</property>
             <child>
               <object class="GtkListBox" id="history">
                 <property name="can_focus">False</property>

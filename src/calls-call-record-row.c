@@ -25,12 +25,12 @@
 #include "calls-call-record-row.h"
 #include "calls-best-match.h"
 #include "calls-contacts.h"
-#include "contrib/hdy-avatar.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <glib.h>
+#include <handy.h>
 
 #include <sys/time.h>
 #include <errno.h>

@@ -29,9 +29,6 @@
 
 #include <gtk/gtk.h>
 
-#define HANDY_USE_UNSTABLE_API
-#include <handy.h>
-
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_HISTORY_BOX (calls_history_box_get_type ())

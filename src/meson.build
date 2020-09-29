@@ -30,7 +30,7 @@ calls_includes = [ top_include, src_include ]
 
 calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('gtk+-3.0'),
-               dependency('libhandy-0.0', version: '>= 0.0.12'),
+               dependency('libhandy-1', version: '>= 1.0.0'),
                dependency('libfeedback-0.0'),
                dependency('libpeas-1.0'),
                dependency('gom-1.0'),
@@ -89,7 +89,6 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-in-app-notification.c', 'calls-in-app-notification.h',
                        'calls-manager.c', 'calls-manager.h',
                        'calls-notifier.c', 'calls-notifier.h',
-                       'contrib/hdy-avatar.c', 'contrib/hdy-avatar.h',
                       ])
 
 calls_config_data = config_data

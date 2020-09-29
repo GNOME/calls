@@ -36,8 +36,6 @@
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
-
-#define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
 #ifdef CALLS_WAYLAND

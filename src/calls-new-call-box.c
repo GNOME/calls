@@ -26,7 +26,6 @@
 #include "calls-manager.h"
 
 #include <glib/gi18n.h>
-#define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
 
@@ -78,7 +77,7 @@ get_origin (CallsNewCallBox *self)
 static void
 backspace_clicked_cb (CallsNewCallBox *self)
 {
-  GtkWidget *entry = hdy_keypad_get_entry (self->keypad);
+  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
   g_signal_emit_by_name (entry, "backspace", NULL);
 }
 
@@ -86,7 +85,7 @@ backspace_clicked_cb (CallsNewCallBox *self)
 static void
 dial_clicked_cb (CallsNewCallBox *self)
 {
-  GtkWidget *entry = hdy_keypad_get_entry (self->keypad);
+  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
   calls_new_call_box_dial
     (self,
      gtk_entry_get_text (GTK_ENTRY (entry)));

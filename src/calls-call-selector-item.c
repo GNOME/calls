@@ -30,8 +30,6 @@
 #include <glib-object.h>
 #include <glib.h>
 
-#define HANDY_USE_UNSTABLE_API
-#include <handy.h>
 
 struct _CallsCallSelectorItem
 {
