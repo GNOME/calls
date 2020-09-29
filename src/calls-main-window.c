@@ -46,11 +46,7 @@ struct _CallsMainWindow
 
   CallsInAppNotification *in_app_notification;
 
-  HdySqueezer *squeezer;
-  GtkLabel *title_label;
-  HdyViewSwitcher *wide_switcher;
-  HdyViewSwitcher *narrow_switcher;
-  HdyViewSwitcherBar *switcher_bar;
+  HdyViewSwitcherTitle *title_switcher;
   GtkStack *main_stack;
 
   GtkRevealer *permanent_error_revealer;
@@ -121,18 +117,6 @@ static const GActionEntry window_entries [] =
 {
   { "about", about_action },
 };
-
-
-static gboolean
-set_switcher_bar_reveal (GBinding     *binding,
-                         const GValue *from_value,
-                         GValue       *to_value,
-                         gpointer      title_label)
-{
-  g_value_set_boolean (to_value, g_value_get_object (from_value) == title_label);
-
-  return TRUE;
-}
 
 
 static void
@@ -235,16 +219,6 @@ constructed (GObject *object)
   g_object_unref (simple_action_group);
 
 
-  g_object_bind_property_full (self->squeezer,
-                               "visible-child",
-                               self->switcher_bar,
-                               "reveal",
-                               G_BINDING_SYNC_CREATE,
-                               set_switcher_bar_reveal,
-                               NULL,
-                               self->title_label,
-                               NULL);
-
   g_signal_connect_swapped (calls_manager_get_default (),
                             "notify::state",
                             G_CALLBACK (state_changed_cb),
@@ -274,12 +248,8 @@ size_allocate (GtkWidget     *widget,
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
 
-  hdy_squeezer_set_child_enabled (self->squeezer,
-                                  GTK_WIDGET (self->wide_switcher),
-                                  allocation->width > 600);
-  hdy_squeezer_set_child_enabled (self->squeezer,
-                                  GTK_WIDGET (self->narrow_switcher),
-                                  allocation->width > 400);
+  hdy_view_switcher_title_set_view_switcher_enabled (self->title_switcher,
+                                                     allocation->width > 400);
 
   GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, allocation);
 }
@@ -309,11 +279,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/main-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, in_app_notification);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, squeezer);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_label);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, wide_switcher);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, narrow_switcher);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, switcher_bar);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_label);
