@@ -9,7 +9,3 @@ option('tests',
 option('wayland',
        type: 'feature', value: 'enabled',
        description: 'Whether to support Wayland lockscreen interaction')
-
-option('librem5-hack',
-       type: 'boolean', value: true,
-       description: 'Whether to use hacky code to support audio output switching (Speaker)')

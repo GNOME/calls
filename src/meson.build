@@ -36,6 +36,7 @@ calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('gom-1.0'),
                dependency('libebook-contacts-1.2'),
                dependency('folks'),
+               dependency('libcallaudio-0'),
              ]
 
 if wl_scanner.found()
@@ -94,9 +95,6 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
 calls_config_data = config_data
 calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
 calls_config_data.set10('WL_SCANNER_FOUND', wl_scanner.found())
-
-use_l5_hacks = get_option('librem5-hack')
-calls_config_data.set('CALLS_USE_UGLY_CODE', use_l5_hacks)
 
 config_h_in = configure_file(
   output: 'config.h.in',
