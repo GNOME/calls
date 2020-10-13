@@ -100,7 +100,7 @@
                             <property name="receives_default">True</property>
                             <property name="no_show_all">True</property>
                             <property name="hexpand">True</property>
-                            <property name="sensitive">False</property>
+                            <property name="sensitive">True</property>
                             <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
                             <child>
                               <object class="GtkBox">
@@ -137,7 +137,7 @@
                             <property name="receives_default">True</property>
                             <property name="no_show_all">True</property>
                             <property name="hexpand">True</property>
-                            <property name="sensitive">False</property>
+                            <property name="sensitive">True</property>
                             <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
                             <child>
                               <object class="GtkBox">
