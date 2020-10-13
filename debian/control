@@ -6,6 +6,7 @@ Uploaders:
  Bob Ham <rah@settrans.net>,
 Build-Depends:
  debhelper (>= 11),
+ libcallaudio-dev,
  libfeedback-dev,
  libhandy-1-dev (>= 1.0.0),
  libgtk-3-dev,
@@ -29,6 +30,7 @@ Architecture: any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
+ callaudiod,
  modemmanager,
 Description: Make and receive PSTN phone calls
  A GTK+ user interface for PSTN phone calls using oFono.
