@@ -63,4 +63,9 @@
             <description>Pre-release development</description>
         </release>
     </releases>
+
+    <custom>
+        <value key="Purism::form_factor">workstation</value>
+        <value key="Purism::form_factor">mobile</value>
+    </custom>
 </component>

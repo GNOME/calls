@@ -13,3 +13,4 @@ StartupNotify=true
 Terminal=false
 Categories=GNOME;GTK;Telephony;
 MimeType=x-scheme-handler/tel
+X-Purism-FormFactor=Workstation;Mobile;
