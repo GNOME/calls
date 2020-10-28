@@ -40,6 +40,7 @@
 
 #include <glib/gi18n.h>
 #include <handy.h>
+#include <libcallaudio.h>
 #include <libebook-contacts/libebook-contacts.h>
 
 /**
@@ -301,10 +302,16 @@ static void
 startup (GApplication *application)
 {
   GtkIconTheme *icon_theme;
+  g_autoptr(GError) error = NULL;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
   hdy_init ();
+
+  if (!call_audio_init (&error))
+    {
+      g_warning ("Failed to init libcallaudio: %s", error->message);
+    }
 
   g_set_prgname (APP_ID);
   g_set_application_name (_("Calls"));
