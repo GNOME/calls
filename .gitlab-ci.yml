@@ -15,8 +15,11 @@ variables:
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
   - apt-get -y update
+  - apt-get -y install $DEPS wget ca-certificates gnupg
+  - echo "deb http://ci.puri.sm/ bullseyeci main" > /etc/apt/sources.list.d/ci.list
+  - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
+  - apt-get -y update
   - apt-get -y build-dep .
-  - apt-get -y install $DEPS
   - ulimit -c unlimited
 
 .tags: &tags
