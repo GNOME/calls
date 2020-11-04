@@ -1,3 +1,46 @@
+calls (0.1.9) amber-phone; urgency=medium
+
+  [ Juliano de Souza Camargo ]
+  * po: Add Portuguese translation
+
+  [ Fabio Tomat ]
+  * po: Just fur for friulian locale
+
+  [ Adrien Plazas ]
+  * Port to libhandy 1
+  * main-window: Use HdyViewSwitcherTitle
+  * data: List compatible form-factors
+
+  [ Evangelos Ribeiro Tzaras ]
+  * docs: update URLs to source.puri.sm
+  * po: fix duplicate language teams
+
+  [ Sebastian Krzyszkowiak ]
+  * gitlab-ci: Use bullseye CI repo
+
+  [ Anders Jonsson ]
+  * po: Update Swedish translation
+
+  [ Arnaud Ferraris ]
+  * call-display: replace ugly hacks with libcallaudio calls
+  * application: initialize libcallaudio on startup
+  * ui: call-display: set speaker and mute buttons sensitive by default
+  * src: meson.build: remove librem5-hack option and depend on libcallaudio
+  * d/control: depend on callaudiod
+
+  [ Mohammed Sadiq ]
+  * Add calls-ussd interface
+  * mm-origin: Implement CallsUssd interface
+  * util: Add API to test for USSD command
+  * manager: Hook to ussd signals from provider
+  * main-window: Add dialog to handle USSD
+  * new-call-box: Handle USSD commands
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Bump max allowed glib version to 2.64
+
+ -- Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>  Wed, 04 Nov 2020 18:07:48 +0100
+
 calls (0.1.8) amber-phone; urgency=medium
 
   [ Arnaud Ferraris ]
