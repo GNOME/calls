@@ -1,4 +1,4 @@
-hdykeypad > button, .dial-button, .delete-button {
+keypad > grid > button, .dial-button, .delete-button {
   border-radius: 9999px;
   -gtk-outline-radius: 9999px;
 }
