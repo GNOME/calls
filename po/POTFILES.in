@@ -16,6 +16,7 @@ src/calls-main-window.c
 src/calls-manager.c
 src/calls-message-source.c
 src/calls-new-call-box.c
+src/calls-notifier.c
 src/calls-origin.c
 src/calls-party.c
 src/calls-provider.c
