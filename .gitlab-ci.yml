@@ -53,6 +53,25 @@ test:native:
     variables:
       - $PKG_ONLY == "1"
 
+check-po:
+  <<: *tags
+  image: $IMAGE
+  stage: test
+  dependencies:
+    - build:native
+  before_script:
+    - apt-get -y update
+    - apt-get -y install intltool
+  script:
+    # barf on untranslated C files. Seems intltool
+    # can't be told to exit with non-zero exit status
+    # in this case
+    - cd po/
+    - intltool-update -m 2>&1 | grep -qs '/.*\.c' && { intltool-update -m; exit 1; } || exit 0
+  except:
+    variables:
+      - $PKG_ONLY == "1"
+
 package:deb-debian-buster:
   extends: .l5-build-debian-package
 
