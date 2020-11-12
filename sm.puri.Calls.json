@@ -262,6 +262,17 @@
             ]
         },
         {
+            "name" : "callaudiod",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://gitlab.com/mobian1/callaudiod/-/archive/0.0.4/callaudiod-0.0.4.tar.gz",
+                    "sha256" : "a9620dee2999fa85a7ca8f0314be3317a99fc225439ac193d5f727ff9397f93d"
+                }
+            ]
+        },
+        {
             "name" : "calls",
             "buildsystem" : "meson",
             "sources" : [
