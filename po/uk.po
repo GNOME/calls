@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-11-03 15:25+0000\n"
-"PO-Revision-Date: 2020-11-03 17:33+0200\n"
+"POT-Creation-Date: 2020-11-13 15:25+0000\n"
+"PO-Revision-Date: 2020-11-14 10:05+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -83,6 +83,24 @@ msgstr "Панель набору"
 #: src/calls-main-window.c:374
 msgid "Recent"
 msgstr "Нещодавні"
+
+#: src/calls-notifier.c:52
+msgid "Missed call"
+msgstr "Пропущено виклик"
+
+#: src/calls-notifier.c:56
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Пропущено виклик від <b>%s</b>"
+
+#: src/calls-notifier.c:58
+#, c-format
+msgid "Missed call from %s"
+msgstr "Пропущено виклик від %s"
+
+#: src/calls-notifier.c:64
+msgid "Call back"
+msgstr "Передзвонити"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
