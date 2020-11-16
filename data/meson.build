@@ -2,11 +2,23 @@ datadir = get_option('datadir')
 sysconfdir = get_option('sysconfdir')
 
 # Desktop file
-install_data('sm.puri.Calls.desktop',
-             install_dir : join_paths(datadir, 'applications'))
-install_data('sm.puri.Calls-daemon.desktop',
-             rename : 'sm.puri.Calls.desktop',
-             install_dir : join_paths(sysconfdir, 'xdg/autostart'))
+desktop_file = i18n.merge_file(
+  input : 'sm.puri.Calls.desktop.in',
+  output : 'sm.puri.Calls.desktop',
+  type : 'desktop',
+  po_dir : '../po',
+  install : true,
+  install_dir : join_paths(datadir, 'applications')
+)
+
+desktop_file = i18n.merge_file(
+  input : 'sm.puri.Calls-daemon.desktop.in',
+  output : 'sm.puri.Calls-daemon.desktop',
+  type : 'desktop',
+  po_dir : '../po',
+  install : true,
+  install_dir : join_paths(sysconfdir, 'xdg/autostart')
+)
 
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
