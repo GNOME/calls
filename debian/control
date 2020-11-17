@@ -6,6 +6,7 @@ Uploaders:
  Bob Ham <rah@settrans.net>,
 Build-Depends:
  debhelper (>= 11),
+ desktop-file-utils,
  libcallaudio-dev,
  libfeedback-dev,
  libhandy-1-dev (>= 1.0.0),
