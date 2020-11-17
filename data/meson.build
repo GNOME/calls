@@ -23,11 +23,11 @@ desktop_file = i18n.merge_file(
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   test('Validate desktop file', desktop_utils,
-       args: [join_paths(meson.current_source_dir(),
+       args: [join_paths(meson.current_build_dir(),
                          'sm.puri.Calls.desktop')
              ])
   test('Validate daemon desktop file', desktop_utils,
-       args: [join_paths(meson.current_source_dir(),
+       args: [join_paths(meson.current_build_dir(),
                          'sm.puri.Calls-daemon.desktop')
              ])
 endif
