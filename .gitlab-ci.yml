@@ -11,6 +11,7 @@ variables:
   DEPS: build-essential git
   WANT_BUILD_DEPS: "true"
   IMAGE: debian:bullseye
+  COMMON_BUILD_OPTS: --werror
 
 before_script:
   - export DEBIAN_FRONTEND=noninteractive
@@ -26,6 +27,12 @@ before_script:
   tags:
     - librem5
 
+.build_step: &build_step
+  script:
+    - 'echo "Build opts: ${BUILD_OPTS}"'
+    - meson ${BUILD_OPTS} . _build
+    - ninja -C _build
+
 build:native:
   <<: *tags
   image: $IMAGE
@@ -33,9 +40,9 @@ build:native:
   artifacts:
     paths:
       - _build
-  script:
-    - meson --werror . _build
-    - ninja -C _build
+  variables:
+    BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
+  <<: *build_step
   except:
     variables:
       - $PKG_ONLY == "1"
@@ -49,6 +56,23 @@ test:native:
   script:
     - export LC_ALL=C.UTF-8
     - xvfb-run ninja -C _build test
+  except:
+    variables:
+      - $PKG_ONLY == "1"
+
+build-gtkdoc:
+  <<: *tags
+  image: $IMAGE
+  stage: test
+  dependencies:
+    - build:native
+  <<: *build_step
+  script:
+    - ninja -C _build calls-doc
+    - mv _build/doc/html/ _reference/
+  artifacts:
+    paths:
+      - _reference
   except:
     variables:
       - $PKG_ONLY == "1"
