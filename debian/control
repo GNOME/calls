@@ -43,3 +43,17 @@ Description: Make and receive PSTN phone calls
  It works on desktops but also adjusts to small screen sizes like smart phones
  and other mobile devices.
  
+Package: calls-doc
+Architecture: all
+Build-Profiles: <!nodoc>
+Depends:
+ ${misc:Depends},
+Description: Make and receive PSTN phone calls - development documentation
+ A GTK user interface for PSTN phone calls using ModemManager.
+ .
+ Besides phone calls it also handles USSD.
+ .
+ It works on desktops but also adjusts to small screen sizes like smart phones
+ and other mobile devices.
+ .
+ This package contains the development documentation.
