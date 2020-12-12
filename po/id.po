@@ -1,0 +1,241 @@
+# Indonesian translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Andika Triwidada <atriwidada@gnome.org>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-12-12 03:25+0000\n"
+"PO-Revision-Date: 2020-12-12 15:31+0700\n"
+"Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural= n!=1;\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:317
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Panggilan"
+
+#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telepon"
+
+#: data/sm.puri.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Pemutar-nomor telepon dan penanganan panggilan"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PTSN;"
+msgstr "Telepon;Panggil;Dial;Pemanggil;PSTN;"
+
+#: data/sm.puri.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Panggilan (daemon)"
+
+#: data/sm.puri.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Pemutar-nomor telepon dan penangan panggilan (mode daemon)"
+
+#: src/calls-application.c:521
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Nama plugin yang digunakan untuk Penyedia panggilan"
+
+#: src/calls-application.c:522
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:527
+msgid "Whether to present the main window on startup"
+msgstr "Apakah menyajikan jendela utama pada saat mulai"
+
+#: src/calls-application.c:533
+msgid "Dial a number"
+msgstr "Putar suatu nomor"
+
+#: src/calls-application.c:534
+msgid "NUMBER"
+msgstr "NOMOR"
+
+#: src/calls-call-display.c:280
+msgid "Calling…"
+msgstr "Memanggil…"
+
+#: src/calls-call-record-row.c:39 src/calls-manager.c:615
+msgid "Anonymous caller"
+msgstr "Penelepon anonim"
+
+#: src/calls-call-record-row.c:112
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"kemarin"
+
+#: src/calls-main-window.c:120
+msgid "translator-credits"
+msgstr "Andika Triwidada <andika@gmail.com>, 2020"
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Tidak dapat melakukan panggilan: Tidak ada modem berkemampuan suara yang tersedia"
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No backend service"
+msgstr "Tidak dapat melakukan panggilan: Tidak ada layanan backend"
+
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No plugin"
+msgstr "Tidak dapat melakukan panggilan: Tidak ada plugin"
+
+#: src/calls-main-window.c:365 src/ui/call-display.ui:280
+msgid "Dial Pad"
+msgstr "Tombol Angka"
+
+#: src/calls-main-window.c:374
+msgid "Recent"
+msgstr "Baru-baru Ini"
+
+#: src/calls-notifier.c:52
+msgid "Missed call"
+msgstr "Panggilan tak terjawab"
+
+#: src/calls-notifier.c:56
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Panggilan tak terjawab dari <b>%s</b>"
+
+#: src/calls-notifier.c:58
+#, c-format
+msgid "Missed call from %s"
+msgstr "Panggilan tak terjawab dari %s"
+
+#: src/calls-notifier.c:64
+msgid "Call back"
+msgstr "Telepon balik"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Panggilan telepon masuk"
+
+#: src/ui/call-display.ui:126
+msgid "Mute"
+msgstr "Bisukan"
+
+#: src/ui/call-display.ui:163
+msgid "Speaker"
+msgstr "Speaker"
+
+#: src/ui/call-display.ui:199
+msgid "Add call"
+msgstr "Menambahkan panggilan"
+
+#: src/ui/call-display.ui:244
+msgid "Hold"
+msgstr "Tahan"
+
+#: src/ui/call-display.ui:336
+msgid "Hang up"
+msgstr "Tutup"
+
+#: src/ui/call-display.ui:367
+msgid "Answer"
+msgstr "Jawab"
+
+#: src/ui/call-display.ui:449
+msgid "Hide the dial pad"
+msgstr "Menyembunyikan tombol angka"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Hubungi mereka"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Hapus Panggilan"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Ditahan"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Panggilan ini tidak dienkripsi"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Panggilan ini dienkripsi"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Tidak Ada Panggilan Terbaru"
+
+#: src/ui/history-header-bar.ui:7
+msgid "Recent Calls"
+msgstr "Panggilan Baru-baru Ini"
+
+#: src/ui/history-header-bar.ui:20
+msgid "New call…"
+msgstr "Panggilan baru…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:39
+msgid "Menu"
+msgstr "Menu"
+
+#: src/ui/history-header-bar.ui:70
+msgid "About Calls"
+msgstr "Tentang Panggilan"
+
+#: src/ui/main-window.ui:38
+msgid "No modem found"
+msgstr "Modem tak ditemukan"
+
+#: src/ui/main-window.ui:58
+msgid "Contacts"
+msgstr "Kontak"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Batal"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_Tutup"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Kirim"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Dial"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Backspace melalui angka"
+
+#: src/ui/new-call-header-bar.ui:7
+msgid "New Call"
+msgstr "Panggilan Baru"
+
+#: src/ui/new-call-header-bar.ui:20
+msgid "Back"
+msgstr "Mundur"
