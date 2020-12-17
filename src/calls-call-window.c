@@ -173,7 +173,10 @@ session_inhibit (CallsCallWindow *self, gboolean inhibit)
         self->inhibit_cookie =
           gtk_application_inhibit (gtk_window_get_application (GTK_WINDOW (self)),
                                    GTK_WINDOW (self),
-                                   GTK_APPLICATION_INHIBIT_SUSPEND,
+                                   GTK_APPLICATION_INHIBIT_SUSPEND |
+                                   GTK_APPLICATION_INHIBIT_IDLE |
+                                   GTK_APPLICATION_INHIBIT_LOGOUT |
+                                   GTK_APPLICATION_INHIBIT_SWITCH,
                                    "call active");
     }
   else
