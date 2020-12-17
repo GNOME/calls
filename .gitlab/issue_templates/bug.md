@@ -24,8 +24,9 @@
 
 # What hardware are you running Calls on?
 
+ - [ ] Librem 5
+ - [ ] Librem 5 devkit
  - [ ] amd64 qemu image
- - [ ] Librem5 devkit
  - [ ] other (please elaborate)
 
 # What modem are you using?
