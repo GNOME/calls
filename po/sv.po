@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the Calls package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2020.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020.
+# Luna Jernberg <droidbittin@gmail.com>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-09-10 15:42+0000\n"
-"PO-Revision-Date: 2020-09-14 22:01+0200\n"
+"POT-Creation-Date: 2020-12-25 15:25+0000\n"
+"PO-Revision-Date: 2020-12-25 21:46+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -17,37 +18,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:317
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
 
-#: src/calls-application.c:519
+#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefon"
+
+#: data/sm.puri.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "En telefonuppringare och samtalshanterare"
+
+# https://source.puri.sm/Librem5/calls/-/issues/205
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PTSN;"
+msgstr "Telefon;Samtal;Lur;Ring;Uppringare;PTSN;"
+
+#: data/sm.puri.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Samtal (demon)"
+
+#: data/sm.puri.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "En telefonuppringare och samtalshanterare (demonläge)"
+
+#: src/calls-application.c:521
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Namnet på insticket att använda för samtalsleverantören"
 
-#: src/calls-application.c:520
+#: src/calls-application.c:522
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:525
+#: src/calls-application.c:527
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:531
+#: src/calls-application.c:533
 msgid "Dial a number"
 msgstr "Slå ett nummer"
 
-#: src/calls-application.c:532
+#: src/calls-application.c:534
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-call-display.c:246
+#: src/calls-call-display.c:280
 msgid "Calling…"
 msgstr "Ringer…"
 
-#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+#: src/calls-call-record-row.c:39 src/calls-manager.c:615
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
 
@@ -60,33 +84,52 @@ msgstr ""
 "%s\n"
 "igår"
 
-#: src/calls-main-window.c:115
+#: src/calls-main-window.c:120
 msgid "translator-credits"
 msgstr ""
 "Sebastian Rasmussen <sebras@gmail.com>\n"
+"Luna Jernberg <droidbittin@gmail.com>\n"
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: src/calls-main-window.c:173
+#: src/calls-main-window.c:318
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Kan inte ringa: Inget röstkapabelt modem tillgängligt"
 
-#: src/calls-main-window.c:178
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No backend service"
 msgstr "Kan inte ringa: Ingen bakändestjänst"
 
-#: src/calls-main-window.c:182
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No plugin"
 msgstr "Kan inte ringa: Inget instick"
 
-#: src/calls-main-window.c:210 src/ui/call-display.ui:280
+#: src/calls-main-window.c:365 src/ui/call-display.ui:280
 msgid "Dial Pad"
 msgstr "Knappsats"
 
-#: src/calls-main-window.c:219
+#: src/calls-main-window.c:374
 msgid "Recent"
 msgstr "Senaste"
+
+#: src/calls-notifier.c:52
+msgid "Missed call"
+msgstr "Missat samtal"
+
+#: src/calls-notifier.c:56
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Missat samtal från <b>%s</b>"
+
+#: src/calls-notifier.c:58
+#, c-format
+msgid "Missed call from %s"
+msgstr "Missat samtal från %s"
+
+#: src/calls-notifier.c:64
+msgid "Call back"
+msgstr "Ring tillbaka"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
@@ -148,20 +191,20 @@ msgstr "Detta samtal är krypterat"
 msgid "No Recent Calls"
 msgstr "Inga senaste samtal"
 
-#: src/ui/history-header-bar.ui:8
+#: src/ui/history-header-bar.ui:7
 msgid "Recent Calls"
 msgstr "Senaste samtal"
 
-#: src/ui/history-header-bar.ui:21
+#: src/ui/history-header-bar.ui:20
 msgid "New call…"
 msgstr "Nytt samtal…"
 
 #. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:40
+#: src/ui/history-header-bar.ui:39
 msgid "Menu"
 msgstr "Meny"
 
-#: src/ui/history-header-bar.ui:71
+#: src/ui/history-header-bar.ui:70
 msgid "About Calls"
 msgstr "Om Samtal"
 
@@ -173,6 +216,22 @@ msgstr "Inget modem hittades"
 msgid "Contacts"
 msgstr "Kontakter"
 
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Avbryt"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "S_täng"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Skicka"
+
 #: src/ui/new-call-box.ui:101
 msgid "Dial"
 msgstr "Ring"
@@ -181,11 +240,11 @@ msgstr "Ring"
 msgid "Backspace through number"
 msgstr "Radera siffra från nummer"
 
-#: src/ui/new-call-header-bar.ui:8
+#: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
 msgstr "Nytt samtal"
 
-#: src/ui/new-call-header-bar.ui:21
+#: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Tillbaka"
 
@@ -213,8 +272,11 @@ msgstr "Tillbaka"
 #~ msgid "The number the call is connected to if known"
 #~ msgstr "Numret som samtalet är anslutet till, om känt"
 
-#~ msgid "The name of the party the call is connected to, if the network provides it"
-#~ msgstr "Namnet på parten som samtalet är anslutet till, om nätverket tillhandahåller det"
+#~ msgid ""
+#~ "The name of the party the call is connected to, if the network provides it"
+#~ msgstr ""
+#~ "Namnet på parten som samtalet är anslutet till, om nätverket "
+#~ "tillhandahåller det"
 
 #~ msgid "State"
 #~ msgstr "Tillstånd:"
@@ -233,9 +295,6 @@ msgstr "Tillbaka"
 
 #~ msgid "The party participating in the call"
 #~ msgstr "Parten som deltar i samtalet"
-
-#~ msgid "Call data"
-#~ msgstr "Samtalsdata"
 
 #~ msgid "Data for the call this display will be associated with"
 #~ msgstr "Data för samtalet som denna skärm kommer att associeras med"
