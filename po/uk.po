@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-11-17 15:25+0000\n"
-"PO-Revision-Date: 2020-11-17 19:37+0200\n"
+"POT-Creation-Date: 2020-12-26 20:37+0000\n"
+"PO-Revision-Date: 2020-12-27 09:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -34,9 +34,9 @@ msgstr "Засіб набирання номерів та обробки вик�
 
 #. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
 #: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
-msgid "Telephone;Call;Phone;Dial;Dialer;PTSN;"
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
-"Telephone;Call;Phone;Dial;Dialer;PTSN;телефон;виклик;дзвінок;набір;набирання;"
+"Telephone;Call;Phone;Dial;Dialer;PSTN;телефон;виклик;дзвінок;набір;набирання;"
 
 #: data/sm.puri.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
@@ -70,7 +70,7 @@ msgstr "НОМЕР"
 msgid "Calling…"
 msgstr "Виклик…"
 
-#: src/calls-call-record-row.c:39 src/calls-manager.c:621
+#: src/calls-call-record-row.c:39 src/calls-manager.c:615
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
