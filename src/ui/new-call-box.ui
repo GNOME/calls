@@ -146,4 +146,8 @@
       </object>
     </child>
   </template>
+  <object class="GtkGestureLongPress" id="long_press_back_gesture">
+    <property name="widget">backspace</property>
+    <signal name="pressed" handler="long_press_back_cb" object="CallsNewCallBox" swapped="true"/>
+  </object>
 </interface>
