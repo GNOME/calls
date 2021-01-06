@@ -1,3 +1,49 @@
+calls (0.2.0) amber-phone; urgency=medium
+
+  [ Adrien Plazas ]
+  * style: Fix the CSS path to the HdyKeypad buttons
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * meson: bump calls to 0.1.9
+  * meson: allow internationalization of desktop files
+  * doc: meson: fix ofono path
+  * doc: meson: Use shared library for gtk-doc
+  * debian: Add dependencies and rules for building docs
+  * CI: build documentation
+  * debian: Move documentation to own package calls-doc
+  * data: Fix typo in desktop files
+  * call-window: inhibit idle during active call
+
+  [ Guido Günther ]
+  * po: Add calls-notifier.c
+  * gitlab-ci: Fail when C files are missing from POTFILES.in
+  * debian: Add desktop-file-utils
+  * data: Check desktop file in build dir
+  * d/control: Update description
+  * gitlab-template: Add Librem 5
+
+  [ Matthias Klumpp ]
+  * trivial: metainfo: style
+  * metainfo: Mark app as touch-input compatible
+
+  [ James Westman ]
+  * flatpak: Add callaudiod to flatpak
+
+  [ Daniel Abrecht ]
+  * Replace CallsOrigin getters with properties and add calls_origin_foreach_call method
+  * Don't localise property descriptions in calls-call and calls-origin properties
+
+  [ Andika Triwidada ]
+  * Added Indonesian translation
+
+  [ Sebastian Krzyszkowiak ]
+  * debian: Add maintscript to rename xdg autostart file
+
+ -- Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>  Wed, 06 Jan 2021 01:33:54 +0100
+
 calls (0.1.9) amber-phone; urgency=medium
 
   [ Juliano de Souza Camargo ]
