@@ -310,10 +310,12 @@ constructed (GObject *object)
 
   g_return_if_fail (self->voice_call != NULL);
 
-  g_signal_connect_swapped (self->voice_call, "property-changed",
-                            G_CALLBACK (property_changed_cb), self);
-  g_signal_connect_swapped (self->voice_call, "disconnect-reason",
-                            G_CALLBACK (disconnect_reason_cb), self);
+  g_signal_connect_object (self->voice_call, "property-changed",
+                           G_CALLBACK (property_changed_cb),
+                           self, G_CONNECT_SWAPPED);
+  g_signal_connect_object (self->voice_call, "disconnect-reason",
+                           G_CALLBACK (disconnect_reason_cb),
+                           self, G_CONNECT_SWAPPED);
 
   G_OBJECT_CLASS (calls_ofono_call_parent_class)->constructed (object);
 }
