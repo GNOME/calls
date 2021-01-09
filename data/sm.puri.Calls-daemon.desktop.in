@@ -12,5 +12,5 @@ Type=Application
 StartupNotify=true
 NoDisplay=true
 Terminal=false
-Categories=GNOME;GTK;Telephony;
+Categories=Network;GNOME;GTK;Telephony;
 X-GNOME-AutoRestart=true

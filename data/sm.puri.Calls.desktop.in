@@ -11,6 +11,6 @@ Exec=calls %u
 Type=Application
 StartupNotify=true
 Terminal=false
-Categories=GNOME;GTK;Telephony;
+Categories=Network;GNOME;GTK;Telephony;
 MimeType=x-scheme-handler/tel
 X-Purism-FormFactor=Workstation;Mobile;
