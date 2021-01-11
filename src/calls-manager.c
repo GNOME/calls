@@ -314,12 +314,12 @@ calls_manager_get_property (GObject    *object,
   case PROP_STATE:
     g_value_set_enum (value, calls_manager_get_state (self));
     break;
-  
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
   }
-} 
+}
 
 static void
 calls_manager_set_property (GObject      *object,
@@ -449,7 +449,7 @@ calls_manager_class_init (CallsManagerClass *klass)
                   CALLS_TYPE_USSD);
 
   props[PROP_PROVIDER] = g_param_spec_string ("provider",
-                                              "provider", 
+                                              "provider",
                                               "The name of the currently loaded provider",
                                               NULL,
                                               G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
