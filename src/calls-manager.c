@@ -564,6 +564,62 @@ calls_manager_get_calls (CallsManager *self)
   return g_steal_pointer (&calls);
 }
 
+/**
+ * calls_manager_hang_up_all_calls:
+ * @self: a #CallsManager
+ *
+ * Hangs up on every call known to @self.
+ */
+void
+calls_manager_hang_up_all_calls (CallsManager *self)
+{
+  g_autoptr (GList) calls = NULL;
+  GList *node;
+  CallsCall *call;
+
+  g_return_if_fail (CALLS_IS_MANAGER (self));
+
+  calls = calls_manager_get_calls (self);
+
+  for (node = calls; node; node = node->next)
+    {
+      call = node->data;
+      g_debug ("Hanging up on call %s", calls_call_get_name (call));
+      calls_call_hang_up (call);
+    }
+
+  g_debug ("Hanged up on all calls");
+}
+
+/**
+ * calls_manager_has_active_call
+ * @self: a #CallsManager
+ *
+ * Checks if @self has any active call
+ *
+ * Returns: %TRUE if there are active calls, %FALSE otherwise
+ */
+gboolean
+calls_manager_has_active_call (CallsManager *self)
+{
+  g_autoptr (GList) calls = NULL;
+  GList *node;
+  CallsCall *call;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+
+  calls = calls_manager_get_calls (self);
+
+  for (node = calls; node; node = node->next)
+    {
+      call = node->data;
+      if (calls_call_get_state (call) != CALLS_CALL_STATE_DISCONNECTED)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 CallsOrigin *
 calls_manager_get_default_origin (CallsManager *self)
 {

@@ -61,5 +61,7 @@ CallsOrigin       *calls_manager_get_default_origin (CallsManager *self);
 void               calls_manager_set_default_origin (CallsManager *self,
                                                      CallsOrigin *origin);
 const gchar       *calls_manager_get_contact_name   (CallsCall *call);
+gboolean           calls_manager_has_active_call    (CallsManager *self);
+void               calls_manager_hang_up_all_calls  (CallsManager *self);
 
 G_END_DECLS
