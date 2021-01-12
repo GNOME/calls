@@ -211,7 +211,7 @@ stop_timeout (CallsCallDisplay *self)
 
 
 static void
-select_mode_complete (gboolean success, GError *error)
+select_mode_complete (gboolean success, GError *error, gpointer data)
 {
   if (error)
     {
@@ -261,11 +261,15 @@ call_state_changed_cb (CallsCallDisplay *self,
          state != CALLS_CALL_STATE_DIALING
          && state != CALLS_CALL_STATE_ALERTING);
 
-      call_audio_select_mode_async (CALL_AUDIO_MODE_CALL, select_mode_complete);
+      call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
+                                    select_mode_complete,
+                                    NULL);
       break;
 
     case CALLS_CALL_STATE_DISCONNECTED:
-      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT, select_mode_complete);
+      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
+                                    select_mode_complete,
+                                    NULL);
       break;
     }
 
