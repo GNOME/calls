@@ -328,6 +328,22 @@ startup (GApplication *application)
 }
 
 
+static void
+notify_window_visible_cb (GtkWidget       *window,
+                          GParamSpec      *pspec,
+                          CallsApplication *application)
+{
+  CallsManager *manager = calls_manager_get_default ();
+
+  g_return_if_fail (CALLS_IS_APPLICATION (application));
+  g_return_if_fail (CALLS_IS_CALL_WINDOW (window));
+
+  /* The UI is being closed, hang up active calls */
+  if (!gtk_widget_is_visible (window))
+    calls_manager_hang_up_all_calls (manager);
+}
+
+
 static gboolean
 start_proper (CallsApplication  *self)
 {
@@ -359,6 +375,11 @@ start_proper (CallsApplication  *self)
 
   self->call_window = calls_call_window_new (gtk_app);
   g_assert (self->call_window != NULL);
+
+  g_signal_connect (self->call_window,
+                    "notify::visible",
+                    G_CALLBACK (notify_window_visible_cb),
+                    self);
 
   return TRUE;
 }
