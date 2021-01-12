@@ -436,6 +436,12 @@ open_tel_uri (CallsApplication *self,
   number = e_phone_number_from_string (uri, NULL, &error);
   if (!number)
     {
+      g_autofree gchar *msg =
+        g_strdup_printf (_("Tried dialing unparsable tel URI `%s'"), uri);
+
+      g_signal_emit_by_name (calls_manager_get_default (),
+                             "error",
+                             msg);
       g_warning ("Ignoring unparsable tel URI `%s': %s",
                  uri, error->message);
       return;
@@ -475,10 +481,18 @@ app_open (GApplication  *application,
         }
       else
         {
+          g_autofree gchar *msg = NULL;
+
           uri = g_file_get_parse_name (files[i]);
           g_warning ("Don't know how to"
                      " open file `%s', ignoring",
                      uri);
+
+          msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
+
+          g_signal_emit_by_name (calls_manager_get_default (),
+                                 "error",
+                                 msg);
         }
     }
 }
