@@ -67,6 +67,7 @@ struct _CallsApplication
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
 
 
 static gboolean start_proper (CallsApplication *self);
@@ -176,7 +177,7 @@ set_daemon_action (GSimpleAction *action,
 static gboolean
 check_dial_number (const gchar *number)
 {
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
   GRegex *reject;
   gboolean matches;
 
@@ -186,7 +187,6 @@ check_dial_number (const gchar *number)
       g_warning ("Could not compile regex for"
                  " dial number checking: %s",
                  error->message);
-      g_error_free (error);
       return FALSE;
     }
 
@@ -237,7 +237,7 @@ dial_action (GSimpleAction *action,
   CallsApplication *self = CALLS_APPLICATION (user_data);
   const gchar *number;
   gboolean number_ok;
-  gchar *dial_string;
+  g_autofree gchar *dial_string = NULL;
 
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
@@ -264,7 +264,6 @@ dial_action (GSimpleAction *action,
 
   calls_main_window_dial (self->main_window,
                           dial_string);
-  g_free (dial_string);
 }
 
 static void
@@ -428,9 +427,9 @@ static void
 open_tel_uri (CallsApplication *self,
               const gchar      *uri)
 {
-  EPhoneNumber *number;
-  GError *error = NULL;
-  gchar *dial_str;
+  g_autoptr (EPhoneNumber) number = NULL;
+  g_autoptr (GError) error = NULL;
+  g_autofree gchar *dial_str = NULL;
 
   g_debug ("Opening tel URI `%s'", uri);
 
@@ -439,17 +438,14 @@ open_tel_uri (CallsApplication *self,
     {
       g_warning ("Ignoring unparsable tel URI `%s': %s",
                  uri, error->message);
-      g_error_free (error);
       return;
     }
 
   dial_str = e_phone_number_to_string
     (number, E_PHONE_NUMBER_FORMAT_E164);
-  e_phone_number_free (number);
 
   calls_main_window_dial (self->main_window,
                           dial_str);
-  g_free (dial_str);
 }
 
 
@@ -470,7 +466,7 @@ app_open (GApplication  *application,
 
   for (i = 0; i < n_files; ++i)
     {
-      gchar *uri;
+      g_autofree gchar *uri = NULL;
       if (g_file_has_uri_scheme (files[i], "tel"))
         {
           uri = g_file_get_uri (files[i]);
@@ -484,8 +480,6 @@ app_open (GApplication  *application,
                      " open file `%s', ignoring",
                      uri);
         }
-
-      g_free (uri);
     }
 }
 
