@@ -36,7 +36,7 @@ calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('gom-1.0'),
                dependency('libebook-contacts-1.2'),
                dependency('folks'),
-               dependency('libcallaudio-0'),
+               dependency('libcallaudio-0.1'),
              ]
 
 if wl_scanner.found()
