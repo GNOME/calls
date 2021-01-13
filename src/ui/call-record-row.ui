@@ -116,6 +116,7 @@
         <!-- Translators: This is a phone number -->
         <attribute name="label" translatable="yes">_Copy number</attribute>
         <attribute name="action">copy-number</attribute>
+        <attribute name="hidden-when">action-disabled</attribute>
       </item>
     </section>
   </menu>

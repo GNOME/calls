@@ -330,6 +330,12 @@ static void
 contact_name_cb (CallsCallRecordRow *self)
 {
   const gchar *name = NULL;
+  g_autofree gchar *target = NULL;
+  GAction *act = g_action_map_lookup_action (self->action_map, "copy-number");
+
+  g_object_get (G_OBJECT (self->record),
+                "target", &target,
+                NULL);
 
   if (self->contact)
     {
@@ -342,21 +348,17 @@ contact_name_cb (CallsCallRecordRow *self)
     }
   else
     {
-      g_autofree gchar *target = NULL;
-
-      g_object_get (G_OBJECT (self->record),
-                    "target", &target,
-                    NULL);
-
       if (!g_strcmp0 (target, ""))
         {
           gtk_label_set_text (self->target, ANONYMOUS_CALLER);
           gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
+          g_simple_action_set_enabled (G_SIMPLE_ACTION (act), FALSE);
         }
       else
         {
           gtk_label_set_text (self->target, target);
           gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
+          g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
         }
     }
 }
@@ -646,9 +648,6 @@ calls_call_record_row_init (CallsCallRecordRow *self)
                                   G_ACTION_GROUP (self->action_map));
 
   act = g_action_map_lookup_action (self->action_map, "delete-call");
-  g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
-
-  act = g_action_map_lookup_action (self->action_map, "copy-number");
   g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
 
   self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
