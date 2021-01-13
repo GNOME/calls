@@ -465,21 +465,6 @@ app_open (GApplication  *application,
 
 
 static void
-constructed (GObject *object)
-{
-  CallsApplication *self = CALLS_APPLICATION (object);
-  GSimpleActionGroup *action_group;
-
-  action_group = g_simple_action_group_new ();
-  g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-                                   actions, G_N_ELEMENTS (actions), self);
-  g_object_unref (action_group);
-
-  G_OBJECT_CLASS (calls_application_parent_class)->constructed (object);
-}
-
-
-static void
 finalize (GObject *object)
 {
   CallsApplication *self = (CallsApplication *)object;
@@ -501,7 +486,6 @@ calls_application_class_init (CallsApplicationClass *klass)
   GApplicationClass *application_class = G_APPLICATION_CLASS (klass);
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed = constructed;
   object_class->finalize = finalize;
 
   application_class->handle_local_options = handle_local_options;
