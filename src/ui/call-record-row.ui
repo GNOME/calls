@@ -112,6 +112,11 @@
         <attribute name="label" translatable="yes">_Delete Call</attribute>
         <attribute name="action">delete-call</attribute>
       </item>
+      <item>
+        <!-- Translators: This is a phone number -->
+        <attribute name="label" translatable="yes">_Copy number</attribute>
+        <attribute name="action">copy-number</attribute>
+      </item>
     </section>
   </menu>
 </interface>

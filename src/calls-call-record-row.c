@@ -598,9 +598,30 @@ delete_call_activated (GSimpleAction *action,
 }
 
 
+static void
+copy_number_activated (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       data)
+{
+  CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (data);
+  g_autofree gchar *target = NULL;
+
+  g_object_get (G_OBJECT (self->record),
+                "target", &target,
+                NULL);
+
+  g_return_if_fail (target);
+
+  g_action_group_activate_action (G_ACTION_GROUP (g_application_get_default ()),
+                                  "copy-number",
+                                  g_variant_new_string (target));
+}
+
+
 static GActionEntry entries[] =
 {
  { "delete-call", delete_call_activated, NULL, NULL, NULL},
+ { "copy-number", copy_number_activated, NULL, NULL, NULL},
 };
 
 
@@ -625,6 +646,9 @@ calls_call_record_row_init (CallsCallRecordRow *self)
                                   G_ACTION_GROUP (self->action_map));
 
   act = g_action_map_lookup_action (self->action_map, "delete-call");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
+
+  act = g_action_map_lookup_action (self->action_map, "copy-number");
   g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
 
   self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
