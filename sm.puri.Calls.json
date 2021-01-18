@@ -55,6 +55,23 @@
                     "url" : "https://download.gnome.org/sources/gsound/1.0/gsound-1.0.2.tar.xz",
                     "sha256" : "bba8ff30eea815037e53bee727bbd5f0b6a2e74d452a7711b819a7c444e78e53"
                 }
+            ],
+            "modules": [
+                {
+                    "name" : "libcanberra",
+                    "sources" : [
+                        {
+                            "type" : "archive",
+                            "url" : "http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz",
+                            "sha256" : "c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72"
+                        }
+                    ],
+                    "config-opts" : [
+                        "--disable-alsa",
+                        "--disable-null",
+                        "--disable-oss"
+                    ]
+                }
             ]
         },
         {
