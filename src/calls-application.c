@@ -267,12 +267,26 @@ dial_action (GSimpleAction *action,
   g_free (dial_string);
 }
 
+static void
+copy_number (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  const gchar *number = g_variant_get_string (parameter, NULL);
+  GtkClipboard *clipboard =
+    gtk_clipboard_get_default (gdk_display_get_default ());
+
+  gtk_clipboard_set_text (clipboard, number, -1);
+
+  g_debug ("Copied `%s' to clipboard", number);
+}
 
 static const GActionEntry actions[] =
 {
   { "set-provider-name", set_provider_name_action, "s" },
   { "set-daemon", set_daemon_action, NULL },
   { "dial", dial_action, "s" },
+  { "copy-number", copy_number, "s"},
 };
 
 
