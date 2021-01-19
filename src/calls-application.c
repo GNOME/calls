@@ -277,30 +277,9 @@ static const GActionEntry actions[] =
 
 
 static void
-css_setup ()
-{
-  GtkCssProvider *provider;
-  GFile *file;
-  GError *error = NULL;
-
-  provider = gtk_css_provider_new ();
-  file = g_file_new_for_uri ("resource:///sm/puri/calls/style.css");
-
-  if (!gtk_css_provider_load_from_file (provider, file, &error)) {
-    g_warning ("Failed to load CSS file: %s", error->message);
-    g_clear_error (&error);
-    g_object_unref (file);
-    return;
-  }
-  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
-                                             GTK_STYLE_PROVIDER (provider), 600);
-  g_object_unref (file);
-}
-
-
-static void
 startup (GApplication *application)
 {
+  g_autoptr(GtkCssProvider) provider = NULL;
   GtkIconTheme *icon_theme;
   g_autoptr(GError) error = NULL;
 
@@ -324,7 +303,11 @@ startup (GApplication *application)
                                    G_N_ELEMENTS (actions),
                                    application);
 
-  css_setup ();
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_resource (provider, "/sm/puri/calls/style.css");
+  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                             GTK_STYLE_PROVIDER (provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 
