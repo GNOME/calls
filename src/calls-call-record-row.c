@@ -24,7 +24,8 @@
 
 #include "calls-call-record-row.h"
 #include "calls-best-match.h"
-#include "calls-contacts.h"
+#include "calls-contacts-provider.h"
+#include "calls-manager.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -385,7 +386,7 @@ setup_contact (CallsCallRecordRow *self)
 {
   g_autofree gchar *target = NULL;
   g_autoptr(GError) error = NULL;
-  EPhoneNumber *phone_number;
+  CallsContactsProvider *contacts_provider;
 
   // Get the target number
   g_object_get (G_OBJECT (self->record),
@@ -396,22 +397,12 @@ setup_contact (CallsCallRecordRow *self)
   if (!target[0])
     return;
 
-  // Parse it
-  phone_number = e_phone_number_from_string
-    (target, NULL, &error);
-  if (!phone_number)
-    {
-      g_warning ("Error parsing phone number `%s': %s",
-                 target, error->message);
-      return;
-    }
-
   // Look up the best match object
-  self->contact = calls_contacts_lookup_phone_number
-    (calls_contacts_get_default (), phone_number);
-  g_assert (self->contact != NULL);
-  g_object_ref (self->contact);
-  e_phone_number_free (phone_number);
+  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
+  self->contact = calls_contacts_provider_lookup_phone_number (contacts_provider, target);
+
+  if (self->contact == NULL)
+    return;
 
   g_signal_connect_swapped (self->contact,
                             "notify::name",

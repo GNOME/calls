@@ -32,7 +32,6 @@
 #include "calls-ringer.h"
 #include "calls-notifier.h"
 #include "calls-record-store.h"
-#include "calls-contacts.h"
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
@@ -61,13 +60,11 @@ struct _CallsApplication
   CallsRinger      *ringer;
   CallsNotifier    *notifier;
   CallsRecordStore *record_store;
-  CallsContacts    *contacts;
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
 
 
 static gboolean start_proper (CallsApplication *self);
@@ -370,9 +367,6 @@ start_proper (CallsApplication  *self)
   self->record_store = calls_record_store_new ();
   g_assert (self->record_store != NULL);
 
-  self->contacts = calls_contacts_get_default ();
-  g_assert (self->contacts != NULL);
-
   self->notifier = calls_notifier_new ();
   g_assert (CALLS_IS_NOTIFIER (self->notifier));
 
@@ -506,7 +500,6 @@ finalize (GObject *object)
   g_clear_object (&self->call_window);
   g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
-  g_clear_object (&self->contacts);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
 

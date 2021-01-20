@@ -25,7 +25,7 @@
 #include "config.h"
 #include "calls-ussd.h"
 #include "calls-manager.h"
-#include "calls-contacts.h"
+#include "calls-contacts-provider.h"
 #include "enum-types.h"
 
 #include <glib/gi18n.h>
@@ -36,13 +36,13 @@ struct _CallsManager
   GObject parent_instance;
 
   CallsProvider *provider;
+  CallsContactsProvider *contacts_provider;
   gchar *provider_name;
   CallsOrigin *default_origin;
   CallsManagerState state;
 };
 
 G_DEFINE_TYPE (CallsManager, calls_manager, G_TYPE_OBJECT);
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
 
 enum {
   PROP_0,
@@ -351,6 +351,7 @@ calls_manager_finalize (GObject *object)
 
   g_clear_object (&self->provider);
   g_clear_pointer (&self->provider_name, g_free);
+  g_clear_object (&self->contacts_provider);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -476,6 +477,9 @@ calls_manager_init (CallsManager *self)
 {
   self->state = CALLS_MANAGER_STATE_NO_PROVIDER;
   self->provider_name = NULL;
+
+  // Load the contacts provider
+  self->contacts_provider = calls_contacts_provider_new ();
 }
 
 
@@ -495,6 +499,14 @@ calls_manager_get_default (void)
     g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *)&instance);
   }
   return instance;
+}
+
+CallsContactsProvider *
+calls_manager_get_contacts_provider (CallsManager *self)
+{
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+
+  return self->contacts_provider;
 }
 
 const gchar *
@@ -661,24 +673,18 @@ calls_manager_set_default_origin (CallsManager *self,
 const gchar *
 calls_manager_get_contact_name (CallsCall *call)
 {
-  g_autoptr (EPhoneNumber) phone_number = NULL;
-  g_autoptr (GError) err = NULL;
   const gchar *number;
-  CallsBestMatch *match;
+  g_autoptr (CallsBestMatch) match = NULL;
+  CallsContactsProvider *contacts_provider;
 
   number = calls_call_get_number (call);
   if (!number || g_strcmp0 (number, "") == 0)
     return _("Anonymous caller");
 
-  phone_number = e_phone_number_from_string (number, NULL, &err);
-  if (!phone_number)
-    {
-      g_warning ("Failed to convert %s to a phone number: %s", number, err->message);
-      return NULL;
-    }
+  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
+  match = calls_contacts_provider_lookup_phone_number (contacts_provider,
+                                                       number);
 
-  match = calls_contacts_lookup_phone_number (calls_contacts_get_default (),
-                                              phone_number);
   if (!match)
     return NULL;
 
