@@ -27,6 +27,7 @@
 #include "calls-ussd.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
+#include "calls-contacts-box.h"
 #include "calls-history-box.h"
 #include "calls-in-app-notification.h"
 #include "calls-manager.h"
@@ -357,6 +358,15 @@ constructed (GObject *object)
                             self);
   gtk_window_set_transient_for (GTK_WINDOW (self->ussd_dialog), GTK_WINDOW (self));
 
+  // Add contacs box
+  widget = calls_contacts_box_new ();
+  gtk_stack_add_titled (self->main_stack, widget,
+                        "contacts", _("Contacts"));
+  gtk_container_child_set (main_stack, widget,
+                           "icon-name", "system-users-symbolic",
+                           NULL);
+  gtk_widget_set_visible (widget, TRUE);
+
   // Add new call box
   self->new_call = calls_new_call_box_new ();
   widget = GTK_WIDGET (self->new_call);
@@ -365,7 +375,6 @@ constructed (GObject *object)
   gtk_container_child_set (main_stack, widget,
                            "icon-name", "input-dialpad-symbolic",
                            NULL);
-
   // Add call records
   history = calls_history_box_new (self->record_store);
   widget = GTK_WIDGET (history);

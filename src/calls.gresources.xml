@@ -12,6 +12,8 @@
     <file preprocess="xml-stripblanks">new-call-header-bar.ui</file>
     <file preprocess="xml-stripblanks">call-record-row.ui</file>
     <file preprocess="xml-stripblanks">in-app-notification.ui</file>
+    <file preprocess="xml-stripblanks">contacts-row.ui</file>
+    <file preprocess="xml-stripblanks">contacts-box.ui</file>
   </gresource>
   <gresource prefix="/sm/puri/calls/">
     <file>style.css</file>

@@ -89,6 +89,8 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-in-app-notification.c', 'calls-in-app-notification.h',
                        'calls-manager.c', 'calls-manager.h',
                        'calls-notifier.c', 'calls-notifier.h',
+                       'calls-contacts-box.c', 'calls-contacts-box.h',
+                       'calls-contacts-row.c', 'calls-contacts-row.h',
                       ])
 
 calls_config_data = config_data

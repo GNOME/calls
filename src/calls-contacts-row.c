@@ -1,0 +1,207 @@
+/* -*- mode: c; c-basic-offset: 2; indent-tabs-mode: nil; -*- */
+/* calls-contacts-row.c
+ *
+ * Copyright 2020 Purism SPC
+ *
+ * Author(s):
+ *   Mohammed Sadiq <sadiq@sadiqpk.org>
+ *   Julian Sparber <julian@sparber.net>
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+#include <folks/folks.h>
+#include <handy.h>
+
+#include "calls-contacts-row.h"
+#include "calls-contacts-provider.h"
+
+struct _CallsContactsRow
+{
+  GtkListBoxRow       parent_instance;
+
+  GtkWidget          *avatar;
+  GtkWidget          *title;
+  GtkWidget          *grid;
+
+  gint                n_phonenumbers;
+
+  FolksIndividual    *item;
+};
+
+G_DEFINE_TYPE (CallsContactsRow, calls_contacts_row, GTK_TYPE_LIST_BOX_ROW)
+
+
+static GdkPixbuf *
+calls_contacts_row_set_pixbuf (gint size,
+                               gpointer item)
+{
+   g_autoptr (GError) error = NULL;
+   GLoadableIcon *icon;
+   g_autoptr (GInputStream) stream = NULL;
+   g_autoptr (GdkPixbuf) pixbuf = NULL;
+
+   g_return_val_if_fail (FOLKS_IS_INDIVIDUAL (item), NULL);
+
+   FolksAvatarDetails *avatar_details = FOLKS_AVATAR_DETAILS (item);
+
+   if (avatar_details == NULL)
+    return NULL;
+
+   icon = folks_avatar_details_get_avatar (avatar_details);
+
+   if (icon == NULL)
+     return NULL;
+
+   stream = g_loadable_icon_load (icon, size, NULL, NULL, &error);
+
+   if (error)
+     return NULL;
+
+   pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream, size, size, TRUE, NULL, &error);
+
+   if (error)
+     return NULL;
+
+   return g_steal_pointer (&pixbuf);
+}
+
+static void
+insert_phonenumber (CallsContactsRow *self,
+                    const gchar      *number)
+{
+  GtkWidget *label = gtk_label_new (number);
+  GtkWidget *button = gtk_button_new_from_icon_name ("call-start-symbolic", GTK_ICON_SIZE_BUTTON);
+
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+  gtk_style_context_add_class (gtk_widget_get_style_context (label), "dim-label");
+  gtk_widget_show (label);
+  gtk_grid_attach (GTK_GRID (self->grid), label, 1, self->n_phonenumbers, 1, 1);
+
+  gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "app.dial");
+  gtk_actionable_set_action_target (GTK_ACTIONABLE (button), "s", number, NULL);
+  gtk_widget_show (button);
+  gtk_grid_attach_next_to (GTK_GRID (self->grid),
+                           button,
+                           label,
+                           GTK_POS_RIGHT,
+                           1,
+                           1);
+
+  self->n_phonenumbers++;
+}
+
+static void
+phone_numbers_changed_cb (CallsContactsRow *self)
+{
+  GeeIterator *phone_iter;
+  g_autoptr (GeeSet) phone_numbers;
+
+  while (gtk_grid_get_child_at (GTK_GRID (self->grid), 1, 1) != NULL) {
+    gtk_grid_remove_row (GTK_GRID (self->grid), 1);
+  }
+
+  self->n_phonenumbers = 1;
+  g_object_get (self->item, "phone-numbers", &phone_numbers, NULL);
+  phone_iter = gee_iterable_iterator (GEE_ITERABLE (phone_numbers));
+
+  while (gee_iterator_next (phone_iter)) {
+    // FIXME: We can't use g_autoptr because it's not implemented in the folks version in debian
+    FolksAbstractFieldDetails *detail = gee_iterator_get (phone_iter);
+
+    if (FOLKS_IS_PHONE_FIELD_DETAILS (detail)) {
+      FolksPhoneFieldDetails *phone = FOLKS_PHONE_FIELD_DETAILS (detail);
+      g_autofree gchar *number = NULL;
+      number = folks_phone_field_details_get_normalised (phone);
+      if (number)
+        insert_phonenumber (self, number);
+    }
+    g_object_unref (detail);
+  }
+}
+
+static void
+avatar_changed_cb (CallsContactsRow *self)
+{
+  // TODO: Load avatar async once https://gitlab.gnome.org/GNOME/libhandy/-/merge_requests/637 is merged
+  hdy_avatar_set_image_load_func (HDY_AVATAR (self->avatar),
+                                  calls_contacts_row_set_pixbuf,
+                                  g_object_ref (self->item), g_object_unref);
+}
+
+static void
+calls_contacts_row_dispose (GObject *object)
+{
+  CallsContactsRow *self = CALLS_CONTACTS_ROW (object);
+
+  g_clear_object (&self->item);
+
+  G_OBJECT_CLASS (calls_contacts_row_parent_class)->dispose (object);
+}
+
+static void
+calls_contacts_row_class_init (CallsContactsRowClass *klass)
+{
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->dispose = calls_contacts_row_dispose;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/sm/puri/calls/"
+                                               "ui/contacts-row.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsContactsRow, avatar);
+  gtk_widget_class_bind_template_child (widget_class, CallsContactsRow, title);
+  gtk_widget_class_bind_template_child (widget_class, CallsContactsRow, grid);
+}
+
+static void
+calls_contacts_row_init (CallsContactsRow *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+}
+
+GtkWidget *
+calls_contacts_row_new (FolksIndividual *item)
+{
+  CallsContactsRow *self;
+
+  g_return_val_if_fail (FOLKS_IS_INDIVIDUAL (item), NULL);
+
+  self = g_object_new (CALLS_TYPE_CONTACTS_ROW, NULL);
+  self->item = g_object_ref (item);
+
+  g_object_bind_property (item, "display-name",
+                          self->title, "label",
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (item, "display-name",
+                          self->avatar, "text",
+                          G_BINDING_SYNC_CREATE);
+
+  g_signal_connect_object (item,
+                           "notify::phone-numbers",
+                           G_CALLBACK (phone_numbers_changed_cb),
+                           self, G_CONNECT_SWAPPED);
+
+  g_signal_connect_object (item,
+                           "notify::avatar",
+                           G_CALLBACK (avatar_changed_cb),
+                           self, G_CONNECT_SWAPPED);
+
+  avatar_changed_cb (self);
+  phone_numbers_changed_cb (self);
+
+  return GTK_WIDGET (self);
+}
+
+
+FolksIndividual *
+calls_contacts_row_get_item (CallsContactsRow *self)
+{
+  g_return_val_if_fail (CALLS_IS_CONTACTS_ROW (self), NULL);
+
+  return self->item;
+}
