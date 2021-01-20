@@ -10,7 +10,7 @@ stages:
 variables:
   DEPS: build-essential git
   WANT_BUILD_DEPS: "true"
-  IMAGE: debian:bullseye
+  IMAGE: pureos/byzantium
   COMMON_BUILD_OPTS: --werror
 
 before_script:
