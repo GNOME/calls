@@ -281,6 +281,15 @@ copy_number (GSimpleAction *action,
   g_debug ("Copied `%s' to clipboard", number);
 }
 
+static void
+manager_state_changed_cb (GApplication *application)
+{
+  GAction* dial_action = g_action_map_lookup_action (G_ACTION_MAP (application), "dial");
+  CallsManagerState state = calls_manager_get_state (calls_manager_get_default ());
+
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (dial_action), state == CALLS_MANAGER_STATE_READY);
+}
+
 static const GActionEntry actions[] =
 {
   { "set-provider-name", set_provider_name_action, "s" },
@@ -316,6 +325,13 @@ startup (GApplication *application)
                                    actions,
                                    G_N_ELEMENTS (actions),
                                    application);
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "notify::state",
+                            G_CALLBACK (manager_state_changed_cb),
+                            application);
+
+  manager_state_changed_cb (application);
 
   provider = gtk_css_provider_new ();
   gtk_css_provider_load_from_resource (provider, "/sm/puri/calls/style.css");
