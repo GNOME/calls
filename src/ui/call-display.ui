@@ -184,7 +184,7 @@
                                   <object class="GtkImage">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="resource">/sm/puri/calls/new-call-symbolic.svg</property>
+                                    <property name="icon_name">new-call-symbolic</property>
                                     <property name="icon_size">3</property>
                                     <property name="vexpand">True</property>
                                   </object>

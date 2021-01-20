@@ -303,7 +303,6 @@ static void
 startup (GApplication *application)
 {
   g_autoptr(GtkCssProvider) provider = NULL;
-  GtkIconTheme *icon_theme;
   g_autoptr(GError) error = NULL;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
@@ -317,9 +316,6 @@ startup (GApplication *application)
 
   g_set_prgname (APP_ID);
   g_set_application_name (_("Calls"));
-
-  icon_theme = gtk_icon_theme_get_default ();
-  gtk_icon_theme_add_resource_path (icon_theme, "/sm/puri/calls/");
 
   g_action_map_add_action_entries (G_ACTION_MAP (application),
                                    actions,

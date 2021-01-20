@@ -15,6 +15,8 @@
   </gresource>
   <gresource prefix="/sm/puri/calls/">
     <file>style.css</file>
+  </gresource>
+  <gresource prefix="/sm/puri/Calls/icons/">
     <file>new-call-symbolic.svg</file>
     <file>call-arrow-incoming-symbolic.svg</file>
     <file>call-arrow-incoming-missed-symbolic.svg</file>
