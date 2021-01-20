@@ -8,6 +8,7 @@ src/calls-call-record.c
 src/calls-call-record-row.c
 src/calls-call-selector-item.c
 src/calls-call-window.c
+src/calls-contacts-provider.c
 src/calls-contacts.c
 src/calls-encryption-indicator.c
 src/calls-history-box.c
