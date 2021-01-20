@@ -2,13 +2,13 @@
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-12-26 20:37+0000\n"
-"PO-Revision-Date: 2020-12-27 09:22+0200\n"
+"POT-Creation-Date: 2021-01-20 15:24+0000\n"
+"PO-Revision-Date: 2021-01-20 21:07+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.11.70\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:317
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:310
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Дзвінки"
@@ -46,23 +46,23 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
-#: src/calls-application.c:521
+#: src/calls-application.c:523
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Назва додатка, яку слід використовувати для надавача послуг дзвінка"
 
-#: src/calls-application.c:522
+#: src/calls-application.c:524
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:527
+#: src/calls-application.c:529
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:533
+#: src/calls-application.c:535
 msgid "Dial a number"
 msgstr "Набрати номер"
 
-#: src/calls-application.c:534
+#: src/calls-application.c:536
 msgid "NUMBER"
 msgstr "НОМЕР"
 
@@ -70,7 +70,7 @@ msgstr "НОМЕР"
 msgid "Calling…"
 msgstr "Виклик…"
 
-#: src/calls-call-record-row.c:39 src/calls-manager.c:615
+#: src/calls-call-record-row.c:39 src/calls-manager.c:671
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
@@ -164,6 +164,11 @@ msgstr "Подзвонити співрозмовнику"
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
 msgstr "В_илучити дзвінок"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "_Копіювати номер"
 
 #: src/ui/call-selector-item.ui:31
 msgid "+441234567890"
