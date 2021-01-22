@@ -8,79 +8,59 @@ stages:
  - package
  - test-package
 
-variables:
-  DEPS: build-essential git
-  WANT_BUILD_DEPS: "true"
-  IMAGE: pureos/byzantium
-  COMMON_BUILD_OPTS: --werror
-
-before_script:
-  - export DEBIAN_FRONTEND=noninteractive
-  - apt-get -y update
-  - apt-get -y install $DEPS wget ca-certificates gnupg
-  - echo "deb http://ci.puri.sm/ bullseyeci main" > /etc/apt/sources.list.d/ci.list
-  - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
-  - apt-get -y update
-  - apt-get -y build-dep .
-  - ulimit -c unlimited
-
-.tags: &tags
-  tags:
-    - librem5
-
-.build_step: &build_step
-  script:
-    - 'echo "Build opts: ${BUILD_OPTS}"'
-    - meson ${BUILD_OPTS} . _build
-    - ninja -C _build
-
 build:native:
-  <<: *tags
-  image: $IMAGE
   stage: build
   artifacts:
     paths:
       - _build
   variables:
     BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
-  <<: *build_step
+    DEPS: build-essential git
+    WANT_BUILD_DEPS: "true"
+    COMMON_BUILD_OPTS: --werror
   except:
     variables:
       - $PKG_ONLY == "1"
+  image: pureos/byzantium
+  tags:
+    - librem5
+  before_script:
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get -y update
+    - apt-get -y install $DEPS wget ca-certificates gnupg
+    - echo "deb http://ci.puri.sm/ bullseyeci main" > /etc/apt/sources.list.d/ci.list
+    - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
+    - apt-get -y update
+    - apt-get -y build-dep .
+    - ulimit -c unlimited
+  script:
+    - 'echo "Build opts: ${BUILD_OPTS}"'
+    - meson ${BUILD_OPTS} . _build
+    - ninja -C _build
 
 test:native:
-  <<: *tags
-  image: $IMAGE
+  extends: build:native
   stage: test
   dependencies:
     - build:native
   script:
     - export LC_ALL=C.UTF-8
     - xvfb-run ninja -C _build test
-  except:
-    variables:
-      - $PKG_ONLY == "1"
 
 build-gtkdoc:
-  <<: *tags
-  image: $IMAGE
+  extends: build:native
   stage: test
   dependencies:
     - build:native
-  <<: *build_step
   script:
     - ninja -C _build calls-doc
     - mv _build/doc/html/ _reference/
   artifacts:
     paths:
       - _reference
-  except:
-    variables:
-      - $PKG_ONLY == "1"
 
 check-po:
-  <<: *tags
-  image: $IMAGE
+  extends: build:native
   stage: test
   dependencies:
     - build:native
@@ -93,6 +73,3 @@ check-po:
     # in this case
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.c' && { intltool-update -m; exit 1; } || exit 0
-  except:
-    variables:
-      - $PKG_ONLY == "1"
