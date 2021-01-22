@@ -490,7 +490,7 @@ finalize (GObject *object)
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
 
-  G_OBJECT_CLASS (calls_application_parent_class)->dispose (object);
+  G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
 }
 
 
