@@ -6,8 +6,8 @@ Comment=A phone dialer and call handler (daemon mode)
 Keywords=Telephone;Call;Phone;Dial;Dialer;PSTN;
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=sm.puri.Calls
-TryExec=calls
-Exec=calls --daemon
+TryExec=gnome-calls
+Exec=gnome-calls --daemon
 Type=Application
 StartupNotify=true
 NoDisplay=true

@@ -118,7 +118,7 @@ calls_resources = gnome.compile_resources(
 )
 
 executable (
-  'calls',
+  'gnome-calls',
   calls_sources, calls_enum_sources, calls_resources,
   wl_proto_sources, wayland_sources, 'main.c',
   dependencies : calls_deps,

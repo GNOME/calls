@@ -3,7 +3,7 @@
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
-    "command" : "calls",
+    "command" : "gnome-calls",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -290,7 +290,7 @@
             ]
         },
         {
-            "name" : "calls",
+            "name" : "gnome-calls",
             "buildsystem" : "meson",
             "sources" : [
                 {

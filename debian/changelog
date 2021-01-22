@@ -1,3 +1,12 @@
+gnome-calls (0.3.0~rc1) byzantium; urgency=medium
+  * UNRELEASED
+
+  [ Evangelos Ribeiro Tzaras]
+  * rename project files to gnome-calls to be in sync
+    with Debian packaging
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Thu, 28 Jan 2021 13:59:33 +0100
+
 calls (0.2.0) amber-phone; urgency=medium
 
   [ Adrien Plazas ]

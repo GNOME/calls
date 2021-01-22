@@ -20,7 +20,7 @@
 #
 
 project(
-  'calls',
+  'gnome-calls',
   'c', 'vala',
   version: '0.2.0',
   license: 'GPLv3+',

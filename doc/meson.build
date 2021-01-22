@@ -41,7 +41,7 @@ gnome.gtkdoc('calls',
                        '--extra-dir=@0@'.format(join_paths(glib_docpath, 'gi')),
                        '--extra-dir=@0@'.format(join_paths(glib_docpath, 'gtk3')),
                      ],
-        install_dir: 'calls',
+        install_dir: 'gnome-calls',
             install: true)
 
 endif
