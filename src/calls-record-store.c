@@ -30,6 +30,7 @@
 
 #include <gom/gom.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 
 #include <errno.h>
 
@@ -749,8 +750,37 @@ calls_record_store_class_init (CallsRecordStoreClass *klass)
 static void
 calls_record_store_init (CallsRecordStore *self)
 {
-  self->filename = g_build_filename (g_get_user_data_dir (),
-                                     APP_DATA_NAME,
+  gboolean exist_old, exist_new, new_is_dir;
+  g_autofree gchar *old_dir = g_build_filename (g_get_user_data_dir (),
+                                                "calls",
+                                                NULL);
+  g_autofree gchar *new_dir = g_build_filename (g_get_user_data_dir (),
+                                                APP_DATA_NAME,
+                                                NULL);
+  gchar *used_dir = NULL;
+
+  exist_old = g_file_test (old_dir, G_FILE_TEST_EXISTS);
+  exist_new = g_file_test (new_dir, G_FILE_TEST_EXISTS);
+  new_is_dir = g_file_test (new_dir, G_FILE_TEST_IS_DIR);
+
+  if (exist_old && !exist_new) {
+    g_debug ("Trying to move database from `%s' to `%s'", old_dir, new_dir);
+
+    if (g_rename (old_dir, new_dir) == 0) {
+      used_dir = new_dir;
+    } else {
+      g_warning ("Moving folders to new location failed!");
+      g_debug ("Continuing to use old location");
+      used_dir = old_dir;
+    }
+  } else if (exist_new && new_is_dir)
+    used_dir = new_dir;
+  else
+    used_dir = old_dir;
+
+  g_assert (used_dir);
+
+  self->filename = g_build_filename (used_dir,
                                      RECORD_STORE_FILENAME,
                                      NULL);
 }
