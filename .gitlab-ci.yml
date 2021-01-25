@@ -15,7 +15,6 @@ build:native:
       - _build
   variables:
     BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
-    DEPS: build-essential git
     WANT_BUILD_DEPS: "true"
     COMMON_BUILD_OPTS: --werror
   except:
@@ -26,10 +25,6 @@ build:native:
     - librem5
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
-    - apt-get -y update
-    - apt-get -y install $DEPS wget ca-certificates gnupg
-    - echo "deb http://ci.puri.sm/ bullseyeci main" > /etc/apt/sources.list.d/ci.list
-    - wget -O- https://ci.puri.sm/ci-repo.key | apt-key add -
     - apt-get -y update
     - apt-get -y build-dep .
     - ulimit -c unlimited
