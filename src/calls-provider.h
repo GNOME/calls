@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018,2021 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -37,21 +37,22 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_PROVIDER (calls_provider_get_type ())
 
-G_DECLARE_INTERFACE (CallsProvider, calls_provider, CALLS, PROVIDER, GObject);
+G_DECLARE_DERIVABLE_TYPE (CallsProvider, calls_provider, CALLS, PROVIDER, GObject)
 
 
-struct _CallsProviderInterface
+struct _CallsProviderClass
 {
-  GTypeInterface parent_iface;
+  GObjectClass parent_iface;
 
-  const gchar * (*get_name) (CallsProvider *self);
-  GList * (*get_origins) (CallsProvider *self);
+  const char *(*get_name)    (CallsProvider *self);
+  const char *(*get_status)  (CallsProvider *self);
+  GList      *(*get_origins) (CallsProvider *self);
 };
 
 
-const gchar * calls_provider_get_name    (CallsProvider *self);
-gchar *       calls_provider_get_status  (CallsProvider *self);
-GList *       calls_provider_get_origins (CallsProvider *self);
+const char *calls_provider_get_name    (CallsProvider *self);
+const char *calls_provider_get_status  (CallsProvider *self);
+GList      *calls_provider_get_origins (CallsProvider *self);
 
 
 G_END_DECLS

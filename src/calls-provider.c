@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018,2021 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -35,7 +35,7 @@
  * oFono, Telepathy or some SIP library.
  * @Title: CallsProvider
  *
- * The #CallsProvider interface is the root of the interface tree that
+ * The #CallsProvider abstract class is the root of the class tree that
  * needs to be implemented by a call provider.  A #CallsProvider
  * provides access to a list of #CallsOrigin interfaces, through the
  * #calls_provider_get_origins function and the #origin-added and
@@ -43,7 +43,12 @@
  */
 
 
-G_DEFINE_INTERFACE (CallsProvider, calls_provider, CALLS_TYPE_MESSAGE_SOURCE);
+typedef struct
+{
+  int dummy;
+} CallsProviderPrivate;
+
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsProvider, calls_provider, G_TYPE_OBJECT)
 
 enum {
   PROP_0,
@@ -61,39 +66,59 @@ enum {
 static guint signals [SIGNAL_LAST_SIGNAL];
 
 static void
-calls_provider_default_init (CallsProviderInterface *iface)
+calls_provider_get_property (GObject    *object,
+                             guint       prop_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
 {
-  GType arg_types = CALLS_TYPE_ORIGIN;
+  CallsProvider *self = CALLS_PROVIDER (object);
+
+  switch (prop_id)
+    {
+    case PROP_STATUS:
+      g_value_set_string (value, calls_provider_get_status (self));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+calls_provider_class_init (CallsProviderClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->get_property = calls_provider_get_property;
 
   props[PROP_STATUS] =
     g_param_spec_string ("status",
                          "Status",
                          "A text string describing the status for display to the user",
                          "",
-                         G_PARAM_READABLE);
+                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  g_object_interface_install_property (iface, props[PROP_STATUS]);
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   signals[SIGNAL_ORIGIN_ADDED] =
-    g_signal_newv ("origin-added",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   1, &arg_types);
+    g_signal_new ("origin-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 1, CALLS_TYPE_ORIGIN);
 
   signals[SIGNAL_ORIGIN_REMOVED] =
-    g_signal_newv ("origin-removed",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   1, &arg_types);
+    g_signal_new ("origin-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 1, CALLS_TYPE_ORIGIN);
 }
 
-#define DEFINE_PROVIDER_FUNC(function,rettype,errval)	\
-  CALLS_DEFINE_IFACE_FUNC(provider, Provider, PROVIDER,  \
-			 function, rettype, errval)
+static void
+calls_provider_init (CallsProvider *self)
+{
+}
 
 /**
  * calls_provider_get_name:
@@ -103,22 +128,21 @@ calls_provider_default_init (CallsProviderInterface *iface)
  *
  * Returns: A string containing the name.
  */
-DEFINE_PROVIDER_FUNC(get_name, const gchar *, NULL);
-
-gchar *
-calls_provider_get_status (CallsProvider *self)
+const char *
+calls_provider_get_name (CallsProvider *self)
 {
-  gchar *status;
-
   g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
 
-  g_object_get (G_OBJECT (self),
-                "status", &status,
-                NULL);
-
-  return status;
+  return CALLS_PROVIDER_GET_CLASS (self)->get_name (self);
 }
 
+const char *
+calls_provider_get_status (CallsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
+
+  return CALLS_PROVIDER_GET_CLASS (self)->get_status (self);
+}
 
 /**
  * calls_provider_get_origins:
@@ -130,4 +154,10 @@ calls_provider_get_status (CallsProvider *self)
  * Returns: A newly-allocated GList of objects implementing
  * #CallsOrigin or NULL if there was an error.
  */
-DEFINE_PROVIDER_FUNC(get_origins, GList *, NULL);
+GList *
+calls_provider_get_origins (CallsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
+
+  return CALLS_PROVIDER_GET_CLASS (self)->get_origins (self);
+}

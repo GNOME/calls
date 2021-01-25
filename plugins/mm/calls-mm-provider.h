@@ -28,11 +28,13 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 
+#include "calls-provider.h"
+
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_MM_PROVIDER (calls_mm_provider_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsMMProvider, calls_mm_provider, CALLS, MM_PROVIDER, GObject);
+G_DECLARE_FINAL_TYPE (CallsMMProvider, calls_mm_provider, CALLS, MM_PROVIDER, CallsProvider)
 
 G_END_DECLS
 

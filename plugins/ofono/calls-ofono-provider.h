@@ -28,11 +28,13 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 
+#include "calls-provider.h"
+
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_OFONO_PROVIDER (calls_ofono_provider_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsOfonoProvider, calls_ofono_provider, CALLS, OFONO_PROVIDER, GObject);
+G_DECLARE_FINAL_TYPE (CallsOfonoProvider, calls_ofono_provider, CALLS, OFONO_PROVIDER, CallsProvider)
 
 G_END_DECLS
 

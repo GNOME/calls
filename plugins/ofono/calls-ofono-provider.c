@@ -37,7 +37,7 @@
 
 struct _CallsOfonoProvider
 {
-  GObject parent_instance;
+  CallsProvider parent_instance;
 
   /** D-Bus connection */
   GDBusConnection *connection;
@@ -50,23 +50,13 @@ struct _CallsOfonoProvider
 };
 
 
-static void calls_ofono_provider_message_source_interface_init (CallsProviderInterface *iface);
-static void calls_ofono_provider_provider_interface_init (CallsProviderInterface *iface);
+static void calls_ofono_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsOfonoProvider, calls_ofono_provider, G_TYPE_OBJECT, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_ofono_provider_message_source_interface_init)
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_PROVIDER,
-                                calls_ofono_provider_provider_interface_init))
-
-
-static const gchar *
-get_name (CallsProvider *iface)
-{
-  return "oFono";
-}
+                                calls_ofono_provider_message_source_interface_init))
 
 
 static void
@@ -75,19 +65,6 @@ add_origin_to_list (const gchar *path,
                     GList **list)
 {
   *list = g_list_prepend (*list, origin);
-}
-
-
-static GList *
-get_origins (CallsProvider *iface)
-{
-  CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (iface);
-  GList *list = NULL;
-
-  g_hash_table_foreach (self->origins,
-                        (GHFunc)add_origin_to_list, &list);
-
-  return g_list_reverse (list);
 }
 
 
@@ -376,6 +353,30 @@ get_modems_cb (GDBOManager *manager,
   g_variant_unref (modems);
 }
 
+static const char *
+calls_ofono_provider_get_name (CallsProvider *provider)
+{
+  return "Ofono";
+}
+
+static const char *
+calls_ofono_provider_get_status (CallsProvider *provider)
+{
+  return "";
+}
+
+static GList *
+calls_ofono_provider_get_origins (CallsProvider *provider)
+{
+  CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (provider);
+  GList *list = NULL;
+
+  g_hash_table_foreach (self->origins,
+                        (GHFunc)add_origin_to_list, &list);
+
+  return g_list_reverse (list);
+}
+
 
 static void
 constructed (GObject *object)
@@ -446,10 +447,15 @@ static void
 calls_ofono_provider_class_init (CallsOfonoProviderClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  CallsProviderClass *provider_class = CALLS_PROVIDER_CLASS (klass);
 
   object_class->constructed = constructed;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
+
+  provider_class->get_name = calls_ofono_provider_get_name;
+  provider_class->get_status = calls_ofono_provider_get_status;
+  provider_class->get_origins = calls_ofono_provider_get_origins;
 }
 
 
@@ -460,16 +466,8 @@ calls_ofono_provider_class_finalize (CallsOfonoProviderClass *klass)
 
 
 static void
-calls_ofono_provider_message_source_interface_init (CallsProviderInterface *iface)
+calls_ofono_provider_message_source_interface_init (CallsMessageSourceInterface *iface)
 {
-}
-
-
-static void
-calls_ofono_provider_provider_interface_init (CallsProviderInterface *iface)
-{
-  iface->get_name = get_name;
-  iface->get_origins = get_origins;
 }
 
 

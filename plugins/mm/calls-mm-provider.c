@@ -34,7 +34,7 @@
 
 struct _CallsMMProvider
 {
-  GObject parent_instance;
+  CallsProvider parent_instance;
 
   /* The status property */
   gchar *status;
@@ -46,37 +46,12 @@ struct _CallsMMProvider
   GHashTable *origins;
 };
 
-static void calls_mm_provider_message_source_interface_init (CallsProviderInterface *iface);
-static void calls_mm_provider_provider_interface_init (CallsProviderInterface *iface);
+static void calls_mm_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
-(CallsMMProvider, calls_mm_provider, G_TYPE_OBJECT, 0,
+(CallsMMProvider, calls_mm_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_mm_provider_message_source_interface_init)
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_PROVIDER,
-                                calls_mm_provider_provider_interface_init))
-
-
-enum {
-  PROP_0,
-  PROP_STATUS,
-  PROP_LAST_PROP,
-};
-
-
-static const gchar *
-get_name (CallsProvider *iface)
-{
-  return "ModemManager";
-}
-
-
-static GList *
-get_origins (CallsProvider *iface)
-{
-  CallsMMProvider *self = CALLS_MM_PROVIDER (iface);
-  return g_hash_table_get_values (self->origins);
-}
+                                calls_mm_provider_message_source_interface_init))
 
 
 static void
@@ -357,6 +332,28 @@ mm_vanished_cb (GDBusConnection *connection,
 }
 
 
+static const char *
+calls_mm_provider_get_name (CallsProvider *provider)
+{
+  return "ModemManager";
+}
+
+static const char *
+calls_mm_provider_get_status (CallsProvider *provider)
+{
+  CallsMMProvider *self = CALLS_MM_PROVIDER (provider);
+
+  return self->status;
+}
+
+static GList *
+calls_mm_provider_get_origins (CallsProvider *provider)
+{
+  CallsMMProvider *self = CALLS_MM_PROVIDER (provider);
+
+  return g_hash_table_get_values (self->origins);
+}
+
 static void
 constructed (GObject *object)
 {
@@ -373,26 +370,6 @@ constructed (GObject *object)
   g_debug ("Watching for ModemManager");
 
   G_OBJECT_CLASS (calls_mm_provider_parent_class)->constructed (object);
-}
-
-
-static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
-{
-  CallsMMProvider *self = CALLS_MM_PROVIDER (object);
-
-  switch (property_id) {
-  case PROP_STATUS:
-    g_value_set_string (value, self->status);
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
 }
 
 
@@ -429,13 +406,15 @@ static void
 calls_mm_provider_class_init (CallsMMProviderClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  CallsProviderClass *provider_class = CALLS_PROVIDER_CLASS (klass);
 
   object_class->constructed = constructed;
-  object_class->get_property = get_property;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  g_object_class_override_property (object_class, PROP_STATUS, "status");
+  provider_class->get_name = calls_mm_provider_get_name;
+  provider_class->get_status = calls_mm_provider_get_status;
+  provider_class->get_origins = calls_mm_provider_get_origins;
 }
 
 
@@ -445,16 +424,8 @@ calls_mm_provider_class_finalize (CallsMMProviderClass *klass)
 }
 
 static void
-calls_mm_provider_message_source_interface_init (CallsProviderInterface *iface)
+calls_mm_provider_message_source_interface_init (CallsMessageSourceInterface *iface)
 {
-}
-
-
-static void
-calls_mm_provider_provider_interface_init (CallsProviderInterface *iface)
-{
-  iface->get_name = get_name;
-  iface->get_origins = get_origins;
 }
 
 

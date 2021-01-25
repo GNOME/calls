@@ -27,11 +27,13 @@
 
 #include <glib-object.h>
 
+#include "calls-provider.h"
+
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_DUMMY_PROVIDER (calls_dummy_provider_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsDummyProvider, calls_dummy_provider, CALLS, DUMMY_PROVIDER, GObject);
+G_DECLARE_FINAL_TYPE (CallsDummyProvider, calls_dummy_provider, CALLS, DUMMY_PROVIDER, CallsProvider)
 
 CallsDummyProvider *calls_dummy_provider_new        ();
 void                calls_dummy_provider_add_origin (CallsDummyProvider *self,
