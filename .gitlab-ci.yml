@@ -1,5 +1,6 @@
 include:
  - 'https://source.puri.sm/Librem5/librem5-ci/raw/master/librem5-pipeline-definitions.yml'
+ - 'https://source.puri.sm/Librem5/librem5-ci/raw/master/librem5-pipeline-byzantium-jobs.yml'
 
 stages:
  - build
@@ -95,26 +96,3 @@ check-po:
   except:
     variables:
       - $PKG_ONLY == "1"
-
-package:deb-debian-buster:
-  extends: .l5-build-debian-package
-  before_script: []
-
-package:deb-debian-buster:arm64:
-  tags:
-    - librem5:arm64
-  extends: .l5-build-debian-package
-  before_script: []
-
-autopkgtest-debian-buster-package:
-  dependencies:
-    - package:deb-debian-buster
-  extends: .l5-autopkgtest-debian-package
-  before_script: []
-
-lintian-debian-buster-package:
-  dependencies:
-    - package:deb-debian-buster
-  extends: .l5-lintian-debian-package
-  before_script: []
-
