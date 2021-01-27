@@ -37,8 +37,7 @@ G_DECLARE_FINAL_TYPE (CallsBestMatch, calls_best_match, CALLS, BEST_MATCH, GObje
 
 CallsBestMatch  *calls_best_match_new            (CallsBestMatchView *view);
 const gchar *    calls_best_match_get_name       (CallsBestMatch     *self);
-GdkPixbuf *      calls_best_match_request_avatar (CallsBestMatch     *self,
-                                                  gint                size);
+GLoadableIcon   *calls_best_match_get_avatar     (CallsBestMatch     *self);
 
 G_END_DECLS
 
