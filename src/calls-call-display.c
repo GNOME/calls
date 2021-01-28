@@ -25,7 +25,6 @@
 #include "config.h"
 #include "calls-manager.h"
 #include "calls-call-display.h"
-#include "calls-party.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -38,6 +37,7 @@ struct _CallsCallDisplay
 {
   GtkOverlay parent_instance;
 
+  CallsBestMatch *contact;
   CallsCall *call;
   GTimer *timer;
   guint timeout;
@@ -312,24 +312,29 @@ calls_call_display_new (CallsCall *call)
 }
 
 
-// FIXME: this should direclty use CallsBestMatch since the matching contact could change over time
 static void
 set_party (CallsCallDisplay *self)
 {
-  GtkWidget *image;
-  const gchar *name, *number;
-  g_autoptr (CallsParty) party = calls_party_new (calls_manager_get_contact_name (self->call),
-                                                  calls_call_get_number (self->call));
-  image = calls_party_create_image (party);
+  // FIXME: use HdyAvatar and the contact avatar
+  GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_end (self->party_box, image, TRUE, TRUE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
   gtk_widget_show (image);
 
-  name = calls_party_get_name (party);
-  number = calls_party_get_number (party);
+  self->contact = calls_call_get_contact (self->call);
 
-  gtk_label_set_text (self->primary_contact_info, name != NULL ? name : number);
-  gtk_label_set_text (self->secondary_contact_info, name != NULL ? number : NULL);
+  g_object_bind_property (self->contact, "name",
+                          self->primary_contact_info, "label",
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (self->contact, "phone-number",
+                          self->secondary_contact_info, "label",
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (self->contact, "has-individual",
+                          self->secondary_contact_info, "visible",
+                          G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+
 }
 
 
@@ -450,6 +455,7 @@ dispose (GObject *object)
 
   stop_timeout (self);
   g_clear_object (&self->call);
+  g_clear_object (&self->contact);
 
   G_OBJECT_CLASS (calls_call_display_parent_class)->dispose (object);
 }
