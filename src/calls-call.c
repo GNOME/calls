@@ -24,6 +24,7 @@
 
 #include "calls-call.h"
 #include "calls-message-source.h"
+#include "calls-manager.h"
 #include "enum-types.h"
 #include "util.h"
 
@@ -324,4 +325,23 @@ calls_call_tone_stop (CallsCall *self,
     }
 
   iface->tone_stop (self, key);
+}
+
+/**
+ * calls_call_get_contact:
+ * @self: a #CallsCall
+ *
+ * This a convenience function to optain the #CallsBestMatch matching the
+ * phone number of the #CallsCall.
+ *
+ * Returns: (transfer full): A #CallsBestMatch
+ */
+CallsBestMatch *
+calls_call_get_contact (CallsCall *self)
+{
+  CallsContactsProvider *contacts_provider =
+   calls_manager_get_contacts_provider (calls_manager_get_default ());
+
+  return calls_contacts_provider_lookup_phone_number (contacts_provider,
+                                                      calls_call_get_number (self));
 }
