@@ -77,19 +77,6 @@ folks_individual_has_phone_numbers (FolksIndividual *individual)
 }
 
 static void
-search_view_prepare_cb (FolksSearchView *view,
-                        GAsyncResult    *res,
-                        gpointer        *user_data)
-{
-  g_autoptr (GError) error = NULL;
-
-  folks_search_view_prepare_finish (view, res, &error);
-
-  if (error)
-    g_warning ("Failed to prepare Folks search view: %s", error->message);
-}
-
-static void
 folks_individual_property_changed_cb (CallsContactsProvider *self, 
                                       GParamSpec            *pspec,
                                       FolksIndividual       *individual)
@@ -275,10 +262,6 @@ calls_contacts_provider_lookup_phone_number (CallsContactsProvider *self,
                                              const gchar           *number)
 {
   g_autoptr (CallsBestMatch) best_match = NULL;
-  g_autoptr (GError) error = NULL;
-  g_autoptr (EPhoneNumber) phone_number = NULL;
-  g_autoptr (CallsPhoneNumberQuery) query = NULL;
-  g_autoptr (CallsBestMatchView) view = NULL;
 
   g_return_val_if_fail (CALLS_IS_CONTACTS_PROVIDER (self), NULL);
 
@@ -290,29 +273,9 @@ calls_contacts_provider_lookup_phone_number (CallsContactsProvider *self,
     return g_steal_pointer (&best_match);
   }
 
-  /* FIXME: parsing the phone number can add the wrong country code if the default region
-   * for the app isn't set correctly.
-   * See https://developer.gnome.org/eds/stable/eds-e-phone-number.html#e-phone-number-get-default-region
-   */
-  phone_number = e_phone_number_from_string (number, NULL, &error);
+  best_match = calls_best_match_new (number);
 
-  if (!phone_number) {
-    g_warning ("Failed to convert %s to a phone number: %s", number, error->message);
-    return NULL;
-  }
-
-  query = calls_phone_number_query_new (phone_number);
-
-  view = calls_best_match_view_new (self->folks_aggregator, FOLKS_QUERY (query));
-
-  folks_search_view_prepare (FOLKS_SEARCH_VIEW (view),
-                             (GAsyncReadyCallback) search_view_prepare_cb,
-                             NULL);
-
-  best_match = calls_best_match_new (view);
-
-  if (best_match)
-    g_hash_table_insert (self->phone_number_best_matches, g_strdup (number), g_object_ref (best_match));
+  g_hash_table_insert (self->phone_number_best_matches, g_strdup (number), g_object_ref (best_match));
 
   return g_steal_pointer (&best_match);
 }
