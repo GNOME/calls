@@ -22,10 +22,8 @@
  *
  */
 
-#include "calls-manager.h"
 #include "calls-call-selector-item.h"
 #include "calls-call-display.h"
-#include "calls-party.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -38,6 +36,7 @@ struct _CallsCallSelectorItem
   GtkEventBox parent_instance;
 
   CallsCallDisplay *display;
+  CallsBestMatch *contact;
 
   GtkBox *main_box;
   GtkLabel *name;
@@ -83,20 +82,20 @@ calls_call_selector_item_get_display (CallsCallSelectorItem *item)
   return item->display;
 }
 
-// FIXME: this should direclty use CallsBestMatch since the matching contact could change over time
 static void
 set_party (CallsCallSelectorItem *self)
 {
-  GtkWidget *image;
-  CallsCall *call = calls_call_display_get_call (self->display);
-  g_autoptr (CallsParty) party = calls_party_new (calls_manager_get_contact_name (call),
-                                                  calls_call_get_number (call));
+  // FIXME: use HdyAvatar and the contact avatar
+  GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
 
-  image = calls_party_create_image (party);
   gtk_box_pack_start (self->main_box, image, TRUE, TRUE, 0);
   gtk_widget_show (image);
 
-  gtk_label_set_text (self->name, calls_party_get_label (party));
+  self->contact = calls_call_get_contact (calls_call_display_get_call (self->display));
+
+  g_object_bind_property (self->contact, "name",
+                          self->name, "label",
+                          G_BINDING_SYNC_CREATE);
 }
 
 
@@ -155,6 +154,7 @@ dispose (GObject *object)
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
   g_clear_object (&self->display);
+  g_clear_object (&self->contact);
 
   G_OBJECT_CLASS (calls_call_selector_item_parent_class)->dispose (object);
 }
