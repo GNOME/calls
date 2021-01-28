@@ -20,7 +20,6 @@ src/calls-message-source.c
 src/calls-new-call-box.c
 src/calls-notifier.c
 src/calls-origin.c
-src/calls-party.c
 src/calls-provider.c
 src/calls-record-store.c
 src/calls-ringer.c
