@@ -328,86 +328,39 @@ setup_time (CallsCallRecordRow *self,
 
 
 static void
-contact_name_cb (CallsCallRecordRow *self)
-{
-  const gchar *name = NULL;
-  g_autofree gchar *target = NULL;
-  GAction *act = g_action_map_lookup_action (self->action_map, "copy-number");
-
-  g_object_get (G_OBJECT (self->record),
-                "target", &target,
-                NULL);
-
-  if (self->contact)
-    {
-      name = calls_best_match_get_name (self->contact);
-    }
-
-  if (name)
-    {
-      gtk_label_set_text (self->target, name);
-    }
-  else
-    {
-      if (!g_strcmp0 (target, ""))
-        {
-          gtk_label_set_text (self->target, ANONYMOUS_CALLER);
-          gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
-          g_simple_action_set_enabled (G_SIMPLE_ACTION (act), FALSE);
-        }
-      else
-        {
-          gtk_label_set_text (self->target, target);
-          gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
-          g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
-        }
-    }
-}
-
-static void
-avatar_text_changed_cb (HdyAvatar *avatar)
-{
-  const gchar *text = hdy_avatar_get_text (avatar);
-  gboolean show_initials = TRUE;
-
-  if (strchr("#*+", *text)
-      || g_ascii_isdigit (*text)
-      || !g_strcmp0 (text, ANONYMOUS_CALLER))
-    {
-      show_initials = FALSE;
-    }
-
-  hdy_avatar_set_show_initials (avatar, show_initials);
-}
-
-
-static void
 setup_contact (CallsCallRecordRow *self)
 {
+  GAction *act = g_action_map_lookup_action (self->action_map, "copy-number");
   g_autofree gchar *target = NULL;
-  g_autoptr(GError) error = NULL;
   CallsContactsProvider *contacts_provider;
 
   // Get the target number
   g_object_get (G_OBJECT (self->record),
                 "target", &target,
                 NULL);
-  g_assert (target != NULL);
-
-  if (!target[0])
-    return;
 
   // Look up the best match object
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
   self->contact = calls_contacts_provider_lookup_phone_number (contacts_provider, target);
 
-  if (self->contact == NULL)
-    return;
+  g_object_bind_property (self->contact, "name",
+                          self->target, "label",
+                          G_BINDING_SYNC_CREATE);
 
-  g_signal_connect_swapped (self->contact,
-                            "notify::name",
-                            G_CALLBACK (contact_name_cb),
-                            self);
+  g_object_bind_property (self->contact, "has-individual",
+                          self->avatar, "show-initials",
+                          G_BINDING_SYNC_CREATE);
+
+  if (target[0] == '\0')
+    {
+      gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (act), FALSE);
+    }
+  else
+    {
+      gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
+    }
 }
 
 
@@ -500,7 +453,6 @@ constructed (GObject *object)
   calls_date_time_unref (end);
 
   setup_contact (self);
-  contact_name_cb (self);
 
   G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 }
@@ -623,11 +575,6 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 {
   GAction *act;
   gtk_widget_init_template (GTK_WIDGET (self));
-
-  g_signal_connect (self->avatar,
-                    "notify::text",
-                    G_CALLBACK (avatar_text_changed_cb),
-                    NULL);
 
   self->action_map = G_ACTION_MAP (g_simple_action_group_new ());
   g_action_map_add_action_entries (self->action_map,
