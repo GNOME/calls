@@ -44,6 +44,7 @@ notify (CallsNotifier *self, CallsCall *call)
 {
   GApplication *app = g_application_get_default ();
   g_autoptr(GNotification) notification;
+  g_autoptr (CallsBestMatch) contact = NULL;
   g_autofree gchar *msg = NULL;
   g_autofree gchar *ref = NULL;
   g_autofree gchar *label_callback = NULL;
@@ -51,8 +52,11 @@ notify (CallsNotifier *self, CallsCall *call)
 
   notification = g_notification_new (_("Missed call"));
 
-  name = calls_manager_get_contact_name (call);
-  if (name)
+  contact = calls_call_get_contact (call);
+  // TODO: We need to update the notification when the contact name changes
+  name = calls_best_match_get_name (contact);
+
+  if (calls_best_match_has_individual (contact))
     msg = g_strdup_printf (_("Missed call from <b>%s</b>"), name);
   else
     msg = g_strdup_printf (_("Missed call from %s"), calls_call_get_number (call));

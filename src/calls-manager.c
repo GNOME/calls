@@ -656,37 +656,3 @@ calls_manager_set_default_origin (CallsManager *self,
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DEFAULT_ORIGIN]);
 }
-
-/**
- * calls_manager_get_contact_name:
- * @call: a #CallsCall
- *
- * Looks up the contact name for @call. If the lookup
- * succeeds, the contact name will be returned. NULL if
- * no match has been found in the contact list.
- * If no number is associated with the @call, then
- * a translatable string will be returned.
- *
- * Returns: (transfer none): The caller's name, a string representing
- * an unknown caller or %NULL
- */
-const gchar *
-calls_manager_get_contact_name (CallsCall *call)
-{
-  const gchar *number;
-  g_autoptr (CallsBestMatch) match = NULL;
-  CallsContactsProvider *contacts_provider;
-
-  number = calls_call_get_number (call);
-  if (!number || g_strcmp0 (number, "") == 0)
-    return _("Anonymous caller");
-
-  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
-  match = calls_contacts_provider_lookup_phone_number (contacts_provider,
-                                                       number);
-
-  if (!match)
-    return NULL;
-
-  return calls_best_match_get_name (match);
-}
