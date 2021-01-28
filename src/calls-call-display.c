@@ -30,6 +30,7 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <glib.h>
+#include <handy.h>
 
 #include <libcallaudio.h>
 
@@ -43,7 +44,7 @@ struct _CallsCallDisplay
   guint timeout;
 
   GtkLabel *incoming_phone_call;
-  GtkBox *party_box;
+  HdyAvatar *avatar;
   GtkLabel *primary_contact_info;
   GtkLabel *secondary_contact_info;
   GtkLabel *status;
@@ -315,12 +316,6 @@ calls_call_display_new (CallsCall *call)
 static void
 set_party (CallsCallDisplay *self)
 {
-  // FIXME: use HdyAvatar and the contact avatar
-  GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_end (self->party_box, image, TRUE, TRUE, 0);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
-  gtk_widget_show (image);
-
   self->contact = calls_call_get_contact (self->call);
 
   g_object_bind_property (self->contact, "name",
@@ -335,6 +330,13 @@ set_party (CallsCallDisplay *self)
                           self->secondary_contact_info, "visible",
                           G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
 
+  g_object_bind_property (self->contact, "name",
+                          self->avatar, "text",
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (self->contact, "has-individual",
+                          self->avatar, "show-initials",
+                          G_BINDING_SYNC_CREATE);
 }
 
 
@@ -494,9 +496,9 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-display.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, incoming_phone_call);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, party_box);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, secondary_contact_info);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, avatar);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, status);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, controls);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, gsm_controls);
