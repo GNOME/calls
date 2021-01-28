@@ -24,6 +24,7 @@
 
 #include "calls-best-match.h"
 #include "calls-contacts-provider.h"
+#include "calls-vala.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -33,7 +34,7 @@ struct _CallsBestMatch
 {
   GObject parent_instance;
 
-  CallsBestMatchView *view;
+  FolksSearchView    *view;
   FolksIndividual    *best_match;
   gchar              *phone_number;
 };
@@ -80,7 +81,11 @@ notify_avatar (CallsBestMatch *self)
 static void
 update_best_match (CallsBestMatch *self)
 {
-  FolksIndividual *best_match = calls_best_match_view_get_best_match (self->view);
+  g_autoptr (GeeSortedSet) individuals = folks_search_view_get_individuals (self->view);
+  FolksIndividual *best_match = NULL;
+
+  if (!gee_collection_get_is_empty (GEE_COLLECTION (individuals)))
+      best_match = gee_sorted_set_first (individuals);
 
   if (best_match == self->best_match)
     return;
@@ -266,10 +271,10 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
       g_warning ("Failed to convert %s to a phone number: %s", phone_number, error->message);
     } else {
       query = calls_phone_number_query_new (number);
-      self->view = calls_best_match_view_new (folks_individual_aggregator_dup (), FOLKS_QUERY (query));
+      self->view = folks_search_view_new (folks_individual_aggregator_dup (), FOLKS_QUERY (query));
 
       g_signal_connect_swapped (self->view,
-                                "notify::best-match",
+                                "individuals-changed-detailed",
                                 G_CALLBACK (update_best_match),
                                 self);
 

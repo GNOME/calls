@@ -25,8 +25,6 @@
 #ifndef CALLS_BEST_MATCH_H__
 #define CALLS_BEST_MATCH_H__
 
-#include "calls-vala.h"
-
 #include <gdk/gdk.h>
 
 G_BEGIN_DECLS

@@ -37,6 +37,7 @@ G_BEGIN_DECLS
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeMap, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeSet, g_object_unref)
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeSortedSet, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeCollection, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
 

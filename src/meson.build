@@ -53,7 +53,6 @@ calls_vala_deps = [
 calls_vala_sources = files (
   [
     'calls-phone-number-query.vala',
-    'calls-best-match-view.vala',
   ]
 )
 
