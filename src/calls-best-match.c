@@ -36,8 +36,6 @@ struct _CallsBestMatch
   CallsBestMatchView *view;
   FolksIndividual    *best_match;
   gchar              *phone_number;
-  gulong display_name_notify_handler_id;
-  gulong avatar_notify_handler_id;
 };
 
 G_DEFINE_TYPE (CallsBestMatch, calls_best_match, G_TYPE_OBJECT);
@@ -80,119 +78,32 @@ notify_avatar (CallsBestMatch *self)
 }
 
 static void
-set_best_match (CallsBestMatch  *self,
-                FolksIndividual *best_match)
+update_best_match (CallsBestMatch *self)
 {
-  g_assert (self->best_match == NULL);
-  g_assert (self->display_name_notify_handler_id == 0);
-  g_assert (self->avatar_notify_handler_id == 0);
+  FolksIndividual *best_match = calls_best_match_view_get_best_match (self->view);
 
-  self->best_match = best_match;
-  g_object_ref (best_match);
+  if (best_match == self->best_match)
+    return;
 
-  self->display_name_notify_handler_id =
+  if (self->best_match) {
+    g_signal_handlers_disconnect_by_data (self->best_match, self);
+    g_clear_object (&self->best_match);
+  }
+
+  if (best_match) {
+    g_set_object (&self->best_match, best_match);
     g_signal_connect_swapped (self->best_match,
                               "notify::display-name",
                               G_CALLBACK (notify_name),
                               self);
-
-  self->avatar_notify_handler_id =
     g_signal_connect_swapped (self->best_match,
                               "notify::avatar",
                               G_CALLBACK (notify_avatar),
                               self);
-}
+  }
 
-
-static void
-clear_best_match (CallsBestMatch *self)
-{
-  calls_clear_signal (self->best_match,
-                      &self->avatar_notify_handler_id);
-  calls_clear_signal (self->best_match,
-                      &self->display_name_notify_handler_id);
-
-  g_clear_object (&self->best_match);
-}
-
-
-static void
-new_best_match (CallsBestMatch  *self,
-                FolksIndividual *best_match)
-{
-  set_best_match (self, best_match);
   notify_name (self);
   notify_avatar (self);
-}
-
-
-static void
-change_best_match (CallsBestMatch  *self,
-                   FolksIndividual *best_match)
-{
-  clear_best_match (self);
-  set_best_match (self, best_match);
-  notify_name (self);
-  notify_avatar (self);
-}
-
-
-static void
-remove_best_match (CallsBestMatch *self)
-{
-  clear_best_match (self);
-  notify_name (self);
-  notify_avatar (self);
-}
-
-
-static void
-update_best_match (CallsBestMatch *self)
-{
-  FolksIndividual *best_match;
-
-  g_debug ("Best match property notified");
-
-  best_match = calls_best_match_view_get_best_match
-    (self->view);
-
-  if (best_match)
-    {
-      if (self->best_match)
-        {
-          if (self->best_match == best_match)
-            {
-              // No change
-              g_debug (" No best match change");
-            }
-          else
-            {
-              // Different best match object
-              change_best_match (self, best_match);
-              g_debug (" Different best match object");
-            }
-        }
-      else
-        {
-          // New best match
-          new_best_match (self, best_match);
-          g_debug (" New best match");
-        }
-    }
-  else
-    {
-      if (self->best_match)
-        {
-          // Best match disappeared
-          remove_best_match (self);
-          g_debug (" Best match disappeared");
-        }
-      else
-        {
-          // No change
-          g_debug (" No best match change");
-        }
-    }
 }
 
 
@@ -255,6 +166,11 @@ dispose (GObject *object)
 
   g_clear_object (&self->view);
   g_clear_pointer (&self->phone_number, g_free);
+
+  if (self->best_match) {
+    g_signal_handlers_disconnect_by_data (self->best_match, self);
+    g_clear_object (&self->best_match);
+  }
 
   G_OBJECT_CLASS (calls_best_match_parent_class)->dispose (object);
 }
