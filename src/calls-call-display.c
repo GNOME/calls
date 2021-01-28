@@ -23,8 +23,9 @@
  */
 
 #include "config.h"
+#include "calls-manager.h"
 #include "calls-call-display.h"
-#include "calls-call-data.h"
+#include "calls-party.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -62,7 +63,7 @@ G_DEFINE_TYPE (CallsCallDisplay, calls_call_display, GTK_TYPE_OVERLAY);
 
 enum {
   PROP_0,
-  PROP_CALL_DATA,
+  PROP_CALL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -303,32 +304,22 @@ call_state_changed_cb (CallsCallDisplay *self,
 
 
 CallsCallDisplay *
-calls_call_display_new (CallsCallData *data)
+calls_call_display_new (CallsCall *call)
 {
   return g_object_new (CALLS_TYPE_CALL_DISPLAY,
-                       "call-data", data,
+                       "call", call,
                        NULL);
 }
 
 
+// FIXME: this should direclty use CallsBestMatch since the matching contact could change over time
 static void
-set_call (CallsCallDisplay *self, CallsCall *call)
-{
-  g_signal_connect_object (call, "state-changed",
-                           G_CALLBACK (call_state_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
-  self->call = call;
-  g_object_ref (G_OBJECT (call));
-}
-
-
-static void
-set_party (CallsCallDisplay *self, CallsParty *party)
+set_party (CallsCallDisplay *self)
 {
   GtkWidget *image;
   const gchar *name, *number;
-
+  g_autoptr (CallsParty) party = calls_party_new (calls_manager_get_contact_name (self->call),
+                                                  calls_call_get_number (self->call));
   image = calls_party_create_image (party);
   gtk_box_pack_end (self->party_box, image, TRUE, TRUE, 0);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 100);
@@ -343,12 +334,36 @@ set_party (CallsCallDisplay *self, CallsParty *party)
 
 
 static void
-set_call_data (CallsCallDisplay *self, CallsCallData *data)
+set_call (CallsCallDisplay *self, CallsCall *call)
 {
-  set_call (self, calls_call_data_get_call (data));
-  set_party (self, calls_call_data_get_party (data));
+  g_signal_connect_object (call, "state-changed",
+                           G_CALLBACK (call_state_changed_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
+
+  g_set_object (&self->call, call);
+  set_party (self);
 }
 
+
+static void
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+  CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
+
+  switch (property_id) {
+  case PROP_CALL:
+    g_value_set_object (value, calls_call_display_get_call (self));
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  } 
+}
 
 static void
 set_property (GObject      *object,
@@ -359,8 +374,8 @@ set_property (GObject      *object,
   CallsCallDisplay *self = CALLS_CALL_DISPLAY (object);
 
   switch (property_id) {
-  case PROP_CALL_DATA:
-    set_call_data (self, CALLS_CALL_DATA (g_value_get_object (value)));
+  case PROP_CALL:
+    set_call (self, CALLS_CALL (g_value_get_object (value)));
     break;
 
   default:
@@ -456,16 +471,17 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed = constructed;
+  object_class->get_property = get_property;
   object_class->set_property = set_property;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  props[PROP_CALL_DATA] =
-    g_param_spec_object ("call-data",
-                         "Call data",
-                         "Data for the call this display will be associated with",
-                         CALLS_TYPE_CALL_DATA,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  props[PROP_CALL] =
+    g_param_spec_object ("call",
+                         "Call",
+                         "The CallsCall which this display rapresents",
+                         CALLS_TYPE_CALL,
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
@@ -493,4 +509,12 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, block_delete_cb);
   gtk_widget_class_bind_template_callback (widget_class, insert_text_cb);
+}
+
+CallsCall *
+calls_call_display_get_call (CallsCallDisplay *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL_DISPLAY (self), NULL);
+
+  return self->call;
 }

@@ -90,19 +90,7 @@ msgstr "Stato"
 msgid "The current state of the call"
 msgstr "Lo stato corrente della chiamata"
 
-#: src/calls-call-data.c:136 src/calls-call-holder.c:157
-msgid "Call"
-msgstr "Chiamata"
-
-#: src/calls-call-data.c:137
-msgid "The call"
-msgstr "La chiamata"
-
-#: src/calls-call-data.c:143
-msgid "Party"
-msgstr "Party"
-
-#: src/calls-call-data.c:144 src/calls-encryption-indicator.c:129
+#: src/calls-encryption-indicator.c:129
 msgid "The party participating in the call"
 msgstr "La parte che partecipa alla chiamata"
 
@@ -117,10 +105,6 @@ msgstr "Dati di chiamata"
 #: src/calls-call-display.c:599
 msgid "Data for the call this display will be associated with"
 msgstr "Dati per la chiamata a cui verrà associato questo display"
-
-#: src/calls-call-holder.c:158
-msgid "The call to hold"
-msgstr "La chiamata da mettere in attesa"
 
 #: src/calls-call-record.c:189
 msgid "ID"

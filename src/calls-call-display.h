@@ -25,9 +25,9 @@
 #ifndef CALLS_CALL_DISPLAY_H__
 #define CALLS_CALL_DISPLAY_H__
 
-#include <gtk/gtk.h>
+#include "calls-call.h"
 
-#include "calls-call-data.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -35,7 +35,8 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsCallDisplay, calls_call_display, CALLS, CALL_DISPLAY, GtkOverlay);
 
-CallsCallDisplay *calls_call_display_new (CallsCallData *data);
+CallsCallDisplay *calls_call_display_new (CallsCall             *call);
+CallsCall        *calls_call_display_get_call (CallsCallDisplay *self);
 
 G_END_DECLS
 

@@ -3,9 +3,7 @@ data/sm.puri.Calls-daemon.desktop.in
 src/calls-application.c
 src/calls-best-match.c
 src/calls-call.c
-src/calls-call-data.c
 src/calls-call-display.c
-src/calls-call-holder.c
 src/calls-call-record.c
 src/calls-call-record-row.c
 src/calls-call-selector-item.c

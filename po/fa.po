@@ -86,19 +86,7 @@ msgstr "وضعیت"
 msgid "The current state of the call"
 msgstr "وضعیت فعلی تماس"
 
-#: src/calls-call-data.c:136 src/calls-call-holder.c:157
-msgid "Call"
-msgstr "تماس"
-
-#: src/calls-call-data.c:137
-msgid "The call"
-msgstr "تماس"
-
-#: src/calls-call-data.c:143
-msgid "Party"
-msgstr ""
-
-#: src/calls-call-data.c:144 src/calls-encryption-indicator.c:129
+#: src/calls-encryption-indicator.c:129
 msgid "The party participating in the call"
 msgstr ""
 
@@ -113,10 +101,6 @@ msgstr "داده‌های تماس"
 #: src/calls-call-display.c:599
 msgid "Data for the call this display will be associated with"
 msgstr "داده‌ها برای تماسی که این نمایشگر به آن مرتبط است"
-
-#: src/calls-call-holder.c:158
-msgid "The call to hold"
-msgstr "تماس برای انتظار"
 
 #: src/calls-call-record.c:189
 msgid "ID"

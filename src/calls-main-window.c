@@ -25,7 +25,6 @@
 #include "calls-main-window.h"
 #include "calls-origin.h"
 #include "calls-ussd.h"
-#include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
 #include "calls-history-box.h"

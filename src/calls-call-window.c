@@ -26,7 +26,6 @@
 
 #include "calls-call-window.h"
 #include "calls-origin.h"
-#include "calls-call-holder.h"
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
 #include "calls-in-app-notification.h"
@@ -48,7 +47,7 @@ struct _CallsCallWindow
 {
   GtkApplicationWindow parent_instance;
 
-  GListStore *call_holders;
+  GListStore *calls;
 
   CallsInAppNotification *in_app_notification;
 
@@ -192,7 +191,7 @@ session_inhibit (CallsCallWindow *self, gboolean inhibit)
 static void
 update_visibility (CallsCallWindow *self)
 {
-  guint calls = g_list_model_get_n_items (G_LIST_MODEL (self->call_holders));
+  guint calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
 
 #ifdef CALLS_WAYLAND
   update_layer_surface (self, calls);
@@ -215,12 +214,9 @@ update_visibility (CallsCallWindow *self)
 
 
 static GtkWidget *
-call_holders_create_widget_cb (CallsCallHolder *holder,
-                               CallsCallWindow *self)
+calls_create_widget_cb (CallsCallSelectorItem *item,
+                        gpointer               user_data)
 {
-  CallsCallSelectorItem *item =
-    calls_call_holder_get_selector_item (holder);
-  g_object_ref (G_OBJECT (item));
   return GTK_WIDGET (item);
 }
 
@@ -234,63 +230,6 @@ new_call_submitted_cb (CallsCallWindow *self,
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
 
   calls_origin_dial (origin, number);
-}
-
-
-typedef gboolean (*FindCallHolderFunc) (CallsCallHolder *holder,
-                                        gpointer user_data);
-
-
-static gboolean
-find_call_holder_by_call (CallsCallHolder *holder,
-                          gpointer         user_data)
-{
-  CallsCallData *data = calls_call_holder_get_data (holder);
-
-  return calls_call_data_get_call (data) == user_data;
-}
-
-
-/** Search through the list of call holders, returning the total
-    number of items in the list, the position of the holder within the
-    list and a pointer to the holder itself. */
-static gboolean
-find_call_holder (CallsCallWindow     *self,
-                  guint               *n_itemsp,
-                  guint               *positionp,
-                  CallsCallHolder    **holderp,
-                  FindCallHolderFunc   predicate,
-                  gpointer             user_data)
-{
-  GListModel * const model = G_LIST_MODEL (self->call_holders);
-  const guint n_items = g_list_model_get_n_items (model);
-  guint position = 0;
-  CallsCallHolder *holder;
-
-  for (position = 0; position < n_items; ++position)
-    {
-      holder = CALLS_CALL_HOLDER (g_list_model_get_item (model, position));
-      g_object_unref (G_OBJECT (holder));
-
-      if (predicate (holder, user_data))
-        {
-#define out(var)                                \
-          if (var##p)                           \
-            {                                   \
-              *var##p = var ;                   \
-            }
-
-          out (n_items);
-          out (position);
-          out (holder);
-
-#undef out
-
-          return TRUE;
-        }
-    }
-
-  return FALSE;
 }
 
 
@@ -331,37 +270,21 @@ void
 add_call (CallsCallWindow *self,
           CallsCall       *call)
 {
-  CallsCallHolder *holder;
   CallsCallDisplay *display;
+  CallsCallSelectorItem *item;
 
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  holder = calls_call_holder_new (call);
-
-  display = calls_call_holder_get_display (holder);
+  display = calls_call_display_new (call);
+  item = calls_call_selector_item_new (display);
   gtk_stack_add_named (self->call_stack, GTK_WIDGET (display),
                        calls_call_get_number (call));
 
-  g_list_store_append (self->call_holders, holder);
-  g_object_unref (holder);
+  g_list_store_append (self->calls, item);
 
   update_visibility (self);
   set_focus (self, display);
-}
-
-
-static void
-remove_call_holder (CallsCallWindow *self,
-                    guint            n_items,
-                    guint            position,
-                    CallsCallHolder *holder)
-{
-  gtk_container_remove (GTK_CONTAINER (self->call_stack),
-                        GTK_WIDGET (calls_call_holder_get_display (holder)));
-  g_list_store_remove (self->call_holders, position);
-
-  update_visibility (self);
 }
 
 void
@@ -369,18 +292,32 @@ remove_call (CallsCallWindow *self,
              CallsCall       *call,
              const gchar     *reason)
 {
-  guint n_items, position;
-  CallsCallHolder *holder;
-  gboolean found;
+  g_autoptr (CallsCallSelectorItem) item = NULL;
+  gint position;
 
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  found = find_call_holder (self, &n_items, &position, &holder,
-                            find_call_holder_by_call, call);
-  g_return_if_fail (found);
+  position = 0;
+  item = g_list_model_get_item (G_LIST_MODEL (self->calls), position);
+  while (item != NULL) {
+    CallsCallDisplay *display = calls_call_selector_item_get_display (item);
 
-  remove_call_holder (self, n_items, position, holder);
+    if (calls_call_display_get_call (display) == call) {
+      g_list_store_remove (self->calls, position);
+      gtk_container_remove (GTK_CONTAINER (self->call_stack),
+                            GTK_WIDGET (display));
+
+
+      break;
+    }
+
+    g_object_unref (item);
+    position++;
+    item = g_list_model_get_item (G_LIST_MODEL (self->calls), position);
+  }
+
+  update_visibility (self);
 }
 
 
@@ -396,7 +333,7 @@ remove_calls (CallsCallWindow *self)
                           GTK_WIDGET (child->data));
   g_list_free (children);
 
-  g_list_store_remove_all (self->call_holders);
+  g_list_store_remove_all (self->calls);
 
   update_visibility (self);
 }
@@ -564,8 +501,8 @@ constructed (GObject *object)
   CallsCallWindow *self = CALLS_CALL_WINDOW (object);
 
   gtk_flow_box_bind_model (self->call_selector,
-                           G_LIST_MODEL (self->call_holders),
-                           (GtkFlowBoxCreateWidgetFunc) call_holders_create_widget_cb,
+                           G_LIST_MODEL (self->calls),
+                           (GtkFlowBoxCreateWidgetFunc) calls_create_widget_cb,
                            NULL, NULL);
 
   update_visibility (self);
@@ -581,7 +518,7 @@ calls_call_window_init (CallsCallWindow *self)
   GList *c;
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  self->call_holders = g_list_store_new (CALLS_TYPE_CALL_HOLDER);
+  self->calls = g_list_store_new (CALLS_TYPE_CALL_SELECTOR_ITEM);
 
   // Show errors in in-app-notification
   g_signal_connect_swapped (calls_manager_get_default (),
@@ -611,12 +548,12 @@ dispose (GObject *object)
 {
   CallsCallWindow *self = CALLS_CALL_WINDOW (object);
 
-  if (self->call_holders)
+  if (self->calls)
     {
       remove_calls (self);
     }
 
-  g_clear_object (&self->call_holders);
+  g_clear_object (&self->calls);
 
   G_OBJECT_CLASS (calls_call_window_parent_class)->dispose (object);
 }

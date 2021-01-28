@@ -22,8 +22,10 @@
  *
  */
 
+#include "calls-manager.h"
 #include "calls-call-selector-item.h"
-#include "calls-call-holder.h"
+#include "calls-call-display.h"
+#include "calls-party.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -46,7 +48,7 @@ G_DEFINE_TYPE (CallsCallSelectorItem, calls_call_selector_item, GTK_TYPE_EVENT_B
 
 enum {
   PROP_0,
-  PROP_HOLDER,
+  PROP_DISPLAY,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -64,12 +66,12 @@ call_state_changed_cb (CallsCallSelectorItem *self,
 
 
 CallsCallSelectorItem *
-calls_call_selector_item_new (CallsCallHolder *holder)
+calls_call_selector_item_new (CallsCallDisplay *display)
 {
-  g_return_val_if_fail (CALLS_IS_CALL_HOLDER (holder), NULL);
+  g_return_val_if_fail (CALLS_IS_CALL_DISPLAY (display), NULL);
 
   return g_object_new (CALLS_TYPE_CALL_SELECTOR_ITEM,
-                       "holder", holder,
+                       "display", display,
                        NULL);
 }
 
@@ -81,21 +83,14 @@ calls_call_selector_item_get_display (CallsCallSelectorItem *item)
   return item->display;
 }
 
-
+// FIXME: this should direclty use CallsBestMatch since the matching contact could change over time
 static void
-set_call (CallsCallSelectorItem *self, CallsCall *call)
-{
-  g_signal_connect_object (call, "state-changed",
-                           G_CALLBACK (call_state_changed_cb),
-                           self,
-                           G_CONNECT_SWAPPED);
-}
-
-
-static void
-set_party (CallsCallSelectorItem *self, CallsParty *party)
+set_party (CallsCallSelectorItem *self)
 {
   GtkWidget *image;
+  CallsCall *call = calls_call_display_get_call (self->display);
+  g_autoptr (CallsParty) party = calls_party_new (calls_manager_get_contact_name (call),
+                                                  calls_call_get_number (call));
 
   image = calls_party_create_image (party);
   gtk_box_pack_start (self->main_box, image, TRUE, TRUE, 0);
@@ -106,16 +101,23 @@ set_party (CallsCallSelectorItem *self, CallsParty *party)
 
 
 static void
-set_call_holder (CallsCallSelectorItem *self, CallsCallHolder *holder)
+set_call_display (CallsCallSelectorItem *self, CallsCallDisplay *display)
 {
-  CallsCallData *data = calls_call_holder_get_data (holder);
-  CallsCall *call = calls_call_data_get_call (data);
+  CallsCall *call = NULL;
 
-  set_call (self, call);
-  set_party (self, calls_call_data_get_party (data));
+  g_return_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (self));
+  g_return_if_fail (CALLS_IS_CALL_DISPLAY (display));
+
+  call = calls_call_display_get_call (display);
+  g_signal_connect_object (call, "state-changed",
+                           G_CALLBACK (call_state_changed_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
+
   call_state_changed_cb (self, calls_call_get_state (call));
 
-  g_set_object (&self->display, calls_call_holder_get_display (holder));
+  g_set_object (&self->display, display);
+  set_party (self);
 }
 
 
@@ -128,9 +130,9 @@ set_property (GObject      *object,
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
   switch (property_id) {
-  case PROP_HOLDER:
-    set_call_holder
-      (self, CALLS_CALL_HOLDER (g_value_get_object (value)));
+  case PROP_DISPLAY:
+    set_call_display
+      (self, CALLS_CALL_DISPLAY (g_value_get_object (value)));
     break;
 
   default:
@@ -167,11 +169,11 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
   object_class->set_property = set_property;
   object_class->dispose = dispose;
 
-  props[PROP_HOLDER] =
-    g_param_spec_object ("holder",
-                         "Call holder",
-                         "The holder for this call",
-                         CALLS_TYPE_CALL_HOLDER,
+  props[PROP_DISPLAY] =
+    g_param_spec_object ("display",
+                         "Call display",
+                         "The display for this call",
+                         CALLS_TYPE_CALL_DISPLAY,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
    
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
