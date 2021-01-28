@@ -375,9 +375,13 @@ calls_best_match_get_name (CallsBestMatch *self)
     {
       return folks_individual_get_display_name (self->best_match);
     }
+  else if (self->phone_number)
+    {
+      return self->phone_number;
+    }
   else
     {
-      return NULL;
+      return _("Anonymous caller");
     }
 }
 
