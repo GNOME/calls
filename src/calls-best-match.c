@@ -47,6 +47,7 @@ enum {
   PROP_PHONE_NUMBER,
   PROP_NAME,
   PROP_AVATAR,
+  PROP_HAS_INDIVIDUAL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -83,6 +84,7 @@ update_best_match (CallsBestMatch *self)
 {
   g_autoptr (GeeSortedSet) individuals = folks_search_view_get_individuals (self->view);
   FolksIndividual *best_match = NULL;
+  gboolean notify_has_individual = FALSE;
 
   if (!gee_collection_get_is_empty (GEE_COLLECTION (individuals)))
       best_match = gee_sorted_set_first (individuals);
@@ -93,6 +95,7 @@ update_best_match (CallsBestMatch *self)
   if (self->best_match) {
     g_signal_handlers_disconnect_by_data (self->best_match, self);
     g_clear_object (&self->best_match);
+    notify_has_individual = TRUE;
   }
 
   if (best_match) {
@@ -105,10 +108,13 @@ update_best_match (CallsBestMatch *self)
                               "notify::avatar",
                               G_CALLBACK (notify_avatar),
                               self);
+    notify_has_individual = TRUE;
   }
 
   notify_name (self);
   notify_avatar (self);
+  if (notify_has_individual)
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_HAS_INDIVIDUAL]);
 }
 
 
@@ -142,6 +148,11 @@ get_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_HAS_INDIVIDUAL:
+      g_value_set_boolean (value,
+                           calls_best_match_has_individual (self));
+      break;
+
     case PROP_PHONE_NUMBER:
       g_value_set_string (value,
                           calls_best_match_get_phone_number (self));
@@ -190,6 +201,13 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
   object_class->get_property = get_property;
   object_class->dispose = dispose;
 
+  props[PROP_HAS_INDIVIDUAL] =
+    g_param_spec_boolean ("has-individual",
+                          "Has individual",
+                          "Whether a matching individual was found or not",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
+
   props[PROP_PHONE_NUMBER] =
     g_param_spec_string ("phone_number",
                          "Phone number",
@@ -228,6 +246,14 @@ calls_best_match_new (const gchar *number)
   return g_object_new (CALLS_TYPE_BEST_MATCH,
                        "phone_number", number,
                        NULL);
+}
+
+gboolean
+calls_best_match_has_individual (CallsBestMatch *self)
+{
+  g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), FALSE);
+
+  return !!self->best_match;
 }
 
 const gchar *
