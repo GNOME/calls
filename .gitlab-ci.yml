@@ -72,7 +72,7 @@ check-po:
 # For some reason including https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml fails, therefore it's copied here
 .flatpak:
   image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
-  stage: 'test'
+  stage: 'package'
   interruptible: true
   tags:
     - flatpak
@@ -117,7 +117,7 @@ check-po:
 
 flatpak:master:
   extends: .flatpak
-  stage: build
+  stage: package
   variables:
     MANIFEST_PATH: "sm.puri.Calls.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
