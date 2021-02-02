@@ -273,6 +273,28 @@
             ]
         },
         {
+            "name" : "gstreamer",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.18.3/gstreamer-1.18.3.tar.gz",
+                    "sha256" : "d7e3917b5d3d9c3bd9bb70b7500314a5725377cff39bcd818df13c1fda0f60ba"
+                }
+            ]
+        },
+        {
+            "name" : "sofia-sip",
+            "buildsystem" : "autotools",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://github.com/freeswitch/sofia-sip/archive/v1.13.2.tar.gz",
+                    "sha256" : "b9eca9688ce4b28e062daf0933c3bf661fb607e7afafa71bda3e8f07eb88df44"
+                }
+            ]
+        },
+        {
             "name" : "calls",
             "buildsystem" : "meson",
             "sources" : [

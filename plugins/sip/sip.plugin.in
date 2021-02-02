@@ -1,0 +1,7 @@
+[Plugin]
+Module=sip
+Name=SIP
+Description=SIP calls provider
+Authors=Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
+Copyright=Copyright (C) 2021 Purism SPC
+Website=@PACKAGE_URL_RAW@
