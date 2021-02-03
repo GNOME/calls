@@ -362,7 +362,7 @@ get_property (GObject    *object,
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
-  } 
+  }
 }
 
 static void
