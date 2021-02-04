@@ -438,13 +438,11 @@ insert_text_cb (GtkEditable      *editable,
 static void
 calls_call_display_init (CallsCallDisplay *self)
 {
-  g_autoptr(GError) err = NULL;
-
   gtk_widget_init_template (GTK_WIDGET (self));
 
   if (!call_audio_is_inited ())
     {
-      g_critical ("libcallaudio not initialized: %s", err->message);
+      g_critical ("libcallaudio not initialized");
       gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
       gtk_widget_set_sensitive (GTK_WIDGET (self->mute), FALSE);
     }
