@@ -21,9 +21,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-subdir('wayland')
 
 gnome = import('gnome')
+
+subdir('wayland')
+subdir('dbus')
 
 src_include = include_directories('.')
 calls_includes = [ top_include, src_include ]
@@ -82,6 +84,7 @@ calls_resources = gnome.compile_resources(
 calls_generated_sources = [
   calls_enum_sources,
   calls_resources,
+  generated_dbus_sources,
   wl_proto_sources,
 ]
 

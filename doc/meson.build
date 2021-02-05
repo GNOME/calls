@@ -27,6 +27,7 @@ gnome.gtkdoc('calls',
             src_dir: [
                        join_paths(meson.source_root(), 'src'),
                        join_paths(meson.build_root(), 'src'),
+                       join_paths(meson.build_root(), 'src/dbus'),
                        join_paths(meson.build_root(), 'plugins/ofono/libgdbofono'),
                      ],
        dependencies: calls_doc_deps,
