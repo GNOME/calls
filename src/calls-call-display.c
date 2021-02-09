@@ -228,6 +228,7 @@ call_state_changed_cb (CallsCallDisplay *self,
                        CallsCallState    state)
 {
   GtkStyleContext *hang_up_style;
+  g_autoptr (GList) calls_list = NULL;
 
   g_return_if_fail (CALLS_IS_CALL_DISPLAY (self));
 
@@ -269,9 +270,14 @@ call_state_changed_cb (CallsCallDisplay *self,
       break;
 
     case CALLS_CALL_STATE_DISCONNECTED:
-      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
-                                    select_mode_complete,
-                                    NULL);
+      calls_list = calls_manager_get_calls (calls_manager_get_default ());
+      /* Switch to default mode only if there's no other ongoing call */
+      if (!calls_list || (calls_list->data == self->call && !calls_list->next))
+        {
+          call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
+                                        select_mode_complete,
+                                        NULL);
+        }
       break;
     }
 
