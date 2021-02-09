@@ -1,3 +1,91 @@
+gnome-calls (0.3.0) byzantium; urgency=medium
+
+  [ Timo Jyrinki ]
+  * po: Add Finnish translation from JRfi, refined by me.
+
+  [ Evangelos Ribeiro Tzaras ]
+  * desktop: Add Network main category
+  * manager: remove trailing whitespace
+  * manager: add has_active_call() and hang_up_all_calls()
+  * application: Hang up calls when closing the UI
+  * application: add copy-number action
+  * record-row: Allow copying number from context menu
+  * record-row: hide copy number menu item
+  * new-call-box: clear entry on longpress
+  * application: chain up to parents finalize
+  * application: Use g_autoptr and g_autofree
+  * application: Notify when opening URI/files fails
+  * ci: Build flatpak in packaging stage
+  * call-display: fix whitespace
+  * project: rename to gnome-calls
+  * record-store: Handle old and new database locations gracefully
+  * display: fix null pointer dereference
+  * code style: consistent whitespaces for g_autoptr
+  * application: use g_autoptr
+  * project: rename back to calls
+  * d/control: Add myself as maintainer
+  * Document changes and release 0.3.0
+
+  [ Eugenio Paolantonio (g7) ]
+  * ofono: call: ensure signals get disconnected on voice_call object destruction
+
+  [ Sebastian Krzyszkowiak ]
+  * gitlab-ci: Don't use global before_script for package jobs
+
+  [ Guido Günther ]
+  * gitlab-ci: Use byzantium instead of Debian bullseye
+
+  [ Mohammed Sadiq ]
+  * application: Simplify loading css
+  * application: Remove unused code
+  * resources: Use standard icon path
+  * Let calls-provider be an abstract class
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+  * po: Update Ukrainian translation
+
+  [ Julian Sparber ]
+  * application: disable dial action when making calls isn't possible
+  * ci: build packages only for byzantium
+  * ci: don't use global variables and definitions
+  * ci: drop bullseyeci packages
+  * flatpak: use master runtime
+  * flatpak: add libcanberra
+  * ci: build flatpak
+  * ci: write STDOUT for flatpak build to file
+  * Revert "ci: write STDOUT for flatpak build to file"
+  * remove CallsCallHolder and CallsCallData
+  * ContactsProvider: Add contacts provider
+  * Contacts: replace CallsContacts with CallsContactsProvider
+  * Revert "ui/main-window: Hide contacts pane"
+  * Contacts: Add contacts list
+  * BestMatch: Turn avatar into a property
+  * BestMatch: Move SearchView creation inside the class
+  * BestMatch: Allways return a name
+  * BestMatch: Simplify code for updating new best matching individual
+  * BestMatch: remove BestMatchView to reduce vala code
+  * BestMatch: add has-individual property
+  * CallsCall: Add method to optain matching contact
+  * CallsCallDisplay: Make sure that the contact infomation is updated
+  * CallsCallSelectorItem: Make sure that the contact infomation is updated
+  * CallManager: drop calls_manager_get_contact_name ()
+  * Remove unused CallsParty
+  * CallsCallRecordRow: Cleanup contact setup
+  * CallsCallDisplay: use HdyAvatar
+
+  [ Arnaud Ferraris ]
+  * call-display: update libcallaudio API calls
+  * src: meson.build: update libcallaudio dependency
+  * d/control: add version requirement on libcallaudio build dependency
+  * flatpak: update callaudiod version
+  * call-display: switch to default audio profile only if no other call
+
+  [ Sebastian Rasmussen ]
+  * po: Update Swedish translation
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Fri, 12 Feb 2021 10:24:38 +0100
+
 gnome-calls (0.3.0~rc1) byzantium; urgency=medium
   * UNRELEASED
 
