@@ -36,6 +36,14 @@ struct _CallsSipOrigin
 {
   GObject parent_instance;
   GString *name;
+
+  /* Account information */
+  gchar *user;
+  gchar *password;
+  gchar *host;
+  gchar *protocol;
+  gboolean use_direct_connection;
+
   GList *calls;
 };
 
@@ -51,11 +59,22 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipOrigin, calls_sip_origin, G_TYPE_OBJECT,
 enum {
   PROP_0,
   PROP_NAME,
+  PROP_ACC_USER,
+  PROP_ACC_PASSWORD,
+  PROP_ACC_HOST,
+  PROP_ACC_PROTOCOL,
+  PROP_ACC_DIRECT,
   PROP_CALLS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+static gboolean
+protocol_is_valid (const gchar *protocol)
+{
+  return g_strcmp0 (protocol, "UDP") == 0 ||
+    g_strcmp0 (protocol, "TLS") == 0;
+}
 
 static void
 remove_call (CallsSipOrigin *self,
@@ -165,6 +184,37 @@ calls_sip_origin_set_property (GObject      *object,
 
   switch (property_id) {
 
+  case PROP_ACC_USER:
+    g_free (self->user);
+    self->user = g_value_dup_string (value);
+    break;
+
+  case PROP_ACC_PASSWORD:
+    g_free (self->password);
+    self->password = g_value_dup_string (value);
+    break;
+
+  case PROP_ACC_HOST:
+    g_free (self->host);
+    self->host = g_value_dup_string (value);
+    break;
+
+  case PROP_ACC_PROTOCOL:
+    if (!protocol_is_valid (g_value_get_string (value))) {
+      g_warning ("Tried setting invalid protocol: '%s'\n"
+                 "Continue using old protocol: '%s'",
+                 g_value_get_string (value), self->protocol);
+      return;
+    }
+
+    g_free (self->protocol);
+    self->protocol = g_value_dup_string (value);
+    break;
+
+  case PROP_ACC_DIRECT:
+    self->use_direct_connection = g_value_get_boolean (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -187,6 +237,18 @@ calls_sip_origin_get_property (GObject      *object,
 
   case PROP_CALLS:
     g_value_set_pointer (value, g_list_copy (self->calls));
+    break;
+
+  case PROP_ACC_USER:
+    g_value_set_string (value, self->user);
+    break;
+
+  case PROP_ACC_HOST:
+    g_value_set_string (value, self->host);
+    break;
+
+  case PROP_ACC_PROTOCOL:
+    g_value_set_string (value, self->protocol);
     break;
 
   default:
@@ -213,6 +275,10 @@ calls_sip_origin_finalize (GObject *object)
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
   g_string_free (self->name, TRUE);
+  g_free (self->user);
+  g_free (self->password);
+  g_free (self->host);
+  g_free (self->protocol);
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->finalize (object);
 }
@@ -227,6 +293,46 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   object_class->finalize = calls_sip_origin_finalize;
   object_class->get_property = calls_sip_origin_get_property;
   object_class->set_property = calls_sip_origin_set_property;
+
+  props[PROP_ACC_USER] =
+    g_param_spec_string ("user",
+                         "User",
+                         "The username for authentication",
+                         "",
+                         G_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_ACC_USER, props[PROP_ACC_USER]);
+
+  props[PROP_ACC_PASSWORD] =
+    g_param_spec_string ("password",
+                         "Password",
+                         "The password for authentication",
+                         "",
+                         G_PARAM_WRITABLE);
+  g_object_class_install_property (object_class, PROP_ACC_PASSWORD, props[PROP_ACC_PASSWORD]);
+
+  props[PROP_ACC_HOST] =
+    g_param_spec_string ("host",
+                         "Host",
+                         "The fqdn of the SIP server",
+                         "",
+                         G_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_ACC_HOST, props[PROP_ACC_HOST]);
+
+  props[PROP_ACC_PROTOCOL] =
+    g_param_spec_string ("protocol",
+                         "Protocol",
+                         "The protocol used to connect to the SIP server",
+                         "UDP",
+                         G_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_ACC_PROTOCOL, props[PROP_ACC_PROTOCOL]);
+
+  props[PROP_ACC_DIRECT] =
+    g_param_spec_boolean ("direct-connection",
+                          "Direct connection",
+                          "Whether to use a direct connection (no SIP server)",
+                          FALSE,
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_ACC_DIRECT, props[PROP_ACC_DIRECT]);
 
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
@@ -271,10 +377,21 @@ calls_sip_origin_create_inbound (CallsSipOrigin *self,
 
 
 CallsSipOrigin *
-calls_sip_origin_new (const gchar *name)
+calls_sip_origin_new (const gchar *name,
+                      const gchar *user,
+                      const gchar *password,
+                      const gchar *host,
+                      const gchar *protocol,
+                      gboolean     direct_connection)
+
 {
   CallsSipOrigin *origin =
     g_object_new (CALLS_TYPE_SIP_ORIGIN,
+                  "user", user,
+                  "password", password,
+                  "host", host,
+                  "protocol", protocol,
+                  "direct-connection", direct_connection,
                   NULL);
 
   g_string_assign (origin->name, name);

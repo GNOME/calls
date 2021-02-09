@@ -36,6 +36,11 @@ G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER,
 
 CallsSipProvider *calls_sip_provider_new                    ();
 void              calls_sip_provider_add_origin             (CallsSipProvider *self,
-                                                             const gchar      *name);
+                                                             const gchar      *name,
+                                                             const gchar      *user,
+                                                             const gchar      *password,
+                                                             const gchar      *host,
+                                                             const gchar      *protocol,
+                                                             gboolean          direct_connection);
 
 G_END_DECLS

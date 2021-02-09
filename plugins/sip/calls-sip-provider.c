@@ -31,11 +31,16 @@
 #include <libpeas/peas.h>
 
 
+#define SIP_ACCOUNT_FILE "sip-account.cfg"
+
 struct _CallsSipProvider
 {
   CallsProvider parent_instance;
 
   GListStore *origins;
+  /* SIP */
+
+  gchar *filename;
 };
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -46,6 +51,74 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_sip_provider_message_source_interface_init))
 
+static gboolean
+check_required_keys (GKeyFile *key_file,
+                     const gchar *group_name)
+{
+  gchar *keys[] = {
+    "User",
+    "Password",
+    "Host",
+    "Protocol",
+  };
+
+  for (gsize i = 0; i < G_N_ELEMENTS (keys); i++) {
+    if (!g_key_file_has_key (key_file, group_name, keys[i], NULL))
+      return FALSE;
+  }
+
+  return TRUE;
+}
+
+static void
+calls_sip_provider_load_accounts (CallsSipProvider *self)
+{
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GKeyFile) key_file = g_key_file_new ();
+  gchar **groups = NULL;
+
+  g_assert (CALLS_IS_SIP_PROVIDER (self));
+
+  if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
+    g_warning ("Error loading key file: %s", error->message);
+    return;
+  }
+
+  groups = g_key_file_get_groups (key_file, NULL);
+
+  for (gsize i = 0; groups[i] != NULL; i++) {
+    g_autofree gchar *user = NULL;
+    g_autofree gchar *password = NULL;
+    g_autofree gchar *host = NULL;
+    g_autofree gchar *protocol = NULL;
+    gboolean direct_connection =
+      g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
+
+    if (direct_connection)
+      goto skip;
+
+    if (!check_required_keys (key_file, groups[i])) {
+      g_warning ("Not all required keys found in section %s of file `%s'",
+                 groups[i], self->filename);
+      continue;
+    }
+
+    user = g_key_file_get_string (key_file, groups[i], "User", NULL);
+    password = g_key_file_get_string (key_file, groups[i], "Password", NULL);
+    host = g_key_file_get_string (key_file, groups[i], "Host", NULL);
+    protocol = g_key_file_get_string (key_file, groups[i], "Protocol", NULL);
+
+  skip:
+    if (protocol == NULL)
+      protocol = g_strdup ("UDP");
+
+    g_debug ("Adding origin for SIP account %s", groups[i]);
+
+    calls_sip_provider_add_origin (self, groups[i], user, password, host, protocol, direct_connection);
+  }
+
+  g_strfreev (groups);
+}
 
 static const char *
 calls_sip_provider_get_name (CallsProvider *provider)
@@ -72,7 +145,7 @@ calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
 
-  calls_sip_provider_add_origin (self, "Sip origin");
+  calls_sip_provider_load_accounts (self);
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }
@@ -85,6 +158,9 @@ calls_sip_provider_dispose (GObject *object)
 
   g_list_store_remove_all (self->origins);
   g_clear_object (&self->origins);
+
+  g_free (self->filename);
+  self->filename = NULL;
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->dispose (object);
 }
@@ -120,9 +196,21 @@ calls_sip_provider_init (CallsSipProvider *self)
 
 void
 calls_sip_provider_add_origin (CallsSipProvider *self,
-                               const gchar      *name)
+                               const gchar      *name,
+                               const gchar      *user,
+                               const gchar      *password,
+                               const gchar      *host,
+                               const gchar      *protocol,
+                               gboolean          direct_connection)
 {
-  g_autoptr (CallsSipOrigin) origin = calls_sip_origin_new (name);
+  g_autoptr (CallsSipOrigin) origin =
+    calls_sip_origin_new (name,
+                          user,
+                          password,
+                          host,
+                          protocol,
+                          direct_connection);
+
 
   g_list_store_append (self->origins, origin);
 }
