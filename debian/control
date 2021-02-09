@@ -1,9 +1,9 @@
 Source: gnome-calls
 Section: comm
 Priority: optional
-Maintainer: Julian Sparber <julian.sparber@puri.sm>
-Uploaders:
- Bob Ham <rah@settrans.net>,
+Maintainer: PureOS Maintainers <pureos-project@puri.sm>
+Uploaders: Julian Sparber <julian.sparber@puri.sm>,
+ Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
 Build-Depends:
  debhelper (>= 11),
  desktop-file-utils,
