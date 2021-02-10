@@ -175,10 +175,9 @@ static gboolean
 check_dial_number (const gchar *number)
 {
   g_autoptr (GError) error = NULL;
-  GRegex *reject;
+  g_autoptr (GRegex) reject = g_regex_new (REJECT_RE, 0, 0, &error);
   gboolean matches;
 
-  reject = g_regex_new (REJECT_RE, 0, 0, &error);
   if (!reject)
     {
       g_warning ("Could not compile regex for"
@@ -199,10 +198,9 @@ static gchar *
 extract_dial_string (const gchar *number)
 {
   g_autoptr (GError) error = NULL;
-  g_autoptr (GRegex) replace_visual;
+  g_autoptr (GRegex) replace_visual = g_regex_new (VISUAL_RE, 0, 0, &error);
   gchar *dial_string;
 
-  replace_visual = g_regex_new (VISUAL_RE, 0, 0, &error);
   if (!replace_visual)
     {
       g_warning ("Could not compile regex for"
