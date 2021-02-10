@@ -290,7 +290,7 @@
             ]
         },
         {
-            "name" : "gnome-calls",
+            "name" : "calls",
             "buildsystem" : "meson",
             "sources" : [
                 {

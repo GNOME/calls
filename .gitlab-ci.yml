@@ -121,9 +121,9 @@ flatpak:master:
   variables:
     MANIFEST_PATH: "sm.puri.Calls.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
-    FLATPAK_MODULE: "gnome-calls"
+    FLATPAK_MODULE: "calls"
     # Make sure to keep this in sync with the Flatpak manifest, all arguments
     # are passed except the config-args because we build it ourselves
     MESON_ARGS: ""
     APP_ID: "sm.puri.Calls"
-    BUNDLE: 'gnome-calls.flatpak'
+    BUNDLE: 'calls.flatpak'
