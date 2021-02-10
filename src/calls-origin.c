@@ -119,7 +119,7 @@ calls_origin_foreach_call(CallsOrigin *self,
                           CallsOriginForeachCallFunc callback,
                           gpointer param)
 {
-  g_autoptr(GList) calls = NULL;
+  g_autoptr (GList) calls = NULL;
   GList *node;
 
   calls = calls_origin_get_calls (self);

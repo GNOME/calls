@@ -98,7 +98,7 @@ ussd_send_cb (GObject      *object,
 {
   CallsNewCallBox *self;
   CallsUssd *ussd = (CallsUssd *)object;
-  g_autoptr(GTask) task = user_data;
+  g_autoptr (GTask) task = user_data;
   GError *error = NULL;
   char *response;
 
@@ -364,8 +364,8 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
                                     GAsyncReadyCallback  callback,
                                     gpointer             user_data)
 {
-  g_autoptr(CallsOrigin) origin = NULL;
-  g_autoptr(GTask) task = NULL;
+  g_autoptr (CallsOrigin) origin = NULL;
+  g_autoptr (GTask) task = NULL;
   GtkEntry *entry;
 
   g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));

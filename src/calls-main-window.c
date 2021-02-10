@@ -214,7 +214,7 @@ window_ussd_respond_cb (GObject      *object,
 {
   CallsMainWindow *self = user_data;
   g_autofree char *response = NULL;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
   CallsUssd *ussd;
 
   ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
@@ -261,7 +261,7 @@ main_window_ussd_send_cb (GObject      *object,
 {
   CallsMainWindow *self = user_data;
   g_autofree char *response = NULL;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
   CallsUssd *ussd;
 
   response = calls_new_call_box_send_ussd_finish (self->new_call, result, &error);

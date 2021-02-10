@@ -223,7 +223,7 @@ call_removed_cb (CallsRinger *self, CallsCall *call)
 static void
 calls_ringer_init (CallsRinger *self)
 {
-  g_autoptr(GError) err = NULL;
+  g_autoptr (GError) err = NULL;
 
   if (lfb_init (APP_ID, &err))
     {

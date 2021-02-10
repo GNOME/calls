@@ -75,7 +75,7 @@ handle_local_options (GApplication *application,
                       GVariantDict *options)
 {
   gboolean ok;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
   const gchar *arg;
 
   g_debug ("Registering application");
@@ -198,8 +198,8 @@ check_dial_number (const gchar *number)
 static gchar *
 extract_dial_string (const gchar *number)
 {
-  g_autoptr(GError) error = NULL;
-  g_autoptr(GRegex) replace_visual;
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GRegex) replace_visual;
   gchar *dial_string;
 
   replace_visual = g_regex_new (VISUAL_RE, 0, 0, &error);
@@ -298,8 +298,8 @@ static const GActionEntry actions[] =
 static void
 startup (GApplication *application)
 {
-  g_autoptr(GtkCssProvider) provider = NULL;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GtkCssProvider) provider = NULL;
+  g_autoptr (GError) error = NULL;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 

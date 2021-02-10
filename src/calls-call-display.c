@@ -104,7 +104,7 @@ mute_toggled_cb (GtkToggleButton  *togglebutton,
                  CallsCallDisplay *self)
 {
   gboolean want_mute, ret;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
 
   want_mute = gtk_toggle_button_get_active (togglebutton);
   ret = call_audio_mute_mic (want_mute, &error);
@@ -121,7 +121,7 @@ speaker_toggled_cb (GtkToggleButton  *togglebutton,
                     CallsCallDisplay *self)
 {
   gboolean want_speaker, ret;
-  g_autoptr(GError) error = NULL;
+  g_autoptr (GError) error = NULL;
 
   want_speaker = gtk_toggle_button_get_active (togglebutton);
   ret = call_audio_enable_speaker (want_speaker, &error);

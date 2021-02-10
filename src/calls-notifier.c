@@ -43,7 +43,7 @@ static void
 notify (CallsNotifier *self, CallsCall *call)
 {
   GApplication *app = g_application_get_default ();
-  g_autoptr(GNotification) notification;
+  g_autoptr (GNotification) notification;
   g_autoptr (CallsBestMatch) contact = NULL;
   g_autofree gchar *msg = NULL;
   g_autofree gchar *ref = NULL;
@@ -95,7 +95,7 @@ state_changed_cb (CallsNotifier  *self,
   n = g_list_model_get_n_items (G_LIST_MODEL (self->unanswered));
   for (int i = 0; i < n; i++)
     {
-      g_autoptr(CallsCall) item = g_list_model_get_item (G_LIST_MODEL (self->unanswered), i);
+      g_autoptr (CallsCall) item = g_list_model_get_item (G_LIST_MODEL (self->unanswered), i);
       if (item == call)
         {
           g_list_store_remove (self->unanswered, i);
