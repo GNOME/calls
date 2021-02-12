@@ -22,13 +22,22 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsSipProvider"
+
+#define SU_ROOT_MAGIC_T CallsSipProvider
+
 #include "calls-sip-provider.h"
 
 #include "calls-message-source.h"
 #include "calls-provider.h"
 #include "calls-sip-origin.h"
+#include "calls-sip-util.h"
+#include "calls-sip-enums.h"
+#include "config.h"
 
 #include <libpeas/peas.h>
+#include <sofia-sip/nua.h>
+#include <sofia-sip/su_glib.h>
 
 
 #define SIP_ACCOUNT_FILE "sip-account.cfg"
@@ -39,9 +48,18 @@ struct _CallsSipProvider
 
   GListStore *origins;
   /* SIP */
+  CallsSipContext *ctx;
+  SipEngineState sip_state;
 
   gchar *filename;
 };
+
+enum {
+  PROP_0,
+  PROP_SIP_STATE,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
@@ -49,7 +67,7 @@ static void calls_sip_provider_message_source_interface_init (CallsMessageSource
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_sip_provider_message_source_interface_init))
+                                calls_sip_provider_message_source_interface_init));
 
 static gboolean
 check_required_keys (GKeyFile *key_file,
@@ -69,6 +87,7 @@ check_required_keys (GKeyFile *key_file,
 
   return TRUE;
 }
+
 
 static void
 calls_sip_provider_load_accounts (CallsSipProvider *self)
@@ -91,6 +110,7 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     g_autofree gchar *password = NULL;
     g_autofree gchar *host = NULL;
     g_autofree gchar *protocol = NULL;
+    gint port = 0;
     gboolean direct_connection =
       g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
 
@@ -107,18 +127,28 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     password = g_key_file_get_string (key_file, groups[i], "Password", NULL);
     host = g_key_file_get_string (key_file, groups[i], "Host", NULL);
     protocol = g_key_file_get_string (key_file, groups[i], "Protocol", NULL);
+    port = g_key_file_get_integer (key_file, groups[i], "Port", NULL);
 
   skip:
     if (protocol == NULL)
       protocol = g_strdup ("UDP");
 
+    /* If Protocol is TLS fall back to port 5061, 5060 otherwise */
+    if (port == 0) {
+      if (g_strcmp0 (protocol, "TLS") == 0)
+        port = 5061;
+      else
+        port = 5060;
+    }
+
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
-    calls_sip_provider_add_origin (self, groups[i], user, password, host, protocol, direct_connection);
+    calls_sip_provider_add_origin (self, groups[i], user, password, host, port, protocol, direct_connection);
   }
 
   g_strfreev (groups);
 }
+
 
 static const char *
 calls_sip_provider_get_name (CallsProvider *provider)
@@ -126,11 +156,25 @@ calls_sip_provider_get_name (CallsProvider *provider)
   return "SIP provider";
 }
 
+
 static const char *
 calls_sip_provider_get_status (CallsProvider *provider)
 {
-  return "Normal";
+  CallsSipProvider *self = CALLS_SIP_PROVIDER (provider);
+
+  switch (self->sip_state) {
+  case SIP_ENGINE_ERROR:
+    return "Error";
+
+  case SIP_ENGINE_READY:
+    return "Normal";
+
+  default:
+    break;
+  }
+  return "Unknown";
 }
+
 
 static GListModel *
 calls_sip_provider_get_origins (CallsProvider *provider)
@@ -140,12 +184,118 @@ calls_sip_provider_get_origins (CallsProvider *provider)
   return G_LIST_MODEL (self->origins);
 }
 
+
+static void
+calls_sip_provider_deinit_sip (CallsSipProvider *self)
+{
+  GSource *gsource;
+
+  if (self->sip_state == SIP_ENGINE_NULL)
+    return;
+
+  /* clean up sofia */
+  if (!self->ctx)
+    goto bail;
+
+
+  if (self->ctx->root) {
+    gsource = su_glib_root_gsource (self->ctx->root);
+    g_source_destroy (gsource);
+    su_root_destroy (self->ctx->root);
+
+    if (su_home_unref (self->ctx->home) != 1)
+      g_error ("Error in su_home_unref ()");
+  }
+  g_clear_pointer (&self->ctx, g_free);
+
+ bail:
+  self->sip_state = SIP_ENGINE_NULL;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
+}
+
+
+static gboolean
+calls_sip_provider_init_sofia (CallsSipProvider *self,
+                               GError          **error)
+{
+  GSource *gsource;
+
+  g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), FALSE);
+
+  self->ctx = g_new0 (CallsSipContext, 1);
+  if (self->ctx == NULL) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Could not allocate memory for the SIP context");
+    goto err;
+  }
+
+  if (su_init () != su_success) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "su_init () failed");
+    goto err;
+  }
+
+  if (su_home_init (self->ctx->home) != su_success) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "su_home_init () failed");
+    goto err;
+  }
+
+  self->ctx->root = su_glib_root_create (self);
+  if (self->ctx->root == NULL) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "su_glib_root_create () failed");
+    goto err;
+  }
+  gsource = su_glib_root_gsource (self->ctx->root);
+  if (gsource == NULL) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "su_glib_root_gsource () failed");
+    goto err;
+  }
+
+  g_source_attach (gsource, NULL);
+  self->sip_state = SIP_ENGINE_READY;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
+  return TRUE;
+
+ err:
+  self->sip_state = SIP_ENGINE_ERROR;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
+  return FALSE;
+}
+
+
+static void
+calls_sip_provider_get_property (GObject      *object,
+                                 guint         property_id,
+                                 GValue       *value,
+                                 GParamSpec   *pspec)
+{
+  CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
+
+  switch (property_id) {
+  case PROP_SIP_STATE:
+    g_value_set_enum (value, self->sip_state);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
 static void
 calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
+  g_autoptr (GError) error = NULL;
 
-  calls_sip_provider_load_accounts (self);
+  if (calls_sip_provider_init_sofia (self, &error))
+    calls_sip_provider_load_accounts (self);
+  else
+    g_warning ("Could not initalize sofia stack: %s", error->message);
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }
@@ -162,6 +312,8 @@ calls_sip_provider_dispose (GObject *object)
   g_free (self->filename);
   self->filename = NULL;
 
+  calls_sip_provider_deinit_sip (self);
+
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->dispose (object);
 }
 
@@ -174,10 +326,21 @@ calls_sip_provider_class_init (CallsSipProviderClass *klass)
 
   object_class->constructed = calls_sip_provider_constructed;
   object_class->dispose = calls_sip_provider_dispose;
+  object_class->get_property = calls_sip_provider_get_property;
 
   provider_class->get_name = calls_sip_provider_get_name;
   provider_class->get_status = calls_sip_provider_get_status;
   provider_class->get_origins = calls_sip_provider_get_origins;
+
+  props[PROP_SIP_STATE] =
+    g_param_spec_enum ("sip-state",
+                       "SIP state",
+                       "The state of the SIP engine",
+                       SIP_TYPE_ENGINE_STATE,
+                       SIP_ENGINE_NULL,
+                       G_PARAM_READABLE);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
@@ -191,6 +354,10 @@ static void
 calls_sip_provider_init (CallsSipProvider *self)
 {
   self->origins = g_list_store_new (CALLS_TYPE_SIP_ORIGIN);
+  self->filename = g_build_filename (g_get_user_data_dir (),
+                                     APP_DATA_NAME,
+                                     SIP_ACCOUNT_FILE,
+                                     NULL);
 }
 
 
@@ -200,17 +367,27 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                const gchar      *user,
                                const gchar      *password,
                                const gchar      *host,
+                               gint              port,
                                const gchar      *protocol,
                                gboolean          direct_connection)
 {
-  g_autoptr (CallsSipOrigin) origin =
-    calls_sip_origin_new (name,
-                          user,
-                          password,
-                          host,
-                          protocol,
-                          direct_connection);
+  g_autoptr (CallsSipOrigin) origin = NULL;
 
+  g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
+
+  origin = calls_sip_origin_new (name,
+                                 self->ctx,
+                                 user,
+                                 password,
+                                 host,
+                                 port,
+                                 protocol,
+                                 direct_connection);
+
+  if (!origin) {
+    g_warning ("Could not create CallsSipOrigin");
+    return;
+  }
 
   g_list_store_append (self->origins, origin);
 }

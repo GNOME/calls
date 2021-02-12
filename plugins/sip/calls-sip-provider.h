@@ -40,6 +40,7 @@ void              calls_sip_provider_add_origin             (CallsSipProvider *s
                                                              const gchar      *user,
                                                              const gchar      *password,
                                                              const gchar      *host,
+                                                             gint              port,
                                                              const gchar      *protocol,
                                                              gboolean          direct_connection);
 

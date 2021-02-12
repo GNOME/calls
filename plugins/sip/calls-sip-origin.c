@@ -27,9 +27,11 @@
 #include "calls-message-source.h"
 #include "calls-origin.h"
 #include "calls-sip-call.h"
+#include "calls-sip-util.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
+#include <sofia-sip/nua.h>
 
 
 struct _CallsSipOrigin
@@ -37,12 +39,28 @@ struct _CallsSipOrigin
   GObject parent_instance;
   GString *name;
 
+  CallsSipContext *ctx;
+  nua_t *nua;
+  CallsSipHandles *oper;
+  /* Maybe it makes sense to have one call handle (nua_handle_t) in
+   * CallsSipCall (do we need a backpointer to CallsSipOrigin?)
+   * and define the HMAGIC as a CallsSipOrigin
+   */
+
+  /* Direct connection mode is useful for debugging purposes */
+  gboolean use_direct_connection;
+
+  /* Needed to handle shutdown correctly. See sip_callback and dispose method */
+  gboolean is_nua_shutdown;
+
+  SipAccountState state;
+
   /* Account information */
   gchar *user;
   gchar *password;
   gchar *host;
+  gint port;
   gchar *protocol;
-  gboolean use_direct_connection;
 
   GList *calls;
 };
@@ -62,12 +80,21 @@ enum {
   PROP_ACC_USER,
   PROP_ACC_PASSWORD,
   PROP_ACC_HOST,
+  PROP_ACC_PORT,
   PROP_ACC_PROTOCOL,
   PROP_ACC_DIRECT,
+  PROP_SIP_CONTEXT,
   PROP_CALLS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
+
+
+static gboolean
+init_sip_account (CallsSipOrigin *self)
+{
+  return FALSE;
+}
 
 static gboolean
 protocol_is_valid (const gchar *protocol)
@@ -95,12 +122,15 @@ remove_call (CallsSipOrigin *self,
 static void
 remove_calls (CallsSipOrigin *self, const gchar *reason)
 {
-  gpointer call;
+  CallsCall *call;
   GList *next;
 
   while (self->calls != NULL) {
     call = self->calls->data;
     next = self->calls->next;
+
+    calls_call_hang_up (call);
+
     g_list_free_1 (self->calls);
     self->calls = next;
 
@@ -199,6 +229,10 @@ calls_sip_origin_set_property (GObject      *object,
     self->host = g_value_dup_string (value);
     break;
 
+  case PROP_ACC_PORT:
+    self->port = g_value_get_int (value);
+    break;
+
   case PROP_ACC_PROTOCOL:
     if (!protocol_is_valid (g_value_get_string (value))) {
       g_warning ("Tried setting invalid protocol: '%s'\n"
@@ -213,6 +247,10 @@ calls_sip_origin_set_property (GObject      *object,
 
   case PROP_ACC_DIRECT:
     self->use_direct_connection = g_value_get_boolean (value);
+    break;
+
+  case PROP_SIP_CONTEXT:
+    self->ctx = g_value_get_pointer (value);
     break;
 
   default:
@@ -247,6 +285,10 @@ calls_sip_origin_get_property (GObject      *object,
     g_value_set_string (value, self->host);
     break;
 
+  case PROP_ACC_PORT:
+    g_value_set_int (value, self->port);
+    break;
+
   case PROP_ACC_PROTOCOL:
     g_value_set_string (value, self->protocol);
     break;
@@ -259,11 +301,45 @@ calls_sip_origin_get_property (GObject      *object,
 
 
 static void
+calls_sip_origin_constructed (GObject *object)
+{
+  CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
+
+  init_sip_account (self);
+
+  G_OBJECT_CLASS (calls_sip_origin_parent_class)->constructed (object);
+}
+
+
+static void
 calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
+  if (self->state == SIP_ACCOUNT_NULL)
+    return;
+
   remove_calls (self, NULL);
+
+  if (self->oper) {
+    g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
+    g_clear_pointer (&self->oper->incoming_call_handle, nua_handle_unref);
+    g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
+  }
+
+  if (self->nua) {
+    g_debug ("Requesting nua_shutdown ()");
+    nua_shutdown (self->nua);
+    // need to wait for nua_r_shutdown event before calling nua_destroy ()
+    while (!self->is_nua_shutdown)
+      su_root_step (self->ctx->root, 100);
+
+    g_debug ("nua_shutdown () complete. Destroying nua handle");
+    nua_destroy (self->nua);
+    self->nua = NULL;
+  }
+
+  self->state = SIP_ACCOUNT_NULL;
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->dispose (object);
 }
@@ -289,6 +365,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed = calls_sip_origin_constructed;
   object_class->dispose = calls_sip_origin_dispose;
   object_class->finalize = calls_sip_origin_finalize;
   object_class->get_property = calls_sip_origin_get_property;
@@ -299,7 +376,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                          "User",
                          "The username for authentication",
                          "",
-                         G_PARAM_READWRITE);
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
   g_object_class_install_property (object_class, PROP_ACC_USER, props[PROP_ACC_USER]);
 
   props[PROP_ACC_PASSWORD] =
@@ -307,7 +384,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                          "Password",
                          "The password for authentication",
                          "",
-                         G_PARAM_WRITABLE);
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT);
   g_object_class_install_property (object_class, PROP_ACC_PASSWORD, props[PROP_ACC_PASSWORD]);
 
   props[PROP_ACC_HOST] =
@@ -315,17 +392,24 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                          "Host",
                          "The fqdn of the SIP server",
                          "",
-                         G_PARAM_READWRITE);
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
   g_object_class_install_property (object_class, PROP_ACC_HOST, props[PROP_ACC_HOST]);
+
+  props[PROP_ACC_PORT] =
+    g_param_spec_int ("port",
+                      "Port",
+                      "Port of the SIP server",
+                      1025, 65535, 5060,
+                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+  g_object_class_install_property (object_class, PROP_ACC_PORT, props[PROP_ACC_PORT]);
 
   props[PROP_ACC_PROTOCOL] =
     g_param_spec_string ("protocol",
                          "Protocol",
                          "The protocol used to connect to the SIP server",
                          "UDP",
-                         G_PARAM_READWRITE);
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
   g_object_class_install_property (object_class, PROP_ACC_PROTOCOL, props[PROP_ACC_PROTOCOL]);
-
   props[PROP_ACC_DIRECT] =
     g_param_spec_boolean ("direct-connection",
                           "Direct connection",
@@ -333,6 +417,13 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           FALSE,
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_ACC_DIRECT, props[PROP_ACC_DIRECT]);
+
+  props[PROP_SIP_CONTEXT] =
+    g_param_spec_pointer ("sip-context",
+                          "SIP context",
+                          "The SIP context (sofia) used for our sip handles",
+                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_SIP_CONTEXT, props[PROP_SIP_CONTEXT]);
 
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
@@ -362,6 +453,10 @@ static void
 calls_sip_origin_init (CallsSipOrigin *self)
 {
   self->name = g_string_new (NULL);
+
+  /* Direct connection mode is useful for debugging purposes */
+  self->use_direct_connection = TRUE;
+
 }
 
 
@@ -377,19 +472,22 @@ calls_sip_origin_create_inbound (CallsSipOrigin *self,
 
 
 CallsSipOrigin *
-calls_sip_origin_new (const gchar *name,
-                      const gchar *user,
-                      const gchar *password,
-                      const gchar *host,
-                      const gchar *protocol,
-                      gboolean     direct_connection)
-
+calls_sip_origin_new (const gchar     *name,
+                      CallsSipContext *sip_context,
+                      const gchar     *user,
+                      const gchar     *password,
+                      const gchar     *host,
+                      gint             port,
+                      const gchar     *protocol,
+                      gboolean         direct_connection)
 {
   CallsSipOrigin *origin =
     g_object_new (CALLS_TYPE_SIP_ORIGIN,
+                  "sip-context", sip_context,
                   "user", user,
                   "password", password,
                   "host", host,
+                  "port", port,
                   "protocol", protocol,
                   "direct-connection", direct_connection,
                   NULL);
