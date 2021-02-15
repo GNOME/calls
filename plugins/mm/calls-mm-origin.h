@@ -35,6 +35,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsMMOrigin, calls_mm_origin, CALLS, MM_ORIGIN, GObject);
 
 CallsMMOrigin *calls_mm_origin_new (MMObject *modem);
+gboolean       calls_mm_origin_matches (CallsMMOrigin *self,
+                                        MMObject      *modem);
 
 G_END_DECLS
 

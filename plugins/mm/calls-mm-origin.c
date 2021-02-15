@@ -869,3 +869,18 @@ calls_mm_origin_new (MMObject *mm_obj)
                        "mm-object", mm_obj,
                        NULL);
 }
+
+gboolean
+calls_mm_origin_matches (CallsMMOrigin *self,
+                         MMObject      *mm_obj)
+{
+  g_return_val_if_fail (CALLS_IS_MM_ORIGIN (self), FALSE);
+  g_return_val_if_fail (MM_IS_OBJECT (mm_obj), FALSE);
+
+  if (self->mm_obj)
+    return g_strcmp0 (mm_object_get_path (mm_obj),
+                      mm_object_get_path (self->mm_obj)) == 0;
+
+  return FALSE;
+}
+

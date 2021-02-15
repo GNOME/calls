@@ -11,7 +11,7 @@ void
 test_dummy_origin_set_up (OriginFixture *fixture,
                           gconstpointer user_data)
 {
-  GList *origins;
+  GListModel *origins;
 
   test_dummy_provider_set_up (&fixture->parent, user_data);
 
@@ -20,8 +20,7 @@ test_dummy_origin_set_up (OriginFixture *fixture,
 
   origins = calls_provider_get_origins
     (CALLS_PROVIDER (fixture->parent.dummy_provider));
-  fixture->dummy_origin = CALLS_DUMMY_ORIGIN (origins->data);
-  g_list_free (origins);
+  fixture->dummy_origin = g_list_model_get_item (origins, 0);
 }
 
 

@@ -9,20 +9,7 @@
 #include <gtk/gtk.h>
 #include <libpeas/peas.h>
 
-gint origin_count = 0;
 CallsCall *test_call = NULL;
-
-static void
-origin_add_cb (CallsManager *manager)
-{
-  origin_count++;
-}
-
-static void
-origin_remove_cb (CallsManager *manager)
-{
-  origin_count--;
-}
 
 static void
 call_add_cb (CallsManager *manager, CallsCall *call)
@@ -54,36 +41,32 @@ static void
 test_calls_manager_dummy_provider ()
 {
   g_autoptr (CallsManager) manager = calls_manager_new ();
-  g_autoptr (GList) origins = NULL;
-  gint no_origins = 0;
+  GListModel *origins;
   CallsOrigin *origin;
   g_assert (CALLS_IS_MANAGER (manager));
 
-  origin_count = 0;
-  g_signal_connect (manager, "origin-remove", G_CALLBACK (origin_remove_cb), NULL);
-  g_signal_connect (manager, "origin-add", G_CALLBACK (origin_add_cb), NULL);
-
   g_assert_null (calls_manager_get_provider (manager));
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_null (calls_manager_get_origins (manager));
 
   calls_manager_set_provider (manager, "dummy");
   g_assert_cmpstr (calls_manager_get_provider (manager), ==, "dummy");
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_READY);
+  g_assert_nonnull (calls_manager_get_origins (manager));
 
   origins = calls_manager_get_origins (manager);
-  no_origins = g_list_length (origins);
-  g_assert_cmpint (origin_count, ==, no_origins);
 
   g_assert_nonnull (calls_manager_get_origins (manager));
+  g_assert_true (g_list_model_get_n_items (origins) > 0);
   g_assert_null (calls_manager_get_calls (manager));
   g_assert_null (calls_manager_get_default_origin (manager));
 
   test_call = NULL;
-  if (no_origins > 0) {
+  if (g_list_model_get_n_items (origins) > 0) {
     g_signal_connect (manager, "call-add", G_CALLBACK (call_add_cb), NULL);
     g_signal_connect (manager, "call-remove", G_CALLBACK (call_remove_cb), NULL);
 
-    origin = CALLS_ORIGIN (g_list_first (origins)->data);
+    origin = g_list_model_get_item (origins, 0);
     g_assert (CALLS_IS_ORIGIN (origin));
 
     calls_manager_set_default_origin (manager, origin);
@@ -101,8 +84,8 @@ test_calls_manager_dummy_provider ()
   /* Unload the provider */
   calls_manager_set_provider (manager, NULL);
 
-  g_assert_cmpint (origin_count, ==, 0);
   g_assert_null (test_call);
+  g_assert_null (calls_manager_get_origins (manager));
 
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
 }

@@ -21,26 +21,19 @@
     <property name="orientation">vertical</property>
     <property name="valign">center</property>
     <property name="visible">True</property>
+
     <child>
-      <object class="GtkComboBox" id="origin_box">
-        <property name="can_focus">False</property>
-        <property name="model">origin_store</property>
-        <property name="id_column">0</property>
-        <property name="margin_bottom">8</property>
-        <property name="no_show_all">True</property>
+      <object class="GtkListBox" id="origin_list_box">
         <property name="visible">True</property>
+        <property name="selection-mode">none</property>
         <child>
-          <object class="GtkCellRendererText"/>
-          <attributes>
-            <attribute name="text">0</attribute>
-          </attributes>
+          <object class="HdyComboRow" id="origin_list">
+            <property name="visible">True</property>
+          </object>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
+
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

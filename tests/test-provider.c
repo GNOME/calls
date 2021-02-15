@@ -41,12 +41,11 @@ static void
 test_dummy_provider_origins (ProviderFixture *fixture,
                              gconstpointer user_data)
 {
-  GList *origins;
+  GListModel *origins;
 
   origins = calls_provider_get_origins
     (CALLS_PROVIDER (fixture->dummy_provider));
-  g_assert_cmpuint (g_list_length (origins), ==, 1);
-  g_list_free (origins);
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 1);
 }
 
 

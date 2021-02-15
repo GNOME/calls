@@ -46,13 +46,13 @@ struct _CallsProviderClass
 
   const char *(*get_name)    (CallsProvider *self);
   const char *(*get_status)  (CallsProvider *self);
-  GList      *(*get_origins) (CallsProvider *self);
+  GListModel *(*get_origins) (CallsProvider *self);
 };
 
 
 const char *calls_provider_get_name    (CallsProvider *self);
 const char *calls_provider_get_status  (CallsProvider *self);
-GList      *calls_provider_get_origins (CallsProvider *self);
+GListModel *calls_provider_get_origins (CallsProvider *self);
 
 
 G_END_DECLS

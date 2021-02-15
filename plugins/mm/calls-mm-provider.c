@@ -42,8 +42,8 @@ struct _CallsMMProvider
   guint watch_id;
   /** ModemManager object proxy */
   MMManager *mm;
-  /** Map of D-Bus object paths to origins */
-  GHashTable *origins;
+  /* A list of CallsOrigins */
+  GListStore *origins;
 };
 
 static void calls_mm_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -78,7 +78,7 @@ update_status (CallsMMProvider *self)
     {
       s = _("ModemManager unavailable");
     }
-  else if (g_hash_table_size (self->origins) == 0)
+  else if (g_list_model_get_n_items (G_LIST_MODEL (self->origins)) == 0)
     {
       s = _("No voice-capable modem available");
     }
@@ -91,6 +91,32 @@ update_status (CallsMMProvider *self)
 }
 
 
+gboolean
+mm_provider_contains (CallsMMProvider *self,
+                      MMObject        *mm_obj)
+{
+  GListModel *model;
+  guint n_items;
+
+  g_assert (CALLS_IS_MM_PROVIDER (self));
+  g_assert (MM_OBJECT (mm_obj));
+
+  model = G_LIST_MODEL (self->origins);
+  n_items = g_list_model_get_n_items (model);
+
+  for (guint i = 0; i < n_items; i++)
+    {
+      g_autoptr(CallsMMOrigin) origin = NULL;
+
+      origin = g_list_model_get_item (model, i);
+
+      if (calls_mm_origin_matches (origin, mm_obj))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 add_origin (CallsMMProvider *self,
             GDBusObject     *object)
@@ -99,8 +125,9 @@ add_origin (CallsMMProvider *self,
   CallsMMOrigin *origin;
   const gchar *path;
 
+  mm_obj = MM_OBJECT (object);
   path = g_dbus_object_get_object_path (object);
-  if (g_hash_table_contains (self->origins, path))
+  if (mm_provider_contains (self, mm_obj))
     {
       g_warning ("New voice interface on existing"
                  " origin with path `%s'", path);
@@ -111,16 +138,10 @@ add_origin (CallsMMProvider *self,
            path);
 
   g_assert (MM_IS_OBJECT (object));
-  mm_obj = MM_OBJECT (object);
 
   origin = calls_mm_origin_new (mm_obj);
+  g_list_store_append (self->origins, origin);
 
-  g_hash_table_insert (self->origins,
-                       mm_object_dup_path (mm_obj),
-                       origin);
-
-  g_signal_emit_by_name (CALLS_PROVIDER (self),
-                         "origin-added", origin);
   update_status (self);
 }
 
@@ -151,24 +172,25 @@ remove_modem_object (CallsMMProvider *self,
                      const gchar     *path,
                      GDBusObject     *object)
 {
-  gpointer *origin;
+  GListModel *model;
+  guint n_items;
 
-  origin = g_hash_table_lookup (self->origins, path);
-  if (!origin)
-    {
-      return;
-    }
+  model = G_LIST_MODEL (self->origins);
+  n_items = g_list_model_get_n_items (model);
 
-  g_assert (CALLS_IS_ORIGIN (origin));
+  for (guint i = 0; i < n_items; i++) {
+    g_autoptr (CallsMMOrigin) origin = NULL;
 
-  g_object_ref (origin);
-  g_hash_table_remove (self->origins, path);
+    origin = g_list_model_get_item (model, i);
 
-  g_signal_emit_by_name (CALLS_PROVIDER (self),
-                         "origin-removed", CALLS_ORIGIN (origin));
-  g_object_unref (origin);
+    if (calls_mm_origin_matches (origin, MM_OBJECT (object)))
+      {
+        g_list_store_remove (self->origins, i);
+        update_status (self);
 
-  update_status (self);
+        break;
+      }
+  }
 }
 
 
@@ -299,35 +321,13 @@ mm_appeared_cb (GDBusConnection *connection,
 }
 
 
-static void
-clear_dbus (CallsMMProvider *self)
-{
-  GList *paths, *node;
-  gpointer origin;
-
-  paths = g_hash_table_get_keys (self->origins);
-
-  for (node = paths; node != NULL; node = node->next)
-    {
-      g_hash_table_steal_extended (self->origins, node->data, NULL, &origin);
-      g_signal_emit_by_name (CALLS_PROVIDER (self),
-                             "origin-removed", CALLS_ORIGIN (origin));
-      g_object_unref (origin);
-    }
-
-  g_list_free_full (paths, g_free);
-
-  g_clear_object (&self->mm);
-}
-
-
 void
 mm_vanished_cb (GDBusConnection *connection,
                 const gchar *name,
                 CallsMMProvider *self)
 {
   g_debug ("ModemManager vanished from D-Bus");
-  clear_dbus (self);
+  g_list_store_remove_all (self->origins);
   update_status (self);
 }
 
@@ -346,12 +346,12 @@ calls_mm_provider_get_status (CallsProvider *provider)
   return self->status;
 }
 
-static GList *
+static GListModel *
 calls_mm_provider_get_origins (CallsProvider *provider)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (provider);
 
-  return g_hash_table_get_values (self->origins);
+  return G_LIST_MODEL (self->origins);
 }
 
 static void
@@ -384,7 +384,7 @@ dispose (GObject *object)
       self->watch_id = 0;
     }
 
-  clear_dbus (self);
+  g_list_store_remove_all (self->origins);
 
   G_OBJECT_CLASS (calls_mm_provider_parent_class)->dispose (object);
 }
@@ -395,7 +395,7 @@ finalize (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
-  g_hash_table_unref (self->origins);
+  g_object_unref (self->origins);
   g_free (self->status);
 
   G_OBJECT_CLASS (calls_mm_provider_parent_class)->finalize (object);
@@ -433,8 +433,7 @@ static void
 calls_mm_provider_init (CallsMMProvider *self)
 {
   self->status = g_strdup (_("Initialised"));
-  self->origins = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                         g_free, g_object_unref);
+  self->origins = g_list_store_new (CALLS_TYPE_MM_ORIGIN);
 }
 
 

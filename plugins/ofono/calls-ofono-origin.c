@@ -110,6 +110,18 @@ calls_ofono_origin_new (GDBOModem *modem)
                        NULL);
 }
 
+gboolean
+calls_ofono_origin_matches (CallsOfonoOrigin *self,
+                            const char       *path)
+{
+  g_return_val_if_fail (CALLS_IS_OFONO_ORIGIN (self), FALSE);
+  g_return_val_if_fail (path, FALSE);
+
+  if (!self->modem)
+    return FALSE;
+
+  return g_strcmp0 (g_dbus_proxy_get_object_path (G_DBUS_PROXY (self->modem)), path) == 0;
+}
 
 static void
 set_property (GObject      *object,

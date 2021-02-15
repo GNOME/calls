@@ -55,8 +55,6 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 enum {
-  SIGNAL_ORIGIN_ADD,
-  SIGNAL_ORIGIN_REMOVE,
   SIGNAL_CALL_ADD,
   SIGNAL_CALL_REMOVE,
   /* TODO: currently this event isn't emitted since the plugins don't give use
@@ -205,7 +203,6 @@ add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
   calls_origin_foreach_call(origin, (CallsOriginForeachCallFunc)add_call, self);
 
   set_state (self, CALLS_MANAGER_STATE_READY);
-  g_signal_emit (self, signals[SIGNAL_ORIGIN_ADD], 0, origin);
 }
 
 static void
@@ -217,7 +214,7 @@ remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
 static void
 remove_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 {
-  g_autoptr (GList) origins = NULL;
+  GListModel *origins;
 
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
 
@@ -229,10 +226,8 @@ remove_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
     calls_manager_set_default_origin (self, NULL);
 
   origins = calls_manager_get_origins (self);
-   if (origins == NULL)
-     set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
-
-  g_signal_emit (self, signals[SIGNAL_ORIGIN_REMOVE], 0, origin);
+  if (!origins || g_list_model_get_n_items (origins) == 0)
+    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
 }
 
 static void
@@ -240,29 +235,59 @@ remove_provider (CallsManager *self)
 {
   PeasEngine *engine = peas_engine_get_default ();
   PeasPluginInfo *plugin = peas_engine_get_plugin_info (engine, self->provider_name);
-  g_autoptr (GList) origins = NULL;
-  GList *o;
+  GListModel *origins;
+  guint n_items;
 
   g_debug ("Remove provider: %s", calls_provider_get_name (self->provider));
   g_signal_handlers_disconnect_by_data (self->provider, self);
 
   origins = calls_provider_get_origins (self->provider);
+  g_signal_handlers_disconnect_by_data (origins, self);
+  n_items = g_list_model_get_n_items (origins);
 
-  for (o = origins; o != NULL; o = o->next)
+  for (guint i = 0; i < n_items; i++)
     {
-      remove_origin (self, o->data, self->provider);
+      g_autoptr(CallsOrigin) origin = NULL;
+
+      origin = g_list_model_get_item (origins, i);
+      remove_origin (self, origin, self->provider);
     }
 
   g_clear_pointer (&self->provider_name, g_free);
   peas_engine_unload_plugin (engine, plugin);
+  g_clear_object (&self->provider);
   set_state (self, CALLS_MANAGER_STATE_NO_PROVIDER);
+}
+
+static void
+origin_items_changed_cb (CallsManager *self)
+{
+  GListModel *origins;
+  guint n_items;
+
+  g_assert (CALLS_IS_MANAGER (self));
+
+  origins = calls_provider_get_origins (self->provider);
+  n_items = g_list_model_get_n_items (origins);
+
+  if (n_items)
+    set_state (self, CALLS_MANAGER_STATE_READY);
+  else
+    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+
+  for (guint i = 0; i < n_items; i++)
+    {
+      g_autoptr(CallsOrigin) origin = NULL;
+
+      origin = g_list_model_get_item (origins, i);
+      add_origin (self, origin, self->provider);
+    }
 }
 
 static void
 add_provider (CallsManager *self, const gchar *name)
 {
-  g_autoptr (GList) origins = NULL;
-  GList *o;
+  GListModel *origins;
 
   /* We could eventually enable more then one provider, but for now let's use
      only one */
@@ -279,17 +304,17 @@ add_provider (CallsManager *self, const gchar *name)
     return;
   }
 
-  set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+  if (g_strcmp0 (name, "dummy") == 0)
+    set_state (self, CALLS_MANAGER_STATE_READY);
+  else
+    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
 
   origins = calls_provider_get_origins (self->provider);
 
-  g_signal_connect_swapped (self->provider, "origin-added", G_CALLBACK (add_origin), self);
-  g_signal_connect_swapped (self->provider, "origin-removed", G_CALLBACK (remove_origin), self);
-
-  for (o = origins; o != NULL; o = o->next)
-    {
-      add_origin (self, o->data, self->provider);
-    }
+  g_signal_connect_object (origins, "items-changed",
+                           G_CALLBACK (origin_items_changed_cb), self,
+                           G_CONNECT_SWAPPED);
+  origin_items_changed_cb (self);
 
   self->provider_name = g_strdup (name);
 }
@@ -365,26 +390,6 @@ calls_manager_class_init (CallsManagerClass *klass)
   object_class->get_property = calls_manager_get_property;
   object_class->set_property = calls_manager_set_property;
   object_class->finalize = calls_manager_finalize;
-
-  signals[SIGNAL_ORIGIN_ADD] =
-   g_signal_new ("origin-add",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_FIRST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 1,
-                 CALLS_TYPE_ORIGIN);
-
-  signals[SIGNAL_ORIGIN_REMOVE] =
-   g_signal_new ("origin-remove",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_FIRST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 1,
-                 CALLS_TYPE_ORIGIN);
 
   signals[SIGNAL_CALL_ADD] =
    g_signal_new ("call-add",
@@ -548,7 +553,7 @@ calls_manager_get_state (CallsManager *self)
   return self->state;
 }
 
-GList *
+GListModel *
 calls_manager_get_origins (CallsManager *self)
 {
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
@@ -562,16 +567,23 @@ calls_manager_get_origins (CallsManager *self)
 GList *
 calls_manager_get_calls (CallsManager *self)
 {
-  g_autoptr (GList) origins = NULL;
+  GListModel *origins = NULL;
   g_autoptr (GList) calls = NULL;
-  GList *o;
+  guint n_items = 0;
 
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
 
   origins = calls_manager_get_origins (self);
+  if (origins)
+    n_items = g_list_model_get_n_items (origins);
 
-  for (o = origins; o != NULL; o = o->next)
-    calls = g_list_concat (calls, calls_origin_get_calls (o->data));
+  for (guint i = 0; i < n_items; i++)
+    {
+      g_autoptr(CallsOrigin) origin = NULL;
+
+      origin = g_list_model_get_item (origins, i);
+      calls = g_list_concat (calls, calls_origin_get_calls (origin));
+    }
 
   return g_steal_pointer (&calls);
 }

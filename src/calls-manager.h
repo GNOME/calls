@@ -54,7 +54,7 @@ void                   calls_manager_set_provider          (CallsManager *self,
                                                            const gchar *name);
 CallsProvider         *calls_manager_get_real_provider     (CallsManager *self);
 CallsManagerState      calls_manager_get_state             (CallsManager *self);
-GList                 *calls_manager_get_origins           (CallsManager *self);
+GListModel            *calls_manager_get_origins           (CallsManager *self);
 GList                 *calls_manager_get_calls             (CallsManager *self);
 void                   calls_manager_dial                  (CallsManager *self,
                                                             CallsOrigin  *origin,

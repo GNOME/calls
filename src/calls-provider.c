@@ -58,13 +58,6 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 
-enum {
-  SIGNAL_ORIGIN_ADDED,
-  SIGNAL_ORIGIN_REMOVED,
-  SIGNAL_LAST_SIGNAL,
-};
-static guint signals [SIGNAL_LAST_SIGNAL];
-
 static void
 calls_provider_get_property (GObject    *object,
                              guint       prop_id,
@@ -99,20 +92,6 @@ calls_provider_class_init (CallsProviderClass *klass)
                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
-
-  signals[SIGNAL_ORIGIN_ADDED] =
-    g_signal_new ("origin-added",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL, NULL,
-                  G_TYPE_NONE, 1, CALLS_TYPE_ORIGIN);
-
-  signals[SIGNAL_ORIGIN_REMOVED] =
-    g_signal_new ("origin-removed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL, NULL,
-                  G_TYPE_NONE, 1, CALLS_TYPE_ORIGIN);
 }
 
 static void
@@ -151,10 +130,9 @@ calls_provider_get_status (CallsProvider *self)
  *
  * Get the list of #CallsOrigin interfaces offered by this provider.
  *
- * Returns: A newly-allocated GList of objects implementing
- * #CallsOrigin or NULL if there was an error.
+ * Returns: (transfer none): A #GListModel of origins
  */
-GList *
+GListModel *
 calls_provider_get_origins (CallsProvider *self)
 {
   g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);

@@ -35,7 +35,7 @@ struct _CallsDummyProvider
 {
   CallsProvider parent_instance;
 
-  GList *origins;
+  GListStore *origins;
 };
 
 static void calls_dummy_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -61,13 +61,15 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
 static gboolean
 usr1_handler (CallsDummyProvider *self)
 {
-  CallsDummyOrigin *origin;
+  GListModel *model;
+  g_autoptr(CallsDummyOrigin) origin = NULL;
 
-  g_return_val_if_fail (self->origins != NULL, FALSE);
+  model = G_LIST_MODEL (self->origins);
+  g_return_val_if_fail (g_list_model_get_n_items (model) > 0, FALSE);
 
   g_debug ("Received SIGUSR1, adding new incoming call");
 
-  origin = CALLS_DUMMY_ORIGIN (self->origins->data);
+  origin = g_list_model_get_item (model, 0);
   calls_dummy_origin_create_inbound (origin, "0987654321");
 
   return TRUE;
@@ -85,12 +87,12 @@ calls_dummy_provider_get_status (CallsProvider *provider)
   return "Normal";
 }
 
-static GList *
+static GListModel *
 calls_dummy_provider_get_origins (CallsProvider *provider)
 {
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (provider);
 
-  return g_list_copy (self->origins);
+  return G_LIST_MODEL (self->origins);
 }
 
 static void
@@ -111,19 +113,10 @@ constructed (GObject *object)
 static void
 dispose (GObject *object)
 {
-  gpointer origin;
-  GList *next;
   CallsDummyProvider *self = CALLS_DUMMY_PROVIDER (object);
 
-  while (self->origins != NULL) {
-    origin = self->origins->data;
-    next = self->origins->next;
-    g_list_free_1 (self->origins);
-    self->origins = next;
-
-    g_signal_emit_by_name (self, "origin-removed", origin);
-    g_object_unref (origin);
-  }
+  g_list_store_remove_all (self->origins);
+  g_clear_object (&self->origins);
 
   G_OBJECT_CLASS (calls_dummy_provider_parent_class)->dispose (object);
 }
@@ -153,6 +146,7 @@ calls_dummy_provider_message_source_interface_init (CallsMessageSourceInterface 
 static void
 calls_dummy_provider_init (CallsDummyProvider *self)
 {
+  self->origins = g_list_store_new (CALLS_TYPE_DUMMY_ORIGIN);
 }
 
 
@@ -161,9 +155,7 @@ calls_dummy_provider_add_origin (CallsDummyProvider *self,
                                  const gchar        *name)
 {
   CallsDummyOrigin *origin = calls_dummy_origin_new (name);
-  self->origins = g_list_append (self->origins, origin);
-
-  g_signal_emit_by_name (CALLS_PROVIDER (self), "origin-added", CALLS_ORIGIN (origin));
+  g_list_store_append (self->origins, origin);
 }
 
 

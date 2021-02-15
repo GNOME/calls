@@ -36,6 +36,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsOfonoOrigin, calls_ofono_origin, CALLS, OFONO_ORIGIN, GObject);
 
 CallsOfonoOrigin *calls_ofono_origin_new (GDBOModem *modem);
+gboolean          calls_ofono_origin_matches (CallsOfonoOrigin *self,
+                                              const char       *path);
 
 G_END_DECLS
 
