@@ -188,8 +188,6 @@ check_dial_number (const gchar *number)
 
   matches = g_regex_match (reject, number, 0, NULL);
 
-  g_regex_unref (reject);
-
   return !matches;
 }
 
