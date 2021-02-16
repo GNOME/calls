@@ -1,3 +1,9 @@
+gnome-calls (0.3.1) byzantium; urgency=medium
+
+  * application: Fix double free
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Tue, 16 Feb 2021 11:48:14 +0100
+
 gnome-calls (0.3.0) byzantium; urgency=medium
 
   [ Timo Jyrinki ]
