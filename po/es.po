@@ -49,7 +49,7 @@ msgstr "Llamando…"
 
 #: src/calls-call-record-row.c:39 src/calls-manager.c:547
 msgid "Anonymous caller"
-msgstr "Origen anónimo"
+msgstr "Llamada anónima"
 
 #: src/calls-call-record-row.c:112
 #, c-format
@@ -80,15 +80,15 @@ msgstr "No puede hacer llamadas: no hay complemento"
 
 #: src/calls-main-window.c:210 src/ui/call-display.ui:280
 msgid "Dial Pad"
-msgstr "Teclado de marcado"
+msgstr "Teclado"
 
 #: src/calls-main-window.c:219
 msgid "Recent"
-msgstr "Reciente"
+msgstr "Recientes"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
-msgstr "Llamada móvil entrante"
+msgstr "Llamada entrante"
 
 #: src/ui/call-display.ui:126
 msgid "Mute"
