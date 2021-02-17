@@ -79,3 +79,7 @@ typedef enum
     SIP_ACCOUNT_ONLINE,
   } SipAccountState;
 
+
+gboolean check_sips (const gchar *addr);
+const gchar *get_protocol_prefix (const gchar *protocol);
+gboolean protocol_is_valid (const gchar *protocol);

@@ -25,6 +25,7 @@
 #pragma once
 
 #include <glib-object.h>
+#include <sofia-sip/nua.h>
 
 G_BEGIN_DECLS
 
@@ -32,7 +33,17 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsSipCall, calls_sip_call, CALLS, SIP_CALL, GObject);
 
-CallsSipCall *calls_sip_call_new                            (const gchar *number,
-                                                             gboolean     inbound);
+CallsSipCall          *calls_sip_call_new                    (const gchar  *number,
+                                                              gboolean      inbound,
+                                                              nua_handle_t *handle);
+void                   calls_sip_call_setup_remote_media     (CallsSipCall *self,
+                                                              const char   *remote,
+                                                              guint         port_rtp,
+                                                              guint         port_rtcp);
+void                   calls_sip_call_setup_local_media      (CallsSipCall *self,
+                                                              guint         port_rtp,
+                                                              guint         port_rtcp);
+void                   calls_sip_call_activate_media         (CallsSipCall *self,
+                                                              gboolean      enabled);
 
 G_END_DECLS

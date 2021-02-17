@@ -28,10 +28,16 @@
 #include "calls-origin.h"
 #include "calls-sip-call.h"
 #include "calls-sip-util.h"
+#include "calls-sip-enums.h"
+#include "calls-sip-media-manager.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <sofia-sip/nua.h>
+#include <sofia-sip/su_tag.h>
+#include <sofia-sip/su_tag_io.h>
+#include <sofia-sip/sip_util.h>
+#include <sofia-sip/sdp.h>
 
 
 struct _CallsSipOrigin
@@ -55,14 +61,18 @@ struct _CallsSipOrigin
 
   SipAccountState state;
 
+  CallsSipMediaManager *media_manager;
+
   /* Account information */
   gchar *user;
   gchar *password;
   gchar *host;
+  gchar *transport_protocol;
+  const gchar *protocol_prefix;
   gint port;
-  gchar *protocol;
 
   GList *calls;
+  GHashTable *call_handles;
 };
 
 static void calls_sip_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -84,34 +94,478 @@ enum {
   PROP_ACC_PROTOCOL,
   PROP_ACC_DIRECT,
   PROP_SIP_CONTEXT,
+  PROP_ACC_STATE,
   PROP_CALLS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
 
-static gboolean
-init_sip_account (CallsSipOrigin *self)
+static void
+sip_authenticate (CallsSipOrigin *origin,
+                  nua_handle_t   *nh,
+                  sip_t const    *sip)
 {
+  const gchar *scheme = NULL;
+  const gchar *realm = NULL;
+  g_autofree gchar *auth = NULL;
+  sip_www_authenticate_t *www_auth = sip->sip_www_authenticate;
+  sip_proxy_authenticate_t *proxy_auth = sip->sip_proxy_authenticate;
+
+  if (www_auth) {
+    scheme = www_auth->au_scheme;
+    realm = msg_params_find (www_auth->au_params, "realm=");
+  }
+  else if (proxy_auth) {
+    scheme = proxy_auth->au_scheme;
+    realm = msg_params_find (proxy_auth->au_params, "realm=");
+  }
+  g_debug ("need to authenticate to realm %s", realm);
+
+  auth = g_strdup_printf ("%s:%s:%s:%s",
+                          scheme, realm, origin->user, origin->password);
+  nua_authenticate (nh, NUTAG_AUTH (auth));
+}
+
+
+static void
+sip_r_invite (int              status,
+              char const      *phrase,
+              nua_t           *nua,
+              CallsSipOrigin  *origin,
+              nua_handle_t    *nh,
+              CallsSipHandles *op,
+              sip_t const     *sip,
+              tagi_t           tags[])
+{
+    g_debug ("response to outgoing INVITE: %03d %s", status, phrase);
+
+    /* TODO call states (see i_state) */
+    if (status == 401) {
+      sip_authenticate (origin, nh, sip);
+    }
+    else if (status == 403) {
+      g_warning ("wrong credentials?");
+    }
+    else if (status == 407) {
+      sip_authenticate (origin, nh, sip);
+    }
+    else if (status == 904) {
+      g_warning ("unmatched challenge");
+    }
+    else if (status == 180) {
+    }
+    else if (status == 100) {
+    }
+    else if (status == 200) {
+    }
+}
+
+
+static void
+sip_r_register (int              status,
+                char const      *phrase,
+                nua_t           *nua,
+                CallsSipOrigin  *origin,
+                nua_handle_t    *nh,
+                CallsSipHandles *op,
+                sip_t const     *sip,
+                tagi_t           tags[])
+{
+  g_debug ("response to REGISTER: %03d %s", status, phrase);
+
+  if (status == 200) {
+    g_debug ("REGISTER successful");
+
+    origin->state = SIP_ACCOUNT_ONLINE;
+  }
+  else if (status == 401) {
+    sip_authenticate (origin, nh, sip);
+
+    origin->state = SIP_ACCOUNT_AUTHENTICATING;
+  }
+  else if (status == 403) {
+    g_warning ("wrong credentials?");
+    origin->state = SIP_ACCOUNT_ERROR_RETRY;
+  }
+  else if (status == 904) {
+    g_warning ("unmatched challenge");
+    origin->state = SIP_ACCOUNT_ERROR_RETRY;
+  }
+  g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
+}
+
+
+static void
+sip_i_state (int              status,
+             char const      *phrase,
+             nua_t           *nua,
+             CallsSipOrigin  *origin,
+             nua_handle_t    *nh,
+             CallsSipHandles *op,
+             sip_t const     *sip,
+             tagi_t           tags[])
+{
+  const sdp_session_t *r_sdp = NULL;
+  gint call_state = nua_callstate_init;
+  CallsCallState state;
+  CallsSipCall *call;
+
+  g_return_if_fail (CALLS_IS_SIP_ORIGIN (origin));
+
+  call = g_hash_table_lookup (origin->call_handles, nh);
+
+  g_return_if_fail (call != NULL);
+
+  g_debug ("The call state has changed: %03d %s", status, phrase);
+  tl_gets (tags,
+           SOATAG_REMOTE_SDP_REF (r_sdp),
+           NUTAG_CALLSTATE_REF (call_state),
+           TAG_END ());
+
+  /* XXX making some assumptions about the received SDP message here...
+   * namely: that there is only the session wide connection c= line
+   * and no individual connections per media stream.
+   * also: rtcp port = rtp port + 1
+   */
+  if (r_sdp) {
+    calls_sip_call_setup_remote_media (call,
+                                       r_sdp->sdp_connection->c_address,
+                                       r_sdp->sdp_media->m_port,
+                                       r_sdp->sdp_media->m_port + 1);
+  }
+
+  /* TODO use CallCallStates with g_object_set (notify!) */
+  switch (call_state) {
+  case nua_callstate_init:
+    return;
+
+  case nua_callstate_calling:
+    state = CALLS_CALL_STATE_DIALING;
+    break;
+
+  case nua_callstate_received:
+    state = CALLS_CALL_STATE_INCOMING;
+    break;
+
+  case nua_callstate_ready:
+    g_debug ("Call ready. Activating media pipeline");
+
+    calls_sip_call_activate_media (call, TRUE);
+    state = CALLS_CALL_STATE_ACTIVE;
+    break;
+
+  case nua_callstate_terminated:
+    g_debug ("Call terminated. Deactivating media pipeline");
+
+    calls_sip_call_activate_media (call, FALSE);
+    state = CALLS_CALL_STATE_DISCONNECTED;
+    break;
+
+  case nua_callstate_authenticating:
+    g_warning ("TODO Move authentication (INVITE) here");
+    return;
+
+  default:
+    return;
+  }
+  g_object_set (call, "state", state, NULL);
+
+}
+
+
+static void
+sip_callback (nua_event_t   event,
+              int           status,
+              char const   *phrase,
+              nua_t        *nua,
+              nua_magic_t  *magic,
+              nua_handle_t *nh,
+              nua_hmagic_t *hmagic,
+              sip_t const  *sip,
+              tagi_t        tags[])
+{
+  CallsSipOrigin *origin = CALLS_SIP_ORIGIN (magic);
+  /* op currently unused */
+  CallsSipHandles *op = hmagic;
+  switch (event) {
+  case nua_i_invite:
+    /* This needs to be handled by CallsSipCall */
+    //g_debug ("incoming call INVITE: %03d %s", status, phrase);
+    //origin->oper->incoming_call_handle = nh;
+    ///* We can only handle a single call */
+    //if (origin->call_state != SIP_CALL_READY) {
+    //  const char * from = NULL;
+
+    //  tl_gets (tags, SIPTAG_FROM_STR_REF (from), TAG_END ());
+
+    //  g_debug ("Rejecting call from %s", from);
+    //  nua_respond (nh, 486, NULL, TAG_END ());
+    //}
+    break;
+
+  case nua_r_invite:
+    sip_r_invite (status,
+                  phrase,
+                  nua,
+                  origin,
+                  nh,
+                  op,
+                  sip,
+                  tags);
+    break;
+
+  case nua_i_ack:
+    g_debug ("incoming ACK: %03d %s", status, phrase);
+    break;
+
+  case nua_i_bye:
+    g_debug ("incoming BYE: %03d %s", status, phrase);
+    break;
+
+  case nua_r_bye:
+    g_debug ("response to BYE: %03d %s", status, phrase);
+    break;
+
+  case nua_r_register:
+    sip_r_register (status,
+                    phrase,
+                    nua,
+                    origin,
+                    nh,
+                    op,
+                    sip,
+                    tags);
+    break;
+
+  case nua_r_set_params:
+    g_debug ("response to set_params: %03d %s", status, phrase);
+    break;
+
+  case nua_i_outbound:
+    g_debug ("status of outbound engine has changed: %03d %s", status, phrase);
+    break;
+
+  case nua_i_state:
+    sip_i_state (status,
+                 phrase,
+                 nua,
+                 origin,
+                 nh,
+                 op,
+                 sip,
+                 tags);
+    break;
+
+  case nua_r_cancel:
+    g_debug ("response to CANCEL: %03d %s", status, phrase);
+    break;
+
+  case nua_r_terminate:
+    break;
+
+  case nua_r_shutdown:
+    /* see also deinit_sip () */
+    g_debug ("response to nua_shutdown: %03d %s", status, phrase);
+    if (status == 200)
+      origin->is_nua_shutdown = TRUE;
+    break;
+
+    /* Deprecated events */
+  case nua_i_active:
+    break;
+  case nua_i_terminated:
+    break;
+
+  default:
+    /* unknown event -> print out error message */
+    g_warning ("unknown event %d: %03d %s",
+               event,
+               status,
+               phrase);
+    g_warning ("printing tags");
+    tl_print(stdout, "", tags);
+    break;
+  }
+}
+
+
+static nua_t *
+setup_nua (CallsSipOrigin *self)
+{
+  g_autofree gchar *address = NULL;
+  nua_t *nua;
+  gboolean use_sips;
+
+  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
+
+  address = g_strconcat (self->protocol_prefix, ":", self->user, "@", self->host, NULL);
+
+  use_sips = check_sips (address);
+
+  // TODO URLs must be changed to accomodate IPv6 use case (later, not important right now)
+  // Note: This is why using hostname does not work! (do we need two nua contexts for ipv4 and ipv6?)
+  nua = nua_create (self->ctx->root,
+                    sip_callback,
+                    self,
+                    NUTAG_USER_AGENT ("sofia-test/0.0.1"),
+                    NUTAG_URL ("sip:0.0.0.0:5060"),
+                    TAG_IF (use_sips, NUTAG_SIPS_URL ("sips:0.0.0.0:5060")),
+                    NUTAG_M_USERNAME (self->user),
+                    SIPTAG_FROM_STR (address),
+                    NUTAG_ENABLEINVITE (1),
+                    NUTAG_AUTOANSWER (0),
+                    NUTAG_AUTOACK (1),
+                    NUTAG_MEDIA_ENABLE (1),
+                    TAG_NULL ());
+
+  return nua;
+}
+
+
+static CallsSipHandles *
+setup_sip_handles (CallsSipOrigin *self)
+{
+  CallsSipHandles *oper;
+
+  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
+
+  if (!(oper = su_zalloc (self->ctx->home, sizeof(CallsSipHandles)))) {
+    g_warning ("cannot create handle");
+    return NULL;
+  }
+
+  oper->context = self->ctx;
+  oper->register_handle = nua_handle (self->nua, self->oper,
+                                      NUTAG_REGISTRAR (self->host),
+                                      TAG_END ());
+  oper->call_handle = NULL;
+  oper->incoming_call_handle = NULL;
+
+  return oper;
+}
+
+
+static void
+setup_account_for_direct_connection (CallsSipOrigin *self)
+{
+  g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
+
+  /* honour username, if previously set */
+  if (self->user == NULL)
+    self->user = g_strdup (g_get_user_name ());
+
+  g_free (self->host);
+  self->host = g_strdup (g_get_host_name ());
+
+  g_free (self->password);
+  self->password = NULL;
+
+  g_free (self->transport_protocol);
+  self->transport_protocol = g_strdup ("UDP");
+
+  self->protocol_prefix = get_protocol_prefix (self->transport_protocol);
+
+  g_debug ("Notifying account changed:\n"
+           "user: %s\nhost URL: %s", self->user, self->host);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_USER]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_HOST]);
+}
+
+
+static gboolean
+is_account_complete (CallsSipOrigin *self)
+{
+  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), FALSE);
+
+  /* we need only need to check for password if needing to authenticate over a proxy/UAS */
+  if (self->user == NULL ||
+      (!self->use_direct_connection && self->password == NULL) ||
+      self->host == NULL ||
+      self->transport_protocol == NULL ||
+      self->protocol_prefix == NULL)
+    return FALSE;
+
+  return TRUE;
+}
+
+
+static gboolean
+init_sip_account (CallsSipOrigin *self,
+                  GError        **error)
+{
+  gboolean recoverable = FALSE;
+
+  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), FALSE);
+
+  if (self->use_direct_connection && !is_account_complete (self)) {
+    g_debug ("Account not set yet. Using user and hostname");
+    setup_account_for_direct_connection (self);
+  }
+
+  if (!is_account_complete (self)) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Must have completed account setup before calling"
+                 "init_sip_account ()"
+                 "Try again when account is setup");
+    recoverable = TRUE;
+    goto err;
+  }
+
+  // setup_nua and setup_oper only after account data has been set
+  self->nua = setup_nua (self);
+  if (self->nua == NULL) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Failed setting up nua context");
+    goto err;
+  }
+
+  self->oper = setup_sip_handles (self);
+  if (self->oper == NULL) {
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Failed setting operation handles");
+    goto err;
+  }
+
+  /* In the case of a direct connection we're immediately good to go */
+  if (self->use_direct_connection)
+    self->state = SIP_ACCOUNT_ONLINE;
+  else
+    self->state = SIP_ACCOUNT_OFFLINE;
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
+  return TRUE;
+
+ err:
+  self->state = recoverable ? SIP_ACCOUNT_ERROR_RETRY : SIP_ACCOUNT_ERROR;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return FALSE;
 }
 
-static gboolean
-protocol_is_valid (const gchar *protocol)
-{
-  return g_strcmp0 (protocol, "UDP") == 0 ||
-    g_strcmp0 (protocol, "TLS") == 0;
-}
 
 static void
 remove_call (CallsSipOrigin *self,
-             CallsCall        *call,
-             const gchar      *reason)
+             CallsCall      *call,
+             const gchar    *reason)
 {
   CallsOrigin *origin;
+  CallsSipCall *sip_call;
+  gboolean inbound;
+  nua_handle_t *nh;
 
   origin = CALLS_ORIGIN (self);
+  sip_call = CALLS_SIP_CALL (call);
+
   self->calls = g_list_remove (self->calls, call);
+
+  g_object_get (sip_call,
+                "inbound", &inbound,
+                "nua-handle", &nh,
+                NULL);
+
+  g_hash_table_remove (self->call_handles, nh);
+  nua_handle_unref (nh);
 
   g_signal_emit_by_name (origin, "call-removed", call, reason);
 
@@ -120,7 +574,8 @@ remove_call (CallsSipOrigin *self,
 
 
 static void
-remove_calls (CallsSipOrigin *self, const gchar *reason)
+remove_calls (CallsSipOrigin *self,
+              const gchar    *reason)
 {
   CallsCall *call;
   GList *next;
@@ -137,14 +592,12 @@ remove_calls (CallsSipOrigin *self, const gchar *reason)
     g_signal_emit_by_name (self, "call-removed", call, reason);
     g_object_unref (call);
   }
+
+  g_hash_table_remove_all (self->call_handles);
+
+  g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
+  g_clear_pointer (&self->oper->incoming_call_handle, nua_handle_unref);
 }
-
-
-struct DisconnectedData
-{
-  CallsSipOrigin *self;
-  CallsCall        *call;
-};
 
 
 static void
@@ -167,14 +620,33 @@ on_call_state_changed_cb (CallsSipOrigin *self,
 
 static void
 add_call (CallsSipOrigin *self,
-          const gchar *address,
-          gboolean inbound)
+          const gchar    *address,
+          gboolean        inbound,
+          nua_handle_t   *handle)
 {
   CallsSipCall *sip_call;
   CallsCall *call;
+  g_autofree gchar *local_sdp = NULL;
 
-  sip_call = calls_sip_call_new (address, inbound);
+  sip_call = calls_sip_call_new (address, inbound, handle);
   g_assert (sip_call != NULL);
+
+  /* XXX dynamically get/probe free ports */
+  calls_sip_call_setup_local_media (sip_call, 19042, 19043);
+
+  local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
+                                                           19042,
+                                                           check_sips (address));
+
+  g_assert (local_sdp);
+  g_debug ("Setting local SDP to string:\n%s", local_sdp);
+
+  nua_set_params (self->nua,
+                  SOATAG_USER_SDP_STR (local_sdp),
+                  SOATAG_AF (SOA_AF_IP4_IP6),
+                  TAG_END ());
+
+  self->oper->call_handle = handle;
 
   call = CALLS_CALL (sip_call);
   g_signal_connect_swapped (call, "state-changed",
@@ -182,6 +654,7 @@ add_call (CallsSipOrigin *self,
                             self);
 
   self->calls = g_list_append (self->calls, sip_call);
+  g_hash_table_insert (self->call_handles, handle, sip_call);
 
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
 }
@@ -191,6 +664,7 @@ static void
 dial (CallsOrigin *origin,
       const gchar *address)
 {
+  CallsSipOrigin *self;
   g_assert (CALLS_ORIGIN (origin));
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
@@ -200,7 +674,17 @@ dial (CallsOrigin *origin,
     return;
   }
 
-  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE);
+  self = CALLS_SIP_ORIGIN (origin);
+
+  if (self->oper->call_handle)
+    nua_handle_unref (self->oper->call_handle);
+
+  self->oper->call_handle = nua_handle (self->nua, self->oper,
+                                        NUTAG_MEDIA_ENABLE (1),
+                                        SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
+                                        TAG_END ());
+
+  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, self->oper->call_handle);
 }
 
 
@@ -237,12 +721,13 @@ calls_sip_origin_set_property (GObject      *object,
     if (!protocol_is_valid (g_value_get_string (value))) {
       g_warning ("Tried setting invalid protocol: '%s'\n"
                  "Continue using old protocol: '%s'",
-                 g_value_get_string (value), self->protocol);
+                 g_value_get_string (value), self->transport_protocol);
       return;
     }
 
-    g_free (self->protocol);
-    self->protocol = g_value_dup_string (value);
+    g_free (self->transport_protocol);
+    self->transport_protocol = g_value_dup_string (value);
+    self->protocol_prefix = get_protocol_prefix (self->transport_protocol);
     break;
 
   case PROP_ACC_DIRECT:
@@ -251,6 +736,10 @@ calls_sip_origin_set_property (GObject      *object,
 
   case PROP_SIP_CONTEXT:
     self->ctx = g_value_get_pointer (value);
+    break;
+
+  case PROP_ACC_STATE:
+    g_warning ("Setting the account state does not yet have any effect");
     break;
 
   default:
@@ -290,7 +779,11 @@ calls_sip_origin_get_property (GObject      *object,
     break;
 
   case PROP_ACC_PROTOCOL:
-    g_value_set_string (value, self->protocol);
+    g_value_set_string (value, self->transport_protocol);
+    break;
+
+  case PROP_ACC_STATE:
+    g_value_set_enum (value, self->state);
     break;
 
   default:
@@ -304,8 +797,13 @@ static void
 calls_sip_origin_constructed (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
+  g_autoptr (GError) error = NULL;
 
-  init_sip_account (self);
+  if (!init_sip_account (self, &error)) {
+    g_warning ("Error initializing the SIP account: %s", error->message);
+  }
+
+  self->media_manager = calls_sip_media_manager_default ();
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->constructed (object);
 }
@@ -354,7 +852,8 @@ calls_sip_origin_finalize (GObject *object)
   g_free (self->user);
   g_free (self->password);
   g_free (self->host);
-  g_free (self->protocol);
+  g_free (self->transport_protocol);
+  g_hash_table_destroy (self->call_handles);
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->finalize (object);
 }
@@ -425,6 +924,15 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_SIP_CONTEXT, props[PROP_SIP_CONTEXT]);
 
+  props[PROP_ACC_STATE] =
+    g_param_spec_enum ("account-state",
+                       "Account state",
+                       "The state of the SIP account",
+                       SIP_TYPE_ACCOUNT_STATE,
+                       SIP_ACCOUNT_NULL,
+                       G_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_ACC_STATE, props[PROP_ACC_STATE]);
+
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
@@ -454,6 +962,8 @@ calls_sip_origin_init (CallsSipOrigin *self)
 {
   self->name = g_string_new (NULL);
 
+  self->call_handles = g_hash_table_new (NULL, NULL);
+
   /* Direct connection mode is useful for debugging purposes */
   self->use_direct_connection = TRUE;
 
@@ -462,12 +972,13 @@ calls_sip_origin_init (CallsSipOrigin *self)
 
 void
 calls_sip_origin_create_inbound (CallsSipOrigin *self,
-                                 const gchar    *address)
+                                 const gchar    *address,
+                                 nua_handle_t   *handle)
 {
   g_return_if_fail (address != NULL);
   g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
 
-  add_call (self, address, TRUE);
+  add_call (self, address, TRUE, handle);
 }
 
 
@@ -481,16 +992,19 @@ calls_sip_origin_new (const gchar     *name,
                       const gchar     *protocol,
                       gboolean         direct_connection)
 {
-  CallsSipOrigin *origin =
-    g_object_new (CALLS_TYPE_SIP_ORIGIN,
-                  "sip-context", sip_context,
-                  "user", user,
-                  "password", password,
-                  "host", host,
-                  "port", port,
-                  "protocol", protocol,
-                  "direct-connection", direct_connection,
-                  NULL);
+  CallsSipOrigin *origin;
+
+  g_return_val_if_fail (sip_context != NULL, NULL);
+
+  origin = g_object_new (CALLS_TYPE_SIP_ORIGIN,
+                         "sip-context", sip_context,
+                         "user", user,
+                         "password", password,
+                         "host", host,
+                         "port", port,
+                         "protocol", protocol,
+                         "direct-connection", direct_connection,
+                         NULL);
 
   g_string_assign (origin->name, name);
 

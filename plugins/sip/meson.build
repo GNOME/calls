@@ -44,7 +44,11 @@ sip_sources = files(
   [
     'calls-sip-call.c', 'calls-sip-call.h',
     'calls-sip-origin.c', 'calls-sip-origin.h',
-    'calls-sip-provider.c', 'calls-sip-provider.h'
+    'calls-sip-provider.c', 'calls-sip-provider.h',
+    'calls-sip-util.c', 'calls-sip-util.h',
+    'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
+    'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
+    'gst-rfc3551.c', 'gst-rfc3551.h',
   ]
 )
 

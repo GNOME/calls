@@ -27,6 +27,7 @@
 #include "calls-sip-util.h"
 
 #include <glib-object.h>
+#include <sofia-sip/nua.h>
 
 G_BEGIN_DECLS
 
@@ -43,6 +44,7 @@ CallsSipOrigin   *calls_sip_origin_new                      (const gchar     *na
                                                              const gchar     *protocol,
                                                              gboolean         direct_connection);
 void              calls_sip_origin_create_inbound           (CallsSipOrigin *self,
-                                                             const gchar *number);
+                                                             const gchar    *number,
+                                                             nua_handle_t   *handle);
 
 G_END_DECLS

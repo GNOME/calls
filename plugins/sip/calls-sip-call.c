@@ -25,9 +25,12 @@
 #include "calls-sip-call.h"
 
 #include "calls-message-source.h"
+#include "calls-sip-media-manager.h"
+#include "calls-sip-media-pipeline.h"
 #include "calls-call.h"
 
 #include <glib/gi18n.h>
+#include <sofia-sip/nua.h>
 
 
 struct _CallsSipCall
@@ -36,6 +39,10 @@ struct _CallsSipCall
   gchar *number;
   gboolean inbound;
   CallsCallState state;
+
+  CallsSipMediaManager *manager;
+  CallsSipMediaPipeline *pipeline;
+  nua_handle_t *nh;
 };
 
 static void calls_sip_call_message_source_interface_init (CallsCallInterface *iface);
@@ -49,6 +56,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipCall, calls_sip_call, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
+  PROP_CALL_HANDLE,
   PROP_CALL_NUMBER,
   PROP_CALL_INBOUND,
   PROP_CALL_STATE,
@@ -97,6 +105,8 @@ answer (CallsCall *call)
     return;
   }
 
+  /* need to include SDP answer here */
+
   change_state (self, CALLS_CALL_STATE_ACTIVE);
 }
 
@@ -135,6 +145,10 @@ calls_sip_call_set_property (GObject      *object,
   CallsSipCall *self = CALLS_SIP_CALL (object);
 
   switch (property_id) {
+  case PROP_CALL_HANDLE:
+    self->nh = g_value_get_pointer (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -167,6 +181,10 @@ calls_sip_call_get_property (GObject      *object,
     g_value_set_string (value, NULL);
     break;
 
+  case PROP_CALL_HANDLE:
+    g_value_set_pointer (value, self->nh);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -181,6 +199,10 @@ calls_sip_call_finalize (GObject *object)
 
   g_free (self->number);
 
+  if (self->pipeline) {
+    calls_sip_media_pipeline_stop (self->pipeline);
+    g_clear_object (&self->pipeline);
+  }
   G_OBJECT_CLASS (calls_sip_call_parent_class)->finalize (object);
 }
 
@@ -193,6 +215,13 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
   object_class->get_property = calls_sip_call_get_property;
   object_class->set_property = calls_sip_call_set_property;
   object_class->finalize = calls_sip_call_finalize;
+
+  props[PROP_CALL_HANDLE] =
+    g_param_spec_pointer ("nua-handle",
+                          "NUA handle",
+                          "The used NUA handler",
+                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_CALL_HANDLE, props[PROP_CALL_HANDLE]);
 
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
@@ -226,18 +255,76 @@ calls_sip_call_message_source_interface_init (CallsCallInterface *iface)
 static void
 calls_sip_call_init (CallsSipCall *self)
 {
+  MediaCodecInfo *best_codec;
+
+  self->manager = calls_sip_media_manager_default ();
+
+  best_codec = get_best_codec (self->manager);
+
+  self->pipeline = calls_sip_media_pipeline_new (best_codec);
+}
+
+
+void
+calls_sip_call_setup_local_media (CallsSipCall *self,
+                                  guint         port_rtp,
+                                  guint         port_rtcp)
+{
+  g_return_if_fail (CALLS_IS_SIP_CALL (self));
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
+
+  g_debug ("Setting local ports: RTP/RTCP %u/%u", port_rtp, port_rtcp);
+  g_object_set (G_OBJECT (self->pipeline),
+                "lport-rtp", port_rtp,
+                "lport-rtcp", port_rtcp,
+                NULL);
+}
+
+
+void
+calls_sip_call_setup_remote_media (CallsSipCall *self,
+                                   const char   *remote,
+                                   guint         port_rtp,
+                                   guint         port_rtcp)
+{
+  g_return_if_fail (CALLS_IS_SIP_CALL (self));
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
+
+  g_debug ("Setting remote ports: RTP/RTCP %u/%u", port_rtp, port_rtcp);
+  g_object_set (G_OBJECT (self->pipeline),
+                "remote", remote,
+                "rport-rtp", port_rtp,
+                "rport-rtcp", port_rtcp,
+                NULL);
+}
+
+
+void
+calls_sip_call_activate_media (CallsSipCall *self,
+                               gboolean enabled)
+{
+  g_return_if_fail (CALLS_IS_SIP_CALL (self));
+
+  if (enabled) {
+    ;
+  } else {
+    ;
+  }
 }
 
 
 CallsSipCall *
-calls_sip_call_new (const gchar *number,
-                    gboolean     inbound)
+calls_sip_call_new (const gchar  *number,
+                    gboolean      inbound,
+                    nua_handle_t *handle)
 {
   CallsSipCall *call;
 
   g_return_val_if_fail (number != NULL, NULL);
 
-  call = g_object_new (CALLS_TYPE_SIP_CALL, NULL);
+  call = g_object_new (CALLS_TYPE_SIP_CALL,
+                       "nua-handle", handle,
+                       NULL);
 
   call->number = g_strdup (number);
   call->inbound = inbound;
