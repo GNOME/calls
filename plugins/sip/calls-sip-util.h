@@ -38,7 +38,6 @@ typedef struct
 {
   nua_handle_t        *register_handle;
   nua_handle_t        *call_handle;
-  nua_handle_t        *incoming_call_handle;
   CallsSipContext     *context;
 } CallsSipHandles;
 

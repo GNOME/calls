@@ -269,8 +269,8 @@ sip_i_state (int              status,
   default:
     return;
   }
-  g_object_set (call, "state", state, NULL);
 
+  calls_sip_call_set_state (call, state);
 }
 
 
@@ -288,20 +288,22 @@ sip_callback (nua_event_t   event,
   CallsSipOrigin *origin = CALLS_SIP_ORIGIN (magic);
   /* op currently unused */
   CallsSipHandles *op = hmagic;
+  const char * from = NULL;
+
   switch (event) {
   case nua_i_invite:
-    /* This needs to be handled by CallsSipCall */
-    //g_debug ("incoming call INVITE: %03d %s", status, phrase);
-    //origin->oper->incoming_call_handle = nh;
-    ///* We can only handle a single call */
-    //if (origin->call_state != SIP_CALL_READY) {
-    //  const char * from = NULL;
+    tl_gets (tags, SIPTAG_FROM_STR_REF (from), TAG_END ());
 
-    //  tl_gets (tags, SIPTAG_FROM_STR_REF (from), TAG_END ());
+    g_debug ("incoming call INVITE: %03d %s from %s", status, phrase, from);
 
-    //  g_debug ("Rejecting call from %s", from);
-    //  nua_respond (nh, 486, NULL, TAG_END ());
-    //}
+    /* reject if there already is a ongoing call */
+    if (op->call_handle) {
+      nua_respond (nh, 486, NULL, TAG_END ());
+      g_debug ("Cannot handle more than one call. Rejecting");
+    }
+    else
+      calls_sip_origin_create_inbound (origin, from, nh);
+
     break;
 
   case nua_r_invite:
@@ -440,7 +442,6 @@ setup_sip_handles (CallsSipOrigin *self)
                                       NUTAG_REGISTRAR (self->host),
                                       TAG_END ());
   oper->call_handle = NULL;
-  oper->incoming_call_handle = NULL;
 
   return oper;
 }
@@ -564,6 +565,10 @@ remove_call (CallsSipOrigin *self,
                 "nua-handle", &nh,
                 NULL);
 
+  /* TODO support multiple simultaneous calls */
+  if (self->oper->call_handle == nh)
+    self->oper->call_handle = NULL;
+
   g_hash_table_remove (self->call_handles, nh);
   nua_handle_unref (nh);
 
@@ -596,7 +601,6 @@ remove_calls (CallsSipOrigin *self,
   g_hash_table_remove_all (self->call_handles);
 
   g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
-  g_clear_pointer (&self->oper->incoming_call_handle, nua_handle_unref);
 }
 
 
@@ -646,7 +650,19 @@ add_call (CallsSipOrigin *self,
                   SOATAG_AF (SOA_AF_IP4_IP6),
                   TAG_END ());
 
+  if (self->oper->call_handle)
+    nua_handle_unref (self->oper->call_handle);
+
   self->oper->call_handle = handle;
+
+  g_hash_table_insert (self->call_handles, handle, sip_call);
+
+  if (!inbound)
+    nua_invite (self->oper->call_handle,
+                SIPTAG_TO_STR (address),
+                SOATAG_RTP_SORT (SOA_RTP_SORT_REMOTE),
+                SOATAG_RTP_SELECT (SOA_RTP_SELECT_ALL),
+                TAG_END ());
 
   call = CALLS_CALL (sip_call);
   g_signal_connect_swapped (call, "state-changed",
@@ -654,7 +670,6 @@ add_call (CallsSipOrigin *self,
                             self);
 
   self->calls = g_list_append (self->calls, sip_call);
-  g_hash_table_insert (self->call_handles, handle, sip_call);
 
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
 }
@@ -665,6 +680,7 @@ dial (CallsOrigin *origin,
       const gchar *address)
 {
   CallsSipOrigin *self;
+  nua_handle_t *nh;
   g_assert (CALLS_ORIGIN (origin));
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
@@ -676,15 +692,14 @@ dial (CallsOrigin *origin,
 
   self = CALLS_SIP_ORIGIN (origin);
 
-  if (self->oper->call_handle)
-    nua_handle_unref (self->oper->call_handle);
+  nh = nua_handle (self->nua, self->oper,
+                   NUTAG_MEDIA_ENABLE (1),
+                   SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
+                   TAG_END ());
 
-  self->oper->call_handle = nua_handle (self->nua, self->oper,
-                                        NUTAG_MEDIA_ENABLE (1),
-                                        SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
-                                        TAG_END ());
+  g_debug ("Calling `%s'", address);
 
-  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, self->oper->call_handle);
+  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
 }
 
 
@@ -821,7 +836,6 @@ calls_sip_origin_dispose (GObject *object)
 
   if (self->oper) {
     g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
-    g_clear_pointer (&self->oper->incoming_call_handle, nua_handle_unref);
     g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
   }
 
@@ -977,6 +991,12 @@ calls_sip_origin_create_inbound (CallsSipOrigin *self,
 {
   g_return_if_fail (address != NULL);
   g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
+
+  /* TODO support multiple calls */
+  if (self->oper->call_handle)
+    nua_handle_unref (self->oper->call_handle);
+
+  self->oper->call_handle = handle;
 
   add_call (self, address, TRUE, handle);
 }

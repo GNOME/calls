@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "calls-call.h"
+
 #include <glib-object.h>
 #include <sofia-sip/nua.h>
 
@@ -45,5 +47,7 @@ void                   calls_sip_call_setup_local_media      (CallsSipCall *self
                                                               guint         port_rtcp);
 void                   calls_sip_call_activate_media         (CallsSipCall *self,
                                                               gboolean      enabled);
+void                   calls_sip_call_set_state              (CallsSipCall  *self,
+                                                              CallsCallState state);
 
 G_END_DECLS
