@@ -28,6 +28,7 @@ src/ui/call-display.ui
 src/ui/call-record-row.ui
 src/ui/call-selector-item.ui
 src/ui/call-window.ui
+src/ui/contacts-box.ui
 src/ui/encryption-indicator.ui
 src/ui/history-box.ui
 src/ui/history-header-bar.ui
