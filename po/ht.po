@@ -1,0 +1,257 @@
+# Creole Haitian translation for GNOME Calls.
+# Copyright (C) 2021 Purism
+# This file is distributed under the same license as the Calls package. 
+# Pierre Michel Augustin <augustinpierremichel@hotmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2021-02-07 15:24+0000\n"
+"PO-Revision-Date: 2021-02-13 13:16-0500\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ht_HT\n"
+
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:314
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Apèl  yo"
+
+#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefòn"
+
+#: data/sm.puri.Calls.desktop.in:5
+#, fuzzy
+msgid "A phone dialer and call handler"
+msgstr "Yon moun kap fè apèl ak moun kap jere apèl yo"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefòn; Apèl; Telefòn; Fè apèl; Moun k ap fè apèl la; PSTN;"
+
+#: data/sm.puri.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Apèl (Sèvis)"
+
+#: data/sm.puri.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Yon moun k ap fè apèl ak jere apèl (mòd sèvis)"
+
+#: src/calls-application.c:434
+#, c-format
+msgid "Tried dialing unparsable tel URI `%s'"
+msgstr "Eseye fè apèl URI telefòn pa analize `%s '"
+
+#: src/calls-application.c:485
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Pa konnen kijan yo louvri `%s '"
+
+#: src/calls-application.c:536
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Non \"Plugin\" pou itilize a pou konpayi k ap konekte apèl la"
+
+#: src/calls-application.c:537
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:542
+msgid "Whether to present the main window on startup"
+msgstr "Si ou vle fè fenèt prensipal la parèt nan demaraj la"
+
+#: src/calls-application.c:548
+msgid "Dial a number"
+msgstr "Fè yon nimewo"
+
+#: src/calls-application.c:549
+msgid "NUMBER"
+msgstr "NIMEWO"
+
+#: src/calls-best-match.c:331 src/calls-call-record-row.c:40
+msgid "Anonymous caller"
+msgstr "Apèl san idantite"
+
+#: src/calls-call-display.c:286
+msgid "Calling…"
+msgstr "Apèl ap kontekte ..."
+
+#: src/calls-call-record-row.c:113
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"yè"
+
+#: src/calls-main-window.c:120
+msgid "translator-credits"
+msgstr "tradiktè-kredi"
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Pa ka fè apèl: Pa gen modèm vwa ki disponib"
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No backend service"
+msgstr "Pa ka fè apèl: Pa gen sèvis deyè"
+
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No plugin"
+msgstr "Pa ka fè apèl: Pa gen okenn \"Plugin\""
+
+#: src/calls-main-window.c:364
+msgid "Contacts"
+msgstr "Kontak  yo"
+
+#: src/calls-main-window.c:374 src/ui/call-display.ui:287
+msgid "Dial Pad"
+msgstr "Touch pou fè apèl"
+
+#: src/calls-main-window.c:382
+msgid "Recent"
+msgstr "Resan"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "Apèl rate"
+
+#: src/calls-notifier.c:60
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Apèl rate de <b>%s</b>"
+
+#: src/calls-notifier.c:62
+#, c-format
+msgid "Missed call from %s"
+msgstr "Apèl rate de %s"
+
+#: src/calls-notifier.c:68
+msgid "Call back"
+msgstr "Rele anko"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Apèl nan telefòn fèk ap rantre"
+
+#: src/ui/call-display.ui:133
+msgid "Mute"
+msgstr "San son"
+
+#: src/ui/call-display.ui:170
+msgid "Speaker"
+msgstr "Gwo volim"
+
+#: src/ui/call-display.ui:206
+msgid "Add call"
+msgstr "Ajoute apèl"
+
+#: src/ui/call-display.ui:251
+msgid "Hold"
+msgstr "poz"
+
+#: src/ui/call-display.ui:343
+msgid "Hang up"
+msgstr "Koupe"
+
+#: src/ui/call-display.ui:374
+msgid "Answer"
+msgstr "Reponn"
+
+#: src/ui/call-display.ui:456
+msgid "Hide the dial pad"
+msgstr "Kache touch apèl"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Rele pati a"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Efase apèl"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "_Kopye nimewo"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Sou poz"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Apèl sa a pa sekirize"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Apèl sa a sekirize"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Pa gen apèl resan"
+
+#: src/ui/history-header-bar.ui:7
+msgid "Recent Calls"
+msgstr "Apèl resan"
+
+#: src/ui/history-header-bar.ui:20
+msgid "New call…"
+msgstr "Nouvo apèl ..."
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:39
+msgid "Menu"
+msgstr "Meni"
+
+#: src/ui/history-header-bar.ui:70
+msgid "About Calls"
+msgstr "Konsènan apèl yo"
+
+#: src/ui/main-window.ui:38
+msgid "No modem found"
+msgstr "Pa jwenn modèm"
+
+#: src/ui/main-window.ui:95
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:104
+msgid "_Cancel"
+msgstr "_Anile"
+
+#: src/ui/main-window.ui:121
+msgid "_Close"
+msgstr "_Femen"
+
+#: src/ui/main-window.ui:131
+msgid "_Send"
+msgstr "_Voye"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Fè apèl"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Retounen pa nimewo"
+
+#: src/ui/new-call-header-bar.ui:7
+msgid "New Call"
+msgstr " Nouvo apèl"
+
+#: src/ui/new-call-header-bar.ui:20
+msgid "Back"
+msgstr "Retounen"
