@@ -403,7 +403,7 @@ constructed (GObject *object)
      NULL,
      (GAsyncReadyCallback) get_modems_cb,
      self);
-     
+
   G_OBJECT_CLASS (calls_ofono_provider_parent_class)->constructed (object);
 }
 

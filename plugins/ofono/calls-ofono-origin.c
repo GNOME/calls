@@ -355,7 +355,7 @@ call_added_cb (GDBOVoiceCallManager *voice,
 
   g_debug ("Call `%s' addition in progress", path);
 }
-               
+
 
 static void
 call_removed_cb (GDBOVoiceCallManager *voice,
@@ -391,7 +391,7 @@ call_removed_cb (GDBOVoiceCallManager *voice,
   remove_call (self, ofono_call, reason->str);
 
   g_string_free (reason, TRUE);
-  
+
   g_debug ("Removed call `%s'", path);
 }
 
@@ -500,7 +500,7 @@ constructed (GObject *object)
      self);
 
   g_clear_object (&self->modem);
-     
+
   G_OBJECT_CLASS (calls_ofono_origin_parent_class)->constructed (object);
 }
 
