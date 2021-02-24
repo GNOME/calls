@@ -212,7 +212,7 @@ operation_cb (MMCall                      *mm_call,
               struct CallsMMOperationData *data)
 {
   gboolean ok;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   ok = data->finish_func (mm_call, res, &error);
   if (!ok)

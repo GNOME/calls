@@ -314,7 +314,7 @@ get_modems_cb (GDBOManager *manager,
   gboolean ok;
   GVariant *modems;
   GVariantIter *modems_iter = NULL;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
   const gchar *path;
   GVariant *properties;
 

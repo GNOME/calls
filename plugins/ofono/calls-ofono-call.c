@@ -107,7 +107,7 @@ operation_cb (GDBOVoiceCall                 *voice_call,
               struct CallsCallOperationData *data)
 {
   gboolean ok;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   ok = data->finish_func (voice_call, res, &error);
   if (!ok)

@@ -67,7 +67,7 @@ dial_cb (GDBOVoiceCallManager  *voice,
          CallsOfonoOrigin      *self)
 {
   gboolean ok;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   ok = gdbo_voice_call_manager_call_dial_finish
     (voice, NULL, res, &error);
@@ -294,7 +294,7 @@ voice_call_proxy_new_cb (GDBusConnection *connection,
 {
   CallsOfonoOrigin *self = data->self;
   GDBOVoiceCall *voice_call;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
   const gchar *path;
   CallsOfonoCall *call;
 
@@ -402,7 +402,7 @@ get_calls_cb (GDBOVoiceCallManager *voice,
 {
   gboolean ok;
   GVariant *calls_with_properties = NULL;
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
   GVariantIter *iter = NULL;
   const gchar *path;
   GVariant *properties;
@@ -443,7 +443,7 @@ voice_new_cb (GDBusConnection  *connection,
               GAsyncResult     *res,
               CallsOfonoOrigin *self)
 {
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   self->voice = gdbo_voice_call_manager_proxy_new_finish
     (res, &error);
