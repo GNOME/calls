@@ -62,6 +62,8 @@ struct _CallsApplication
   CallsRecordStore *record_store;
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
+
+  char             *uri;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
@@ -382,37 +384,6 @@ start_proper (CallsApplication  *self)
   return TRUE;
 }
 
-
-static void
-activate (GApplication *application)
-{
-  CallsApplication *self = CALLS_APPLICATION (application);
-  gboolean present;
-
-  g_debug ("Activated");
-
-  if (self->main_window)
-    {
-      present = TRUE;
-    }
-  else
-    {
-      gboolean ok = start_proper (self);
-      if (!ok)
-        {
-          return;
-        }
-
-      present = !self->daemon;
-    }
-
-  if (present)
-    {
-      gtk_window_present (GTK_WINDOW (self->main_window));
-    }
-}
-
-
 static void
 open_tel_uri (CallsApplication *self,
               const gchar      *uri)
@@ -444,6 +415,39 @@ open_tel_uri (CallsApplication *self,
                           dial_str);
 }
 
+static void
+activate (GApplication *application)
+{
+  CallsApplication *self = CALLS_APPLICATION (application);
+  gboolean present;
+
+  g_debug ("Activated");
+
+  if (self->main_window)
+    {
+      present = TRUE;
+    }
+  else
+    {
+      gboolean ok = start_proper (self);
+      if (!ok)
+        {
+          return;
+        }
+
+      present = !self->daemon;
+    }
+
+  if (present || self->uri)
+    {
+      gtk_window_present (GTK_WINDOW (self->main_window));
+    }
+
+  if (self->uri)
+    open_tel_uri (self, self->uri);
+
+  g_clear_pointer (&self->uri, g_free);
+}
 
 static void
 app_open (GApplication  *application,
@@ -452,38 +456,34 @@ app_open (GApplication  *application,
           const gchar   *hint)
 {
   CallsApplication *self = CALLS_APPLICATION (application);
-  gint i;
 
   g_assert (n_files > 0);
 
-  g_debug ("Opened (%i files)", n_files);
+  if (n_files > 1)
+    g_warning ("Calls can handle only one call a time. %u items provided", n_files);
 
-  start_proper (self);
-
-  for (i = 0; i < n_files; ++i)
+  if (g_file_has_uri_scheme (files[0], "tel"))
     {
-      g_autofree gchar *uri = NULL;
-      if (g_file_has_uri_scheme (files[i], "tel"))
-        {
-          uri = g_file_get_uri (files[i]);
+      g_free (self->uri);
+      self->uri = g_file_get_uri (files[0]);
+      g_debug ("Opening %s", self->uri);
 
-          open_tel_uri (self, uri);
-        }
-      else
-        {
-          g_autofree gchar *msg = NULL;
+      g_application_activate (application);
+    }
+  else
+    {
+      g_autofree char *msg = NULL;
+      g_autofree char *uri = NULL;
 
-          uri = g_file_get_parse_name (files[i]);
-          g_warning ("Don't know how to"
-                     " open file `%s', ignoring",
-                     uri);
+      uri = g_file_get_parse_name (files[0]);
+      g_warning ("Don't know how to"
+                 " open file `%s', ignoring",
+                 uri);
 
-          msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
+      msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
 
-          g_signal_emit_by_name (calls_manager_get_default (),
-                                 "error",
-                                 msg);
-        }
+      g_signal_emit_by_name (calls_manager_get_default (),
+                             "error", msg);
     }
 }
 
@@ -498,6 +498,7 @@ finalize (GObject *object)
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
+  g_free (self->uri);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
 }
