@@ -1,0 +1,182 @@
+# Czech translation for Calls.
+# Copyright (C) 2021 Calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Jaroslav Svoboda <multi.flexi@seznam.cz>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-29 14:30+0200\n"
+"PO-Revision-Date: 2021-02-24 12:58+0100\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 3.38.0\n"
+"Last-Translator: Jaroslav Svoboda <multi.flexi@seznam.cz>\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"Language: cs\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Volání"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Název pluginu, který se má použít pro poskytovatele hovoru"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Zda-li zobrazit hlavní okno při spuštění"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Vytočit číslo"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "ČÍSLO"
+
+#: src/calls-call-display.c:246
+msgid "Calling..."
+msgstr "Volání..."
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"včera"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Jaroslav Svoboda <multi.flexi@sezman.cz>, 2021"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Nelze volat: Chybí SIM karta"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Nelze volat: Chybí backend služba"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Nelze volat: Chybí plugin"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Číselník"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Nedávné"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Příchozí hovor"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Příchozí telefonní hovor"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Ztlumit"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Reproduktor"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Přidat hovor"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Přidržet"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Zavěsit"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Zvednout"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Skrýt číselník"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Uskutečnit konferenční hovor"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Hovor přidržen"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Tento hovor není zašifrován"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Tento hovor je zašifrován"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Žádné nedávné hovory"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Nedávné hovory"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Nový hovor…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Nabídka"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "O aplikaci Volání"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Modem nenalezen"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Kontakty"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Vytočit"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Smazat číslo"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Nový hovor"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Zpět"
