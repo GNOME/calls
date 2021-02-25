@@ -287,11 +287,22 @@ sip_callback (nua_event_t   event,
 {
   CallsSipOrigin *origin = CALLS_SIP_ORIGIN (magic);
   CallsSipHandles *op = origin->oper;
-  const char * from = NULL;
+  g_autofree gchar * from = NULL;
 
   switch (event) {
   case nua_i_invite:
-    tl_gets (tags, SIPTAG_FROM_STR_REF (from), TAG_END ());
+    if (sip->sip_from && sip->sip_from->a_url &&
+        sip->sip_from->a_url->url_scheme &&
+        sip->sip_from->a_url->url_user &&
+        sip->sip_from->a_url->url_host)
+      from = g_strconcat (sip->sip_from->a_url->url_scheme, ":",
+                          sip->sip_from->a_url->url_user, "@",
+                          sip->sip_from->a_url->url_host, NULL);
+    else {
+      nua_respond (nh, 400, NULL, TAG_END ());
+      g_warning ("invalid incoming INVITE request");
+      break;
+    }
 
     g_debug ("incoming call INVITE: %03d %s from %s", status, phrase, from);
 
