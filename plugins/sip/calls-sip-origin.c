@@ -246,6 +246,7 @@ sip_i_state (int              status,
 
   case nua_callstate_received:
     state = CALLS_CALL_STATE_INCOMING;
+    g_debug ("Call incoming");
     break;
 
   case nua_callstate_ready:
@@ -260,7 +261,13 @@ sip_i_state (int              status,
 
     calls_sip_call_activate_media (call, FALSE);
     state = CALLS_CALL_STATE_DISCONNECTED;
-    break;
+
+    g_hash_table_remove (origin->call_handles, nh);
+
+    calls_sip_call_set_state (call, state);
+    g_object_unref (G_OBJECT (call));
+
+    return;
 
   case nua_callstate_authenticating:
     g_warning ("TODO Move authentication (INVITE) here");
@@ -579,12 +586,7 @@ remove_call (CallsSipOrigin *self,
   if (self->oper->call_handle == nh)
     self->oper->call_handle = NULL;
 
-  g_hash_table_remove (self->call_handles, nh);
-  nua_handle_unref (nh);
-
   g_signal_emit_by_name (origin, "call-removed", call, reason);
-
-  g_object_unref (G_OBJECT (call));
 }
 
 
