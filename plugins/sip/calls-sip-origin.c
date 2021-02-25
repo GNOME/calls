@@ -223,6 +223,9 @@ sip_i_state (int              status,
            NUTAG_CALLSTATE_REF (call_state),
            TAG_END ());
 
+  if (status == 503) {
+    CALLS_EMIT_MESSAGE (origin, "DNS error", GTK_MESSAGE_ERROR);
+  }
   /* XXX making some assumptions about the received SDP message here...
    * namely: that there is only the session wide connection c= line
    * and no individual connections per media stream.
