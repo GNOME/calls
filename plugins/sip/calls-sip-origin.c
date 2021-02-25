@@ -510,8 +510,8 @@ init_sip_account (CallsSipOrigin *self,
 
   g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), FALSE);
 
-  if (self->use_direct_connection && !is_account_complete (self)) {
-    g_debug ("Account not set yet. Using user and hostname");
+  if (self->use_direct_connection) {
+    g_debug ("Direct connection case. Using user and hostname");
     setup_account_for_direct_connection (self);
   }
 
