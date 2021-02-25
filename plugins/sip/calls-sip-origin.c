@@ -286,8 +286,7 @@ sip_callback (nua_event_t   event,
               tagi_t        tags[])
 {
   CallsSipOrigin *origin = CALLS_SIP_ORIGIN (magic);
-  /* op currently unused */
-  CallsSipHandles *op = hmagic;
+  CallsSipHandles *op = origin->oper;
   const char * from = NULL;
 
   switch (event) {
