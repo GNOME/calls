@@ -112,59 +112,6 @@ calls_application_dbus_unregister (GApplication    *application,
 }
 
 
-static gint
-handle_local_options (GApplication *application,
-                      GVariantDict *options)
-{
-  gboolean ok;
-  g_autoptr (GError) error = NULL;
-  const char *arg;
-  g_autoptr (GVariant) providers = NULL;
-
-  g_debug ("Registering application");
-  ok = g_application_register (application, NULL, &error);
-  if (!ok) {
-    g_error ("Error registering application: %s",
-             error->message);
-  }
-
-  ok = g_variant_dict_contains (options, "version");
-  if (ok) {
-    char * version = g_str_equal (VCS_TAG, "") ? PACKAGE_VERSION : VCS_TAG;
-
-    g_print ("%s %s\n", APP_DATA_NAME, version);
-    exit (0);
-  }
-
-  providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
-  if (providers) {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-provider-names",
-                                    providers);
-  } else {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-default-providers",
-                                    NULL);
-  }
-
-  ok = g_variant_dict_contains (options, "daemon");
-  if (ok) {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-daemon",
-                                    NULL);
-  }
-
-  ok = g_variant_dict_lookup (options, "dial", "&s", &arg);
-  if (ok) {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "dial",
-                                    g_variant_new_string (arg));
-  }
-
-  return -1; // Continue processing signal
-}
-
-
 static void
 set_provider_names_action (GSimpleAction *action,
                            GVariant      *parameter,
@@ -380,6 +327,20 @@ static const GActionEntry actions[] =
 };
 
 
+static int
+calls_application_handle_local_options (GApplication *application,
+                                        GVariantDict *options)
+{
+  if (g_variant_dict_contains (options, "version")) {
+    g_print ("%s %s\n", APP_DATA_NAME, *VCS_TAG ? VCS_TAG : PACKAGE_VERSION);
+
+    return 0;
+  }
+
+  return -1;
+}
+
+
 static void
 startup (GApplication *application)
 {
@@ -426,6 +387,55 @@ startup (GApplication *application)
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
+
+static int
+calls_application_command_line (GApplication            *application,
+                                GApplicationCommandLine *command_line)
+{
+  CallsApplication *self = CALLS_APPLICATION (application);
+  GVariantDict *options;
+  const char *arg;
+  g_autoptr (GVariant) providers = NULL;
+  g_auto(GStrv) arguments = NULL;
+  gint argc;
+
+  options = g_application_command_line_get_options_dict (command_line);
+
+  providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
+  if (providers) {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-provider-names",
+                                    providers);
+  } else {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-default-providers",
+                                    NULL);
+  }
+
+  if (g_variant_dict_contains (options, "daemon"))
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-daemon", NULL);
+
+  if (g_variant_dict_lookup (options, "dial", "&s", &arg))
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "dial", g_variant_new_string (arg));
+
+  arguments = g_application_command_line_get_arguments (command_line, &argc);
+
+  /* Keep only the first URI, if there are many */
+  for (guint i = 0; i < argc; i++)
+    if (g_str_has_prefix (arguments[i], "tel:") ||
+        g_str_has_prefix (arguments[i], "sip:") ||
+        g_str_has_prefix (arguments[i], "sips:")) {
+      g_free (self->uri);
+      self->uri = g_strdup (arguments[i]);
+      break;
+    }
+
+  g_application_activate (application);
+
+  return 0;
+}
 
 static void
 notify_window_visible_cb (GtkWidget       *window,
@@ -634,8 +644,9 @@ calls_application_class_init (CallsApplicationClass *klass)
 
   object_class->finalize = finalize;
 
-  application_class->handle_local_options = handle_local_options;
+  application_class->handle_local_options = calls_application_handle_local_options;
   application_class->startup = startup;
+  application_class->command_line = calls_application_command_line;
   application_class->activate = activate;
   application_class->open = app_open;
   application_class->dbus_register  = calls_application_dbus_register;
@@ -689,7 +700,7 @@ calls_application_new (void)
 {
   return g_object_new (CALLS_TYPE_APPLICATION,
                        "application-id", APP_ID,
-                       "flags", G_APPLICATION_HANDLES_OPEN,
+                       "flags", G_APPLICATION_HANDLES_OPEN | G_APPLICATION_HANDLES_COMMAND_LINE,
                        "register-session", TRUE,
                        NULL);
 }
