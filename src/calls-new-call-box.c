@@ -212,6 +212,8 @@ provider_changed_cb (CallsNewCallBox *self)
   g_signal_connect_object (origins, "items-changed",
                            G_CALLBACK (origin_count_changed_cb), self,
                            G_CONNECT_SWAPPED);
+
+  origin_count_changed_cb (self);
 }
 
 static void
