@@ -646,15 +646,16 @@ add_call (CallsSipOrigin *self,
   CallsSipCall *sip_call;
   CallsCall *call;
   g_autofree gchar *local_sdp = NULL;
+  guint local_port = get_port_for_rtp ();
 
   sip_call = calls_sip_call_new (address, inbound, handle);
   g_assert (sip_call != NULL);
 
   /* XXX dynamically get/probe free ports */
-  calls_sip_call_setup_local_media (sip_call, 19042, 19043);
+  calls_sip_call_setup_local_media (sip_call, local_port, local_port + 1);
 
   local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
-                                                           19042,
+                                                           local_port,
                                                            check_sips (address));
 
   g_assert (local_sdp);

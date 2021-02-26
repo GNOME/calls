@@ -82,3 +82,4 @@ typedef enum
 gboolean check_sips (const gchar *addr);
 const gchar *get_protocol_prefix (const gchar *protocol);
 gboolean protocol_is_valid (const gchar *protocol);
+guint get_port_for_rtp (void);

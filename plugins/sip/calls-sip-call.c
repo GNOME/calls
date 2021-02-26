@@ -29,6 +29,7 @@
 #include "calls-message-source.h"
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
+#include "calls-sip-util.h"
 #include "calls-call.h"
 
 #include <glib/gi18n.h>
@@ -73,6 +74,7 @@ answer (CallsCall *call)
 {
   CallsSipCall *self;
   g_autofree gchar *local_sdp = NULL;
+  guint local_port = get_port_for_rtp ();
 
   g_assert (CALLS_IS_CALL (call));
   g_assert (CALLS_IS_SIP_CALL (call));
@@ -87,10 +89,10 @@ answer (CallsCall *call)
   }
 
   /* XXX dynamically get free ports */
-  calls_sip_call_setup_local_media (self, 19042, 19043);
+  calls_sip_call_setup_local_media (self, local_port, local_port + 1);
 
   local_sdp = calls_sip_media_manager_static_capabilities (self->manager,
-                                                           19042,
+                                                           local_port,
                                                            FALSE);
 
   g_assert (local_sdp);

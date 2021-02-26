@@ -53,3 +53,17 @@ protocol_is_valid (const gchar *protocol)
     g_strcmp0 (protocol, "TCP") == 0 ||
     g_strcmp0 (protocol, "TLS") == 0;
 }
+
+#define RTP_PORT_MIN 20000
+#define RTP_PORT_MAX 65534
+guint
+get_port_for_rtp (void)
+{
+  const guint rand_range = RTP_PORT_MAX - RTP_PORT_MIN;
+  guint rand = (g_random_int () % rand_range) + RTP_PORT_MIN;
+
+  /* RTP ports must be even */
+  return rand % 2 == 0 ? rand : rand + 1;
+}
+#undef RTP_PORT_MIN
+#undef RTP_PORT_MAX
