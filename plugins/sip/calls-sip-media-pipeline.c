@@ -33,6 +33,7 @@ struct _CallsSipMediaPipeline {
   GObject parent;
 
   MediaCodecInfo *codec;
+  gboolean debug;
   /* Connection details */
   char *remote;
 
@@ -85,6 +86,7 @@ enum {
   PROP_RPORT_RTP,
   PROP_LPORT_RTCP,
   PROP_RPORT_RTCP,
+  PROP_DEBUG,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -199,6 +201,10 @@ get_property (GObject      *object,
     g_value_set_uint (value, self->rport_rtcp);
     break;
 
+  case PROP_DEBUG:
+    g_value_set_boolean (value, self->debug);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -238,6 +244,10 @@ set_property (GObject      *object,
 
   case PROP_RPORT_RTCP:
     self->rport_rtcp = g_value_get_uint (value);
+    break;
+
+  case PROP_DEBUG:
+    self->debug = g_value_get_boolean (value);
     break;
 
   default:
@@ -290,6 +300,12 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
                                               "remote rtcp port",
                                               1025, 65535, 5003,
                                               G_PARAM_READWRITE);
+
+  props[PROP_DEBUG] = g_param_spec_boolean ("debug",
+                                            "Debug",
+                                            "Enable debugging information",
+                                            FALSE,
+                                            G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -477,8 +493,6 @@ initable_init (GInitable    *initable,
                           self->rtcp_send_sink, "host",
                           G_BINDING_BIDIRECTIONAL);
 
-  /* TODO https://sources.debian.org/src/gst-plugins-good1.0/1.18.3-1/gst/rtsp/gstrtspsrc.c/?hl=4542#L4542 */
-
   /* Link pads */
   /* in/receive direction */
   /* request and link the pads */
@@ -588,16 +602,100 @@ calls_sip_media_pipeline_new (MediaCodecInfo *codec)
 }
 
 
+static void
+diagnose_used_ports_in_socket (GSocket *socket)
+{
+  g_autoptr (GSocketAddress) local_addr = NULL;
+  g_autoptr (GSocketAddress) remote_addr = NULL;
+  guint16 local_port;
+  guint16 remote_port;
+
+  local_addr = g_socket_get_local_address (socket, NULL);
+  remote_addr = g_socket_get_remote_address (socket, NULL);
+  if (!local_addr) {
+    g_warning ("Could not get local address of socket");
+    return;
+  }
+  g_return_if_fail (G_IS_INET_SOCKET_ADDRESS (local_addr));
+
+  local_port = g_inet_socket_address_get_port (G_INET_SOCKET_ADDRESS (local_addr));
+  g_debug ("Using local port %d", local_port);
+
+  if (!remote_addr) {
+    g_warning ("Could not get remote address of socket");
+    return;
+  }
+  g_return_if_fail (G_IS_INET_SOCKET_ADDRESS (remote_addr));
+
+  remote_port = g_inet_socket_address_get_port (G_INET_SOCKET_ADDRESS (remote_addr));
+  g_debug ("Using remote port %d", remote_port);
+
+}
+
+
+static void
+diagnose_ports_in_use (CallsSipMediaPipeline *self)
+{
+  GSocket *socket_in;
+  GSocket *socket_out;
+  gboolean same_socket = FALSE;
+
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  // TODO also return if pipeline is not started yet
+
+  g_object_get (self->rtp_src, "used-socket", &socket_in, NULL);
+  g_object_get (self->rtp_sink, "used-socket", &socket_out, NULL);
+
+  if (socket_in == NULL || socket_out == NULL) {
+    g_warning ("Could not get used socket");
+    return;
+  }
+  same_socket = socket_in == socket_out;
+
+  if (same_socket) {
+    g_debug ("Diagnosing bidirectional socket...");
+    diagnose_used_ports_in_socket (socket_in);
+  }
+  else {
+    g_debug ("Diagnosing server socket...");
+    diagnose_used_ports_in_socket (socket_in);
+    g_debug ("Diagnosing client socket...");
+    diagnose_used_ports_in_socket (socket_out);
+  }
+}
+
+
 void
 calls_sip_media_pipeline_start (CallsSipMediaPipeline *self)
 {
+  GSocket *socket;
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
   g_debug ("Starting media pipeline");
   self->is_running = TRUE;
 
-  gst_element_set_state (self->send_pipeline, GST_STATE_PLAYING);
+  /* First start the receiver pipeline so that
+     we may reuse the socket in the sender pipeline */
+  /* TODO can we do something similar for RTCP? */
   gst_element_set_state (self->recv_pipeline, GST_STATE_PLAYING);
+
+  g_object_get (self->rtp_src, "used-socket", &socket, NULL);
+
+  if (socket) {
+    g_object_set (self->rtp_sink,
+                  "close-socket", FALSE,
+                  "socket", socket,
+                  NULL);
+  }
+  else
+    g_warning ("Could not get used socket of udpsrc element");
+
+  /* Now start the sender pipeline */
+  gst_element_set_state (self->send_pipeline, GST_STATE_PLAYING);
+
+  if (self->debug)
+    diagnose_ports_in_use (self);
+
 }
 
 
@@ -609,6 +707,7 @@ calls_sip_media_pipeline_stop (CallsSipMediaPipeline *self)
   g_debug ("Stopping media pipeline");
   self->is_running = FALSE;
 
+  /* Stop the pipelines in reverse order (compared to the starting) */
   gst_element_set_state (self->send_pipeline, GST_STATE_NULL);
   gst_element_set_state (self->recv_pipeline, GST_STATE_NULL);
 }
