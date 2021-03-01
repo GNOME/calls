@@ -871,6 +871,9 @@ calls_sip_origin_dispose (GObject *object)
   if (self->oper) {
     g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
     g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
+
+    if (!self->use_direct_connection && self->state == SIP_ACCOUNT_OFFLINE)
+      calls_sip_origin_go_online (self, FALSE);
   }
 
   if (self->nua) {
