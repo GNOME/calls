@@ -42,6 +42,7 @@ void              calls_sip_provider_add_origin             (CallsSipProvider *s
                                                              const gchar      *host,
                                                              gint              port,
                                                              const gchar      *protocol,
-                                                             gboolean          direct_connection);
+                                                             gboolean          direct_connection,
+                                                             gboolean          auto_connect);
 
 G_END_DECLS

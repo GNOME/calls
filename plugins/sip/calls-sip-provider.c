@@ -113,6 +113,10 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     gint port = 0;
     gboolean direct_connection =
       g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
+    gboolean auto_connect = TRUE;
+
+    if (g_key_file_has_key (key_file, groups[i], "AutoConnect", NULL))
+      auto_connect = g_key_file_get_boolean (key_file, groups[i], "AutoConnect", NULL);
 
     if (direct_connection)
       goto skip;
@@ -143,7 +147,15 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
 
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
-    calls_sip_provider_add_origin (self, groups[i], user, password, host, port, protocol, direct_connection);
+    calls_sip_provider_add_origin (self,
+                                   groups[i],
+                                   user,
+                                   password,
+                                   host,
+                                   port,
+                                   protocol,
+                                   direct_connection,
+                                   auto_connect);
   }
 
   g_strfreev (groups);
@@ -369,7 +381,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                const gchar      *host,
                                gint              port,
                                const gchar      *protocol,
-                               gboolean          direct_connection)
+                               gboolean          direct_connection,
+                               gboolean          auto_connect)
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
 
@@ -382,7 +395,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                  host,
                                  port,
                                  protocol,
-                                 direct_connection);
+                                 direct_connection,
+                                 auto_connect);
 
   if (!origin) {
     g_warning ("Could not create CallsSipOrigin");

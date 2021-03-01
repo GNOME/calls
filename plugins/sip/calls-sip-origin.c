@@ -63,6 +63,8 @@ struct _CallsSipOrigin
 
   CallsSipMediaManager *media_manager;
 
+  gboolean auto_connect;
+
   /* Account information */
   gchar *user;
   gchar *password;
@@ -93,6 +95,7 @@ enum {
   PROP_ACC_PORT,
   PROP_ACC_PROTOCOL,
   PROP_ACC_DIRECT,
+  PROP_ACC_AUTO_CONNECT,
   PROP_SIP_CONTEXT,
   PROP_ACC_STATE,
   PROP_CALLS,
@@ -449,6 +452,7 @@ static CallsSipHandles *
 setup_sip_handles (CallsSipOrigin *self)
 {
   CallsSipHandles *oper;
+  g_autofree gchar *registrar_url = NULL;
 
   g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
 
@@ -457,9 +461,10 @@ setup_sip_handles (CallsSipOrigin *self)
     return NULL;
   }
 
+  registrar_url = g_strconcat (self->protocol_prefix, ":", self->host, NULL);
   oper->context = self->ctx;
   oper->register_handle = nua_handle (self->nua, self->oper,
-                                      NUTAG_REGISTRAR (self->host),
+                                      NUTAG_REGISTRAR (registrar_url),
                                       TAG_END ());
   oper->call_handle = NULL;
 
@@ -552,8 +557,13 @@ init_sip_account (CallsSipOrigin *self,
   /* In the case of a direct connection we're immediately good to go */
   if (self->use_direct_connection)
     self->state = SIP_ACCOUNT_ONLINE;
-  else
+  else {
     self->state = SIP_ACCOUNT_OFFLINE;
+
+    if (self->auto_connect)
+      /* try to go online */
+      calls_sip_origin_go_online (self, TRUE);
+  }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return TRUE;
@@ -773,6 +783,10 @@ calls_sip_origin_set_property (GObject      *object,
     g_warning ("Setting the account state does not yet have any effect");
     break;
 
+  case PROP_ACC_AUTO_CONNECT:
+    self->auto_connect = g_value_get_boolean (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -815,6 +829,10 @@ calls_sip_origin_get_property (GObject      *object,
 
   case PROP_ACC_STATE:
     g_value_set_enum (value, self->state);
+    break;
+
+  case PROP_ACC_AUTO_CONNECT:
+    g_value_set_boolean (value, self->auto_connect);
     break;
 
   default:
@@ -963,6 +981,14 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                        G_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_ACC_STATE, props[PROP_ACC_STATE]);
 
+  props[PROP_ACC_AUTO_CONNECT] =
+    g_param_spec_boolean ("auto-connect",
+                          "Auto connect",
+                          "Automatically try to connect",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_ACC_AUTO_CONNECT, props[PROP_ACC_AUTO_CONNECT]);
+
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
@@ -1017,7 +1043,6 @@ calls_sip_origin_create_inbound (CallsSipOrigin *self,
   add_call (self, address, TRUE, handle);
 }
 
-
 CallsSipOrigin *
 calls_sip_origin_new (const gchar     *name,
                       CallsSipContext *sip_context,
@@ -1026,7 +1051,8 @@ calls_sip_origin_new (const gchar     *name,
                       const gchar     *host,
                       gint             port,
                       const gchar     *protocol,
-                      gboolean         direct_connection)
+                      gboolean         direct_connection,
+                      gboolean         auto_connect)
 {
   CallsSipOrigin *origin;
 
@@ -1040,9 +1066,34 @@ calls_sip_origin_new (const gchar     *name,
                          "port", port,
                          "protocol", protocol,
                          "direct-connection", direct_connection,
+                         "auto-connect", auto_connect,
                          NULL);
 
   g_string_assign (origin->name, name);
 
   return origin;
+}
+
+void
+calls_sip_origin_go_online (CallsSipOrigin *self,
+                            gboolean        online)
+{
+  g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
+
+  if (online) {
+    if (self->state == SIP_ACCOUNT_ONLINE)
+      return;
+
+    nua_register (self->oper->register_handle,
+                  NUTAG_M_FEATURES("expires=180"),
+                  TAG_END ());
+  }
+  else {
+    if (self->state == SIP_ACCOUNT_OFFLINE)
+      return;
+
+    nua_unregister (self->oper->register_handle,
+                    TAG_END ());
+  }
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
 }
