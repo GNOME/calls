@@ -89,7 +89,7 @@ check-po:
     - flatpak-builder --user --disable-rofiles-fuse --build-only flatpak_app ${MANIFEST_PATH}
     - flatpak build-finish --socket=x11 --share=network flatpak_app
     - >
-      xvfb-run -a -s "-screen 0 1024x768x24"
+      xvfb-run -a -s "-screen 0 1024x768x24 -noreset"
       flatpak-builder --user --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH} <<END
 
       LANG=C.UTF-8
