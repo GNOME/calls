@@ -111,6 +111,7 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     g_autofree gchar *host = NULL;
     g_autofree gchar *protocol = NULL;
     gint port = 0;
+    gint local_port = 0;
     gboolean direct_connection =
       g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
     gboolean auto_connect = TRUE;
@@ -118,8 +119,10 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     if (g_key_file_has_key (key_file, groups[i], "AutoConnect", NULL))
       auto_connect = g_key_file_get_boolean (key_file, groups[i], "AutoConnect", NULL);
 
-    if (direct_connection)
+    if (direct_connection) {
+      local_port = 5060;
       goto skip;
+    }
 
     if (!check_required_keys (key_file, groups[i])) {
       g_warning ("Not all required keys found in section %s of file `%s'",
@@ -132,6 +135,7 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
     host = g_key_file_get_string (key_file, groups[i], "Host", NULL);
     protocol = g_key_file_get_string (key_file, groups[i], "Protocol", NULL);
     port = g_key_file_get_integer (key_file, groups[i], "Port", NULL);
+    local_port = g_key_file_get_integer (key_file, groups[i], "LocalPort", NULL);
 
   skip:
     if (protocol == NULL)
@@ -144,15 +148,12 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
       else
         port = 5060;
     }
-
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
-    calls_sip_provider_add_origin (self,
-                                   groups[i],
-                                   user,
-                                   password,
-                                   host,
-                                   port,
+
+    calls_sip_provider_add_origin (self, groups[i],
+                                   user, password,
+                                   host, port, local_port,
                                    protocol,
                                    direct_connection,
                                    auto_connect);
@@ -380,6 +381,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                const gchar      *password,
                                const gchar      *host,
                                gint              port,
+                               gint              local_port,
                                const gchar      *protocol,
                                gboolean          direct_connection,
                                gboolean          auto_connect)
@@ -394,6 +396,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                  password,
                                  host,
                                  port,
+                                 local_port,
                                  protocol,
                                  direct_connection,
                                  auto_connect);

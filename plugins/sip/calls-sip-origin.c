@@ -72,6 +72,7 @@ struct _CallsSipOrigin
   gchar *transport_protocol;
   const gchar *protocol_prefix;
   gint port;
+  gint local_port;
 
   GList *calls;
   GHashTable *call_handles;
@@ -97,6 +98,7 @@ enum {
   PROP_ACC_DIRECT,
   PROP_ACC_AUTO_CONNECT,
   PROP_SIP_CONTEXT,
+  PROP_SIP_LOCAL_PORT,
   PROP_ACC_STATE,
   PROP_CALLS,
   PROP_LAST_PROP,
@@ -421,6 +423,8 @@ setup_nua (CallsSipOrigin *self)
   g_autofree gchar *address = NULL;
   nua_t *nua;
   gboolean use_sips;
+  g_autofree gchar * sip_url = NULL;
+  g_autofree gchar * sips_url = NULL;
 
   g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
 
@@ -428,14 +432,20 @@ setup_nua (CallsSipOrigin *self)
 
   use_sips = check_sips (address);
 
-  // TODO URLs must be changed to accomodate IPv6 use case (later, not important right now)
-  // Note: This is why using hostname does not work! (do we need two nua contexts for ipv4 and ipv6?)
+  if (self->local_port > 0) {
+    sip_url = g_strdup_printf ("sip:*:%d", self->local_port);
+    sips_url = g_strdup_printf ("sips:*:%d", self->local_port);
+  } else {
+    sip_url = g_strdup ("sip:*:*");
+    sips_url = g_strdup_printf ("sips:*:*");
+  }
+
   nua = nua_create (self->ctx->root,
                     sip_callback,
                     self,
                     NUTAG_USER_AGENT ("sofia-test/0.0.1"),
-                    NUTAG_URL ("sip:0.0.0.0:5060"),
-                    TAG_IF (use_sips, NUTAG_SIPS_URL ("sips:0.0.0.0:5060")),
+                    NUTAG_URL (sip_url),
+                    TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
                     NUTAG_M_USERNAME (self->user),
                     SIPTAG_FROM_STR (address),
                     NUTAG_ENABLEINVITE (1),
@@ -786,6 +796,10 @@ calls_sip_origin_set_property (GObject      *object,
     self->auto_connect = g_value_get_boolean (value);
     break;
 
+  case PROP_SIP_LOCAL_PORT:
+    self->local_port = g_value_get_int (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -832,6 +846,10 @@ calls_sip_origin_get_property (GObject      *object,
 
   case PROP_ACC_AUTO_CONNECT:
     g_value_set_boolean (value, self->auto_connect);
+    break;
+
+  case PROP_SIP_LOCAL_PORT:
+    g_value_set_int (value, self->local_port);
     break;
 
   default:
@@ -974,6 +992,14 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_SIP_CONTEXT, props[PROP_SIP_CONTEXT]);
 
+  props[PROP_SIP_LOCAL_PORT] =
+    g_param_spec_int ("local-port",
+                      "Local port",
+                      "The local port to which the SIP stack binds to",
+                      1025, 65535, 5060,
+                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+  g_object_class_install_property (object_class, PROP_SIP_LOCAL_PORT, props[PROP_SIP_LOCAL_PORT]);
+
   props[PROP_ACC_STATE] =
     g_param_spec_enum ("account-state",
                        "Account state",
@@ -1052,6 +1078,7 @@ calls_sip_origin_new (const gchar     *name,
                       const gchar     *password,
                       const gchar     *host,
                       gint             port,
+                      gint             local_port,
                       const gchar     *protocol,
                       gboolean         direct_connection,
                       gboolean         auto_connect)
@@ -1066,6 +1093,7 @@ calls_sip_origin_new (const gchar     *name,
                          "password", password,
                          "host", host,
                          "port", port,
+                         "local-port", local_port,
                          "protocol", protocol,
                          "direct-connection", direct_connection,
                          "auto-connect", auto_connect,
@@ -1075,6 +1103,7 @@ calls_sip_origin_new (const gchar     *name,
 
   return origin;
 }
+
 
 void
 calls_sip_origin_go_online (CallsSipOrigin *self,

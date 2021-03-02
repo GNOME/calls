@@ -37,11 +37,12 @@ G_DECLARE_FINAL_TYPE (CallsSipOrigin, calls_sip_origin, CALLS, SIP_ORIGIN, GObje
 
 CallsSipOrigin   *calls_sip_origin_new                      (const gchar     *name,
                                                              CallsSipContext *sip_context,
-                                                             const gchar     *user,
-                                                             const gchar     *password,
-                                                             const gchar     *host,
-                                                             gint             port,
-                                                             const gchar     *protocol,
+                                                             const gchar *user,
+                                                             const gchar *password,
+                                                             const gchar *host,
+                                                             gint         port,
+                                                             gint         local_port,
+                                                             const gchar *protocol,
                                                              gboolean     direct_connection,
                                                              gboolean     auto_connect);
 void              calls_sip_origin_create_inbound           (CallsSipOrigin *self,
