@@ -656,25 +656,12 @@ add_call (CallsSipOrigin *self,
   CallsSipCall *sip_call;
   CallsCall *call;
   g_autofree gchar *local_sdp = NULL;
+
+  /* TODO get free port by creating GSocket and passing that to the pipeline */
   guint local_port = get_port_for_rtp ();
 
   sip_call = calls_sip_call_new (address, inbound, handle);
   g_assert (sip_call != NULL);
-
-  /* XXX dynamically get/probe free ports */
-  calls_sip_call_setup_local_media (sip_call, local_port, local_port + 1);
-
-  local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
-                                                           local_port,
-                                                           check_sips (address));
-
-  g_assert (local_sdp);
-  g_debug ("Setting local SDP to string:\n%s", local_sdp);
-
-  nua_set_params (self->nua,
-                  SOATAG_USER_SDP_STR (local_sdp),
-                  SOATAG_AF (SOA_AF_IP4_IP6),
-                  TAG_END ());
 
   if (self->oper->call_handle)
     nua_handle_unref (self->oper->call_handle);
@@ -683,13 +670,25 @@ add_call (CallsSipOrigin *self,
 
   g_hash_table_insert (self->call_handles, handle, sip_call);
 
-  if (!inbound)
+  if (!inbound) {
+    calls_sip_call_setup_local_media (sip_call, local_port, local_port + 1);
+
+    local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
+                                                             local_port,
+                                                             check_sips (address));
+
+    g_assert (local_sdp);
+
+    g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
+
     nua_invite (self->oper->call_handle,
+                SOATAG_AF (SOA_AF_IP4_IP6),
+                SOATAG_USER_SDP_STR (local_sdp),
                 SIPTAG_TO_STR (address),
                 SOATAG_RTP_SORT (SOA_RTP_SORT_REMOTE),
                 SOATAG_RTP_SELECT (SOA_RTP_SELECT_ALL),
                 TAG_END ());
-
+  }
   call = CALLS_CALL (sip_call);
   g_signal_connect_swapped (call, "state-changed",
                             G_CALLBACK (on_call_state_changed_cb),

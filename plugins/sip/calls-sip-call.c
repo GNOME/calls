@@ -88,7 +88,7 @@ answer (CallsCall *call)
     return;
   }
 
-  /* XXX dynamically get free ports */
+  /* TODO get free port by creating GSocket and passing that to the pipeline */
   calls_sip_call_setup_local_media (self, local_port, local_port + 1);
 
   local_sdp = calls_sip_media_manager_static_capabilities (self->manager,
