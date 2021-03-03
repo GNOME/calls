@@ -374,6 +374,10 @@ sip_callback (nua_event_t   event,
 
   case nua_i_outbound:
     g_debug ("status of outbound engine has changed: %03d %s", status, phrase);
+
+    if (status == 404)
+      CALLS_EMIT_MESSAGE (origin, "contact not found", GTK_MESSAGE_ERROR);
+
     break;
 
   case nua_i_state:
