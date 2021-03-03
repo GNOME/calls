@@ -22,6 +22,9 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsSipOrigin"
+
+#include "config.h"
 #include "calls-sip-origin.h"
 
 #include "calls-message-source.h"
@@ -443,7 +446,7 @@ setup_nua (CallsSipOrigin *self)
   nua = nua_create (self->ctx->root,
                     sip_callback,
                     self,
-                    NUTAG_USER_AGENT ("sofia-test/0.0.1"),
+                    NUTAG_USER_AGENT (APP_DATA_NAME),
                     NUTAG_URL (sip_url),
                     TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
                     NUTAG_M_USERNAME (self->user),
