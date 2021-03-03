@@ -41,7 +41,7 @@ G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
 MediaCodecInfo*
 get_best_codec (CallsSipMediaManager *self)
 {
-  return media_codec_by_name ("PCMU");
+  return media_codec_by_name ("PCMA");
 }
 
 
