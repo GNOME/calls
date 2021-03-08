@@ -375,8 +375,11 @@ sip_callback (nua_event_t   event,
   case nua_i_outbound:
     g_debug ("status of outbound engine has changed: %03d %s", status, phrase);
 
-    if (status == 404)
+    if (status == 404) {
       CALLS_EMIT_MESSAGE (origin, "contact not found", GTK_MESSAGE_ERROR);
+
+      g_warning ("outbound engine changed state to %03d %s", status, phrase);
+    }
 
     break;
 
@@ -433,10 +436,15 @@ setup_nua (CallsSipOrigin *self)
   gboolean use_ipv6 = FALSE; /* TODO make configurable or use DNS to figure out if ipv6 is supported*/
   gchar *ipv6_bind = "*";
   gchar *ipv4_bind = "0.0.0.0";
-  g_autofree gchar * sip_url = NULL;
-  g_autofree gchar * sips_url = NULL;
+  g_autofree gchar *sip_url = NULL;
+  g_autofree gchar *sips_url = NULL;
+  const gchar *uuid = NULL;
+  g_autofree gchar* urn_uuid = NULL;
 
   g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
+
+  uuid = nua_generate_instance_identifier (self->ctx->home);
+  urn_uuid = g_strdup_printf ("urn:uuid:%s", uuid);
 
   address = g_strconcat (self->protocol_prefix, ":", self->user, "@", self->host, NULL);
 
@@ -464,13 +472,20 @@ setup_nua (CallsSipOrigin *self)
                     NUTAG_USER_AGENT (APP_DATA_NAME),
                     NUTAG_URL (sip_url),
                     TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
-                    NUTAG_M_USERNAME (self->user),
                     SIPTAG_FROM_STR (address),
+                    NUTAG_ALLOW ("INVITE, ACK, BYE, CANCEL, OPTIONS, UPDATE"),
+                    NTATAG_MAX_FORWARDS (70),
                     NUTAG_ENABLEINVITE (1),
                     NUTAG_AUTOANSWER (0),
                     NUTAG_AUTOACK (1),
+                    NUTAG_PATH_ENABLE (0),
                     NUTAG_MEDIA_ENABLE (1),
+                    NUTAG_INSTANCE (urn_uuid),
                     TAG_NULL ());
+
+  nua_set_params (nua,
+                  NUTAG_SUPPORTED ("replaces, gruu, outbound"),
+                  TAG_END ());
 
   return nua;
 }
@@ -495,7 +510,6 @@ setup_sip_handles (CallsSipOrigin *self)
                                       NUTAG_REGISTRAR (registrar_url),
                                       TAG_END ());
   oper->call_handle = NULL;
-
   return oper;
 }
 
@@ -1135,7 +1149,13 @@ calls_sip_origin_go_online (CallsSipOrigin *self,
       return;
 
     nua_register (self->oper->register_handle,
-                  NUTAG_M_FEATURES("expires=180"),
+                  SIPTAG_EXPIRES_STR ("180"),
+                  NUTAG_SUPPORTED ("replaces, outbound, gruu"),
+                  NUTAG_OUTBOUND ("outbound natify gruuize"), // <- janus uses "no-validate"
+                  NUTAG_M_USERNAME (self->user),
+                  NUTAG_M_DISPLAY ("SIP tester"),
+                  NUTAG_M_PARAMS ("user=phone"),
+                  NUTAG_CALLEE_CAPS (1), // <- this should be to include media information: SDP
                   TAG_END ());
   }
   else {
