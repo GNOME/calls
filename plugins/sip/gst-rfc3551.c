@@ -28,11 +28,11 @@
 
 /* TODO check available codecs during runtime */
 static MediaCodecInfo gst_codecs[] = {
-  {0, "PCMU", 8000, 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec"},
-  {3, "GSM", 8000, 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec"},
-  {4, "G723", 8000, 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1"}, // does not seem to work
-  {8, "PCMA", 8000, 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec"},
-  {9, "G722", 8000, 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722"},
+  {"0", "PCMU", "8000", 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec"},
+  {"3", "GSM", "8000", 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec"},
+  {"4", "G723", "8000", 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1"}, // does not seem to work
+  {"8", "PCMA", "8000", 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec"},
+  {"9", "G722", "8000", 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722"},
 };
 
 
@@ -53,9 +53,9 @@ media_codec_by_name (const char *name)
 gchar *
 media_codec_get_gst_capabilities (MediaCodecInfo *codec)
 {
-  return g_strdup_printf ("application/x-rtp,media=(string)audio,clock-rate=(int)%d"
-                          ",encoding-name=(string)%s,payload=(int)%d",
+  return g_strdup_printf ("application/x-rtp,media=(string)audio,clock-rate=(int)%s"
+                          ",encoding-name=(string)%s,payload=(int)%s",
                           codec->clock_rate,
                           codec->name,
-                          codec->payload_type);
+                          codec->payload_id);
 }

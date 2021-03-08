@@ -99,15 +99,20 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
                                              guint                 port,
                                              gboolean              use_srtp)
 {
-  char *attribute_line = "rtpmap:0 PCMU/8000";
   char *payload_type = use_srtp ? "SAVP" : "AVP";
   g_autofree char *media_line = NULL;
+  g_autofree char *attribute_line = NULL;
+  MediaCodecInfo *codec;
 
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
-  media_line = g_strdup_printf ("audio %d RTP/%s 0", port, payload_type);
+  codec = get_best_codec (self);
+  /* TODO support multiplice codecs: f.e. audio 31337 RTP/AVP 9 8 0 96 */
+  media_line = g_strdup_printf ("audio %d RTP/%s %s",
+                                port, payload_type, codec->payload_id);
+  attribute_line = g_strdup_printf ("rtpmap:%s %s/%s",
+                                    codec->payload_id, codec->name, codec->clock_rate);
 
-  /* TODO we can have multiple attribute lines (or media lines for that matter) */
   /* TODO add attribute describing RTCP stream */
   return g_strdup_printf ("v=0\r\n"
                           "m=%s\r\n"
