@@ -25,6 +25,14 @@
 #include "calls-sip-util.h"
 
 gboolean
+check_ipv6 (const gchar *host)
+{
+  /* TODO DNS SRV records to determine whether or not to use IPv6 */
+  return FALSE;
+}
+
+
+gboolean
 check_sips (const gchar *addr)
 {
   /* To keep it simple we only check if the URL starts with "sips:" */

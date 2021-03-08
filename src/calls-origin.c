@@ -58,9 +58,9 @@ calls_origin_default_init (CallsOriginInterface *iface)
   g_object_interface_install_property (
     iface,
     g_param_spec_pointer ("calls",
-                         "Calls",
-                         "The list of current calls",
-                         G_PARAM_READABLE));
+                          "Calls",
+                          "The list of current calls",
+                          G_PARAM_READABLE));
 
   signals[SIGNAL_CALL_ADDED] =
     g_signal_newv ("call-added",

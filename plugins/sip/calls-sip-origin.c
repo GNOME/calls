@@ -430,6 +430,9 @@ setup_nua (CallsSipOrigin *self)
   g_autofree gchar *address = NULL;
   nua_t *nua;
   gboolean use_sips;
+  gboolean use_ipv6 = FALSE; /* TODO make configurable or use DNS to figure out if ipv6 is supported*/
+  gchar *ipv6_bind = "*";
+  gchar *ipv4_bind = "0.0.0.0";
   g_autofree gchar * sip_url = NULL;
   g_autofree gchar * sips_url = NULL;
 
@@ -438,13 +441,21 @@ setup_nua (CallsSipOrigin *self)
   address = g_strconcat (self->protocol_prefix, ":", self->user, "@", self->host, NULL);
 
   use_sips = check_sips (address);
+  use_ipv6 = check_ipv6 (self->host);
+
 
   if (self->local_port > 0) {
-    sip_url = g_strdup_printf ("sip:*:%d", self->local_port);
-    sips_url = g_strdup_printf ("sips:*:%d", self->local_port);
+    sip_url = g_strdup_printf ("sip:%s:%d",
+                               use_ipv6 ? ipv6_bind : ipv4_bind,
+                               self->local_port);
+    sips_url = g_strdup_printf ("sips:%s:%d",
+                                use_ipv6 ? ipv6_bind : ipv4_bind,
+                                self->local_port);
   } else {
-    sip_url = g_strdup ("sip:*:*");
-    sips_url = g_strdup_printf ("sips:*:*");
+    sip_url = g_strdup_printf ("sip:%s:*",
+                               use_ipv6 ? ipv6_bind : ipv4_bind);
+    sips_url = g_strdup_printf ("sips:%s:*",
+                                use_ipv6 ? ipv6_bind : ipv4_bind);
   }
 
   nua = nua_create (self->ctx->root,
@@ -698,6 +709,7 @@ add_call (CallsSipOrigin *self,
 
     g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
 
+    /* TODO handle IPv4 vs IPv6 for nua_invite (SOATAG_TAG) */
     nua_invite (self->oper->call_handle,
                 SOATAG_AF (SOA_AF_IP4_IP6),
                 SOATAG_USER_SDP_STR (local_sdp),
