@@ -237,6 +237,12 @@ dial_action (GSimpleAction *action,
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
 
+  if (g_str_has_prefix (number, "sip:") ||
+      g_str_has_prefix (number, "sips:")) {
+    dial_string = g_strdup (number);
+    goto proper;
+  }
+
   number_ok = check_dial_number (number);
   if (!number_ok)
     {
@@ -254,7 +260,7 @@ dial_action (GSimpleAction *action,
   g_debug ("Dialing dial string `%s' extracted from number `%s'",
            dial_string, number);
 
-
+ proper:
   start_proper (self);
 
   calls_main_window_dial (self->main_window,
@@ -385,6 +391,29 @@ start_proper (CallsApplication  *self)
 }
 
 static void
+open_sip_uri (CallsApplication *self,
+              const gchar      *uri)
+{
+  gchar **tokens = NULL;
+  g_assert (uri);
+
+  tokens = g_strsplit (uri, "///", 2);
+
+  if (tokens) {
+    /* Remove "///" from "sip:///user@host" */
+    g_autofree gchar *dial_string = g_strconcat (tokens[0], tokens[1], NULL);
+
+    calls_main_window_dial (self->main_window, dial_string);
+
+    g_strfreev (tokens);
+  }
+  else {
+    /* Dial the uri as it is */
+    calls_main_window_dial (self->main_window, uri);
+  }
+}
+
+static void
 open_tel_uri (CallsApplication *self,
               const gchar      *uri)
 {
@@ -444,7 +473,14 @@ activate (GApplication *application)
     }
 
   if (self->uri)
-    open_tel_uri (self, self->uri);
+    {
+    if (g_str_has_prefix (self->uri, "tel:"))
+      open_tel_uri (self, self->uri);
+
+    else if (g_str_has_prefix (self->uri, "sip:") ||
+             g_str_has_prefix (self->uri, "sips:"))
+      open_sip_uri (self, self->uri);
+  }
 
   g_clear_pointer (&self->uri, g_free);
 }
@@ -462,7 +498,9 @@ app_open (GApplication  *application,
   if (n_files > 1)
     g_warning ("Calls can handle only one call a time. %u items provided", n_files);
 
-  if (g_file_has_uri_scheme (files[0], "tel"))
+  if (g_file_has_uri_scheme (files[0], "tel") ||
+      g_file_has_uri_scheme (files[0], "sip") ||
+      g_file_has_uri_scheme (files[0], "sips"))
     {
       g_free (self->uri);
       self->uri = g_file_get_uri (files[0]);
