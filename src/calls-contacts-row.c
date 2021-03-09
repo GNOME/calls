@@ -32,40 +32,6 @@ struct _CallsContactsRow
 G_DEFINE_TYPE (CallsContactsRow, calls_contacts_row, GTK_TYPE_LIST_BOX_ROW)
 
 
-static GdkPixbuf *
-calls_contacts_row_set_pixbuf (gint size,
-                               gpointer item)
-{
-   g_autoptr (GError) error = NULL;
-   GLoadableIcon *icon;
-   g_autoptr (GInputStream) stream = NULL;
-   g_autoptr (GdkPixbuf) pixbuf = NULL;
-
-   g_return_val_if_fail (FOLKS_IS_INDIVIDUAL (item), NULL);
-
-   FolksAvatarDetails *avatar_details = FOLKS_AVATAR_DETAILS (item);
-
-   if (avatar_details == NULL)
-    return NULL;
-
-   icon = folks_avatar_details_get_avatar (avatar_details);
-
-   if (icon == NULL)
-     return NULL;
-
-   stream = g_loadable_icon_load (icon, size, NULL, NULL, &error);
-
-   if (error)
-     return NULL;
-
-   pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream, size, size, TRUE, NULL, &error);
-
-   if (error)
-     return NULL;
-
-   return g_steal_pointer (&pixbuf);
-}
-
 static void
 insert_phonenumber (CallsContactsRow *self,
                     const gchar      *number)
@@ -125,10 +91,21 @@ phone_numbers_changed_cb (CallsContactsRow *self)
 static void
 avatar_changed_cb (CallsContactsRow *self)
 {
-  // TODO: Load avatar async once https://gitlab.gnome.org/GNOME/libhandy/-/merge_requests/637 is merged
-  hdy_avatar_set_image_load_func (HDY_AVATAR (self->avatar),
-                                  calls_contacts_row_set_pixbuf,
-                                  g_object_ref (self->item), g_object_unref);
+  FolksAvatarDetails *avatar_details;
+  GLoadableIcon *icon;
+
+  g_assert (FOLKS_IS_INDIVIDUAL (self->item));
+
+  avatar_details = FOLKS_AVATAR_DETAILS (self->item);
+  if (avatar_details == NULL)
+    return;
+
+  icon = folks_avatar_details_get_avatar (avatar_details);
+
+  if (icon == NULL)
+    return;
+
+  hdy_avatar_set_loadable_icon (HDY_AVATAR (self->avatar), icon);
 }
 
 static void
