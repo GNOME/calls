@@ -219,11 +219,14 @@ sip_i_state (int              status,
   CallsCallState state;
   CallsSipCall *call;
 
-  g_return_if_fail (CALLS_IS_SIP_ORIGIN (origin));
+  g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
   call = g_hash_table_lookup (origin->call_handles, nh);
 
-  g_return_if_fail (call != NULL);
+  if (call == NULL) {
+    g_warning ("No call found for the current handle");
+    return;
+  }
 
   g_debug ("The call state has changed: %03d %s", status, phrase);
   tl_gets (tags,
@@ -355,6 +358,15 @@ sip_callback (nua_event_t   event,
 
   case nua_r_bye:
     g_debug ("response to BYE: %03d %s", status, phrase);
+    if (status == 200) {
+      CallsSipCall *call =
+        CALLS_SIP_CALL (g_hash_table_lookup (origin->call_handles, nh));
+
+      if (call == NULL) {
+        g_warning ("BYE response from an unknown call");
+        return;
+      }
+    }
     break;
 
   case nua_r_register:
@@ -441,8 +453,6 @@ setup_nua (CallsSipOrigin *self)
   const gchar *uuid = NULL;
   g_autofree gchar* urn_uuid = NULL;
 
-  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
-
   uuid = nua_generate_instance_identifier (self->ctx->home);
   urn_uuid = g_strdup_printf ("urn:uuid:%s", uuid);
 
@@ -497,7 +507,7 @@ setup_sip_handles (CallsSipOrigin *self)
   CallsSipHandles *oper;
   g_autofree gchar *registrar_url = NULL;
 
-  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), NULL);
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
 
   if (!(oper = su_zalloc (self->ctx->home, sizeof(CallsSipHandles)))) {
     g_warning ("cannot create handle");
@@ -517,7 +527,7 @@ setup_sip_handles (CallsSipOrigin *self)
 static void
 setup_account_for_direct_connection (CallsSipOrigin *self)
 {
-  g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
 
   /* honour username, if previously set */
   if (self->user == NULL)
@@ -545,7 +555,7 @@ setup_account_for_direct_connection (CallsSipOrigin *self)
 static gboolean
 is_account_complete (CallsSipOrigin *self)
 {
-  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), FALSE);
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
 
   /* we need only need to check for password if needing to authenticate over a proxy/UAS */
   if (self->user == NULL ||
@@ -564,8 +574,6 @@ init_sip_account (CallsSipOrigin *self,
                   GError        **error)
 {
   gboolean recoverable = FALSE;
-
-  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (self), FALSE);
 
   if (self->use_direct_connection) {
     g_debug ("Direct connection case. Using user and hostname");
@@ -677,13 +685,13 @@ on_call_state_changed_cb (CallsSipOrigin *self,
                           CallsCallState  old_state,
                           CallsCall      *call)
 {
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+  g_assert (CALLS_IS_CALL (call));
+
   if (new_state != CALLS_CALL_STATE_DISCONNECTED)
     {
       return;
     }
-
-  g_assert (CALLS_IS_SIP_ORIGIN (self));
-  g_assert (CALLS_IS_CALL (call));
 
   remove_call (self, call, "Disconnected");
 }

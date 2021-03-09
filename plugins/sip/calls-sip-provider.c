@@ -233,7 +233,7 @@ calls_sip_provider_init_sofia (CallsSipProvider *self,
 {
   GSource *gsource;
 
-  g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), FALSE);
+  g_assert (CALLS_SIP_PROVIDER (self));
 
   self->ctx = g_new0 (CallsSipContext, 1);
   if (self->ctx == NULL) {

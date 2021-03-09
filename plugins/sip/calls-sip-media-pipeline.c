@@ -616,7 +616,7 @@ diagnose_used_ports_in_socket (GSocket *socket)
     g_warning ("Could not get local address of socket");
     return;
   }
-  g_return_if_fail (G_IS_INET_SOCKET_ADDRESS (local_addr));
+  g_assert (G_IS_INET_SOCKET_ADDRESS (local_addr));
 
   local_port = g_inet_socket_address_get_port (G_INET_SOCKET_ADDRESS (local_addr));
   g_debug ("Using local port %d", local_port);
@@ -625,7 +625,7 @@ diagnose_used_ports_in_socket (GSocket *socket)
     g_warning ("Could not get remote address of socket");
     return;
   }
-  g_return_if_fail (G_IS_INET_SOCKET_ADDRESS (remote_addr));
+  g_assert (G_IS_INET_SOCKET_ADDRESS (remote_addr));
 
   remote_port = g_inet_socket_address_get_port (G_INET_SOCKET_ADDRESS (remote_addr));
   g_debug ("Using remote port %d", remote_port);
@@ -640,8 +640,8 @@ diagnose_ports_in_use (CallsSipMediaPipeline *self)
   GSocket *socket_out;
   gboolean same_socket = FALSE;
 
-  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
-  // TODO also return if pipeline is not started yet
+  g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  g_assert (self->is_running);
 
   g_object_get (self->rtp_src, "used-socket", &socket_in, NULL);
   g_object_get (self->rtp_sink, "used-socket", &socket_out, NULL);

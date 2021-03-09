@@ -40,7 +40,7 @@ static MediaCodecInfo gst_codecs[] = {
 MediaCodecInfo *
 media_codec_by_name (const char *name)
 {
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (name, NULL);
 
   for (guint i = 0; i < G_N_ELEMENTS (gst_codecs); i++) {
     if (g_strcmp0 (name, gst_codecs[i].name) == 0)
