@@ -128,6 +128,10 @@ sip_authenticate (CallsSipOrigin *origin,
     scheme = proxy_auth->au_scheme;
     realm = msg_params_find (proxy_auth->au_params, "realm=");
   }
+  else {
+    g_warning ("No authentication context found");
+    return;
+  }
   g_debug ("need to authenticate to realm %s", realm);
 
   auth = g_strdup_printf ("%s:%s:%s:%s",
@@ -149,17 +153,15 @@ sip_r_invite (int              status,
     g_debug ("response to outgoing INVITE: %03d %s", status, phrase);
 
     /* TODO call states (see i_state) */
-    if (status == 401) {
+    if (status == 401 || status == 407) {
       sip_authenticate (origin, nh, sip);
     }
     else if (status == 403) {
-      g_warning ("wrong credentials?");
-    }
-    else if (status == 407) {
-      sip_authenticate (origin, nh, sip);
+      g_warning ("Response to outgoing INVITE: 403 wrong credentials?");
     }
     else if (status == 904) {
-      g_warning ("unmatched challenge");
+      g_warning ("Response to outgoing INVITE: 904 unmatched challenge."
+                 "Possibly the challenge was already answered?");
     }
     else if (status == 180) {
     }
@@ -187,7 +189,7 @@ sip_r_register (int              status,
 
     origin->state = SIP_ACCOUNT_ONLINE;
   }
-  else if (status == 401) {
+  else if (status == 401 || status == 407) {
     sip_authenticate (origin, nh, sip);
 
     origin->state = SIP_ACCOUNT_AUTHENTICATING;
@@ -221,6 +223,8 @@ sip_i_state (int              status,
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
+  g_debug ("The call state has changed: %03d %s", status, phrase);
+
   call = g_hash_table_lookup (origin->call_handles, nh);
 
   if (call == NULL) {
@@ -228,7 +232,6 @@ sip_i_state (int              status,
     return;
   }
 
-  g_debug ("The call state has changed: %03d %s", status, phrase);
   tl_gets (tags,
            SOATAG_REMOTE_SDP_REF (r_sdp),
            NUTAG_CALLSTATE_REF (call_state),
@@ -281,10 +284,6 @@ sip_i_state (int              status,
     calls_sip_call_set_state (call, state);
     g_object_unref (G_OBJECT (call));
 
-    return;
-
-  case nua_callstate_authenticating:
-    g_warning ("TODO Move authentication (INVITE) here");
     return;
 
   default:
