@@ -140,8 +140,6 @@ hang_up (CallsCall *call)
   default:
     g_warning ("Hanging up not possible in state %d", self->state);
   }
-
-  calls_sip_call_set_state (self, CALLS_CALL_STATE_DISCONNECTED);
 }
 
 static void

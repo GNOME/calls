@@ -280,11 +280,7 @@ sip_i_state (int              status,
     state = CALLS_CALL_STATE_DISCONNECTED;
 
     g_hash_table_remove (origin->call_handles, nh);
-
-    calls_sip_call_set_state (call, state);
-    g_object_unref (G_OBJECT (call));
-
-    return;
+    break;
 
   default:
     return;
@@ -649,6 +645,7 @@ remove_call (CallsSipOrigin *self,
     self->oper->call_handle = NULL;
 
   g_signal_emit_by_name (origin, "call-removed", call, reason);
+  g_object_unref (call);
 }
 
 
@@ -717,7 +714,15 @@ add_call (CallsSipOrigin *self,
 
   self->oper->call_handle = handle;
 
+  self->calls = g_list_append (self->calls, sip_call);
   g_hash_table_insert (self->call_handles, handle, sip_call);
+
+  call = CALLS_CALL (sip_call);
+
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
+  g_signal_connect_swapped (call, "state-changed",
+                            G_CALLBACK (on_call_state_changed_cb),
+                            self);
 
   if (!inbound) {
     calls_sip_call_setup_local_media (sip_call, local_port, local_port + 1);
@@ -739,14 +744,6 @@ add_call (CallsSipOrigin *self,
                 SOATAG_RTP_SELECT (SOA_RTP_SELECT_ALL),
                 TAG_END ());
   }
-  call = CALLS_CALL (sip_call);
-  g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (on_call_state_changed_cb),
-                            self);
-
-  self->calls = g_list_append (self->calls, sip_call);
-
-  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
 }
 
 
