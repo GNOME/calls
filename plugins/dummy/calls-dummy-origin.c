@@ -132,13 +132,13 @@ add_call (CallsDummyOrigin *self, const gchar *number, gboolean inbound)
   g_assert (dummy_call != NULL);
 
   call = CALLS_CALL (dummy_call);
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
   g_signal_connect_swapped (call, "state-changed",
                             G_CALLBACK (call_state_changed_cb),
                             self);
 
   self->calls = g_list_append (self->calls, dummy_call);
 
-  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
 }
 
 
