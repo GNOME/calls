@@ -535,16 +535,6 @@ calls_manager_set_provider (CallsManager *self, const gchar *name)
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PROVIDER]);
 }
 
-/* FIXME: This function should be removed since we don't want to hand out the
-   provider */
-CallsProvider *
-calls_manager_get_real_provider (CallsManager *self)
-{
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
-
-  return self->provider;
-}
-
 CallsManagerState
 calls_manager_get_state (CallsManager *self)
 {
