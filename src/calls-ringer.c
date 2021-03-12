@@ -38,6 +38,10 @@ struct _CallsRinger
 {
   GObject parent_instance;
 
+  /* call_count keeps track of total ongoing calls.
+   * ring_count keeps track of ringing calls.
+   */
+  unsigned  call_count;
   unsigned  ring_count;
   gboolean  playing;
   LfbEvent *event;
@@ -73,6 +77,10 @@ start (CallsRinger *self)
 
   if (self->event)
     {
+      if (self->call_count > self->ring_count)
+        {
+          lfb_event_set_feedback_profile (self->event, "quiet");
+        }
       g_object_ref (self);
       lfb_event_trigger_feedback_async (self->event,
                                         NULL,
@@ -190,6 +198,8 @@ update_count (CallsRinger    *self,
               CallsCall      *call,
               short           delta)
 {
+  self->call_count += delta;
+
   if (is_ring_state (calls_call_get_state (call)))
     {
       self->ring_count += delta;
