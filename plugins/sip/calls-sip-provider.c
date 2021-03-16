@@ -63,11 +63,22 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
+#ifdef FOR_TESTING
+
+G_DEFINE_TYPE_WITH_CODE
+(CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER,
+ G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                        calls_sip_provider_message_source_interface_init))
+
+
+#else
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_sip_provider_message_source_interface_init));
+
+#endif /* FOR_TESTING */
 
 static gboolean
 check_required_keys (GKeyFile *key_file,
@@ -304,9 +315,16 @@ calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
   g_autoptr (GError) error = NULL;
+  gboolean auto_load_accounts = TRUE;
 
-  if (calls_sip_provider_init_sofia (self, &error))
-    calls_sip_provider_load_accounts (self);
+#ifdef FOR_TESTING
+  auto_load_accounts = FALSE;
+#endif
+
+  if (calls_sip_provider_init_sofia (self, &error)) {
+    if (auto_load_accounts)
+      calls_sip_provider_load_accounts (self);
+  }
   else
     g_warning ("Could not initalize sofia stack: %s", error->message);
 
