@@ -88,4 +88,21 @@ t = executable('plugins', test_sources,
                 )
 test('plugins', t, env: test_env)
 
+test_sources = [ 'test-sip.c' ]
+t = executable('sip', test_sources,
+               calls_sources, sip_sources,
+               calls_enum_sources, calls_resources,
+               wl_proto_sources, wayland_sources,
+               c_args : test_cflags_with_test_define,
+               link_args: test_link_args,
+               link_with : calls_vala,
+               dependencies: [calls_deps, sip_deps],
+               include_directories : [
+                   calls_includes,
+                   dummy_include,
+                   sip_include,
+                 ]
+               )
+test('sip', t, env: test_env)
+
 endif
