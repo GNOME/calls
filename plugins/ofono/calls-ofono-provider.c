@@ -54,7 +54,7 @@ static void calls_ofono_provider_message_source_interface_init (CallsMessageSour
 
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
-(CallsOfonoProvider, calls_ofono_provider, G_TYPE_OBJECT, 0,
+(CallsOfonoProvider, calls_ofono_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_ofono_provider_message_source_interface_init))
 
