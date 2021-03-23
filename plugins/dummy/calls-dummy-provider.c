@@ -154,7 +154,9 @@ void
 calls_dummy_provider_add_origin (CallsDummyProvider *self,
                                  const gchar        *name)
 {
-  CallsDummyOrigin *origin = calls_dummy_origin_new (name);
+  g_autoptr (CallsDummyOrigin) origin = NULL;
+
+  origin = calls_dummy_origin_new (name);
   g_list_store_append (self->origins, origin);
 }
 

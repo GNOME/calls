@@ -122,7 +122,7 @@ add_origin (CallsMMProvider *self,
             GDBusObject     *object)
 {
   MMObject *mm_obj;
-  CallsMMOrigin *origin;
+  g_autoptr (CallsMMOrigin) origin = NULL;
   const gchar *path;
 
   mm_obj = MM_OBJECT (object);
