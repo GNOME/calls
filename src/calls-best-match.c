@@ -24,6 +24,7 @@
 
 #include "calls-best-match.h"
 #include "calls-contacts-provider.h"
+#include "calls-manager.h"
 #include "calls-vala.h"
 #include "util.h"
 
@@ -273,6 +274,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
   g_autoptr (GError) error = NULL;
+  g_autofree gchar *country_code = NULL;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
 
@@ -289,11 +291,10 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_clear_object (&self->view);
 
   if (self->phone_number) {
-    /* FIXME: parsing the phone number can add the wrong country code if the default region
-     * for the app isn't set correctly.See:
-     * https://developer.gnome.org/eds/stable/eds-e-phone-number.html#e-phone-number-get-default-region
-     */
-    number = e_phone_number_from_string (phone_number, NULL, &error);
+    g_object_get (calls_manager_get_default (),
+                  "country-code", &country_code,
+                  NULL);
+    number = e_phone_number_from_string (phone_number, country_code, &error);
 
     if (!number) {
       g_warning ("Failed to convert %s to a phone number: %s", phone_number, error->message);
