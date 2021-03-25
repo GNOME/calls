@@ -61,9 +61,9 @@ enum {
 };
 static guint signals[SIGNAL_LAST_SIGNAL];
 
-static void folks_remove_contact (CallsContactsProvider *self,    
+static void folks_remove_contact (CallsContactsProvider *self,
                                   FolksIndividual       *individual);
-static void folks_add_contact    (CallsContactsProvider *self,     
+static void folks_add_contact    (CallsContactsProvider *self,
                                   FolksIndividual       *individual);
 
 static gboolean
@@ -71,13 +71,13 @@ folks_individual_has_phone_numbers (FolksIndividual *individual)
 {
   g_autoptr (GeeSet) phone_numbers;
 
-  g_object_get (individual, "phone-numbers", &phone_numbers, NULL); 
+  g_object_get (individual, "phone-numbers", &phone_numbers, NULL);
 
   return !gee_collection_get_is_empty (GEE_COLLECTION (phone_numbers));
 }
 
 static void
-folks_individual_property_changed_cb (CallsContactsProvider *self, 
+folks_individual_property_changed_cb (CallsContactsProvider *self,
                                       GParamSpec            *pspec,
                                       FolksIndividual       *individual)
 {
