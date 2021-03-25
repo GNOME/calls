@@ -420,10 +420,15 @@ open_tel_uri (CallsApplication *self,
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (GError) error = NULL;
   g_autofree gchar *dial_str = NULL;
+  g_autofree gchar *country_code = NULL;
+
+  g_object_get (calls_manager_get_default (),
+                "country-code", &country_code,
+                NULL);
 
   g_debug ("Opening tel URI `%s'", uri);
 
-  number = e_phone_number_from_string (uri, NULL, &error);
+  number = e_phone_number_from_string (uri, country_code, &error);
   if (!number)
     {
       g_autofree gchar *msg =
