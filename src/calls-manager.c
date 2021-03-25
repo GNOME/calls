@@ -41,6 +41,8 @@ struct _CallsManager
   CallsOrigin *default_origin;
   CallsManagerState state;
   CallsCall *primary_call;
+  char *country_code;
+  GBinding *country_code_binding;
 };
 
 G_DEFINE_TYPE (CallsManager, calls_manager, G_TYPE_OBJECT);
@@ -50,6 +52,7 @@ enum {
   PROP_PROVIDER,
   PROP_DEFAULT_ORIGIN,
   PROP_STATE,
+  PROP_COUNTRY_CODE,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -294,6 +297,10 @@ calls_manager_get_property (GObject    *object,
     g_value_set_enum (value, calls_manager_get_state (self));
     break;
 
+  case PROP_COUNTRY_CODE:
+    g_value_set_string (value, self->country_code);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -317,6 +324,11 @@ calls_manager_set_property (GObject      *object,
     calls_manager_set_default_origin (self, g_value_get_object (value));
     break;
 
+  case PROP_COUNTRY_CODE:
+    g_free (self->country_code);
+    self->country_code = g_value_dup_string (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -331,6 +343,7 @@ calls_manager_finalize (GObject *object)
   g_clear_object (&self->provider);
   g_clear_pointer (&self->provider_name, g_free);
   g_clear_object (&self->contacts_provider);
+  g_clear_pointer (&self->country_code, g_free);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -426,6 +439,12 @@ calls_manager_class_init (CallsManagerClass *klass)
                                                     "The default origin, if any",
                                                     CALLS_TYPE_ORIGIN,
                                                     G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
+
+  props[PROP_COUNTRY_CODE] = g_param_spec_string ("country-code",
+                                                  "country code",
+                                                  "The default country code to use",
+                                                  NULL,
+                                                  G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -606,10 +625,17 @@ calls_manager_set_default_origin (CallsManager *self,
   if (self->default_origin == origin)
     return;
 
+  g_clear_pointer (&self->country_code_binding, g_binding_unbind);
+
   g_clear_object (&self->default_origin);
 
-  if (origin)
+  if (origin) {
     self->default_origin = g_object_ref (origin);
+    self->country_code_binding =
+      g_object_bind_property (origin, "country-code",
+                              self, "country-code",
+                              G_BINDING_SYNC_CREATE);
+  }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DEFAULT_ORIGIN]);
 }

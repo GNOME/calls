@@ -104,6 +104,7 @@ enum {
   PROP_SIP_LOCAL_PORT,
   PROP_ACC_STATE,
   PROP_CALLS,
+  PROP_COUNTRY_CODE,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -889,6 +890,10 @@ calls_sip_origin_get_property (GObject      *object,
     g_value_set_int (value, self->local_port);
     break;
 
+  case PROP_COUNTRY_CODE:
+    g_value_set_string (value, NULL);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -1060,6 +1065,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
 
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
+  IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
 
 #undef IMPLEMENTS
 }
