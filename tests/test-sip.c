@@ -25,6 +25,10 @@ typedef struct {
   CallsSipOrigin *origin_offline;
 } SipFixture;
 
+
+static gboolean is_call_test_done = FALSE;
+static gboolean are_call_tests_done = FALSE;
+
 static void
 test_sip_provider_object (SipFixture   *fixture,
                           gconstpointer user_data)
@@ -59,6 +63,9 @@ setup_sip_provider (SipFixture   *fixture,
 {
   CallsProvider *provider = calls_provider_load_plugin ("sip");
   fixture->provider = CALLS_SIP_PROVIDER (provider);
+
+  is_call_test_done = FALSE;
+  are_call_tests_done = FALSE;
 }
 
 static void
@@ -125,11 +132,220 @@ test_sip_origin_call_lists (SipFixture   *fixture,
   g_assert_null (calls_offline);
 }
 
+static gboolean
+on_check_call_disconnected_cb (gpointer user_data)
+{
+  CallsCall *call = CALLS_CALL (user_data);
+  CallsCallState state = calls_call_get_state (call);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_DISCONNECTED);
+
+  g_object_unref (call);
+
+  if (is_call_test_done)
+    are_call_tests_done = TRUE;
+
+  is_call_test_done = TRUE;
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
+on_check_call_active_cb (gpointer user_data)
+{
+  CallsCall *call = CALLS_CALL (user_data);
+  CallsCallState state = calls_call_get_state (call);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_ACTIVE);
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
+on_call_hangup_cb (gpointer user_data)
+{
+  CallsCall *call = CALLS_CALL (user_data);
+
+  g_debug ("Hanging up call");
+  calls_call_hang_up (call);
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
+on_call_answer_cb (gpointer user_data)
+{
+  CallsCall *call = CALLS_CALL (user_data);
+
+  g_debug ("Answering incoming call");
+  calls_call_answer (call);
+
+  return G_SOURCE_REMOVE;
+}
+
+/**
+ * TODO the calling tests are all g_timeout_add based and should be reworked
+ * using g_idle_add and/or using the "state-changed" signal of CallsCall
+ */
+static gboolean
+on_incoming_call_autoaccept_cb (CallsOrigin *origin,
+                                CallsCall   *call,
+                                gpointer     user_data)
+{
+  CallsCallState state = calls_call_get_state (call);
+  gboolean schedule_hangup = GPOINTER_TO_INT (user_data);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_INCOMING);
+
+  g_object_ref (call);
+
+  g_timeout_add (50, (GSourceFunc) on_call_answer_cb, call);
+
+  g_timeout_add (500, (GSourceFunc) on_check_call_active_cb, call);
+
+  if (schedule_hangup)
+    g_timeout_add (1500, (GSourceFunc) on_call_hangup_cb, call);
+
+  g_timeout_add (2000, (GSourceFunc) on_check_call_disconnected_cb, call);
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
+on_incoming_call_autoreject_cb (CallsOrigin *origin,
+                                CallsCall   *call,
+                                gpointer     user_data)
+{
+  CallsCallState state = calls_call_get_state (call);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_INCOMING);
+
+  g_object_ref (call);
+  g_timeout_add (200, (GSourceFunc) on_call_hangup_cb, call);
+
+  g_timeout_add (1000, (GSourceFunc) on_check_call_disconnected_cb, call);
+
+  return G_SOURCE_REMOVE;
+}
+
+
+static gboolean
+on_outgoing_call_cb (CallsOrigin *origin,
+                     CallsCall   *call,
+                     gpointer     user_data)
+{
+  CallsCallState state = calls_call_get_state (call);
+  gboolean schedule_hangup = GPOINTER_TO_INT (user_data);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_DIALING);
+
+  g_object_ref (call);
+
+  g_timeout_add (250, (GSourceFunc) on_check_call_active_cb, call);
+
+  if (schedule_hangup)
+    g_timeout_add (750, (GSourceFunc) on_call_hangup_cb, call);
+
+  g_timeout_add (2000, (GSourceFunc) on_check_call_disconnected_cb, call);
+
+  return G_SOURCE_REMOVE;
+}
+
 static void
 test_sip_call_direct_calls (SipFixture   *fixture,
                             gconstpointer user_data)
 {
-  ;
+  gint local_port_alice, local_port_bob;
+  g_autofree gchar *address_alice = NULL;
+  g_autofree gchar *address_bob = NULL;
+  gulong handler_alice, handler_bob;
+
+  g_object_get (fixture->origin_alice,
+                "local-port", &local_port_alice,
+                NULL);
+  address_alice = g_strdup_printf ("sip:alice@localhost:%d",
+                                   local_port_alice);
+
+  g_object_get (fixture->origin_bob,
+                "local-port", &local_port_bob,
+                NULL);
+  address_bob = g_strdup_printf ("sip:bob@localhost:%d",
+                                 local_port_bob);
+
+  /* Case 1: Bob calls Alice, Alice rejects call */
+
+  g_debug ("Call test: Stage 1");
+
+  handler_alice =
+    g_signal_connect (fixture->origin_alice,
+                      "call-added",
+                      G_CALLBACK (on_incoming_call_autoreject_cb),
+                      NULL);
+
+  calls_origin_dial (CALLS_ORIGIN (fixture->origin_bob), address_alice);
+
+  while (!is_call_test_done)
+    g_main_context_iteration (NULL, TRUE);
+
+  is_call_test_done = FALSE;
+  are_call_tests_done = FALSE;
+
+  g_signal_handler_disconnect (fixture->origin_alice, handler_alice);
+
+  /* Case 2: Alice calls Bob, Bob accepts and hangs up shortly after */
+
+  g_debug ("Call test: Stage 2");
+
+  handler_alice =
+    g_signal_connect (fixture->origin_alice,
+                      "call-added",
+                      G_CALLBACK (on_outgoing_call_cb),
+                      GINT_TO_POINTER (FALSE));
+
+  handler_bob =
+    g_signal_connect (fixture->origin_bob,
+                      "call-added",
+                      G_CALLBACK (on_incoming_call_autoaccept_cb),
+                      GINT_TO_POINTER (TRUE));
+
+  calls_origin_dial (CALLS_ORIGIN (fixture->origin_alice), address_bob);
+
+  while (!are_call_tests_done)
+    g_main_context_iteration (NULL, TRUE);
+
+  is_call_test_done = FALSE;
+  are_call_tests_done = FALSE;
+
+  g_signal_handler_disconnect (fixture->origin_alice, handler_alice);
+  g_signal_handler_disconnect (fixture->origin_bob, handler_bob);
+
+  /* Case 3: Alice calls Bob, Bob accepts and Alice hangs up shortly after */
+
+  g_debug ("Call test: Stage 3");
+
+  handler_alice =
+    g_signal_connect (fixture->origin_alice,
+                      "call-added",
+                      G_CALLBACK (on_outgoing_call_cb),
+                      GINT_TO_POINTER (TRUE));
+
+  handler_bob =
+    g_signal_connect (fixture->origin_bob,
+                      "call-added",
+                      G_CALLBACK (on_incoming_call_autoaccept_cb),
+                      GINT_TO_POINTER (FALSE));
+
+  calls_origin_dial (CALLS_ORIGIN (fixture->origin_alice), address_bob);
+
+  while (!are_call_tests_done)
+    g_main_context_iteration (NULL, TRUE);
+
+  is_call_test_done = FALSE;
+  are_call_tests_done = FALSE;
+
+  g_signal_handler_disconnect (fixture->origin_alice, handler_alice);
+  g_signal_handler_disconnect (fixture->origin_bob, handler_bob);
+
 }
 
 static void
