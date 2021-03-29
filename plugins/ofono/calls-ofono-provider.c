@@ -39,6 +39,8 @@ struct _CallsOfonoProvider
 {
   CallsProvider parent_instance;
 
+  /** ID for the D-Bus watch */
+  guint watch_id;
   /** D-Bus connection */
   GDBusConnection *connection;
   /** D-Bus proxy for the oFono Manager object */
@@ -366,14 +368,14 @@ calls_ofono_provider_get_origins (CallsProvider *provider)
   return G_LIST_MODEL (self->origins);
 }
 
-
 static void
-constructed (GObject *object)
+ofono_appeared_cb (GDBusConnection *connection,
+                   const gchar *name,
+                   const gchar *name_owner,
+                   CallsOfonoProvider *self)
 {
-  CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
-  GError *error = NULL;
-
-  self->connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+  g_autoptr (GError) error = NULL;
+  self->connection = connection;
   if (!self->connection)
     {
       g_error ("Error creating D-Bus connection: %s",
@@ -403,6 +405,34 @@ constructed (GObject *object)
      NULL,
      (GAsyncReadyCallback) get_modems_cb,
      self);
+}
+
+
+void
+ofono_vanished_cb (GDBusConnection *connection,
+                   const gchar *name,
+                   CallsOfonoProvider *self)
+{
+  g_debug ("Ofono vanished from D-Bus");
+  g_list_store_remove_all (self->origins);
+  //update_status (self);
+}
+
+static void
+constructed (GObject *object)
+{
+  CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
+
+  self->watch_id =
+    g_bus_watch_name (G_BUS_TYPE_SYSTEM,
+                      "org.ofono",
+                      G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                      (GBusNameAppearedCallback) ofono_appeared_cb,
+                      (GBusNameVanishedCallback) ofono_vanished_cb,
+                      self, NULL);
+
+  g_debug ("Watching for Ofono");
+
 
   G_OBJECT_CLASS (calls_ofono_provider_parent_class)->constructed (object);
 }
