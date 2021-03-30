@@ -38,13 +38,6 @@ typedef struct _CallsSipMediaManager
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
 
 
-MediaCodecInfo*
-get_best_codec (CallsSipMediaManager *self)
-{
-  return media_codec_by_name ("PCMA");
-}
-
-
 static void
 calls_sip_media_manager_finalize (GObject *object)
 {
@@ -130,3 +123,9 @@ calls_sip_media_manager_supports_media (CallsSipMediaManager *self,
   return TRUE;
 }
 
+
+MediaCodecInfo*
+get_best_codec (CallsSipMediaManager *self)
+{
+  return media_codec_by_name ("PCMA");
+}
