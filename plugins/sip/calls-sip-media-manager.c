@@ -33,6 +33,8 @@
 typedef struct _CallsSipMediaManager
 {
   GObject parent;
+
+  GList *supported_codecs;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
@@ -42,6 +44,8 @@ static void
 calls_sip_media_manager_finalize (GObject *object)
 {
   gst_deinit ();
+
+  g_list_free (CALLS_SIP_MEDIA_MANAGER (object)->supported_codecs);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
 }
@@ -60,6 +64,8 @@ static void
 calls_sip_media_manager_init (CallsSipMediaManager *self)
 {
   gst_init (NULL, NULL);
+
+  self->supported_codecs = media_codecs_get_candidates ();
 }
 
 
@@ -93,34 +99,45 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
                                              gboolean              use_srtp)
 {
   char *payload_type = use_srtp ? "SAVP" : "AVP";
-  g_autofree char *media_line = NULL;
-  g_autofree char *attribute_line = NULL;
-  MediaCodecInfo *codec;
+  g_autoptr (GString) media_line = NULL;
+  g_autoptr (GString) attribute_lines = NULL;
+  GList *node;
 
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
-  codec = get_best_codec (self);
-  /* TODO support multiplice codecs: f.e. audio 31337 RTP/AVP 9 8 0 96 */
-  media_line = g_strdup_printf ("audio %d RTP/%s %s",
-                                port, payload_type, codec->payload_id);
-  attribute_line = g_strdup_printf ("rtpmap:%s %s/%s",
-                                    codec->payload_id, codec->name, codec->clock_rate);
+  media_line = g_string_new (NULL);
+  attribute_lines = g_string_new (NULL);
 
-  /* TODO add attribute describing RTCP stream */
+  if (self->supported_codecs == NULL) {
+    g_warning ("No supported codecs found. Can't build meaningful SDP message");
+    g_string_append_printf (media_line, "m=audio 0 RTP/AVP 0");
+    goto done;
+  }
+
+  /* media lines look f.e like "audio 31337 RTP/AVP 9 8 0" */
+  g_string_append_printf (media_line,
+                          "m=audio %d RTP/%s", port, payload_type);
+
+  for (node = self->supported_codecs; node != NULL; node = node->next) {
+    MediaCodecInfo *codec = node->data;
+
+    g_string_append_printf (media_line, " %s", codec->payload_id);
+    g_string_append_printf (attribute_lines,
+                            "a=rtpmap:%s %s/%s%s",
+                            codec->payload_id,
+                            codec->name,
+                            codec->clock_rate,
+                            "\r\n");
+  }
+
+  g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", port + 1);
+
+ done:
   return g_strdup_printf ("v=0\r\n"
-                          "m=%s\r\n"
-                          "a=%s\r\n",
-                          media_line,
-                          attribute_line);
-}
-
-
-/* TODO lookup plugins in GStreamer */
-gboolean
-calls_sip_media_manager_supports_media (CallsSipMediaManager *self,
-                                        const char *media_type)
-{
-  return TRUE;
+                          "%s\r\n"
+                          "%s\r\n",
+                          media_line->str,
+                          attribute_lines->str);
 }
 
 

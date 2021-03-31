@@ -26,16 +26,21 @@
 
 #include <glib.h>
 
-/* TODO check available codecs during runtime */
+/* Use the following codecs in order of preference */
 static MediaCodecInfo gst_codecs[] = {
+  {"8", "PCMA", "8000", 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec"},
   {"0", "PCMU", "8000", 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec"},
   {"3", "GSM", "8000", 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec"},
-  {"4", "G723", "8000", 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1"}, // does not seem to work
-  {"8", "PCMA", "8000", 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec"},
   {"9", "G722", "8000", 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722"},
+  {"4", "G723", "8000", 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1"}, // does not seem to work
 };
 
 
+static gboolean
+media_codec_available_in_gst (MediaCodecInfo *codec) {
+  /* TODO probe available plugins in GStreamer */
+  return TRUE;
+}
 
 MediaCodecInfo *
 media_codec_by_name (const char *name)
@@ -58,4 +63,19 @@ media_codec_get_gst_capabilities (MediaCodecInfo *codec)
                           codec->clock_rate,
                           codec->name,
                           codec->payload_id);
+}
+
+GList *
+media_codecs_get_candidates ()
+{
+  GList *candidates = NULL;
+
+  for (guint i = 0; i < G_N_ELEMENTS (gst_codecs); i++) {
+    if (media_codec_available_in_gst (&gst_codecs[i])) {
+      g_debug ("Adding %s to the codec candidates", gst_codecs[i].name);
+      candidates = g_list_append (candidates, &gst_codecs[i]);
+    }
+  }
+
+  return candidates;
 }
