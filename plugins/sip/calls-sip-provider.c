@@ -385,7 +385,7 @@ static void
 calls_sip_provider_init (CallsSipProvider *self)
 {
   self->origins = g_list_store_new (CALLS_TYPE_SIP_ORIGIN);
-  self->filename = g_build_filename (g_get_user_data_dir (),
+  self->filename = g_build_filename (g_get_user_config_dir (),
                                      APP_DATA_NAME,
                                      SIP_ACCOUNT_FILE,
                                      NULL);
