@@ -36,6 +36,12 @@ If using ModemManager, Calls will wait for ModemManager to appear on
 D-Bus and then wait for usable modems to appear.  The UI will be
 inactive and display a status message until a usable modem appears.
 
+When running from the source tree you can use `CALLS_PLUGIN_DIR` environment
+varible to specify the directroy from where plugins are loaded. To e.g. load
+the dummy plugin from the source tree:
+
+    export CALLS_PLUGIN_DIR=_build/plugins/dummy/
+    _build/src/gnome-calls -p dummy
 
 ### oFono
 There is also an oFono backend, "ofono".  This was the first backend
