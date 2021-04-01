@@ -258,12 +258,33 @@ set_property (GObject      *object,
 
 
 static void
+finalize (GObject *object)
+{
+  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
+
+  calls_sip_media_pipeline_stop (self);
+
+  gst_object_unref (self->send_pipeline);
+  gst_object_unref (self->recv_pipeline);
+  gst_bus_remove_watch (self->bus_send);
+  gst_object_unref (self->bus_send);
+  gst_bus_remove_watch (self->bus_recv);
+  gst_object_unref (self->bus_recv);
+
+  g_free (self->remote);
+
+  G_OBJECT_CLASS (calls_sip_media_pipeline_parent_class)->finalize (object);
+}
+
+
+static void
 calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = set_property;
   object_class->get_property = get_property;
+  object_class->finalize = finalize;
 
   /* Maybe we want to turn Codec into a GObject later */
   props[PROP_CODEC] = g_param_spec_pointer ("codec",
