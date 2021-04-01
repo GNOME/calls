@@ -180,8 +180,9 @@ session_inhibit (CallsCallWindow *self, gboolean inhibit)
     }
   else
     {
-      gtk_application_uninhibit (gtk_window_get_application (GTK_WINDOW (self)),
-                                 self->inhibit_cookie);
+      if (self->inhibit_cookie != 0)
+        gtk_application_uninhibit (gtk_window_get_application (GTK_WINDOW (self)),
+                                   self->inhibit_cookie);
       self->inhibit_cookie = 0;
     }
 
