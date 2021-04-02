@@ -209,11 +209,14 @@ provider_changed_cb (CallsNewCallBox *self)
   g_assert (CALLS_IS_NEW_CALL_BOX (self));
 
   origins = calls_manager_get_origins (calls_manager_get_default ());
-  g_signal_connect_object (origins, "items-changed",
-                           G_CALLBACK (origin_count_changed_cb), self,
-                           G_CONNECT_SWAPPED);
+  if (origins)
+    {
+      g_signal_connect_object (origins, "items-changed",
+                               G_CALLBACK (origin_count_changed_cb), self,
+                               G_CONNECT_SWAPPED);
 
-  origin_count_changed_cb (self);
+      origin_count_changed_cb (self);
+  }
 }
 
 static void
