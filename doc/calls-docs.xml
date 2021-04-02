@@ -37,7 +37,6 @@
 
   <chapter id="dbus">
     <title>DBus interfaces</title>
-    <xi:include href="../src/dbus/calls-sm.puri.Calls.xml"/>
     <xi:include href="../src/dbus/calls-sm.puri.Calls.Call.xml"/>
   </chapter>
 

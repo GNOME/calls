@@ -26,6 +26,7 @@
  */
 
 #include "config.h"
+#include "calls-dbus-manager.h"
 #include "calls-history-box.h"
 #include "calls-new-call-box.h"
 #include "calls-encryption-indicator.h"
@@ -65,6 +66,7 @@ struct _CallsApplication
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
   CallsSettings    *settings;
+  CallsDBusManager *dbus_manager;
 
   char             *uri;
 };
@@ -73,6 +75,39 @@ G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
 
 
 static gboolean start_proper (CallsApplication *self);
+
+
+static gboolean
+calls_application_dbus_register (GApplication    *application,
+                                 GDBusConnection *connection,
+                                 const gchar     *object_path,
+                                 GError         **error)
+{
+  CallsApplication *self = CALLS_APPLICATION (application);
+
+  G_APPLICATION_CLASS (calls_application_parent_class)->dbus_register (application,
+                                                                       connection,
+                                                                       object_path,
+                                                                       error);
+
+  self->dbus_manager = calls_dbus_manager_new ();
+  return calls_dbus_manager_register (self->dbus_manager, connection, object_path, error);
+}
+
+
+static void
+calls_application_dbus_unregister (GApplication    *application,
+                                   GDBusConnection *connection,
+                                   const gchar     *object_path)
+{
+  CallsApplication *self = CALLS_APPLICATION (application);
+
+  g_clear_object (&self->dbus_manager);
+
+  G_APPLICATION_CLASS (calls_application_parent_class)->dbus_unregister (application,
+                                                                         connection,
+                                                                         object_path);
+}
 
 
 static gint
@@ -553,6 +588,8 @@ calls_application_class_init (CallsApplicationClass *klass)
   application_class->startup = startup;
   application_class->activate = activate;
   application_class->open = app_open;
+  application_class->dbus_register  = calls_application_dbus_register;
+  application_class->dbus_unregister  = calls_application_dbus_unregister;
 
   g_type_ensure (CALLS_TYPE_ENCRYPTION_INDICATOR);
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);

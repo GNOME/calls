@@ -20,17 +20,20 @@
 -->
 
 <node>
+
   <interface name="sm.puri.Calls.Call">
-    <method name="AcceptCall"/>
-    <method name="EndCall"/>
-    <method name="HoldCall"/>
-    <method name="UnholdCall"/>
-    <method name="SendDtmf">
-      <arg direction="in" type="s" name="tones"/>
-    </method>
-    <property name="CallParty" type="as" access="read"/>
-    <property name="CallIsConference" type="b" access="read"/>
-    <property name="CallState" type="u" access="read"/>
-    <property name="Origin" type="s" access="read"/>
+    <method name="Accept"/>
+    <method name="Hangup"/>
+    <property name="Inbound" type="b" access="read"/>
+    <property name="State" type="u" access="read"/>
+    <property name="Id" type="s" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>The Id identifying the call, e.g. a phone number</doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name="Party" type="s" access="read"/>
   </interface>
+
 </node>

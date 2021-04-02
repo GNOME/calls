@@ -90,6 +90,7 @@ calls_generated_sources = [
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call.c',
+                       'calls-dbus-manager.c',
                        'calls-ussd.c',
                        'calls-origin.c', 'calls-origin.h',
                        'calls-provider.c', 'calls-provider.h',
