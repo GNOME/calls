@@ -79,67 +79,6 @@ set_state (CallsManager *self, CallsManagerState state)
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 }
 
-static CallsProvider *
-load_provider (const gchar* name)
-{
-  g_autoptr (GError) error = NULL;
-  PeasEngine *plugins;
-  PeasPluginInfo *info;
-  PeasExtension *extension;
-  const gchar *dir;
-
-  // Add Calls search path and rescan
-  plugins = peas_engine_get_default ();
-  peas_engine_add_search_path (plugins, PLUGIN_LIBDIR, NULL);
-  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
-
-  dir = g_getenv ("CALLS_PLUGIN_DIR");
-  if (dir && dir[0] != '\0') {
-    g_debug ("Adding %s to plugin search path", dir);
-    peas_engine_prepend_search_path (plugins, dir, NULL);
-  }
-
-  // Find the plugin
-  info = peas_engine_get_plugin_info (plugins, name);
-  if (!info)
-    {
-      g_debug ("Could not find plugin `%s'", name);
-      return NULL;
-    }
-
-  // Possibly load the plugin
-  if (!peas_plugin_info_is_loaded (info))
-    {
-      peas_engine_load_plugin (plugins, info);
-
-      if (!peas_plugin_info_is_available (info, &error))
-        {
-          g_debug ("Error loading plugin `%s': %s", name, error->message);
-          return NULL;
-        }
-
-      g_debug ("Loaded plugin `%s'", name);
-    }
-
-  // Check the plugin provides CallsProvider
-  if (!peas_engine_provides_extension (plugins, info, CALLS_TYPE_PROVIDER))
-    {
-      g_debug ("Plugin `%s' does not have a provider extension", name);
-      return NULL;
-    }
-
-  // Get the extension
-  extension = peas_engine_create_extensionv (plugins, info, CALLS_TYPE_PROVIDER, 0, NULL);
-  if (!extension)
-    {
-      g_debug ("Could not create provider from plugin `%s'", name);
-      return NULL;
-    }
-
-  g_debug ("Created provider from plugin `%s'", name);
-  return CALLS_PROVIDER (extension);
-}
-
 static void
 add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 {
@@ -249,8 +188,6 @@ remove_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
 static void
 remove_provider (CallsManager *self)
 {
-  PeasEngine *engine = peas_engine_get_default ();
-  PeasPluginInfo *plugin = peas_engine_get_plugin_info (engine, self->provider_name);
   GListModel *origins;
   guint n_items;
 
@@ -269,8 +206,9 @@ remove_provider (CallsManager *self)
       remove_origin (self, origin, self->provider);
     }
 
+  calls_provider_unload_plugin (self->provider_name);
+
   g_clear_pointer (&self->provider_name, g_free);
-  peas_engine_unload_plugin (engine, plugin);
   g_clear_object (&self->provider);
   set_state (self, CALLS_MANAGER_STATE_NO_PROVIDER);
 }
@@ -313,7 +251,7 @@ add_provider (CallsManager *self, const gchar *name)
   if (name == NULL)
     return;
 
-  self->provider = load_provider (name);
+  self->provider = calls_provider_load_plugin (name);
 
   if (self->provider == NULL) {
     set_state (self, CALLS_MANAGER_STATE_NO_PLUGIN);
