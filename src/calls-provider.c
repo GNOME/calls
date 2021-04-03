@@ -43,12 +43,7 @@
  */
 
 
-typedef struct
-{
-  int dummy;
-} CallsProviderPrivate;
-
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsProvider, calls_provider, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (CallsProvider, calls_provider, G_TYPE_OBJECT)
 
 enum {
   PROP_0,
