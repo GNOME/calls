@@ -221,9 +221,11 @@ origin_items_changed_cb (CallsManager *self)
 {
   GListModel *origins;
   guint n_items;
+  gboolean has_default_origin = FALSE;
 
   g_assert (CALLS_IS_MANAGER (self));
 
+  has_default_origin = !!self->default_origin;
   origins = calls_provider_get_origins (self->provider);
   n_items = g_list_model_get_n_items (origins);
 
@@ -238,6 +240,17 @@ origin_items_changed_cb (CallsManager *self)
 
       origin = g_list_model_get_item (origins, i);
       add_origin (self, origin, self->provider);
+      if (!has_default_origin)
+        {
+          /* XXX
+            This actually doesn't work correctly when we default origin is removed.
+            This will require a rework when supporting multiple providers anyway
+            and also isn't really used outside of getting the country code
+            it's not really a problem.
+          */
+          calls_manager_set_default_origin (self, origin);
+          has_default_origin = TRUE;
+        }
     }
 }
 

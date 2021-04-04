@@ -59,7 +59,6 @@ test_calls_manager_dummy_provider ()
   g_assert_nonnull (calls_manager_get_origins (manager));
   g_assert_true (g_list_model_get_n_items (origins) > 0);
   g_assert_null (calls_manager_get_calls (manager));
-  g_assert_null (calls_manager_get_default_origin (manager));
 
   test_call = NULL;
   if (g_list_model_get_n_items (origins) > 0) {
@@ -69,7 +68,6 @@ test_calls_manager_dummy_provider ()
     origin = g_list_model_get_item (origins, 0);
     g_assert (CALLS_IS_ORIGIN (origin));
 
-    calls_manager_set_default_origin (manager, origin);
     g_assert (calls_manager_get_default_origin (manager) == origin);
 
     calls_origin_dial (origin, "+393422342");
