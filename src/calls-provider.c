@@ -52,6 +52,24 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+static const char *
+calls_provider_real_get_name (CallsProvider *self)
+{
+  return NULL;
+}
+
+static const char *
+calls_provider_real_get_status (CallsProvider *self)
+{
+  return NULL;
+}
+
+GListModel *
+calls_provider_real_get_origins (CallsProvider *self)
+{
+  return NULL;
+}
+
 
 static void
 calls_provider_get_property (GObject    *object,
@@ -78,6 +96,10 @@ calls_provider_class_init (CallsProviderClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->get_property = calls_provider_get_property;
+
+  klass->get_name = calls_provider_real_get_name;
+  klass->get_status = calls_provider_real_get_status;
+  klass->get_origins = calls_provider_real_get_origins;
 
   props[PROP_STATUS] =
     g_param_spec_string ("status",
