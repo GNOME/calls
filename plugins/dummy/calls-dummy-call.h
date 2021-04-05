@@ -27,11 +27,13 @@
 
 #include <glib-object.h>
 
+#include "calls-call.h"
+
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_DUMMY_CALL (calls_dummy_call_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsDummyCall, calls_dummy_call, CALLS, DUMMY_CALL, GObject);
+G_DECLARE_FINAL_TYPE (CallsDummyCall, calls_dummy_call, CALLS, DUMMY_CALL, CallsCall)
 
 CallsDummyCall *calls_dummy_call_new (const gchar *number,
                                       gboolean     inbound);

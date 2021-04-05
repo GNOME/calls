@@ -26,14 +26,15 @@
 #define CALLS_OFONO_CALL_H__
 
 #include <libgdbofono/gdbo-call.h>
-
 #include <glib-object.h>
+
+#include "calls-call.h"
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_OFONO_CALL (calls_ofono_call_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsOfonoCall, calls_ofono_call, CALLS, OFONO_CALL, GObject);
+G_DECLARE_FINAL_TYPE (CallsOfonoCall, calls_ofono_call, CALLS, OFONO_CALL, CallsCall)
 
 CallsOfonoCall *calls_ofono_call_new (GDBOVoiceCall *voice_call,
                                       GVariant      *properties);

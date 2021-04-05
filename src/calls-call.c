@@ -31,59 +31,6 @@
 #include <glib/gi18n.h>
 
 
-void
-calls_call_state_to_string (GString        *string,
-                            CallsCallState  state)
-{
-  GEnumClass *klass;
-  GEnumValue *value;
-
-  klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
-
-  value = g_enum_get_value (klass, (gint)state);
-  if (!value)
-    {
-      return g_string_printf (string,
-                              "Unknown call state (%d)",
-                              (gint)state);
-    }
-
-  g_string_assign (string, value->value_nick);
-  string->str[0] = g_ascii_toupper (string->str[0]);
-
-  g_type_class_unref (klass);
-}
-
-
-gboolean
-calls_call_state_parse_nick (CallsCallState *state,
-                             const gchar    *nick)
-{
-  GEnumClass *klass;
-  GEnumValue *value;
-  gboolean ret;
-
-  g_return_val_if_fail (state != NULL, FALSE);
-  g_return_val_if_fail (nick != NULL, FALSE);
-
-  klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
-  value = g_enum_get_value_by_nick (klass, nick);
-
-  if (value)
-    {
-      *state = (CallsCallState) value->value;
-      ret = TRUE;
-    }
-  else
-    {
-      ret = FALSE;
-    }
-
-  g_type_class_unref (klass);
-  return ret;
-}
-
-
 /**
  * SECTION:calls-call
  * @short_description: A call.
@@ -100,56 +47,150 @@ calls_call_state_parse_nick (CallsCallState *state,
  */
 
 
-G_DEFINE_INTERFACE (CallsCall, calls_call, CALLS_TYPE_MESSAGE_SOURCE);
+G_DEFINE_ABSTRACT_TYPE (CallsCall, calls_call, G_TYPE_OBJECT)
 
 enum {
-  SIGNAL_STATE_CHANGED,
-  SIGNAL_LAST_SIGNAL,
+  PROP_0,
+  PROP_INBOUND,
+  PROP_NUMBER,
+  PROP_NAME,
+  PROP_STATE,
+  N_PROPS,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
 
+enum {
+  STATE_CHANGED,
+  N_SIGNALS,
+};
+
+static GParamSpec *properties[N_PROPS];
+static guint signals[N_SIGNALS];
+
+static const char *
+calls_call_real_get_number (CallsCall *self)
+{
+  return NULL;
+}
+
+static const char *
+calls_call_real_get_name (CallsCall *self)
+{
+  return NULL;
+}
+
+static CallsCallState
+calls_call_real_get_state (CallsCall *self)
+{
+  return 0;
+}
+
+static gboolean
+calls_call_real_get_inbound (CallsCall *self)
+{
+  return FALSE;
+}
 
 static void
-calls_call_default_init (CallsCallInterface *iface)
+calls_call_real_answer (CallsCall *self)
 {
-  GType arg_types[2] =
-    {
-      CALLS_TYPE_CALL_STATE,
-      CALLS_TYPE_CALL_STATE
-    };
+}
 
-  g_object_interface_install_property (
-    iface,
+static void
+calls_call_real_hang_up (CallsCall *self)
+{
+}
+
+static void
+calls_call_real_tone_start (CallsCall *self,
+                            char       key)
+{
+  g_info ("Beep! (%c)", (int)key);
+}
+
+static void
+calls_call_real_tone_stop (CallsCall *self,
+                           char       key)
+{
+  g_info ("Beep end (%c)", (int)key);
+}
+
+static void
+calls_call_get_property (GObject    *object,
+                         guint       prop_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  CallsCall *self = CALLS_CALL (object);
+
+  switch (prop_id)
+    {
+    case PROP_INBOUND:
+      g_value_set_boolean (value, calls_call_get_inbound (self));
+      break;
+
+    case PROP_NUMBER:
+      g_value_set_string (value, calls_call_get_number (self));
+      break;
+
+    case PROP_NAME:
+      g_value_set_string (value, calls_call_get_name (self));
+      break;
+
+    case PROP_STATE:
+      g_value_set_enum (value, calls_call_get_state (self));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+calls_call_class_init (CallsCallClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->get_property = calls_call_get_property;
+
+  klass->get_number = calls_call_real_get_number;
+  klass->get_name = calls_call_real_get_name;
+  klass->get_state = calls_call_real_get_state;
+  klass->get_inbound = calls_call_real_get_inbound;
+  klass->answer = calls_call_real_answer;
+  klass->hang_up = calls_call_real_hang_up;
+  klass->tone_start = calls_call_real_tone_start;
+  klass->tone_stop = calls_call_real_tone_stop;
+
+  properties[PROP_INBOUND] =
     g_param_spec_boolean ("inbound",
                           "Inbound",
                           "Whether the call is inbound",
                           FALSE,
-                          G_PARAM_READABLE));
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  g_object_interface_install_property (
-    iface,
+  properties[PROP_NUMBER] =
     g_param_spec_string ("number",
                          "Number",
                          "The number the call is connected to if known",
                          NULL,
-                         G_PARAM_READABLE));
+                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  g_object_interface_install_property (
-    iface,
+  properties[PROP_NAME] =
     g_param_spec_string ("name",
                          "Name",
                          "The name of the party the call is connected to, if the network provides it",
                          NULL,
-                         G_PARAM_READABLE));
+                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  g_object_interface_install_property (
-    iface,
+  properties[PROP_STATE] =
     g_param_spec_enum ("state",
                        "State",
                        "The current state of the call",
                        CALLS_TYPE_CALL_STATE,
                        CALLS_CALL_STATE_ACTIVE,
-                       G_PARAM_READABLE));
+                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 
   /**
    * CallsCall::state-changed:
@@ -160,22 +201,19 @@ calls_call_default_init (CallsCallInterface *iface)
    * This signal is emitted when the state of the call changes, for
    * example when it's answered or when the call is disconnected.
    */
-  signals[SIGNAL_STATE_CHANGED] =
-    g_signal_newv ("state-changed",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   2, arg_types);
+  signals[STATE_CHANGED] =
+    g_signal_new ("state-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  2, CALLS_TYPE_CALL_STATE, CALLS_TYPE_CALL_STATE);
 }
 
-
-#define DEFINE_CALL_GETTER(prop,rettype,errval) \
-  CALLS_DEFINE_IFACE_GETTER(call, Call, CALL, prop, rettype, errval)
-
-#define DEFINE_CALL_FUNC_VOID(function)                         \
-  CALLS_DEFINE_IFACE_FUNC_VOID(call, Call, CALL, function)
-
+static void
+calls_call_init (CallsCall *self)
+{
+}
 
 /**
  * calls_call_get_number:
@@ -187,7 +225,13 @@ calls_call_default_init (CallsCallInterface *iface)
  *
  * Returns: the number, or NULL
  */
-DEFINE_CALL_GETTER(number, const gchar *, NULL);
+const char *
+calls_call_get_number (CallsCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
+
+  return CALLS_CALL_GET_CLASS (self)->get_number (self);
+}
 
 /**
  * calls_call_get_name:
@@ -198,7 +242,13 @@ DEFINE_CALL_GETTER(number, const gchar *, NULL);
  *
  * Returns: the number, or NULL
  */
-DEFINE_CALL_GETTER(name, const gchar *, NULL);
+const char *
+calls_call_get_name (CallsCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
+
+  return CALLS_CALL_GET_CLASS (self)->get_name (self);
+}
 
 /**
  * calls_call_get_state:
@@ -208,7 +258,13 @@ DEFINE_CALL_GETTER(name, const gchar *, NULL);
  *
  * Returns: the state
  */
-DEFINE_CALL_GETTER(state, CallsCallState, ((CallsCallState)0));
+CallsCallState
+calls_call_get_state (CallsCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), 0);
+
+  return CALLS_CALL_GET_CLASS (self)->get_state (self);
+}
 
 /**
  * calls_call_answer:
@@ -217,7 +273,13 @@ DEFINE_CALL_GETTER(state, CallsCallState, ((CallsCallState)0));
  * If the call is incoming, answer it.
  *
  */
-DEFINE_CALL_FUNC_VOID(answer);
+void
+calls_call_answer (CallsCall *self)
+{
+  g_return_if_fail (CALLS_IS_CALL (self));
+
+  CALLS_CALL_GET_CLASS (self)->answer (self);
+}
 
 /**
  * calls_call_hang_up:
@@ -226,7 +288,13 @@ DEFINE_CALL_FUNC_VOID(answer);
  * Hang up the call.
  *
  */
-DEFINE_CALL_FUNC_VOID(hang_up);
+void
+calls_call_hang_up (CallsCall *self)
+{
+  g_return_if_fail (CALLS_IS_CALL (self));
+
+  CALLS_CALL_GET_CLASS (self)->hang_up (self);
+}
 
 
 /**
@@ -237,7 +305,13 @@ DEFINE_CALL_FUNC_VOID(hang_up);
  *
  * Returns: TRUE if inbound, FALSE if outbound.
  */
-DEFINE_CALL_GETTER(inbound, gboolean, FALSE);
+gboolean
+calls_call_get_inbound (CallsCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
+
+  return CALLS_CALL_GET_CLASS (self)->get_inbound (self);
+}
 
 static inline gboolean
 tone_key_is_valid (gchar key)
@@ -265,15 +339,10 @@ void
 calls_call_tone_start (CallsCall *self,
                        gchar      key)
 {
-  CallsCallInterface *iface;
-
   g_return_if_fail (CALLS_IS_CALL (self));
   g_return_if_fail (tone_key_is_valid (key));
 
-  iface = CALLS_CALL_GET_IFACE (self);
-  g_return_if_fail (iface->tone_start != NULL);
-
-  iface->tone_start (self, key);
+  CALLS_CALL_GET_CLASS (self)->tone_start (self, key);
 }
 
 /**
@@ -291,13 +360,9 @@ calls_call_tone_start (CallsCall *self,
 gboolean
 calls_call_tone_stoppable (CallsCall *self)
 {
-  CallsCallInterface *iface;
-
   g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
 
-  iface = CALLS_CALL_GET_IFACE (self);
-
-  return iface->tone_stop != NULL;
+  return CALLS_CALL_GET_CLASS (self)->tone_stop != calls_call_real_tone_stop;
 }
 
 /**
@@ -313,18 +378,10 @@ void
 calls_call_tone_stop (CallsCall *self,
                       gchar      key)
 {
-  CallsCallInterface *iface;
-
   g_return_if_fail (CALLS_IS_CALL (self));
   g_return_if_fail (tone_key_is_valid (key));
 
-  iface = CALLS_CALL_GET_IFACE (self);
-  if (!iface->tone_stop)
-    {
-      return;
-    }
-
-  iface->tone_stop (self, key);
+  CALLS_CALL_GET_CLASS (self)->tone_stop (self, key);
 }
 
 /**
@@ -344,4 +401,55 @@ calls_call_get_contact (CallsCall *self)
 
   return calls_contacts_provider_lookup_phone_number (contacts_provider,
                                                       calls_call_get_number (self));
+}
+
+void
+calls_call_state_to_string (GString        *string,
+                            CallsCallState  state)
+{
+  GEnumClass *klass;
+  GEnumValue *value;
+
+  klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
+
+  value = g_enum_get_value (klass, (gint)state);
+  if (!value)
+    {
+      return g_string_printf (string,
+                              "Unknown call state (%d)",
+                              (gint)state);
+    }
+
+  g_string_assign (string, value->value_nick);
+  string->str[0] = g_ascii_toupper (string->str[0]);
+
+  g_type_class_unref (klass);
+}
+
+gboolean
+calls_call_state_parse_nick (CallsCallState *state,
+                             const char     *nick)
+{
+  GEnumClass *klass;
+  GEnumValue *value;
+  gboolean ret;
+
+  g_return_val_if_fail (state != NULL, FALSE);
+  g_return_val_if_fail (nick != NULL, FALSE);
+
+  klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
+  value = g_enum_get_value_by_nick (klass, nick);
+
+  if (value)
+    {
+      *state = (CallsCallState) value->value;
+      ret = TRUE;
+    }
+  else
+    {
+      ret = FALSE;
+    }
+
+  g_type_class_unref (klass);
+  return ret;
 }

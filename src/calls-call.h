@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_CALL (calls_call_get_type ())
 
-G_DECLARE_INTERFACE (CallsCall, calls_call, CALLS, CALL, GObject);
+G_DECLARE_DERIVABLE_TYPE (CallsCall, calls_call, CALLS, CALL, GObject)
 
 typedef enum
 {
@@ -46,26 +46,24 @@ typedef enum
   CALLS_CALL_STATE_DISCONNECTED
 } CallsCallState;
 
-void     calls_call_state_to_string  (GString        *string,
-                                      CallsCallState  state);
-gboolean calls_call_state_parse_nick (CallsCallState *state,
-                                      const gchar    *nick);
-
-struct _CallsCallInterface
+struct _CallsCallClass
 {
-  GTypeInterface parent_iface;
+  GObjectClass parent_iface;
 
-  void           (*answer)     (CallsCall *self);
-  void           (*hang_up)    (CallsCall *self);
-  void           (*tone_start) (CallsCall *self,
-                                gchar      key);
-  void           (*tone_stop)  (CallsCall *self,
-                                gchar      key);
+  const char     *(*get_number)           (CallsCall *self);
+  const char     *(*get_name)             (CallsCall *self);
+  CallsCallState  (*get_state)            (CallsCall *self);
+  gboolean        (*get_inbound)          (CallsCall *self);
+  void            (*answer)               (CallsCall *self);
+  void            (*hang_up)              (CallsCall *self);
+  void            (*tone_start)           (CallsCall *self,
+                                           char       key);
+  void            (*tone_stop)            (CallsCall *self,
+                                           char       key);
 };
 
-
-const gchar *    calls_call_get_number     (CallsCall *self);
-const gchar *    calls_call_get_name       (CallsCall *self);
+const char      *calls_call_get_number     (CallsCall *self);
+const char      *calls_call_get_name       (CallsCall *self);
 CallsCallState   calls_call_get_state      (CallsCall *self);
 gboolean         calls_call_get_inbound    (CallsCall *self);
 void             calls_call_answer         (CallsCall *self);
@@ -76,6 +74,11 @@ gboolean         calls_call_tone_stoppable (CallsCall *self);
 void             calls_call_tone_stop      (CallsCall *self,
                                             gchar      key);
 CallsBestMatch * calls_call_get_contact    (CallsCall *self);
+
+void     calls_call_state_to_string  (GString         *string,
+                                      CallsCallState   state);
+gboolean calls_call_state_parse_nick (CallsCallState  *state,
+                                      const char      *nick);
 
 
 G_END_DECLS

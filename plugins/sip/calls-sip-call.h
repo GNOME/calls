@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_SIP_CALL (calls_sip_call_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsSipCall, calls_sip_call, CALLS, SIP_CALL, GObject);
+G_DECLARE_FINAL_TYPE (CallsSipCall, calls_sip_call, CALLS, SIP_CALL, CallsCall)
 
 CallsSipCall          *calls_sip_call_new                    (const gchar  *number,
                                                               gboolean      inbound,

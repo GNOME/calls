@@ -28,11 +28,13 @@
 #include <libmm-glib.h>
 #include <glib-object.h>
 
+#include "calls-call.h"
+
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_MM_CALL (calls_mm_call_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsMMCall, calls_mm_call, CALLS, MM_CALL, GObject);
+G_DECLARE_FINAL_TYPE (CallsMMCall, calls_mm_call, CALLS, MM_CALL, CallsCall)
 
 CallsMMCall *calls_mm_call_new                   (MMCall *mm_call);
 const gchar *calls_mm_call_get_object_path       (CallsMMCall *call);

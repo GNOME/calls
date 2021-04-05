@@ -48,29 +48,46 @@ struct _CallsSipCall
   nua_handle_t *nh;
 };
 
-static void calls_sip_call_message_source_interface_init (CallsCallInterface *iface);
-static void calls_sip_call_call_interface_init (CallsCallInterface *iface);
+static void calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface);
 
-G_DEFINE_TYPE_WITH_CODE (CallsSipCall, calls_sip_call, G_TYPE_OBJECT,
+G_DEFINE_TYPE_WITH_CODE (CallsSipCall, calls_sip_call, CALLS_TYPE_CALL,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                                                calls_sip_call_message_source_interface_init)
-                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_CALL,
-                                                calls_sip_call_call_interface_init))
+                                                calls_sip_call_message_source_interface_init))
 
 enum {
   PROP_0,
   PROP_CALL_HANDLE,
-  PROP_CALL_NUMBER,
-  PROP_CALL_INBOUND,
-  PROP_CALL_STATE,
-  PROP_CALL_NAME,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
 
+static const char *
+calls_sip_call_get_number (CallsCall *call)
+{
+  CallsSipCall *self = CALLS_SIP_CALL (call);
+
+  return self->number;
+}
+
+static CallsCallState
+calls_sip_call_get_state (CallsCall *call)
+{
+  CallsSipCall *self = CALLS_SIP_CALL (call);
+
+  return self->state;
+}
+
+static gboolean
+calls_sip_call_get_inbound (CallsCall *call)
+{
+  CallsSipCall *self = CALLS_SIP_CALL (call);
+
+  return self->inbound;
+}
+
 static void
-answer (CallsCall *call)
+calls_sip_call_answer (CallsCall *call)
 {
   CallsSipCall *self;
   g_autofree gchar *local_sdp = NULL;
@@ -107,7 +124,7 @@ answer (CallsCall *call)
 }
 
 static void
-hang_up (CallsCall *call)
+calls_sip_call_hang_up (CallsCall *call)
 {
   CallsSipCall *self;
 
@@ -143,19 +160,6 @@ hang_up (CallsCall *call)
 }
 
 static void
-tone_start (CallsCall *call, gchar key)
-{
-  g_info ("Beep! (%c)", (int)key);
-}
-
-static void
-tone_stop (CallsCall *call, gchar key)
-{
-  g_info ("Beep end (%c)", (int)key);
-}
-
-
-static void
 calls_sip_call_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
@@ -184,22 +188,6 @@ calls_sip_call_get_property (GObject      *object,
   CallsSipCall *self = CALLS_SIP_CALL (object);
 
   switch (property_id) {
-  case PROP_CALL_INBOUND:
-    g_value_set_boolean (value, self->inbound);
-    break;
-
-  case PROP_CALL_NUMBER:
-    g_value_set_string (value, self->number);
-    break;
-
-  case PROP_CALL_STATE:
-    g_value_set_enum (value, self->state);
-    break;
-
-  case PROP_CALL_NAME:
-    g_value_set_string (value, NULL);
-    break;
-
   case PROP_CALL_HANDLE:
     g_value_set_pointer (value, self->nh);
     break;
@@ -230,10 +218,17 @@ static void
 calls_sip_call_class_init (CallsSipCallClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  CallsCallClass *call_class = CALLS_CALL_CLASS (klass);
 
   object_class->get_property = calls_sip_call_get_property;
   object_class->set_property = calls_sip_call_set_property;
   object_class->finalize = calls_sip_call_finalize;
+
+  call_class->get_number = calls_sip_call_get_number;
+  call_class->get_state = calls_sip_call_get_state;
+  call_class->get_inbound = calls_sip_call_get_inbound;
+  call_class->answer = calls_sip_call_answer;
+  call_class->hang_up = calls_sip_call_hang_up;
 
   props[PROP_CALL_HANDLE] =
     g_param_spec_pointer ("nua-handle",
@@ -241,32 +236,10 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
                           "The used NUA handler",
                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_CALL_HANDLE, props[PROP_CALL_HANDLE]);
-
-#define IMPLEMENTS(ID, NAME) \
-  g_object_class_override_property (object_class, ID, NAME);    \
-  props[ID] = g_object_class_find_property(object_class, NAME);
-
-  IMPLEMENTS(PROP_CALL_NUMBER, "number");
-  IMPLEMENTS(PROP_CALL_INBOUND, "inbound");
-  IMPLEMENTS(PROP_CALL_STATE, "state");
-  IMPLEMENTS(PROP_CALL_NAME, "name");
-
-#undef IMPLEMENTS
-
 }
 
 static void
-calls_sip_call_call_interface_init (CallsCallInterface *iface)
-{
-  iface->answer = answer;
-  iface->hang_up = hang_up;
-  iface->tone_start = tone_start;
-  iface->tone_stop = tone_stop;
-}
-
-
-static void
-calls_sip_call_message_source_interface_init (CallsCallInterface *iface)
+calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface)
 {
 }
 
@@ -374,7 +347,7 @@ calls_sip_call_set_state (CallsSipCall   *self,
   }
 
   self->state = state;
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL_STATE]);
+  g_object_notify (G_OBJECT (self), "state");
   g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
