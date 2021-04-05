@@ -17,6 +17,7 @@ test_calls_plugin_loading ()
   g_autoptr (CallsProvider) dummy_provider = NULL;
   g_autoptr (CallsProvider) mm_provider = NULL;
   g_autoptr (CallsProvider) ofono_provider = NULL;
+  g_autoptr (CallsProvider) sip_provider = NULL;
   g_autoptr (CallsProvider) not_a_provider = NULL;
 
   dummy_provider = calls_provider_load_plugin ("dummy");
@@ -28,12 +29,16 @@ test_calls_plugin_loading ()
   ofono_provider = calls_provider_load_plugin ("ofono");
   g_assert_nonnull (ofono_provider);
 
+  sip_provider = calls_provider_load_plugin ("sip");
+  g_assert_nonnull (sip_provider);
+
   not_a_provider = calls_provider_load_plugin ("not-a-valid-provider-plugin");
   g_assert_null (not_a_provider);
 
   calls_provider_unload_plugin ("dummy");
   calls_provider_unload_plugin ("mm");
   calls_provider_unload_plugin ("ofono");
+  calls_provider_unload_plugin ("sip");
 }
 
 
