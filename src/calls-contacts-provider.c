@@ -255,7 +255,7 @@ calls_contacts_provider_get_individuals (CallsContactsProvider *self)
  *
  * Get a best contact match for a phone number
  *
- * Returns: (transfer none): The best match as #CallsBestMatch
+ * Returns: (transfer: full): The best match as #CallsBestMatch
  */
 CallsBestMatch *
 calls_contacts_provider_lookup_phone_number (CallsContactsProvider *self,
