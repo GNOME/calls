@@ -40,7 +40,7 @@ test:native:
     - build:native
   script:
     - export LC_ALL=C.UTF-8
-    - xvfb-run ninja -C _build test
+    - xvfb-run -s -noreset ninja -C _build test
 
 build-gtkdoc:
   extends: build:native
