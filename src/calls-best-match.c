@@ -38,6 +38,8 @@ struct _CallsBestMatch
   FolksSearchView    *view;
   FolksIndividual    *best_match;
   gchar              *phone_number;
+  gchar              *country_code;
+  gboolean            had_country_code_last_time;
 };
 
 G_DEFINE_TYPE (CallsBestMatch, calls_best_match, G_TYPE_OBJECT);
@@ -49,6 +51,7 @@ enum {
   PROP_NAME,
   PROP_AVATAR,
   PROP_HAS_INDIVIDUAL,
+  PROP_COUNTRY_CODE,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -128,11 +131,22 @@ set_property (GObject      *object,
               GParamSpec   *pspec)
 {
   CallsBestMatch *self = CALLS_BEST_MATCH (object);
+  const gchar *country_code;
 
   switch (property_id)
     {
     case PROP_PHONE_NUMBER:
       calls_best_match_set_phone_number (self, g_value_get_string (value));
+      break;
+
+    case PROP_COUNTRY_CODE:
+      country_code = g_value_get_string (value);
+      if (country_code) {
+        g_autofree gchar *number = g_strdup (self->phone_number);
+        g_free (self->country_code);
+        self->country_code = g_strdup (country_code);
+        calls_best_match_set_phone_number (self, number);
+      }
       break;
 
     default:
@@ -161,6 +175,10 @@ get_property (GObject      *object,
                           calls_best_match_get_phone_number (self));
       break;
 
+    case PROP_COUNTRY_CODE:
+      g_value_set_string (value, self->country_code);
+      break;
+
     case PROP_NAME:
       g_value_set_string (value,
                           calls_best_match_get_name (self));
@@ -185,6 +203,7 @@ dispose (GObject *object)
 
   g_clear_object (&self->view);
   g_clear_pointer (&self->phone_number, g_free);
+  g_clear_pointer (&self->country_code, g_free);
 
   if (self->best_match) {
     g_signal_handlers_disconnect_by_data (self->best_match, self);
@@ -218,6 +237,13 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
+  props[PROP_COUNTRY_CODE] =
+    g_param_spec_string ("country-code",
+                         "Country code",
+                         "The country code used for matching",
+                         NULL,
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+
   props[PROP_NAME] =
     g_param_spec_string ("name",
                          "Name",
@@ -240,6 +266,9 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
 static void
 calls_best_match_init (CallsBestMatch *self)
 {
+  g_object_bind_property (calls_manager_get_default (), "country-code",
+                          self, "country-code",
+                          G_BINDING_SYNC_CREATE);
 }
 
 
@@ -274,13 +303,17 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
   g_autoptr (GError) error = NULL;
-  g_autofree gchar *country_code = NULL;
+  gboolean have_country_code_now = FALSE;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
 
+  have_country_code_now = !!self->country_code;
 
-  if (self->phone_number == phone_number)
+  if (self->phone_number == phone_number &&
+      self->had_country_code_last_time == have_country_code_now)
     return;
+
+  self->had_country_code_last_time = have_country_code_now;
 
   g_clear_pointer (&self->phone_number, g_free);
 
@@ -291,10 +324,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_clear_object (&self->view);
 
   if (self->phone_number) {
-    g_object_get (calls_manager_get_default (),
-                  "country-code", &country_code,
-                  NULL);
-    number = e_phone_number_from_string (phone_number, country_code, &error);
+    number = e_phone_number_from_string (phone_number, self->country_code, &error);
 
     if (!number) {
       g_warning ("Failed to convert %s to a phone number: %s", phone_number, error->message);

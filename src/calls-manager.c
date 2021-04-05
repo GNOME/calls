@@ -472,6 +472,9 @@ calls_manager_init (CallsManager *self)
 
   // Load the contacts provider
   self->contacts_provider = calls_contacts_provider_new ();
+  g_object_bind_property (self, "country-code",
+                          self->contacts_provider, "country-code",
+                          G_BINDING_DEFAULT);
 }
 
 
