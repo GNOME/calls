@@ -321,6 +321,8 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   if (phone_number[0] != '\0')
     self->phone_number = g_strdup (phone_number);
 
+  if (self->view)
+    g_signal_handlers_disconnect_by_data (self->view, self);
   g_clear_object (&self->view);
 
   if (self->phone_number) {
