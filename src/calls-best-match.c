@@ -86,6 +86,8 @@ update_best_match (CallsBestMatch *self)
   FolksIndividual *best_match = NULL;
   gboolean notify_has_individual = FALSE;
 
+  g_return_if_fail (GEE_IS_COLLECTION (individuals));
+
   if (!gee_collection_get_is_empty (GEE_COLLECTION (individuals)))
       best_match = gee_sorted_set_first (individuals);
 
