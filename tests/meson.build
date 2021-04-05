@@ -8,6 +8,7 @@ test_env = [
   'PYTHONDONTWRITEBYTECODE=yes',
   'MALLOC_CHECK_=2',
   'NO_AT_BRIDGE=1',
+  'CALLS_SIP_DO_NOT_AUTOLOAD=1',
 ]
 
 test_cflags = [

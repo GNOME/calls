@@ -322,10 +322,11 @@ calls_sip_provider_constructed (GObject *object)
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
   g_autoptr (GError) error = NULL;
   gboolean auto_load_accounts = TRUE;
+  const gchar *env_do_not_auto_load;
 
-#ifdef FOR_TESTING
-  auto_load_accounts = FALSE;
-#endif
+  env_do_not_auto_load = g_getenv ("CALLS_SIP_DO_NOT_AUTOLOAD");
+  if (env_do_not_auto_load && env_do_not_auto_load[0] != '\0')
+    auto_load_accounts = FALSE;
 
   if (calls_sip_provider_init_sofia (self, &error)) {
     if (auto_load_accounts)
