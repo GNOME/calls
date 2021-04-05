@@ -396,8 +396,12 @@ calls_call_tone_stop (CallsCall *self,
 CallsBestMatch *
 calls_call_get_contact (CallsCall *self)
 {
-  CallsContactsProvider *contacts_provider =
-   calls_manager_get_contacts_provider (calls_manager_get_default ());
+  CallsContactsProvider *contacts_provider;
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
+
+  contacts_provider =
+    calls_manager_get_contacts_provider (calls_manager_get_default ());
 
   return calls_contacts_provider_lookup_phone_number (contacts_provider,
                                                       calls_call_get_number (self));
