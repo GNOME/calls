@@ -63,22 +63,12 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
-#ifdef FOR_TESTING
-
-G_DEFINE_TYPE_WITH_CODE
-(CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER,
- G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                        calls_sip_provider_message_source_interface_init))
-
-
-#else
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_sip_provider_message_source_interface_init));
 
-#endif /* FOR_TESTING */
 
 static gboolean
 check_required_keys (GKeyFile *key_file,
@@ -442,8 +432,6 @@ calls_sip_provider_new ()
 }
 
 
-#ifndef FOR_TESTING
-
 static void
 calls_sip_provider_class_finalize (CallsSipProviderClass *klass)
 {
@@ -459,5 +447,3 @@ peas_register_types (PeasObjectModule *module)
                                               CALLS_TYPE_PROVIDER,
                                               CALLS_TYPE_SIP_PROVIDER);
 }
-
-#endif /* FOR_TESTING */

@@ -6,12 +6,14 @@
  * Author: Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  */
 
+#include "calls-provider.h"
 #include "calls-sip-provider.h"
 #include "calls-sip-origin.h"
 #include "calls-sip-util.h"
 
 #include <gtk/gtk.h>
 #include <sofia-sip/su_uniqueid.h>
+#include <libpeas/peas.h>
 
 typedef struct {
   CallsSipProvider *provider;
@@ -52,7 +54,8 @@ static void
 setup_sip_provider (SipFixture   *fixture,
                     gconstpointer user_data)
 {
-  fixture->provider = calls_sip_provider_new ();
+  CallsProvider *provider = calls_provider_load_plugin ("sip");
+  fixture->provider = CALLS_SIP_PROVIDER (provider);
 }
 
 static void
@@ -60,6 +63,7 @@ tear_down_sip_provider (SipFixture   *fixture,
                         gconstpointer user_data)
 {
   g_clear_object (&fixture->provider);
+  calls_provider_unload_plugin ("sip");
 }
 
 
@@ -170,6 +174,9 @@ main (gint   argc,
 {
   gtk_test_init (&argc, &argv, NULL);
 
+#ifdef PLUGIN_BUILDDIR
+  peas_engine_add_search_path (peas_engine_get_default (), PLUGIN_BUILDDIR, NULL);
+#endif
   /* this is a workaround for an issue with sofia: https://github.com/freeswitch/sofia-sip/issues/58 */
   su_random64 ();
 
