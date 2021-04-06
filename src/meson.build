@@ -64,6 +64,17 @@ calls_vala = static_library (
 )
 
 
+calls_enum_headers = files(['calls-call.h', 'calls-ussd.h', 'calls-manager.h'])
+calls_enum_sources = gnome.mkenums_simple('enum-types',
+                                          sources : calls_enum_headers)
+
+calls_resources = gnome.compile_resources(
+   'calls-resources',
+   'calls.gresources.xml',
+   source_dir: ['ui', '../data'],
+   c_name: 'call',
+)
+
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call.c',
                        'calls-ussd.c',
@@ -104,17 +115,6 @@ config_h = vcs_tag(
     fallback: '',
        input: config_h_in,
       output: 'config.h',
-)
-
-calls_enum_headers = files(['calls-call.h', 'calls-ussd.h', 'calls-manager.h'])
-calls_enum_sources = gnome.mkenums_simple('enum-types',
-                                          sources : calls_enum_headers)
-
-calls_resources = gnome.compile_resources(
-   'calls-resources',
-   'calls.gresources.xml',
-   source_dir: ['ui', '../data'],
-   c_name: 'call',
 )
 
 executable (
