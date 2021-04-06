@@ -12,7 +12,7 @@ if get_option('gtk_doc')
                                calls_vala_sources,
                                dependencies: calls_vala_deps)
   calls_doc_lib = library('calls-doc',
-                          [calls_sources, calls_enum_sources, wayland_sources, wl_proto_sources, gdbofono_src],
+                          [calls_sources, gdbofono_src],
                           include_directories: calls_includes,
                           link_with: calls_vala_doc_lib,
                           dependencies: calls_deps)

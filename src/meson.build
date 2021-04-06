@@ -75,6 +75,12 @@ calls_resources = gnome.compile_resources(
    c_name: 'call',
 )
 
+calls_generated_sources = [
+  calls_enum_sources,
+  calls_resources,
+  wl_proto_sources,
+]
+
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-call.c',
                        'calls-ussd.c',
@@ -100,7 +106,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-notifier.c', 'calls-notifier.h',
                        'calls-contacts-box.c', 'calls-contacts-box.h',
                        'calls-contacts-row.c', 'calls-contacts-row.h',
-                      ])
+                      ]) + wayland_sources + calls_generated_sources
 
 calls_config_data = config_data
 calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
@@ -119,8 +125,7 @@ config_h = vcs_tag(
 
 executable (
   'gnome-calls',
-  calls_sources, calls_enum_sources, calls_resources,
-  wl_proto_sources, wayland_sources, 'main.c',
+  calls_sources, 'main.c',
   dependencies : calls_deps,
   export_dynamic : true,
   include_directories : calls_includes,

@@ -45,8 +45,8 @@ foreach test : tests
                     'common.h' ]
 
   t = executable(name, test_sources,
-                 calls_sources, dummy_sources, calls_enum_sources, calls_resources,
-                 wl_proto_sources, wayland_sources,
+                 calls_sources,
+                 dummy_sources,
                  c_args : test_cflags_with_test_define,
                  link_args: test_link_args,
                  link_with : calls_vala,
@@ -62,8 +62,7 @@ endforeach
 test_sources = [ 'test-manager.c' ]
 
 t = executable('manager', test_sources,
-                 calls_sources, calls_enum_sources, calls_resources,
-                 wl_proto_sources, wayland_sources,
+                 calls_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
                  link_with : calls_vala,
@@ -77,8 +76,7 @@ test('manager', t, env: test_env)
 test_sources = [ 'test-plugins.c' ]
 
 t = executable('plugins', test_sources,
-                 calls_sources, calls_enum_sources, calls_resources,
-                 wl_proto_sources, wayland_sources,
+                 calls_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
                  link_with : calls_vala,
@@ -92,8 +90,6 @@ test('plugins', t, env: test_env)
 test_sources = [ 'test-sip.c' ]
 t = executable('sip', test_sources,
                calls_sources, sip_sources,
-               calls_enum_sources, calls_resources,
-               wl_proto_sources, wayland_sources,
                c_args : test_cflags_with_test_define,
                link_args: test_link_args,
                link_with : calls_vala,
