@@ -13,12 +13,10 @@ test_env = [
 
 test_cflags = [
   '-fPIE',
+  '-DFOR_TESTING',
   '-Wno-error=deprecated-declarations',
   '-DPLUGIN_BUILDDIR="@0@"'.format(full_calls_plugin_builddir),
 ]
-
-test_cflags_with_test_define = test_cflags
-test_cflags_with_test_define +=  [ '-DFOR_TESTING' ]
 
 test_link_args = [
   '-fPIC',
@@ -47,7 +45,7 @@ foreach test : tests
   t = executable(name, test_sources,
                  calls_sources,
                  dummy_sources,
-                 c_args : test_cflags_with_test_define,
+                 c_args : test_cflags,
                  link_args: test_link_args,
                  link_with : calls_vala,
                  dependencies: calls_deps,
