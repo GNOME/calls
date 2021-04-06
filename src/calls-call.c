@@ -391,7 +391,7 @@ calls_call_tone_stop (CallsCall *self,
  * This a convenience function to optain the #CallsBestMatch matching the
  * phone number of the #CallsCall.
  *
- * Returns: (transfer full): A #CallsBestMatch
+ * Returns: (transfer: full): A #CallsBestMatch
  */
 CallsBestMatch *
 calls_call_get_contact (CallsCall *self)
