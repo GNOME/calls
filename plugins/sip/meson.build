@@ -64,10 +64,11 @@ sip_enums = gnome.mkenums('calls-sip-enums',
 
 sip_sources += sip_enums
 
-shared_module(
+calls_sip = shared_library(
   'sip',
   sip_sources,
   dependencies: sip_deps,
+  link_args: '-Wl,--unresolved-symbols=ignore-in-object-files',
   include_directories: src_include,
   install: true,
   install_dir: sip_install_dir

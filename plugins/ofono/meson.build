@@ -46,10 +46,11 @@ ofono_sources = files(
   ]
 )
 
-shared_module(
+calls_ofono = shared_library(
   'ofono',
   ofono_sources, gdbofono_headers,
   dependencies: ofono_deps,
+  link_args: '-Wl,--unresolved-symbols=ignore-in-object-files',
   include_directories: [
     src_include,
     include_directories('.')
