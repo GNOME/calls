@@ -32,9 +32,9 @@
  */
 
 typedef struct {
-  char *payload_id;
+  guint payload_id;
   char *name;
-  char *clock_rate;
+  gint clock_rate;
   gint channels;
   char *gst_payloader_name;
   char *gst_depayloader_name;

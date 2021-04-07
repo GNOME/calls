@@ -121,9 +121,9 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
   for (node = self->supported_codecs; node != NULL; node = node->next) {
     MediaCodecInfo *codec = node->data;
 
-    g_string_append_printf (media_line, " %s", codec->payload_id);
+    g_string_append_printf (media_line, " %u", codec->payload_id);
     g_string_append_printf (attribute_lines,
-                            "a=rtpmap:%s %s/%s%s",
+                            "a=rtpmap:%u %s/%u%s",
                             codec->payload_id,
                             codec->name,
                             codec->clock_rate,
