@@ -751,7 +751,7 @@ call_mm_ussd_changed_cb (CallsMMOrigin *self)
 }
 
 static void
-cb_get_sim_ready (MMModem      *modem,
+get_sim_ready_cb (MMModem      *modem,
                   GAsyncResult *res,
                   gpointer      user_data)
 {
@@ -782,7 +782,7 @@ constructed (GObject *object)
 
   mm_modem_get_sim (mm_object_get_modem (self->mm_obj),
                     NULL,
-                    (GAsyncReadyCallback) cb_get_sim_ready,
+                    (GAsyncReadyCallback) get_sim_ready_cb,
                     self);
 
   g_signal_connect_object (self->mm_obj, "notify::modem3gpp-ussd",
