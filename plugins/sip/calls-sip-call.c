@@ -106,7 +106,7 @@ calls_sip_call_answer (CallsCall *call)
   }
 
   /* TODO get free port by creating GSocket and passing that to the pipeline */
-  calls_sip_call_setup_local_media (self, local_port, local_port + 1);
+  calls_sip_call_setup_local_media_connection (self, local_port, local_port + 1);
 
   local_sdp = calls_sip_media_manager_static_capabilities (self->manager,
                                                            local_port,
@@ -258,9 +258,9 @@ calls_sip_call_init (CallsSipCall *self)
 
 
 void
-calls_sip_call_setup_local_media (CallsSipCall *self,
-                                  guint         port_rtp,
-                                  guint         port_rtcp)
+calls_sip_call_setup_local_media_connection (CallsSipCall *self,
+                                             guint         port_rtp,
+                                             guint         port_rtcp)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
@@ -274,10 +274,10 @@ calls_sip_call_setup_local_media (CallsSipCall *self,
 
 
 void
-calls_sip_call_setup_remote_media (CallsSipCall *self,
-                                   const char   *remote,
-                                   guint         port_rtp,
-                                   guint         port_rtcp)
+calls_sip_call_setup_remote_media_connection (CallsSipCall *self,
+                                              const char   *remote,
+                                              guint         port_rtp,
+                                              guint         port_rtcp)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));

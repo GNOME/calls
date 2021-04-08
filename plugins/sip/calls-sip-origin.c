@@ -247,10 +247,10 @@ sip_i_state (int              status,
    * also: rtcp port = rtp port + 1
    */
   if (r_sdp) {
-    calls_sip_call_setup_remote_media (call,
-                                       r_sdp->sdp_connection->c_address,
-                                       r_sdp->sdp_media->m_port,
-                                       r_sdp->sdp_media->m_port + 1);
+    calls_sip_call_setup_remote_media_connection (call,
+                                                  r_sdp->sdp_connection->c_address,
+                                                  r_sdp->sdp_media->m_port,
+                                                  r_sdp->sdp_media->m_port + 1);
   }
 
   /* TODO use CallCallStates with g_object_set (notify!) */
@@ -726,7 +726,7 @@ add_call (CallsSipOrigin *self,
                             self);
 
   if (!inbound) {
-    calls_sip_call_setup_local_media (sip_call, local_port, local_port + 1);
+    calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
 
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
                                                              local_port,
