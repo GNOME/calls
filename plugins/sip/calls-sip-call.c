@@ -45,6 +45,13 @@ struct _CallsSipCall
 
   CallsSipMediaManager *manager;
   CallsSipMediaPipeline *pipeline;
+
+  guint lport_rtp;
+  guint lport_rtcp;
+  guint rport_rtp;
+  guint rport_rtcp;
+  gchar *remote;
+
   nua_handle_t *nh;
   GList *codecs;
 };
@@ -62,6 +69,43 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
+
+static gboolean
+try_setting_up_media_pipeline (CallsSipCall *self)
+{
+  g_assert (CALLS_SIP_CALL (self));
+
+  if (self->codecs == NULL)
+    return FALSE;
+
+  if (self->pipeline == NULL) {
+    MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
+    self->pipeline = calls_sip_media_pipeline_new (codec);
+  }
+
+  if (!self->lport_rtp || !self->lport_rtcp || !self->remote ||
+      !self->rport_rtp || !self->rport_rtcp)
+    return FALSE;
+
+  g_debug ("Setting local ports: RTP/RTCP %u/%u",
+           self->lport_rtp, self->lport_rtcp);
+
+  g_object_set (G_OBJECT (self->pipeline),
+                "lport-rtp", self->lport_rtp,
+                "lport-rtcp", self->lport_rtcp,
+                NULL);
+
+  g_debug ("Setting remote ports: RTP/RTCP %u/%u",
+           self->rport_rtp, self->rport_rtcp);
+
+  g_object_set (G_OBJECT (self->pipeline),
+                "remote", self->remote,
+                "rport-rtp", self->rport_rtp,
+                "rport-rtcp", self->rport_rtcp,
+                NULL);
+
+  return TRUE;
+}
 
 static const char *
 calls_sip_call_get_number (CallsCall *call)
@@ -213,6 +257,7 @@ calls_sip_call_finalize (GObject *object)
     g_clear_object (&self->pipeline);
   }
   g_clear_pointer (&self->codecs, g_list_free);
+  g_clear_pointer (&self->remote, g_free);
 
   G_OBJECT_CLASS (calls_sip_call_parent_class)->finalize (object);
 }
@@ -251,13 +296,7 @@ calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface
 static void
 calls_sip_call_init (CallsSipCall *self)
 {
-  MediaCodecInfo *best_codec;
-
   self->manager = calls_sip_media_manager_default ();
-
-  best_codec = get_best_codec (self->manager);
-
-  self->pipeline = calls_sip_media_pipeline_new (best_codec);
 }
 
 
@@ -267,13 +306,11 @@ calls_sip_call_setup_local_media_connection (CallsSipCall *self,
                                              guint         port_rtcp)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
-  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
 
-  g_debug ("Setting local ports: RTP/RTCP %u/%u", port_rtp, port_rtcp);
-  g_object_set (G_OBJECT (self->pipeline),
-                "lport-rtp", port_rtp,
-                "lport-rtcp", port_rtcp,
-                NULL);
+  self->lport_rtp = port_rtp;
+  self->lport_rtcp = port_rtcp;
+
+  try_setting_up_media_pipeline (self);
 }
 
 
@@ -284,14 +321,13 @@ calls_sip_call_setup_remote_media_connection (CallsSipCall *self,
                                               guint         port_rtcp)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
-  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
 
-  g_debug ("Setting remote ports: RTP/RTCP %u/%u", port_rtp, port_rtcp);
-  g_object_set (G_OBJECT (self->pipeline),
-                "remote", remote,
-                "rport-rtp", port_rtp,
-                "rport-rtcp", port_rtcp,
-                NULL);
+  g_free (self->remote);
+  self->remote = g_strdup (remote);
+  self->rport_rtp = port_rtp;
+  self->rport_rtcp = port_rtcp;
+
+  try_setting_up_media_pipeline (self);
 }
 
 
