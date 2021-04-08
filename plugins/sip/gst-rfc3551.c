@@ -22,24 +22,38 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsSipMediaManager"
+
 #include "gst-rfc3551.h"
 
 #include <glib.h>
+#include <gst/gst.h>
 
 /* Use the following codecs in order of preference */
 static MediaCodecInfo gst_codecs[] = {
-  {8, "PCMA", 8000, 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec"},
-  {0, "PCMU", 8000, 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec"},
-  {3, "GSM", 8000, 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec"},
-  {9, "G722", 8000, 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722"},
-  {4, "G723", 8000, 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1"}, // does not seem to work
+  {8, "PCMA", 8000, 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec", "libgstalaw.so"},
+  {0, "PCMU", 8000, 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec", "libgstmulaw.so"},
+  {3, "GSM", 8000, 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec", "libgstgsm.so"},
+  {9, "G722", 8000, 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722", "libgstlibav.so"},
+  {4, "G723", 8000, 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1", "libgstlibav.so"}, // does not seem to work
 };
 
 
 static gboolean
 media_codec_available_in_gst (MediaCodecInfo *codec) {
-  /* TODO probe available plugins in GStreamer */
-  return TRUE;
+  gboolean available = FALSE;
+  GstRegistry *registry = gst_registry_get ();
+  GstPlugin *plugin = NULL;
+
+  plugin = gst_registry_lookup (registry, codec->filename);
+  available = !!plugin;
+
+  if (plugin)
+    gst_object_unref (plugin);
+
+  g_debug ("Gstreamer plugin for %s %s available",
+           codec->name, available ? "is" : "is not");
+  return available;
 }
 
 MediaCodecInfo *

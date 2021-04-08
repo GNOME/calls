@@ -40,6 +40,7 @@ typedef struct {
   char *gst_depayloader_name;
   char *gst_encoder_name;
   char *gst_decoder_name;
+  char *filename;
 } MediaCodecInfo;
 
 
