@@ -40,6 +40,4 @@ gchar*                calls_sip_media_manager_static_capabilities           (Cal
                                                                              gboolean use_srtp);
 gboolean              calls_sip_media_manager_supports_media                (CallsSipMediaManager *self,
                                                                              const char *media_type);
-void                  calls_sip_media_manager_activate_media                (CallsSipMediaManager *self);
-void                  calls_sip_media_manager_deactivate_media              (CallsSipMediaManager *self);
 MediaCodecInfo*       get_best_codec                                        (CallsSipMediaManager *self);
