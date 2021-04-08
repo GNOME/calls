@@ -49,5 +49,7 @@ void                   calls_sip_call_activate_media                    (CallsSi
                                                                          gboolean      enabled);
 void                   calls_sip_call_set_state                         (CallsSipCall  *self,
                                                                          CallsCallState state);
+void                   calls_sip_call_set_codecs                        (CallsSipCall *self,
+                                                                         GList        *codecs);
 
 G_END_DECLS

@@ -27,6 +27,7 @@
 #include "gst-rfc3551.h"
 
 #include <sofia-sip/nua.h>
+#include <sofia-sip/sdp.h>
 #include <glib-object.h>
 
 #define CALLS_TYPE_SIP_MEDIA_MANAGER (calls_sip_media_manager_get_type ())
@@ -35,9 +36,16 @@ G_DECLARE_FINAL_TYPE (CallsSipMediaManager, calls_sip_media_manager, CALLS, SIP_
 
 
 CallsSipMediaManager* calls_sip_media_manager_default                       (void);
+gchar*                calls_sip_media_manager_get_capabilities              (CallsSipMediaManager *self,
+                                                                             guint port,
+                                                                             gboolean use_srtp,
+                                                                             GList *supported_codecs);
 gchar*                calls_sip_media_manager_static_capabilities           (CallsSipMediaManager *self,
                                                                              guint port,
                                                                              gboolean use_srtp);
 gboolean              calls_sip_media_manager_supports_media                (CallsSipMediaManager *self,
                                                                              const char *media_type);
 MediaCodecInfo*       get_best_codec                                        (CallsSipMediaManager *self);
+GList *               calls_sip_media_manager_codec_candidates              (CallsSipMediaManager *self);
+GList *               calls_sip_media_manager_get_codecs_from_sdp           (CallsSipMediaManager *self,
+                                                                             sdp_media_t          *sdp_media);

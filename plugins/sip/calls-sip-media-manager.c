@@ -85,18 +85,21 @@ calls_sip_media_manager_default ()
 }
 
 
-/* calls_sip_media_manager_static_capabilities:
+/* calls_sip_media_manager_get_capabilities:
  *
+ * @self: A #CallsSipMediaManager
  * @port: Should eventually come from the ICE stack
  * @use_srtp: Whether to use srtp (not really handled)
+ * @supported_codecs: A #GList of #MediaCodecInfo
  *
- * Returns: (full-control) string describing capabilities
+ * Returns: (transfer: full) string describing capabilities
  * to be used in the session description (SDP)
  */
 char *
-calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
-                                             guint                 port,
-                                             gboolean              use_srtp)
+calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
+                                          guint                 port,
+                                          gboolean              use_srtp,
+                                          GList                *supported_codecs)
 {
   char *payload_type = use_srtp ? "SAVP" : "AVP";
   g_autoptr (GString) media_line = NULL;
@@ -108,7 +111,7 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
   media_line = g_string_new (NULL);
   attribute_lines = g_string_new (NULL);
 
-  if (self->supported_codecs == NULL) {
+  if (supported_codecs == NULL) {
     g_warning ("No supported codecs found. Can't build meaningful SDP message");
     g_string_append_printf (media_line, "m=audio 0 RTP/AVP 0");
     goto done;
@@ -118,7 +121,7 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
   g_string_append_printf (media_line,
                           "m=audio %d RTP/%s", port, payload_type);
 
-  for (node = self->supported_codecs; node != NULL; node = node->next) {
+  for (node = supported_codecs; node != NULL; node = node->next) {
     MediaCodecInfo *codec = node->data;
 
     g_string_append_printf (media_line, " %u", codec->payload_id);
@@ -141,8 +144,86 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
 }
 
 
+/* calls_sip_media_manager_static_capabilities:
+ *
+ * @self: A #CallsSipMediaManager
+ * @port: Should eventually come from the ICE stack
+ * @use_srtp: Whether to use srtp (not really handled)
+ *
+ * Returns: (transfer: full) string describing capabilities
+ * to be used in the session description (SDP)
+ */
+char *
+calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
+                                             guint                 port,
+                                             gboolean              use_srtp)
+{
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
+
+  return calls_sip_media_manager_get_capabilities (self,
+                                                   port,
+                                                   use_srtp,
+                                                   self->supported_codecs);
+}
+
+
 MediaCodecInfo*
 get_best_codec (CallsSipMediaManager *self)
 {
   return media_codec_by_name ("PCMA");
+}
+
+
+/* calls_sip_media_manager_codec_candiates:
+ *
+ * @self: A #CallsSipMediaManager
+ *
+ * Returns: (transfer: none) A #GList of supported
+ * #MediaCodecInfo
+ */
+GList *
+calls_sip_media_manager_codec_candidates (CallsSipMediaManager *self)
+{
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
+
+  return self->supported_codecs;
+}
+
+
+/* calls_sip_media_manager_get_codecs_from_sdp
+ *
+ * @self: A #CallsSipMediaManager
+ * @sdp: A #sdp_media_t media description
+ *
+ * Returns: (transfer: full) A #GList of codecs found in the
+ * SDP message
+ */
+GList *
+calls_sip_media_manager_get_codecs_from_sdp (CallsSipMediaManager *self,
+                                             sdp_media_t          *sdp_media)
+{
+  GList *codecs = NULL;
+  sdp_rtpmap_t *rtpmap = NULL;
+
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
+  g_return_val_if_fail (sdp_media, NULL);
+
+  if (sdp_media->m_type != sdp_media_audio) {
+    g_warning ("Only the 'audio' media type is supported");
+    return NULL;
+  }
+
+  for (rtpmap = sdp_media->m_rtpmaps; rtpmap != NULL; rtpmap = rtpmap->rm_next) {
+    MediaCodecInfo *codec = media_codec_by_payload_id (rtpmap->rm_pt);
+    if (codec)
+      codecs = g_list_append (codecs, codec);
+  }
+
+  if (sdp_media->m_next != NULL)
+    g_warning ("Currently only a single media session is supported");
+
+  if (codecs == NULL)
+    g_warning ("Did not find any common codecs");
+
+  return codecs;
 }

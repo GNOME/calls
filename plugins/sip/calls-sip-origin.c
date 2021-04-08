@@ -218,9 +218,14 @@ sip_i_state (int              status,
              tagi_t           tags[])
 {
   const sdp_session_t *r_sdp = NULL;
+  const sdp_session_t *l_sdp = NULL;
   gint call_state = nua_callstate_init;
   CallsCallState state;
   CallsSipCall *call;
+  int offer_sent = 0;
+  int offer_recv = 0;
+  int answer_sent = 0;
+  int answer_recv = 0;
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
@@ -234,8 +239,13 @@ sip_i_state (int              status,
   }
 
   tl_gets (tags,
+           SOATAG_LOCAL_SDP_REF (l_sdp),
            SOATAG_REMOTE_SDP_REF (r_sdp),
            NUTAG_CALLSTATE_REF (call_state),
+           NUTAG_OFFER_SENT_REF (offer_sent),
+           NUTAG_OFFER_RECV_REF (offer_recv),
+           NUTAG_ANSWER_SENT_REF (answer_sent),
+           NUTAG_ANSWER_RECV_REF (answer_recv),
            TAG_END ());
 
   if (status == 503) {
@@ -247,6 +257,11 @@ sip_i_state (int              status,
    * also: rtcp port = rtp port + 1
    */
   if (r_sdp) {
+    GList *codecs =
+      calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
+                                                   r_sdp->sdp_media);
+
+    calls_sip_call_set_codecs (call, codecs);
     calls_sip_call_setup_remote_media_connection (call,
                                                   r_sdp->sdp_connection->c_address,
                                                   r_sdp->sdp_media->m_port,
@@ -1161,7 +1176,7 @@ calls_sip_origin_go_online (CallsSipOrigin *self,
     nua_register (self->oper->register_handle,
                   SIPTAG_EXPIRES_STR ("180"),
                   NUTAG_SUPPORTED ("replaces, outbound, gruu"),
-                  NUTAG_OUTBOUND ("outbound natify gruuize"), // <- janus uses "no-validate"
+                  NUTAG_OUTBOUND ("outbound natify gruuize validate"), // <- janus uses "no-validate"
                   NUTAG_M_USERNAME (self->user),
                   NUTAG_M_DISPLAY ("SIP tester"),
                   NUTAG_M_PARAMS ("user=phone"),

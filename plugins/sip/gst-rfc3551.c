@@ -55,6 +55,17 @@ media_codec_by_name (const char *name)
   return NULL;
 }
 
+MediaCodecInfo *
+media_codec_by_payload_id (guint payload_id)
+{
+  for (guint i = 0; i < G_N_ELEMENTS (gst_codecs); i++) {
+    if (payload_id == gst_codecs[i].payload_id)
+      return &gst_codecs[i];
+  }
+
+  return NULL;
+}
+
 gchar *
 media_codec_get_gst_capabilities (MediaCodecInfo *codec)
 {

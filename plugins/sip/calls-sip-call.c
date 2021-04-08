@@ -46,6 +46,7 @@ struct _CallsSipCall
   CallsSipMediaManager *manager;
   CallsSipMediaPipeline *pipeline;
   nua_handle_t *nh;
+  GList *codecs;
 };
 
 static void calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -108,9 +109,10 @@ calls_sip_call_answer (CallsCall *call)
   /* TODO get free port by creating GSocket and passing that to the pipeline */
   calls_sip_call_setup_local_media_connection (self, local_port, local_port + 1);
 
-  local_sdp = calls_sip_media_manager_static_capabilities (self->manager,
-                                                           local_port,
-                                                           FALSE);
+  local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
+                                                        local_port,
+                                                        FALSE,
+                                                        self->codecs);
 
   g_assert (local_sdp);
   g_debug ("Setting local SDP to string:\n%s", local_sdp);
@@ -210,6 +212,8 @@ calls_sip_call_finalize (GObject *object)
     calls_sip_media_pipeline_stop (self->pipeline);
     g_clear_object (&self->pipeline);
   }
+  g_clear_pointer (&self->codecs, g_list_free);
+
   G_OBJECT_CLASS (calls_sip_call_parent_class)->finalize (object);
 }
 
@@ -354,3 +358,14 @@ calls_sip_call_set_state (CallsSipCall   *self,
                          old_state);
 }
 
+
+void
+calls_sip_call_set_codecs (CallsSipCall *self,
+                           GList        *codecs)
+{
+  g_return_if_fail (CALLS_IS_SIP_CALL (self));
+  g_return_if_fail (codecs);
+
+  g_list_free (self->codecs);
+  self->codecs = codecs;
+}
