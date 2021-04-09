@@ -113,7 +113,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 
   if (supported_codecs == NULL) {
     g_warning ("No supported codecs found. Can't build meaningful SDP message");
-    g_string_append_printf (media_line, "m=audio 0 RTP/AVP 0");
+    g_string_append_printf (media_line, "m=audio 0 RTP/AVP");
     goto done;
   }
 
