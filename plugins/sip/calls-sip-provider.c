@@ -381,11 +381,16 @@ calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *i
 static void
 calls_sip_provider_init (CallsSipProvider *self)
 {
+  const char *filename_env = g_getenv ("CALLS_SIP_ACCOUNT_FILE");
+
   self->origins = g_list_store_new (CALLS_TYPE_SIP_ORIGIN);
-  self->filename = g_build_filename (g_get_user_config_dir (),
-                                     APP_DATA_NAME,
-                                     SIP_ACCOUNT_FILE,
-                                     NULL);
+  if (filename_env && filename_env[0] != '\0')
+    self->filename = g_strdup (filename_env);
+  else
+    self->filename = g_build_filename (g_get_user_config_dir (),
+                                       APP_DATA_NAME,
+                                       SIP_ACCOUNT_FILE,
+                                       NULL);
 }
 
 
