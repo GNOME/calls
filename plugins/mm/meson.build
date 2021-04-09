@@ -46,11 +46,10 @@ mm_sources = files(
   ]
 )
 
-calls_mm = shared_library(
+calls_mm = shared_module(
   'mm',
   mm_sources,
   dependencies: mm_deps,
-  link_args: '-Wl,--unresolved-symbols=ignore-in-object-files',
   include_directories: src_include,
   install: true,
   install_dir: mm_install_dir

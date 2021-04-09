@@ -46,11 +46,10 @@ dummy_sources = files(
   ]
 )
 
-calls_dummy = shared_library(
+calls_dummy = shared_module(
   'dummy',
   dummy_sources,
   dependencies: dummy_deps,
-  link_args: '-Wl,--unresolved-symbols=ignore-in-object-files',
   include_directories: src_include,
   install: true,
   install_dir: dummy_install_dir
