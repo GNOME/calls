@@ -22,7 +22,7 @@
  *
  */
 
-#define G_LOG_DOMAIN "CallsCallsSipMediaManager"
+#define G_LOG_DOMAIN "CallsSipMediaManager"
 
 #include "calls-sip-media-pipeline.h"
 #include "gst-rfc3551.h"
