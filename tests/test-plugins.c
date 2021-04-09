@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Purism SPC
+ * Copyright (C) 2021 Purism SPC
  *
  * SPDX-License-Identifier: GPL-3.0+
  *
