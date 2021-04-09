@@ -111,6 +111,178 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
+remove_call (CallsSipOrigin *self,
+             CallsCall      *call,
+             const gchar    *reason)
+{
+  CallsOrigin *origin;
+  CallsSipCall *sip_call;
+  gboolean inbound;
+  nua_handle_t *nh;
+
+  origin = CALLS_ORIGIN (self);
+  sip_call = CALLS_SIP_CALL (call);
+
+  self->calls = g_list_remove (self->calls, call);
+
+  g_object_get (sip_call,
+                "inbound", &inbound,
+                "nua-handle", &nh,
+                NULL);
+
+  /* TODO support multiple simultaneous calls */
+  if (self->oper->call_handle == nh)
+    self->oper->call_handle = NULL;
+
+  g_signal_emit_by_name (origin, "call-removed", call, reason);
+  g_object_unref (call);
+}
+
+
+static void
+remove_calls (CallsSipOrigin *self,
+              const gchar    *reason)
+{
+  CallsCall *call;
+  GList *next;
+
+  while (self->calls != NULL) {
+    call = self->calls->data;
+    next = self->calls->next;
+
+    calls_call_hang_up (call);
+
+    g_list_free_1 (self->calls);
+    self->calls = next;
+
+    g_signal_emit_by_name (self, "call-removed", call, reason);
+    g_object_unref (call);
+  }
+
+  g_hash_table_remove_all (self->call_handles);
+
+  g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
+}
+
+
+static void
+on_call_state_changed_cb (CallsSipOrigin *self,
+                          CallsCallState  new_state,
+                          CallsCallState  old_state,
+                          CallsCall      *call)
+{
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+  g_assert (CALLS_IS_CALL (call));
+
+  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
+    {
+      return;
+    }
+
+  remove_call (self, call, "Disconnected");
+}
+
+
+static void
+add_call (CallsSipOrigin *self,
+          const gchar    *address,
+          gboolean        inbound,
+          nua_handle_t   *handle)
+{
+  CallsSipCall *sip_call;
+  CallsCall *call;
+  g_autofree gchar *local_sdp = NULL;
+
+  /* TODO get free port by creating GSocket and passing that to the pipeline */
+  guint local_port = get_port_for_rtp ();
+
+  sip_call = calls_sip_call_new (address, inbound, handle);
+  g_assert (sip_call != NULL);
+
+  if (self->oper->call_handle)
+    nua_handle_unref (self->oper->call_handle);
+
+  self->oper->call_handle = handle;
+
+  self->calls = g_list_append (self->calls, sip_call);
+  g_hash_table_insert (self->call_handles, handle, sip_call);
+
+  call = CALLS_CALL (sip_call);
+
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
+  g_signal_connect_swapped (call, "state-changed",
+                            G_CALLBACK (on_call_state_changed_cb),
+                            self);
+
+  if (!inbound) {
+    calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
+
+    local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
+                                                             local_port,
+                                                             check_sips (address));
+
+    g_assert (local_sdp);
+
+    g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
+
+    /* TODO handle IPv4 vs IPv6 for nua_invite (SOATAG_TAG) */
+    nua_invite (self->oper->call_handle,
+                SOATAG_AF (SOA_AF_IP4_IP6),
+                SOATAG_USER_SDP_STR (local_sdp),
+                SIPTAG_TO_STR (address),
+                SOATAG_RTP_SORT (SOA_RTP_SORT_REMOTE),
+                SOATAG_RTP_SELECT (SOA_RTP_SELECT_ALL),
+                TAG_END ());
+  }
+}
+
+
+static void
+dial (CallsOrigin *origin,
+      const gchar *address)
+{
+  CallsSipOrigin *self;
+  nua_handle_t *nh;
+  g_assert (CALLS_ORIGIN (origin));
+  g_assert (CALLS_IS_SIP_ORIGIN (origin));
+
+  if (address == NULL) {
+    g_warning ("Tried dialing on origin '%s' without an address",
+               calls_origin_get_name (origin));
+    return;
+  }
+
+  self = CALLS_SIP_ORIGIN (origin);
+
+  nh = nua_handle (self->nua, self->oper,
+                   NUTAG_MEDIA_ENABLE (1),
+                   SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
+                   TAG_END ());
+
+  g_debug ("Calling `%s'", address);
+
+  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
+}
+
+static void
+create_inbound (CallsSipOrigin *self,
+                const gchar    *address,
+                nua_handle_t   *handle)
+{
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+  g_assert (address != NULL);
+
+  /* TODO support multiple calls */
+  if (self->oper->call_handle)
+    nua_handle_unref (self->oper->call_handle);
+
+  self->oper->call_handle = handle;
+
+  add_call (self, address, TRUE, handle);
+}
+
+
+static void
 sip_authenticate (CallsSipOrigin *origin,
                   nua_handle_t   *nh,
                   sip_t const    *sip)
@@ -344,7 +516,7 @@ sip_callback (nua_event_t   event,
       g_debug ("Cannot handle more than one call. Rejecting");
     }
     else
-      calls_sip_origin_create_inbound (origin, from, nh);
+      create_inbound (origin, from, nh);
 
     break;
 
@@ -633,161 +805,6 @@ init_sip_account (CallsSipOrigin *self,
   self->state = recoverable ? SIP_ACCOUNT_ERROR_RETRY : SIP_ACCOUNT_ERROR;
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return FALSE;
-}
-
-
-static void
-remove_call (CallsSipOrigin *self,
-             CallsCall      *call,
-             const gchar    *reason)
-{
-  CallsOrigin *origin;
-  CallsSipCall *sip_call;
-  gboolean inbound;
-  nua_handle_t *nh;
-
-  origin = CALLS_ORIGIN (self);
-  sip_call = CALLS_SIP_CALL (call);
-
-  self->calls = g_list_remove (self->calls, call);
-
-  g_object_get (sip_call,
-                "inbound", &inbound,
-                "nua-handle", &nh,
-                NULL);
-
-  /* TODO support multiple simultaneous calls */
-  if (self->oper->call_handle == nh)
-    self->oper->call_handle = NULL;
-
-  g_signal_emit_by_name (origin, "call-removed", call, reason);
-  g_object_unref (call);
-}
-
-
-static void
-remove_calls (CallsSipOrigin *self,
-              const gchar    *reason)
-{
-  CallsCall *call;
-  GList *next;
-
-  while (self->calls != NULL) {
-    call = self->calls->data;
-    next = self->calls->next;
-
-    calls_call_hang_up (call);
-
-    g_list_free_1 (self->calls);
-    self->calls = next;
-
-    g_signal_emit_by_name (self, "call-removed", call, reason);
-    g_object_unref (call);
-  }
-
-  g_hash_table_remove_all (self->call_handles);
-
-  g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
-}
-
-
-static void
-on_call_state_changed_cb (CallsSipOrigin *self,
-                          CallsCallState  new_state,
-                          CallsCallState  old_state,
-                          CallsCall      *call)
-{
-  g_assert (CALLS_IS_SIP_ORIGIN (self));
-  g_assert (CALLS_IS_CALL (call));
-
-  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
-    {
-      return;
-    }
-
-  remove_call (self, call, "Disconnected");
-}
-
-
-static void
-add_call (CallsSipOrigin *self,
-          const gchar    *address,
-          gboolean        inbound,
-          nua_handle_t   *handle)
-{
-  CallsSipCall *sip_call;
-  CallsCall *call;
-  g_autofree gchar *local_sdp = NULL;
-
-  /* TODO get free port by creating GSocket and passing that to the pipeline */
-  guint local_port = get_port_for_rtp ();
-
-  sip_call = calls_sip_call_new (address, inbound, handle);
-  g_assert (sip_call != NULL);
-
-  if (self->oper->call_handle)
-    nua_handle_unref (self->oper->call_handle);
-
-  self->oper->call_handle = handle;
-
-  self->calls = g_list_append (self->calls, sip_call);
-  g_hash_table_insert (self->call_handles, handle, sip_call);
-
-  call = CALLS_CALL (sip_call);
-
-  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
-  g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (on_call_state_changed_cb),
-                            self);
-
-  if (!inbound) {
-    calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
-
-    local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
-                                                             local_port,
-                                                             check_sips (address));
-
-    g_assert (local_sdp);
-
-    g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
-
-    /* TODO handle IPv4 vs IPv6 for nua_invite (SOATAG_TAG) */
-    nua_invite (self->oper->call_handle,
-                SOATAG_AF (SOA_AF_IP4_IP6),
-                SOATAG_USER_SDP_STR (local_sdp),
-                SIPTAG_TO_STR (address),
-                SOATAG_RTP_SORT (SOA_RTP_SORT_REMOTE),
-                SOATAG_RTP_SELECT (SOA_RTP_SELECT_ALL),
-                TAG_END ());
-  }
-}
-
-
-static void
-dial (CallsOrigin *origin,
-      const gchar *address)
-{
-  CallsSipOrigin *self;
-  nua_handle_t *nh;
-  g_assert (CALLS_ORIGIN (origin));
-  g_assert (CALLS_IS_SIP_ORIGIN (origin));
-
-  if (address == NULL) {
-    g_warning ("Tried dialing on origin '%s' without an address",
-               calls_origin_get_name (origin));
-    return;
-  }
-
-  self = CALLS_SIP_ORIGIN (origin);
-
-  nh = nua_handle (self->nua, self->oper,
-                   NUTAG_MEDIA_ENABLE (1),
-                   SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
-                   TAG_END ());
-
-  g_debug ("Calling `%s'", address);
-
-  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
 }
 
 
@@ -1109,24 +1126,6 @@ calls_sip_origin_init (CallsSipOrigin *self)
   /* Direct connection mode is useful for debugging purposes */
   self->use_direct_connection = TRUE;
 
-}
-
-
-void
-calls_sip_origin_create_inbound (CallsSipOrigin *self,
-                                 const gchar    *address,
-                                 nua_handle_t   *handle)
-{
-  g_return_if_fail (address != NULL);
-  g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
-
-  /* TODO support multiple calls */
-  if (self->oper->call_handle)
-    nua_handle_unref (self->oper->call_handle);
-
-  self->oper->call_handle = handle;
-
-  add_call (self, address, TRUE, handle);
 }
 
 CallsSipOrigin *
