@@ -337,8 +337,7 @@ calls_sip_provider_dispose (GObject *object)
   g_list_store_remove_all (self->origins);
   g_clear_object (&self->origins);
 
-  g_free (self->filename);
-  self->filename = NULL;
+  g_clear_pointer (&self->filename, g_free);
 
   calls_sip_provider_deinit_sip (self);
 
