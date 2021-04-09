@@ -1177,9 +1177,8 @@ calls_sip_origin_go_online (CallsSipOrigin *self,
                   NUTAG_SUPPORTED ("replaces, outbound, gruu"),
                   NUTAG_OUTBOUND ("outbound natify gruuize validate"), // <- janus uses "no-validate"
                   NUTAG_M_USERNAME (self->user),
-                  NUTAG_M_DISPLAY ("SIP tester"),
                   NUTAG_M_PARAMS ("user=phone"),
-                  NUTAG_CALLEE_CAPS (1), // <- this should be to include media information: SDP
+                  NUTAG_CALLEE_CAPS (1), /* header parameters based on SDP capabilities and Allow header */
                   TAG_END ());
   }
   else {
