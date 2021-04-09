@@ -1122,10 +1122,6 @@ calls_sip_origin_init (CallsSipOrigin *self)
   self->name = g_string_new (NULL);
 
   self->call_handles = g_hash_table_new (NULL, NULL);
-
-  /* Direct connection mode is useful for debugging purposes */
-  self->use_direct_connection = TRUE;
-
 }
 
 CallsSipOrigin *
@@ -1162,6 +1158,10 @@ calls_sip_origin_new (const gchar     *name,
 }
 
 
+/* calls_sip_origin_go_online:
+ * @self: A #CallsSipOrigin
+ * @enabled: Whether to go online or offline
+ */
 void
 calls_sip_origin_go_online (CallsSipOrigin *self,
                             gboolean        online)
