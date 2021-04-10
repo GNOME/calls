@@ -149,12 +149,6 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
       else
         port = 5060;
     }
-    if (local_port == 0) {
-      if (g_strcmp0 (protocol, "TLS") == 0)
-        local_port = 5061;
-      else
-        local_port = 5060;
-    }
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
 

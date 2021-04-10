@@ -867,6 +867,12 @@ calls_sip_origin_set_property (GObject      *object,
     break;
 
   case PROP_SIP_LOCAL_PORT:
+    if (g_value_get_int (value) > 0 && g_value_get_int (value) < 1025) {
+      g_warning ("Tried setting a priviliged port as the local port to bind to: %d\n"
+                 "Continue using old 'local-port' value: %d (using 0 let's the OS decide)",
+                 g_value_get_int (value), self->local_port);
+      return;
+    }
     self->local_port = g_value_get_int (value);
     break;
 
@@ -1070,7 +1076,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
     g_param_spec_int ("local-port",
                       "Local port",
                       "The local port to which the SIP stack binds to",
-                      1025, 65535, 5060,
+                      0, 65535, 0,
                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_SIP_LOCAL_PORT, props[PROP_SIP_LOCAL_PORT]);
 
