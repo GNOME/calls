@@ -24,23 +24,35 @@
 
 #define G_LOG_DOMAIN "CallsSipProvider"
 
-#define SU_ROOT_MAGIC_T CallsSipProvider
-
-#include "calls-sip-provider.h"
+#define SIP_ACCOUNT_FILE "sip-account.cfg"
 
 #include "calls-message-source.h"
 #include "calls-provider.h"
-#include "calls-sip-origin.h"
-#include "calls-sip-util.h"
 #include "calls-sip-enums.h"
+#include "calls-sip-origin.h"
+#include "calls-sip-provider.h"
+#include "calls-sip-util.h"
 #include "config.h"
 
 #include <libpeas/peas.h>
 #include <sofia-sip/nua.h>
 #include <sofia-sip/su_glib.h>
 
+/**
+ * SECTION:sip-provider
+ * @short_description: A #CallsProvider for the SIP protocol
+ * @Title: CallsSipProvider
+ *
+ * #CallsSipProvider is derived from #CallsProvider and is responsible
+ * for setting up the sofia-sip stack.
+ */
 
-#define SIP_ACCOUNT_FILE "sip-account.cfg"
+enum {
+  PROP_0,
+  PROP_SIP_STATE,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsSipProvider
 {
@@ -53,13 +65,6 @@ struct _CallsSipProvider
 
   gchar *filename;
 };
-
-enum {
-  PROP_0,
-  PROP_SIP_STATE,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
 
@@ -340,6 +345,12 @@ calls_sip_provider_dispose (GObject *object)
 
 
 static void
+calls_sip_provider_class_finalize (CallsSipProviderClass *klass)
+{
+}
+
+
+static void
 calls_sip_provider_class_init (CallsSipProviderClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -427,12 +438,6 @@ CallsSipProvider *
 calls_sip_provider_new ()
 {
   return g_object_new (CALLS_TYPE_SIP_PROVIDER, NULL);
-}
-
-
-static void
-calls_sip_provider_class_finalize (CallsSipProviderClass *klass)
-{
 }
 
 

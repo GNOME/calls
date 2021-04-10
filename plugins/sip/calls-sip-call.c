@@ -24,17 +24,34 @@
 
 #define G_LOG_DOMAIN "CallsSipCall"
 
-#include "calls-sip-call.h"
 
+#include "calls-call.h"
 #include "calls-message-source.h"
+#include "calls-sip-call.h"
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
 #include "calls-sip-util.h"
-#include "calls-call.h"
 
 #include <glib/gi18n.h>
+
 #include <sofia-sip/nua.h>
 
+/**
+ * SECTION:sip-call
+ * @short_description: A #CallsCall for the SIP protocol
+ * @Title: CallsSipCall
+ *
+ * #CallsSipCall derives from #CallsCall. Apart from allowing call control
+ * like answering and hanging up it also coordinates with #CallsSipMediaManager
+ * to prepare and control appropriate #CallsSipMediaPipeline objects.
+ */
+
+enum {
+  PROP_0,
+  PROP_CALL_HANDLE,
+  PROP_LAST_PROP
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsSipCall
 {
@@ -61,14 +78,6 @@ static void calls_sip_call_message_source_interface_init (CallsMessageSourceInte
 G_DEFINE_TYPE_WITH_CODE (CallsSipCall, calls_sip_call, CALLS_TYPE_CALL,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
                                                 calls_sip_call_message_source_interface_init))
-
-enum {
-  PROP_0,
-  PROP_CALL_HANDLE,
-  PROP_LAST_PROP
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
 
 static gboolean
 try_setting_up_media_pipeline (CallsSipCall *self)
@@ -115,6 +124,7 @@ calls_sip_call_get_number (CallsCall *call)
   return self->number;
 }
 
+
 static CallsCallState
 calls_sip_call_get_state (CallsCall *call)
 {
@@ -123,6 +133,7 @@ calls_sip_call_get_state (CallsCall *call)
   return self->state;
 }
 
+
 static gboolean
 calls_sip_call_get_inbound (CallsCall *call)
 {
@@ -130,6 +141,7 @@ calls_sip_call_get_inbound (CallsCall *call)
 
   return self->inbound;
 }
+
 
 static void
 calls_sip_call_answer (CallsCall *call)
@@ -169,6 +181,7 @@ calls_sip_call_answer (CallsCall *call)
   calls_sip_call_set_state (self, CALLS_CALL_STATE_ACTIVE);
 }
 
+
 static void
 calls_sip_call_hang_up (CallsCall *call)
 {
@@ -204,6 +217,7 @@ calls_sip_call_hang_up (CallsCall *call)
     g_warning ("Hanging up not possible in state %d", self->state);
   }
 }
+
 
 static void
 calls_sip_call_set_property (GObject      *object,
@@ -286,6 +300,7 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_CALL_HANDLE, props[PROP_CALL_HANDLE]);
 }
+
 
 static void
 calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface)

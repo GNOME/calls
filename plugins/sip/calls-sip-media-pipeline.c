@@ -29,6 +29,35 @@
 #include <gst/gst.h>
 #include <gio/gio.h>
 
+/**
+ * SECTION:sip-media-pipeline
+ * @short_description:
+ * @Title:
+ *
+ * #CallsSipMediaPipeline is responsible for building Gstreamer pipelines.
+ * Usually a sender and receiver pipeline is employed.
+ *
+ * The sender pipeline records audio and uses RTP to send it out over the network
+ * to the specified host.
+ * The receiver pipeline receives RTP from the network and plays the audio
+ * on the system.
+ *
+ * Both pipelines are using RTCP.
+ */
+
+enum {
+  PROP_0,
+  PROP_CODEC,
+  PROP_REMOTE,
+  PROP_LPORT_RTP,
+  PROP_RPORT_RTP,
+  PROP_LPORT_RTCP,
+  PROP_RPORT_RTCP,
+  PROP_DEBUG,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
 struct _CallsSipMediaPipeline {
   GObject parent;
 
@@ -78,24 +107,10 @@ static void initable_iface_init (GInitableIface *iface);
 G_DEFINE_TYPE_WITH_CODE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE, initable_iface_init));
 
-enum {
-  PROP_0,
-  PROP_CODEC,
-  PROP_REMOTE,
-  PROP_LPORT_RTP,
-  PROP_RPORT_RTP,
-  PROP_LPORT_RTCP,
-  PROP_RPORT_RTCP,
-  PROP_DEBUG,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
-
 /* rtpbin adds a pad once the payload is verified */
 static void
-pad_added_cb (GstElement *rtpbin,
-              GstPad *srcpad,
+on_pad_added (GstElement *rtpbin,
+              GstPad     *srcpad,
               GstElement *depayloader)
 {
   GstPad *sinkpad;
@@ -113,9 +128,9 @@ pad_added_cb (GstElement *rtpbin,
 
 
 static gboolean
-bus_cb (GstBus *bus,
-        GstMessage *message,
-        gpointer data)
+on_bus_message (GstBus     *bus,
+                GstMessage *message,
+                gpointer    data)
 {
   CallsSipMediaPipeline *pipeline = CALLS_SIP_MEDIA_PIPELINE (data);
 
@@ -426,8 +441,8 @@ initable_init (GInitable    *initable,
 /* get the busses and establish watches */
   self->bus_send = gst_pipeline_get_bus (GST_PIPELINE (self->send_pipeline));
   self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
-  self->bus_watch_send = gst_bus_add_watch (self->bus_send, bus_cb, self);
-  self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, bus_cb, self);
+  self->bus_watch_send = gst_bus_add_watch (self->bus_send, on_bus_message, self);
+  self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
 
   gst_bin_add_many (GST_BIN (self->recv_pipeline), self->depayloader, self->decoder,
                     self->audiosink, NULL);
@@ -568,7 +583,7 @@ initable_init (GInitable    *initable,
   gst_object_unref (sinkpad);
 
   /* need to link RTP pad to the depayloader */
-  g_signal_connect (self->recv_rtpbin, "pad-added", G_CALLBACK (pad_added_cb), self->depayloader);
+  g_signal_connect (self->recv_rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
 
 
   /* out/send direction */

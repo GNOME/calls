@@ -24,24 +24,53 @@
 
 #define G_LOG_DOMAIN "CallsSipOrigin"
 
-#include "config.h"
-#include "calls-sip-origin.h"
 
 #include "calls-message-source.h"
 #include "calls-origin.h"
 #include "calls-sip-call.h"
-#include "calls-sip-util.h"
 #include "calls-sip-enums.h"
+#include "calls-sip-origin.h"
+#include "calls-sip-util.h"
 #include "calls-sip-media-manager.h"
+#include "config.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
+
 #include <sofia-sip/nua.h>
 #include <sofia-sip/su_tag.h>
 #include <sofia-sip/su_tag_io.h>
 #include <sofia-sip/sip_util.h>
 #include <sofia-sip/sdp.h>
 
+/**
+ * SECTION:sip-origin
+ * @short_description: A #CallsOrigin for the SIP protocol
+ * @Title: CallsSipOrigin
+ *
+ * #CallsSipOrigin implements the #CallsOriginInterface and is mainly
+ * responsible for managing the sofia-sip callbacks, keeping track of #CallsSipCall
+ * objects and coordinating with #CallsSipMediaManager.
+ */
+
+enum {
+  PROP_0,
+  PROP_NAME,
+  PROP_ACC_USER,
+  PROP_ACC_PASSWORD,
+  PROP_ACC_HOST,
+  PROP_ACC_PORT,
+  PROP_ACC_PROTOCOL,
+  PROP_ACC_DIRECT,
+  PROP_ACC_AUTO_CONNECT,
+  PROP_SIP_CONTEXT,
+  PROP_SIP_LOCAL_PORT,
+  PROP_ACC_STATE,
+  PROP_CALLS,
+  PROP_COUNTRY_CODE,
+  PROP_LAST_PROP,
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsSipOrigin
 {
@@ -89,26 +118,6 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipOrigin, calls_sip_origin, G_TYPE_OBJECT,
                                                 calls_sip_origin_message_source_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_ORIGIN,
                                                 calls_sip_origin_origin_interface_init))
-
-enum {
-  PROP_0,
-  PROP_NAME,
-  PROP_ACC_USER,
-  PROP_ACC_PASSWORD,
-  PROP_ACC_HOST,
-  PROP_ACC_PORT,
-  PROP_ACC_PROTOCOL,
-  PROP_ACC_DIRECT,
-  PROP_ACC_AUTO_CONNECT,
-  PROP_SIP_CONTEXT,
-  PROP_SIP_LOCAL_PORT,
-  PROP_ACC_STATE,
-  PROP_CALLS,
-  PROP_COUNTRY_CODE,
-  PROP_LAST_PROP,
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
 
 static void
 remove_call (CallsSipOrigin *self,
@@ -166,10 +175,10 @@ remove_calls (CallsSipOrigin *self,
 
 
 static void
-on_call_state_changed_cb (CallsSipOrigin *self,
-                          CallsCallState  new_state,
-                          CallsCallState  old_state,
-                          CallsCall      *call)
+on_call_state_changed (CallsSipOrigin *self,
+                       CallsCallState  new_state,
+                       CallsCallState  old_state,
+                       CallsCall      *call)
 {
   g_assert (CALLS_IS_SIP_ORIGIN (self));
   g_assert (CALLS_IS_CALL (call));
@@ -211,7 +220,7 @@ add_call (CallsSipOrigin *self,
 
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
   g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (on_call_state_changed_cb),
+                            G_CALLBACK (on_call_state_changed),
                             self);
 
   if (!inbound) {
@@ -1166,7 +1175,7 @@ calls_sip_origin_new (const gchar     *name,
 
 /* calls_sip_origin_go_online:
  * @self: A #CallsSipOrigin
- * @enabled: Whether to go online or offline
+ * @enabled: %TRUE to go online, %FALSE to go offline
  */
 void
 calls_sip_origin_go_online (CallsSipOrigin *self,

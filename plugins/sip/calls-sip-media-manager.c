@@ -24,11 +24,20 @@
 
 #define G_LOG_DOMAIN "CallsSipMediaManager"
 
-#include "calls-sip-media-pipeline.h"
-#include "gst-rfc3551.h"
 #include "calls-sip-media-manager.h"
+#include "gst-rfc3551.h"
 
 #include <gst/gst.h>
+
+/**
+ * SECTION:sip-media-manager
+ * @short_description: The media manager singleton
+ * @Title: CallsSipMediaManager
+ *
+ * #CallsSipMediaManager is mainly responsible for generating appropriate
+ * SDP messages for the set of supported codecs. In the future it
+ * shall also manage the #CallsSipMediaPipeline objects that are in use.
+ */
 
 typedef struct _CallsSipMediaManager
 {
