@@ -159,7 +159,8 @@ bus_cb (GstBus *bus,
     }
 
   default:
-    g_debug ("Got unhandled %s message", GST_MESSAGE_TYPE_NAME (message));
+    if (pipeline->debug)
+      g_debug ("Got unhandled %s message", GST_MESSAGE_TYPE_NAME (message));
     break;
   }
 
