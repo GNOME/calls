@@ -210,6 +210,9 @@ modem_property_changed_cb (GDBOModem *modem,
   modem_name = g_object_get_data (G_OBJECT (modem),
                                   "calls-modem-name");
 
+  /* PropertyChanged gives us a variant gvariant containing a string array,
+  but modem_check_ifaces expects the inner string array gvariant */
+  value = g_variant_get_variant(value);
   modem_check_ifaces (self, modem, modem_name, value);
 }
 
