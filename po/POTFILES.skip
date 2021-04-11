@@ -5,3 +5,4 @@ plugins/mm/calls-mm-origin.c
 plugins/mm/calls-mm-provider.c
 plugins/ofono/calls-ofono-call.c
 plugins/ofono/calls-ofono-origin.c
+plugins/ofono/calls-ofono-provider.c
