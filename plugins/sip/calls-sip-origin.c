@@ -1173,7 +1173,8 @@ calls_sip_origin_new (const gchar     *name,
 }
 
 
-/* calls_sip_origin_go_online:
+/**
+ * calls_sip_origin_go_online:
  * @self: A #CallsSipOrigin
  * @enabled: %TRUE to go online, %FALSE to go offline
  */

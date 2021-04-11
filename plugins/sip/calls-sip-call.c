@@ -314,7 +314,12 @@ calls_sip_call_init (CallsSipCall *self)
   self->manager = calls_sip_media_manager_default ();
 }
 
-
+/**
+ * calls_sip_call_setup_local_media_connection:
+ * @self: A #CallsSipCall
+ * @port_rtp: The RTP port on the the local host
+ * @port_rtcp: The RTCP port on the local host
+ */
 void
 calls_sip_call_setup_local_media_connection (CallsSipCall *self,
                                              guint         port_rtp,
@@ -328,7 +333,13 @@ calls_sip_call_setup_local_media_connection (CallsSipCall *self,
   try_setting_up_media_pipeline (self);
 }
 
-
+/**
+ * calls_sip_call_setup_remote_media_connection:
+ * @self: A #CallsSipCall
+ * @remote: The remote host
+ * @port_rtp: The RTP port on the remote host
+ * @port_rtcp: The RTCP port on the remote host
+ */
 void
 calls_sip_call_setup_remote_media_connection (CallsSipCall *self,
                                               const char   *remote,
@@ -345,7 +356,13 @@ calls_sip_call_setup_remote_media_connection (CallsSipCall *self,
   try_setting_up_media_pipeline (self);
 }
 
-
+/**
+ * calls_sip_call_activate_media:
+ * @self: A #CallsSipCall
+ * @enabled: %TRUE to enable the media pipeline, %FALSE to disable
+ *
+ * Controls the state of the #CallsSipMediaPipeline
+ */
 void
 calls_sip_call_activate_media (CallsSipCall *self,
                                gboolean      enabled)
@@ -385,7 +402,13 @@ calls_sip_call_new (const gchar  *number,
   return call;
 }
 
-
+/**
+ * calls_sip_call_set_state:
+ * @self: A #CallsSipCall
+ * @state: The new #CallsCallState to set
+ *
+ * Sets the new call state and emits the state-changed signal
+ */
 void
 calls_sip_call_set_state (CallsSipCall   *self,
                           CallsCallState  state)
@@ -409,7 +432,13 @@ calls_sip_call_set_state (CallsSipCall   *self,
                          old_state);
 }
 
-
+/**
+ * calls_sip_call_set_codecs:
+ * @self: A #CallsSipCall
+ * @codecs: A #GList of #MediaCodecInfo elements
+ *
+ * Set the supported codecs. This is used when answering the call
+ */
 void
 calls_sip_call_set_codecs (CallsSipCall *self,
                            GList        *codecs)

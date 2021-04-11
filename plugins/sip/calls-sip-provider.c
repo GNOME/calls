@@ -397,7 +397,22 @@ calls_sip_provider_init (CallsSipProvider *self)
                                        NULL);
 }
 
-
+/**
+ * calls_sip_provider_add_origin:
+ * @self: A #CallsSipProvider
+ * @name: The name of the origin
+ * @user: (nullable): The username to use or %NULL
+ * @password: (nullable): The password to use or %NULL
+ * @host: (nullable):The host to use or %NULL
+ * @port: The port of the host to connect to, usually 5060
+ * @local_port: The local port to bind to or 0
+ * @protocol: (nullable): The protocol to use. Can be "TCP", "UDP", "TLS" or %NULL
+ * @direct_connection: %TRUE to use a direct connection to peers, %FALSE otherwise
+ * @auto_connect: %TRUE to automatically try to register, %FALSE otherwise
+ *
+ * Adds a new origin (SIP account). If @direct_connection is set the nullables
+ * can be set automatically (f.e. use the local user and hostname).
+ */
 void
 calls_sip_provider_add_origin (CallsSipProvider *self,
                                const gchar      *name,
