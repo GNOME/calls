@@ -39,6 +39,8 @@ struct _CallsOfonoProvider
 {
   CallsProvider parent_instance;
 
+  /* The status property */
+  gchar *status;
   /** ID for the D-Bus watch */
   guint watch_id;
   /** D-Bus connection */
@@ -59,6 +61,46 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsOfonoProvider, calls_ofono_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_ofono_provider_message_source_interface_init))
+
+
+static void
+set_status (CallsOfonoProvider *self,
+            const gchar        *new_status)
+{
+  if (strcmp (self->status, new_status) == 0)
+    {
+      return;
+    }
+
+  g_free (self->status);
+  self->status = g_strdup (new_status);
+  g_object_notify (G_OBJECT (self), "status");
+}
+
+
+static void
+update_status (CallsOfonoProvider *self)
+{
+  const gchar *s;
+  GListModel *model;
+
+  model = G_LIST_MODEL (self->origins);
+
+  if (!self->connection)
+    {
+      s = _("DBus unavailable");
+    }
+  else if (g_list_model_get_n_items (model) == 0)
+    {
+      s = _("No voice-capable modem available");
+    }
+  else
+    {
+      s = _("Normal");
+    }
+
+  set_status (self, s);
+}
 
 
 gboolean
@@ -84,6 +126,8 @@ ofono_find_origin_index (CallsOfonoProvider *self,
         {
           if (index)
             *index = i;
+
+          update_status (self);
 
           return TRUE;
         }
@@ -357,7 +401,9 @@ calls_ofono_provider_get_name (CallsProvider *provider)
 static const char *
 calls_ofono_provider_get_status (CallsProvider *provider)
 {
-  return "";
+  CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (provider);
+
+  return self->status;
 }
 
 static GListModel *
@@ -415,7 +461,7 @@ ofono_vanished_cb (GDBusConnection *connection,
 {
   g_debug ("Ofono vanished from D-Bus");
   g_list_store_remove_all (self->origins);
-  //update_status (self);
+  update_status (self);
 }
 
 static void
@@ -456,6 +502,7 @@ finalize (GObject *object)
   CallsOfonoProvider *self = CALLS_OFONO_PROVIDER (object);
 
   g_object_unref (self->origins);
+  g_free (self->status);
   g_hash_table_unref (self->modems);
 
   G_OBJECT_CLASS (calls_ofono_provider_parent_class)->finalize (object);
@@ -493,6 +540,7 @@ calls_ofono_provider_message_source_interface_init (CallsMessageSourceInterface 
 static void
 calls_ofono_provider_init (CallsOfonoProvider *self)
 {
+  self->status = g_strdup (_("Initialised"));
   self->modems = g_hash_table_new_full (g_str_hash, g_str_equal,
                                         g_free, g_object_unref);
   self->origins = g_list_store_new (CALLS_TYPE_OFONO_ORIGIN);
