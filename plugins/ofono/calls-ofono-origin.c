@@ -117,9 +117,7 @@ calls_ofono_origin_matches (CallsOfonoOrigin *self,
 {
   g_return_val_if_fail (CALLS_IS_OFONO_ORIGIN (self), FALSE);
   g_return_val_if_fail (path, FALSE);
-
-  if (!self->modem)
-    return FALSE;
+  g_return_val_if_fail (self->modem, FALSE);
 
   return g_strcmp0 (g_dbus_proxy_get_object_path (G_DBUS_PROXY (self->modem)), path) == 0;
 }
@@ -503,8 +501,6 @@ constructed (GObject *object)
      NULL,
      (GAsyncReadyCallback)voice_new_cb,
      self);
-
-  g_clear_object (&self->modem);
 
   G_OBJECT_CLASS (calls_ofono_origin_parent_class)->constructed (object);
 }
