@@ -112,7 +112,7 @@ calls_ofono_call_get_inbound (CallsCall *call)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
 
-  return self->state;
+  return self->inbound;
 }
 
 struct CallsCallOperationData
