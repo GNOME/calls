@@ -139,6 +139,7 @@ operation_cb (GDBOVoiceCall                 *voice_call,
       CALLS_ERROR (data->self, error);
     }
 
+  g_object_unref (data->self);
   g_free (data);
 }
 
@@ -151,7 +152,7 @@ calls_ofono_call_answer (CallsCall *call)
 
   data = g_new0 (struct CallsCallOperationData, 1);
   data->desc = "answering";
-  data->self = self;
+  data->self = g_object_ref (self);
   data->finish_func = gdbo_voice_call_call_answer_finish;
 
   gdbo_voice_call_call_answer
@@ -169,7 +170,7 @@ calls_ofono_call_hang_up (CallsCall *call)
 
   data = g_new0 (struct CallsCallOperationData, 1);
   data->desc = "hanging up";
-  data->self = self;
+  data->self = g_object_ref (self);
   data->finish_func = gdbo_voice_call_call_hangup_finish;
 
   gdbo_voice_call_call_hangup
