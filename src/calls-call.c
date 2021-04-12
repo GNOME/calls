@@ -223,7 +223,7 @@ calls_call_init (CallsCall *self)
  * could return NULL if the number is not known, for example if an
  * incoming PTSN call has no caller ID information.
  *
- * Returns: the number, or NULL
+ * Returns: (transfer none): the number, or NULL
  */
 const char *
 calls_call_get_number (CallsCall *self)
@@ -240,7 +240,7 @@ calls_call_get_number (CallsCall *self)
  * Get the name of the party the call is connected to, if the network
  * provides it.
  *
- * Returns: the number, or NULL
+ * Returns the number, or NULL
  */
 const char *
 calls_call_get_name (CallsCall *self)
@@ -391,7 +391,7 @@ calls_call_tone_stop (CallsCall *self,
  * This a convenience function to optain the #CallsBestMatch matching the
  * phone number of the #CallsCall.
  *
- * Returns: (transfer: full): A #CallsBestMatch
+ * Returns: (transfer full): A #CallsBestMatch
  */
 CallsBestMatch *
 calls_call_get_contact (CallsCall *self)
