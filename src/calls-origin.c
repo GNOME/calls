@@ -150,7 +150,7 @@ calls_origin_foreach_call(CallsOrigin *self,
  */
 void
 calls_origin_dial(CallsOrigin *self,
-                  const gchar *number)
+                  const char  *number)
 {
   CallsOriginInterface *iface;
 
