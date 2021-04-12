@@ -72,20 +72,29 @@ get_property (GObject      *object,
 
   switch (property_id) {
 
-#define case_set(prop,type,member)              \
-    case PROP_##prop:                           \
-      g_value_set_##type (value, self->member); \
-      break;
+  case PROP_ID:
+    g_value_set_uint (value, self->id);
+    break;
 
-    case_set(ID, uint, id);
-    case_set(TARGET, string, target);
-    case_set(INBOUND, boolean, inbound);
-    case_set(START, boxed, start);
-    case_set(ANSWERED, boxed, answered);
-    case_set(END, boxed, end);
+  case PROP_TARGET:
+    g_value_set_string (value, self->target);
+    break;
 
-#undef case_set
+  case PROP_INBOUND:
+    g_value_set_boolean (value, self->inbound);
+    break;
 
+  case PROP_START:
+    g_value_set_boxed (value, self->start);
+    break;
+
+  case PROP_ANSWERED:
+    g_value_set_boxed (value, self->answered);
+    break;
+
+  case PROP_END:
+    g_value_set_boxed (value, self->end);
+    break;
 
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -184,11 +193,6 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
 
   gom_resource_class_set_table (resource_class, "calls");
 
-
-#define install(NAME)                                   \
-  g_object_class_install_property                       \
-    (object_class, PROP_##NAME, props[PROP_##NAME])
-
   /*
    * NB: ANY ADDITIONS TO THIS LIST REQUIRE AN INCREASE IN
    * RECORD_STORE_VERSION IN calls-record-store.c AND THE USE OF
@@ -205,7 +209,8 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                        "The row ID",
                        0, G_MAXUINT, 0,
                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (ID);
+
+  g_object_class_install_property (object_class, PROP_ID, props[PROP_ID]);
   gom_resource_class_set_primary_key (resource_class, "id");
 
   props[PROP_TARGET] =
@@ -214,7 +219,8 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                          "The PTSN phone number or other address of the call",
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (TARGET);
+
+  g_object_class_install_property (object_class, PROP_TARGET, props[PROP_TARGET]);
 
   props[PROP_INBOUND] =
     g_param_spec_boolean ("inbound",
@@ -222,7 +228,8 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                           "Whether the call was an inbound call",
                           FALSE,
                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (INBOUND);
+
+  g_object_class_install_property (object_class, PROP_INBOUND, props[PROP_INBOUND]);
 
   props[PROP_START] =
     g_param_spec_boxed ("start",
@@ -230,7 +237,8 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                         "Time stamp of the start of the call",
                         G_TYPE_DATE_TIME,
                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (START);
+
+  g_object_class_install_property (object_class, PROP_START, props[PROP_START]);
 
   props[PROP_ANSWERED] =
     g_param_spec_boxed ("answered",
@@ -238,7 +246,8 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                         "Time stamp of when the call was answered",
                         G_TYPE_DATE_TIME,
                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (ANSWERED);
+
+  g_object_class_install_property (object_class, PROP_ANSWERED, props[PROP_ANSWERED]);
 
   props[PROP_END] =
     g_param_spec_boxed ("end",
@@ -246,7 +255,9 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                         "Time stamp of the end of the call",
                         G_TYPE_DATE_TIME,
                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-  install (END);
+
+  g_object_class_install_property (object_class, PROP_END, props[PROP_END]);
+
 
   /*
    * NB: ANY ADDITIONS TO THIS LIST REQUIRE AN INCREASE IN
@@ -258,7 +269,6 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
    * HERE.
    */
 
-#undef install
 }
 
 
