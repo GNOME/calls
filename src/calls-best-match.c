@@ -142,10 +142,13 @@ set_property (GObject      *object,
     case PROP_COUNTRY_CODE:
       country_code = g_value_get_string (value);
       if (country_code) {
-        g_autofree gchar *number = g_strdup (self->phone_number);
         g_free (self->country_code);
         self->country_code = g_strdup (country_code);
-        calls_best_match_set_phone_number (self, number);
+
+        if (self->phone_number) {
+          g_autofree gchar *number = g_strdup (self->phone_number);
+          calls_best_match_set_phone_number (self, number);
+        }
       }
       break;
 
