@@ -368,6 +368,10 @@ calls_sip_call_activate_media (CallsSipCall *self,
                                gboolean      enabled)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
+
+  /* when hanging up an incoming call the pipeline has not yet been setup */
+  if (self->pipeline == NULL && !enabled)
+    return;
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
 
   if (enabled) {
