@@ -153,6 +153,17 @@ dial (CallsOrigin *origin, const gchar *number)
 }
 
 
+static gboolean
+supports_protocol (CallsOrigin *origin,
+                   const char  *protocol)
+{
+  g_assert (protocol != NULL);
+  g_assert (CALLS_IS_DUMMY_ORIGIN (origin));
+
+  return TRUE;
+}
+
+
 CallsDummyOrigin *
 calls_dummy_origin_new (const gchar *name)
 {
@@ -273,6 +284,7 @@ static void
 calls_dummy_origin_origin_interface_init (CallsOriginInterface *iface)
 {
   iface->dial = dial;
+  iface->supports_protocol = supports_protocol;
 }
 
 

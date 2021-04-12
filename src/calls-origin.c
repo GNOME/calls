@@ -162,3 +162,25 @@ calls_origin_dial(CallsOrigin *self,
 
   return iface->dial(self, number);
 }
+
+/**
+ * calls_origin_supports_protocol:
+ * @self: A #CallsOrigin
+ * @protocol: The protocol to check support for
+ *
+ * Returns: %TRUE if the origin supports the protocol, %FALSE otherwise
+ */
+gboolean
+calls_origin_supports_protocol (CallsOrigin *self,
+                                const char  *protocol)
+{
+  CallsOriginInterface *iface;
+
+  g_return_val_if_fail (CALLS_IS_ORIGIN (self), FALSE);
+  g_return_val_if_fail (protocol != NULL, FALSE);
+
+  iface = CALLS_ORIGIN_GET_IFACE (self);
+  g_return_val_if_fail (iface->supports_protocol != NULL, FALSE);
+
+  return iface->supports_protocol (self, protocol);
+}

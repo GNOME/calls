@@ -994,6 +994,26 @@ init_sip_account (CallsSipOrigin *self,
 }
 
 
+static gboolean
+supports_protocol (CallsOrigin *origin,
+                   const char  *protocol)
+{
+  CallsSipOrigin *self;
+  g_assert (protocol);
+  g_assert (CALLS_IS_SIP_ORIGIN (origin));
+
+  self = CALLS_SIP_ORIGIN (origin);
+
+  if (g_strcmp0 (protocol, "sip") == 0)
+    return TRUE;
+  if (g_strcmp0 (protocol, "sips") == 0)
+    return g_strcmp0 (self->protocol_prefix, "sips") == 0;
+
+  /* TODO need to set a property (from the UI) to allow using origin for telephony */
+  return FALSE;
+}
+
+
 static void
 calls_sip_origin_set_property (GObject      *object,
                                guint         property_id,
@@ -1204,6 +1224,7 @@ static void
 calls_sip_origin_origin_interface_init (CallsOriginInterface *iface)
 {
   iface->dial = dial;
+  iface->supports_protocol = supports_protocol;
 }
 
 static void

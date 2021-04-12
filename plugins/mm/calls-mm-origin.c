@@ -341,6 +341,17 @@ dial (CallsOrigin *origin, const gchar *number)
 }
 
 
+static gboolean
+supports_protocol (CallsOrigin *origin,
+                   const char  *protocol)
+{
+  g_assert (protocol);
+  g_assert (CALLS_IS_MM_ORIGIN (origin));
+
+  return g_strcmp0 (protocol, "tel") == 0;
+}
+
+
 static void
 remove_calls (CallsMMOrigin *self, const gchar *reason)
 {
@@ -897,6 +908,7 @@ static void
 calls_mm_origin_origin_interface_init (CallsOriginInterface *iface)
 {
   iface->dial = dial;
+  iface->supports_protocol = supports_protocol;
 }
 
 
