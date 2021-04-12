@@ -36,7 +36,7 @@
 
 
 #define RECORD_STORE_FILENAME "records.db"
-#define RECORD_STORE_VERSION  1
+#define RECORD_STORE_VERSION  2
 
 
 typedef enum
@@ -490,6 +490,7 @@ record_call (CallsRecordStore *self,
                          "repository", self->repository,
                          "target", calls_call_get_number (call),
                          "inbound", calls_call_get_inbound (call),
+                         "protocol", calls_call_get_protocol (call),
                          "start", start,
                          NULL);
 

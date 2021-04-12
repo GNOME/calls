@@ -31,11 +31,12 @@ struct _CallsCallRecord
 {
   GomResource parent_instance;
   guint id;
-  gchar *target;
+  char *target;
   gboolean inbound;
   GDateTime *start;
   GDateTime *answered;
   GDateTime *end;
+  char *protocol;
   gboolean complete;
 };
 
@@ -50,6 +51,7 @@ enum {
   PROP_START,
   PROP_ANSWERED,
   PROP_END,
+  PROP_PROTOCOL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -93,6 +95,10 @@ get_property (GObject      *object,
 
   case PROP_END:
     g_value_set_boxed (value, self->end);
+    break;
+
+  case PROP_PROTOCOL:
+    g_value_set_string (value, self->protocol);
     break;
 
   default:
@@ -151,6 +157,11 @@ set_property (GObject      *object,
     set_date_time (&self->end, value);
     break;
 
+  case PROP_PROTOCOL:
+    g_free (self->protocol);
+    self->protocol = g_value_dup_string (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -167,6 +178,7 @@ finalize (GObject *object)
   g_clear_pointer (&self->answered, g_date_time_unref);
   g_clear_pointer (&self->start, g_date_time_unref);
   g_free (self->target);
+  g_free (self->protocol);
 
   G_OBJECT_CLASS (calls_call_record_parent_class)->finalize (object);
 }
@@ -257,6 +269,16 @@ calls_call_record_class_init (CallsCallRecordClass *klass)
                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
 
   g_object_class_install_property (object_class, PROP_END, props[PROP_END]);
+
+  props[PROP_PROTOCOL] =
+    g_param_spec_string ("protocol",
+                         "Protocol",
+                         "The URI protocol for this call",
+                         NULL,
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+  g_object_class_install_property (object_class, PROP_PROTOCOL, props[PROP_PROTOCOL]);
+
+  gom_resource_class_set_property_new_in_version (resource_class, "protocol", 2);
 
 
   /*
