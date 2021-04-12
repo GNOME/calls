@@ -88,11 +88,6 @@ G_BEGIN_DECLS
   CALLS_DEFINE_IFACE_GETTER_BASE(calls,iface,Calls,Iface,CALLS,IFACE,prop,rettype,errval)
 
 
-#define CALLS_SET_PTR_PROPERTY(ptr,new_value)   \
-  g_free (ptr);                                 \
-  ptr = new_value;
-
-
 #define calls_clear_source(source_id_ptr)       \
   if (*source_id_ptr != 0)                      \
     {                                           \

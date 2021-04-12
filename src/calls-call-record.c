@@ -23,7 +23,6 @@
  */
 
 #include "calls-call-record.h"
-#include "util.h"
 
 #include <glib/gi18n.h>
 
@@ -132,7 +131,8 @@ set_property (GObject      *object,
     break;
 
   case PROP_TARGET:
-    CALLS_SET_PTR_PROPERTY (self->target, g_value_dup_string (value));
+    g_free (self->target);
+    self->target = g_value_dup_string (value);
     break;
 
   case PROP_INBOUND:

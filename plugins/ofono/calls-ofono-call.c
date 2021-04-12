@@ -25,7 +25,6 @@
 #include "calls-ofono-call.h"
 #include "calls-call.h"
 #include "calls-message-source.h"
-#include "util.h"
 
 #include <glib/gi18n.h>
 
@@ -287,11 +286,10 @@ static void
 disconnect_reason_cb (CallsOfonoCall *self,
                       const gchar *reason)
 {
-  if (reason)
-    {
-      CALLS_SET_PTR_PROPERTY (self->disconnect_reason,
-                              g_strdup (reason));
-    }
+  if (reason) {
+    g_free (self->disconnect_reason);
+    self->disconnect_reason = g_strdup (reason);
+  }
 }
 
 
