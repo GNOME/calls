@@ -306,6 +306,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   gboolean have_country_code_now = FALSE;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
+  g_return_if_fail (phone_number);
 
   have_country_code_now = !!self->country_code;
 
