@@ -16,7 +16,7 @@ if get_option('gtk_doc')
                           include_directories: calls_includes,
                           link_with: calls_vala_doc_lib,
                           dependencies: calls_deps)
-  calls_doc_deps = declare_dependency(sources: [calls_sources, calls_enum_sources, wayland_sources, wl_proto_sources, calls_vala_sources],
+  calls_doc_deps = declare_dependency(sources: [calls_sources, calls_vala_sources],
                                       include_directories: calls_includes,
                                       link_with: [calls_doc_lib, calls_vala_doc_lib],
                                       dependencies: [calls_deps, calls_vala_deps])
