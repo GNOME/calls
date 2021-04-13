@@ -135,17 +135,14 @@ set_provider_name_action (GSimpleAction *action,
   name = g_variant_get_string (parameter, NULL);
   g_return_if_fail (name != NULL);
 
-  /* FIXME: allow to set a new provider, we need to make sure that the
-     provider is unloaded correctly from the CallsManager */
-  if (calls_manager_get_provider (calls_manager_get_default ()) != NULL) {
-    g_warning ("Cannot set provider name to `%s'"
-               " because provider is already created",
+  if (calls_manager_has_provider (calls_manager_get_default (), name)) {
+    g_warning ("Cannot add provider `%s' because it is already loaded",
                name);
     return;
   }
 
   g_debug ("Start loading provider `%s'", name);
-  calls_manager_set_provider (calls_manager_get_default (), name);
+  calls_manager_add_provider (calls_manager_get_default (), name);
 }
 
 

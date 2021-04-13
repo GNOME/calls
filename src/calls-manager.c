@@ -35,22 +35,28 @@ struct _CallsManager
 {
   GObject parent_instance;
 
-  CallsProvider *provider;
+  GHashTable *providers;
+  /* This is the protocols supported in principle. This is collected from the loaded
+     providers and does not imply that there are any origins able to handle a given protocol.
+     See origins_by_protocol for a GListStore of suitable origins per protocol.
+  */
+  GPtrArray *supported_protocols;
+
+  GListStore *origins;
+  /* origins_by_protocol maps protocol names to GListStore's of suitable origins */
+  GHashTable *origins_by_protocol;
+
   CallsContactsProvider *contacts_provider;
-  gchar *provider_name;
-  CallsOrigin *default_origin;
+
   CallsManagerState state;
   CallsCall *primary_call;
   char *country_code;
-  GBinding *country_code_binding;
 };
 
 G_DEFINE_TYPE (CallsManager, calls_manager, G_TYPE_OBJECT);
 
 enum {
   PROP_0,
-  PROP_PROVIDER,
-  PROP_DEFAULT_ORIGIN,
   PROP_STATE,
   PROP_COUNTRY_CODE,
   PROP_LAST_PROP,
@@ -80,6 +86,91 @@ set_state (CallsManager *self, CallsManagerState state)
   self->state = state;
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
+}
+
+static void
+update_state (CallsManager *self)
+{
+  guint n_items;
+  g_assert (CALLS_IS_MANAGER (self));
+
+  if (g_hash_table_size (self->providers) == 0) {
+    set_state (self, CALLS_MANAGER_STATE_NO_PROVIDER);
+    return;
+  }
+
+  if (g_hash_table_contains (self->providers, "dummy")) {
+    set_state (self, CALLS_MANAGER_STATE_READY);
+    return;
+  }
+
+  n_items = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+
+  if (n_items)
+    set_state (self, CALLS_MANAGER_STATE_READY);
+  else
+    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+}
+
+static gboolean
+check_supported_protocol (CallsManager *self,
+                          const char   *protocol)
+{
+  guint index;
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (protocol);
+
+  if (self->supported_protocols->len > 0)
+    return g_ptr_array_find_with_equal_func (self->supported_protocols,
+                                             protocol,
+                                             g_str_equal,
+                                             &index);
+
+  return FALSE;
+}
+
+/* This function will update self->supported_protocols from available provider plugins */
+static void
+update_protocols (CallsManager *self)
+{
+  GHashTableIter iter;
+  gpointer key, value;
+  const char * const *protocols;
+
+  g_assert (CALLS_IS_MANAGER (self));
+
+  g_ptr_array_remove_range (self->supported_protocols,
+                            0, self->supported_protocols->len);
+
+  g_hash_table_iter_init (&iter, self->providers);
+  while (g_hash_table_iter_next (&iter, &key, &value)) {
+    const char *name = key;
+    CallsProvider *provider = CALLS_PROVIDER (value);
+
+    protocols = calls_provider_get_protocols (provider);
+
+    if (protocols == NULL) {
+      g_debug ("Plugin %s does not provide any protocols", name);
+      continue;
+    }
+    for (guint i = 0; protocols[i] != NULL; i++) {
+      if (!check_supported_protocol (self, protocols[i]))
+        g_ptr_array_add (self->supported_protocols, g_strdup (protocols[i]));
+
+      if (!g_hash_table_contains (self->origins_by_protocol, protocols[i])) {
+        /* Add a new GListStore if there's none already.
+         * Actually adding origins to self->origins_by_protocol is done
+         * in rebuild_origins_by_protocol()
+         */
+        GListStore *store = g_list_store_new (CALLS_TYPE_ORIGIN);
+        g_hash_table_insert (self->origins_by_protocol,
+                             g_strdup (protocols[i]),
+                             store);
+      }
+    }
+  }
+
+  update_state (self);
 }
 
 static void
@@ -153,6 +244,8 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   name = calls_origin_get_name (origin);
   g_debug ("Adding origin %s (%p)", name, origin);
 
+  g_list_store_append (self->origins, origin);
+
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
 
@@ -163,50 +256,99 @@ add_origin (CallsManager *self, CallsOrigin *origin)
       g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
     }
 
-  calls_origin_foreach_call(origin, (CallsOriginForeachCallFunc)add_call, self);
-
-  set_state (self, CALLS_MANAGER_STATE_READY);
+  calls_origin_foreach_call (origin, (CallsOriginForeachCallFunc) add_call, self);
 }
 
 static void
 remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
 {
-  remove_call(self, call, NULL, origin);
+  remove_call (self, call, NULL, origin);
 }
 
 static void
 remove_origin (CallsManager *self, CallsOrigin *origin)
 {
-  GListModel *origins;
   g_autofree const char *name = NULL;
+  guint position;
 
-  g_return_if_fail (CALLS_IS_ORIGIN (origin));
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (CALLS_IS_ORIGIN (origin));
 
   name = calls_origin_get_name (origin);
   g_debug ("Removing origin %s (%p)", name, origin);
 
   g_signal_handlers_disconnect_by_data (origin, self);
 
-  calls_origin_foreach_call(origin, remove_call_cb, self);
+  calls_origin_foreach_call (origin, remove_call_cb, self);
 
-  if (self->default_origin == origin)
-    calls_manager_set_default_origin (self, NULL);
+  if (!g_list_store_find (self->origins, origin, &position))
+    g_warning ("Origin %p not found in list store while trying to remove it",
+               origin);
+  else
+    g_list_store_remove (self->origins, position);
 
-  origins = calls_manager_get_origins (self);
-  if (!origins || g_list_model_get_n_items (origins) == 0)
-    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+  update_state (self);
+}
+
+/* rebuild_origins_by_protocols() when any origins were added or removed */
+static void
+rebuild_origins_by_protocols (CallsManager *self)
+{
+  GHashTableIter iter;
+  gpointer key, value;
+  guint n_origins;
+
+  g_assert (CALLS_IS_MANAGER (self));
+
+  /* Remove everything */
+  g_hash_table_iter_init (&iter, self->origins_by_protocol);
+
+  while (g_hash_table_iter_next (&iter, &key, &value)) {
+    GListStore *store = G_LIST_STORE (value);
+    g_list_store_remove_all (store);
+  }
+
+  /* Iterate over all origins and check which protocols they support */
+  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+
+  for (guint i = 0; i < n_origins; i++) {
+    g_autoptr (CallsOrigin) origin =
+      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
+
+    for (guint j = 0; j < self->supported_protocols->len; j++) {
+      char *protocol = g_ptr_array_index (self->supported_protocols, j);
+      GListStore *store =
+        G_LIST_STORE (g_hash_table_lookup (self->origins_by_protocol, protocol));
+
+      g_assert (store);
+
+      if (calls_origin_supports_protocol (origin, protocol))
+        g_list_store_append (store, origin);
+    }
+  }
 }
 
 static void
-remove_provider (CallsManager *self)
+remove_provider (CallsManager *self,
+                 const char   *name)
 {
   GListModel *origins;
   guint n_items;
+  CallsProvider *provider;
 
-  g_debug ("Remove provider: %s", calls_provider_get_name (self->provider));
-  g_signal_handlers_disconnect_by_data (self->provider, self);
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (name);
 
-  origins = calls_provider_get_origins (self->provider);
+  provider = g_hash_table_lookup (self->providers, name);
+  if (provider == NULL) {
+    g_warning ("Trying to remove provider %s which has not been found", name);
+    return;
+  }
+
+  g_debug ("Remove provider: %s", name);
+  g_signal_handlers_disconnect_by_data (provider, self);
+
+  origins = calls_provider_get_origins (provider);
   g_signal_handlers_disconnect_by_data (origins, self);
   n_items = g_list_model_get_n_items (origins);
 
@@ -218,84 +360,128 @@ remove_provider (CallsManager *self)
       remove_origin (self, origin);
     }
 
-  calls_provider_unload_plugin (self->provider_name);
+  g_hash_table_remove (self->providers, name);
+  calls_provider_unload_plugin (name);
 
-  g_clear_pointer (&self->provider_name, g_free);
-  g_clear_object (&self->provider);
-  set_state (self, CALLS_MANAGER_STATE_NO_PROVIDER);
+  update_protocols (self);
+  update_state (self);
+  rebuild_origins_by_protocols (self);
 }
 
-static void
-origin_items_changed_cb (CallsManager *self)
+static gboolean
+origin_found_in_any_provider (CallsManager *self,
+                              CallsOrigin  *origin)
 {
-  GListModel *origins;
-  guint n_items;
-  gboolean has_default_origin = FALSE;
+  GHashTableIter iter;
+  gpointer key, value;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+  g_return_val_if_fail (CALLS_IS_ORIGIN (origin), FALSE);
+
+  g_hash_table_iter_init (&iter, self->providers);
+  while (g_hash_table_iter_next (&iter, &key, &value)) {
+    guint position;
+    CallsProvider *provider = CALLS_PROVIDER (value);
+    GListModel *origins = calls_provider_get_origins (provider);
+
+    if (origins && calls_find_in_store (origins,
+                                        origin,
+                                        &position))
+      return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+
+static void
+origin_items_changed_cb (GListModel   *model,
+                         guint         position,
+                         guint         removed,
+                         guint         added,
+                         CallsManager *self)
+{
+  guint i;
+  CallsOrigin *origin;
+  guint purged = 0;
+  guint total_origins;
 
   g_assert (CALLS_IS_MANAGER (self));
 
-  has_default_origin = !!self->default_origin;
-  origins = calls_provider_get_origins (self->provider);
-  n_items = g_list_model_get_n_items (origins);
+  total_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+  g_debug ("origins changed: pos=%d rem=%d added=%d total=%d",
+           position, removed, added, g_list_model_get_n_items (model));
 
-  if (n_items)
-    set_state (self, CALLS_MANAGER_STATE_READY);
-  else
-    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+  /* Check stale/removed origins: We need to look up */
+  if (removed == 0)
+    goto skip_remove;
 
-  for (guint i = 0; i < n_items; i++)
-    {
-      g_autoptr(CallsOrigin) origin = NULL;
+  for (i = 0; i < total_origins - purged; i++) {
+    origin = g_list_model_get_item (G_LIST_MODEL (self->origins), i - purged);
 
-      origin = g_list_model_get_item (origins, i);
-      add_origin (self, origin);
-      if (!has_default_origin)
-        {
-          /* XXX
-            This actually doesn't work correctly when we default origin is removed.
-            This will require a rework when supporting multiple providers anyway
-            and also isn't really used outside of getting the country code
-            it's not really a problem.
-          */
-          calls_manager_set_default_origin (self, origin);
-          has_default_origin = TRUE;
-        }
+    if (!origin_found_in_any_provider (self, origin)) {
+      remove_origin (self, origin);
+      purged++;
     }
+  }
+
+  /** The number of purged entries from self->origins must be equal to removed
+   *  origins from the providers list
+   */
+  if (purged != removed) {
+    g_warning ("Managed origins are not in sync anymore!");
+  }
+
+ skip_remove:
+  for (i = 0; i < added; i++) {
+    g_debug ("before adding: %d",
+             g_list_model_get_n_items (G_LIST_MODEL (self->origins)));
+
+    origin = g_list_model_get_item (model, position + i);
+    add_origin (self, origin); // add to list store
+    g_object_unref (origin);
+
+    g_debug ("after adding: %d",
+             g_list_model_get_n_items (G_LIST_MODEL (self->origins)));
+  }
+
+  rebuild_origins_by_protocols (self);
+  update_state (self);
 }
 
 static void
 add_provider (CallsManager *self, const gchar *name)
 {
   GListModel *origins;
+  CallsProvider *provider;
+  guint n_items;
 
-  /* We could eventually enable more then one provider, but for now let's use
-     only one */
-  if (self->provider != NULL)
-    remove_provider (self);
+  g_assert (CALLS_IS_MANAGER (self));
+  g_assert (name);
 
-  if (name == NULL)
+  if (g_hash_table_lookup (self->providers, name))
     return;
 
-  self->provider = calls_provider_load_plugin (name);
-
-  if (self->provider == NULL) {
-    set_state (self, CALLS_MANAGER_STATE_NO_PLUGIN);
+  provider = calls_provider_load_plugin (name);
+  if (provider == NULL) {
+    g_warning ("Could not load a plugin with name `%s'", name);
     return;
   }
 
-  if (g_strcmp0 (name, "dummy") == 0)
-    set_state (self, CALLS_MANAGER_STATE_READY);
-  else
-    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+  g_hash_table_insert (self->providers, g_strdup (name), provider);
 
-  origins = calls_provider_get_origins (self->provider);
+  update_protocols (self);
+
+  origins = calls_provider_get_origins (provider);
 
   g_signal_connect_object (origins, "items-changed",
                            G_CALLBACK (origin_items_changed_cb), self,
-                           G_CONNECT_SWAPPED);
-  origin_items_changed_cb (self);
+                           G_CONNECT_AFTER);
 
-  self->provider_name = g_strdup (name);
+  n_items = g_list_model_get_n_items (origins);
+  origin_items_changed_cb (origins, 0, 0, n_items, self);
+
 }
 
 static void
@@ -307,14 +493,6 @@ calls_manager_get_property (GObject    *object,
   CallsManager *self = CALLS_MANAGER (object);
 
   switch (property_id) {
-  case PROP_PROVIDER:
-    g_value_set_string (value, calls_manager_get_provider (self));
-    break;
-
-  case PROP_DEFAULT_ORIGIN:
-    g_value_set_object (value, calls_manager_get_default_origin (self));
-    break;
-
   case PROP_STATE:
     g_value_set_enum (value, calls_manager_get_state (self));
     break;
@@ -338,14 +516,6 @@ calls_manager_set_property (GObject      *object,
   CallsManager *self = CALLS_MANAGER (object);
 
   switch (property_id) {
-  case PROP_PROVIDER:
-    calls_manager_set_provider (self, g_value_get_string (value));
-    break;
-
-  case PROP_DEFAULT_ORIGIN:
-    calls_manager_set_default_origin (self, g_value_get_object (value));
-    break;
-
   case PROP_COUNTRY_CODE:
     g_free (self->country_code);
     self->country_code = g_value_dup_string (value);
@@ -362,10 +532,13 @@ calls_manager_finalize (GObject *object)
 {
   CallsManager *self = CALLS_MANAGER (object);
 
-  g_clear_object (&self->provider);
-  g_clear_pointer (&self->provider_name, g_free);
+  g_clear_object (&self->origins);
   g_clear_object (&self->contacts_provider);
   g_clear_pointer (&self->country_code, g_free);
+
+  g_clear_pointer (&self->providers, g_hash_table_unref);
+  g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
+  g_clear_pointer (&self->supported_protocols, g_ptr_array_unref);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -443,24 +616,13 @@ calls_manager_class_init (CallsManagerClass *klass)
                   1,
                   CALLS_TYPE_USSD);
 
-  props[PROP_PROVIDER] = g_param_spec_string ("provider",
-                                              "provider",
-                                              "The name of the currently loaded provider",
-                                              NULL,
-                                              G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
-
-  props[PROP_STATE] = g_param_spec_enum ("state",
-                                         "state",
-                                         "The state of the Manager",
-                                         CALLS_TYPE_MANAGER_STATE,
-                                         CALLS_MANAGER_STATE_NO_PROVIDER,
-                                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
-
-  props[PROP_DEFAULT_ORIGIN] = g_param_spec_object ("default-origin",
-                                                    "default origin",
-                                                    "The default origin, if any",
-                                                    CALLS_TYPE_ORIGIN,
-                                                    G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
+  props[PROP_STATE] =
+    g_param_spec_enum ("state",
+                       "state",
+                       "The state of the Manager",
+                       CALLS_TYPE_MANAGER_STATE,
+                       CALLS_MANAGER_STATE_NO_PROVIDER,
+                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 
   props[PROP_COUNTRY_CODE] = g_param_spec_string ("country-code",
                                                   "country code",
@@ -479,8 +641,19 @@ calls_manager_init (CallsManager *self)
   const gchar *dir;
 
   self->state = CALLS_MANAGER_STATE_NO_PROVIDER;
-  self->provider_name = NULL;
   self->primary_call = NULL;
+  self->providers = g_hash_table_new_full (g_str_hash,
+                                           g_str_equal,
+                                           g_free,
+                                           g_object_unref);
+
+  self->origins_by_protocol = g_hash_table_new_full (g_str_hash,
+                                                     g_str_equal,
+                                                     g_free,
+                                                     g_object_unref);
+
+  self->origins = g_list_store_new (calls_origin_get_type ());
+  self->supported_protocols = g_ptr_array_new_full (5, g_free);
 
   // Load the contacts provider
   self->contacts_provider = calls_contacts_provider_new ();
@@ -528,25 +701,35 @@ calls_manager_get_contacts_provider (CallsManager *self)
   return self->contacts_provider;
 }
 
-const gchar *
-calls_manager_get_provider (CallsManager *self)
+void
+calls_manager_add_provider (CallsManager *self,
+                            const char   *name)
 {
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+  g_return_if_fail (CALLS_IS_MANAGER (self));
+  g_return_if_fail (name);
 
-  return self->provider_name;
+  add_provider (self, name);
 }
 
 void
-calls_manager_set_provider (CallsManager *self, const gchar *name)
+calls_manager_remove_provider (CallsManager *self,
+                               const char   *name)
 {
   g_return_if_fail (CALLS_IS_MANAGER (self));
+  g_return_if_fail (name);
 
-  if (self->provider != NULL && g_strcmp0 (calls_provider_get_name (self->provider), name) == 0)
-    return;
+  remove_provider (self, name);
+  update_protocols (self);
+}
 
-  add_provider (self, name);
+gboolean
+calls_manager_has_provider (CallsManager *self,
+                            const char   *name)
+{
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+  g_return_val_if_fail (name, FALSE);
 
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PROVIDER]);
+  return !!g_hash_table_lookup (self->providers, name);
 }
 
 CallsManagerState
@@ -562,10 +745,7 @@ calls_manager_get_origins (CallsManager *self)
 {
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
 
-  if (self->provider == NULL)
-    return NULL;
-
-  return calls_provider_get_origins (self->provider);
+  return G_LIST_MODEL (self->origins);
 }
 
 GList *
@@ -648,34 +828,28 @@ calls_manager_has_active_call (CallsManager *self)
   return FALSE;
 }
 
-CallsOrigin *
-calls_manager_get_default_origin (CallsManager *self)
+/**
+ * calls_manager_get_suitable_origins:
+ * @self: The #CallsManager
+ * @target: The target number/address
+ *
+ * Returns (transfer none): A #GListModel of suitable origins
+ */
+GListModel *
+calls_manager_get_suitable_origins (CallsManager *self,
+                                    const char   *target)
 {
+  const char *protocol;
+  GListModel *model;
+
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+  g_return_val_if_fail (target, NULL);
 
-  return self->default_origin;
-}
+  protocol = get_protocol_from_address_with_fallback (target);
 
-void
-calls_manager_set_default_origin (CallsManager *self,
-                                  CallsOrigin *origin)
-{
-  g_return_if_fail (CALLS_IS_MANAGER (self));
+  model = g_hash_table_lookup (self->origins_by_protocol, protocol);
+  if (model && G_IS_LIST_MODEL (model))
+    return model;
 
-  if (self->default_origin == origin)
-    return;
-
-  g_clear_pointer (&self->country_code_binding, g_binding_unbind);
-
-  g_clear_object (&self->default_origin);
-
-  if (origin) {
-    self->default_origin = g_object_ref (origin);
-    self->country_code_binding =
-      g_object_bind_property (origin, "country-code",
-                              self, "country-code",
-                              G_BINDING_SYNC_CREATE);
-  }
-
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DEFAULT_ORIGIN]);
+  return NULL;
 }

@@ -27,14 +27,21 @@ call_remove_cb (CallsManager *manager, CallsCall *call)
 static void
 test_calls_manager_without_provider ()
 {
+  guint no_origins;
+  GListModel *origins;
   g_autoptr (CallsManager) manager = calls_manager_new ();
   g_assert (CALLS_IS_MANAGER (manager));
 
-  g_assert_null (calls_manager_get_provider (manager));
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
-  g_assert_null (calls_manager_get_origins (manager));
+
+  origins = calls_manager_get_origins (manager);
+  no_origins = g_list_model_get_n_items (origins);
+  g_assert_cmpuint (no_origins, ==, 0);
+
   g_assert_null (calls_manager_get_calls (manager));
-  g_assert_null (calls_manager_get_default_origin (manager));
+  g_assert_null (calls_manager_get_suitable_origins (manager, "tel:+123456789"));
+  g_assert_null (calls_manager_get_suitable_origins (manager, "sip:alice@example.org"));
+  g_assert_null (calls_manager_get_suitable_origins (manager, "sips:bob@example.org"));
 }
 
 static void
@@ -42,48 +49,49 @@ test_calls_manager_dummy_provider ()
 {
   g_autoptr (CallsManager) manager = calls_manager_new ();
   GListModel *origins;
-  CallsOrigin *origin;
+  GListModel *origins_tel;
+  guint position;
+  g_autoptr (CallsOrigin) origin = NULL;
   g_assert (CALLS_IS_MANAGER (manager));
 
-  g_assert_null (calls_manager_get_provider (manager));
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
-  g_assert_null (calls_manager_get_origins (manager));
-
-  calls_manager_set_provider (manager, "dummy");
-  g_assert_cmpstr (calls_manager_get_provider (manager), ==, "dummy");
-  g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_READY);
-  g_assert_nonnull (calls_manager_get_origins (manager));
 
   origins = calls_manager_get_origins (manager);
+  g_assert_true (origins);
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
 
-  g_assert_nonnull (calls_manager_get_origins (manager));
-  g_assert_true (g_list_model_get_n_items (origins) > 0);
+  calls_manager_add_provider (manager, "dummy");
+  g_assert_true (calls_manager_has_provider (manager, "dummy"));
+  g_assert_true (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_READY);
+
+  g_assert_cmpuint (g_list_model_get_n_items (origins), >, 0);
   g_assert_null (calls_manager_get_calls (manager));
 
   test_call = NULL;
-  if (g_list_model_get_n_items (origins) > 0) {
-    g_signal_connect (manager, "call-add", G_CALLBACK (call_add_cb), NULL);
-    g_signal_connect (manager, "call-remove", G_CALLBACK (call_remove_cb), NULL);
+  g_signal_connect (manager, "call-add", G_CALLBACK (call_add_cb), NULL);
+  g_signal_connect (manager, "call-remove", G_CALLBACK (call_remove_cb), NULL);
 
-    origin = g_list_model_get_item (origins, 0);
-    g_assert (CALLS_IS_ORIGIN (origin));
+  origin = g_list_model_get_item (origins, 0);
+  g_assert_true (CALLS_IS_ORIGIN (origin));
 
-    g_assert (calls_manager_get_default_origin (manager) == origin);
+  origins_tel = calls_manager_get_suitable_origins (manager, "tel:+393422342");
+  g_assert_true (G_IS_LIST_MODEL (origins_tel));
+  g_assert_true (G_IS_LIST_STORE (origins_tel));
+  g_assert_true (g_list_store_find (G_LIST_STORE (origins_tel), origin, &position));
 
-    calls_origin_dial (origin, "+393422342");
-    g_assert (CALLS_IS_CALL (test_call));
-    calls_call_hang_up (test_call);
-    g_assert_null (test_call);
+  calls_origin_dial (origin, "+393422342");
+  g_assert_true (CALLS_IS_CALL (test_call));
+  calls_call_hang_up (test_call);
+  g_assert_null (test_call);
 
-    /* Add new call do check if we remove it when we unload the provider */
-    calls_origin_dial (origin, "+393422342");
-  }
+  /* Add new call do check if we remove it when we unload the provider */
+  calls_origin_dial (origin, "+393422342");
 
   /* Unload the provider */
-  calls_manager_set_provider (manager, NULL);
+  calls_manager_remove_provider (manager, "dummy");
 
   g_assert_null (test_call);
-  g_assert_null (calls_manager_get_origins (manager));
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
 
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
 }
@@ -94,16 +102,13 @@ test_calls_manager_mm_provider ()
   g_autoptr (CallsManager) manager = calls_manager_new ();
   g_assert (CALLS_IS_MANAGER (manager));
 
-  g_assert_null (calls_manager_get_provider (manager));
   g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
-  calls_manager_set_provider (manager, "mm");
-  g_assert_cmpstr (calls_manager_get_provider (manager), ==, "mm");
+  calls_manager_add_provider (manager, "mm");
   g_assert (calls_manager_get_state (manager) > CALLS_MANAGER_STATE_NO_PROVIDER);
   g_assert_null (calls_manager_get_calls (manager));
-  g_assert_null (calls_manager_get_default_origin (manager));
 
-  calls_manager_set_provider (manager, NULL);
-  g_assert (calls_manager_get_state (manager) == CALLS_MANAGER_STATE_NO_PROVIDER);
+  calls_manager_remove_provider (manager, "mm");
+  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
 }
 
 gint
