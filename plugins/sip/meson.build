@@ -66,7 +66,7 @@ sip_sources += sip_enums
 
 calls_sip = shared_library(
   'sip',
-  sip_sources,
+  sip_sources, config_h,
   dependencies: sip_deps,
   link_args: '-Wl,--unresolved-symbols=ignore-in-object-files',
   include_directories: src_include,
