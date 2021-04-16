@@ -22,6 +22,7 @@
  *
  */
 
+#include "calls-application.h"
 #include "calls-new-call-box.h"
 #include "calls-ussd.h"
 #include "calls-main-window.h"
@@ -49,11 +50,25 @@ G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
 
 
 static CallsOrigin *
-get_origin (CallsNewCallBox *self)
+get_origin (CallsNewCallBox *self,
+            const char      *target)
 {
+  CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
   g_autoptr (CallsOrigin) origin = NULL;
   GListModel *model;
   int index = -1;
+  gboolean auto_use_def_origin =
+    calls_application_get_use_default_origins_setting (app);
+
+  if (auto_use_def_origin) {
+    model = calls_manager_get_suitable_origins (calls_manager_get_default (),
+                                                target);
+    if (g_list_model_get_n_items (model) == 0)
+      return NULL;
+
+    origin = g_list_model_get_item (model, 0);
+    return origin;
+  }
 
   model = hdy_combo_row_get_model (self->origin_list);
 
@@ -125,11 +140,20 @@ dial_clicked_cb (CallsNewCallBox *self)
 
 
 static void
-dial_queued_cb (gchar       *target,
-                CallsOrigin *origin)
+dial_queued_cb (gchar           *target,
+                CallsNewCallBox *self)
 {
-  g_debug ("Dialing queued target `%s'", target);
-  calls_origin_dial (origin, target);
+  CallsOrigin *origin = NULL;
+  g_debug ("Try dialing queued target `%s'", target);
+
+  origin = get_origin (self,
+                       target);
+  if (origin) {
+    calls_origin_dial (origin, target);
+    self->dial_queue = g_list_remove (self->dial_queue, target);
+  }
+  else
+    g_debug ("No suitable origin found");
 }
 
 
@@ -144,22 +168,15 @@ clear_dial_queue (CallsNewCallBox *self)
 static void
 dial_queued (CallsNewCallBox *self)
 {
-  CallsOrigin *origin;
-
   if (!self->dial_queue)
     return;
 
-  g_debug ("Dialing %u queued targets",
+  g_debug ("Try dialing %u queued targets",
            g_list_length (self->dial_queue));
-
-  origin = get_origin (self);
-  g_assert (origin != NULL);
 
   g_list_foreach (self->dial_queue,
                   (GFunc) dial_queued_cb,
-                  origin);
-
-  clear_dial_queue (self);
+                  self);
 }
 
 
@@ -280,7 +297,7 @@ calls_new_call_box_dial (CallsNewCallBox *self,
   g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
   g_return_if_fail (target != NULL);
 
-  origin = get_origin (self);
+  origin = get_origin (self, target);
   if (!origin) {
     // Queue for dialing when an origin appears
     g_debug ("Can't submit call with no origin, queuing for later");
@@ -307,7 +324,7 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
   g_return_if_fail (target && *target);
 
-  origin = get_origin (self);
+  origin = get_origin (self, target);
 
   task = g_task_new (self, cancellable, callback, user_data);
 
