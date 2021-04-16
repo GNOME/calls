@@ -66,7 +66,7 @@ sip_sources += sip_enums
 
 calls_sip = shared_module(
   'sip',
-  sip_sources, config_h,
+  sip_sources,
   dependencies: sip_deps,
   include_directories: src_include,
   install: true,
