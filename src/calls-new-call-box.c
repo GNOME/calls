@@ -51,7 +51,7 @@ G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
 static CallsOrigin *
 get_origin (CallsNewCallBox *self)
 {
-  g_autoptr(CallsOrigin) origin = NULL;
+  g_autoptr (CallsOrigin) origin = NULL;
   GListModel *model;
   int index = -1;
 
@@ -147,9 +147,7 @@ dial_queued (CallsNewCallBox *self)
   CallsOrigin *origin;
 
   if (!self->dial_queue)
-    {
-      return;
-    }
+    return;
 
   g_debug ("Dialing %u queued targets",
            g_list_length (self->dial_queue));
@@ -158,7 +156,7 @@ dial_queued (CallsNewCallBox *self)
   g_assert (origin != NULL);
 
   g_list_foreach (self->dial_queue,
-                  (GFunc)dial_queued_cb,
+                  (GFunc) dial_queued_cb,
                   origin);
 
   clear_dial_queue (self);
@@ -209,13 +207,12 @@ provider_changed_cb (CallsNewCallBox *self)
   g_assert (CALLS_IS_NEW_CALL_BOX (self));
 
   origins = calls_manager_get_origins (calls_manager_get_default ());
-  if (origins)
-    {
-      g_signal_connect_object (origins, "items-changed",
-                               G_CALLBACK (origin_count_changed_cb), self,
-                               G_CONNECT_SWAPPED);
+  if (origins) {
+    g_signal_connect_object (origins, "items-changed",
+                             G_CALLBACK (origin_count_changed_cb), self,
+                             G_CONNECT_SWAPPED);
 
-      origin_count_changed_cb (self);
+    origin_count_changed_cb (self);
   }
 }
 
@@ -284,14 +281,13 @@ calls_new_call_box_dial (CallsNewCallBox *self,
   g_return_if_fail (target != NULL);
 
   origin = get_origin (self);
-  if (!origin)
-    {
-      // Queue for dialing when an origin appears
-      g_debug ("Can't submit call with no origin, queuing for later");
-      self->dial_queue = g_list_append (self->dial_queue,
-                                        g_strdup (target));
-      return;
-    }
+  if (!origin) {
+    // Queue for dialing when an origin appears
+    g_debug ("Can't submit call with no origin, queuing for later");
+    self->dial_queue = g_list_append (self->dial_queue,
+                                      g_strdup (target));
+    return;
+  }
 
   calls_origin_dial (origin, target);
 }
@@ -315,19 +311,17 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
 
   task = g_task_new (self, cancellable, callback, user_data);
 
-  if (!CALLS_IS_USSD (origin))
-    {
-      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
-                               "No origin with USSD available");
-      return;
-    }
+  if (!CALLS_IS_USSD (origin)) {
+    g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                             "No origin with USSD available");
+    return;
+  }
 
-  if (!calls_number_is_ussd (target))
-    {
-      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
-                               "%s is not a valid USSD code", target);
-      return;
-    }
+  if (!calls_number_is_ussd (target)) {
+    g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                             "%s is not a valid USSD code", target);
+    return;
+  }
 
   calls_ussd_initiate_async (CALLS_USSD (origin), target, cancellable,
                              ussd_send_cb, g_steal_pointer (&task));
