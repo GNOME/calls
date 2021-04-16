@@ -35,6 +35,7 @@
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
+#include "calls-settings.h"
 #include "calls-application.h"
 #include "version.h"
 
@@ -63,6 +64,7 @@ struct _CallsApplication
   CallsRecordStore *record_store;
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
+  CallsSettings    *settings;
 
   char             *uri;
 };
@@ -374,6 +376,9 @@ start_proper (CallsApplication  *self)
   self->call_window = calls_call_window_new (gtk_app);
   g_assert (self->call_window != NULL);
 
+  self->settings = calls_settings_new ();
+  g_assert (self->settings != NULL);
+
   g_signal_connect (self->call_window,
                     "notify::visible",
                     G_CALLBACK (notify_window_visible_cb),
@@ -522,6 +527,7 @@ finalize (GObject *object)
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
+  g_clear_object (&self->settings);
   g_free (self->uri);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
@@ -592,4 +598,21 @@ calls_application_new (void)
                        "flags", G_APPLICATION_HANDLES_OPEN,
                        "register-session", TRUE,
                        NULL);
+}
+
+gboolean
+calls_application_get_use_default_origins_setting (CallsApplication *self)
+{
+  g_return_val_if_fail (CALLS_IS_APPLICATION (self), FALSE);
+
+  return calls_settings_get_use_default_origins (self->settings);
+}
+
+void
+calls_application_set_use_default_origins_setting (CallsApplication *self,
+                                                   gboolean enabled)
+{
+  g_return_if_fail (CALLS_IS_APPLICATION (self));
+
+  calls_settings_set_use_default_origins (self->settings, enabled);
 }

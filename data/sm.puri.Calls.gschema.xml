@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="purism-calls">
+  <schema id="sm.puri.Calls" path="/sm/puri/Calls/">
+
+    <key name="auto-use-default-origins" type="b">
+      <default>true</default>
+      <summary>Whether calls should automatically use the default origin</summary>
+      <description>Whether calls should automatically use the default origin</description>
+    </key>
+
+  </schema>
+</schemalist>

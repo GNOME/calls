@@ -1,6 +1,5 @@
-/* calls-application.c
- *
- * Copyright (C) 2018 Mohammed Sadiq <sadiq@sadiqpk.org>
+/*
+ * Copyright (C) 2021 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -17,25 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Authors:
- *      Mohammed Sadiq <sadiq@sadiqpk.org>
+ * Author: Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
+ *
  */
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define CALLS_TYPE_APPLICATION (calls_application_get_type ())
+#define CALLS_TYPE_SETTINGS (calls_settings_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsApplication, calls_application, CALLS, APPLICATION, GtkApplication)
+G_DECLARE_FINAL_TYPE (CallsSettings, calls_settings, CALLS, SETTINGS, GObject)
 
-CallsApplication   *calls_application_new                               (void);
-gboolean            calls_application_get_use_default_origins_setting   (CallsApplication *self);
-void                calls_application_set_use_default_origins_setting   (CallsApplication *self,
-                                                                         gboolean enabled);
+CallsSettings     *calls_settings_new                            (void);
+gboolean           calls_settings_get_use_default_origins        (CallsSettings *self);
+void               calls_settings_set_use_default_origins        (CallsSettings *self,
+                                                                  gboolean       enable);
 
 G_END_DECLS
+
