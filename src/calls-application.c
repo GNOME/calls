@@ -87,6 +87,14 @@ handle_local_options (GApplication *application,
              error->message);
   }
 
+  ok = g_variant_dict_contains (options, "version");
+  if (ok) {
+    char * version = g_str_equal (VCS_TAG, "") ? PACKAGE_VERSION : VCS_TAG;
+
+    g_print ("%s %s\n", APP_DATA_NAME, version);
+    exit (0);
+  }
+
   ok = g_variant_dict_lookup (options, "provider", "&s", &arg);
   if (ok) {
     g_action_group_activate_action (G_ACTION_GROUP (application),
@@ -562,6 +570,12 @@ calls_application_init (CallsApplication *self)
       G_OPTION_ARG_STRING, NULL,
       _("Dial a number"),
       _("NUMBER")
+    },
+    {
+      "version", 'v', G_OPTION_FLAG_NONE,
+      G_OPTION_ARG_NONE, NULL,
+      _("Print current version"),
+      NULL
     },
     {
       NULL
