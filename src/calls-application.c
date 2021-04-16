@@ -104,9 +104,10 @@ handle_local_options (GApplication *application,
                                     "set-provider-name",
                                     g_variant_new_string (arg));
   } else {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-provider-name",
-                                    g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
+    if (!calls_manager_has_any_provider (calls_manager_get_default ()))
+      g_action_group_activate_action (G_ACTION_GROUP (application),
+                                      "set-provider-name",
+                                      g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
   }
 
   ok = g_variant_dict_contains (options, "daemon");

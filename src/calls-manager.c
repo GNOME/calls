@@ -853,3 +853,17 @@ calls_manager_get_suitable_origins (CallsManager *self,
 
   return NULL;
 }
+
+/**
+ * calls_manager_has_any_provider:
+ * @self: The #CallsManager
+ *
+ * Returns: %TRUE if any provider is loaded, %FALSE otherwise
+ */
+gboolean
+calls_manager_has_any_provider (CallsManager *self)
+{
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+
+  return !!g_hash_table_size (self->providers);
+}
