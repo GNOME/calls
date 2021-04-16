@@ -33,6 +33,7 @@
 #include "calls-manager.h"
 #include "config.h"
 #include "util.h"
+#include "version.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>

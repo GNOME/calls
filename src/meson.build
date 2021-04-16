@@ -109,19 +109,20 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                       ]) + wayland_sources + calls_generated_sources
 
 calls_config_data = config_data
-calls_config_data.set_quoted('VCS_TAG', '@VCS_TAG@')
 calls_config_data.set10('WL_SCANNER_FOUND', wl_scanner.found())
 
-config_h_in = configure_file(
-  output: 'config.h.in',
+config_h = configure_file(
+  output: 'config.h',
   configuration: calls_config_data
 )
 
-config_h = vcs_tag(
+version_h = vcs_tag(
     fallback: '',
-       input: config_h_in,
-      output: 'config.h',
+       input: 'version.h.in',
+      output: 'version.h',
 )
+
+calls_sources += [ version_h ]
 
 executable (
   'gnome-calls',

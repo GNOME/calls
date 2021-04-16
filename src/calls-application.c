@@ -36,6 +36,7 @@
 #include "calls-main-window.h"
 #include "calls-manager.h"
 #include "calls-application.h"
+#include "version.h"
 
 #include <glib/gi18n.h>
 #include <handy.h>
