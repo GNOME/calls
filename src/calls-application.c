@@ -78,45 +78,39 @@ handle_local_options (GApplication *application,
 {
   gboolean ok;
   g_autoptr (GError) error = NULL;
-  const gchar *arg;
+  const char *arg;
 
   g_debug ("Registering application");
   ok = g_application_register (application, NULL, &error);
-  if (!ok)
-    {
-      g_error ("Error registering application: %s",
-               error->message);
-    }
+  if (!ok) {
+    g_error ("Error registering application: %s",
+             error->message);
+  }
 
   ok = g_variant_dict_lookup (options, "provider", "&s", &arg);
-  if (ok)
-    {
-      g_action_group_activate_action (G_ACTION_GROUP (application),
-                                      "set-provider-name",
-                                      g_variant_new_string (arg));
-    }
-  else
-    {
-      g_action_group_activate_action (G_ACTION_GROUP (application),
-                                      "set-provider-name",
-                                      g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
-    }
+  if (ok) {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-provider-name",
+                                    g_variant_new_string (arg));
+  } else {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-provider-name",
+                                    g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
+  }
 
   ok = g_variant_dict_contains (options, "daemon");
-  if (ok)
-    {
-      g_action_group_activate_action (G_ACTION_GROUP (application),
-                                      "set-daemon",
-                                      NULL);
-    }
+  if (ok) {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-daemon",
+                                    NULL);
+  }
 
   ok = g_variant_dict_lookup (options, "dial", "&s", &arg);
-  if (ok)
-    {
-      g_action_group_activate_action (G_ACTION_GROUP (application),
-                                      "dial",
-                                      g_variant_new_string (arg));
-    }
+  if (ok) {
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "dial",
+                                    g_variant_new_string (arg));
+  }
 
   return -1; // Continue processing signal
 }
@@ -127,20 +121,19 @@ set_provider_name_action (GSimpleAction *action,
                           GVariant      *parameter,
                           gpointer       user_data)
 {
-  const gchar *name;
+  const char *name;
 
   name = g_variant_get_string (parameter, NULL);
   g_return_if_fail (name != NULL);
 
   /* FIXME: allow to set a new provider, we need to make sure that the
      provider is unloaded correctly from the CallsManager */
-  if (calls_manager_get_provider (calls_manager_get_default ()) != NULL)
-    {
-      g_warning ("Cannot set provider name to `%s'"
-                 " because provider is already created",
-                 name);
-      return;
-    }
+  if (calls_manager_get_provider (calls_manager_get_default ()) != NULL) {
+    g_warning ("Cannot set provider name to `%s'"
+               " because provider is already created",
+               name);
+    return;
+  }
 
   g_debug ("Start loading provider `%s'", name);
   calls_manager_set_provider (calls_manager_get_default (), name);
@@ -154,12 +147,11 @@ set_daemon_action (GSimpleAction *action,
 {
   CallsApplication *self = CALLS_APPLICATION (user_data);
 
-  if (self->main_window)
-    {
-      g_warning ("Cannot set application as a daemon"
-                 " because application is already started");
-      return;
-    }
+  if (self->main_window) {
+    g_warning ("Cannot set application as a daemon"
+               " because application is already started");
+    return;
+  }
 
   self->daemon = TRUE;
 
@@ -174,19 +166,18 @@ set_daemon_action (GSimpleAction *action,
 #define VISUAL_RE   "[" VISUAL "]"
 
 static gboolean
-check_dial_number (const gchar *number)
+check_dial_number (const char *number)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GRegex) reject = g_regex_new (REJECT_RE, 0, 0, &error);
   gboolean matches;
 
-  if (!reject)
-    {
-      g_warning ("Could not compile regex for"
-                 " dial number checking: %s",
-                 error->message);
-      return FALSE;
-    }
+  if (!reject) {
+    g_warning ("Could not compile regex for"
+               " dial number checking: %s",
+               error->message);
+    return FALSE;
+  }
 
   matches = g_regex_match (reject, number, 0, NULL);
 
@@ -194,31 +185,29 @@ check_dial_number (const gchar *number)
 }
 
 
-static gchar *
-extract_dial_string (const gchar *number)
+static char *
+extract_dial_string (const char *number)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GRegex) replace_visual = g_regex_new (VISUAL_RE, 0, 0, &error);
-  gchar *dial_string;
+  char *dial_string;
 
-  if (!replace_visual)
-    {
-      g_warning ("Could not compile regex for"
-                 " dial number extracting: %s",
-                 error->message);
-      return NULL;
-    }
+  if (!replace_visual) {
+    g_warning ("Could not compile regex for"
+               " dial number extracting: %s",
+               error->message);
+    return NULL;
+  }
 
   dial_string = g_regex_replace_literal
     (replace_visual, number, -1, 0, "", 0, &error);
 
-  if (!dial_string)
-    {
-      g_warning ("Error replacing visual separators"
-                 " in dial number: %s",
-                 error->message);
-      return NULL;
-    }
+  if (!dial_string) {
+    g_warning ("Error replacing visual separators"
+               " in dial number: %s",
+               error->message);
+    return NULL;
+  }
 
   return dial_string;
 }
@@ -230,9 +219,9 @@ dial_action (GSimpleAction *action,
              gpointer       user_data)
 {
   CallsApplication *self = CALLS_APPLICATION (user_data);
-  const gchar *number;
+  const char *number;
   gboolean number_ok;
-  g_autofree gchar *dial_string = NULL;
+  g_autofree char *dial_string = NULL;
 
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
@@ -244,18 +233,16 @@ dial_action (GSimpleAction *action,
   }
 
   number_ok = check_dial_number (number);
-  if (!number_ok)
-    {
-      g_warning ("Dial number `%s' is not a valid dial string",
-                 number);
-      return;
-    }
+  if (!number_ok) {
+    g_warning ("Dial number `%s' is not a valid dial string",
+               number);
+    return;
+  }
 
   dial_string = extract_dial_string (number);
-  if (!dial_string)
-    {
-      return;
-    }
+  if (!dial_string) {
+    return;
+  }
 
   g_debug ("Dialing dial string `%s' extracted from number `%s'",
            dial_string, number);
@@ -272,7 +259,7 @@ copy_number (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  const gchar *number = g_variant_get_string (parameter, NULL);
+  const char *number = g_variant_get_string (parameter, NULL);
   GtkClipboard *clipboard =
     gtk_clipboard_get_default (gdk_display_get_default ());
 
@@ -358,10 +345,9 @@ start_proper (CallsApplication  *self)
 {
   GtkApplication *gtk_app;
 
-  if (self->main_window)
-    {
-      return TRUE;
-    }
+  if (self->main_window) {
+    return TRUE;
+  }
 
   gtk_app = GTK_APPLICATION (self);
 
@@ -392,22 +378,21 @@ start_proper (CallsApplication  *self)
 
 static void
 open_sip_uri (CallsApplication *self,
-              const gchar      *uri)
+              const char       *uri)
 {
-  gchar **tokens = NULL;
+  char **tokens = NULL;
   g_assert (uri);
 
   tokens = g_strsplit (uri, "///", 2);
 
   if (tokens) {
     /* Remove "///" from "sip:///user@host" */
-    g_autofree gchar *dial_string = g_strconcat (tokens[0], tokens[1], NULL);
+    g_autofree char *dial_string = g_strconcat (tokens[0], tokens[1], NULL);
 
     calls_main_window_dial (self->main_window, dial_string);
 
     g_strfreev (tokens);
-  }
-  else {
+  } else {
     /* Dial the uri as it is */
     calls_main_window_dial (self->main_window, uri);
   }
@@ -415,12 +400,12 @@ open_sip_uri (CallsApplication *self,
 
 static void
 open_tel_uri (CallsApplication *self,
-              const gchar      *uri)
+              const char       *uri)
 {
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (GError) error = NULL;
-  g_autofree gchar *dial_str = NULL;
-  g_autofree gchar *country_code = NULL;
+  g_autofree char *dial_str = NULL;
+  g_autofree char *country_code = NULL;
 
   g_object_get (calls_manager_get_default (),
                 "country-code", &country_code,
@@ -429,18 +414,17 @@ open_tel_uri (CallsApplication *self,
   g_debug ("Opening tel URI `%s'", uri);
 
   number = e_phone_number_from_string (uri, country_code, &error);
-  if (!number)
-    {
-      g_autofree gchar *msg =
-        g_strdup_printf (_("Tried dialing unparsable tel URI `%s'"), uri);
+  if (!number) {
+    g_autofree char *msg =
+      g_strdup_printf (_("Tried dialing unparsable tel URI `%s'"), uri);
 
-      g_signal_emit_by_name (calls_manager_get_default (),
-                             "error",
-                             msg);
-      g_warning ("Ignoring unparsable tel URI `%s': %s",
-                 uri, error->message);
-      return;
-    }
+    g_signal_emit_by_name (calls_manager_get_default (),
+                           "error",
+                           msg);
+    g_warning ("Ignoring unparsable tel URI `%s': %s",
+               uri, error->message);
+    return;
+  }
 
   dial_str = e_phone_number_to_string
     (number, E_PHONE_NUMBER_FORMAT_E164);
@@ -457,28 +441,21 @@ activate (GApplication *application)
 
   g_debug ("Activated");
 
-  if (self->main_window)
-    {
-      present = TRUE;
-    }
-  else
-    {
-      gboolean ok = start_proper (self);
-      if (!ok)
-        {
-          return;
-        }
+  if (self->main_window) {
+    present = TRUE;
+  } else {
+    gboolean ok = start_proper (self);
+    if (!ok)
+      return;
 
-      present = !self->daemon;
-    }
+    present = !self->daemon;
+  }
 
-  if (present || self->uri)
-    {
-      gtk_window_present (GTK_WINDOW (self->main_window));
-    }
+  if (present || self->uri) {
+    gtk_window_present (GTK_WINDOW (self->main_window));
+  }
 
-  if (self->uri)
-    {
+  if (self->uri) {
     if (g_str_has_prefix (self->uri, "tel:"))
       open_tel_uri (self, self->uri);
 
@@ -494,7 +471,7 @@ static void
 app_open (GApplication  *application,
           GFile        **files,
           gint           n_files,
-          const gchar   *hint)
+          const char    *hint)
 {
   CallsApplication *self = CALLS_APPLICATION (application);
 
@@ -505,29 +482,27 @@ app_open (GApplication  *application,
 
   if (g_file_has_uri_scheme (files[0], "tel") ||
       g_file_has_uri_scheme (files[0], "sip") ||
-      g_file_has_uri_scheme (files[0], "sips"))
-    {
-      g_free (self->uri);
-      self->uri = g_file_get_uri (files[0]);
-      g_debug ("Opening %s", self->uri);
+      g_file_has_uri_scheme (files[0], "sips")) {
 
-      g_application_activate (application);
-    }
-  else
-    {
-      g_autofree char *msg = NULL;
-      g_autofree char *uri = NULL;
+    g_free (self->uri);
+    self->uri = g_file_get_uri (files[0]);
+    g_debug ("Opening %s", self->uri);
 
-      uri = g_file_get_parse_name (files[0]);
-      g_warning ("Don't know how to"
-                 " open file `%s', ignoring",
-                 uri);
+    g_application_activate (application);
+  } else {
+    g_autofree char *msg = NULL;
+    g_autofree char *uri = NULL;
 
-      msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
+    uri = g_file_get_parse_name (files[0]);
+    g_warning ("Don't know how to"
+               " open file `%s', ignoring",
+               uri);
 
-      g_signal_emit_by_name (calls_manager_get_default (),
-                             "error", msg);
-    }
+    msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
+
+    g_signal_emit_by_name (calls_manager_get_default (),
+                           "error", msg);
+  }
 }
 
 
