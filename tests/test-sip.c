@@ -39,7 +39,7 @@ test_sip_provider_object (SipFixture   *fixture,
   g_object_get (fixture->provider,
                 "sip-state", &state,
                 NULL);
-  g_assert_true (state == SIP_ENGINE_READY);
+  g_assert_cmpint (state, ==, SIP_ENGINE_READY);
 }
 
 static void
@@ -102,9 +102,9 @@ test_sip_origin_objects (SipFixture   *fixture,
                 "account-state", &state_offline,
                 NULL);
 
-  g_assert_true (state_alice == SIP_ACCOUNT_ONLINE);
-  g_assert_true (state_bob == SIP_ACCOUNT_ONLINE);
-  g_assert_true (state_offline == SIP_ACCOUNT_OFFLINE);
+  g_assert_cmpint (state_alice, ==, SIP_ACCOUNT_ONLINE);
+  g_assert_cmpint (state_bob, ==, SIP_ACCOUNT_ONLINE);
+  g_assert_cmpint (state_offline, ==, SIP_ACCOUNT_OFFLINE);
 }
 
 static void
