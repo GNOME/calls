@@ -1,4 +1,6 @@
 Test-Command: xvfb-run /usr/bin/gnome-calls --help
 Restrictions: superficial
-Depends: gnome-calls, xauth, xvfb
-
+Depends:
+ gnome-calls,
+ xauth,
+ xvfb,
