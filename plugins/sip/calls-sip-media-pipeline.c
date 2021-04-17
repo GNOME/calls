@@ -364,10 +364,40 @@ initable_init (GInitable    *initable,
   g_autofree char *caps_string = NULL;
   GstPad *srcpad, *sinkpad;
   GstStructure *props = NULL;
+  const char *env_var;
 
-  /* could also use autoaudiosink instead of pulsesink */
-  self->audiosink = gst_element_factory_make ("pulsesink", "sink");
-  self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
+  env_var = g_getenv ("CALLS_AUDIOSINK");
+  if (env_var) {
+    self->audiosink = gst_element_factory_make (env_var, "sink");
+  } else {
+    /* could also use autoaudiosink instead of pulsesink */
+    self->audiosink = gst_element_factory_make ("pulsesink", "sink");
+
+    /* enable echo cancellation and set buffer size to 40ms */
+    props = gst_structure_new ("props",
+                               "media.role", G_TYPE_STRING, "phone",
+                               "filter.want", G_TYPE_STRING, "echo-cancel",
+                               NULL);
+
+    g_object_set (self->audiosink,
+                  "buffer-time", (gint64) 40000,
+                  "stream-properties", props,
+                  NULL);
+
+    g_object_set (self->audiosrc,
+                  "buffer-time", (gint64) 40000,
+                  "stream-properties", props,
+                  NULL);
+
+    gst_structure_free (props);
+  }
+
+  env_var = g_getenv ("CALLS_AUDIOSRC");
+  if (env_var)
+    self->audiosrc = gst_element_factory_make (env_var, "source");
+  else
+    self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
+
   if (!self->audiosrc || !self->audiosink) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Could not create audiosink or audiosrc");
@@ -460,24 +490,6 @@ initable_init (GInitable    *initable,
                  "Failed to link audiosrc encoder and payloader");
     return FALSE;
   }
-
-  /* enable echo cancellation and set buffer size to 40ms */
-  props = gst_structure_new ("props",
-                             "media.role", G_TYPE_STRING, "phone",
-                             "filter.want", G_TYPE_STRING, "echo-cancel",
-                             NULL);
-
-  g_object_set (self->audiosink,
-                "buffer-time", (gint64) 40000,
-                "stream-properties", props,
-                NULL);
-
-  g_object_set (self->audiosrc,
-                "buffer-time", (gint64) 40000,
-                "stream-properties", props,
-                NULL);
-
-  gst_structure_free (props);
 
   gst_bin_add (GST_BIN (self->send_pipeline), self->send_rtpbin);
   gst_bin_add (GST_BIN (self->recv_pipeline), self->recv_rtpbin);
