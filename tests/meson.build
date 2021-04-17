@@ -9,6 +9,8 @@ test_env = [
   'MALLOC_CHECK_=2',
   'NO_AT_BRIDGE=1',
   'CALLS_SIP_DO_NOT_AUTOLOAD=1',
+  'CALLS_AUDIOSRC=audiotestsrc',
+  'CALLS_AUDIOSINK=fakesink',
 ]
 
 test_cflags = [
