@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-02-23 15:25+0000\n"
-"PO-Revision-Date: 2021-02-23 20:32+0200\n"
+"POT-Creation-Date: 2021-04-17 03:24+0000\n"
+"PO-Revision-Date: 2021-04-17 12:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.11.70\n"
+"X-Generator: Lokalize 20.12.0\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:310
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:313
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Дзвінки"
@@ -45,37 +45,42 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
-#: src/calls-application.c:430
+#: src/calls-application.c:427
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Спроба набору за непридатною до обробки адресою телефону «%s»"
 
-#: src/calls-application.c:481
+#: src/calls-application.c:509
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:532
+#: src/calls-application.c:559
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Назва додатка, яку слід використовувати для надавача послуг дзвінка"
 
-#: src/calls-application.c:533
+#: src/calls-application.c:560
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:538
+#: src/calls-application.c:565
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:571
 msgid "Dial a number"
 msgstr "Набрати номер"
 
-#: src/calls-application.c:545
+#: src/calls-application.c:572
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-best-match.c:331 src/calls-call-record-row.c:40
+#: src/calls-application.c:577
+msgid "Print current version"
+msgstr ""
+"Вивести поточну версію"
+
+#: src/calls-best-match.c:370 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
@@ -120,21 +125,21 @@ msgstr "Панель набору"
 msgid "Recent"
 msgstr "Нещодавні"
 
-#: src/calls-notifier.c:53
+#: src/calls-notifier.c:46
 msgid "Missed call"
 msgstr "Пропущено виклик"
 
-#: src/calls-notifier.c:60
+#: src/calls-notifier.c:58
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущено виклик від <b>%s</b>"
 
-#: src/calls-notifier.c:62
+#: src/calls-notifier.c:60
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущено виклик від %s"
 
-#: src/calls-notifier.c:68
+#: src/calls-notifier.c:66
 msgid "Call back"
 msgstr "Передзвонити"
 
@@ -192,7 +197,6 @@ msgid "On hold"
 msgstr "Очікування"
 
 #: src/ui/contacts-box.ui:66
-#| msgid "No modem found"
 msgid "No contacts found"
 msgstr "Не знайдено жодного контакту"
 
@@ -245,11 +249,11 @@ msgstr "З_акрити"
 msgid "_Send"
 msgstr "_Надіслати"
 
-#: src/ui/new-call-box.ui:101
+#: src/ui/new-call-box.ui:94
 msgid "Dial"
 msgstr "Набір номера"
 
-#: src/ui/new-call-box.ui:129
+#: src/ui/new-call-box.ui:122
 msgid "Backspace through number"
 msgstr "Витирання номера"
 
