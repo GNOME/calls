@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-03-25 15:24+0000\n"
-"PO-Revision-Date: 2021-03-31 11:45+0200\n"
+"POT-Creation-Date: 2021-04-18 15:24+0000\n"
+"PO-Revision-Date: 2021-04-18 21:31+0300\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:312
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:313
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Apeluri"
@@ -45,37 +45,41 @@ msgstr "Apeluri (serviciu)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Apelant telefonic și gestionarea apelurilor (mod serviciu)"
 
-#: src/calls-application.c:401
+#: src/calls-application.c:427
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "S-a încercat apelarea URI-ului de telefon neanalizabil „%s”"
 
-#: src/calls-application.c:483
+#: src/calls-application.c:509
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:533
+#: src/calls-application.c:559
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Numele modulului de utilizat pentru furnizorul de apel"
 
-#: src/calls-application.c:534
+#: src/calls-application.c:560
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:539
+#: src/calls-application.c:565
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:545
+#: src/calls-application.c:571
 msgid "Dial a number"
 msgstr "Apelează un număr"
 
-#: src/calls-application.c:546
+#: src/calls-application.c:572
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-best-match.c:331 src/calls-call-record-row.c:40
+#: src/calls-application.c:577
+msgid "Print current version"
+msgstr "Tipărește versiunea curentă"
+
+#: src/calls-best-match.c:370 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Apelant anonim"
 
@@ -99,7 +103,7 @@ msgstr ""
 "Jobava <jobaval10n@gmail.com>, 2015\n"
 "Adelin Șerbănescu <sadelin106@gmail.com>, 2018\n"
 "Florentina Mușat <florentina [dot] musat [dot] 28 [at] gmail [dot] com>, "
-"2020\n"
+"2020-2021\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019-2021"
 
 #: src/calls-main-window.c:318
