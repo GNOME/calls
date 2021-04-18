@@ -144,11 +144,10 @@ ussd_state_changed_cb (CallsManager *self,
 }
 
 static void
-add_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
+add_origin (CallsManager *self, CallsOrigin *origin)
 {
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (CALLS_IS_ORIGIN (origin));
-  g_assert (CALLS_IS_PROVIDER (provider));
 
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
@@ -172,7 +171,7 @@ remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
 }
 
 static void
-remove_origin (CallsManager *self, CallsOrigin *origin, CallsProvider *provider)
+remove_origin (CallsManager *self, CallsOrigin *origin)
 {
   GListModel *origins;
 
@@ -208,7 +207,7 @@ remove_provider (CallsManager *self)
       g_autoptr(CallsOrigin) origin = NULL;
 
       origin = g_list_model_get_item (origins, i);
-      remove_origin (self, origin, self->provider);
+      remove_origin (self, origin);
     }
 
   calls_provider_unload_plugin (self->provider_name);
@@ -241,7 +240,7 @@ origin_items_changed_cb (CallsManager *self)
       g_autoptr(CallsOrigin) origin = NULL;
 
       origin = g_list_model_get_item (origins, i);
-      add_origin (self, origin, self->provider);
+      add_origin (self, origin);
       if (!has_default_origin)
         {
           /* XXX
