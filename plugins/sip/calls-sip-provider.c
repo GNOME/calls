@@ -40,6 +40,13 @@
 #include <sofia-sip/nua.h>
 #include <sofia-sip/su_glib.h>
 
+static const char * const supported_protocols[] = {
+  "tel",
+  "sip",
+  "sips",
+  NULL
+};
+
 /**
  * SECTION:sip-provider
  * @short_description: A #CallsProvider for the SIP protocol
@@ -154,6 +161,12 @@ calls_sip_provider_get_origins (CallsProvider *provider)
   CallsSipProvider *self = CALLS_SIP_PROVIDER (provider);
 
   return G_LIST_MODEL (self->origins);
+}
+
+static const char * const *
+calls_sip_provider_get_protocols (CallsProvider *provider)
+{
+  return supported_protocols;
 }
 
 
@@ -319,6 +332,7 @@ calls_sip_provider_class_init (CallsSipProviderClass *klass)
   provider_class->get_name = calls_sip_provider_get_name;
   provider_class->get_status = calls_sip_provider_get_status;
   provider_class->get_origins = calls_sip_provider_get_origins;
+  provider_class->get_protocols = calls_sip_provider_get_protocols;
 
   props[PROP_SIP_STATE] =
     g_param_spec_enum ("sip-state",

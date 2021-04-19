@@ -72,6 +72,12 @@ calls_provider_real_get_origins (CallsProvider *self)
   return NULL;
 }
 
+static const char * const *
+calls_provider_real_get_protocols (CallsProvider *self)
+{
+  g_assert_not_reached ();
+}
+
 
 static void
 calls_provider_get_property (GObject    *object,
@@ -101,6 +107,7 @@ calls_provider_class_init (CallsProviderClass *klass)
   klass->get_name = calls_provider_real_get_name;
   klass->get_status = calls_provider_real_get_status;
   klass->get_origins = calls_provider_real_get_origins;
+  klass->get_protocols = calls_provider_real_get_protocols;
 
   props[PROP_STATUS] =
     g_param_spec_string ("status",
@@ -222,4 +229,18 @@ calls_provider_unload_plugin (const char *name)
     peas_engine_unload_plugin (engine, plugin);
   else
     g_warning ("Can't unload plugin: No plugin with name %s found", name);
+}
+
+/**
+ * calls_provider_get_protocols:
+ * @self: A #CallsProvider
+ *
+ * Returns: (transfer none): A null-terminated array of strings
+ */
+const char * const *
+calls_provider_get_protocols (CallsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
+
+  return CALLS_PROVIDER_GET_CLASS (self)->get_protocols (self);
 }

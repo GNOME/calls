@@ -32,6 +32,11 @@
 #include <libpeas/peas.h>
 #include <glib/gi18n.h>
 
+static const char * const supported_protocols[] = {
+  "tel",
+  NULL
+};
+
 struct _CallsMMProvider
 {
   CallsProvider parent_instance;
@@ -354,6 +359,12 @@ calls_mm_provider_get_origins (CallsProvider *provider)
   return G_LIST_MODEL (self->origins);
 }
 
+static const char * const *
+calls_mm_provider_get_protocols (CallsProvider *provider)
+{
+  return supported_protocols;
+}
+
 static void
 constructed (GObject *object)
 {
@@ -415,6 +426,7 @@ calls_mm_provider_class_init (CallsMMProviderClass *klass)
   provider_class->get_name = calls_mm_provider_get_name;
   provider_class->get_status = calls_mm_provider_get_status;
   provider_class->get_origins = calls_mm_provider_get_origins;
+  provider_class->get_protocols = calls_mm_provider_get_protocols;
 }
 
 
