@@ -663,7 +663,14 @@ get_property (GObject      *object,
 static gchar *
 modem_get_name (MMModem *modem)
 {
-  gchar *name = NULL;
+  char *name = NULL;
+  const char * const *numbers = NULL;
+
+  numbers = mm_modem_get_own_numbers (modem);
+  if (numbers && g_strv_length ((char **) numbers) > 0) {
+    name = g_strdup (numbers[0]);
+    return name;
+  }
 
 #define try(prop)                               \
   name = mm_modem_dup_##prop (modem);           \
