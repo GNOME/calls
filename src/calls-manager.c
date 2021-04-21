@@ -471,6 +471,9 @@ calls_manager_class_init (CallsManagerClass *klass)
 static void
 calls_manager_init (CallsManager *self)
 {
+  PeasEngine *peas;
+  const gchar *dir;
+
   self->state = CALLS_MANAGER_STATE_NO_PROVIDER;
   self->provider_name = NULL;
   self->primary_call = NULL;
@@ -480,6 +483,18 @@ calls_manager_init (CallsManager *self)
   g_object_bind_property (self, "country-code",
                           self->contacts_provider, "country-code",
                           G_BINDING_DEFAULT);
+
+  // Prepend peas plugin search path
+  peas = peas_engine_get_default ();
+  peas_engine_add_search_path (peas, PLUGIN_LIBDIR, NULL);
+  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
+
+  dir = g_getenv ("CALLS_PLUGIN_DIR");
+  if (dir && dir[0] != '\0') {
+    g_debug ("Adding %s to plugin search path", dir);
+    peas_engine_prepend_search_path (peas, dir, NULL);
+  }
+
 }
 
 

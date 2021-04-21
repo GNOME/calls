@@ -174,18 +174,8 @@ calls_provider_load_plugin (const char *name)
   PeasEngine *plugins;
   PeasPluginInfo *info;
   PeasExtension *extension;
-  const gchar *dir;
 
-  // Add Calls search path and rescan
   plugins = peas_engine_get_default ();
-  peas_engine_add_search_path (plugins, PLUGIN_LIBDIR, NULL);
-  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
-
-  dir = g_getenv ("CALLS_PLUGIN_DIR");
-  if (dir && dir[0] != '\0') {
-    g_debug ("Adding %s to plugin search path", dir);
-    peas_engine_prepend_search_path (plugins, dir, NULL);
-  }
 
   // Find the plugin
   info = peas_engine_get_plugin_info (plugins, name);
