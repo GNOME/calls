@@ -872,7 +872,7 @@ calls_manager_get_calls (CallsManager *self)
 
   for (guint i = 0; i < n_items; i++)
     {
-      g_autoptr(CallsOrigin) origin = NULL;
+      g_autoptr (CallsOrigin) origin = NULL;
 
       origin = g_list_model_get_item (origins, i);
       calls = g_list_concat (calls, calls_origin_get_calls (origin));
