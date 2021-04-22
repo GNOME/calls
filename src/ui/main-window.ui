@@ -28,6 +28,23 @@
                 <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
               </object>
             </child>
+            <child>
+              <object class="GtkMenuButton">
+                <property name="visible">False</property>
+                <property name="can_focus">False</property>
+                <property name="popover">menu_popover</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="icon_name">open-menu-symbolic</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack_type">end</property>
+              </packing>
+            </child>
           </object>
         </child>
         <child>
@@ -95,7 +112,7 @@
     <property name="default-height">200</property>
     <signal name="delete-event" handler="gtk_widget_hide_on_delete" object="ussd_dialog" swapped="yes"/>
     <child type="titlebar">
-      <object class="GtkHeaderBar">
+      <object class="HdyHeaderBar">
         <property name="visible">True</property>
         <property name="show-close-button">False</property>
         <property name="title" translatable="yes">USSD</property>
@@ -190,6 +207,50 @@
               </object>
             </child>
 
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </object>
+
+  <object class="GtkPopoverMenu" id="menu_popover">
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="can_focus">False</property>
+        <property name="margin">12</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="text" translatable="yes">VoIP Accounts</property>
+            <!--<property name="action-name">app.voip-accounts</property>-->
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="text" translatable="yes">Keyboard shortcuts</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="text" translatable="yes">Help</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="text" translatable="yes">About Calls</property>
           </object>
         </child>
 
