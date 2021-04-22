@@ -1,3 +1,181 @@
+gnome-calls (0.3.2) byzantium; urgency=medium
+
+  [ carlosgonz ]
+  * po: Update spanish translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * meson: bump version
+  * po: Add src/ui/contacts-box.ui to POTFILES.in
+  * d/gbp.conf: automatically bump project version
+  * new-call-box: make sure to call origin_count_changed_cb
+  * codestyle: remove whitespaces
+  * plugins: use g_autoptr for GError
+  * flatpak: remove libhandy as it is part of the SDK
+  * meson: bump required libhandy-1 version >1.1.90
+  * contact-row: remove deprecated function
+  * dummy: fix infinite ringtone
+  * ringer: use quiet profile for non-primary calls
+  * manager: remove unused function
+  * manager: hang up secondary calls
+  * ci: add -noreset to xvfb-run invocation for flatpak builds
+  * plugins: fix memory leaks with respect to items in GListStore
+  * ofono: Derive from CallsProvider
+  * test: Test loading provider plugins
+  * ofono: use g_bus_watch_name
+  * sip: Initial provider
+  * sip: Origin needs account credentials
+  * sip: sipify provider with sofia
+  * sip: Add media manager and sipify origin
+  * sip: initial call handling
+  * sip: origin: fix CallsSipHandles reference in sip_callback
+  * sip: origin: get address on incoming call
+  * sip: origin: fix direct connection case
+  * sip: call: rework call state changes
+  * sip: origin: emit message on DNS error
+  * sip: origin: do not use hardcoded ports for RTP
+  * sip: pipeline: bind sockets for RTP
+  * sip: origin: register with SIP server
+  * sip: go offline when disposing CallsSipOrigin
+  * sip: rework setting SDP
+  * sip: allow specifying local port and use IPv6
+  * sip: Use app name in the user agent
+  * sip: media: change default codec to PCMA
+  * sip: handle i_outbound 404 errors
+  * sip: media: improve SDP offer/answer handling
+  * sip: use ipv4 exclusively for now
+  * sip: improve connection handling by using relevant sofia tags
+  * application: open sip uri
+  * sip: use g_return_if_fail and friends only for public functions
+  * sip: slightly improved authentication
+  * sip: fix infinite ringtone loop
+  * sip-media: enable echo cancellation
+  * sip: do not auto load accounts when running tests
+  * test: Add basic SIP provider tests
+  * test: Test CallsSipOrigin
+  * sip: provider: use g_get_user_config_dir () for account config
+  * sip: provider: Fall back to reasonable values for local-port property
+  * sip: pipeline: clean up in finalize ()
+  * new-call-box: Connect signals only if origins non-NULL
+  * provider: Add API for loading and unloading provider plugins
+  * tests: use plugin load API
+  * test: test-plugins: Add SIP plugin
+  * sip: Allow controlling automatic account loading via environment
+  * contact-provider: remove trailing whitespaces
+  * ci: add -noreset to xvfb-run invocation
+  * call: g_return_if_fail: type check calls_call_get_contact ()
+  * contacts-provider: fix docstring
+  * best-match: g_return_if_fail if not GeeCollection
+  * origin: Add country-code property
+  * application: Use the country code
+  * best-match: Use the country code
+  * Add API to get SIM country code
+  * mm: Implement country-code property
+  * manager: set default origin
+  * best-match: Lookup contact if country code changed
+  * best-match: disconnect old signal handlers
+  * plugins: build as shared library instead of shared module
+  * sip: remove FOR_TESTING ifdef
+  * tests: don't special case tests needing FOR_TESTING define
+  * mm-origin: codestyle
+  * mm-origin: fix memory leak
+  * Introduce HACKING.md
+  * media-manager: codestyle
+  * sip: media-manager: remove unused function prototypes
+  * media: manager: support multiple codecs SDP wise
+  * sip: media: use number types for payload id and clock rate
+  * sip: call: rename setup local/remote connection functions
+  * sip: media: rework codec negotiation
+  * sip: media-pipeline: only create pipeline after codec negotiation
+  * sip: gst-rfc3551: query for plugin availability
+  * sip: gst-rfc3551: Add docstrings for public functions
+  * tests: Update year in SPDX header
+  * tests: Test SDP messages
+  * sip: media-manager: fix G_LOG_DOMAIN
+  * sip: media-manager: fix SDP message when there is no supported codec
+  * best-match: avoid using NULL phone number
+  * best-match: Don't set NULL phone numbers when updating country code
+  * meson: Fix project name in license header
+  * build: doc: deduplicate sources
+  * sip: build: depend on config.h
+  * ci: disable testing in flatpak
+  * sip: origin: make create_inbound a private function
+  * sip: origin: Remove hardcoded display name from contact header
+  * sip: origin: Remove unnecessary code
+  * sip: provider: Allow overriding SIP account config via environment
+  * sip: provider: use g_clear_pointer pattern instead of emulating it
+  * sip: origin: Allow using a local port of 0
+  * sip: pipeline: Only inform of unhandled bus massages when debugging
+  * sip: codestyle changes
+  * sip: provider: document public functions
+  * sip: call: Don't fail when hanging up on an incoming call
+  * plugins: make plugins shared modules again
+  * codestyle: application
+  * application: add --version flag
+  * debian: ran wrap-and-sort -ast
+  * d/control: Add gstreamer plugins for SIP calling tests
+  * sip: media-pipeline: Allow overriding audio elements from environment
+  * test: sip: use g_assert_cmpint for asserting enums
+  * test: Use dummy audio elements for Gstreamer pipelines
+  * test: Add calling tests
+  * d/gbp.conf: set multimaint-merge true
+
+  [ Pierre Michel Augustin ]
+  * po: Add Creole Haitian translation
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+  * po: Update Ukrainian translation
+
+  [ Mohammed Sadiq ]
+  * provider: Use GListModel to track origins
+  * application: Open only the first 'tel:' URI
+  * provider: Avoid private data
+  * provider: Rename a variable
+  * provider: Implement default methods
+  * Let calls-call be an abstract class
+
+  [ Guido Günther ]
+  * notifier: Fix compile warning
+  * manager: Allow one to add plugin dir via environment
+  * window: Don't unhibit with 0 cookie (Closes: #249)
+  * build: Move generated sources before source file list
+  * build: deduplicate sources
+  * provider: Fix gtk-doc transfer annotations
+  * calls: Fix gtk-doc transfer annotation
+
+  [ Jan Jasper de Kroon ]
+  * po: Add Dutch translation
+
+  [ Emin Tufan Çetin ]
+  * po: Update Turkish translation
+
+  [ JaroslavSvoboda ]
+  * Added Czech translation
+
+  [ Balázs Meskó ]
+  * po:Update Hungarian translation
+
+  [ Daniel Șerbănescu ]
+  * po: Update Romanian translation
+  * po: Update Romanian translation
+
+  [ anteater ]
+  * ofono: fix return of incorrect field
+  * ofono: ref self across async callback
+  * ofono: don't clear self->modem after constructing CallsOfonoOrigin
+  * ofono: track status in CallsOfonoProvider
+  * ofono: correct variant format confusion
+  * ofono: add calls-ofono-provider.c to POTFILES.skip
+
+  [ Anders Jonsson ]
+  * po: Update Swedish translation
+  * po: Update Swedish translation
+
+  [ scootergrisen ]
+  * po: Update Danish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 22 Apr 2021 12:09:15 +0200
+
 gnome-calls (0.3.1) byzantium; urgency=medium
 
   * application: Fix double free
@@ -204,11 +382,11 @@ calls (0.1.8) amber-phone; urgency=medium
   [ Guido Günther ]
   * po: Add Hungarian to LINGUAS
   * call-record-row: Use g_autoptr for the GError
-  * calls-call-record-row: Ignore anonymous callsers.
+  * calls-call-record-row: Ignore anonymous callers.
     These have an empty string which leads to
         Error parsing phone number `': Keine Telefonnumme
   * po: Add Spanish to LINGUAS
-  * gitlab-ci: Allow to only build a package
+  * gitlab-ci: Allow one to only build a package
   * main-window: Allow the in app notification to wrap.
     Othewise we overflow the window. Center it too.
   * calls-main-window: Bring back old error string when no modem is present.
