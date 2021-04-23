@@ -263,13 +263,13 @@ test_sip_call_direct_calls (SipFixture   *fixture,
   g_object_get (fixture->origin_alice,
                 "local-port", &local_port_alice,
                 NULL);
-  address_alice = g_strdup_printf ("sip:alice@localhost:%d",
+  address_alice = g_strdup_printf ("sip:alice@127.0.0.1:%d",
                                    local_port_alice);
 
   g_object_get (fixture->origin_bob,
                 "local-port", &local_port_bob,
                 NULL);
-  address_bob = g_strdup_printf ("sip:bob@localhost:%d",
+  address_bob = g_strdup_printf ("sip:bob@127.0.0.1:%d",
                                  local_port_bob);
 
   /* Case 1: Bob calls Alice, Alice rejects call */
