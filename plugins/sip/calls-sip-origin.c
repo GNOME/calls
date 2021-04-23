@@ -877,7 +877,7 @@ calls_sip_origin_set_property (GObject      *object,
 
   case PROP_SIP_LOCAL_PORT:
     if (g_value_get_int (value) > 0 && g_value_get_int (value) < 1025) {
-      g_warning ("Tried setting a priviliged port as the local port to bind to: %d\n"
+      g_warning ("Tried setting a privileged port as the local port to bind to: %d\n"
                  "Continue using old 'local-port' value: %d (using 0 let's the OS decide)",
                  g_value_get_int (value), self->local_port);
       return;

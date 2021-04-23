@@ -322,7 +322,7 @@ calls_sip_provider_constructed (GObject *object)
       calls_sip_provider_load_accounts (self);
   }
   else
-    g_warning ("Could not initalize sofia stack: %s", error->message);
+    g_warning ("Could not initialize sofia stack: %s", error->message);
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }
