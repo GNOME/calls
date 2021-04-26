@@ -384,6 +384,22 @@ initable_init (GInitable    *initable,
                   "stream-properties", props,
                   NULL);
 
+    gst_structure_free (props);
+  }
+
+  env_var = g_getenv ("CALLS_AUDIOSRC");
+  if (env_var) {
+    self->audiosrc = gst_element_factory_make (env_var, "source");
+  } else {
+    /* could also use autoaudiosrc instead of pulsesrc */
+    self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
+
+    /* enable echo cancellation and set buffer size to 40ms */
+    props = gst_structure_new ("props",
+                               "media.role", G_TYPE_STRING, "phone",
+                               "filter.want", G_TYPE_STRING, "echo-cancel",
+                               NULL);
+
     g_object_set (self->audiosrc,
                   "buffer-time", (gint64) 40000,
                   "stream-properties", props,
@@ -391,12 +407,6 @@ initable_init (GInitable    *initable,
 
     gst_structure_free (props);
   }
-
-  env_var = g_getenv ("CALLS_AUDIOSRC");
-  if (env_var)
-    self->audiosrc = gst_element_factory_make (env_var, "source");
-  else
-    self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
 
   if (!self->audiosrc || !self->audiosink) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
