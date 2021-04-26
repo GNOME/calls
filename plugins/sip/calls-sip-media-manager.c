@@ -101,7 +101,7 @@ calls_sip_media_manager_default ()
  * @use_srtp: Whether to use srtp (not really handled)
  * @supported_codecs: A #GList of #MediaCodecInfo
  *
- * Returns: (transfer: full) string describing capabilities
+ * Returns: (transfer full): string describing capabilities
  * to be used in the session description (SDP)
  */
 char *
@@ -159,7 +159,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
  * @port: Should eventually come from the ICE stack
  * @use_srtp: Whether to use srtp (not really handled)
  *
- * Returns: (transfer: full) string describing capabilities
+ * Returns: (transfer full): string describing capabilities
  * to be used in the session description (SDP)
  */
 char *
@@ -187,7 +187,7 @@ get_best_codec (CallsSipMediaManager *self)
  *
  * @self: A #CallsSipMediaManager
  *
- * Returns: (transfer: none) A #GList of supported
+ * Returns: (transfer none): A #GList of supported
  * #MediaCodecInfo
  */
 GList *
@@ -204,7 +204,7 @@ calls_sip_media_manager_codec_candidates (CallsSipMediaManager *self)
  * @self: A #CallsSipMediaManager
  * @sdp: A #sdp_media_t media description
  *
- * Returns: (transfer: full) A #GList of codecs found in the
+ * Returns: (transfer full): A #GList of codecs found in the
  * SDP message
  */
 GList *

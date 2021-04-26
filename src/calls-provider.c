@@ -149,7 +149,7 @@ calls_provider_get_status (CallsProvider *self)
  *
  * Get the list of #CallsOrigin interfaces offered by this provider.
  *
- * Returns: (transfer: none): A #GListModel of origins
+ * Returns: (transfer none): A #GListModel of origins
  */
 GListModel *
 calls_provider_get_origins (CallsProvider *self)
@@ -165,7 +165,7 @@ calls_provider_get_origins (CallsProvider *self)
  *
  * Get a #CallsProvider plugin by name
  *
- * Returns: (transfer: full): A #CallsProvider
+ * Returns: (transfer full): A #CallsProvider
  */
 CallsProvider *
 calls_provider_load_plugin (const char *name)
