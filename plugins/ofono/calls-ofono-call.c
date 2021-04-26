@@ -114,6 +114,12 @@ calls_ofono_call_get_inbound (CallsCall *call)
   return self->inbound;
 }
 
+static const char *
+calls_ofono_call_get_protocol (CallsCall *call)
+{
+  return "tel";
+}
+
 struct CallsCallOperationData
 {
   const gchar *desc;
@@ -351,6 +357,7 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   call_class->get_name = calls_ofono_call_get_name;
   call_class->get_state = calls_ofono_call_get_state;
   call_class->get_inbound = calls_ofono_call_get_inbound;
+  call_class->get_protocol = calls_ofono_call_get_protocol;
   call_class->answer = calls_ofono_call_answer;
   call_class->hang_up = calls_ofono_call_hang_up;
   call_class->tone_start = calls_ofono_call_tone_start;

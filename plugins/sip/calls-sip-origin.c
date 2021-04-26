@@ -224,6 +224,8 @@ add_call (CallsSipOrigin *self,
 
     g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
 
+    /* TODO transform tel URI according to https://tools.ietf.org/html/rfc3261#section-19.1.6 */
+
     /* TODO handle IPv4 vs IPv6 for nua_invite (SOATAG_TAG) */
     nua_invite (self->oper->call_handle,
                 SOATAG_AF (SOA_AF_IP4_IP6),

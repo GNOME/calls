@@ -55,6 +55,7 @@ enum {
   PROP_NUMBER,
   PROP_NAME,
   PROP_STATE,
+  PROP_PROTOCOL,
   N_PROPS,
 };
 
@@ -88,6 +89,12 @@ static gboolean
 calls_call_real_get_inbound (CallsCall *self)
 {
   return FALSE;
+}
+
+static const char *
+calls_call_real_get_protocol (CallsCall *self)
+{
+  return NULL;
 }
 
 static void
@@ -140,6 +147,10 @@ calls_call_get_property (GObject    *object,
       g_value_set_enum (value, calls_call_get_state (self));
       break;
 
+    case PROP_PROTOCOL:
+      g_value_set_string (value, calls_call_get_protocol (self));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
@@ -156,6 +167,7 @@ calls_call_class_init (CallsCallClass *klass)
   klass->get_name = calls_call_real_get_name;
   klass->get_state = calls_call_real_get_state;
   klass->get_inbound = calls_call_real_get_inbound;
+  klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
   klass->hang_up = calls_call_real_hang_up;
   klass->tone_start = calls_call_real_tone_start;
@@ -189,6 +201,13 @@ calls_call_class_init (CallsCallClass *klass)
                        CALLS_TYPE_CALL_STATE,
                        CALLS_CALL_STATE_ACTIVE,
                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  properties[PROP_PROTOCOL] =
+    g_param_spec_string ("protocol",
+                         "Protocol",
+                         "The protocol used for this call",
+                         NULL,
+                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -311,6 +330,22 @@ calls_call_get_inbound (CallsCall *self)
   g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
 
   return CALLS_CALL_GET_CLASS (self)->get_inbound (self);
+}
+
+/**
+ * calls_call_get_protocol:
+ * @self: a #CallsCall
+ *
+ * Get the protocol of the call (i.e. "tel", "sip")
+ *
+ * Returns: The protocol used or %NULL when unknown
+ */
+const char *
+calls_call_get_protocol (CallsCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
+
+  return CALLS_CALL_GET_CLASS (self)->get_protocol (self);
 }
 
 static inline gboolean

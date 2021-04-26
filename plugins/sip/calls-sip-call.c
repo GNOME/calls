@@ -31,6 +31,7 @@
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
 #include "calls-sip-util.h"
+#include "util.h"
 
 #include <glib/gi18n.h>
 
@@ -140,6 +141,15 @@ calls_sip_call_get_inbound (CallsCall *call)
   CallsSipCall *self = CALLS_SIP_CALL (call);
 
   return self->inbound;
+}
+
+
+static const char *
+calls_sip_call_get_protocol (CallsCall *call)
+{
+  CallsSipCall *self = CALLS_SIP_CALL (call);
+
+  return get_protocol_from_address (self->number);
 }
 
 
@@ -290,6 +300,7 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
   call_class->get_number = calls_sip_call_get_number;
   call_class->get_state = calls_sip_call_get_state;
   call_class->get_inbound = calls_sip_call_get_inbound;
+  call_class->get_protocol = calls_sip_call_get_protocol;
   call_class->answer = calls_sip_call_answer;
   call_class->hang_up = calls_sip_call_hang_up;
 

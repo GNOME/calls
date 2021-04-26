@@ -216,6 +216,12 @@ calls_mm_call_get_inbound (CallsCall *call)
   return FALSE;
 }
 
+static const char *
+calls_mm_call_get_protocol (CallsCall *self)
+{
+  return "tel";
+}
+
 struct CallsMMOperationData
 {
   const gchar *desc;
@@ -375,6 +381,7 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   call_class->get_number = calls_mm_call_get_number;
   call_class->get_state = calls_mm_call_get_state;
   call_class->get_inbound = calls_mm_call_get_inbound;
+  call_class->get_protocol = calls_mm_call_get_protocol;
   call_class->answer = calls_mm_call_answer;
   call_class->hang_up = calls_mm_call_hang_up;
   call_class->tone_start = calls_mm_call_tone_start;

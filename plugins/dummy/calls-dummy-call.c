@@ -95,6 +95,12 @@ calls_dummy_call_get_inbound (CallsCall *call)
   return self->inbound;
 }
 
+static const char*
+calls_dummy_call_get_protocol (CallsCall *call)
+{
+  return "tel";
+}
+
 static void
 calls_dummy_call_answer (CallsCall *call)
 {
@@ -223,6 +229,7 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   call_class->get_number = calls_dummy_call_get_number;
   call_class->get_state = calls_dummy_call_get_state;
   call_class->get_inbound = calls_dummy_call_get_inbound;
+  call_class->get_protocol = calls_dummy_call_get_protocol;
   call_class->answer = calls_dummy_call_answer;
   call_class->hang_up = calls_dummy_call_hang_up;
 
