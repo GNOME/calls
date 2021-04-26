@@ -12,5 +12,5 @@ Type=Application
 StartupNotify=true
 Terminal=false
 Categories=Network;GNOME;GTK;Telephony;
-MimeType=x-scheme-handler/tel
+MimeType=x-scheme-handler/tel;x-scheme-handler/sip;x-scheme-handler/sips
 X-Purism-FormFactor=Workstation;Mobile;
