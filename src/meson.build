@@ -106,6 +106,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-notifier.c', 'calls-notifier.h',
                        'calls-contacts-box.c', 'calls-contacts-box.h',
                        'calls-contacts-row.c', 'calls-contacts-row.h',
+                       'calls-credentials.c', 'calls-credentials.h',
                       ]) + wayland_sources + calls_generated_sources
 
 calls_config_data = config_data

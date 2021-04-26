@@ -26,6 +26,7 @@
 
 #define SIP_ACCOUNT_FILE "sip-account.cfg"
 
+#include "calls-credentials.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"
 #include "calls-sip-enums.h"
@@ -75,26 +76,6 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
                                 calls_sip_provider_message_source_interface_init));
 
 
-static gboolean
-check_required_keys (GKeyFile *key_file,
-                     const gchar *group_name)
-{
-  gchar *keys[] = {
-    "User",
-    "Password",
-    "Host",
-    "Protocol",
-  };
-
-  for (gsize i = 0; i < G_N_ELEMENTS (keys); i++) {
-    if (!g_key_file_has_key (key_file, group_name, keys[i], NULL))
-      return FALSE;
-  }
-
-  return TRUE;
-}
-
-
 static void
 calls_sip_provider_load_accounts (CallsSipProvider *self)
 {
@@ -112,48 +93,36 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
   groups = g_key_file_get_groups (key_file, NULL);
 
   for (gsize i = 0; groups[i] != NULL; i++) {
+    g_autoptr (CallsCredentials) credentials = calls_credentials_new ();
     g_autofree gchar *user = NULL;
     g_autofree gchar *password = NULL;
     g_autofree gchar *host = NULL;
     g_autofree gchar *protocol = NULL;
     gint port = 0;
     gint local_port = 0;
+    gboolean auto_connect = TRUE;
     gboolean direct_connection =
       g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
-    gboolean auto_connect = TRUE;
-
-    if (g_key_file_has_key (key_file, groups[i], "AutoConnect", NULL))
-      auto_connect = g_key_file_get_boolean (key_file, groups[i], "AutoConnect", NULL);
 
     if (direct_connection) {
-      local_port = 5060;
+      local_port = g_key_file_get_integer (key_file, groups[i], "LocalPort", NULL);
+      if (local_port == 0)
+        local_port = 5060;
+      protocol = g_strdup ("UDP");
       goto skip;
     }
 
-    if (!check_required_keys (key_file, groups[i])) {
-      g_warning ("Not all required keys found in section %s of file `%s'",
-                 groups[i], self->filename);
-      continue;
-    }
+    calls_credentials_update_from_keyfile (credentials, key_file, groups[i]);
 
-    user = g_key_file_get_string (key_file, groups[i], "User", NULL);
-    password = g_key_file_get_string (key_file, groups[i], "Password", NULL);
-    host = g_key_file_get_string (key_file, groups[i], "Host", NULL);
-    protocol = g_key_file_get_string (key_file, groups[i], "Protocol", NULL);
-    port = g_key_file_get_integer (key_file, groups[i], "Port", NULL);
-    local_port = g_key_file_get_integer (key_file, groups[i], "LocalPort", NULL);
-
+    g_object_get (G_OBJECT (credentials),
+                  "host", &host,
+                  "user", &user,
+                  "password", &password,
+                  "port", &port,
+                  "protocol", &protocol,
+                  "auto-connect", &auto_connect,
+                  NULL);
   skip:
-    if (protocol == NULL)
-      protocol = g_strdup ("UDP");
-
-    /* If Protocol is TLS fall back to port 5061, 5060 otherwise */
-    if (port == 0) {
-      if (g_strcmp0 (protocol, "TLS") == 0)
-        port = 5061;
-      else
-        port = 5060;
-    }
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
 
