@@ -14,9 +14,9 @@ build:native:
     paths:
       - _build
   variables:
+    COMMON_BUILD_OPTS: -Db_coverage=true --werror
     BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
     WANT_BUILD_DEPS: "true"
-    COMMON_BUILD_OPTS: --werror
   except:
     variables:
       - $PKG_ONLY == "1"
@@ -26,6 +26,7 @@ build:native:
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
+    - apt-get -y install lcov
     - apt-get -y build-dep .
     - ulimit -c unlimited
   script:
@@ -41,6 +42,9 @@ test:native:
   script:
     - export LC_ALL=C.UTF-8
     - xvfb-run -s -noreset ninja -C _build test
+    - cp _build/src/libcalls-vala.a.p/*.c _build
+    - ninja -C _build coverage
+  coverage: '/^\s+lines\.+:\s+([\d.]+\%)\s+/'
 
 build-gtkdoc:
   extends: build:native
