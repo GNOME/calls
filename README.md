@@ -1,4 +1,5 @@
 # Calls
+[![Code coverage](https://source.puri.sm/Librem5/calls/badges/master/coverage.svg)](https://source.puri.sm/Librem5/calls/commits/master)
 
 A phone dialer and call handler.
 
