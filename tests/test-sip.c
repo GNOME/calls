@@ -23,6 +23,9 @@ typedef struct {
   CallsSipOrigin *origin_alice;
   CallsSipOrigin *origin_bob;
   CallsSipOrigin *origin_offline;
+  CallsCredentials *credentials_alice;
+  CallsCredentials *credentials_bob;
+  CallsCredentials *credentials_offline;
 } SipFixture;
 
 
@@ -358,27 +361,43 @@ setup_sip_origins (SipFixture   *fixture,
                    gconstpointer user_data)
 {
   GListModel *origins;
+  CallsCredentials *alice = calls_credentials_new ();
+  CallsCredentials *bob = calls_credentials_new ();
+  CallsCredentials *offline = calls_credentials_new ();
 
   setup_sip_provider (fixture, user_data);
 
-  calls_sip_provider_add_origin (fixture->provider, "Alice",
-                                 "alice", NULL, NULL, 5060,
-                                 5060, "UDP", TRUE, FALSE);
+  g_object_set (alice, "name", "Alice", "user", "alice", NULL);
 
-  calls_sip_provider_add_origin (fixture->provider, "Bob",
-                                 "bob", NULL, NULL, 5060,
-                                 5061, "UDP", TRUE, FALSE);
+  calls_sip_provider_add_origin (fixture->provider, alice, 5060, TRUE);
 
-  calls_sip_provider_add_origin (fixture->provider, "Offline",
-                                 "someuser", "sip.imaginary-host.org", "password", 5060,
-                                 5062, "UDP", FALSE, FALSE);
+  g_object_set (bob, "name", "Bob", "user", "bob", NULL);
+
+  calls_sip_provider_add_origin (fixture->provider, bob, 5061, TRUE);
+
+  g_object_set (offline,
+                "name", "Offline",
+                "user", "someuser",
+                "host", "sip.imaginary-host.org",
+                "password", "password123",
+                "port", 5060,
+                "protocol", "UDP",
+                "auto-connect", FALSE,
+                NULL);
+
+  calls_sip_provider_add_origin (fixture->provider, offline, 0, FALSE);
 
   origins = calls_provider_get_origins
     (CALLS_PROVIDER (fixture->provider));
 
   fixture->origin_alice = g_list_model_get_item (origins, 0);
+  fixture->credentials_alice = alice;
+
   fixture->origin_bob = g_list_model_get_item (origins, 1);
+  fixture->credentials_bob = bob;
+
   fixture->origin_offline = g_list_model_get_item (origins, 2);
+  fixture->credentials_offline = offline;
 }
 
 static void
@@ -386,8 +405,13 @@ tear_down_sip_origins (SipFixture   *fixture,
                        gconstpointer user_data)
 {
   g_clear_object (&fixture->origin_alice);
+  g_clear_object (&fixture->credentials_alice);
+
   g_clear_object (&fixture->origin_bob);
+  g_clear_object (&fixture->credentials_bob);
+
   g_clear_object (&fixture->origin_offline);
+  g_clear_object (&fixture->credentials_offline);
 
   tear_down_sip_provider (fixture, user_data);
 }

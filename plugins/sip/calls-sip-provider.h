@@ -26,6 +26,7 @@
 
 #include <glib-object.h>
 
+#include "calls-credentials.h"
 #include "calls-provider.h"
 
 G_BEGIN_DECLS
@@ -36,14 +37,8 @@ G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER,
 
 CallsSipProvider *calls_sip_provider_new                    ();
 void              calls_sip_provider_add_origin             (CallsSipProvider *self,
-                                                             const gchar      *name,
-                                                             const gchar      *user,
-                                                             const gchar      *password,
-                                                             const gchar      *host,
-                                                             gint              port,
+                                                             CallsCredentials *credentials,
                                                              gint              local_port,
-                                                             const gchar      *protocol,
-                                                             gboolean          direct_connection,
-                                                             gboolean          auto_connect);
+                                                             gboolean          direct_connection);
 
 G_END_DECLS

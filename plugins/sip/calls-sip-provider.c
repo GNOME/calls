@@ -94,44 +94,23 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
 
   for (gsize i = 0; groups[i] != NULL; i++) {
     g_autoptr (CallsCredentials) credentials = calls_credentials_new ();
-    g_autofree gchar *user = NULL;
-    g_autofree gchar *password = NULL;
-    g_autofree gchar *host = NULL;
-    g_autofree gchar *protocol = NULL;
-    gint port = 0;
     gint local_port = 0;
-    gboolean auto_connect = TRUE;
     gboolean direct_connection =
       g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
 
     if (direct_connection) {
+      g_object_set (credentials, "name", groups[i], NULL);
+
       local_port = g_key_file_get_integer (key_file, groups[i], "LocalPort", NULL);
+      /* direct connection mode, needs a local port set */
       if (local_port == 0)
         local_port = 5060;
-      protocol = g_strdup ("UDP");
-      goto skip;
+    } else {
+      calls_credentials_update_from_keyfile (credentials, key_file, groups[i]);
     }
-
-    calls_credentials_update_from_keyfile (credentials, key_file, groups[i]);
-
-    g_object_get (G_OBJECT (credentials),
-                  "host", &host,
-                  "user", &user,
-                  "password", &password,
-                  "port", &port,
-                  "protocol", &protocol,
-                  "auto-connect", &auto_connect,
-                  NULL);
-  skip:
     g_debug ("Adding origin for SIP account %s", groups[i]);
 
-
-    calls_sip_provider_add_origin (self, groups[i],
-                                   user, password,
-                                   host, port, local_port,
-                                   protocol,
-                                   direct_connection,
-                                   auto_connect);
+    calls_sip_provider_add_origin (self, g_steal_pointer (&credentials), local_port, direct_connection);
   }
 
   g_strfreev (groups);
@@ -369,50 +348,29 @@ calls_sip_provider_init (CallsSipProvider *self)
 /**
  * calls_sip_provider_add_origin:
  * @self: A #CallsSipProvider
- * @name: The name of the origin
- * @user: (nullable): The username to use or %NULL
- * @password: (nullable): The password to use or %NULL
- * @host: (nullable):The host to use or %NULL
- * @port: The port of the host to connect to, usually 5060
+ * @credentials: A #CallsCredentials
  * @local_port: The local port to bind to or 0
- * @protocol: (nullable): The protocol to use. Can be "TCP", "UDP", "TLS" or %NULL
  * @direct_connection: %TRUE to use a direct connection to peers, %FALSE otherwise
- * @auto_connect: %TRUE to automatically try to register, %FALSE otherwise
  *
- * Adds a new origin (SIP account). If @direct_connection is set the nullables
- * can be set automatically (f.e. use the local user and hostname).
+ * Adds a new origin (SIP account). If @direct_connection is set
+ * some properties of @credentials can be set automatically
+ * (f.e. use the username and hostname).
  */
 void
 calls_sip_provider_add_origin (CallsSipProvider *self,
-                               const gchar      *name,
-                               const gchar      *user,
-                               const gchar      *password,
-                               const gchar      *host,
-                               gint              port,
+                               CallsCredentials *credentials,
                                gint              local_port,
-                               const gchar      *protocol,
-                               gboolean          direct_connection,
-                               gboolean          auto_connect)
+                               gboolean          direct_connection)
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
 
   g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
+  g_return_if_fail (CALLS_IS_CREDENTIALS (credentials));
 
-  origin = calls_sip_origin_new (name,
-                                 self->ctx,
-                                 user,
-                                 password,
-                                 host,
-                                 port,
+  origin = calls_sip_origin_new (self->ctx,
+                                 credentials,
                                  local_port,
-                                 protocol,
-                                 direct_connection,
-                                 auto_connect);
-
-  if (!origin) {
-    g_warning ("Could not create CallsSipOrigin");
-    return;
-  }
+                                 direct_connection);
 
   g_list_store_append (self->origins, origin);
 }
