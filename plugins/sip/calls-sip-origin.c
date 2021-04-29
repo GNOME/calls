@@ -99,12 +99,15 @@ struct _CallsSipOrigin
 
 static void calls_sip_origin_message_source_interface_init (CallsOriginInterface *iface);
 static void calls_sip_origin_origin_interface_init (CallsOriginInterface *iface);
+static void calls_sip_origin_accounts_interface_init (CallsAccountInterface *iface);
 
 G_DEFINE_TYPE_WITH_CODE (CallsSipOrigin, calls_sip_origin, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
                                                 calls_sip_origin_message_source_interface_init)
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_ORIGIN,
-                                                calls_sip_origin_origin_interface_init))
+                                                calls_sip_origin_origin_interface_init)
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_ACCOUNT,
+                                                calls_sip_origin_accounts_interface_init))
 
 static void
 remove_call (CallsSipOrigin *self,
@@ -239,6 +242,7 @@ dial (CallsOrigin *origin,
 {
   CallsSipOrigin *self;
   nua_handle_t *nh;
+
   g_assert (CALLS_ORIGIN (origin));
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
@@ -825,6 +829,50 @@ setup_sip_handles (CallsSipOrigin *self)
 
 
 static void
+go_online (CallsAccount *account,
+           gboolean            online)
+{
+  CallsSipOrigin *self;
+
+  g_assert (CALLS_IS_ACCOUNT (account));
+  g_assert (CALLS_IS_ORIGIN (account));
+  g_assert (CALLS_IS_SIP_ORIGIN (account));
+
+  self = CALLS_SIP_ORIGIN (account);
+
+  if (online) {
+    g_autofree char *user = NULL;
+    g_autofree char *display_name = NULL;
+    g_autofree char *registrar_url = NULL;
+
+    if (self->state == CALLS_ACCOUNT_ONLINE)
+      return;
+
+    g_object_get (self->credentials,
+                  "user", &user,
+                  "display-name", &display_name,
+                  NULL);
+
+    registrar_url = get_registrar_url (self);
+
+    nua_register (self->oper->register_handle,
+                  NUTAG_M_USERNAME (user),
+                  TAG_IF (display_name, NUTAG_M_DISPLAY (display_name)),
+                  NUTAG_REGISTRAR (registrar_url),
+                  TAG_END ());
+  }
+  else {
+    if (self->state == CALLS_ACCOUNT_OFFLINE)
+      return;
+
+    nua_unregister (self->oper->register_handle,
+                    TAG_END ());
+  }
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
+}
+
+
+static void
 setup_account_for_direct_connection (CallsSipOrigin *self)
 {
   g_autofree char *user = NULL;
@@ -929,7 +977,7 @@ init_sip_account (CallsSipOrigin *self,
     g_object_get (self->credentials, "auto-connect", &auto_connect, NULL);
     /* try to go online */
     if (auto_connect)
-      calls_sip_origin_go_online (self, TRUE);
+      go_online (CALLS_ACCOUNT (self), TRUE);
   }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
@@ -1056,7 +1104,7 @@ calls_sip_origin_dispose (GObject *object)
     g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
 
     if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_OFFLINE)
-      calls_sip_origin_go_online (self, FALSE);
+      go_online (CALLS_ACCOUNT (self), FALSE);
   }
 
   if (self->nua) {
@@ -1100,14 +1148,6 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   object_class->get_property = calls_sip_origin_get_property;
   object_class->set_property = calls_sip_origin_set_property;
 
-  props[PROP_ACC_CREDENTIALS] =
-    g_param_spec_object ("credentials",
-                         "Credentials",
-                         "The credentials for this origin",
-                         CALLS_TYPE_CREDENTIALS,
-                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_ACC_CREDENTIALS, props[PROP_ACC_CREDENTIALS]);
-
   props[PROP_ACC_DIRECT] =
     g_param_spec_boolean ("direct-connection",
                           "Direct connection",
@@ -1131,14 +1171,11 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_SIP_LOCAL_PORT, props[PROP_SIP_LOCAL_PORT]);
 
-  props[PROP_ACC_STATE] =
-    g_param_spec_enum ("account-state",
-                       "Account state",
-                       "The state of the SIP account",
-                       CALLS_TYPE_ACCOUNT_STATE,
-                       CALLS_ACCOUNT_NULL,
-                       G_PARAM_READWRITE);
-  g_object_class_install_property (object_class, PROP_ACC_STATE, props[PROP_ACC_STATE]);
+  g_object_class_override_property (object_class, PROP_ACC_CREDENTIALS, "account-credentials");
+  props[PROP_ACC_CREDENTIALS] = g_object_class_find_property (object_class, "account-credentials");
+
+  g_object_class_override_property (object_class, PROP_ACC_STATE, "account-state");
+  props[PROP_ACC_STATE] = g_object_class_find_property (object_class, "account-state");
 
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
@@ -1164,6 +1201,12 @@ calls_sip_origin_origin_interface_init (CallsOriginInterface *iface)
   iface->dial = dial;
 }
 
+static void
+calls_sip_origin_accounts_interface_init (CallsAccountInterface *iface)
+{
+  iface->go_online = go_online;
+}
+
 
 static void
 calls_sip_origin_init (CallsSipOrigin *self)
@@ -1182,51 +1225,8 @@ calls_sip_origin_new (CallsSipContext *sip_context,
 
   return g_object_new (CALLS_TYPE_SIP_ORIGIN,
                        "sip-context", sip_context,
-                       "credentials", g_object_ref (credentials),
+                       "account-credentials", g_object_ref (credentials),
                        "local-port", local_port,
                        "direct-connection", direct_connection,
                        NULL);
-}
-
-
-/**
- * calls_sip_origin_go_online:
- * @self: A #CallsSipOrigin
- * @enabled: %TRUE to go online, %FALSE to go offline
- */
-void
-calls_sip_origin_go_online (CallsSipOrigin *self,
-                            gboolean        online)
-{
-  g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
-
-  if (online) {
-    g_autofree char *user = NULL;
-    g_autofree char *display_name = NULL;
-    g_autofree char *registrar_url = NULL;
-
-    if (self->state == CALLS_ACCOUNT_ONLINE)
-      return;
-
-    g_object_get (self->credentials,
-                  "user", &user,
-                  "display-name", &display_name,
-                  NULL);
-
-    registrar_url = get_registrar_url (self);
-
-    nua_register (self->oper->register_handle,
-                  NUTAG_M_USERNAME (user),
-                  TAG_IF (display_name, NUTAG_M_DISPLAY (display_name)),
-                  NUTAG_REGISTRAR (registrar_url),
-                  TAG_END ());
-  }
-  else {
-    if (self->state == CALLS_ACCOUNT_OFFLINE)
-      return;
-
-    nua_unregister (self->oper->register_handle,
-                    TAG_END ());
-  }
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
 }
