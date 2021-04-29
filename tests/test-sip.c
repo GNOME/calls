@@ -133,35 +133,6 @@ test_sip_origin_call_lists (SipFixture   *fixture,
 }
 
 static gboolean
-on_check_call_disconnected_cb (gpointer user_data)
-{
-  CallsCall *call = CALLS_CALL (user_data);
-  CallsCallState state = calls_call_get_state (call);
-
-  g_assert_cmpint (state, ==, CALLS_CALL_STATE_DISCONNECTED);
-
-  g_object_unref (call);
-
-  if (is_call_test_done)
-    are_call_tests_done = TRUE;
-
-  is_call_test_done = TRUE;
-
-  return G_SOURCE_REMOVE;
-}
-
-static gboolean
-on_check_call_active_cb (gpointer user_data)
-{
-  CallsCall *call = CALLS_CALL (user_data);
-  CallsCallState state = calls_call_get_state (call);
-
-  g_assert_cmpint (state, ==, CALLS_CALL_STATE_ACTIVE);
-
-  return G_SOURCE_REMOVE;
-}
-
-static gboolean
 on_call_hangup_cb (gpointer user_data)
 {
   CallsCall *call = CALLS_CALL (user_data);
@@ -183,30 +154,68 @@ on_call_answer_cb (gpointer user_data)
   return G_SOURCE_REMOVE;
 }
 
-/**
- * TODO the calling tests are all g_timeout_add based and should be reworked
- * using g_idle_add and/or using the "state-changed" signal of CallsCall
- */
+static void
+on_autoreject_state_changed_cb (CallsCall     *call,
+                                CallsCallState new_state,
+                                CallsCallState old_state,
+                                gpointer       user_data)
+{
+  g_assert_cmpint (old_state, ==, CALLS_CALL_STATE_INCOMING);
+  g_assert_cmpint (new_state, ==, CALLS_CALL_STATE_DISCONNECTED);
+
+  g_object_unref (call);
+
+  is_call_test_done = TRUE;
+}
+
+static void
+on_state_changed_cb (CallsCall     *call,
+                     CallsCallState new_state,
+                     CallsCallState old_state,
+                     gpointer       user_data)
+{
+  gboolean schedule_hangup = GPOINTER_TO_INT (user_data);
+
+  switch (old_state) {
+  case CALLS_CALL_STATE_INCOMING:
+  case CALLS_CALL_STATE_DIALING:
+    g_assert_cmpint (new_state, ==, CALLS_CALL_STATE_ACTIVE);
+
+    if (schedule_hangup)
+      g_idle_add ((GSourceFunc) on_call_hangup_cb, call);
+    break;
+
+  case CALLS_CALL_STATE_ACTIVE:
+    g_assert_cmpint (new_state, ==, CALLS_CALL_STATE_DISCONNECTED);
+
+    g_object_unref (call);
+
+    if (is_call_test_done)
+      are_call_tests_done = TRUE;
+
+    is_call_test_done = TRUE;
+    break;
+
+  default:
+    g_assert_not_reached ();
+  }
+}
+
 static gboolean
 on_incoming_call_autoaccept_cb (CallsOrigin *origin,
                                 CallsCall   *call,
                                 gpointer     user_data)
 {
   CallsCallState state = calls_call_get_state (call);
-  gboolean schedule_hangup = GPOINTER_TO_INT (user_data);
 
   g_assert_cmpint (state, ==, CALLS_CALL_STATE_INCOMING);
 
   g_object_ref (call);
 
-  g_timeout_add (50, (GSourceFunc) on_call_answer_cb, call);
+  g_idle_add ((GSourceFunc) on_call_answer_cb, call);
 
-  g_timeout_add (500, (GSourceFunc) on_check_call_active_cb, call);
-
-  if (schedule_hangup)
-    g_timeout_add (1500, (GSourceFunc) on_call_hangup_cb, call);
-
-  g_timeout_add (2000, (GSourceFunc) on_check_call_disconnected_cb, call);
+  g_signal_connect (call, "state-changed",
+                    (GCallback) on_state_changed_cb, user_data);
 
   return G_SOURCE_REMOVE;
 }
@@ -221,9 +230,10 @@ on_incoming_call_autoreject_cb (CallsOrigin *origin,
   g_assert_cmpint (state, ==, CALLS_CALL_STATE_INCOMING);
 
   g_object_ref (call);
-  g_timeout_add (200, (GSourceFunc) on_call_hangup_cb, call);
+  g_idle_add ((GSourceFunc) on_call_hangup_cb, call);
 
-  g_timeout_add (1000, (GSourceFunc) on_check_call_disconnected_cb, call);
+  g_signal_connect (call, "state-changed",
+                    (GCallback) on_autoreject_state_changed_cb, NULL);
 
   return G_SOURCE_REMOVE;
 }
@@ -235,18 +245,13 @@ on_outgoing_call_cb (CallsOrigin *origin,
                      gpointer     user_data)
 {
   CallsCallState state = calls_call_get_state (call);
-  gboolean schedule_hangup = GPOINTER_TO_INT (user_data);
 
   g_assert_cmpint (state, ==, CALLS_CALL_STATE_DIALING);
 
   g_object_ref (call);
 
-  g_timeout_add (250, (GSourceFunc) on_check_call_active_cb, call);
-
-  if (schedule_hangup)
-    g_timeout_add (750, (GSourceFunc) on_call_hangup_cb, call);
-
-  g_timeout_add (2000, (GSourceFunc) on_check_call_disconnected_cb, call);
+  g_signal_connect (call, "state-changed",
+                    (GCallback) on_state_changed_cb, user_data);
 
   return G_SOURCE_REMOVE;
 }
