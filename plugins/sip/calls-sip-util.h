@@ -57,27 +57,6 @@ typedef enum
     SIP_ENGINE_READY,
   } SipEngineState;
 
-/**
- * SipAccountState:
- * @SIP_ACCOUNT_NULL: Not initialized
- * @SIP_ACCOUNT_OFFLINE: Account considered offline (not ready for placing or receiving calls)
- * @SIP_ACCOUNT_REGISTERING: REGISTER sent
- * @SIP_ACCOUNT_AUTHENTICATING: Authenticating using web-auth/proxy-auth
- * @SIP_ACCOUNT_ERROR: Unrecoverable error
- * @SIP_ACCOUNT_ERROR_RETRY: Recoverable error (f.e. using other credentials)
- * @SIP_ACCOUNT_ONLINE: Account considered online (can place and receive calls)
- */
-typedef enum
-  {
-    SIP_ACCOUNT_NULL = 0,
-    SIP_ACCOUNT_OFFLINE,
-    SIP_ACCOUNT_REGISTERING,
-    SIP_ACCOUNT_AUTHENTICATING,
-    SIP_ACCOUNT_ERROR,
-    SIP_ACCOUNT_ERROR_RETRY,
-    SIP_ACCOUNT_ONLINE,
-  } SipAccountState;
-
 
 gboolean check_sips (const gchar *addr);
 gboolean check_ipv6 (const gchar *host);

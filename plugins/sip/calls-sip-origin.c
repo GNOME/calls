@@ -25,6 +25,7 @@
 #define G_LOG_DOMAIN "CallsSipOrigin"
 
 
+#include "calls-account.h"
 #include "calls-credentials.h"
 #include "calls-message-source.h"
 #include "calls-origin.h"
@@ -34,6 +35,7 @@
 #include "calls-sip-util.h"
 #include "calls-sip-media-manager.h"
 #include "config.h"
+#include "enum-types.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
@@ -82,7 +84,7 @@ struct _CallsSipOrigin
   /* Needed to handle shutdown correctly. See sip_callback and dispose method */
   gboolean is_nua_shutdown;
 
-  SipAccountState state;
+  CallsAccountState state;
 
   CallsSipMediaManager *media_manager;
 
@@ -446,20 +448,20 @@ sip_r_register (int              status,
   if (status == 200) {
     g_debug ("REGISTER successful");
 
-    origin->state = SIP_ACCOUNT_ONLINE;
+    origin->state = CALLS_ACCOUNT_ONLINE;
   }
   else if (status == 401 || status == 407) {
     sip_authenticate (origin, nh, sip);
 
-    origin->state = SIP_ACCOUNT_AUTHENTICATING;
+    origin->state = CALLS_ACCOUNT_AUTHENTICATING;
   }
   else if (status == 403) {
     g_warning ("wrong credentials?");
-    origin->state = SIP_ACCOUNT_ERROR_RETRY;
+    origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
   }
   else if (status == 904) {
     g_warning ("unmatched challenge");
-    origin->state = SIP_ACCOUNT_ERROR_RETRY;
+    origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
   }
   g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
 }
@@ -882,7 +884,6 @@ static gboolean
 init_sip_account (CallsSipOrigin *self,
                   GError        **error)
 {
-  gboolean recoverable = FALSE;
   gboolean auto_connect = FALSE;
 
   if (self->use_direct_connection) {
@@ -895,7 +896,8 @@ init_sip_account (CallsSipOrigin *self,
                  "Must have completed account setup before calling"
                  "init_sip_account ()"
                  "Try again when account is setup");
-    recoverable = TRUE;
+
+    self->state = CALLS_ACCOUNT_NO_CREDENTIALS;
     goto err;
   }
 
@@ -904,6 +906,8 @@ init_sip_account (CallsSipOrigin *self,
   if (self->nua == NULL) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed setting up nua context");
+
+    self->state = CALLS_ACCOUNT_NULL;
     goto err;
   }
 
@@ -911,14 +915,16 @@ init_sip_account (CallsSipOrigin *self,
   if (self->oper == NULL) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed setting operation handles");
+
+    self->state = CALLS_ACCOUNT_NULL;
     goto err;
   }
 
   /* In the case of a direct connection we're immediately good to go */
   if (self->use_direct_connection)
-    self->state = SIP_ACCOUNT_ONLINE;
+    self->state = CALLS_ACCOUNT_ONLINE;
   else {
-    self->state = SIP_ACCOUNT_OFFLINE;
+    self->state = CALLS_ACCOUNT_OFFLINE;
 
     g_object_get (self->credentials, "auto-connect", &auto_connect, NULL);
     /* try to go online */
@@ -930,7 +936,6 @@ init_sip_account (CallsSipOrigin *self,
   return TRUE;
 
  err:
-  self->state = recoverable ? SIP_ACCOUNT_ERROR_RETRY : SIP_ACCOUNT_ERROR;
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return FALSE;
 }
@@ -1041,7 +1046,7 @@ calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
-  if (self->state == SIP_ACCOUNT_NULL)
+  if (self->state == CALLS_ACCOUNT_NULL)
     return;
 
   remove_calls (self, NULL);
@@ -1050,7 +1055,7 @@ calls_sip_origin_dispose (GObject *object)
     g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
     g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
 
-    if (!self->use_direct_connection && self->state == SIP_ACCOUNT_OFFLINE)
+    if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_OFFLINE)
       calls_sip_origin_go_online (self, FALSE);
   }
 
@@ -1066,7 +1071,7 @@ calls_sip_origin_dispose (GObject *object)
     self->nua = NULL;
   }
 
-  self->state = SIP_ACCOUNT_NULL;
+  self->state = CALLS_ACCOUNT_NULL;
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->dispose (object);
 }
@@ -1130,8 +1135,8 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
     g_param_spec_enum ("account-state",
                        "Account state",
                        "The state of the SIP account",
-                       SIP_TYPE_ACCOUNT_STATE,
-                       SIP_ACCOUNT_NULL,
+                       CALLS_TYPE_ACCOUNT_STATE,
+                       CALLS_ACCOUNT_NULL,
                        G_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_ACC_STATE, props[PROP_ACC_STATE]);
 
@@ -1200,7 +1205,7 @@ calls_sip_origin_go_online (CallsSipOrigin *self,
     g_autofree char *display_name = NULL;
     g_autofree char *registrar_url = NULL;
 
-    if (self->state == SIP_ACCOUNT_ONLINE)
+    if (self->state == CALLS_ACCOUNT_ONLINE)
       return;
 
     g_object_get (self->credentials,
@@ -1217,7 +1222,7 @@ calls_sip_origin_go_online (CallsSipOrigin *self,
                   TAG_END ());
   }
   else {
-    if (self->state == SIP_ACCOUNT_OFFLINE)
+    if (self->state == CALLS_ACCOUNT_OFFLINE)
       return;
 
     nua_unregister (self->oper->register_handle,

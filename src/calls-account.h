@@ -45,12 +45,13 @@ struct _CallsAccountInterface
 };
 /**
  * CallsAccountState:
- * @CALLS_ACCOUNT_NULL: Not initialized
+ * @CALLS_ACCOUNT_NULL: Not initialized or error
  * @CALLS_ACCOUNT_OFFLINE: Account considered offline (not ready for placing or receiving calls)
  * @CALLS_ACCOUNT_CONNECTING: Trying to connect to server
  * @CALLS_ACCOUNT_CONNECTION_FAILURE: Could not connect to server (f.e. DNS error, unreachable)
  * @CALLS_ACCOUNT_AUTHENTICATING: Authenticating using web-auth/proxy-auth
  * @CALLS_ACCOUNT_AUTHENTICATION_FAILURE: Could not authenticate to server (f.e. wrong credentials)
+ * @CALLS_ACCOUNT_NO_CREDENTIALS: Credentials are missing
  * @CALLS_ACCOUNT_ONLINE: Account considered online (can place and receive calls)
  */
 typedef enum {
@@ -60,6 +61,8 @@ typedef enum {
   CALLS_ACCOUNT_CONNECTION_FAILURE,
   CALLS_ACCOUNT_AUTHENTICATING,
   CALLS_ACCOUNT_AUTHENTICATION_FAILURE,
+  CALLS_ACCOUNT_NO_CREDENTIALS,
+  CALLS_ACCOUNT_UNKNOWN_ERROR,
   CALLS_ACCOUNT_ONLINE
 } CallsAccountState;
 

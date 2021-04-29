@@ -11,6 +11,7 @@
 #include "calls-sip-provider.h"
 #include "calls-sip-origin.h"
 #include "calls-sip-util.h"
+#include "calls-account.h"
 #include "gst-rfc3551.h"
 
 #include <gtk/gtk.h>
@@ -84,7 +85,7 @@ static void
 test_sip_origin_objects (SipFixture   *fixture,
                          gconstpointer user_data)
 {
-  SipAccountState state_alice, state_bob, state_offline;
+  CallsAccountState state_alice, state_bob, state_offline;
 
   g_assert_true (G_IS_OBJECT (fixture->origin_alice));
   g_assert_true (G_IS_OBJECT (fixture->origin_bob));
@@ -112,9 +113,9 @@ test_sip_origin_objects (SipFixture   *fixture,
                 "account-state", &state_offline,
                 NULL);
 
-  g_assert_cmpint (state_alice, ==, SIP_ACCOUNT_ONLINE);
-  g_assert_cmpint (state_bob, ==, SIP_ACCOUNT_ONLINE);
-  g_assert_cmpint (state_offline, ==, SIP_ACCOUNT_OFFLINE);
+  g_assert_cmpint (state_alice, ==, CALLS_ACCOUNT_ONLINE);
+  g_assert_cmpint (state_bob, ==, CALLS_ACCOUNT_ONLINE);
+  g_assert_cmpint (state_offline, ==, CALLS_ACCOUNT_OFFLINE);
 }
 
 static void
