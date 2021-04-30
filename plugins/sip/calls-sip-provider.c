@@ -26,6 +26,7 @@
 
 #define SIP_ACCOUNT_FILE "sip-account.cfg"
 
+#include "calls-account-provider.h"
 #include "calls-credentials.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"
@@ -60,6 +61,7 @@ struct _CallsSipProvider
   CallsProvider parent_instance;
 
   GListStore *origins;
+  GHashTable *credentials; /* key = credentials, value = origin */
   /* SIP */
   CallsSipContext *ctx;
   SipEngineState sip_state;
@@ -68,12 +70,15 @@ struct _CallsSipProvider
 };
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
+static void calls_sip_provider_account_provider_interface_init (CallsAccountProviderInterface *iface);
 
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
 (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_sip_provider_message_source_interface_init));
+                                calls_sip_provider_message_source_interface_init)
+ G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
+                                calls_sip_provider_account_provider_interface_init));
 
 
 static void
@@ -284,6 +289,9 @@ calls_sip_provider_dispose (GObject *object)
   g_list_store_remove_all (self->origins);
   g_clear_object (&self->origins);
 
+  g_hash_table_remove_all (self->credentials);
+  g_clear_pointer (&self->credentials, g_hash_table_unref);
+
   g_clear_pointer (&self->filename, g_free);
 
   calls_sip_provider_deinit_sip (self);
@@ -329,13 +337,87 @@ calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *i
 {
 }
 
+static gboolean
+add_account (CallsAccountProvider *acc_provider,
+             CallsCredentials     *credentials)
+{
+  CallsSipProvider *self;
+
+  g_assert (CALLS_IS_ACCOUNT_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_SIP_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_CREDENTIALS (credentials));
+
+  self = CALLS_SIP_PROVIDER (acc_provider);
+
+  return !!calls_sip_provider_add_origin (self, credentials, 0, FALSE);
+}
+
+static gboolean
+remove_account (CallsAccountProvider *acc_provider,
+                CallsCredentials     *credentials)
+{
+  CallsSipProvider *self;
+  CallsSipOrigin *origin;
+  guint position;
+
+  g_assert (CALLS_IS_ACCOUNT_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_SIP_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_CREDENTIALS (credentials));
+
+  self = CALLS_SIP_PROVIDER (acc_provider);
+
+  origin = g_hash_table_lookup (self->credentials, credentials);
+
+  if (origin == NULL)
+    return FALSE;
+
+  if (!g_list_store_find (self->origins, origin, &position))
+    return FALSE;
+
+  g_hash_table_remove (self->credentials, credentials);
+  g_list_store_remove (self->origins, position);
+
+  return TRUE;
+}
+
+static CallsAccount *
+get_account (CallsAccountProvider *acc_provider,
+             CallsCredentials     *credentials)
+{
+  CallsSipProvider *self;
+  CallsSipOrigin *origin;
+
+  g_assert (CALLS_IS_ACCOUNT_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_SIP_PROVIDER (acc_provider));
+  g_assert (CALLS_IS_CREDENTIALS (credentials));
+
+  self = CALLS_SIP_PROVIDER (acc_provider);
+
+  origin = g_hash_table_lookup (self->credentials, credentials);
+  if (origin)
+    return CALLS_ACCOUNT (origin);
+  else
+    return NULL;
+}
+
+static void
+calls_sip_provider_account_provider_interface_init (CallsAccountProviderInterface *iface)
+{
+  iface->add_account = add_account;
+  iface->remove_account = remove_account;
+  iface->get_account = get_account;
+}
 
 static void
 calls_sip_provider_init (CallsSipProvider *self)
 {
   const char *filename_env = g_getenv ("CALLS_SIP_ACCOUNT_FILE");
 
+  self->credentials =
+    g_hash_table_new_full (NULL, NULL, g_object_unref, g_object_unref);
+
   self->origins = g_list_store_new (CALLS_TYPE_SIP_ORIGIN);
+
   if (filename_env && filename_env[0] != '\0')
     self->filename = g_strdup (filename_env);
   else
@@ -369,11 +451,21 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
   g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), NULL);
   g_return_val_if_fail (CALLS_IS_CREDENTIALS (credentials), NULL);
 
+  if (g_hash_table_contains (self->credentials, credentials)) {
+    g_autofree char *name = NULL;
+    g_object_get (credentials, "name", &name, NULL);
+
+    g_warning ("Cannot add credentials with name '%s' multiple times", name);
+    return NULL;
+  }
+
   origin = calls_sip_origin_new (self->ctx,
                                  credentials,
                                  local_port,
                                  direct_connection);
 
+  g_hash_table_insert (self->credentials,
+                       g_object_ref (credentials), g_object_ref (origin));
   g_list_store_append (self->origins, origin);
 
   return origin;
