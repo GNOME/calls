@@ -111,4 +111,16 @@ t = executable('account', test_sources,
                )
 test('account', t, env: test_env)
 
+test_sources = [ 'test-util.c' ]
+t = executable('util', test_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('util', t, env: test_env)
+
 endif
