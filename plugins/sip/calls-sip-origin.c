@@ -318,7 +318,7 @@ sip_authenticate (CallsSipOrigin *origin,
 
   auth = g_strdup_printf ("%s:%s:%s:%s",
                           scheme, realm, origin->user, origin->password);
-  nua_authenticate (nh, NUTAG_AUTH (auth));
+  nua_authenticate (nh, NUTAG_AUTH (auth), TAG_END ());
 }
 
 
