@@ -24,10 +24,10 @@
 
 #pragma once
 
-#include <glib-object.h>
-
 #include "calls-credentials.h"
 #include "calls-provider.h"
+
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
