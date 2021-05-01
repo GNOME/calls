@@ -355,8 +355,10 @@ calls_sip_provider_init (CallsSipProvider *self)
  * Adds a new origin (SIP account). If @direct_connection is set
  * some properties of @credentials can be set automatically
  * (f.e. use the username and hostname).
+ *
+ * Return: (transfer none): A #CallsSipOrigin
  */
-void
+CallsSipOrigin *
 calls_sip_provider_add_origin (CallsSipProvider *self,
                                CallsCredentials *credentials,
                                gint              local_port,
@@ -364,8 +366,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
 
-  g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
-  g_return_if_fail (CALLS_IS_CREDENTIALS (credentials));
+  g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), NULL);
+  g_return_val_if_fail (CALLS_IS_CREDENTIALS (credentials), NULL);
 
   origin = calls_sip_origin_new (self->ctx,
                                  credentials,
@@ -373,6 +375,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                  direct_connection);
 
   g_list_store_append (self->origins, origin);
+
+  return origin;
 }
 
 
