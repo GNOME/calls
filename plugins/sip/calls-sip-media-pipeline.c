@@ -569,7 +569,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtpsrc to rtpbin");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -579,7 +579,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtcpsrc to rtpbin");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -589,7 +589,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtpbin to rtcpsink");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -605,7 +605,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link payloader to rtpbin");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -616,7 +616,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtpbin to rtpsink");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -627,7 +627,7 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtpbin to rtcpsink");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
@@ -638,12 +638,18 @@ initable_init (GInitable    *initable,
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtcpsrc to rtpbin");
-    return FALSE;
+    goto err;
   }
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
 
   return TRUE;
+
+ err:
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+  return FALSE;
 }
 
 
