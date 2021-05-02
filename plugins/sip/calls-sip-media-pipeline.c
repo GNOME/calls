@@ -360,7 +360,7 @@ initable_init (GInitable    *initable,
                GError      **error)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (initable);
-  GstCaps *caps;
+  g_autoptr (GstCaps) caps = NULL;
   g_autofree char *caps_string = NULL;
   GstPad *srcpad, *sinkpad;
   GstStructure *props = NULL;
