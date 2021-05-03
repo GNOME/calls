@@ -101,4 +101,18 @@ t = executable('sip', test_sources,
                )
 test('sip', t, env: test_env)
 
+test_sources = [ 'test-account.c' ]
+t = executable('account', test_sources,
+               calls_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               link_with : [calls_vala, calls_sip],
+               dependencies: [calls_deps, sip_deps],
+               include_directories : [
+                   calls_includes,
+                   sip_include,
+                 ]
+               )
+test('account', t, env: test_env)
+
 endif
