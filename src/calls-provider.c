@@ -78,6 +78,25 @@ calls_provider_real_get_protocols (CallsProvider *self)
   g_assert_not_reached ();
 }
 
+static gboolean
+calls_provider_real_is_modem (CallsProvider *self)
+{
+  return FALSE;
+}
+
+static gboolean
+calls_provider_real_is_operational (CallsProvider *self)
+{
+  GListModel *origins;
+
+  origins = calls_provider_get_origins (self);
+
+  if (origins)
+    return !!g_list_model_get_n_items (origins);
+
+  return FALSE;
+}
+
 
 static void
 calls_provider_get_property (GObject    *object,
@@ -108,6 +127,8 @@ calls_provider_class_init (CallsProviderClass *klass)
   klass->get_status = calls_provider_real_get_status;
   klass->get_origins = calls_provider_real_get_origins;
   klass->get_protocols = calls_provider_real_get_protocols;
+  klass->is_modem = calls_provider_real_is_modem;
+  klass->is_operational = calls_provider_real_is_operational;
 
   props[PROP_STATUS] =
     g_param_spec_string ("status",
@@ -243,4 +264,35 @@ calls_provider_get_protocols (CallsProvider *self)
   g_return_val_if_fail (CALLS_IS_PROVIDER (self), NULL);
 
   return CALLS_PROVIDER_GET_CLASS (self)->get_protocols (self);
+}
+
+/**
+ * calls_provider_is_modem:
+ * @self: A #CallsProvider
+ *
+ * Returns: %TRUE is this provider handles modems, %FALSE otherwise
+ */
+gboolean
+calls_provider_is_modem (CallsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), FALSE);
+
+  return CALLS_PROVIDER_GET_CLASS (self)->is_modem (self);
+}
+
+/**
+ * calls_provider_is_operational:
+ * @self: A #CallsProvider
+ *
+ * Returns: %TRUE is this provider is operational, %FALSE otherwise
+ *
+ * If not subclassed this method will simply test if there are any
+ * origins available.
+ */
+gboolean
+calls_provider_is_operational (CallsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_PROVIDER (self), FALSE);
+
+  return CALLS_PROVIDER_GET_CLASS (self)->is_operational (self);
 }

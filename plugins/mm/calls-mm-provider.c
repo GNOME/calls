@@ -365,6 +365,12 @@ calls_mm_provider_get_protocols (CallsProvider *provider)
   return supported_protocols;
 }
 
+static gboolean
+calls_mm_provider_is_modem (CallsProvider *provider)
+{
+  return TRUE;
+}
+
 static void
 constructed (GObject *object)
 {
@@ -427,6 +433,7 @@ calls_mm_provider_class_init (CallsMMProviderClass *klass)
   provider_class->get_status = calls_mm_provider_get_status;
   provider_class->get_origins = calls_mm_provider_get_origins;
   provider_class->get_protocols = calls_mm_provider_get_protocols;
+  provider_class->is_modem = calls_mm_provider_is_modem;
 }
 
 

@@ -306,6 +306,12 @@ calls_ofono_provider_get_protocols (CallsProvider *provider)
   return supported_protocols;
 }
 
+static gboolean
+calls_ofono_provider_is_modem (CallsProvider *provider)
+{
+  return TRUE;
+}
+
 static void
 modem_added_cb (GDBOManager        *manager,
                 const gchar        *path,
@@ -535,6 +541,7 @@ calls_ofono_provider_class_init (CallsOfonoProviderClass *klass)
   provider_class->get_status = calls_ofono_provider_get_status;
   provider_class->get_origins = calls_ofono_provider_get_origins;
   provider_class->get_protocols = calls_ofono_provider_get_protocols;
+  provider_class->is_modem = calls_ofono_provider_is_modem;
 }
 
 

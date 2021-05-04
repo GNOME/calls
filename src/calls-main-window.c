@@ -315,8 +315,12 @@ state_changed_cb (CallsMainWindow *self,
     case CALLS_MANAGER_STATE_READY:
       break;
 
-    case CALLS_MANAGER_STATE_NO_ORIGIN:
+    case CALLS_MANAGER_STATE_NO_VOICE_MODEM:
       error = _("Can't place calls: No voice-capable modem available");
+      break;
+
+    case CALLS_MANAGER_STATE_NO_ORIGIN:
+      error = _("Can't place calls: No modem or VoIP account available");
       break;
 
     case CALLS_MANAGER_STATE_UNKNOWN:

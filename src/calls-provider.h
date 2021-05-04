@@ -48,6 +48,8 @@ struct _CallsProviderClass
   const char         *(*get_status)                     (CallsProvider *self);
   GListModel         *(*get_origins)                    (CallsProvider *self);
   const char * const *(*get_protocols)                  (CallsProvider *self);
+  gboolean            (*is_modem)                       (CallsProvider *self);
+  gboolean            (*is_operational)                 (CallsProvider *self);
 };
 
 const char           *calls_provider_get_name           (CallsProvider *self);
@@ -55,7 +57,9 @@ const char           *calls_provider_get_status         (CallsProvider *self);
 GListModel           *calls_provider_get_origins        (CallsProvider *self);
 CallsProvider        *calls_provider_load_plugin        (const char    *name);
 void                  calls_provider_unload_plugin      (const char    *name);
-const char * const   *calls_provider_get_protocols       (CallsProvider *self);
+const char * const   *calls_provider_get_protocols      (CallsProvider *self);
+gboolean              calls_provider_is_modem           (CallsProvider *self);
+gboolean              calls_provider_is_operational     (CallsProvider *self);
 
 
 G_END_DECLS

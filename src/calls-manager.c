@@ -92,6 +92,10 @@ static void
 update_state (CallsManager *self)
 {
   guint n_items;
+  GHashTableIter iter;
+  gpointer key;
+  gpointer value;
+
   g_assert (CALLS_IS_MANAGER (self));
 
   if (g_hash_table_size (self->providers) == 0) {
@@ -99,9 +103,15 @@ update_state (CallsManager *self)
     return;
   }
 
-  if (g_hash_table_contains (self->providers, "dummy")) {
-    set_state (self, CALLS_MANAGER_STATE_READY);
-    return;
+  g_hash_table_iter_init (&iter, self->providers);
+
+  while (g_hash_table_iter_next (&iter, &key, &value)) {
+    CallsProvider *provider = CALLS_PROVIDER (value);
+
+    if (calls_provider_is_modem (provider) && !calls_provider_is_operational (provider)) {
+      set_state (self, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
+      return;
+    }
   }
 
   n_items = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
