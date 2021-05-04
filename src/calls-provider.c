@@ -81,15 +81,14 @@ calls_provider_get_property (GObject    *object,
 {
   CallsProvider *self = CALLS_PROVIDER (object);
 
-  switch (prop_id)
-    {
-    case PROP_STATUS:
-      g_value_set_string (value, calls_provider_get_status (self));
-      break;
+  switch (prop_id) {
+  case PROP_STATUS:
+    g_value_set_string (value, calls_provider_get_status (self));
+    break;
 
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
 }
 
 static void
@@ -179,40 +178,35 @@ calls_provider_load_plugin (const char *name)
 
   // Find the plugin
   info = peas_engine_get_plugin_info (plugins, name);
-  if (!info)
-    {
-      g_debug ("Could not find plugin `%s'", name);
-      return NULL;
-    }
+  if (!info) {
+    g_debug ("Could not find plugin `%s'", name);
+    return NULL;
+  }
 
   // Possibly load the plugin
-  if (!peas_plugin_info_is_loaded (info))
-    {
-      peas_engine_load_plugin (plugins, info);
+  if (!peas_plugin_info_is_loaded (info)) {
+    peas_engine_load_plugin (plugins, info);
 
-      if (!peas_plugin_info_is_available (info, &error))
-        {
-          g_debug ("Error loading plugin `%s': %s", name, error->message);
-          return NULL;
-        }
-
-      g_debug ("Loaded plugin `%s'", name);
-    }
-
-  // Check the plugin provides CallsProvider
-  if (!peas_engine_provides_extension (plugins, info, CALLS_TYPE_PROVIDER))
-    {
-      g_debug ("Plugin `%s' does not have a provider extension", name);
+    if (!peas_plugin_info_is_available (info, &error)) {
+      g_debug ("Error loading plugin `%s': %s", name, error->message);
       return NULL;
     }
+
+    g_debug ("Loaded plugin `%s'", name);
+  }
+
+  // Check the plugin provides CallsProvider
+  if (!peas_engine_provides_extension (plugins, info, CALLS_TYPE_PROVIDER)) {
+    g_debug ("Plugin `%s' does not have a provider extension", name);
+    return NULL;
+  }
 
   // Get the extension
   extension = peas_engine_create_extensionv (plugins, info, CALLS_TYPE_PROVIDER, 0, NULL);
-  if (!extension)
-    {
-      g_debug ("Could not create provider from plugin `%s'", name);
-      return NULL;
-    }
+  if (!extension) {
+    g_debug ("Could not create provider from plugin `%s'", name);
+    return NULL;
+  }
 
   g_debug ("Created provider from plugin `%s'", name);
   return CALLS_PROVIDER (extension);

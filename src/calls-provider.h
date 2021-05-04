@@ -44,17 +44,16 @@ struct _CallsProviderClass
 {
   GObjectClass parent_class;
 
-  const char *(*get_name)    (CallsProvider *self);
-  const char *(*get_status)  (CallsProvider *self);
-  GListModel *(*get_origins) (CallsProvider *self);
+  const char         *(*get_name)                       (CallsProvider *self);
+  const char         *(*get_status)                     (CallsProvider *self);
+  GListModel         *(*get_origins)                    (CallsProvider *self);
 };
 
-
-const char    *calls_provider_get_name      (CallsProvider *self);
-const char    *calls_provider_get_status    (CallsProvider *self);
-GListModel    *calls_provider_get_origins   (CallsProvider *self);
-CallsProvider *calls_provider_load_plugin   (const char *name);
-void           calls_provider_unload_plugin (const char *name);
+const char           *calls_provider_get_name           (CallsProvider *self);
+const char           *calls_provider_get_status         (CallsProvider *self);
+GListModel           *calls_provider_get_origins        (CallsProvider *self);
+CallsProvider        *calls_provider_load_plugin        (const char    *name);
+void                  calls_provider_unload_plugin      (const char    *name);
 
 
 G_END_DECLS
