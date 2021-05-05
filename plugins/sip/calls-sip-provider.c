@@ -469,7 +469,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
     g_autofree char *name = NULL;
     g_object_get (credentials, "name", &name, NULL);
 
-    g_warning ("Cannot add credentials with name '%s' multiple times", name);
+    /* This could be a INFO level log once we have improved logging */
+    g_debug ("Cannot add credentials with name '%s' multiple times", name);
     return NULL;
   }
 

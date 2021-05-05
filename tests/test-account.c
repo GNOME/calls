@@ -72,8 +72,6 @@ test_account_basic ()
   g_object_unref (origin_bob);
 
   /* Try adding credentials a second time */
-  g_test_expect_message ("CallsSipProvider", G_LOG_LEVEL_WARNING,
-                         "Cannot add credentials with name 'Alice' multiple times");
   g_assert_false (calls_account_provider_add_account (acc_provider, alice));
 
   /* Remove credentials */
