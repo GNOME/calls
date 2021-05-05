@@ -25,8 +25,8 @@
 #pragma once
 
 #include "calls-contacts-provider.h"
-#include "calls-provider.h"
 #include "calls-origin.h"
+#include "calls-credentials.h"
 
 #include <glib-object.h>
 
@@ -56,6 +56,14 @@ void                   calls_manager_remove_provider          (CallsManager     
                                                                const char       *name);
 gboolean               calls_manager_has_provider             (CallsManager     *self,
                                                                const char       *name);
+gboolean               calls_manager_is_modem_provider        (CallsManager     *self,
+                                                               const char       *name);
+gboolean               calls_manager_provider_add_account     (CallsManager     *self,
+                                                               const char       *provider,
+                                                               CallsCredentials *credentials);
+gboolean               calls_manager_provider_remove_account  (CallsManager     *self,
+                                                               const char       *provider,
+                                                               CallsCredentials *credentials);
 CallsManagerState      calls_manager_get_state                (CallsManager     *self);
 GListModel            *calls_manager_get_origins              (CallsManager     *self);
 GList                 *calls_manager_get_calls                (CallsManager     *self);

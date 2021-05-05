@@ -23,9 +23,13 @@
  */
 
 #include "config.h"
-#include "calls-ussd.h"
-#include "calls-manager.h"
+
+#include "calls-account-provider.h"
 #include "calls-contacts-provider.h"
+#include "calls-manager.h"
+#include "calls-provider.h"
+#include "calls-ussd.h"
+
 #include "enum-types.h"
 
 #include <glib/gi18n.h>
@@ -740,6 +744,74 @@ calls_manager_has_provider (CallsManager *self,
   g_return_val_if_fail (name, FALSE);
 
   return !!g_hash_table_lookup (self->providers, name);
+}
+
+gboolean
+calls_manager_is_modem_provider (CallsManager *self,
+                                 const char   *name)
+{
+  CallsProvider *provider;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+  g_return_val_if_fail (name, FALSE);
+
+  provider = g_hash_table_lookup (self->providers, name);
+  g_return_val_if_fail (provider, FALSE);
+
+  return calls_provider_is_modem (provider);
+}
+
+/**
+ * calls_manager_provder_add_accounts:
+ * @self: A #CallsManager
+ * @name: The name of the provider to add the account to
+ * @credentials: A #CallsCredentials storing the credentials of the account
+ *
+ * Returns: %TRUE if account successfully added, %FALSE otherwise
+ */
+gboolean
+calls_manager_provider_add_account (CallsManager     *self,
+                                    const char       *name,
+                                    CallsCredentials *credentials)
+{
+  CallsProvider *provider = NULL;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+  g_return_val_if_fail (name, FALSE);
+  g_return_val_if_fail (CALLS_IS_CREDENTIALS (credentials), FALSE);
+
+  provider = g_hash_table_lookup (self->providers, name);
+  g_return_val_if_fail (CALLS_IS_PROVIDER (provider), FALSE);
+  g_return_val_if_fail (CALLS_IS_ACCOUNT_PROVIDER (provider), FALSE);
+
+  return calls_account_provider_add_account (CALLS_ACCOUNT_PROVIDER (provider),
+                                             credentials);
+}
+/**
+ * calls_manager_provder_remove_accounts:
+ * @self: A #CallsManager
+ * @name: The name of the provider to add the account to
+ * @credentials: A #CallsCredentials storing the credentials of the account
+ *
+ * Returns: %TRUE if account successfully removed, %FALSE otherwise
+ */
+gboolean
+calls_manager_provider_remove_account (CallsManager     *self,
+                                       const char       *name,
+                                       CallsCredentials *credentials)
+{
+  CallsProvider *provider = NULL;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
+  g_return_val_if_fail (name, FALSE);
+  g_return_val_if_fail (CALLS_IS_CREDENTIALS (credentials), FALSE);
+
+  provider = g_hash_table_lookup (self->providers, name);
+  g_return_val_if_fail (CALLS_IS_PROVIDER (provider), FALSE);
+  g_return_val_if_fail (CALLS_IS_ACCOUNT_PROVIDER (provider), FALSE);
+
+  return calls_account_provider_remove_account (CALLS_ACCOUNT_PROVIDER (provider),
+                                                credentials);
 }
 
 CallsManagerState
