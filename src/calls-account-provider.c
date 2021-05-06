@@ -62,6 +62,8 @@ calls_account_provider_add_account (CallsAccountProvider *self,
   iface = CALLS_ACCOUNT_PROVIDER_GET_IFACE (self);
   g_return_val_if_fail (iface->add_account != NULL, FALSE);
 
+  g_debug ("Trying to add account for %s", calls_credentials_get_name (credentials));
+
   return iface->add_account (self, credentials);
 }
 
@@ -85,6 +87,8 @@ calls_account_provider_remove_account (CallsAccountProvider *self,
   iface = CALLS_ACCOUNT_PROVIDER_GET_IFACE (self);
   g_return_val_if_fail (iface->remove_account != NULL, FALSE);
 
+  g_debug ("Trying to remove account from %s", calls_credentials_get_name (credentials));
+
   return iface->remove_account (self, credentials);
 }
 
@@ -105,6 +109,8 @@ calls_account_provider_get_account (CallsAccountProvider *self,
 
   iface = CALLS_ACCOUNT_PROVIDER_GET_IFACE (self);
   g_return_val_if_fail (iface->get_account != NULL, NULL);
+
+  g_debug ("Trying to get account from %s", calls_credentials_get_name (credentials));
 
   return iface->get_account (self, credentials);
 }

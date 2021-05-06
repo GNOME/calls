@@ -37,6 +37,9 @@ CallsCredentials       *calls_credentials_new                     ();
 gboolean                calls_credentials_update_from_keyfile     (CallsCredentials *self,
                                                                    GKeyFile         *key_file,
                                                                    const char       *name);
+void                    calls_credentials_set_name                (CallsCredentials *self,
+                                                                   const char       *name);
+const char             *calls_credentials_get_name                (CallsCredentials *self);
 
 G_END_DECLS
 
