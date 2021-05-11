@@ -33,10 +33,11 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, HdyApplicationWindow);
 
-CallsMainWindow *calls_main_window_new  (GtkApplication  *application,
-                                         GListModel      *record_store);
-void             calls_main_window_dial (CallsMainWindow *self,
-                                         const gchar     *target);
+CallsMainWindow       *calls_main_window_new                      (GtkApplication  *application,
+                                                                   GListModel      *record_store);
+void                   calls_main_window_dial                     (CallsMainWindow *self,
+                                                                   const gchar     *target);
+void                   calls_main_window_show_accounts_overview   (CallsMainWindow *self);
 
 G_END_DECLS
 

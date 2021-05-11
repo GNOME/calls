@@ -23,6 +23,7 @@
  */
 
 #include "calls-main-window.h"
+#include "calls-account-overview.h"
 #include "calls-origin.h"
 #include "calls-ussd.h"
 #include "calls-call-selector-item.h"
@@ -54,6 +55,7 @@ struct _CallsMainWindow
   GtkRevealer *permanent_error_revealer;
   GtkLabel *permanent_error_label;
 
+  CallsAccountOverview *account_overview;
   CallsNewCallBox *new_call;
 
   GtkDialog  *ussd_dialog;
@@ -426,6 +428,7 @@ dispose (GObject *object)
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   g_clear_object (&self->record_store);
+  g_clear_object (&self->account_overview);
 
   G_OBJECT_CLASS (calls_main_window_parent_class)->dispose (object);
 }
@@ -530,4 +533,18 @@ calls_main_window_dial (CallsMainWindow *self,
     {
       calls_new_call_box_dial (self->new_call, target);
     }
+}
+
+void
+calls_main_window_show_accounts_overview (CallsMainWindow *self)
+{
+  g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
+
+  if (self->account_overview == NULL) {
+    self->account_overview = calls_account_overview_new ();
+    gtk_window_set_transient_for (GTK_WINDOW (self->account_overview),
+                                  GTK_WINDOW (self));
+  }
+
+  gtk_window_present (GTK_WINDOW (self->account_overview));
 }

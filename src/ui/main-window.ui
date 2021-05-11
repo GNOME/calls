@@ -30,7 +30,7 @@
             </child>
             <child>
               <object class="GtkMenuButton">
-                <property name="visible">False</property>
+                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="popover">menu_popover</property>
                 <child>
@@ -225,8 +225,8 @@
         <child>
           <object class="GtkModelButton">
             <property name="visible">True</property>
-            <property name="text" translatable="yes">VoIP Accounts</property>
-            <!--<property name="action-name">app.voip-accounts</property>-->
+            <property name="text" translatable="yes">_VoIP Accounts</property>
+            <property name="action-name">app.accounts</property>
           </object>
         </child>
         <child>
@@ -237,20 +237,21 @@
         </child>
         <child>
           <object class="GtkModelButton">
-            <property name="visible">True</property>
-            <property name="text" translatable="yes">Keyboard shortcuts</property>
+            <property name="visible">False</property>
+            <property name="text" translatable="yes">_Keyboard shortcuts</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">False</property>
+            <property name="text" translatable="yes">_Help</property>
           </object>
         </child>
         <child>
           <object class="GtkModelButton">
             <property name="visible">True</property>
-            <property name="text" translatable="yes">Help</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">True</property>
-            <property name="text" translatable="yes">About Calls</property>
+            <property name="text" translatable="yes">_About Calls</property>
+            <property name="action-name">app.about</property>
           </object>
         </child>
 

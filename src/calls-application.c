@@ -351,6 +351,15 @@ copy_number (GSimpleAction *action,
 }
 
 static void
+show_accounts (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
+{
+  CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
+  calls_main_window_show_accounts_overview (app->main_window);
+}
+
+static void
 manager_state_changed_cb (GApplication *application)
 {
   GAction* dial_action = g_action_map_lookup_action (G_ACTION_MAP (application), "dial");
@@ -366,6 +375,8 @@ static const GActionEntry actions[] =
   { "set-daemon", set_daemon_action, NULL },
   { "dial", dial_action, "s" },
   { "copy-number", copy_number, "s"},
+  /* TODO About dialog { "about", show_about, NULL}, */
+  { "accounts", show_accounts, NULL},
 };
 
 

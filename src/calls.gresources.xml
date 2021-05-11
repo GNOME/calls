@@ -14,6 +14,8 @@
     <file preprocess="xml-stripblanks">in-app-notification.ui</file>
     <file preprocess="xml-stripblanks">contacts-row.ui</file>
     <file preprocess="xml-stripblanks">contacts-box.ui</file>
+    <file preprocess="xml-stripblanks">account-overview.ui</file>
+    <file preprocess="xml-stripblanks">account-row.ui</file>
   </gresource>
   <gresource prefix="/org/gnome/Calls/">
     <file>style.css</file>

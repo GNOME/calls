@@ -108,6 +108,8 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-contacts-row.c', 'calls-contacts-row.h',
                        'calls-account.c', 'calls-account.h',
                        'calls-account-provider.c', 'calls-account-provider.h',
+                       'calls-account-overview.c', 'calls-account-overview.h',
+                       'calls-account-row.c', 'calls-account-row.h',
                        'calls-settings.c', 'calls-settings.h',
                       ]) + calls_generated_sources
 
