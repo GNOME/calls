@@ -242,13 +242,16 @@ dial (CallsOrigin *origin,
 {
   CallsSipOrigin *self;
   nua_handle_t *nh;
+  g_autofree char *name = NULL;
 
   g_assert (CALLS_ORIGIN (origin));
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
+  name = calls_origin_get_name (origin);
+
   if (address == NULL) {
     g_warning ("Tried dialing on origin '%s' without an address",
-               calls_origin_get_name (origin));
+               name);
     return;
   }
 
@@ -259,7 +262,7 @@ dial (CallsOrigin *origin,
                    SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
                    TAG_END ());
 
-  g_debug ("Calling `%s'", address);
+  g_debug ("Calling `%s' from origin '%s'", address, name);
 
   add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
 }

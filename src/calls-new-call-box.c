@@ -163,13 +163,13 @@ dial_queued (CallsNewCallBox *self)
 }
 
 
-char *
+static char *
 get_origin_name (gpointer item,
                  gpointer user_data)
 {
   g_assert (CALLS_IS_ORIGIN (item));
 
-  return g_strdup (calls_origin_get_name (item));
+  return calls_origin_get_name (item);
 }
 
 static void

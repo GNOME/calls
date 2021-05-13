@@ -146,10 +146,12 @@ ussd_state_changed_cb (CallsManager *self,
 static void
 add_origin (CallsManager *self, CallsOrigin *origin)
 {
+  g_autofree const char *name = NULL;
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (CALLS_IS_ORIGIN (origin));
 
-  g_debug ("Adding origin %s (%p)", calls_origin_get_name (origin), origin);
+  name = calls_origin_get_name (origin);
+  g_debug ("Adding origin %s (%p)", name, origin);
 
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
@@ -176,10 +178,12 @@ static void
 remove_origin (CallsManager *self, CallsOrigin *origin)
 {
   GListModel *origins;
+  g_autofree const char *name = NULL;
 
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
 
-  g_debug ("Removing origin %s (%p)", calls_origin_get_name (origin), origin);
+  name = calls_origin_get_name (origin);
+  g_debug ("Removing origin %s (%p)", name, origin);
 
   g_signal_handlers_disconnect_by_data (origin, self);
 

@@ -48,7 +48,7 @@ struct _CallsOriginInterface
 
 typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, CallsOrigin* origin);
 
-const gchar *          calls_origin_get_name                (CallsOrigin *self);
+char *                 calls_origin_get_name                (CallsOrigin *self);
 GList *                calls_origin_get_calls               (CallsOrigin *self);
 void                   calls_origin_foreach_call            (CallsOrigin *self,
                                                              CallsOriginForeachCallFunc callback,

@@ -96,10 +96,10 @@ calls_origin_default_init (CallsOriginInterface *iface)
  *
  * Get the user-presentable name of the origin.
  *
- * Returns: A string containing the name.  The string must be freed by
+ * Returns (transfer full): A string containing the name.  The string must be freed by
  * the caller.
  */
-DEFINE_ORIGIN_GETTER(name, const gchar *, NULL);
+DEFINE_ORIGIN_GETTER(name, char *, NULL);
 
 /**
  * calls_origin_get_calls:
