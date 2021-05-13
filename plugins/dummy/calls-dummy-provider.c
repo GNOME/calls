@@ -146,7 +146,7 @@ calls_dummy_provider_message_source_interface_init (CallsMessageSourceInterface 
 static void
 calls_dummy_provider_init (CallsDummyProvider *self)
 {
-  self->origins = g_list_store_new (CALLS_TYPE_DUMMY_ORIGIN);
+  self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
 }
 
 

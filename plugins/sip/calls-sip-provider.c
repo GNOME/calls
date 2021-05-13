@@ -416,7 +416,7 @@ calls_sip_provider_init (CallsSipProvider *self)
   self->credentials =
     g_hash_table_new_full (NULL, NULL, g_object_unref, g_object_unref);
 
-  self->origins = g_list_store_new (CALLS_TYPE_SIP_ORIGIN);
+  self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
 
   if (filename_env && filename_env[0] != '\0')
     self->filename = g_strdup (filename_env);

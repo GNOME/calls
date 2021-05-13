@@ -546,7 +546,7 @@ calls_ofono_provider_init (CallsOfonoProvider *self)
   self->status = g_strdup (_("Initialised"));
   self->modems = g_hash_table_new_full (g_str_hash, g_str_equal,
                                         g_free, g_object_unref);
-  self->origins = g_list_store_new (CALLS_TYPE_OFONO_ORIGIN);
+  self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
 }
 
 
