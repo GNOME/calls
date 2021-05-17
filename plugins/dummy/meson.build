@@ -51,6 +51,7 @@ calls_dummy = shared_module(
   dummy_sources,
   dependencies: dummy_deps,
   include_directories: src_include,
+  link_with: libcalls,
   install: true,
   install_dir: dummy_install_dir
 )

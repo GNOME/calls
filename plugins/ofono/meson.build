@@ -54,7 +54,7 @@ calls_ofono = shared_module(
     src_include,
     include_directories('.')
   ],
-  link_with: gdbofono_lib,
+  link_with: [gdbofono_lib, libcalls],
   install: true,
   install_dir: ofono_install_dir
 )

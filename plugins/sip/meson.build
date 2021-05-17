@@ -69,6 +69,7 @@ calls_sip = shared_module(
   sip_sources,
   dependencies: sip_deps,
   include_directories: src_include,
+  link_with: libcalls,
   install: true,
   install_dir: sip_install_dir
 )

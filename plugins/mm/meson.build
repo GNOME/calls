@@ -51,6 +51,7 @@ calls_mm = shared_module(
   mm_sources,
   dependencies: mm_deps,
   include_directories: src_include,
+  link_with: libcalls,
   install: true,
   install_dir: mm_install_dir
 )

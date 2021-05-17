@@ -45,11 +45,10 @@ foreach test : tests
                     'common.h' ]
 
   t = executable(name, test_sources,
-                 calls_sources,
                  dummy_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
-                 link_with : calls_vala,
+                 link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
                    calls_includes,
@@ -62,10 +61,9 @@ endforeach
 test_sources = [ 'test-manager.c' ]
 
 t = executable('manager', test_sources,
-                 calls_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
-                 link_with : calls_vala,
+                 link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
                    calls_includes
@@ -79,7 +77,7 @@ t = executable('plugins', test_sources,
                  calls_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
-                 link_with : calls_vala,
+                 link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
                    calls_includes
@@ -89,10 +87,9 @@ test('plugins', t, env: test_env)
 
 test_sources = [ 'test-sip.c' ]
 t = executable('sip', test_sources,
-               calls_sources,
                c_args : test_cflags,
                link_args: test_link_args,
-               link_with : [calls_vala, calls_sip],
+               link_with : [calls_vala, calls_sip, libcalls],
                dependencies: [calls_deps, sip_deps],
                include_directories : [
                    calls_includes,
@@ -103,10 +100,9 @@ test('sip', t, env: test_env)
 
 test_sources = [ 'test-account.c' ]
 t = executable('account', test_sources,
-               calls_sources,
                c_args : test_cflags,
                link_args: test_link_args,
-               link_with : [calls_vala, calls_sip],
+               link_with : [calls_vala, calls_sip, libcalls],
                dependencies: [calls_deps, sip_deps],
                include_directories : [
                    calls_includes,

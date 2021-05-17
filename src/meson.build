@@ -131,13 +131,22 @@ version_h = vcs_tag(
 
 calls_sources += [ version_h ]
 
+libcalls = static_library(
+  'calls', calls_sources,
+  install: false,
+  dependencies : calls_deps,
+  link_with: calls_vala,
+  include_directories: src_include,
+)
+
 executable (
   'gnome-calls',
-  calls_sources, 'main.c',
+  calls_resources,
+  'main.c',
   dependencies : calls_deps,
   export_dynamic : true,
   include_directories : calls_includes,
   install : true,
-  link_with : calls_vala,
+  link_with : [calls_vala, libcalls],
   c_args : '-Wno-error=deprecated-declarations',
 )
