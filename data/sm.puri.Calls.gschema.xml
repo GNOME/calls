@@ -8,5 +8,11 @@
       <description>Whether calls should automatically use the default origin</description>
     </key>
 
+    <key name="country-code" type="s">
+      <default>''</default>
+      <summary>The country code as reported by the modem</summary>
+      <description>The country code is used for contact name lookup</description>
+    </key>
+
   </schema>
 </schemalist>

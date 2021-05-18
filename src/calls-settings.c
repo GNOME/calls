@@ -39,6 +39,7 @@
 enum {
   PROP_0,
   PROP_AUTO_USE_DEFAULT_ORIGINS,
+  PROP_COUNTRY_CODE,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -65,6 +66,10 @@ calls_settings_set_property (GObject      *object,
     calls_settings_set_use_default_origins (self, g_value_get_boolean (value));
     break;
 
+  case PROP_COUNTRY_CODE:
+    calls_settings_set_country_code (self, g_value_get_string (value));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -83,6 +88,10 @@ calls_settings_get_property (GObject    *object,
   switch (prop_id) {
   case PROP_AUTO_USE_DEFAULT_ORIGINS:
     g_value_set_boolean (value, calls_settings_get_use_default_origins (self));
+    break;
+
+  case PROP_COUNTRY_CODE:
+    g_value_set_string (value, calls_settings_get_country_code (self));
     break;
 
   default:
@@ -131,6 +140,12 @@ calls_settings_class_init (CallsSettingsClass *klass)
                           "Automatically use default origins",
                           TRUE,
                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+  props[PROP_COUNTRY_CODE] =
+    g_param_spec_string ("country-code",
+                         "country code",
+                         "The country code (usually from the modem)",
+                         "",
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -183,4 +198,37 @@ calls_settings_set_use_default_origins (CallsSettings *self,
 
   g_debug ("%sabling the use of default origins", enable ? "En" : "Dis");
   g_settings_set_boolean (G_SETTINGS (self->settings), "auto-use-default-origins", enable);
+}
+
+/**
+ * calls_settings_get_country_code:
+ * @self: A #CallsSettings
+ *
+ * Whether to prompt the user when there multiple origigins or fall back to defaults
+ *
+ * Returns: (transfer full): The used country code
+ */
+char *
+calls_settings_get_country_code (CallsSettings *self)
+{
+  g_return_val_if_fail (CALLS_IS_SETTINGS (self), NULL);
+
+  return g_settings_get_string (G_SETTINGS (self->settings), "country-code");
+}
+
+/**
+ * calls_settings_set_country_code:
+ * @self: A #CallsSettings
+ * @country_code: The country code to set
+ *
+ * Sets the country code
+ */
+void
+calls_settings_set_country_code (CallsSettings *self,
+                                 const char    *country_code)
+{
+  g_return_if_fail (CALLS_IS_SETTINGS (self));
+
+  g_debug ("Setting country code to %s", country_code);
+  g_settings_set_string (G_SETTINGS (self->settings), "country-code", country_code);
 }

@@ -300,6 +300,8 @@ startup (GApplication *application)
 {
   g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
+  CallsApplication *self = CALLS_APPLICATION (application);
+  CallsManager *manager;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
@@ -318,7 +320,14 @@ startup (GApplication *application)
                                    G_N_ELEMENTS (actions),
                                    application);
 
-  g_signal_connect_swapped (calls_manager_get_default (),
+  self->settings = calls_settings_new ();
+  g_assert (self->settings != NULL);
+
+  manager = calls_manager_get_default ();
+  g_object_bind_property (self->settings, "country-code",
+                          manager, "country-code",
+                          G_BINDING_SYNC_CREATE);
+  g_signal_connect_swapped (manager,
                             "notify::state",
                             G_CALLBACK (manager_state_changed_cb),
                             application);
@@ -376,9 +385,6 @@ start_proper (CallsApplication  *self)
 
   self->call_window = calls_call_window_new (gtk_app);
   g_assert (self->call_window != NULL);
-
-  self->settings = calls_settings_new ();
-  g_assert (self->settings != NULL);
 
   g_signal_connect (self->call_window,
                     "notify::visible",
@@ -616,4 +622,21 @@ calls_application_set_use_default_origins_setting (CallsApplication *self,
   g_return_if_fail (CALLS_IS_APPLICATION (self));
 
   calls_settings_set_use_default_origins (self->settings, enabled);
+}
+
+char *
+calls_application_get_country_code_setting (CallsApplication *self)
+{
+  g_return_val_if_fail (CALLS_IS_APPLICATION (self), FALSE);
+
+  return calls_settings_get_country_code (self->settings);
+}
+
+void
+calls_application_set_country_code_setting (CallsApplication *self,
+                                            const char       *country_code)
+{
+  g_return_if_fail (CALLS_IS_APPLICATION (self));
+
+  calls_settings_set_country_code (self->settings, country_code);
 }
