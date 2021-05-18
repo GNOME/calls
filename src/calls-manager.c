@@ -24,6 +24,7 @@
 
 #include "config.h"
 
+#include "calls-application.h"
 #include "calls-account-provider.h"
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
@@ -249,6 +250,27 @@ ussd_state_changed_cb (CallsManager *self,
 }
 
 static void
+update_country_code_cb (CallsOrigin  *origin,
+                        GParamSpec   *pspec,
+                        CallsManager *self)
+{
+  CallsApplication *app;
+  g_autofree char *country_code = NULL;
+
+  g_assert (CALLS_IS_MANAGER (self));
+  app = CALLS_APPLICATION (g_application_get_default ());
+
+  g_object_get (G_OBJECT (origin), "country-code", &country_code, NULL);
+
+  if (country_code && g_strcmp0 (country_code, self->country_code) == 0)
+    return;
+
+  g_free (self->country_code);
+  self->country_code = country_code;
+  calls_application_set_country_code_setting (app, country_code);
+}
+
+static void
 add_origin (CallsManager *self, CallsOrigin *origin)
 {
   g_autofree const char *name = NULL;
@@ -260,6 +282,11 @@ add_origin (CallsManager *self, CallsOrigin *origin)
 
   g_list_store_append (self->origins, origin);
 
+  g_signal_connect_object (origin,
+                           "notify::country-code",
+                           G_CALLBACK (update_country_code_cb),
+                           self,
+                           G_CONNECT_AFTER);
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
 
