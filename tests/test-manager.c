@@ -40,6 +40,7 @@ test_calls_manager_without_provider (void)
   g_assert_cmpuint (no_origins, ==, 0);
 
   g_assert_null (calls_manager_get_calls (manager));
+  g_assert_false (calls_manager_has_any_provider (manager));
   g_assert_null (calls_manager_get_suitable_origins (manager, "tel:+123456789"));
   g_assert_null (calls_manager_get_suitable_origins (manager, "sip:alice@example.org"));
   g_assert_null (calls_manager_get_suitable_origins (manager, "sips:bob@example.org"));
@@ -62,6 +63,7 @@ test_calls_manager_dummy_provider (void)
   g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
 
   calls_manager_add_provider (manager, "dummy");
+  g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "dummy"));
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
 
@@ -90,6 +92,8 @@ test_calls_manager_dummy_provider (void)
 
   /* Unload the provider */
   calls_manager_remove_provider (manager, "dummy");
+  g_assert_false (calls_manager_has_provider (manager, "dummy"));
+  g_assert_false (calls_manager_has_any_provider (manager));
 
   g_assert_null (test_call);
   g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
@@ -108,6 +112,9 @@ test_calls_manager_mm_provider (void)
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
 
   calls_manager_add_provider (manager, "mm");
+  g_assert_true (calls_manager_has_any_provider (manager));
+  g_assert_true (calls_manager_has_provider (manager, "mm"));
+
   g_assert_cmpuint (calls_manager_get_state (manager), >, CALLS_MANAGER_STATE_NO_PROVIDER);
 
   g_assert_null (calls_manager_get_calls (manager));
@@ -145,6 +152,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
 
   /* First add the SIP provider, MM provider later */
   calls_manager_add_provider (manager, "sip");
+  g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "sip"));
   g_assert_true (calls_manager_is_modem_provider (manager, "sip") == FALSE);
 
@@ -204,6 +212,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
    * and https://source.puri.sm/Librem5/calls/-/issues/178
    */
   calls_manager_add_provider (manager, "mm");
+  g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "mm"));
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
 
@@ -215,6 +224,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
 
   /* Unload MM plugin, since we still have Bob we should be ready (and bob should be the default sip origin) */
   calls_manager_remove_provider (manager, "mm");
+  g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
 
   g_assert_true (calls_manager_provider_remove_account (manager, "sip", bob));
