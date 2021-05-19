@@ -1,3 +1,44 @@
+gnome-calls (0.3.3) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * d/control: bump required libhandy
+  * test: sip: Don't use DNS lookups
+  * sip: fix typos
+  * call-record: Get rid of macros
+  * codestyle: get rid of CALLS_SET_PTR_PROPERTY macro
+  * codestyle: align function prototypes in calls-origin header
+  * codestyle: new-call-box
+  * manager: g_assert in static functions
+  * Revert "sip: build: depend on config.h"
+  * build: separate version from the rest of the configuration data
+  * ci: Generate code coverage reports
+  * doc: Fix gtk-doc transfer annotations
+  * call: doc: Indicate ownership in docstrings
+  * manager: remove unused CallsProvider argument from functions
+  * manager: add debug messages when adding or removing origins
+  * README: Include code coverage badge
+  * test: sip: Connect to state-changed signal
+  * sip: origin: Fix nua_authenticate call
+  * sip: media-pipeline: Fix memory leak
+  * sip: media-pipeline: Fix memory leak in error path
+  * flatpak: change URL for boost
+  * sip: media-pipeline: Do not set the stream properties prematurely
+  * Add CallsCredentials class and use it in CallsSipProvider
+  * sip: origin: Use CallsCredentials and adapt to changes
+  * Add CallsAccountInterface
+  * sip: origin: Use CallsAccountState instead of SipAccountState
+  * sip: origin: Implement CallsAccountsInterface
+  * sip: provider: codestyle
+  * sip: provider: return origin in calls_sip_provider_add_origin()
+  * Add CallsAccountProviderInterface
+  * sip: provider: Implement CallsAccountProvider interface
+  * test: Add account tests
+
+  [ Mohammed Sadiq ]
+  * build: Avoid building files multiple times
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Wed, 19 May 2021 18:10:31 +0200
+
 gnome-calls (0.3.2) byzantium; urgency=medium
 
   [ carlosgonz ]
@@ -174,7 +215,7 @@ gnome-calls (0.3.2) byzantium; urgency=medium
   [ scootergrisen ]
   * po: Update Danish translation
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 22 Apr 2021 12:09:15 +0200
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Thu, 22 Apr 2021 12:09:15 +0200
 
 gnome-calls (0.3.1) byzantium; urgency=medium
 

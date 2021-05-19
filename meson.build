@@ -22,7 +22,7 @@
 project(
   'calls',
   'c', 'vala',
-  version: '0.3.2',
+  version: '0.3.3',
   license: 'GPLv3+',
   meson_version: '>= 0.47.0',
   default_options: [
