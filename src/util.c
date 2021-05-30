@@ -166,7 +166,15 @@ calls_number_is_ussd (const char *number)
   return FALSE;
 }
 
-
+/**
+ * calls_find_in_store:
+ * @list: A #GListModel
+ * @item: The #gpointer to find
+ * @position: (out) (optional): The first position of @item, if it was found.
+ *
+ * Returns: Whether @list contains @item. This is mainly a convenience function
+ * until we no longer support older glib versions.
+ */
 gboolean
 calls_find_in_store (GListModel *list,
                      gpointer    item,
@@ -183,18 +191,17 @@ calls_find_in_store (GListModel *list,
 
   count = g_list_model_get_n_items (list);
 
-  for (guint i = 0; i < count; i++)
-    {
-      g_autoptr (GObject) object = NULL;
+  for (guint i = 0; i < count; i++) {
+    g_autoptr (GObject) object = NULL;
 
-      object = g_list_model_get_item (list, i);
+    object = g_list_model_get_item (list, i);
 
-      if (object == item)
-        {
-          *position = i;
-          return TRUE;
-        }
+    if (object == item) {
+      if (position)
+        *position = i;
+      return TRUE;
     }
+  }
   return FALSE;
 #endif
 }
