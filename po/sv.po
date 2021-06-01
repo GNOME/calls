@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-04-17 03:24+0000\n"
-"PO-Revision-Date: 2021-04-17 22:01+0200\n"
+"POT-Creation-Date: 2021-06-01 15:24+0000\n"
+"PO-Revision-Date: 2021-06-01 21:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:313
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:316
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
@@ -46,37 +46,37 @@ msgstr "Samtal (demon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
 
-#: src/calls-application.c:427
+#: src/calls-application.c:437
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Försökte ringa tel-URI ”%s” som inte gick att tolka"
 
-#: src/calls-application.c:509
+#: src/calls-application.c:519
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:559
+#: src/calls-application.c:570
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Namnet på insticket att använda för samtalsleverantören"
 
-#: src/calls-application.c:560
+#: src/calls-application.c:571
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:565
+#: src/calls-application.c:576
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:571
+#: src/calls-application.c:582
 msgid "Dial a number"
 msgstr "Slå ett nummer"
 
-#: src/calls-application.c:572
+#: src/calls-application.c:583
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:577
+#: src/calls-application.c:588
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
@@ -97,7 +97,7 @@ msgstr ""
 "%s\n"
 "igår"
 
-#: src/calls-main-window.c:120
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "Sebastian Rasmussen <sebras@gmail.com>\n"
@@ -107,27 +107,31 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Kan inte ringa: Inget röstkapabelt modem tillgängligt"
 
 #: src/calls-main-window.c:323
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Kan inte ringa: Inget modem eller VoIP-konto tillgängligt"
+
+#: src/calls-main-window.c:328
 msgid "Can't place calls: No backend service"
 msgstr "Kan inte ringa: Ingen bakändestjänst"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No plugin"
 msgstr "Kan inte ringa: Inget instick"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:369
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: src/calls-main-window.c:374 src/ui/call-display.ui:287
+#: src/calls-main-window.c:379 src/ui/call-display.ui:287
 msgid "Dial Pad"
 msgstr "Knappsats"
 
-#: src/calls-main-window.c:382
+#: src/calls-main-window.c:387
 msgid "Recent"
 msgstr "Senaste"
 
