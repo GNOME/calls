@@ -29,6 +29,7 @@
 #include "calls-sip-origin.h"
 
 #include <glib-object.h>
+#include <libpeas/peas.h>
 
 G_BEGIN_DECLS
 
@@ -41,5 +42,6 @@ CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *s
                                                              CallsCredentials *credentials,
                                                              gint              local_port,
                                                              gboolean          direct_connection);
+void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS

@@ -107,7 +107,7 @@ update_status (CallsOfonoProvider *self)
 }
 
 
-gboolean
+static gboolean
 ofono_find_origin_index (CallsOfonoProvider *self,
                          const char         *path,
                          guint              *index)
@@ -472,7 +472,7 @@ ofono_appeared_cb (GDBusConnection *connection,
 }
 
 
-void
+static void
 ofono_vanished_cb (GDBusConnection *connection,
                    const gchar *name,
                    CallsOfonoProvider *self)

@@ -66,7 +66,7 @@ calls_provider_real_get_status (CallsProvider *self)
   return NULL;
 }
 
-GListModel *
+static GListModel *
 calls_provider_real_get_origins (CallsProvider *self)
 {
   return NULL;

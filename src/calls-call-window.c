@@ -267,7 +267,7 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 }
 
 
-void
+static void
 add_call (CallsCallWindow *self,
           CallsCall       *call)
 {
@@ -288,7 +288,7 @@ add_call (CallsCallWindow *self,
   set_focus (self, display);
 }
 
-void
+static void
 remove_call (CallsCallWindow *self,
              CallsCall       *call,
              const gchar     *reason)

@@ -25,16 +25,19 @@
 #ifndef CALLS_MM_PROVIDER_H__
 #define CALLS_MM_PROVIDER_H__
 
+#include "calls-provider.h"
+
 #include <glib-object.h>
 #include <gio/gio.h>
-
-#include "calls-provider.h"
+#include <libpeas/peas.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_MM_PROVIDER (calls_mm_provider_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsMMProvider, calls_mm_provider, CALLS, MM_PROVIDER, CallsProvider)
+
+void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS
 

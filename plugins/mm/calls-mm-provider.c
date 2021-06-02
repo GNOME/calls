@@ -96,7 +96,7 @@ update_status (CallsMMProvider *self)
 }
 
 
-gboolean
+static gboolean
 mm_provider_contains (CallsMMProvider *self,
                       MMObject        *mm_obj)
 {
@@ -252,7 +252,7 @@ add_mm_objects (CallsMMProvider *self)
 }
 
 
-void
+static void
 object_added_cb (CallsMMProvider *self,
                  GDBusObject     *object)
 {
@@ -263,7 +263,7 @@ object_added_cb (CallsMMProvider *self,
 }
 
 
-void
+static void
 object_removed_cb (CallsMMProvider *self,
                    GDBusObject     *object)
 {
@@ -326,7 +326,7 @@ mm_appeared_cb (GDBusConnection *connection,
 }
 
 
-void
+static void
 mm_vanished_cb (GDBusConnection *connection,
                 const gchar *name,
                 CallsMMProvider *self)
