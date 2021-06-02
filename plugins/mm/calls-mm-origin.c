@@ -323,21 +323,21 @@ static void
 dial (CallsOrigin *origin, const gchar *number)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (origin);
-  MMCallProperties *props;
+  MMCallProperties *call_props;
 
   g_assert (self->voice != NULL);
 
-  props = mm_call_properties_new();
-  mm_call_properties_set_number (props, number);
+  call_props = mm_call_properties_new ();
+  mm_call_properties_set_number (call_props, number);
 
   mm_modem_voice_create_call
     (self->voice,
-     props,
+     call_props,
      NULL,
      (GAsyncReadyCallback) dial_cb,
      self);
 
-  g_object_unref (props);
+  g_object_unref (call_props);
 }
 
 
