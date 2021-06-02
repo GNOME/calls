@@ -50,21 +50,20 @@ typedef enum
 static CallsCallRecordState
 state_to_record_state (CallsCallState call_state)
 {
-  switch (call_state)
-    {
-    case CALLS_CALL_STATE_DIALING:
-    case CALLS_CALL_STATE_ALERTING:
-    case CALLS_CALL_STATE_INCOMING:
-    case CALLS_CALL_STATE_WAITING:
-      return STARTED;
+  switch (call_state) {
+  case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_ALERTING:
+  case CALLS_CALL_STATE_INCOMING:
+  case CALLS_CALL_STATE_WAITING:
+    return STARTED;
 
-    case CALLS_CALL_STATE_ACTIVE:
-    case CALLS_CALL_STATE_HELD:
-      return ANSWERED;
+  case CALLS_CALL_STATE_ACTIVE:
+  case CALLS_CALL_STATE_HELD:
+    return ANSWERED;
 
-    case CALLS_CALL_STATE_DISCONNECTED:
-      return ENDED;
-    }
+  case CALLS_CALL_STATE_DISCONNECTED:
+    return ENDED;
+  }
 
   g_assert_not_reached ();
 }
@@ -100,25 +99,21 @@ delete_record_cb (GomResource      *resource,
                 &id,
                 NULL);
 
-  if (!ok)
-    {
-      if (error)
-        {
-          g_warning ("Error deleting call record with id %u from database %s",
-                     id, error->message);
-          return;
-        }
-      else
-        {
-          g_warning ("Unknown error deleting call record with id %u from database",
-                     id);
-        }
+  if (!ok) {
+    if (error) {
+      g_warning ("Error deleting call record with id %u from database %s",
+                 id, error->message);
+      return;
+
+    } else {
+      g_warning ("Unknown error deleting call record with id %u from database",
+                 id);
     }
-  else {
+
+  } else {
     g_debug ("Successfully deleted call record with id %u from database",
              id);
   }
-
 }
 
 
@@ -145,12 +140,11 @@ load_calls_fetch_cb (GomResourceGroup *group,
   ok = gom_resource_group_fetch_finish (group,
                                         res,
                                         &error);
-  if (error)
-    {
-      g_debug ("Error fetching call records: %s",
-               error->message);
-      return;
-    }
+  if (error) {
+    g_debug ("Error fetching call records: %s",
+             error->message);
+    return;
+  }
   g_assert (ok);
 
   count = gom_resource_group_get_count (group);
@@ -158,32 +152,29 @@ load_calls_fetch_cb (GomResourceGroup *group,
            count, self->filename);
   records = g_new (gpointer, count);
 
-  for (i = 0; i < count; ++i)
-    {
-      GomResource *resource;
-      CallsCallRecord *record;
-      GDateTime *end = NULL;
+  for (i = 0; i < count; ++i) {
+    GomResource *resource;
+    CallsCallRecord *record;
+    GDateTime *end = NULL;
 
-      resource = gom_resource_group_get_index (group, i);
-      g_assert (resource != NULL);
-      g_assert (CALLS_IS_CALL_RECORD (resource));
-      record = CALLS_CALL_RECORD (resource);
+    resource = gom_resource_group_get_index (group, i);
+    g_assert (resource != NULL);
+    g_assert (CALLS_IS_CALL_RECORD (resource));
+    record = CALLS_CALL_RECORD (resource);
 
-      records[i] = record;
+    records[i] = record;
 
-      g_object_get (G_OBJECT (record),
-                    "end", &end,
-                    NULL);
-      if (end)
-        {
-          g_date_time_unref (end);
-        }
+    g_object_get (G_OBJECT (record),
+                  "end", &end,
+                  NULL);
+    if (end)
+      g_date_time_unref (end);
 
-      g_signal_connect (record,
-                        "call-delete",
-                        G_CALLBACK (delete_call_cb),
-                        self);
-    }
+    g_signal_connect (record,
+                      "call-delete",
+                      G_CALLBACK (delete_call_cb),
+                      self);
+  }
 
   g_list_store_splice (G_LIST_STORE (self),
                        0,
@@ -208,21 +199,19 @@ load_calls_find_cb (GomRepository    *repository,
   group = gom_repository_find_finish (repository,
                                       res,
                                       &error);
-  if (error)
-    {
-      g_debug ("Error finding call records in database `%s': %s",
-               self->filename, error->message);
-      return;
-    }
+  if (error) {
+    g_debug ("Error finding call records in database `%s': %s",
+             self->filename, error->message);
+    return;
+  }
   g_assert (group != NULL);
 
   count = gom_resource_group_get_count (group);
-  if (count == 0)
-    {
-      g_debug ("No call records found in database `%s'",
-               self->filename);
-      return;
-    }
+  if (count == 0) {
+    g_debug ("No call records found in database `%s'",
+             self->filename);
+    return;
+  }
 
   g_debug ("Found %u call records in database `%s', fetching",
            count, self->filename);
@@ -271,28 +260,22 @@ set_up_repo_migrate_cb (GomRepository *repo,
   gboolean ok;
 
   ok = gom_repository_automatic_migrate_finish (repo, res, &error);
-  if (!ok)
-    {
+  if (!ok) {
       if (error)
-        {
-          g_warning ("Error migrating call record database `%s': %s",
-                     self->filename, error->message);
-        }
+        g_warning ("Error migrating call record database `%s': %s",
+                   self->filename, error->message);
       else
-        {
-          g_warning ("Unknown error migrating call record database `%s'",
-                     self->filename);
-        }
+        g_warning ("Unknown error migrating call record database `%s'",
+                   self->filename);
 
       g_clear_object (&self->repository);
       g_clear_object (&self->adapter);
-    }
-  else
-    {
-      g_debug ("Successfully migrated call record database `%s'",
-               self->filename);
-      load_calls (self);
-    }
+
+    } else {
+    g_debug ("Successfully migrated call record database `%s'",
+             self->filename);
+    load_calls (self);
+  }
 }
 
 
@@ -302,13 +285,12 @@ set_up_repo (CallsRecordStore *self)
   GomRepository *repo;
   GList *types = NULL;
 
-  if (self->repository)
-    {
-      g_warning ("Opened call record database `%s'"
-                 " while repository exists",
-                 self->filename);
-      return;
-    }
+  if (self->repository) {
+    g_warning ("Opened call record database `%s'"
+               " while repository exists",
+               self->filename);
+    return;
+  }
 
   repo = gom_repository_new (self->adapter);
 
@@ -339,18 +321,13 @@ close_adapter (CallsRecordStore *self)
     }
 
   ok = gom_adapter_close_sync(self->adapter, &error);
-  if (!ok)
-    {
+  if (!ok) {
       if (error)
-        {
-          g_warning ("Error closing call record database `%s': %s",
-                     self->filename, error->message);
-        }
+        g_warning ("Error closing call record database `%s': %s",
+                   self->filename, error->message);
       else
-        {
-          g_warning ("Unknown error closing call record database `%s'",
-                     self->filename);
-        }
+        g_warning ("Unknown error closing call record database `%s'",
+                   self->filename);
     }
 
   g_clear_object (&self->adapter);
@@ -366,27 +343,21 @@ open_repo_adapter_open_cb (GomAdapter *adapter,
   gboolean ok;
 
   ok = gom_adapter_open_finish (adapter, res, &error);
-  if (!ok)
-    {
-      if (error)
-        {
-          g_warning ("Error opening call record database `%s': %s",
-                     self->filename, error->message);
-        }
-      else
-        {
-          g_warning ("Unknown error opening call record database `%s'",
-                     self->filename);
-        }
+  if (!ok) {
+    if (error)
+      g_warning ("Error opening call record database `%s': %s",
+                 self->filename, error->message);
+    else
+      g_warning ("Unknown error opening call record database `%s'",
+                 self->filename);
 
-      close_adapter (self);
-    }
-  else
-    {
-      g_debug ("Successfully opened call record database `%s'",
-               self->filename);
-      set_up_repo (self);
-    }
+    close_adapter (self);
+
+  } else {
+    g_debug ("Successfully opened call record database `%s'",
+             self->filename);
+    set_up_repo (self);
+  }
 }
 
 
@@ -398,18 +369,14 @@ open_repo (CallsRecordStore *self)
   gchar *uri;
 
   if (self->adapter)
-    {
-      return;
-    }
+    return;
 
 
   dir = g_path_get_dirname (self->filename);
   err = g_mkdir_with_parents (dir, 0755);
   if (err)
-    {
-      g_warning ("Could not create Calls data directory `%s': %s",
-                 dir, g_strerror (errno));
-    }
+    g_warning ("Could not create Calls data directory `%s': %s",
+               dir, g_strerror (errno));
   g_free (dir);
 
 
@@ -443,28 +410,23 @@ record_call_save_cb (GomResource                *resource,
   gboolean ok;
 
   ok = gom_resource_save_finish (resource, res, &error);
-  if (!ok)
-    {
-      if (error)
-        {
-          g_warning ("Error saving call record to database: %s",
-                     error->message);
-        }
-      else
-        {
-          g_warning ("Unknown error saving call record to database");
-        }
+  if (!ok) {
+    if (error)
+      g_warning ("Error saving call record to database: %s",
+                 error->message);
+    else
+      g_warning ("Unknown error saving call record to database");
 
-      g_object_set_data (call_obj, "calls-call-record", NULL);
-    }
-  else
-    {
-      g_debug ("Successfully saved new call record to database");
-      g_list_store_insert (G_LIST_STORE (data->self),
-                           0,
-                           CALLS_CALL_RECORD (resource));
-      g_object_set_data (call_obj, "calls-call-start", NULL);
-    }
+    g_object_set_data (call_obj, "calls-call-record", NULL);
+
+  } else {
+    g_debug ("Successfully saved new call record to database");
+    g_list_store_insert (G_LIST_STORE (data->self),
+                         0,
+                         CALLS_CALL_RECORD (resource));
+
+    g_object_set_data (call_obj, "calls-call-start", NULL);
+  }
 
   g_object_unref (data->call);
   g_object_unref (data->self);
@@ -518,22 +480,16 @@ update_cb (GomResource  *resource,
   gboolean ok;
 
   ok = gom_resource_save_finish (resource, res, &error);
-  if (!ok)
-    {
-      if (error)
-        {
-          g_warning ("Error updating call record in database: %s",
-                     error->message);
-        }
-      else
-        {
-          g_warning ("Unknown error updating call record in database");
-        }
-    }
-  else
-    {
-      g_debug ("Successfully updated call record in database");
-    }
+  if (!ok) {
+    if (error)
+      g_warning ("Error updating call record in database: %s",
+                 error->message);
+    else
+      g_warning ("Unknown error updating call record in database");
+
+  } else {
+    g_debug ("Successfully updated call record in database");
+  }
 }
 
 
@@ -549,9 +505,7 @@ stamp_call (CallsCallRecord  *record,
                 stamp_name, &stamp,
                 NULL);
   if (stamp)
-    {
-      return;
-    }
+    return;
 
 
   g_debug ("Stamping call `%s'", stamp_name);
@@ -580,62 +534,55 @@ state_changed_cb (CallsRecordStore *self,
 
 
   /* Check whether the call is recorded */
-  if (!record)
-    {
-      /* Try to record the call again */
-      if (g_object_get_data (call_obj, "calls-call-start") != NULL)
-        {
-          record_call (self, call);
-        }
-      else
-        {
-          g_warning ("Record store received state change"
-                     " for non-started call");
-        }
-      return;
-    }
+  if (!record) {
+    /* Try to record the call again */
+    if (g_object_get_data (call_obj, "calls-call-start") != NULL)
+      record_call (self, call);
+    else
+      g_warning ("Record store received state change"
+                 " for non-started call");
+    return;
+  }
 
   new_rec_state = state_to_record_state (new_state);
   old_rec_state = state_to_record_state (old_state);
 
   if (new_rec_state == old_rec_state)
-    {
-      return;
-    }
+    return;
 
-  switch (old_rec_state)
-    {
-    case STARTED:
-      switch (new_rec_state)
-        {
-        case ANSWERED:
-          stamp_call (record, "answered");
-          break;
-        case ENDED:
-          stamp_call (record, "end");
-          break;
-        default:
-          g_assert_not_reached ();
-          break;
-        }
+  switch (old_rec_state) {
+  case STARTED:
+    switch (new_rec_state) {
+    case ANSWERED:
+      stamp_call (record, "answered");
       break;
 
-    case ANSWERED:
-      switch (new_rec_state)
-        {
-        case ENDED:
-          stamp_call (record, "end");
-          break;
-        default:
-          g_assert_not_reached ();
-          break;
-        }
+    case ENDED:
+      stamp_call (record, "end");
       break;
 
     default:
       g_assert_not_reached ();
       break;
     }
+    break;
+
+  case ANSWERED:
+    switch (new_rec_state) {
+    case ENDED:
+      stamp_call (record, "end");
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+    break;
+
+  default:
+    g_assert_not_reached ();
+    break;
+  }
 }
 
 
@@ -651,11 +598,10 @@ call_added_cb (CallsRecordStore *self,
   g_object_set_data_full (call_obj, "calls-call-start",
                           start, (GDestroyNotify)g_date_time_unref);
 
-  if (!self->repository)
-    {
-      open_repo (self);
-      return;
-    }
+  if (!self->repository) {
+    open_repo (self);
+    return;
+  }
 
   record_call (self, call);
 
@@ -676,9 +622,7 @@ call_removed_cb (CallsRecordStore *self,
     g_object_get_data (G_OBJECT (call), "calls-call-record");
 
   if (record)
-    {
-      stamp_call (record, "end");
-    }
+    stamp_call (record, "end");
 
   g_signal_handlers_disconnect_by_data (call, self);
 }
