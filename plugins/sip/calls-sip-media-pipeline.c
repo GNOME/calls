@@ -363,7 +363,7 @@ initable_init (GInitable    *initable,
   g_autoptr (GstCaps) caps = NULL;
   g_autofree char *caps_string = NULL;
   GstPad *srcpad, *sinkpad;
-  GstStructure *props = NULL;
+  GstStructure *gst_props = NULL;
   const char *env_var;
 
   env_var = g_getenv ("CALLS_AUDIOSINK");
@@ -374,17 +374,17 @@ initable_init (GInitable    *initable,
     self->audiosink = gst_element_factory_make ("pulsesink", "sink");
 
     /* enable echo cancellation and set buffer size to 40ms */
-    props = gst_structure_new ("props",
-                               "media.role", G_TYPE_STRING, "phone",
-                               "filter.want", G_TYPE_STRING, "echo-cancel",
-                               NULL);
+    gst_props = gst_structure_new ("props",
+                                   "media.role", G_TYPE_STRING, "phone",
+                                   "filter.want", G_TYPE_STRING, "echo-cancel",
+                                   NULL);
 
     g_object_set (self->audiosink,
                   "buffer-time", (gint64) 40000,
-                  "stream-properties", props,
+                  "stream-properties", gst_props,
                   NULL);
 
-    gst_structure_free (props);
+    gst_structure_free (gst_props);
   }
 
   env_var = g_getenv ("CALLS_AUDIOSRC");
@@ -395,17 +395,17 @@ initable_init (GInitable    *initable,
     self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
 
     /* enable echo cancellation and set buffer size to 40ms */
-    props = gst_structure_new ("props",
-                               "media.role", G_TYPE_STRING, "phone",
-                               "filter.want", G_TYPE_STRING, "echo-cancel",
-                               NULL);
+    gst_props = gst_structure_new ("props",
+                                   "media.role", G_TYPE_STRING, "phone",
+                                   "filter.want", G_TYPE_STRING, "echo-cancel",
+                                   NULL);
 
     g_object_set (self->audiosrc,
                   "buffer-time", (gint64) 40000,
-                  "stream-properties", props,
+                  "stream-properties", gst_props,
                   NULL);
 
-    gst_structure_free (props);
+    gst_structure_free (gst_props);
   }
 
   if (!self->audiosrc || !self->audiosink) {
