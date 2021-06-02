@@ -67,10 +67,54 @@ configure_file(
   output: 'run',
   configuration: run_data)
 
-add_project_arguments([
- '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_58',
- '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_64',
-], language: 'c')
+cc = meson.get_compiler('c')
+
+global_c_args = []
+test_c_args = [
+  '-Wcast-align',
+  '-Wdate-time',
+  '-Wdeclaration-after-statement',
+  ['-Werror=format-security', '-Werror=format=2'],
+  '-Wendif-labels',
+  '-Werror=incompatible-pointer-types',
+  '-Werror=missing-declarations',
+  '-Werror=overflow',
+  '-Werror=return-type',
+  '-Werror=shift-count-overflow',
+  '-Werror=shift-overflow=2',
+  '-Wfloat-equal',
+  '-Wformat-nonliteral',
+  '-Wformat-security',
+  '-Winit-self',
+  '-Wmaybe-uninitialized',
+  '-Wmissing-include-dirs',
+  '-Wmissing-noreturn',
+  '-Wnested-externs',
+  '-Wold-style-definition',
+  '-Wshadow',
+  '-Wstrict-prototypes',
+  '-Wswitch-default',
+  '-Wno-switch-enum',
+  '-Wtype-limits',
+  '-Wunused-function',
+  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_58',
+ '  -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_66',
+]
+
+if get_option('buildtype') != 'plain'
+  test_c_args += '-fstack-protector-strong'
+endif
+
+foreach arg: test_c_args
+  if cc.has_multi_arguments(arg)
+    global_c_args += arg
+  endif
+endforeach
+
+add_project_arguments(
+  global_c_args,
+  language: 'c'
+)
 
 subdir('po')
 subdir('src')
@@ -78,3 +122,4 @@ subdir('plugins')
 subdir('doc')
 subdir('data')
 subdir('tests')
+
