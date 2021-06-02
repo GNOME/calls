@@ -76,9 +76,7 @@ answer_clicked_cb (GtkButton        *button,
   g_return_if_fail (CALLS_IS_CALL_DISPLAY (self));
 
   if (self->call)
-    {
-      calls_call_answer (self->call);
-    }
+    calls_call_answer (self->call);
 }
 
 static void
@@ -88,9 +86,7 @@ hang_up_clicked_cb (GtkButton        *button,
   g_return_if_fail (CALLS_IS_CALL_DISPLAY (self));
 
   if (self->call)
-    {
-      calls_call_hang_up (self->call);
-    }
+    calls_call_hang_up (self->call);
 }
 
 static void
@@ -109,10 +105,9 @@ mute_toggled_cb (GtkToggleButton  *togglebutton,
   want_mute = gtk_toggle_button_get_active (togglebutton);
   ret = call_audio_mute_mic (want_mute, &error);
   if (!ret && error)
-    {
-      g_warning ("Failed to %smute microphone: %s", want_mute ? "" : "un",
-                                                    error->message);
-    }
+    g_warning ("Failed to %smute microphone: %s",
+               want_mute ? "" : "un",
+               error->message);
 }
 
 
@@ -126,10 +121,9 @@ speaker_toggled_cb (GtkToggleButton  *togglebutton,
   want_speaker = gtk_toggle_button_get_active (togglebutton);
   ret = call_audio_enable_speaker (want_speaker, &error);
   if (!ret && error)
-    {
-      g_warning ("Failed to %sable speaker: %s", want_speaker ? "en" : "dis",
-                                                 error->message);
-    }
+      g_warning ("Failed to %sable speaker: %s",
+                 want_speaker ? "en" : "dis",
+                 error->message);
 }
 
 
@@ -160,27 +154,23 @@ timeout_cb (CallsCallDisplay *self)
 
   g_return_val_if_fail (CALLS_IS_CALL_DISPLAY (self), FALSE);
   if (!self->call)
-    {
-      return FALSE;
-    }
+    return FALSE;
 
   elapsed = g_timer_elapsed (self->timer, NULL);
 
   str = g_string_new ("");
 
-  if ( (printing = (elapsed > DAY)) )
-    {
-      guint days = (guint)(elapsed / DAY);
-      g_string_append_printf (str, "%ud ", days);
-      elapsed -= (days * DAY);
-    }
+  if ( (printing = (elapsed > DAY)) ) {
+    guint days = (guint)(elapsed / DAY);
+    g_string_append_printf (str, "%ud ", days);
+    elapsed -= (days * DAY);
+  }
 
-  if (printing || elapsed > HOUR)
-    {
-      guint hours = (guint)(elapsed / HOUR);
-      g_string_append_printf (str, "%u:", hours);
-      elapsed -= (hours * HOUR);
-    }
+  if (printing || elapsed > HOUR) {
+    guint hours = (guint)(elapsed / HOUR);
+    g_string_append_printf (str, "%u:", hours);
+    elapsed -= (hours * HOUR);
+  }
 
   minutes = (guint)(elapsed / MINUTE);
   g_string_append_printf (str, "%02u:", minutes);
@@ -203,9 +193,7 @@ static void
 stop_timeout (CallsCallDisplay *self)
 {
   if (self->timeout == 0)
-    {
-      return;
-    }
+    return;
 
   g_source_remove (self->timeout);
   self->timeout = 0;
@@ -215,11 +203,10 @@ stop_timeout (CallsCallDisplay *self)
 static void
 select_mode_complete (gboolean success, GError *error, gpointer data)
 {
-  if (error)
-    {
-      g_warning ("Failed to select audio mode: %s", error->message);
-      g_error_free (error);
-    }
+  if (error) {
+    g_warning ("Failed to select audio mode: %s", error->message);
+    g_error_free (error);
+  }
 }
 
 
@@ -236,77 +223,72 @@ call_state_changed_cb (CallsCallDisplay *self,
     (GTK_WIDGET (self->hang_up));
 
   /* Widgets */
-  switch (state)
-    {
-    case CALLS_CALL_STATE_INCOMING:
-      gtk_widget_hide (GTK_WIDGET (self->status));
-      gtk_widget_hide (GTK_WIDGET (self->controls));
-      gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
-      gtk_widget_show (GTK_WIDGET (self->answer));
-      gtk_style_context_remove_class
-        (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
-      break;
+  switch (state) {
+  case CALLS_CALL_STATE_INCOMING:
+    gtk_widget_hide (GTK_WIDGET (self->status));
+    gtk_widget_hide (GTK_WIDGET (self->controls));
+    gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
+    gtk_widget_show (GTK_WIDGET (self->answer));
+    gtk_style_context_remove_class
+      (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+    break;
 
-    case CALLS_CALL_STATE_DIALING:
-    case CALLS_CALL_STATE_ALERTING:
-    case CALLS_CALL_STATE_ACTIVE:
-    case CALLS_CALL_STATE_HELD:
-    case CALLS_CALL_STATE_WAITING:
-      gtk_style_context_add_class
-        (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
-      gtk_widget_hide (GTK_WIDGET (self->answer));
-      gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
-      gtk_widget_show (GTK_WIDGET (self->controls));
-      gtk_widget_show (GTK_WIDGET (self->status));
+  case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_ALERTING:
+  case CALLS_CALL_STATE_ACTIVE:
+  case CALLS_CALL_STATE_HELD:
+  case CALLS_CALL_STATE_WAITING:
+    gtk_style_context_add_class
+      (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+    gtk_widget_hide (GTK_WIDGET (self->answer));
+    gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
+    gtk_widget_show (GTK_WIDGET (self->controls));
+    gtk_widget_show (GTK_WIDGET (self->status));
 
-      gtk_widget_set_visible
-        (GTK_WIDGET (self->gsm_controls),
-         state != CALLS_CALL_STATE_DIALING
-         && state != CALLS_CALL_STATE_ALERTING);
+    gtk_widget_set_visible
+      (GTK_WIDGET (self->gsm_controls),
+       state != CALLS_CALL_STATE_DIALING
+       && state != CALLS_CALL_STATE_ALERTING);
 
-      call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
+    call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
+                                  select_mode_complete,
+                                  NULL);
+    break;
+
+  case CALLS_CALL_STATE_DISCONNECTED:
+    calls_list = calls_manager_get_calls (calls_manager_get_default ());
+    /* Switch to default mode only if there's no other ongoing call */
+    if (!calls_list || (calls_list->data == self->call && !calls_list->next))
+      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
                                     select_mode_complete,
                                     NULL);
-      break;
-
-    case CALLS_CALL_STATE_DISCONNECTED:
-      calls_list = calls_manager_get_calls (calls_manager_get_default ());
-      /* Switch to default mode only if there's no other ongoing call */
-      if (!calls_list || (calls_list->data == self->call && !calls_list->next))
-        {
-          call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
-                                        select_mode_complete,
-                                        NULL);
-        }
-      break;
-    }
+    break;
+  }
 
   /* Status text */
-  switch (state)
-    {
-    case CALLS_CALL_STATE_INCOMING:
-      break;
+  switch (state) {
+  case CALLS_CALL_STATE_INCOMING:
+    break;
 
-    case CALLS_CALL_STATE_DIALING:
-    case CALLS_CALL_STATE_ALERTING:
-      gtk_label_set_text (self->status, _("Calling…"));
-      break;
+  case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_ALERTING:
+    gtk_label_set_text (self->status, _("Calling…"));
+    break;
 
-    case CALLS_CALL_STATE_ACTIVE:
-    case CALLS_CALL_STATE_HELD:
-    case CALLS_CALL_STATE_WAITING:
-      if (self->timeout == 0)
-        {
-          self->timeout = g_timeout_add
-            (500, (GSourceFunc)timeout_cb, self);
-          timeout_cb (self);
-        }
-      break;
-
-    case CALLS_CALL_STATE_DISCONNECTED:
-      stop_timeout (self);
-      break;
+  case CALLS_CALL_STATE_ACTIVE:
+  case CALLS_CALL_STATE_HELD:
+  case CALLS_CALL_STATE_WAITING:
+    if (self->timeout == 0) {
+      self->timeout = g_timeout_add
+        (500, (GSourceFunc)timeout_cb, self);
+      timeout_cb (self);
     }
+    break;
+
+  case CALLS_CALL_STATE_DISCONNECTED:
+    stop_timeout (self);
+    break;
+  }
 }
 
 
@@ -446,12 +428,11 @@ calls_call_display_init (CallsCallDisplay *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  if (!call_audio_is_inited ())
-    {
-      g_critical ("libcallaudio not initialized");
-      gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
-      gtk_widget_set_sensitive (GTK_WIDGET (self->mute), FALSE);
-    }
+  if (!call_audio_is_inited ()) {
+    g_critical ("libcallaudio not initialized");
+    gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->mute), FALSE);
+  }
 }
 
 static void
