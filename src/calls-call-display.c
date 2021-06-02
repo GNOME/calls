@@ -263,6 +263,9 @@ call_state_changed_cb (CallsCallDisplay *self,
                                     select_mode_complete,
                                     NULL);
     break;
+
+  default:
+    g_assert_not_reached ();
   }
 
   /* Status text */
@@ -288,6 +291,9 @@ call_state_changed_cb (CallsCallDisplay *self,
   case CALLS_CALL_STATE_DISCONNECTED:
     stop_timeout (self);
     break;
+
+  default:
+    g_assert_not_reached ();
   }
 }
 
