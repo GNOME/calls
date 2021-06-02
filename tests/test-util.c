@@ -11,7 +11,7 @@
 #include <gtk/gtk.h>
 
 static void
-test_protocol_prefix ()
+test_protocol_prefix (void)
 {
   g_assert_cmpstr (get_protocol_from_address ("sip:alice@example.org"), ==, "sip");
   g_assert_cmpstr (get_protocol_from_address ("SIP:alice@example.org"), ==, "sip");

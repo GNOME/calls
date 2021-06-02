@@ -114,7 +114,7 @@ media_codec_get_gst_capabilities (MediaCodecInfo *codec)
  * Returns: (transfer none): A #GList of codec candidates of type #MediaCodecInfo
  */
 GList *
-media_codecs_get_candidates ()
+media_codecs_get_candidates (void)
 {
   GList *candidates = NULL;
 

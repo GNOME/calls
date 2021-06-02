@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsDummyProvider, calls_dummy_provider, CALLS, DUMMY_PROVIDER, CallsProvider)
 
-CallsDummyProvider *calls_dummy_provider_new        ();
+CallsDummyProvider *calls_dummy_provider_new        (void);
 void                calls_dummy_provider_add_origin (CallsDummyProvider *self,
                                                      const gchar        *name);
 

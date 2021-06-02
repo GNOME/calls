@@ -298,7 +298,7 @@ calls_credentials_init (CallsCredentials *self)
 
 
 CallsCredentials *
-calls_credentials_new ()
+calls_credentials_new (void)
 {
   return g_object_new (CALLS_TYPE_CREDENTIALS, NULL);
 }

@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsInAppNotification, calls_in_app_notification, CALLS, IN_APP_NOTIFICATION, GtkRevealer)
 
-CallsInAppNotification * calls_in_app_notification_new ();
+CallsInAppNotification * calls_in_app_notification_new (void);
 void calls_in_app_notification_show (CallsInAppNotification *self, const gchar *message);
 void calls_in_app_notification_hide (CallsInAppNotification *self);
 

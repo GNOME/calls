@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsNotifier, calls_notifier, CALLS, NOTIFIER, GObject);
 
-CallsNotifier *calls_notifier_new ();
+CallsNotifier *calls_notifier_new (void);
 
 G_END_DECLS
 

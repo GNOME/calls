@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsCredentials, calls_credentials, CALLS, CREDENTIALS, GObject);
 
 
-CallsCredentials       *calls_credentials_new                     ();
+CallsCredentials       *calls_credentials_new                     (void);
 gboolean                calls_credentials_update_from_keyfile     (CallsCredentials *self,
                                                                    GKeyFile         *key_file,
                                                                    const char       *name);

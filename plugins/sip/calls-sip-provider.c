@@ -488,7 +488,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
 
 
 CallsSipProvider *
-calls_sip_provider_new ()
+calls_sip_provider_new (void)
 {
   return g_object_new (CALLS_TYPE_SIP_PROVIDER, NULL);
 }

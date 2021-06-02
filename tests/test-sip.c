@@ -438,7 +438,7 @@ find_string_in_sdp_message (const char *sdp,
 }
 
 static void
-test_sip_media_manager ()
+test_sip_media_manager (void)
 {
   g_autoptr (CallsSipMediaManager) manager = calls_sip_media_manager_default ();
   char *sdp_message = NULL;

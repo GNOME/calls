@@ -173,7 +173,7 @@ calls_dummy_provider_add_origin (CallsDummyProvider *self,
 
 
 CallsDummyProvider *
-calls_dummy_provider_new ()
+calls_dummy_provider_new (void)
 {
   return g_object_new (CALLS_TYPE_DUMMY_PROVIDER, NULL);
 }

@@ -12,7 +12,7 @@
 #include <libpeas/peas.h>
 
 static void
-test_calls_plugin_loading ()
+test_calls_plugin_loading (void)
 {
   g_autoptr (CallsProvider) dummy_provider = NULL;
   g_autoptr (CallsProvider) mm_provider = NULL;

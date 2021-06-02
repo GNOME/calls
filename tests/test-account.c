@@ -17,7 +17,7 @@
 #include <libpeas/peas.h>
 
 static void
-test_account_basic ()
+test_account_basic (void)
 {
   CallsCredentials *alice = calls_credentials_new ();
   CallsCredentials *bob = calls_credentials_new ();

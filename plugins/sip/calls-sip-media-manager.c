@@ -81,7 +81,7 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
 /* Public functions */
 
 CallsSipMediaManager *
-calls_sip_media_manager_default ()
+calls_sip_media_manager_default (void)
 {
   static CallsSipMediaManager *instance = NULL;
 

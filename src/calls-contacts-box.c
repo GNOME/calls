@@ -212,7 +212,7 @@ calls_contacts_box_init (CallsContactsBox *self)
 
 
 GtkWidget *
-calls_contacts_box_new ()
+calls_contacts_box_new (void)
 {
   return g_object_new (CALLS_TYPE_CONTACTS_BOX, NULL);
 }

@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER, CallsProvider)
 
-CallsSipProvider *calls_sip_provider_new                    ();
+CallsSipProvider *calls_sip_provider_new                    (void);
 CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *self,
                                                              CallsCredentials *credentials,
                                                              gint              local_port,

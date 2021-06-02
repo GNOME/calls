@@ -143,7 +143,7 @@ calls_in_app_notification_init (CallsInAppNotification *self)
 
 
 CallsInAppNotification *
-calls_in_app_notification_new ()
+calls_in_app_notification_new (void)
 {
   return g_object_new (CALLS_TYPE_IN_APP_NOTIFICATION, NULL);
 }

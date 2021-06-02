@@ -165,7 +165,7 @@ calls_notifier_class_init (CallsNotifierClass *klass)
 }
 
 CallsNotifier *
-calls_notifier_new ()
+calls_notifier_new (void)
 {
   return g_object_new (CALLS_TYPE_NOTIFIER, NULL);
 }

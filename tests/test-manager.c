@@ -26,7 +26,7 @@ call_remove_cb (CallsManager *manager, CallsCall *call)
 }
 
 static void
-test_calls_manager_without_provider ()
+test_calls_manager_without_provider (void)
 {
   guint no_origins;
   GListModel *origins;
@@ -46,7 +46,7 @@ test_calls_manager_without_provider ()
 }
 
 static void
-test_calls_manager_dummy_provider ()
+test_calls_manager_dummy_provider (void)
 {
   g_autoptr (CallsManager) manager = calls_manager_new ();
   GListModel *origins;
@@ -99,7 +99,7 @@ test_calls_manager_dummy_provider ()
 }
 
 static void
-test_calls_manager_mm_provider ()
+test_calls_manager_mm_provider (void)
 {
   GListModel *origins_tel;
   g_autoptr (CallsManager) manager = calls_manager_new ();
@@ -121,7 +121,7 @@ test_calls_manager_mm_provider ()
 }
 
 static void
-test_calls_manager_multiple_providers_mm_sip ()
+test_calls_manager_multiple_providers_mm_sip (void)
 {
   g_autoptr (CallsCredentials) alice = NULL;
   g_autoptr (CallsCredentials) bob = NULL;

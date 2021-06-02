@@ -732,7 +732,7 @@ calls_record_store_init (CallsRecordStore *self)
 
 
 CallsRecordStore *
-calls_record_store_new ()
+calls_record_store_new (void)
 {
   return g_object_new (CALLS_TYPE_RECORD_STORE,
                        "item-type", CALLS_TYPE_CALL_RECORD,

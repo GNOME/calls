@@ -47,4 +47,4 @@ typedef struct {
 MediaCodecInfo*  media_codec_by_name (const char *name);
 MediaCodecInfo*  media_codec_by_payload_id (uint payload_id);
 gchar*           media_codec_get_gst_capabilities (MediaCodecInfo *codec);
-GList*           media_codecs_get_candidates ();
+GList*           media_codecs_get_candidates (void);
