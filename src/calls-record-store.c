@@ -63,9 +63,10 @@ state_to_record_state (CallsCallState call_state)
 
   case CALLS_CALL_STATE_DISCONNECTED:
     return ENDED;
-  }
 
-  g_assert_not_reached ();
+  default:
+    g_assert_not_reached ();
+  }
 }
 
 
@@ -561,6 +562,7 @@ state_changed_cb (CallsRecordStore *self,
       stamp_call (record, "end");
       break;
 
+    case STARTED:
     default:
       g_assert_not_reached ();
       break;
@@ -573,12 +575,15 @@ state_changed_cb (CallsRecordStore *self,
       stamp_call (record, "end");
       break;
 
+    case STARTED:
+    case ANSWERED:
     default:
       g_assert_not_reached ();
       break;
     }
     break;
 
+  case ENDED:
   default:
     g_assert_not_reached ();
     break;
