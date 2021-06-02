@@ -472,7 +472,7 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   props[PROP_CALL] =
     g_param_spec_object ("call",
                          "Call",
-                         "The CallsCall which this display rapresents",
+                         "The CallsCall which this display represents",
                          CALLS_TYPE_CALL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
 
