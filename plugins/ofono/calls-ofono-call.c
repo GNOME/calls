@@ -202,16 +202,16 @@ calls_ofono_call_tone_start (CallsCall *call, gchar key)
 
 static void
 set_properties (CallsOfonoCall *self,
-                GVariant       *props)
+                GVariant       *call_props)
 {
   const gchar *str = NULL;
 
-  g_return_if_fail (props != NULL);
+  g_return_if_fail (call_props != NULL);
 
-  g_variant_lookup (props, "LineIdentification", "s", &self->number);
-  g_variant_lookup (props, "Name", "s", &self->name);
+  g_variant_lookup (call_props, "LineIdentification", "s", &self->number);
+  g_variant_lookup (call_props, "Name", "s", &self->name);
 
-  g_variant_lookup (props, "State", "&s", &str);
+  g_variant_lookup (call_props, "State", "&s", &str);
   g_return_if_fail (str != NULL);
   calls_call_state_parse_nick (&self->state, str);
 
