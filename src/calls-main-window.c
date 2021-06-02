@@ -331,6 +331,9 @@ state_changed_cb (CallsMainWindow *self,
     case CALLS_MANAGER_STATE_NO_PLUGIN:
       error = _("Can't place calls: No plugin");
       break;
+
+    default:
+      g_assert_not_reached ();
     }
 
   gtk_label_set_text (self->permanent_error_label, error);
