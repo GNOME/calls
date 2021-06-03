@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+ABS_BUILDDIR='@ABS_BUILDDIR@'
+ABS_SRCDIR='@ABS_SRCDIR@'
+
+export GSETTINGS_SCHEMA_DIR="${ABS_BUILDDIR}/data"
+set -x
+exec "${ABS_BUILDDIR}/src/gnome-calls" "$@"
+

@@ -58,6 +58,15 @@ config_data.set_quoted('PACKAGE_URL', calls_homepage)
 config_data.set_quoted('PACKAGE_VERSION', calls_version)
 config_data.set('PACKAGE_URL_RAW', calls_homepage)
 
+run_data = configuration_data()
+run_data.set('ABS_BUILDDIR', meson.current_build_dir())
+run_data.set('ABS_SRCDIR', meson.current_source_dir())
+
+configure_file(
+  input: 'run.in',
+  output: 'run',
+  configuration: run_data)
+
 add_project_arguments([
  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_58',
  '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_64',
