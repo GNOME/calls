@@ -22,6 +22,7 @@ Build-Depends:
  libmm-glib-dev (>= 1.12.0),
  libpeas-dev,
  libsofia-sip-ua-glib-dev,
+ libxml2-utils,
  meson,
  modemmanager-dev,
  pkg-config,
