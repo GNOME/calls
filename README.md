@@ -41,7 +41,7 @@ command-line option.  For example, to run with the dummy backend and
 some useful debugging output:
 
     export G_MESSAGES_DEBUG=all
-    /usr/bin/gnome-calls -p dummy
+    /usr/local/bin/gnome-calls -p dummy
 
 If using ModemManager, Calls will wait for ModemManager to appear on
 D-Bus and then wait for usable modems to appear.  The UI will be
@@ -49,14 +49,18 @@ inactive and display a status message until a usable modem appears.
 
 ### Running from the build directory
 You can run calls without having to install it by executing the run script in
-the build folder, i.e. `_build/run`
+the build folder, i.e. `_build/run`. This script will setup the needed environment
+and start Calls.
 
-When running from the build tree you can use `CALLS_PLUGIN_DIR` environment
-varible to specify the directroy from where plugins are loaded. To e.g. load
-the dummy plugin from the build tree:
+### Call provider backends
+Call provider backends are compiled as plugins and can be loaded and unloaded at runtime
+using the `-p` command line flag, followed by the plugin name.
+
+Setting the `CALLS_PLUGIN_DIR` environment variable will include the specified
+directory in the plugin search path. F.e.
 
     export CALLS_PLUGIN_DIR=_build/plugins/
-    _build/run -p dummy
+    /usr/local/bin/gnome-calls -p dummy
 
 
 ### oFono
