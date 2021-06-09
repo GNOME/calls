@@ -977,3 +977,24 @@ calls_manager_has_any_provider (CallsManager *self)
 
   return !!g_hash_table_size (self->providers);
 }
+
+/**
+ * calls_manager_get_provider_names:
+ * @self: The #CallsManager
+ * @length: (optional) (out): the length of the returned array
+ *
+ * Retrieves the names of all providers loaded by @self, as an array.
+ *
+ * You should free the return value with g_free().
+ *
+ * Returns: (array length=length) (transfer container): a
+ * %NULL-terminated array containing the names of providers.
+ */
+const char **
+calls_manager_get_provider_names (CallsManager *self,
+                                  guint        *length)
+{
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+
+  return (const char **) g_hash_table_get_keys_as_array (self->providers, length);
+}

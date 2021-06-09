@@ -75,6 +75,8 @@ GListModel            *calls_manager_get_suitable_origins     (CallsManager     
 const gchar           *calls_manager_get_contact_name         (CallsCall        *call);
 gboolean               calls_manager_has_active_call          (CallsManager     *self);
 void                   calls_manager_hang_up_all_calls        (CallsManager     *self);
-gboolean               calls_manager_has_any_provider         (CallsManager *self);
+gboolean               calls_manager_has_any_provider         (CallsManager     *self);
+const char           **calls_manager_get_provider_names       (CallsManager     *self,
+                                                               guint            *length);
 
 G_END_DECLS

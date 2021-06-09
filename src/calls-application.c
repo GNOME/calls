@@ -119,6 +119,7 @@ handle_local_options (GApplication *application,
   gboolean ok;
   g_autoptr (GError) error = NULL;
   const char *arg;
+  g_autoptr (GVariant) providers = NULL;
 
   g_debug ("Registering application");
   ok = g_application_register (application, NULL, &error);
@@ -135,16 +136,15 @@ handle_local_options (GApplication *application,
     exit (0);
   }
 
-  ok = g_variant_dict_lookup (options, "provider", "&s", &arg);
-  if (ok) {
+  providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
+  if (providers) {
     g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-provider-name",
-                                    g_variant_new_string (arg));
+                                    "set-provider-names",
+                                    providers);
   } else {
-    if (!calls_manager_has_any_provider (calls_manager_get_default ()))
-      g_action_group_activate_action (G_ACTION_GROUP (application),
-                                      "set-provider-name",
-                                      g_variant_new_string (DEFAULT_PROVIDER_PLUGIN));
+    g_action_group_activate_action (G_ACTION_GROUP (application),
+                                    "set-default-providers",
+                                    NULL);
   }
 
   ok = g_variant_dict_contains (options, "daemon");
@@ -166,23 +166,54 @@ handle_local_options (GApplication *application,
 
 
 static void
-set_provider_name_action (GSimpleAction *action,
-                          GVariant      *parameter,
-                          gpointer       user_data)
+set_provider_names_action (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
-  const char *name;
+  CallsManager *manager;
+  g_autofree const char **names = NULL;
+  g_autofree const char **loaded = NULL;
+  gsize length;
+  guint length_loaded;
 
-  name = g_variant_get_string (parameter, NULL);
-  g_return_if_fail (name != NULL);
+  names = g_variant_get_strv (parameter, &length);
+  g_return_if_fail (names && *names);
 
-  if (calls_manager_has_provider (calls_manager_get_default (), name)) {
-    g_warning ("Cannot add provider `%s' because it is already loaded",
-               name);
-    return;
+  manager = calls_manager_get_default ();
+  loaded = calls_manager_get_provider_names (manager, &length_loaded);
+
+  /* remove unwanted providers */
+  for (guint i = 0; i < length_loaded; i++) {
+    g_autofree char *provider = g_strdup (loaded[i]);
+    if (!g_strv_contains (names, provider))
+      calls_manager_remove_provider (manager, provider);
   }
 
-  g_debug ("Start loading provider `%s'", name);
-  calls_manager_add_provider (calls_manager_get_default (), name);
+  for (guint i = 0; i < length; i++) {
+    const char *name = names[i];
+
+    if (calls_manager_has_provider (manager, name))
+      continue;
+
+    g_debug ("Loading provider `%s'", name);
+    calls_manager_add_provider (manager, name);
+  }
+}
+
+
+static void
+set_default_providers_action (GSimpleAction *action,
+                              GVariant      *parameter,
+                              gpointer       user_data)
+{
+  /**
+   * Only add default providers when there are none added yet,
+   * This makes sure we're not resetting explicitly set providers
+   */
+  if (calls_manager_has_any_provider (calls_manager_get_default ()))
+    return;
+
+  /* TODO get defaults from GSettings */
 }
 
 
@@ -325,7 +356,8 @@ manager_state_changed_cb (GApplication *application)
 
 static const GActionEntry actions[] =
 {
-  { "set-provider-name", set_provider_name_action, "s" },
+  { "set-provider-names", set_provider_names_action, "as" },
+  { "set-default-providers", set_default_providers_action, NULL },
   { "set-daemon", set_daemon_action, NULL },
   { "dial", dial_action, "s" },
   { "copy-number", copy_number, "s"},
@@ -605,7 +637,7 @@ calls_application_init (CallsApplication *self)
   const GOptionEntry options[] = {
     {
       "provider", 'p', G_OPTION_FLAG_NONE,
-      G_OPTION_ARG_STRING, NULL,
+      G_OPTION_ARG_STRING_ARRAY, NULL,
       _("The name of the plugin to use for the call Provider"),
       _("PLUGIN")
     },
