@@ -393,13 +393,12 @@ remove_provider (CallsManager *self,
   g_signal_handlers_disconnect_by_data (origins, self);
   n_items = g_list_model_get_n_items (origins);
 
-  for (guint i = 0; i < n_items; i++)
-    {
-      g_autoptr(CallsOrigin) origin = NULL;
+  for (guint i = 0; i < n_items; i++) {
+    g_autoptr(CallsOrigin) origin = NULL;
 
-      origin = g_list_model_get_item (origins, i);
-      remove_origin (self, origin);
-    }
+    origin = g_list_model_get_item (origins, i);
+    remove_origin (self, origin);
+  }
 
   g_hash_table_remove (self->providers, name);
   calls_provider_unload_plugin (name);
