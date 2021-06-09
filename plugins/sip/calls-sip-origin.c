@@ -954,7 +954,7 @@ init_sip_account (CallsSipOrigin *self,
     goto err;
   }
 
-  // setup_nua and setup_oper only after account data has been set
+  // setup_nua() and setup_sip_handles() only after account data has been set
   self->nua = setup_nua (self);
   if (self->nua == NULL) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -1128,7 +1128,7 @@ calls_sip_origin_dispose (GObject *object)
     g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
     g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
 
-    if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_OFFLINE)
+    if (!self->use_direct_connection && self->state != CALLS_ACCOUNT_OFFLINE)
       go_online (CALLS_ACCOUNT (self), FALSE);
   }
 
