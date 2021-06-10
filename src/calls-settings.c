@@ -40,6 +40,7 @@ enum {
   PROP_0,
   PROP_AUTO_USE_DEFAULT_ORIGINS,
   PROP_COUNTRY_CODE,
+  PROP_AUTOLOAD_PLUGINS,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -70,6 +71,10 @@ calls_settings_set_property (GObject      *object,
     calls_settings_set_country_code (self, g_value_get_string (value));
     break;
 
+  case PROP_AUTOLOAD_PLUGINS:
+    calls_settings_set_autoload_plugins (self, g_value_get_boxed (value));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -92,6 +97,10 @@ calls_settings_get_property (GObject    *object,
 
   case PROP_COUNTRY_CODE:
     g_value_set_string (value, calls_settings_get_country_code (self));
+    break;
+
+  case PROP_AUTOLOAD_PLUGINS:
+    g_value_set_boxed (value, calls_settings_get_autoload_plugins (self));
     break;
 
   default:
@@ -146,6 +155,13 @@ calls_settings_class_init (CallsSettingsClass *klass)
                          "The country code (usually from the modem)",
                          "",
                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  props[PROP_AUTOLOAD_PLUGINS] =
+    g_param_spec_boxed ("autoload-plugins",
+                        "autoload plugins",
+                        "The plugins to automatically load on startup",
+                        G_TYPE_STRV,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -231,4 +247,23 @@ calls_settings_set_country_code (CallsSettings *self,
 
   g_debug ("Setting country code to %s", country_code);
   g_settings_set_string (G_SETTINGS (self->settings), "country-code", country_code);
+}
+
+
+char **
+calls_settings_get_autoload_plugins (CallsSettings *self)
+{
+  g_return_val_if_fail (CALLS_IS_SETTINGS (self), NULL);
+
+  return g_settings_get_strv (G_SETTINGS (self->settings), "autoload-plugins");
+}
+
+
+void
+calls_settings_set_autoload_plugins (CallsSettings      *self,
+                                     const char * const *plugins)
+{
+  g_return_if_fail (CALLS_IS_SETTINGS (self));
+
+  g_settings_set_strv (G_SETTINGS (self->settings), "autoload-plugins", plugins);
 }

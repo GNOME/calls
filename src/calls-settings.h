@@ -33,12 +33,15 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsSettings, calls_settings, CALLS, SETTINGS, GObject)
 
 CallsSettings     *calls_settings_new                            (void);
-gboolean           calls_settings_get_use_default_origins        (CallsSettings *self);
-void               calls_settings_set_use_default_origins        (CallsSettings *self,
-                                                                  gboolean       enable);
-char              *calls_settings_get_country_code               (CallsSettings *self);
-void               calls_settings_set_country_code               (CallsSettings *self,
-                                                                  const char    *country_code);
+gboolean           calls_settings_get_use_default_origins        (CallsSettings      *self);
+void               calls_settings_set_use_default_origins        (CallsSettings      *self,
+                                                                  gboolean            enable);
+char              *calls_settings_get_country_code               (CallsSettings      *self);
+void               calls_settings_set_country_code               (CallsSettings      *self,
+                                                                  const char         *country_code);
+char             **calls_settings_get_autoload_plugins           (CallsSettings      *self);
+void               calls_settings_set_autoload_plugins           (CallsSettings      *self,
+                                                                  const char * const *plugins);
 
 G_END_DECLS
 

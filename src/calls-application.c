@@ -206,6 +206,8 @@ set_default_providers_action (GSimpleAction *action,
                               GVariant      *parameter,
                               gpointer       user_data)
 {
+  CallsApplication *self = CALLS_APPLICATION (user_data);
+  g_auto (GStrv) plugins = NULL;
   /**
    * Only add default providers when there are none added yet,
    * This makes sure we're not resetting explicitly set providers
@@ -213,7 +215,10 @@ set_default_providers_action (GSimpleAction *action,
   if (calls_manager_has_any_provider (calls_manager_get_default ()))
     return;
 
-  /* TODO get defaults from GSettings */
+  plugins = calls_settings_get_autoload_plugins (self->settings);
+  for (guint i = 0; plugins[i] != NULL; i++) {
+    calls_manager_add_provider (calls_manager_get_default (), plugins[i]);
+  }
 }
 
 

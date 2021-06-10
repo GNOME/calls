@@ -14,5 +14,11 @@
       <description>The country code is used for contact name lookup</description>
     </key>
 
+    <key name="autoload-plugins" type="as">
+      <default>["mm", "sip"]</default>
+      <summary>The plugins to load automatically</summary>
+      <description>These plugins will be automatically loaded on application startup.</description>
+    </key>
+
   </schema>
 </schemalist>
