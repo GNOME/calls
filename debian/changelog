@@ -1,3 +1,70 @@
+gnome-calls (0.3.4) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * manager: Set peas search path only once
+  * provider: whitespace and indentation
+  * cleanup: Fix calls_origin_get_name() related memory leaks
+  * mm: origin: Try using own number as the origin name
+  * account-provider: Add debugging in the public functions
+  * plugins: provider: Use CallsOrigin instead of derived types for GListStore
+  * util: Add simple API to query protocol
+  * test: Add util tests
+  * call: Introduce protocol property
+  * calls-record: Introduce the protocol property
+  * provider: Add API to query supported protocols
+  * origin: Add API to query supported protocols
+  * manager: support multiple providers
+  * application: Add CallsSettings class
+  * new-call-box: Honour auto-use-default-origins setting
+  * application: Don't add a provider if one is already present
+  * manager: Differentiate the NO_ORIGIN state
+  * test: manager: Use more appropriate `g_assert_*()` calls
+  * sip: provider: Don't warn when trying to add account multiple times
+  * tests: manager: Add multiple provider tests
+  * application: settings: Add country code setting
+  * manager: Update country code
+  * ci: disable flatpak build
+  * d/control: Add libxml2-utils
+  * meson: Compile schemas in build directory
+  * Add run script to the build directory
+  * Update README: Explain how to start calls without installing
+  * Initial DBus API
+  * display: codestyle
+  * display: Fix typo
+  * record-store: codestyle
+  * Fix old-style warnings all over the codebase
+  * Fix missing-declarations warnings all over the codebase
+  * sip: media-pipeline: Don't shadow props variable
+  * ofono: call: Don't shadow props variable
+  * mm: origin: Don't shadow props variable
+  * call-display: Add default case to switch statement
+  * record-store: Add default case to switch statements
+  * main-window: Add default case to switch statement
+  * meson: Use stricter compilation warnings and errors
+  * desktop-file: Register as sip and sips URI scheme handler
+  * run: Add plugin search directory
+  * README: Reword plugin search directory section to be more accurate
+  * dir-locals: Treat G_* macros as including a semicolon
+  * manager: Fix whitespace
+  * manager: codestyle
+  * sip: origin: Fix if condition in dispose()
+  * util: Make position argument in calls_find_store() optional
+  * test: manager: Expanded *has_provider() testing
+
+  [ Anders Jonsson ]
+  * po: Update Swedish translation
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+
+  [ Vittorio Monti ]
+  * po: Update Italian translation
+
+  [ Guido Günther ]
+  * Expose call objects on DBus
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Sat, 12 Jun 2021 17:21:31 +0200
+
 gnome-calls (0.3.3) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]
