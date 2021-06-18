@@ -6,7 +6,7 @@ ABS_SRCDIR='@ABS_SRCDIR@'
 
 if [ "${CALLS_GDB}" = 1 ]; then
     echo "Running calls under gdb"
-    WRAPPER="gdb"
+    WRAPPER="gdb --args"
 fi
 
 export GSETTINGS_SCHEMA_DIR="${ABS_BUILDDIR}/data"
