@@ -21,7 +21,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
-#define G_LOG_DOMAIN "calls-ringer"
+#define G_LOG_DOMAIN "CallsRinger"
 
 #include "calls-ringer.h"
 #include "calls-manager.h"
