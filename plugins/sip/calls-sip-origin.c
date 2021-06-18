@@ -456,22 +456,21 @@ sip_r_register (int              status,
 
   if (status == 200) {
     g_debug ("REGISTER successful");
-
     origin->state = CALLS_ACCOUNT_ONLINE;
-  }
-  else if (status == 401 || status == 407) {
-    sip_authenticate (origin, nh, sip);
 
+  } else if (status == 401 || status == 407) {
+    sip_authenticate (origin, nh, sip);
     origin->state = CALLS_ACCOUNT_AUTHENTICATING;
-  }
-  else if (status == 403) {
+
+  } else if (status == 403) {
     g_warning ("wrong credentials?");
     origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
-  }
-  else if (status == 904) {
+
+  } else if (status == 904) {
     g_warning ("unmatched challenge");
     origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
   }
+
   g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
 }
 
@@ -865,8 +864,8 @@ go_online (CallsAccount *account,
                   TAG_IF (display_name, NUTAG_M_DISPLAY (display_name)),
                   NUTAG_REGISTRAR (registrar_url),
                   TAG_END ());
-  }
-  else {
+
+  } else {
     if (self->state == CALLS_ACCOUNT_OFFLINE)
       return;
 
