@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsOfonoProvider"
+
 #include "calls-ofono-provider.h"
 #include "calls-provider.h"
 #include "calls-ofono-origin.h"

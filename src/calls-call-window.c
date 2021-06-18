@@ -24,6 +24,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsCallWindow"
+
 #include "calls-call-window.h"
 #include "calls-origin.h"
 #include "calls-call-selector-item.h"

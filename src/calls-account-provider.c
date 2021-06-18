@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsAccountProvider"
+
 #include "calls-account-provider.h"
 
 /**

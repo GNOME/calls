@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsOfonoCall"
+
 #include "calls-ofono-call.h"
 #include "calls-call.h"
 #include "calls-message-source.h"

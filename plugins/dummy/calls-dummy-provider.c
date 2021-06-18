@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsDummyProvider"
+
 #include "calls-dummy-provider.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"

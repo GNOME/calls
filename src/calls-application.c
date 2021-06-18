@@ -25,6 +25,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#define G_LOG_DOMAIN "CallsApplication"
+
 #include "config.h"
 #include "calls-dbus-manager.h"
 #include "calls-history-box.h"

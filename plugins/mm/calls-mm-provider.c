@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsMMProvider"
+
 #include "calls-mm-provider.h"
 #include "calls-provider.h"
 #include "calls-mm-origin.h"

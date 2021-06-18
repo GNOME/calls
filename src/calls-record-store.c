@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsRecordStore"
+
 #include "calls-record-store.h"
 #include "calls-call-record.h"
 #include "calls-manager.h"

@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsMMOrigin"
+
 #include "calls-mm-origin.h"
 #include "calls-origin.h"
 #include "calls-ussd.h"

@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsNewCallBox"
+
 #include "calls-application.h"
 #include "calls-new-call-box.h"
 #include "calls-ussd.h"
