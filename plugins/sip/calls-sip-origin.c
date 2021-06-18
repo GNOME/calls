@@ -872,7 +872,6 @@ go_online (CallsAccount *account,
     nua_unregister (self->oper->register_handle,
                     TAG_END ());
   }
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
 }
 
 
