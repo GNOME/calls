@@ -476,6 +476,31 @@ sip_r_register (int              status,
 
 
 static void
+sip_r_unregister (int              status,
+                  char const      *phrase,
+                  nua_t           *nua,
+                  CallsSipOrigin  *origin,
+                  nua_handle_t    *nh,
+                  CallsSipHandles *op,
+                  sip_t const     *sip,
+                  tagi_t           tags[])
+{
+  g_debug ("response to unregistering: %03d %s", status, phrase);
+
+  if (status == 200) {
+    g_debug ("Unregistering successful");
+    origin->state = CALLS_ACCOUNT_OFFLINE;
+
+  } else {
+    g_warning ("Unregisterung unsuccessful: %03d %s", status, phrase);
+    origin->state = CALLS_ACCOUNT_UNKNOWN_ERROR;
+  }
+
+  g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
+}
+
+
+static void
 sip_i_state (int              status,
              char const      *phrase,
              nua_t           *nua,
@@ -656,6 +681,17 @@ sip_callback (nua_event_t   event,
                     op,
                     sip,
                     tags);
+    break;
+
+  case nua_r_unregister:
+    sip_r_unregister (status,
+                      phrase,
+                      nua,
+                      origin,
+                      nh,
+                      op,
+                      sip,
+                      tags);
     break;
 
   case nua_r_set_params:
