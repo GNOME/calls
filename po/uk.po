@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-06-01 15:24+0000\n"
-"PO-Revision-Date: 2021-06-01 23:14+0300\n"
+"POT-Creation-Date: 2021-06-19 03:24+0000\n"
+"PO-Revision-Date: 2021-06-19 12:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:316
+#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:353
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Дзвінки"
@@ -45,37 +45,37 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
-#: src/calls-application.c:437
+#: src/calls-application.c:474
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Спроба набору за непридатною до обробки адресою телефону «%s»"
 
-#: src/calls-application.c:519
+#: src/calls-application.c:556
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:570
+#: src/calls-application.c:609
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Назва додатка, яку слід використовувати для надавача послуг дзвінка"
 
-#: src/calls-application.c:571
+#: src/calls-application.c:610
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:576
+#: src/calls-application.c:615
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:582
+#: src/calls-application.c:621
 msgid "Dial a number"
 msgstr "Набрати номер"
 
-#: src/calls-application.c:583
+#: src/calls-application.c:622
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:588
+#: src/calls-application.c:627
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
@@ -83,7 +83,7 @@ msgstr "Вивести поточну версію"
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
-#: src/calls-call-display.c:292
+#: src/calls-call-display.c:278
 msgid "Calling…"
 msgstr "Виклик…"
 
@@ -105,9 +105,10 @@ msgid "Can't place calls: No voice-capable modem available"
 msgstr "Не вдалося розмістити дзвінки: немає модема із голосовими можливостями"
 
 #: src/calls-main-window.c:323
-#| msgid "Can't place calls: No voice-capable modem available"
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "Не вдалося розмістити дзвінки: немає модема або облікового запису інтернет-телефонії"
+msgstr ""
+"Не вдалося розмістити дзвінки: немає модема або облікового запису інтернет-"
+"телефонії"
 
 #: src/calls-main-window.c:328
 msgid "Can't place calls: No backend service"
@@ -117,15 +118,15 @@ msgstr "Не вдалося розмістити дзвінки: немає сл
 msgid "Can't place calls: No plugin"
 msgstr "Не вдалося розмістити дзвінки: немає додатка"
 
-#: src/calls-main-window.c:369
+#: src/calls-main-window.c:372
 msgid "Contacts"
 msgstr "Контакти"
 
-#: src/calls-main-window.c:379 src/ui/call-display.ui:287
+#: src/calls-main-window.c:382 src/ui/call-display.ui:287
 msgid "Dial Pad"
 msgstr "Панель набору"
 
-#: src/calls-main-window.c:387
+#: src/calls-main-window.c:390
 msgid "Recent"
 msgstr "Нещодавні"
 
@@ -133,17 +134,22 @@ msgstr "Нещодавні"
 msgid "Missed call"
 msgstr "Пропущено виклик"
 
-#: src/calls-notifier.c:58
+#: src/calls-notifier.c:63
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущено виклик від <b>%s</b>"
 
-#: src/calls-notifier.c:60
+#: src/calls-notifier.c:65
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущено виклик від %s"
 
-#: src/calls-notifier.c:66
+#: src/calls-notifier.c:67
+#| msgid "Missed call from %s"
+msgid "Missed call from unknown caller"
+msgstr "Пропущено виклик від невідомого абонента"
+
+#: src/calls-notifier.c:73
 msgid "Call back"
 msgstr "Передзвонити"
 
