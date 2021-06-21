@@ -1158,13 +1158,8 @@ calls_sip_origin_dispose (GObject *object)
 
   remove_calls (self, NULL);
 
-  if (self->oper) {
-    g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
-    g_clear_pointer (&self->oper->register_handle, nua_handle_unref);
-
-    if (!self->use_direct_connection && self->state != CALLS_ACCOUNT_OFFLINE)
-      go_online (CALLS_ACCOUNT (self), FALSE);
-  }
+  if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_ONLINE)
+    go_online (CALLS_ACCOUNT (self), FALSE);
 
   if (self->nua) {
     g_debug ("Requesting nua_shutdown ()");
