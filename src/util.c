@@ -180,14 +180,15 @@ calls_find_in_store (GListModel *list,
                      gpointer    item,
                      guint      *position)
 {
-#if GLIB_CHECK_VERSION(2, 64, 0)
-  return g_list_store_find ((GListStore *) list,
-                            item,
-                            position);
-#else
+  GListStore *store = (GListStore *) list;
   guint count;
 
   g_return_val_if_fail (G_IS_LIST_MODEL (list), FALSE);
+
+  if (G_IS_LIST_STORE (store))
+    return g_list_store_find (store,
+                              item,
+                              position);
 
   count = g_list_model_get_n_items (list);
 
@@ -203,7 +204,6 @@ calls_find_in_store (GListModel *list,
     }
   }
   return FALSE;
-#endif
 }
 
 /**
