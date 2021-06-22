@@ -212,8 +212,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/evolution-data-server/3.35/evolution-data-server-3.35.90.tar.xz",
-                    "sha256" : "f7444e53228ecdae0f71c37846ff8e59ca7e54522dda040d889769d6fbd976fc"
+                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.40/evolution-data-server-3.40.2.tar.xz",
+                    "sha256" : "ec82951639f32a5cece80a8b0b9aa3f66b7d318e3ee2c1c35234f2e2bde8a418"
                 }
             ]
         },
