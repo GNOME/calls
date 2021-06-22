@@ -14,7 +14,6 @@ test_env = [
 ]
 
 test_cflags = [
-  '-fPIE',
   '-DFOR_TESTING',
   '-Wno-error=deprecated-declarations',
   '-DPLUGIN_BUILDDIR="@0@"'.format(full_calls_plugin_builddir),
@@ -48,6 +47,7 @@ foreach test : tests
                  dummy_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
+                 pie: true,
                  link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
@@ -63,6 +63,7 @@ test_sources = [ 'test-manager.c' ]
 t = executable('manager', test_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
+                 pie: true,
                  link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
@@ -77,6 +78,7 @@ t = executable('plugins', test_sources,
                  calls_sources,
                  c_args : test_cflags,
                  link_args: test_link_args,
+                 pie: true,
                  link_with : [calls_vala, libcalls],
                  dependencies: calls_deps,
                  include_directories : [
@@ -89,6 +91,7 @@ test_sources = [ 'test-sip.c' ]
 t = executable('sip', test_sources,
                c_args : test_cflags,
                link_args: test_link_args,
+               pie: true,
                link_with : [calls_vala, calls_sip, libcalls],
                dependencies: [calls_deps, sip_deps],
                include_directories : [
@@ -102,6 +105,7 @@ test_sources = [ 'test-account.c' ]
 t = executable('account', test_sources,
                c_args : test_cflags,
                link_args: test_link_args,
+               pie: true,
                link_with : [calls_vala, calls_sip, libcalls],
                dependencies: [calls_deps, sip_deps],
                include_directories : [
@@ -115,6 +119,7 @@ test_sources = [ 'test-util.c' ]
 t = executable('util', test_sources,
                c_args : test_cflags,
                link_args: test_link_args,
+               pie: true,
                link_with : [calls_vala, libcalls],
                dependencies: calls_deps,
                include_directories : [
