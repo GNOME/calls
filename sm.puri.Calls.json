@@ -42,8 +42,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.12.4.tar.xz",
-                    "sha256" : "852d61755e0c1a8d0c609b17192d742b324fdd2e513f3ed64b228befb859a95b"
+                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.16.6.tar.xz",
+                    "sha256" : "2a90b6260f66d3135609d62667ada73416694d717e7fd9b73223e3703a499617"
                 }
             ]
         },
