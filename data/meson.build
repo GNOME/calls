@@ -70,7 +70,7 @@ install_data(
 
 schema_src = 'sm.puri.Calls.gschema.xml'
 compiled = gnome.compile_schemas(build_by_default: true,
-                                 depends_files: files(schema_src))
+                                 depend_files: files(schema_src))
 
 install_data(schema_src,
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
