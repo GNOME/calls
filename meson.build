@@ -97,8 +97,8 @@ test_c_args = [
   '-Wno-switch-enum',
   '-Wtype-limits',
   '-Wunused-function',
-  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_58',
- '  -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_66',
+  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_64',
+  '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_68',
 ]
 
 if get_option('buildtype') != 'plain'
