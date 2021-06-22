@@ -99,6 +99,8 @@ test_c_args = [
   '-Wunused-function',
   '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_64',
   '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_68',
+  # see https://gitlab.gnome.org/GNOME/evolution-data-server/-/issues/332
+  '-DEDS_DISABLE_DEPRECATED',
 ]
 
 if get_option('buildtype') != 'plain'
