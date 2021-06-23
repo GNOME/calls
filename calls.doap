@@ -17,13 +17,6 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Bob Ham</foaf:name>
-      <foaf:mbox rdf:resource="mailto:bob.ham@puri.sm" />
-      <foaf:mbox rdf:resource="mailto:rah@settrans.net" />
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
       <foaf:name>Julian Sparber</foaf:name>
       <foaf:mbox rdf:resource="mailto:julian.sparber@puri.sm" />
     </foaf:Person>
@@ -31,6 +24,7 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Evangelos Ribeiro Tzaras</foaf:name>
+      <foaf:mbox rdf:resource="mailto:evangelos.tzaras@puri.sm" />
       <foaf:mbox rdf:resource="mailto:devrtz@fortysixandtwo.eu" />
     </foaf:Person>
   </maintainer>
