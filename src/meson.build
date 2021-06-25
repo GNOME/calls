@@ -24,7 +24,6 @@
 
 gnome = import('gnome')
 
-subdir('wayland')
 subdir('dbus')
 
 src_include = include_directories('.')
@@ -40,12 +39,6 @@ calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('folks'),
                dependency('libcallaudio-0.1'),
              ]
-
-if wl_scanner.found()
-  calls_includes += include_directories('wayland')
-  calls_deps += dependency('wayland-client', version: '>=1.14')
-endif
-
 
 calls_vala_deps = [
   dependency('libebook-contacts-1.2'),
@@ -85,7 +78,6 @@ calls_generated_sources = [
   calls_enum_sources,
   calls_resources,
   generated_dbus_sources,
-  wl_proto_sources,
 ]
 
 calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
@@ -118,10 +110,9 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-account.c', 'calls-account.h',
                        'calls-account-provider.c', 'calls-account-provider.h',
                        'calls-settings.c', 'calls-settings.h',
-                      ]) + wayland_sources + calls_generated_sources
+                      ]) + calls_generated_sources
 
 calls_config_data = config_data
-calls_config_data.set10('WL_SCANNER_FOUND', wl_scanner.found())
 
 config_h = configure_file(
   output: 'config.h',

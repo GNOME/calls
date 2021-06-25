@@ -31,19 +31,12 @@
 #include "calls-call-selector-item.h"
 #include "calls-new-call-box.h"
 #include "calls-in-app-notification.h"
-#include "calls-wayland-config.h"
 #include "calls-manager.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <handy.h>
-
-#ifdef CALLS_WAYLAND
-#include <gdk/gdkwayland.h>
-#include "wlr-layer-shell-unstable-v1-client-protocol.h"
-#include "wayland/layersurface.h"
-#endif // CALLS_WAYLAND
 
 struct _CallsCallWindow
 {
@@ -61,108 +54,9 @@ struct _CallsCallWindow
 
   guint inhibit_cookie;
 
-#ifdef CALLS_WAYLAND
-  gboolean screensaver_active;
-  struct zwlr_layer_shell_v1 *layer_shell_iface;
-  struct wl_output *output;
-  GtkWindow *layer_surface;
-#endif // CALLS_WAYLAND
 };
 
 G_DEFINE_TYPE (CallsCallWindow, calls_call_window, GTK_TYPE_APPLICATION_WINDOW);
-
-
-#ifdef CALLS_WAYLAND
-static void
-tear_down_layer_surface (CallsCallWindow *self)
-{
-  GtkWidget *child;
-
-  if (!self->layer_surface)
-    {
-      return;
-    }
-
-  g_debug ("Tearing down layer surface");
-
-  // Remove window content from layer surface
-  child = gtk_bin_get_child (GTK_BIN (self->layer_surface));
-  g_object_ref (child);
-
-  gtk_container_remove (GTK_CONTAINER (self->layer_surface),
-                        child);
-
-  // Add to the call window
-  gtk_container_add (GTK_CONTAINER (self), child);
-  g_object_unref (child);
-
-  // Destroy layer surface
-  gtk_widget_destroy (GTK_WIDGET (self->layer_surface));
-  self->layer_surface = NULL;
-}
-
-
-static void
-set_up_layer_surface (CallsCallWindow *self)
-{
-  GtkWidget *child;
-
-  if (self->layer_surface
-      || !self->layer_shell_iface
-      || !self->output)
-    {
-      return;
-    }
-
-  g_debug ("Setting up layer surface");
-
-  // Create layer surface
-  self->layer_surface = g_object_new
-    (PHOSH_TYPE_LAYER_SURFACE,
-     "layer-shell", self->layer_shell_iface,
-     "wl-output", self->output,
-     "layer", ZWLR_LAYER_SHELL_V1_LAYER_OVERLAY,
-     "namespace", "calls",
-     "anchor", ZWLR_LAYER_SURFACE_V1_ANCHOR_TOP
-     | ZWLR_LAYER_SURFACE_V1_ANCHOR_BOTTOM
-     | ZWLR_LAYER_SURFACE_V1_ANCHOR_LEFT
-     | ZWLR_LAYER_SURFACE_V1_ANCHOR_RIGHT,
-     NULL);
-  g_assert (self->layer_surface);
-
-  // Remove window content from call window
-  child = gtk_bin_get_child (GTK_BIN (self));
-  g_object_ref (child);
-
-  gtk_container_remove (GTK_CONTAINER (self), child);
-
-  // Add to the layer surface
-  gtk_container_add (GTK_CONTAINER (self->layer_surface),
-                     child);
-  g_object_unref (child);
-
-  // Show the layer surface
-  gtk_window_set_keep_above (self->layer_surface, TRUE);
-  gtk_widget_show (GTK_WIDGET (self->layer_surface));
-}
-
-
-static void
-update_layer_surface (CallsCallWindow *self,
-                      guint calls)
-{
-  g_debug ("Updating layer surface");
-
-  if (calls == 0)
-    {
-      tear_down_layer_surface (self);
-    }
-  else if (self->screensaver_active)
-    {
-      set_up_layer_surface (self);
-    }
-}
-#endif // CALLS_WAYLAND
 
 
 static void
@@ -195,10 +89,6 @@ static void
 update_visibility (CallsCallWindow *self)
 {
   guint calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
-
-#ifdef CALLS_WAYLAND
-  update_layer_surface (self, calls);
-#endif // CALLS_WAYLAND
 
   gtk_widget_set_visible (GTK_WIDGET (self), calls > 0);
   gtk_widget_set_sensitive (GTK_WIDGET (self->show_calls), calls > 1);
@@ -340,162 +230,6 @@ remove_calls (CallsCallWindow *self)
 
   update_visibility (self);
 }
-
-#ifdef CALLS_WAYLAND
-static void
-get_screensaver_active (CallsCallWindow *self,
-                        GtkApplication  *app)
-{
-  g_object_get (app,
-                "screensaver-active", &self->screensaver_active,
-                NULL);
-}
-
-
-static void
-notify_screensaver_active_cb (CallsCallWindow *self,
-                              GParamSpec      *pspec,
-                              GtkApplication  *app)
-{
-  get_screensaver_active (self, app);
-  g_debug ("Screensaver became %sactive",
-           self->screensaver_active ? "" : "in");
-
-  update_visibility (self);
-}
-
-
-static gboolean
-set_up_screensaver (CallsCallWindow *self)
-{
-  GtkApplication *app;
-  gboolean reg;
-
-  app = gtk_window_get_application (GTK_WINDOW (self));
-  g_assert (app != NULL);
-
-  g_object_get (app,
-                "register-session", &reg,
-                NULL);
-  if (!reg)
-    {
-      g_warning ("Cannot monitor screensaver state because"
-                 " Application is not set to register with session");
-      return FALSE;
-    }
-
-  g_signal_connect_swapped (app,
-                            "notify::screensaver-active",
-                            G_CALLBACK (notify_screensaver_active_cb),
-                            self);
-
-  get_screensaver_active (self, app);
-  g_debug ("Screensaver is %sactive at startup",
-           self->screensaver_active ? "" : "in");
-
-  return TRUE;
-}
-
-
-static void
-registry_global_cb (void               *data,
-                    struct wl_registry *registry,
-                    uint32_t            name,
-                    const char         *interface,
-                    uint32_t            version)
-{
-  CallsCallWindow *self = CALLS_CALL_WINDOW (data);
-
-  if (strcmp (interface, zwlr_layer_shell_v1_interface.name) == 0)
-    {
-      self->layer_shell_iface = wl_registry_bind
-        (registry, name, &zwlr_layer_shell_v1_interface, version);
-    }
-  else if (strcmp (interface, "wl_output") == 0)
-    {
-      // FIXME: Deal with more than one output
-      if (!self->output)
-        {
-          self->output = wl_registry_bind
-            (registry, name, &wl_output_interface, version);
-        }
-    }
-}
-
-static const struct wl_registry_listener registry_listener =
-{
-  registry_global_cb,
-  // FIXME: Add a remove callback
-};
-
-
-static void
-set_up_wayland (CallsCallWindow *self)
-{
-  GdkDisplay *gdk_display;
-  struct wl_display *display;
-  struct wl_registry *registry;
-
-  gdk_display = gdk_display_get_default ();
-  g_assert (gdk_display != NULL);
-
-  if (!GDK_IS_WAYLAND_DISPLAY (gdk_display))
-    {
-      g_debug ("GDK display is not a Wayland display");
-      return;
-    }
-
-  display = gdk_wayland_display_get_wl_display (gdk_display);
-  g_assert (display != NULL);
-
-  registry = wl_display_get_registry (display);
-  g_assert (registry != NULL);
-
-  wl_registry_add_listener (registry, &registry_listener, self);
-  wl_display_roundtrip (display);
-
-
-  if (!self->layer_shell_iface)
-    {
-      g_warning ("Wayland display has no layer shell interface");
-    }
-  if (!self->output)
-    {
-      g_warning ("Wayland display has no output");
-    }
-}
-
-
-static void
-application_cb (CallsCallWindow *self)
-{
-  gboolean ok;
-
-  ok = set_up_screensaver (self);
-
-  if (ok)
-    {
-      set_up_wayland (self);
-    }
-}
-
-
-static void
-notify (GObject    *object,
-        GParamSpec *pspec)
-{
-  CallsCallWindow *self = CALLS_CALL_WINDOW (object);
-  const gchar *name;
-
-  name = g_param_spec_get_name (pspec);
-  if (strcmp (name, "application") == 0)
-    {
-      application_cb (self);
-    }
-
-  return;
-}
-#endif // CALLS_WAYLAND
 
 
 static void
