@@ -108,22 +108,34 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
   g_autoptr (GError) error = NULL;
   g_autoptr (CallsDBusObjectSkeleton) object = NULL;
   g_autoptr (CallsDBusCallsCall) iface = NULL;
+  g_autoptr (CallsBestMatch) match = NULL;
 
   path = get_obj_path (self, self->iface_num++);
   object = calls_dbus_object_skeleton_new (path);
   iface = calls_dbus_calls_call_skeleton_new ();
   g_dbus_object_skeleton_add_interface (G_DBUS_OBJECT_SKELETON (object),
                                         G_DBUS_INTERFACE_SKELETON (iface));
-  g_object_set_data_full (G_OBJECT (object), "call", g_object_ref (call), g_object_unref);
 
+  /* Keep in sync with call object */
+  g_object_set_data_full (G_OBJECT (object), "call", g_object_ref (call), g_object_unref);
   g_object_connect (iface,
                     "object_signal::handle-accept", G_CALLBACK (on_handle_call_accept), call,
                     "object_signal::handle-hangup", G_CALLBACK (on_handle_call_hangup), call,
                     NULL);
-
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "number", iface, "id", G_BINDING_SYNC_CREATE);
+  g_object_bind_property (call, "protocol", iface, "protocol", G_BINDING_SYNC_CREATE);
+  /* TODO: once calls supports encryption */
+  calls_dbus_calls_call_set_encrypted (iface, FALSE);
+
+  /* Keep in sync BestMatch object */
+  match = calls_call_get_contact (call);
+  if (calls_best_match_has_individual (match)) {
+    g_object_bind_property (match, "name", iface, "display-name", G_BINDING_SYNC_CREATE);
+    /* TODO: avatar once https://source.puri.sm/Librem5/calls/-/issues/161 is fixed */
+  }
+  g_object_set_data_full (G_OBJECT (object), "contact", g_steal_pointer (&match), g_object_unref);
 
   /* Export with properties bound to reduce DBus traffic: */
   g_debug ("Exporting %p at %s", call, path);
