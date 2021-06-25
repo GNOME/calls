@@ -363,6 +363,8 @@ add_account (CallsAccountProvider *acc_provider,
 
   self = CALLS_SIP_PROVIDER (acc_provider);
 
+  g_object_ref (acc_provider);
+
   return !!calls_sip_provider_add_origin (self, credentials, 0, FALSE);
 }
 
@@ -390,6 +392,8 @@ remove_account (CallsAccountProvider *acc_provider,
 
   g_hash_table_remove (self->credentials, credentials);
   g_list_store_remove (self->origins, position);
+
+  g_object_unref (acc_provider);
 
   return TRUE;
 }
