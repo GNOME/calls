@@ -703,17 +703,19 @@ calls_manager_init (CallsManager *self)
                           self->contacts_provider, "country-code",
                           G_BINDING_DEFAULT);
 
-  // Prepend peas plugin search path
   peas = peas_engine_get_default ();
-  peas_engine_add_search_path (peas, PLUGIN_LIBDIR, NULL);
-  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
 
   dir = g_getenv ("CALLS_PLUGIN_DIR");
   if (dir && dir[0] != '\0') {
+    /** Add the directory to the search path. prepend_search_path() does not work
+     * as expected. see https://gitlab.gnome.org/GNOME/libpeas/-/issues/19
+     */
     g_debug ("Adding %s to plugin search path", dir);
-    peas_engine_prepend_search_path (peas, dir, NULL);
+    peas_engine_add_search_path (peas, dir, NULL);
   }
 
+  peas_engine_add_search_path (peas, PLUGIN_LIBDIR, NULL);
+  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
 }
 
 
