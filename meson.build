@@ -125,3 +125,4 @@ subdir('doc')
 subdir('data')
 subdir('tests')
 
+meson.add_install_script('build-aux/meson/postinstall.py')
