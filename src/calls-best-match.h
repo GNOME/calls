@@ -33,12 +33,12 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsBestMatch, calls_best_match, CALLS, BEST_MATCH, GObject);
 
-CallsBestMatch  *calls_best_match_new                (const gchar        *phone_number);
+CallsBestMatch  *calls_best_match_new                (const char         *phone_number);
 gboolean         calls_best_match_has_individual     (CallsBestMatch     *self);
-const gchar *    calls_best_match_get_phone_number   (CallsBestMatch     *self);
+const char      *calls_best_match_get_phone_number   (CallsBestMatch     *self);
 void             calls_best_match_set_phone_number   (CallsBestMatch     *self,
-                                                      const gchar        *phone_number);
-const gchar *    calls_best_match_get_name           (CallsBestMatch     *self);
+                                                      const char         *phone_number);
+const char      *calls_best_match_get_name           (CallsBestMatch     *self);
 GLoadableIcon   *calls_best_match_get_avatar         (CallsBestMatch     *self);
 
 G_END_DECLS

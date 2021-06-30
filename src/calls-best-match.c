@@ -37,8 +37,8 @@ struct _CallsBestMatch
 
   FolksSearchView    *view;
   FolksIndividual    *best_match;
-  gchar              *phone_number;
-  gchar              *country_code;
+  char               *phone_number;
+  char               *country_code;
   gboolean            had_country_code_last_time;
 };
 
@@ -131,31 +131,30 @@ set_property (GObject      *object,
               GParamSpec   *pspec)
 {
   CallsBestMatch *self = CALLS_BEST_MATCH (object);
-  const gchar *country_code;
+  const char *country_code;
 
-  switch (property_id)
-    {
-    case PROP_PHONE_NUMBER:
-      calls_best_match_set_phone_number (self, g_value_get_string (value));
-      break;
+  switch (property_id) {
+  case PROP_PHONE_NUMBER:
+    calls_best_match_set_phone_number (self, g_value_get_string (value));
+    break;
 
-    case PROP_COUNTRY_CODE:
-      country_code = g_value_get_string (value);
-      if (country_code) {
-        g_free (self->country_code);
-        self->country_code = g_strdup (country_code);
+  case PROP_COUNTRY_CODE:
+    country_code = g_value_get_string (value);
+    if (country_code) {
+      g_free (self->country_code);
+      self->country_code = g_strdup (country_code);
 
-        if (self->phone_number) {
-          g_autofree gchar *number = g_strdup (self->phone_number);
-          calls_best_match_set_phone_number (self, number);
-        }
+      if (self->phone_number) {
+        g_autofree char *number = g_strdup (self->phone_number);
+        calls_best_match_set_phone_number (self, number);
       }
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
     }
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
 }
 
 static void
@@ -166,36 +165,35 @@ get_property (GObject      *object,
 {
   CallsBestMatch *self = CALLS_BEST_MATCH (object);
 
-  switch (property_id)
-    {
-    case PROP_HAS_INDIVIDUAL:
-      g_value_set_boolean (value,
-                           calls_best_match_has_individual (self));
-      break;
+  switch (property_id) {
+  case PROP_HAS_INDIVIDUAL:
+    g_value_set_boolean (value,
+                         calls_best_match_has_individual (self));
+    break;
 
-    case PROP_PHONE_NUMBER:
-      g_value_set_string (value,
-                          calls_best_match_get_phone_number (self));
-      break;
+  case PROP_PHONE_NUMBER:
+    g_value_set_string (value,
+                        calls_best_match_get_phone_number (self));
+    break;
 
-    case PROP_COUNTRY_CODE:
-      g_value_set_string (value, self->country_code);
-      break;
+  case PROP_COUNTRY_CODE:
+    g_value_set_string (value, self->country_code);
+    break;
 
-    case PROP_NAME:
-      g_value_set_string (value,
-                          calls_best_match_get_name (self));
-      break;
+  case PROP_NAME:
+    g_value_set_string (value,
+                        calls_best_match_get_name (self));
+    break;
 
-    case PROP_AVATAR:
-      g_value_set_object (value,
-                          calls_best_match_get_avatar (self));
-      break;
+  case PROP_AVATAR:
+    g_value_set_object (value,
+                        calls_best_match_get_avatar (self));
+    break;
 
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
 }
 
 
@@ -276,7 +274,7 @@ calls_best_match_init (CallsBestMatch *self)
 
 
 CallsBestMatch *
-calls_best_match_new (const gchar *number)
+calls_best_match_new (const char *number)
 {
   return g_object_new (CALLS_TYPE_BEST_MATCH,
                        "phone_number", number,
@@ -291,7 +289,7 @@ calls_best_match_has_individual (CallsBestMatch *self)
   return !!self->best_match;
 }
 
-const gchar *
+const char *
 calls_best_match_get_phone_number (CallsBestMatch *self)
 {
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
@@ -301,7 +299,7 @@ calls_best_match_get_phone_number (CallsBestMatch *self)
 
 void
 calls_best_match_set_phone_number (CallsBestMatch *self,
-                                   const gchar    *phone_number)
+                                   const char    *phone_number)
 {
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
@@ -352,23 +350,19 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
 }
 
-const gchar *
+const char *
 calls_best_match_get_name (CallsBestMatch *self)
 {
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
   if (self->best_match)
-    {
-      return folks_individual_get_display_name (self->best_match);
-    }
+    return folks_individual_get_display_name (self->best_match);
+  else if (self->name_sip)
+    return self->name_sip;
   else if (self->phone_number)
-    {
-      return self->phone_number;
-    }
+    return self->phone_number;
   else
-    {
-      return _("Anonymous caller");
-    }
+    return _("Anonymous caller");
 }
 
 
@@ -378,11 +372,7 @@ calls_best_match_get_avatar (CallsBestMatch *self)
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
   if (self->best_match)
-    {
-      return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->best_match));
-    }
+    return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->best_match));
   else
-    {
-      return NULL;
-    }
+    return NULL;
 }
