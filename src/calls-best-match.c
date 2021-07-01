@@ -39,6 +39,7 @@ struct _CallsBestMatch
   FolksIndividual    *best_match;
   char               *phone_number;
   char               *country_code;
+  char               *name_sip;
   gboolean            had_country_code_last_time;
 };
 
@@ -205,6 +206,7 @@ dispose (GObject *object)
   g_clear_object (&self->view);
   g_clear_pointer (&self->phone_number, g_free);
   g_clear_pointer (&self->country_code, g_free);
+  g_clear_pointer (&self->name_sip, g_free);
 
   if (self->best_match) {
     g_signal_handlers_disconnect_by_data (self->best_match, self);
@@ -328,6 +330,14 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_clear_object (&self->view);
 
   if (self->phone_number) {
+    /* This is a SIP address, don' try parsing it as a phone number */
+    if (g_str_has_prefix (self->phone_number, "sip")) {
+      g_auto (GStrv) split = g_strsplit_set (self->phone_number, ":@", -1);
+
+      self->name_sip = g_strdup (split[1]);
+      g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
+      return;
+    }
     number = e_phone_number_from_string (phone_number, self->country_code, &error);
 
     if (!number) {
