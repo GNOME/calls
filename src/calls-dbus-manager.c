@@ -6,7 +6,7 @@
  * Author: Guido Günther <agx@sigxcpu.org>
  */
 
-#define G_LOG_DOMAIN "CallsDBusMmanager"
+#define G_LOG_DOMAIN "CallsDBusManager"
 
 #include "config.h"
 #include "calls-call.h"
