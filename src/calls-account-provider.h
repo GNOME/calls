@@ -24,21 +24,30 @@
 
 #pragma once
 
+#include "calls-account.h"
 #include "calls-provider.h"
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_ACCOUNT_PROVIDER (calls_account_provider_get_type ())
 
-G_DECLARE_INTERFACE (CallsAccountProvider, calls_account_provider, CALLS, ACCOUNT_PROVIDER, CallsProvider);
+G_DECLARE_INTERFACE (CallsAccountProvider, calls_account_provider, CALLS, ACCOUNT_PROVIDER, CallsProvider)
 
 struct _CallsAccountProviderInterface
 {
   GTypeInterface parent_iface;
 
+  GtkWidget   *(*get_account_widget)              (CallsAccountProvider *self);
+  void         (*add_new_account)                 (CallsAccountProvider *self);
+  void         (*edit_account)                    (CallsAccountProvider *self,
+                                                   CallsAccount         *account);
 };
 
+GtkWidget *calls_account_provider_get_account_widget (CallsAccountProvider *self);
+void       calls_account_provider_add_new_account    (CallsAccountProvider *self);
+void       calls_account_provider_edit_account       (CallsAccountProvider *self,
+                                                      CallsAccount         *account);
 
 G_END_DECLS
