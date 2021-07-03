@@ -69,5 +69,6 @@ typedef enum {
 
 void                   calls_account_go_online          (CallsAccount *self,
                                                          gboolean      online);
+CallsAccountState      calls_account_get_state          (CallsAccount *self);
 
 G_END_DECLS

@@ -70,3 +70,21 @@ calls_account_go_online (CallsAccount *self,
 
   return iface->go_online (self, online);
 }
+
+/**
+ * calls_account_get_state:
+ * @self: A #CallsAccount
+ *
+ * Returns: The current #CallsAccountState of this account
+ */
+CallsAccountState
+calls_account_get_state (CallsAccount *self)
+{
+  CallsAccountState state;
+
+  g_return_val_if_fail (CALLS_IS_ACCOUNT (self), CALLS_ACCOUNT_NULL);
+
+  g_object_get (self, "account-state", &state, NULL);
+
+  return state;
+}
