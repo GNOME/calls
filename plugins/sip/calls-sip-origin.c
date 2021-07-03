@@ -70,6 +70,7 @@ enum {
   PROP_ACC_LOCAL_PORT,
   PROP_SIP_CONTEXT,
   PROP_ACC_STATE,
+  PROP_ACC_ADDRESS,
   PROP_CALLS,
   PROP_COUNTRY_CODE,
   PROP_LAST_PROP,
@@ -873,7 +874,6 @@ go_online (CallsAccount *account,
   CallsSipOrigin *self;
 
   g_assert (CALLS_IS_ACCOUNT (account));
-  g_assert (CALLS_IS_ORIGIN (account));
   g_assert (CALLS_IS_SIP_ORIGIN (account));
 
   self = CALLS_SIP_ORIGIN (account);
@@ -899,6 +899,19 @@ go_online (CallsAccount *account,
     nua_unregister (self->oper->register_handle,
                     TAG_END ());
   }
+}
+
+static const char *
+get_address (CallsAccount *account)
+{
+  CallsSipOrigin *self;
+
+  g_assert (CALLS_IS_ACCOUNT (account));
+  g_assert (CALLS_IS_SIP_ORIGIN (account));
+
+  self = CALLS_SIP_ORIGIN (account);
+
+  return self->address;
 }
 
 
@@ -1141,6 +1154,10 @@ calls_sip_origin_get_property (GObject      *object,
     g_value_set_enum (value, self->state);
     break;
 
+  case PROP_ACC_ADDRESS:
+    g_value_set_string (value, get_address (CALLS_ACCOUNT (self)));
+    break;
+
   case PROP_COUNTRY_CODE:
     g_value_set_string (value, NULL);
     break;
@@ -1314,6 +1331,9 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   g_object_class_override_property (object_class, PROP_ACC_STATE, "account-state");
   props[PROP_ACC_STATE] = g_object_class_find_property (object_class, "account-state");
 
+  g_object_class_override_property (object_class, PROP_ACC_ADDRESS, "address");
+  props[PROP_ACC_ADDRESS] = g_object_class_find_property (object_class, "address");
+
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
@@ -1343,6 +1363,7 @@ static void
 calls_sip_origin_accounts_interface_init (CallsAccountInterface *iface)
 {
   iface->go_online = go_online;
+  iface->get_address = get_address;
 }
 
 

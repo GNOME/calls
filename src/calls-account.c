@@ -48,6 +48,15 @@ calls_account_default_init (CallsAccountInterface *iface)
                        G_PARAM_READABLE |
                        G_PARAM_STATIC_STRINGS |
                        G_PARAM_EXPLICIT_NOTIFY));
+
+  g_object_interface_install_property (iface,
+    g_param_spec_string ("address",
+                         "Address",
+                         "The address of this account",
+                         NULL,
+                         G_PARAM_READABLE |
+                         G_PARAM_STATIC_STRINGS |
+                         G_PARAM_EXPLICIT_NOTIFY));
 }
 
 /**
@@ -87,4 +96,24 @@ calls_account_get_state (CallsAccount *self)
   g_object_get (self, "account-state", &state, NULL);
 
   return state;
+}
+
+/**
+ * calls_account_get_address:
+ * @self: A #CallsAccount
+ *
+ * Returns: The address under which this account can be reached.
+ * For example: alice@example.org for SIP and XMPP/Jingle or @alice:example.org for Matrix
+ */
+const char *
+calls_account_get_address (CallsAccount *self)
+{
+  CallsAccountInterface *iface;
+
+  g_return_val_if_fail (CALLS_IS_ACCOUNT (self), NULL);
+
+  iface = CALLS_ACCOUNT_GET_IFACE (self);
+  g_return_val_if_fail (iface->get_address, NULL);
+
+  return iface->get_address (self);
 }

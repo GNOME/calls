@@ -42,6 +42,7 @@ struct _CallsAccountInterface
 
   void               (*go_online)                           (CallsAccount *self,
                                                              gboolean      online);
+  const char        *(*get_address)                         (CallsAccount *self);
 };
 /**
  * CallsAccountState:
@@ -69,6 +70,7 @@ typedef enum {
 
 void                   calls_account_go_online          (CallsAccount *self,
                                                          gboolean      online);
+const char            *calls_account_get_address        (CallsAccount *self);
 CallsAccountState      calls_account_get_state          (CallsAccount *self);
 
 G_END_DECLS
