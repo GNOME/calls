@@ -85,7 +85,7 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
                                 calls_sip_provider_message_source_interface_init)
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
-                                calls_sip_provider_account_provider_interface_init));
+                                calls_sip_provider_account_provider_interface_init))
 
 
 static void

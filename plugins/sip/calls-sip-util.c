@@ -25,7 +25,7 @@
 #include "calls-sip-util.h"
 
 gboolean
-check_ipv6 (const gchar *host)
+check_ipv6 (const char *host)
 {
   /* TODO DNS SRV records to determine whether or not to use IPv6 */
   return FALSE;
@@ -33,7 +33,7 @@ check_ipv6 (const gchar *host)
 
 
 gboolean
-check_sips (const gchar *addr)
+check_sips (const char *addr)
 {
   /* To keep it simple we only check if the URL starts with "sips:" */
   return g_str_has_prefix (addr, "sips:");
@@ -41,7 +41,7 @@ check_sips (const gchar *addr)
 
 
 const gchar *
-get_protocol_prefix (const gchar *protocol)
+get_protocol_prefix (const char *protocol)
 {
   if (g_strcmp0 (protocol, "UDP") == 0 ||
       g_strcmp0 (protocol, "TCP") == 0)
@@ -55,7 +55,7 @@ get_protocol_prefix (const gchar *protocol)
 
 
 gboolean
-protocol_is_valid (const gchar *protocol)
+protocol_is_valid (const char *protocol)
 {
   return g_strcmp0 (protocol, "UDP") == 0 ||
     g_strcmp0 (protocol, "TCP") == 0 ||

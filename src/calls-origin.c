@@ -33,7 +33,7 @@
  */
 
 
-G_DEFINE_INTERFACE (CallsOrigin, calls_origin, CALLS_TYPE_MESSAGE_SOURCE);
+G_DEFINE_INTERFACE (CallsOrigin, calls_origin, CALLS_TYPE_MESSAGE_SOURCE)
 
 enum {
   SIGNAL_CALL_ADDED,
@@ -133,9 +133,7 @@ calls_origin_foreach_call(CallsOrigin *self,
   calls = calls_origin_get_calls (self);
 
   for (node = calls; node; node = node->next)
-    {
-      callback (param, CALLS_CALL (node->data), self);
-    }
+    callback (param, CALLS_CALL (node->data), self);
 }
 
 

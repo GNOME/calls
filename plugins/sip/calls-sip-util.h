@@ -58,8 +58,8 @@ typedef enum
   } SipEngineState;
 
 
-gboolean check_sips (const gchar *addr);
-gboolean check_ipv6 (const gchar *host);
-const gchar *get_protocol_prefix (const gchar *protocol);
-gboolean protocol_is_valid (const gchar *protocol);
-guint get_port_for_rtp (void);
+gboolean              check_sips                         (const char *addr);
+gboolean              check_ipv6                         (const char *host);
+const char           *get_protocol_prefix                (const char *protocol);
+gboolean              protocol_is_valid                  (const char *protocol);
+guint                 get_port_for_rtp                   (void);
