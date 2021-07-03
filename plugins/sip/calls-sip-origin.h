@@ -24,21 +24,20 @@
 
 #pragma once
 
-#include "calls-credentials.h"
-#include "calls-sip-util.h"
-
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_SIP_ORIGIN (calls_sip_origin_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsSipOrigin, calls_sip_origin, CALLS, SIP_ORIGIN, GObject);
+G_DECLARE_FINAL_TYPE (CallsSipOrigin, calls_sip_origin, CALLS, SIP_ORIGIN, GObject)
 
-CallsSipOrigin   *calls_sip_origin_new                      (CallsSipContext *sip_context,
-                                                             CallsCredentials *credentials,
-                                                             gint         local_port,
-                                                             gboolean     direct_connection);
-void              calls_sip_origin_go_online                (CallsSipOrigin *self,
-                                                             gboolean        online);
+void              calls_sip_origin_set_credentials          (CallsSipOrigin *self,
+                                                             const char     *host,
+                                                             const char     *user,
+                                                             const char     *password,
+                                                             const char     *display_name,
+                                                             const char     *transport_protocol,
+                                                             gboolean        auto_connect);
+
 G_END_DECLS

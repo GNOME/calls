@@ -1,6 +1,6 @@
 /* calls-manager.c
  *
- * Copyright (C) 2020 Purism SPC
+ * Copyright (C) 2020, 2021 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -18,6 +18,7 @@
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authors: Julian Sparber <julian.sparber@puri.sm>
+ * Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -26,7 +27,6 @@
 
 #include "calls-contacts-provider.h"
 #include "calls-origin.h"
-#include "calls-credentials.h"
 
 #include <glib-object.h>
 
@@ -49,34 +49,28 @@ typedef enum
 
 CallsManager          *calls_manager_new                      (void);
 CallsManager          *calls_manager_get_default              (void);
-CallsContactsProvider *calls_manager_get_contacts_provider    (CallsManager     *self);
-void                   calls_manager_add_provider             (CallsManager     *self,
-                                                               const char       *name);
-void                   calls_manager_remove_provider          (CallsManager     *self,
-                                                               const char       *name);
-gboolean               calls_manager_has_provider             (CallsManager     *self,
-                                                               const char       *name);
-gboolean               calls_manager_is_modem_provider        (CallsManager     *self,
-                                                               const char       *name);
-gboolean               calls_manager_provider_add_account     (CallsManager     *self,
-                                                               const char       *provider,
-                                                               CallsCredentials *credentials);
-gboolean               calls_manager_provider_remove_account  (CallsManager     *self,
-                                                               const char       *provider,
-                                                               CallsCredentials *credentials);
-CallsManagerState      calls_manager_get_state                (CallsManager     *self);
-GListModel            *calls_manager_get_origins              (CallsManager     *self);
-GList                 *calls_manager_get_calls                (CallsManager     *self);
-void                   calls_manager_dial                     (CallsManager     *self,
-                                                               CallsOrigin      *origin,
-                                                               const char       *target);
-GListModel            *calls_manager_get_suitable_origins     (CallsManager     *self,
-                                                               const char       *target);
-const gchar           *calls_manager_get_contact_name         (CallsCall        *call);
-gboolean               calls_manager_has_active_call          (CallsManager     *self);
-void                   calls_manager_hang_up_all_calls        (CallsManager     *self);
-gboolean               calls_manager_has_any_provider         (CallsManager     *self);
-const char           **calls_manager_get_provider_names       (CallsManager     *self,
-                                                               guint            *length);
+CallsContactsProvider *calls_manager_get_contacts_provider    (CallsManager *self);
+void                   calls_manager_add_provider             (CallsManager *self,
+                                                               const char   *name);
+void                   calls_manager_remove_provider          (CallsManager *self,
+                                                               const char   *name);
+gboolean               calls_manager_has_provider             (CallsManager *self,
+                                                               const char   *name);
+gboolean               calls_manager_is_modem_provider        (CallsManager *self,
+                                                               const char   *name);
+CallsManagerState      calls_manager_get_state                (CallsManager *self);
+GListModel            *calls_manager_get_origins              (CallsManager *self);
+GList                 *calls_manager_get_calls                (CallsManager *self);
+void                   calls_manager_dial                     (CallsManager *self,
+                                                               CallsOrigin  *origin,
+                                                               const char   *target);
+GListModel            *calls_manager_get_suitable_origins     (CallsManager *self,
+                                                               const char   *target);
+const gchar           *calls_manager_get_contact_name         (CallsCall    *call);
+gboolean               calls_manager_has_active_call          (CallsManager *self);
+void                   calls_manager_hang_up_all_calls        (CallsManager *self);
+gboolean               calls_manager_has_any_provider         (CallsManager *self);
+const char           **calls_manager_get_provider_names       (CallsManager *self,
+                                                               guint        *length);
 
 G_END_DECLS

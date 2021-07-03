@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "calls-credentials.h"
 #include "calls-provider.h"
 #include "calls-sip-origin.h"
 
@@ -39,9 +38,22 @@ G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER,
 
 CallsSipProvider *calls_sip_provider_new                    (void);
 CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *self,
-                                                             CallsCredentials *credentials,
-                                                             gint              local_port,
-                                                             gboolean          direct_connection);
+                                                             const char       *host,
+                                                             const char       *user,
+                                                             const char       *password,
+                                                             const char       *display_name,
+                                                             const char       *transport_protocol,
+                                                             gint              port);
+CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *self,
+                                                             const char       *host,
+                                                             const char       *user,
+                                                             const char       *password,
+                                                             const char       *display_name,
+                                                             const char       *transport_protocol,
+                                                             gint              port,
+                                                             gboolean          auto_connect,
+                                                             gboolean          direct_mode,
+                                                             gint              local_port);
 void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS

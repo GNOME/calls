@@ -5,7 +5,6 @@
  */
 
 #include "calls-manager.h"
-#include "calls-credentials.h"
 
 #include <gtk/gtk.h>
 #include <libpeas/peas.h>
@@ -130,8 +129,6 @@ test_calls_manager_mm_provider (void)
 static void
 test_calls_manager_multiple_providers_mm_sip (void)
 {
-  g_autoptr (CallsCredentials) alice = NULL;
-  g_autoptr (CallsCredentials) bob = NULL;
   g_autoptr (CallsOrigin) origin_alice = NULL;
   g_autoptr (CallsOrigin) origin_bob = NULL;
   g_autoptr (CallsManager) manager = calls_manager_new ();
@@ -171,39 +168,6 @@ test_calls_manager_multiple_providers_mm_sip (void)
 
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_ORIGIN);
 
-  /* Add Alice SIP account */
-  alice = calls_credentials_new ();
-  g_object_set (alice,
-                "name", "Alice",
-                "user", "alice",
-                "host", "example.org",
-                "password", "password123",
-                NULL);
-  g_assert_true (calls_manager_provider_add_account (manager, "sip", alice));
-  g_assert_false (calls_manager_provider_add_account (manager, "sip", alice));
-
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
-  g_assert_cmpuint (g_list_model_get_n_items (origins_sip), ==, 1);
-
-  /**
-   * Add a second SIP origin to mix things up.
-   * TODO We can expand on this later to test the call routing
-   * starting with a simple "default" mechanism for now
-   * needs https://source.puri.sm/Librem5/calls/-/issues/259 first though
-   */
-  bob = calls_credentials_new ();
-  g_object_set (bob,
-                "name", "Bob",
-                "user", "bob",
-                "host", "example.org",
-                "password", "password123",
-                NULL);
-
-  g_assert_true (calls_manager_provider_add_account (manager, "sip", bob));
-
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
-  g_assert_cmpuint (g_list_model_get_n_items (origins_sip), ==, 2);
-
   /**
    * If we now load the MM plugin, the manager state should be *_STATE_NO_VOICE_MODEM
    * (unless run on a phone I guess?)
@@ -216,19 +180,6 @@ test_calls_manager_multiple_providers_mm_sip (void)
   g_assert_true (calls_manager_has_provider (manager, "mm"));
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
 
-  /* Remove alice */
-  g_assert_true (calls_manager_provider_remove_account (manager, "sip", alice));
-  g_assert_false (calls_manager_provider_remove_account (manager, "sip", alice));
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
-  g_assert_cmpuint (g_list_model_get_n_items (origins_sip), ==, 1);
-
-  /* Unload MM plugin, since we still have Bob we should be ready (and bob should be the default sip origin) */
-  calls_manager_remove_provider (manager, "mm");
-  g_assert_true (calls_manager_has_any_provider (manager));
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
-
-  g_assert_true (calls_manager_provider_remove_account (manager, "sip", bob));
-  g_assert_cmpuint (g_list_model_get_n_items (origins_sip), ==, 0);
 }
 
 gint

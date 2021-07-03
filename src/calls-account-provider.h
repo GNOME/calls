@@ -24,8 +24,6 @@
 
 #pragma once
 
-#include "calls-account.h"
-#include "calls-credentials.h"
 #include "calls-provider.h"
 
 #include <glib-object.h>
@@ -40,19 +38,7 @@ struct _CallsAccountProviderInterface
 {
   GTypeInterface parent_iface;
 
-  gboolean           (*add_account)                           (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
-  gboolean           (*remove_account)                        (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
-  CallsAccount      *(*get_account)                           (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
 };
 
-gboolean               calls_account_provider_add_account     (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
-gboolean               calls_account_provider_remove_account  (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
-CallsAccount          *calls_account_provider_get_account     (CallsAccountProvider *self,
-                                                               CallsCredentials     *credentials);
 
 G_END_DECLS

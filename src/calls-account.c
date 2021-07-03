@@ -22,7 +22,6 @@
  *
  */
 
-#include "calls-credentials.h"
 #include "calls-account.h"
 #include "enum-types.h"
 
@@ -31,15 +30,8 @@
  * @short_description: An interface for online accounts
  * @Title: CallsAccount
  *
- * #CallsAccount is meant to be implemented by a #CallsOrigin when
- * the #CallsOrigin uses #CallsCredentials to connect to the internet.
+ * #CallsAccount is a type of #CallsOrigin for online accounts.
  */
-
-enum {
-  SIGNAL_ACCOUNT_STATE_CHANGED,
-  SIGNAL_LAST_SIGNAL
-};
-static guint signals[SIGNAL_LAST_SIGNAL];
 
 G_DEFINE_INTERFACE (CallsAccount, calls_account, CALLS_TYPE_ORIGIN)
 
@@ -47,21 +39,6 @@ G_DEFINE_INTERFACE (CallsAccount, calls_account, CALLS_TYPE_ORIGIN)
 static void
 calls_account_default_init (CallsAccountInterface *iface)
 {
-  signals[SIGNAL_ACCOUNT_STATE_CHANGED] =
-    g_signal_new ("account-state-changed",
-                  G_TYPE_FROM_INTERFACE (iface),
-                  G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL, NULL,
-                  G_TYPE_NONE,
-                  2, CALLS_TYPE_ACCOUNT_STATE, CALLS_TYPE_ACCOUNT_STATE);
-
-  g_object_interface_install_property (iface,
-    g_param_spec_object ("account-credentials",
-                         "Account credentials",
-                         "The credentials to be used for authentication",
-                         CALLS_TYPE_CREDENTIALS,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
-
   g_object_interface_install_property (iface,
     g_param_spec_enum ("account-state",
                        "Account state",
