@@ -81,6 +81,7 @@ enum {
   USSD_ADDED,
   USSD_CANCELLED,
   USSD_STATE_CHANGED,
+  PROVIDERS_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
@@ -409,6 +410,8 @@ remove_provider (CallsManager *self,
   update_protocols (self);
   update_state (self);
   rebuild_origins_by_protocols (self);
+
+  g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
 
 static gboolean
@@ -525,6 +528,7 @@ add_provider (CallsManager *self, const gchar *name)
   n_items = g_list_model_get_n_items (origins);
   origin_items_changed_cb (origins, 0, 0, n_items, self);
 
+  g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
 
 static void
@@ -658,6 +662,15 @@ calls_manager_class_init (CallsManagerClass *klass)
                   G_TYPE_NONE,
                   1,
                   CALLS_TYPE_USSD);
+
+  signals[PROVIDERS_CHANGED] =
+    g_signal_new ("providers-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  0);
 
   props[PROP_STATE] =
     g_param_spec_enum ("state",
