@@ -72,5 +72,6 @@ void                   calls_manager_hang_up_all_calls        (CallsManager *sel
 gboolean               calls_manager_has_any_provider         (CallsManager *self);
 const char           **calls_manager_get_provider_names       (CallsManager *self,
                                                                guint        *length);
+GList                 *calls_manager_get_providers            (CallsManager *self);
 
 G_END_DECLS

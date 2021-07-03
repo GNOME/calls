@@ -949,3 +949,20 @@ calls_manager_get_provider_names (CallsManager *self,
 
   return (const char **) g_hash_table_get_keys_as_array (self->providers, length);
 }
+
+/**
+ * calls_manager_get_providers:
+ * @self: A #CallsManager
+ *
+ * Get the currently loaded providers
+ *
+ * Returns: (transfer container): A #GList of #CallsProvider.
+ * Use g_list_free() when done using the list.
+ */
+GList *
+calls_manager_get_providers (CallsManager *self)
+{
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+
+  return g_hash_table_get_values (self->providers);
+}
