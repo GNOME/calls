@@ -45,7 +45,9 @@ calls_account_default_init (CallsAccountInterface *iface)
                        "The state of the account",
                        CALLS_TYPE_ACCOUNT_STATE,
                        CALLS_ACCOUNT_NULL,
-                       G_PARAM_READABLE));
+                       G_PARAM_READABLE |
+                       G_PARAM_STATIC_STRINGS |
+                       G_PARAM_EXPLICIT_NOTIFY));
 }
 
 /**
