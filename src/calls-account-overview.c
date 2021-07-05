@@ -28,6 +28,7 @@
 #include "calls-account-overview.h"
 #include "calls-account-row.h"
 #include "calls-account-provider.h"
+#include "calls-manager.h"
 
 
 /**
@@ -150,6 +151,98 @@ on_add_account_clicked (CallsAccountOverview *self)
 
 
 static void
+on_edit_account_clicked (CallsAccountRow      *row,
+                         CallsAccountProvider *provider,
+                         CallsAccount         *account,
+                         CallsAccountOverview *self)
+{
+  GtkWidget *widget;
+
+  widget = calls_account_provider_get_account_widget (provider);
+  attach_account_widget (self, widget);
+
+  calls_account_provider_edit_account (provider, account);
+
+  gtk_window_present (self->account_window);
+}
+
+
+static void
+update_account_list (CallsAccountOverview *self)
+{
+  gboolean removed_all = FALSE;
+
+  g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
+
+  /* TODO rework with GTK4 FlattenListModel (to flatten a GListModel of GListModels)
+   * in particular we could then connect to the items-changed signal of the flattened list.
+   * Always rebuilding the account list is not particularly efficient, but since
+   * we're not constantly doing this it's fine for now.
+   */
+  while (!removed_all) {
+    GtkListBoxRow *row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (self->overview), 0);
+
+    if (row == NULL || row == GTK_LIST_BOX_ROW (self->add_row))
+      removed_all = TRUE;
+    else
+      gtk_container_remove (GTK_CONTAINER (self->overview), GTK_WIDGET (row));
+  }
+
+  for (GList *node = self->providers; node != NULL; node = node->next) {
+    CallsAccountProvider *provider = CALLS_ACCOUNT_PROVIDER (node->data);
+    GListModel *model = calls_provider_get_origins (CALLS_PROVIDER (provider));
+    guint n_origins = g_list_model_get_n_items (model);
+
+    for (guint i = 0; i < n_origins; i++) {
+      g_autoptr (CallsAccount) account = CALLS_ACCOUNT (g_list_model_get_item (model, i));
+      CallsAccountRow *account_row = calls_account_row_new (provider, account);
+
+      g_signal_connect (account_row, "edit-clicked",
+                        G_CALLBACK (on_edit_account_clicked),
+                        self);
+
+      gtk_list_box_insert (GTK_LIST_BOX (self->overview),
+                           GTK_WIDGET (account_row),
+                           0);
+    }
+  }
+  update_state (self);
+}
+
+
+
+static void
+on_providers_changed (CallsAccountOverview *self)
+{
+  GList *providers;
+
+  g_clear_pointer (&self->providers, g_list_free);
+  providers = calls_manager_get_providers (calls_manager_get_default ());
+
+  for (GList *node = providers; node != NULL; node = node->next) {
+    CallsProvider *provider = node->data;
+
+    if (CALLS_IS_ACCOUNT_PROVIDER (provider)) {
+      self->providers = g_list_append (self->providers, provider);
+      g_signal_connect_swapped (calls_provider_get_origins (provider),
+                                "items-changed",
+                                G_CALLBACK (update_account_list),
+                                self);
+      g_signal_connect_swapped (provider, "widget-edit-done",
+                                G_CALLBACK (gtk_widget_hide), self->account_window);
+    }
+  }
+
+  /* Clear any acccount widgets, because they might've gone stale */
+  attach_account_widget (self, NULL);
+  gtk_widget_hide (GTK_WIDGET (self->account_window));
+
+  update_account_list (self);
+
+  gtk_widget_set_sensitive (self->add_btn, !!self->providers);
+}
+
+static void
 calls_account_overview_class_init (CallsAccountOverviewClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -173,6 +266,12 @@ static void
 calls_account_overview_init (CallsAccountOverview *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_signal_connect_swapped (calls_manager_get_default (),
+                            "providers-changed",
+                            G_CALLBACK (on_providers_changed),
+                            self);
+  on_providers_changed (self);
 
   gtk_list_box_insert (GTK_LIST_BOX (self->overview),
                        GTK_WIDGET (self->add_row),
