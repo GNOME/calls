@@ -29,6 +29,7 @@
 #include "calls-account-provider.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"
+#include "calls-sip-account-widget.h"
 #include "calls-sip-enums.h"
 #include "calls-sip-origin.h"
 #include "calls-sip-provider.h"
@@ -73,6 +74,8 @@ struct _CallsSipProvider
 
   gboolean use_memory_backend;
   gchar *filename;
+
+  CallsSipAccountWidget *account_widget;
 };
 
 static void calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -328,6 +331,7 @@ calls_sip_provider_dispose (GObject *object)
 
   g_list_store_remove_all (self->origins);
   g_clear_object (&self->origins);
+  g_clear_object (&self->account_widget);
 
   g_clear_pointer (&self->filename, g_free);
 
@@ -376,8 +380,48 @@ calls_sip_provider_message_source_interface_init (CallsMessageSourceInterface *i
 }
 
 static void
+ensure_account_widget (CallsSipProvider *self)
+{
+  if (!self->account_widget) {
+    self->account_widget = calls_sip_account_widget_new (self);
+    g_object_ref_sink (self->account_widget);
+  }
+}
+
+static GtkWidget *
+get_account_widget (CallsAccountProvider *provider)
+{
+  CallsSipProvider *self = CALLS_SIP_PROVIDER (provider);
+
+  ensure_account_widget (self);
+  return GTK_WIDGET (self->account_widget);
+}
+
+static void
+add_new_account (CallsAccountProvider *provider)
+{
+  CallsSipProvider *self = CALLS_SIP_PROVIDER (provider);
+
+  ensure_account_widget (self);
+  calls_sip_account_widget_set_origin (self->account_widget, NULL);
+}
+
+static void
+edit_account (CallsAccountProvider *provider,
+              CallsAccount         *account)
+{
+  CallsSipProvider *self = CALLS_SIP_PROVIDER (provider);
+
+  ensure_account_widget (self);
+  calls_sip_account_widget_set_origin (self->account_widget, CALLS_SIP_ORIGIN (account));
+}
+
+static void
 calls_sip_provider_account_provider_interface_init (CallsAccountProviderInterface *iface)
 {
+  iface->get_account_widget = get_account_widget;
+  iface->add_new_account = add_new_account;
+  iface->edit_account = edit_account;
 }
 
 static void
