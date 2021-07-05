@@ -496,6 +496,23 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
 }
 
 
+gboolean
+calls_sip_provider_remove_origin (CallsSipProvider *self,
+                                  CallsSipOrigin   *origin)
+{
+  guint position;
+
+  g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), FALSE);
+  g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (origin), FALSE);
+
+  if (g_list_store_find (self->origins, origin, &position)) {
+    g_list_store_remove (self->origins, position);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 CallsSipProvider *
 calls_sip_provider_new (void)
 {

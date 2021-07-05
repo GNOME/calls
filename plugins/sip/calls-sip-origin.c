@@ -1380,6 +1380,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
                                   const char     *password,
                                   const char     *display_name,
                                   const char     *transport_protocol,
+                                  gint            port,
                                   gboolean        auto_connect)
 {
   g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
@@ -1414,6 +1415,8 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
     self->transport_protocol = g_strdup (transport_protocol);
   else
     self->transport_protocol = g_strdup ("UDP");
+
+  self->port = port;
 
   /* Propagate changes to nua stack */
   update_nua (self);
