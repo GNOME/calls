@@ -36,6 +36,7 @@ sip_deps = [
   dependency('gobject-2.0'),
   dependency('gstreamer-1.0'),
   dependency('gtk+-3.0'),
+  dependency('libhandy-1', version: '>= 1.1.90'),
   dependency('libpeas-1.0'),
   dependency('sofia-sip-ua-glib'),
 ]
@@ -48,6 +49,7 @@ sip_sources = files(
     'calls-sip-util.c', 'calls-sip-util.h',
     'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
     'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
+    'calls-sip-account-widget.c', 'calls-sip-account-widget.h',
     'gst-rfc3551.c', 'gst-rfc3551.h',
   ]
 )
@@ -63,6 +65,15 @@ sip_enums = gnome.mkenums('calls-sip-enums',
 )
 
 sip_sources += sip_enums
+
+sip_resources = gnome.compile_resources(
+  'sip-resources',
+  'sip.gresources.xml',
+  source_dir: '.',
+  c_name: 'call',
+)
+
+sip_sources += sip_resources
 
 calls_sip = shared_module(
   'sip',

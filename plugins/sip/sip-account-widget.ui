@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <requires lib="libhandy" version="1.0"/>
+  <template class="CallsSipAccountWidget" parent="GtkBox">
+    <property name="visible">True</property>
+    <property name="orientation">vertical</property>
+    
+    <child>
+      <object class="HdyHeaderBar" id="header_add">
+        <property name="title" translatable="yes">Add Account</property>
+        <property name="show-close-button">True</property>
+        <child>
+          <object class="GtkButton" id="login_btn">
+            <property name="visible">True</property>
+            <property name="use-underline">True</property>
+            <property name="label" translatable="yes">_Log In</property>
+            <signal name="clicked" handler="on_login_clicked" swapped="yes"/>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSpinner" id="spinner_add">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    
+    <child>
+      <object class="HdyHeaderBar" id="header_edit">
+        <property name="visible">True</property>
+        <property name="show-close-button">True</property>
+        <property name="title" translatable="yes">Manage Account</property>
+        <child>
+          <object class="GtkButton" id="apply_btn">
+            <property name="visible">True</property>
+            <property name="use-underline">True</property>
+            <property name="label" translatable="yes">_Apply</property>
+            <signal name="clicked" handler="on_apply_clicked" swapped="yes"/>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="delete_btn">
+            <property name="visible">True</property>
+            <property name="use-underline">True</property>
+            <property name="label" translatable="yes">_Delete</property>
+            <signal name="clicked" handler="on_delete_clicked" swapped="yes"/>
+            <style>
+              <class name="destructive-action"/>
+            </style>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSpinner" id="spinner_edit">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    
+    <child>
+      <object class="HdyPreferencesPage">
+        <property name="visible">True</property>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Server</property>
+                <child>
+                  <object class="GtkEntry" id="host">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Display Name</property>
+                <property name="subtitle" translatable="yes">Optional</property>
+                <child>
+                  <object class="GtkEntry" id="display_name">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">User ID</property>
+                <child>
+                  <object class="GtkEntry" id="user">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Password</property>
+                <child>
+                  <object class="GtkEntry" id="password">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <property name="input-purpose">password</property>
+                    <property name="visibility">False</property>
+                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Port</property>
+                <child>
+                  <object class="GtkEntry" id="port">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <property name="input-purpose">digits</property>
+                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="HdyComboRow" id="protocol">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Transport</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+  <object class="GtkSizeGroup">
+    <widgets>
+      <widget name="host"/>
+      <widget name="display_name"/>
+      <widget name="user"/>
+      <widget name="password"/>
+      <widget name="port"/>
+    </widgets>
+  </object>
+</interface>
+
