@@ -85,39 +85,65 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
                                 calls_sip_provider_account_provider_interface_init))
 
-
 static void
-calls_sip_provider_load_accounts (CallsSipProvider *self)
+new_origin_from_keyfile (CallsSipProvider *self,
+                         GKeyFile         *key_file,
+                         const char       *name)
 {
-  g_autoptr (GError) error = NULL;
-  g_autoptr (GKeyFile) key_file = g_key_file_new ();
-  g_auto (GStrv) groups = NULL;
+  g_autofree char *host = NULL;
+  g_autofree char *user = NULL;
+  g_autofree char *password = NULL;
+  g_autofree char *display_name = NULL;
+  g_autofree char *protocol = NULL;
+  gint port = 0;
+  gint local_port = 0;
+  gboolean auto_connect = TRUE;
+  gboolean direct_mode = FALSE;
 
-  g_assert (CALLS_IS_SIP_PROVIDER (self));
+  g_return_if_fail (name);
+  g_return_if_fail (key_file);
+  g_return_if_fail (g_key_file_has_group (key_file, name));
 
-  if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
-    g_warning ("Error loading key file: %s", error->message);
+  host = g_key_file_get_string (key_file, name, "Host", NULL);
+  user = g_key_file_get_string (key_file, name, "User", NULL);
+  /* TODO password will get removed very soon, but is currently useful for testing */
+  password = g_key_file_get_string (key_file, name, "Password", NULL);
+  display_name = g_key_file_get_string (key_file, name, "DisplayName", NULL);
+  protocol = g_key_file_get_string (key_file, name, "Protocol", NULL);
+  port = g_key_file_get_integer (key_file, name, "Port", NULL);
+  display_name = g_key_file_get_string (key_file, name, "DisplayName", NULL);
+  local_port = g_key_file_get_integer (key_file, name, "LocalPort", NULL);
+
+  if (g_key_file_has_key (key_file, name, "AutoConnect", NULL))
+    auto_connect = g_key_file_get_boolean (key_file, name, "AutoConnect", NULL);
+
+  if (protocol == NULL)
+    protocol = g_strdup ("UDP");
+
+  if (g_key_file_has_key (key_file, name, "DirectMode", NULL))
+    direct_mode = g_key_file_get_boolean (key_file, name, "DirectMode", NULL);
+
+#define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
+  if (!direct_mode &&
+      (IS_NULL_OR_EMPTY (host) ||
+       IS_NULL_OR_EMPTY (user) ||
+       IS_NULL_OR_EMPTY (password))) {
+    g_warning ("Host, user and password must not be empty");
+
     return;
   }
+#undef IS_NULL_OR_EMPTY
 
-  groups = g_key_file_get_groups (key_file, NULL);
-
-  for (gsize i = 0; groups[i] != NULL; i++) {
-    gint local_port = 0;
-    gboolean direct_connection =
-      g_key_file_get_boolean (key_file, groups[i], "Direct", NULL);
-
-    if (direct_connection) {
-
-      local_port = g_key_file_get_integer (key_file, groups[i], "LocalPort", NULL);
-      /* direct connection mode, needs a local port set */
-      if (local_port == 0)
-        local_port = 5060;
-    }
-    g_debug ("Adding origin for SIP account %s", groups[i]);
-
-    /* TODO rewrite */
-  }
+  calls_sip_provider_add_origin_full (self,
+                                      host,
+                                      user,
+                                      password,
+                                      display_name,
+                                      protocol,
+                                      port,
+                                      auto_connect,
+                                      direct_mode,
+                                      local_port);
 }
 
 
@@ -276,11 +302,20 @@ calls_sip_provider_constructed (GObject *object)
     auto_load_accounts = FALSE;
 
   if (calls_sip_provider_init_sofia (self, &error)) {
-    if (auto_load_accounts)
-      calls_sip_provider_load_accounts (self);
-  }
-  else
+    if (auto_load_accounts) {
+      g_autoptr (GKeyFile) key_file = g_key_file_new ();
+
+      if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
+        g_warning ("Error loading key file: %s", error->message);
+        goto out;
+      }
+      calls_sip_provider_load_accounts (self, key_file);
+    }
+  } else {
     g_warning ("Could not initialize sofia stack: %s", error->message);
+  }
+
+ out:
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }
@@ -465,6 +500,24 @@ CallsSipProvider *
 calls_sip_provider_new (void)
 {
   return g_object_new (CALLS_TYPE_SIP_PROVIDER, NULL);
+}
+
+
+void
+calls_sip_provider_load_accounts (CallsSipProvider *self,
+                                  GKeyFile         *key_file)
+{
+  g_autoptr (GError) error = NULL;
+  g_auto (GStrv) groups = NULL;
+
+  g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
+  g_return_if_fail (key_file);
+
+  groups = g_key_file_get_groups (key_file, NULL);
+
+  for (gsize i = 0; groups[i] != NULL; i++) {
+    new_origin_from_keyfile (self, key_file, groups[i]);
+  }
 }
 
 

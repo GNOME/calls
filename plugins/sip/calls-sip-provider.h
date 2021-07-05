@@ -54,6 +54,8 @@ CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *s
                                                              gboolean          auto_connect,
                                                              gboolean          direct_mode,
                                                              gint              local_port);
+void              calls_sip_provider_load_accounts          (CallsSipProvider *self,
+                                                             GKeyFile         *key_file);
 void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS
