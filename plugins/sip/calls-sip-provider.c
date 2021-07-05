@@ -91,7 +91,7 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
 {
   g_autoptr (GError) error = NULL;
   g_autoptr (GKeyFile) key_file = g_key_file_new ();
-  gchar **groups = NULL;
+  g_auto (GStrv) groups = NULL;
 
   g_assert (CALLS_IS_SIP_PROVIDER (self));
 
@@ -118,8 +118,6 @@ calls_sip_provider_load_accounts (CallsSipProvider *self)
 
     /* TODO rewrite */
   }
-
-  g_strfreev (groups);
 }
 
 
