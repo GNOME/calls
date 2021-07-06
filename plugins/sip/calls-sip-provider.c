@@ -194,6 +194,20 @@ origin_to_keyfile (CallsSipOrigin *origin,
 }
 
 
+static void
+save_to_disk (CallsSipProvider *self)
+{
+  g_autoptr (GKeyFile) key_file = g_key_file_new ();
+  g_autoptr (GError) error = NULL;
+
+  g_assert (CALLS_IS_SIP_PROVIDER (self));
+
+  calls_sip_provider_save_accounts (self, key_file);
+
+  if (!g_key_file_save_to_file (key_file, self->filename, &error))
+    g_warning ("Error saving keyfile to file %s: %s", self->filename, error->message);
+}
+
 static const char *
 calls_sip_provider_get_name (CallsProvider *provider)
 {
@@ -578,6 +592,9 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
                          NULL);
 
   g_list_store_append (self->origins, origin);
+
+  if (!self->use_memory_backend)
+    save_to_disk (self);
 
   return origin;
 }
