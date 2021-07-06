@@ -1031,6 +1031,19 @@ supports_protocol (CallsOrigin *origin,
 
 
 static void
+update_name (CallsSipOrigin *self)
+{
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+
+  if (self->display_name && self->display_name[0] != '\0')
+    self->name = self->display_name;
+  else
+    self->name = self->user;
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NAME]);
+}
+
+static void
 calls_sip_origin_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
@@ -1188,6 +1201,8 @@ calls_sip_origin_constructed (GObject *object)
   if (!init_sip_account (self, &error)) {
     g_warning ("Error initializing the SIP account: %s", error->message);
   }
+
+  update_name (self);
 
   self->media_manager = calls_sip_media_manager_default ();
 
@@ -1417,6 +1432,8 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
     self->transport_protocol = g_strdup ("UDP");
 
   self->port = port;
+
+  update_name (self);
 
   /* Propagate changes to nua stack */
   update_nua (self);
