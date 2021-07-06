@@ -58,6 +58,8 @@ gboolean          calls_sip_provider_remove_origin          (CallsSipProvider *s
                                                              CallsSipOrigin   *origin);
 void              calls_sip_provider_load_accounts          (CallsSipProvider *self,
                                                              GKeyFile         *key_file);
+void              calls_sip_provider_save_accounts          (CallsSipProvider *self,
+                                                             GKeyFile         *key_file);
 void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS

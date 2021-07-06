@@ -151,6 +151,49 @@ new_origin_from_keyfile (CallsSipProvider *self,
 }
 
 
+static void
+origin_to_keyfile (CallsSipOrigin *origin,
+                   GKeyFile       *key_file,
+                   const char     *name)
+{
+  g_autofree char *host = NULL;
+  g_autofree char *user = NULL;
+  /* TODO password will get removed very soon, but is currently useful for testing */
+  g_autofree char *password = NULL;
+  g_autofree char *display_name = NULL;
+  g_autofree char *protocol = NULL;
+  gint port;
+  gint local_port;
+  gboolean auto_connect;
+  gboolean direct_mode;
+
+  g_assert (CALLS_IS_SIP_ORIGIN (origin));
+  g_assert (key_file);
+
+  g_object_get (origin,
+                "host", &host,
+                "user", &user,
+                "password", &password,
+                "display-name", &display_name,
+                "transport-protocol", &protocol,
+                "port", &port,
+                "auto-connect", &auto_connect,
+                "direct-mode", &direct_mode,
+                "local-port", &local_port,
+                NULL);
+
+  g_key_file_set_string (key_file, name, "Host", host);
+  g_key_file_set_string (key_file, name, "User", user);
+  g_key_file_set_string (key_file, name, "Password", password);
+  g_key_file_set_string (key_file, name, "DisplayName", display_name ?: "");
+  g_key_file_set_string (key_file, name, "Protocol", protocol);
+  g_key_file_set_integer (key_file, name, "Port", port);
+  g_key_file_set_boolean (key_file, name, "AutoConnect", auto_connect);
+  g_key_file_set_boolean (key_file, name, "DirectMode", direct_mode);
+  g_key_file_set_integer (key_file, name, "LocalPort", local_port);
+}
+
+
 static const char *
 calls_sip_provider_get_name (CallsProvider *provider)
 {
@@ -578,6 +621,26 @@ calls_sip_provider_load_accounts (CallsSipProvider *self,
 
   for (gsize i = 0; groups[i] != NULL; i++) {
     new_origin_from_keyfile (self, key_file, groups[i]);
+  }
+}
+
+
+void
+calls_sip_provider_save_accounts (CallsSipProvider *self,
+                                  GKeyFile         *key_file)
+{
+  guint n_origins;
+
+  g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
+  g_return_if_fail (key_file);
+
+  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+  for (guint i = 0; i < n_origins; i++) {
+    g_autoptr (CallsSipOrigin) origin =
+      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
+    g_autofree char *group_name = g_strdup_printf ("sip-%02d", i);
+
+    origin_to_keyfile (origin, key_file, group_name);
   }
 }
 
