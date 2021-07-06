@@ -71,6 +71,7 @@ struct _CallsSipProvider
   CallsSipContext *ctx;
   SipEngineState sip_state;
 
+  gboolean use_memory_backend;
   gchar *filename;
 };
 
@@ -294,15 +295,14 @@ calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
   g_autoptr (GError) error = NULL;
-  gboolean auto_load_accounts = TRUE;
-  const gchar *env_do_not_auto_load;
+  const gchar *env_sip_test;
 
-  env_do_not_auto_load = g_getenv ("CALLS_SIP_DO_NOT_AUTOLOAD");
-  if (env_do_not_auto_load && env_do_not_auto_load[0] != '\0')
-    auto_load_accounts = FALSE;
+  env_sip_test = g_getenv ("CALLS_SIP_TEST");
+  if (env_sip_test && env_sip_test[0] != '\0')
+    self->use_memory_backend = TRUE;
 
   if (calls_sip_provider_init_sofia (self, &error)) {
-    if (auto_load_accounts) {
+    if (!self->use_memory_backend) {
       g_autoptr (GKeyFile) key_file = g_key_file_new ();
 
       if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
