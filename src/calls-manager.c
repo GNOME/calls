@@ -379,13 +379,16 @@ remove_provider (CallsManager *self,
 {
   GListModel *origins;
   guint n_items;
-  CallsProvider *provider;
+  g_autoptr (CallsProvider) provider;
 
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (name);
 
   provider = g_hash_table_lookup (self->providers, name);
-  if (provider == NULL) {
+  if (provider) {
+    /* Hold a ref since g_hash_table_remove () might drop the last one */
+    g_object_ref (provider);
+  } else {
     g_warning ("Trying to remove provider %s which has not been found", name);
     return;
   }
