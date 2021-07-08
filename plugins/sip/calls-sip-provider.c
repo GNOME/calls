@@ -25,10 +25,12 @@
 #define G_LOG_DOMAIN "CallsSipProvider"
 
 #define SIP_ACCOUNT_FILE "sip-account.cfg"
+#define CALLS_PROTOCOL_SIP_STR "sip"
 
 #include "calls-account-provider.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"
+#include "calls-secret-store.h"
 #include "calls-sip-account-widget.h"
 #include "calls-sip-enums.h"
 #include "calls-sip-origin.h"
@@ -153,6 +155,19 @@ new_origin_from_keyfile (CallsSipProvider *self,
 
 
 static void
+on_origin_pw_saved (GObject      *source,
+                    GAsyncResult *result,
+                    gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  if (!secret_password_store_finish (result, &error)) {
+    g_warning ("Could not store the password in the keyring: %s", error->message);
+  }
+}
+
+
+static void
 origin_to_keyfile (CallsSipOrigin *origin,
                    GKeyFile       *key_file,
                    const char     *name)
@@ -163,6 +178,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_autofree char *password = NULL;
   g_autofree char *display_name = NULL;
   g_autofree char *protocol = NULL;
+  g_autofree char *label_secret = NULL;
   gint port;
   gint local_port;
   gboolean auto_connect;
@@ -192,6 +208,17 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_key_file_set_boolean (key_file, name, "AutoConnect", auto_connect);
   g_key_file_set_boolean (key_file, name, "DirectMode", direct_mode);
   g_key_file_set_integer (key_file, name, "LocalPort", local_port);
+
+  label_secret = g_strdup_printf ("Calls Password for %s",
+                                  calls_account_get_address (CALLS_ACCOUNT (origin)));
+
+  /* save to keyring */
+  secret_password_store (calls_secret_get_schema (), NULL, label_secret, password,
+                         NULL, on_origin_pw_saved, NULL,
+                         CALLS_SERVER_ATTRIBUTE, host,
+                         CALLS_USERNAME_ATTRIBUTE, user,
+                         CALLS_PROTOCOL_ATTRIBUTE, CALLS_PROTOCOL_SIP_STR,
+                         NULL);
 }
 
 

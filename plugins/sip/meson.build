@@ -39,6 +39,7 @@ sip_deps = [
   dependency('libhandy-1', version: '>= 1.1.90'),
   dependency('libpeas-1.0'),
   dependency('sofia-sip-ua-glib'),
+  dependency('libsecret-1'),
 ]
 
 sip_sources = files(
