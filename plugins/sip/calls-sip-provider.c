@@ -147,7 +147,8 @@ new_origin_from_keyfile (CallsSipProvider *self,
                                       port,
                                       auto_connect,
                                       direct_mode,
-                                      local_port);
+                                      local_port,
+                                      FALSE);
 }
 
 
@@ -505,6 +506,7 @@ calls_sip_provider_init (CallsSipProvider *self)
  * @password: The password to use
  * @display_name: The display name
  * @transport_protocol: The transport protocol to use, can be one of "UDP", "TCP" or "TLS"
+ * @store_credentials: Whether to store credentials for this origin to disk
  *
  * Adds a new origin (SIP account)
  *
@@ -517,7 +519,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                const char       *password,
                                const char       *display_name,
                                const char       *transport_protocol,
-                               gint              port)
+                               gint              port,
+                               gboolean          store_credentials)
 {
   return calls_sip_provider_add_origin_full (self,
                                              host,
@@ -528,7 +531,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                              port,
                                              TRUE,
                                              FALSE,
-                                             0);
+                                             0,
+                                             store_credentials);
 }
 
 /**
@@ -542,6 +546,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
  * @auto_connect: Whether to automatically try going online
  * @direct_mode: Whether to use direct connection mode. Useful when you don't want to
  * connect to a SIP server. Mostly useful for testing and debugging.
+ * @store_credentials: Whether to store credentials for this origin to disk
  *
  * Adds a new origin (SIP account). If @direct_mode is %TRUE then @host, @user and
  * @password do not have to be set.
@@ -558,7 +563,8 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
                                     gint              port,
                                     gboolean          auto_connect,
                                     gboolean          direct_mode,
-                                    gint              local_port)
+                                    gint              local_port,
+                                    gboolean          store_credentials)
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
   g_autofree char *protocol = NULL;
@@ -593,7 +599,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
 
   g_list_store_append (self->origins, origin);
 
-  if (!self->use_memory_backend)
+  if (store_credentials && !self->use_memory_backend)
     save_to_disk (self);
 
   return origin;

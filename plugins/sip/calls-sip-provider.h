@@ -43,7 +43,8 @@ CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *s
                                                              const char       *password,
                                                              const char       *display_name,
                                                              const char       *transport_protocol,
-                                                             gint              port);
+                                                             gint              port,
+                                                             gboolean          store_credentials);
 CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *self,
                                                              const char       *host,
                                                              const char       *user,
@@ -53,7 +54,8 @@ CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *s
                                                              gint              port,
                                                              gboolean          auto_connect,
                                                              gboolean          direct_mode,
-                                                             gint              local_port);
+                                                             gint              local_port,
+                                                             gboolean          store_credentials);
 gboolean          calls_sip_provider_remove_origin          (CallsSipProvider *self,
                                                              CallsSipOrigin   *origin);
 void              calls_sip_provider_load_accounts          (CallsSipProvider *self,

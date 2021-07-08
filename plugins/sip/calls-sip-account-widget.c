@@ -259,7 +259,8 @@ on_login_clicked (CallsSipAccountWidget *self)
                                           gtk_entry_get_text (GTK_ENTRY (self->password)),
                                           gtk_entry_get_text (GTK_ENTRY (self->display_name)),
                                           "UDP",
-                                          0);
+                                          0,
+                                          TRUE);
 
   self->origin = origin;
   update_header (self);

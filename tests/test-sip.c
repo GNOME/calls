@@ -370,7 +370,8 @@ setup_sip_origins (SipFixture   *fixture,
                                         0,
                                         FALSE,
                                         TRUE,
-                                        5060);
+                                        5060,
+                                        FALSE);
 
   fixture->origin_bob =
     calls_sip_provider_add_origin_full (fixture->provider,
@@ -382,7 +383,8 @@ setup_sip_origins (SipFixture   *fixture,
                                         0,
                                         FALSE,
                                         TRUE,
-                                        5061);
+                                        5061,
+                                        FALSE);
 
   fixture->origin_offline =
     calls_sip_provider_add_origin_full (fixture->provider,
@@ -394,7 +396,8 @@ setup_sip_origins (SipFixture   *fixture,
                                         0,
                                         FALSE,
                                         FALSE,
-                                        0);
+                                        0,
+                                        FALSE);
 
 }
 
