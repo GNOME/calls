@@ -91,11 +91,20 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED
  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
                                 calls_sip_provider_account_provider_interface_init))
 
+typedef struct {
+  CallsSipProvider *provider;
+  GKeyFile         *key_file;
+  char             *name;
+} SipOriginLoadData;
+
 static void
-new_origin_from_keyfile (CallsSipProvider *self,
-                         GKeyFile         *key_file,
-                         const char       *name)
+on_origin_pw_looked_up (GObject      *source,
+                        GAsyncResult *result,
+                        gpointer      user_data)
 {
+  SipOriginLoadData *data;
+  g_autoptr (GError) error = NULL;
+  g_autofree char *name = NULL;
   g_autofree char *host = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
@@ -106,28 +115,33 @@ new_origin_from_keyfile (CallsSipProvider *self,
   gboolean auto_connect = TRUE;
   gboolean direct_mode = FALSE;
 
-  g_return_if_fail (name);
-  g_return_if_fail (key_file);
-  g_return_if_fail (g_key_file_has_group (key_file, name));
+  g_assert (user_data);
 
-  host = g_key_file_get_string (key_file, name, "Host", NULL);
-  user = g_key_file_get_string (key_file, name, "User", NULL);
-  /* TODO password will get removed very soon, but is currently useful for testing */
-  password = g_key_file_get_string (key_file, name, "Password", NULL);
-  display_name = g_key_file_get_string (key_file, name, "DisplayName", NULL);
-  protocol = g_key_file_get_string (key_file, name, "Protocol", NULL);
-  port = g_key_file_get_integer (key_file, name, "Port", NULL);
-  display_name = g_key_file_get_string (key_file, name, "DisplayName", NULL);
-  local_port = g_key_file_get_integer (key_file, name, "LocalPort", NULL);
+  data = user_data;
 
-  if (g_key_file_has_key (key_file, name, "AutoConnect", NULL))
-    auto_connect = g_key_file_get_boolean (key_file, name, "AutoConnect", NULL);
+  host = g_key_file_get_string (data->key_file, data->name, "Host", NULL);
+  user = g_key_file_get_string (data->key_file, data->name, "User", NULL);
+  display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
+  protocol = g_key_file_get_string (data->key_file, data->name, "Protocol", NULL);
+  port = g_key_file_get_integer (data->key_file, data->name, "Port", NULL);
+  display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
+  local_port = g_key_file_get_integer (data->key_file, data->name, "LocalPort", NULL);
+
+  if (g_key_file_has_key (data->key_file, data->name, "AutoConnect", NULL))
+    auto_connect = g_key_file_get_boolean (data->key_file, data->name, "AutoConnect", NULL);
 
   if (protocol == NULL)
     protocol = g_strdup ("UDP");
 
-  if (g_key_file_has_key (key_file, name, "DirectMode", NULL))
-    direct_mode = g_key_file_get_boolean (key_file, name, "DirectMode", NULL);
+  if (g_key_file_has_key (data->key_file, data->name, "DirectMode", NULL))
+    direct_mode = g_key_file_get_boolean (data->key_file, data->name, "DirectMode", NULL);
+
+  /* PW */
+  password = secret_password_lookup_finish (result, &error);
+  if (!direct_mode && error) {
+    g_warning ("Could not lookup password: %s", error->message);
+    return;
+  }
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
   if (!direct_mode &&
@@ -140,7 +154,7 @@ new_origin_from_keyfile (CallsSipProvider *self,
   }
 #undef IS_NULL_OR_EMPTY
 
-  calls_sip_provider_add_origin_full (self,
+  calls_sip_provider_add_origin_full (data->provider,
                                       host,
                                       user,
                                       password,
@@ -151,6 +165,40 @@ new_origin_from_keyfile (CallsSipProvider *self,
                                       direct_mode,
                                       local_port,
                                       FALSE);
+}
+static void
+new_origin_from_keyfile_secret (CallsSipProvider *self,
+                                GKeyFile         *key_file,
+                                const char       *name)
+{
+  g_autofree char *host = NULL;
+  g_autofree char *user = NULL;
+  SipOriginLoadData *data;
+
+  g_assert (CALLS_IS_SIP_PROVIDER (self));
+  g_assert (key_file);
+  g_assert (name);
+
+  if (!g_key_file_has_group (key_file, name)) {
+    g_warning ("Keyfile has no group %s", name);
+    return;
+  }
+
+  host = g_key_file_get_string (key_file, name, "Host", NULL);
+  user = g_key_file_get_string (key_file, name, "User", NULL);
+
+  data = g_new0 (SipOriginLoadData, 1);
+  data->provider = self;
+  g_key_file_ref (key_file);
+  data->key_file = key_file;
+  data->name = g_strdup (name);
+
+  secret_password_lookup (calls_secret_get_schema (), NULL,
+                          on_origin_pw_looked_up, data,
+                          CALLS_SERVER_ATTRIBUTE, host,
+                          CALLS_USERNAME_ATTRIBUTE, user,
+                          CALLS_PROTOCOL_ATTRIBUTE, CALLS_PROTOCOL_SIP_STR,
+                          NULL);
 }
 
 
@@ -710,7 +758,7 @@ calls_sip_provider_load_accounts (CallsSipProvider *self,
   groups = g_key_file_get_groups (key_file, NULL);
 
   for (gsize i = 0; groups[i] != NULL; i++) {
-    new_origin_from_keyfile (self, key_file, groups[i]);
+    new_origin_from_keyfile_secret (self, key_file, groups[i]);
   }
 }
 
