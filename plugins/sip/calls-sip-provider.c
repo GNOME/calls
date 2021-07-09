@@ -155,6 +155,39 @@ new_origin_from_keyfile (CallsSipProvider *self,
 
 
 static void
+on_origin_pw_cleared (GObject      *source,
+                      GAsyncResult *result,
+                      gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+
+  if (!secret_password_clear_finish (result, &error))
+    g_warning ("Could not delete the password in the keyring: %s", error->message);
+}
+
+
+static void
+origin_pw_delete_secret (CallsSipOrigin *origin)
+{
+  g_autofree char *host = NULL;
+  g_autofree char *user = NULL;
+
+  g_assert (CALLS_IS_SIP_ORIGIN (origin));
+
+  g_object_get (origin,
+                "host", &host,
+                "user", &user,
+                NULL);
+
+  secret_password_clear (calls_secret_get_schema (), NULL, on_origin_pw_cleared, NULL,
+                         CALLS_SERVER_ATTRIBUTE, host,
+                         CALLS_USERNAME_ATTRIBUTE, user,
+                         CALLS_PROTOCOL_ATTRIBUTE, CALLS_PROTOCOL_SIP_STR,
+                         NULL);
+}
+
+
+static void
 on_origin_pw_saved (GObject      *source,
                     GAsyncResult *result,
                     gpointer      user_data)
@@ -643,12 +676,14 @@ calls_sip_provider_remove_origin (CallsSipProvider *self,
   g_return_val_if_fail (CALLS_IS_SIP_ORIGIN (origin), FALSE);
 
   if (g_list_store_find (self->origins, origin, &position)) {
+    g_object_ref (origin);
     g_list_store_remove (self->origins, position);
 
     if (!self->use_memory_backend) {
-      /* TODO need to delete credentials from the keyring as well */
+      origin_pw_delete_secret (origin);
       save_to_disk (self);
     }
+    g_object_unref (origin);
     return TRUE;
   }
   return FALSE;
