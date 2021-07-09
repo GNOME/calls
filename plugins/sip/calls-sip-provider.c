@@ -644,6 +644,11 @@ calls_sip_provider_remove_origin (CallsSipProvider *self,
 
   if (g_list_store_find (self->origins, origin, &position)) {
     g_list_store_remove (self->origins, position);
+
+    if (!self->use_memory_backend) {
+      /* TODO need to delete credentials from the keyring as well */
+      save_to_disk (self);
+    }
     return TRUE;
   }
   return FALSE;
