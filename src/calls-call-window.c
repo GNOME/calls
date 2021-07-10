@@ -577,7 +577,7 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   object_class->notify = notify;
 #endif // CALLS_WAYLAND
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/call-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, in_app_notification);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, header_bar_stack);

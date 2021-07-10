@@ -131,7 +131,7 @@ calls_encryption_indicator_class_init (CallsEncryptionIndicatorClass *klass)
                           G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/encryption-indicator.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/encryption-indicator.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsEncryptionIndicator, is_not_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CallsEncryptionIndicator, is_encrypted);
 }

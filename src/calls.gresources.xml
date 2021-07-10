@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/sm/puri/calls/ui">
+  <gresource prefix="/org/gnome/Calls/ui">
     <file preprocess="xml-stripblanks">main-window.ui</file>
     <file preprocess="xml-stripblanks">call-display.ui</file>
     <file preprocess="xml-stripblanks">call-selector-item.ui</file>
@@ -15,10 +15,10 @@
     <file preprocess="xml-stripblanks">contacts-row.ui</file>
     <file preprocess="xml-stripblanks">contacts-box.ui</file>
   </gresource>
-  <gresource prefix="/sm/puri/calls/">
+  <gresource prefix="/org/gnome/Calls/">
     <file>style.css</file>
   </gresource>
-  <gresource prefix="/sm/puri/Calls/icons/">
+  <gresource prefix="/org/gnome/Calls/icons/">
     <file>new-call-symbolic.svg</file>
     <file>call-arrow-incoming-symbolic.svg</file>
     <file>call-arrow-incoming-missed-symbolic.svg</file>

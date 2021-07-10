@@ -127,7 +127,7 @@ calls_contacts_row_class_init (CallsContactsRowClass *klass)
   object_class->dispose = calls_contacts_row_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/sm/puri/calls/"
+                                               "/org/gnome/Calls/"
                                                "ui/contacts-row.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsContactsRow, avatar);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsRow, title);

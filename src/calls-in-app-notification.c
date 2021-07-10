@@ -128,7 +128,7 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/in-app-notification.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/in-app-notification.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsInAppNotification, label);
   gtk_widget_class_bind_template_callback (widget_class, calls_in_app_notification_hide);
 }

@@ -485,7 +485,7 @@ calls_call_display_class_init (CallsCallDisplayClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-display.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/call-display.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, incoming_phone_call);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CallsCallDisplay, secondary_contact_info);

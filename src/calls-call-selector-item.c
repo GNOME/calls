@@ -179,7 +179,7 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/sm/puri/calls/ui/call-selector-item.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/call-selector-item.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallSelectorItem, main_box);
   gtk_widget_class_bind_template_child (widget_class, CallsCallSelectorItem, name);
   gtk_widget_class_bind_template_child (widget_class, CallsCallSelectorItem, status);
