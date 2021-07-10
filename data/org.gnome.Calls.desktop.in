@@ -1,16 +1,16 @@
 [Desktop Entry]
-Name=Calls (daemon)
+Name=Calls
 GenericName=Phone
-Comment=A phone dialer and call handler (daemon mode)
+Comment=A phone dialer and call handler
 # Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
 Keywords=Telephone;Call;Phone;Dial;Dialer;PSTN;
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-Icon=sm.puri.Calls
+Icon=org.gnome.Calls
 TryExec=gnome-calls
-Exec=gnome-calls --daemon
+Exec=gnome-calls %u
 Type=Application
 StartupNotify=true
-NoDisplay=true
 Terminal=false
 Categories=Network;GNOME;GTK;Telephony;
-X-GNOME-AutoRestart=true
+MimeType=x-scheme-handler/tel;x-scheme-handler/sip;x-scheme-handler/sips
+X-Purism-FormFactor=Workstation;Mobile;

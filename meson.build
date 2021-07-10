@@ -32,7 +32,7 @@ project(
   ]
 )
 
-calls_id = 'sm.puri.Calls'
+calls_id = 'org.gnome.Calls'
 calls_homepage = 'https://gitlab.gnome.org/GNOME/calls'
 calls_name = meson.project_name()
 calls_version = meson.project_version()

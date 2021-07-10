@@ -134,9 +134,9 @@ flatpak:master:
   extends: .flatpak
   stage: package
   variables:
-    MANIFEST_PATH: "sm.puri.Calls.json"
+    MANIFEST_PATH: "org.gnome.Calls.json"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     FLATPAK_MODULE: "calls"
     MESON_ARGS: ""
-    APP_ID: "sm.puri.Calls"
+    APP_ID: "org.gnome.Calls"
     BUNDLE: "calls.flatpak"

@@ -1,5 +1,5 @@
 {
-    "app-id" : "sm.puri.Calls",
+    "app-id" : "org.gnome.Calls",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
