@@ -33,7 +33,7 @@ project(
 )
 
 calls_id = 'sm.puri.Calls'
-calls_homepage = 'https://source.puri.sm/Librem5/calls'
+calls_homepage = 'https://gitlab.gnome.org/GNOME/calls'
 calls_name = meson.project_name()
 calls_version = meson.project_version()
 
