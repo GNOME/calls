@@ -22,8 +22,8 @@
  * The #CallsCallManager is responsible for exposing the
  * call objects on the session bus using #GDBusObjectManager.
  *
- * Call objects are exported like /sm/puri/Calls/ as
- * /sm/puri/Calls/Call/1, /sm/puri/Calls/Call/2, … using
+ * Call objects are exported like /org/gnome/Calls/ as
+ * /org/gnome/Calls/Call/1, /org/gnome/Calls/Call/2, … using
  * org.freedesktop.DBus.ObjectManager.
  */
 
