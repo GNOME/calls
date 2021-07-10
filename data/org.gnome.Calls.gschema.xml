@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="purism-calls">
-  <schema id="sm.puri.Calls" path="/sm/puri/Calls/">
+  <schema id="org.gnome.Calls" path="/org/gnome/Calls/">
 
     <key name="auto-use-default-origins" type="b">
       <default>true</default>

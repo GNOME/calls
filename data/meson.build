@@ -68,7 +68,7 @@ install_data(
   )
 )
 
-schema_src = 'sm.puri.Calls.gschema.xml'
+schema_src = 'org.gnome.Calls.gschema.xml'
 compiled = gnome.compile_schemas(build_by_default: true,
                                  depend_files: files(schema_src))
 

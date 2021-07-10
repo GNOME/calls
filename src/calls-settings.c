@@ -169,7 +169,7 @@ calls_settings_class_init (CallsSettingsClass *klass)
 static void
 calls_settings_init (CallsSettings *self)
 {
-  self->settings = g_settings_new ("sm.puri.Calls");
+  self->settings = g_settings_new ("org.gnome.Calls");
 }
 
 /**
