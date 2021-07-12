@@ -255,7 +255,6 @@ origin_to_keyfile (CallsSipOrigin *origin,
 {
   g_autofree char *host = NULL;
   g_autofree char *user = NULL;
-  /* TODO password will get removed very soon, but is currently useful for testing */
   g_autofree char *password = NULL;
   g_autofree char *display_name = NULL;
   g_autofree char *protocol = NULL;
@@ -282,7 +281,6 @@ origin_to_keyfile (CallsSipOrigin *origin,
 
   g_key_file_set_string (key_file, name, "Host", host);
   g_key_file_set_string (key_file, name, "User", user);
-  g_key_file_set_string (key_file, name, "Password", password);
   g_key_file_set_string (key_file, name, "DisplayName", display_name ?: "");
   g_key_file_set_string (key_file, name, "Protocol", protocol);
   g_key_file_set_integer (key_file, name, "Port", port);
