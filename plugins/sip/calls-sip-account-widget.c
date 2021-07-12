@@ -263,6 +263,7 @@ on_login_clicked (CallsSipAccountWidget *self)
 
   self->origin = origin;
   update_header (self);
+  g_signal_emit_by_name (self->provider, "widget-edit-done");
 }
 
 
@@ -275,6 +276,7 @@ on_delete_clicked (CallsSipAccountWidget *self)
   self->origin = NULL;
 
   update_header (self);
+  g_signal_emit_by_name (self->provider, "widget-edit-done");
 }
 
 
@@ -293,6 +295,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     TRUE);
 
   update_header (self);
+  g_signal_emit_by_name (self->provider, "widget-edit-done");
 }
 
 
