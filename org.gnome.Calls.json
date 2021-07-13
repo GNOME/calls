@@ -300,7 +300,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://source.puri.sm/Librem5/calls.git"
+                    "url" : "https://gitlab.gnome.org/GNOME/calls.git"
                 }
             ]
         }
