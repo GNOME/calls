@@ -5,7 +5,3 @@ option('gtk_doc',
 option('tests',
        type: 'boolean', value: true,
        description: 'Whether to compile unit tests')
-
-option('wayland',
-       type: 'feature', value: 'enabled',
-       description: 'Whether to support Wayland lockscreen interaction')
