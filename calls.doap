@@ -11,6 +11,8 @@
   <description>Calls is a dialer for phone calls, initially PSTN calls
   but eventually other systems like SIP in future.</description>
   <homepage rdf:resource="https://gitlab.gnome.org/GNOME/calls" />
+  <download-page rdf:resource="https://gitlab.gnome.org/GNOME/calls/-/tags" />
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/calls/issues/" />
   <license rdf:resource="http://usefulinc.com/doap/licenses/gpl" />
 
   <programming-language>C</programming-language>
