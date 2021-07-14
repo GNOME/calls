@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Calls
-Source: https://source.puri.sm/Librem5/calls
+Source: https://gitlab.gnome.org/GNOME/calls
 License: GPL-3+
 
 Files: *
