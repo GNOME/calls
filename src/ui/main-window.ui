@@ -3,12 +3,33 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="1.0"/>
-  <template class="CallsMainWindow" parent="GtkApplicationWindow">
+  <template class="CallsMainWindow" parent="HdyApplicationWindow">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Calls</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
     <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="HdyHeaderBar">
+            <property name="visible">True</property>
+            <property name="centering_policy">strict</property>
+            <property name="can_focus">False</property>
+            <property name="show_close_button">True</property>
+            <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
+            <child type="title">
+              <object class="HdyViewSwitcherTitle" id="title_switcher">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stack">main_stack</property>
+                <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
+              </object>
+            </child>
+          </object>
+        </child>
     <child>
       <object class="GtkOverlay">
         <property name="visible">True</property>
@@ -63,21 +84,6 @@
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <object class="HdyHeaderBar">
-        <property name="visible">True</property>
-        <property name="centering_policy">strict</property>
-        <property name="can_focus">False</property>
-        <property name="show_close_button">True</property>
-        <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
-        <child type="title">
-          <object class="HdyViewSwitcherTitle" id="title_switcher">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="stack">main_stack</property>
-            <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
-          </object>
-        </child>
       </object>
     </child>
   </template>

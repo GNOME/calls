@@ -42,7 +42,7 @@
 
 struct _CallsMainWindow
 {
-  GtkApplicationWindow parent_instance;
+  HdyApplicationWindow parent_instance;
 
   GListModel *record_store;
 
@@ -67,7 +67,7 @@ struct _CallsMainWindow
   GtkButton  *ussd_reply_button;
 };
 
-G_DEFINE_TYPE (CallsMainWindow, calls_main_window, GTK_TYPE_APPLICATION_WINDOW);
+G_DEFINE_TYPE (CallsMainWindow, calls_main_window, HDY_TYPE_APPLICATION_WINDOW);
 
 enum {
   PROP_0,
