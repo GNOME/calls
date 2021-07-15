@@ -92,6 +92,8 @@ about_action (GSimpleAction *action,
     "Adrien Plazas <kekun.plazas@laposte.net>",
     "Bob Ham <rah@settrans.net>",
     "Guido Günther <agx@sigxcpu.org>",
+    "Julian Sparber <julian@sparber.net>",
+    "Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>",
     NULL
   };
 
