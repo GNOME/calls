@@ -30,60 +30,60 @@
             </child>
           </object>
         </child>
-    <child>
-      <object class="GtkOverlay">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <child type="overlay">
-          <object class="CallsInAppNotification" id="in_app_notification">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-        </child>
         <child>
-          <object class="GtkBox">
+          <object class="GtkOverlay">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkRevealer" id="permanent_error_revealer">
+            <child type="overlay">
+              <object class="CallsInAppNotification" id="in_app_notification">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="reveal_child">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="permanent_error_label">
-                    <property name="justify">center</property>
-                    <property name="wrap">True</property>
+                  <object class="GtkRevealer" id="permanent_error_revealer">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">No modem found</property>
-                    <style>
-                      <class name="error-state-message"/>
-                    </style>
+                    <property name="reveal_child">True</property>
+                    <child>
+                      <object class="GtkLabel" id="permanent_error_label">
+                        <property name="justify">center</property>
+                        <property name="wrap">True</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">No modem found</property>
+                        <style>
+                          <class name="error-state-message"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStack" id="main_stack">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="homogeneous">False</property>
+                    <property name="expand">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="HdyViewSwitcherBar" id="switcher_bar">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="stack">main_stack</property>
+                    <property name="reveal" bind-source="title_switcher" bind-property="title-visible" bind-flags="sync-create"/>
                   </object>
                 </child>
               </object>
             </child>
-            <child>
-              <object class="GtkStack" id="main_stack">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="homogeneous">False</property>
-                <property name="expand">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="HdyViewSwitcherBar" id="switcher_bar">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="stack">main_stack</property>
-                <property name="reveal" bind-source="title_switcher" bind-property="title-visible" bind-flags="sync-create"/>
-              </object>
-            </child>
           </object>
         </child>
-      </object>
-    </child>
       </object>
     </child>
   </template>
