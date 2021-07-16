@@ -32,6 +32,8 @@
 
     <mimetypes>
         <mimetype>x-scheme-handler/tel</mimetype>
+        <mimetype>x-scheme-handler/sip</mimetype>
+        <mimetype>x-scheme-handler/sips</mimetype>
     </mimetypes>
 
     <content_rating type="oars-1.1">
