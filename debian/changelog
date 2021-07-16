@@ -1,3 +1,86 @@
+gnome-calls (41~alpha) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * run: Run under gdb when CALLS_GDB is set to 1
+  * ringer: Follow coding style for G_LOG_DOMAIN
+  * debug: Add G_LOG_DOMAIN to every file using g_debug()
+  * run: Allow passing arguments to calls when running under gdb
+  * notifier: Explicitly handle unknown callers
+  * sip: origin: codestyle
+  * sip: origin: Remove unnecessary notify
+  * sip: origin: Handle unregistering (going offline)
+  * sip: origin: No need to explicitly clear nua handles
+  * meson: bump required version to 0.49.0
+  * meson: Fix typo in gnome.compile_schemas
+  * meson: Passing `-fPIE` explicitly is discouraged
+  * flatpak: Update gom to 0.4.0
+  * flatpak: Update e-d-s to 3.40
+  * flatpak: Update folks to 0.15
+  * flatpak: Update ModemManager to 1.16
+  * ci: Reenable flatpak builds
+  * doap: Remove Bob from maintainer list
+  * meson: bump minimum and maximum glib to 2.64 and 2.68
+  * meson: Disable deprecation warning for e-d-s
+  * util: Get rid of conditional compilation in calls_find_in_store()
+  * sip: provider: Keep provider alive while there are still origins
+  * application: Allow invoking with multiple `-p` arguments
+  * application: settings: Add autoload-plugins setting
+  * manager: Don't use peas_engine_prepend_search_path
+  * meson: Add postinstall script to compile schemas etc
+  * best-match: codestyle
+  * best-match: Preliminary handling of SIP addresses
+  * call-display: Ellipsize labels at the end
+  * doap: Add gnome user ids
+  * ci: Switch to Debian Bullseye images
+  * meson: Change homepage to GNOMEs gitlab
+  * docs: Change homepage to GNOMEs gitlab
+  * resources: Use /org/gnome prefix and adapt to changes
+  * schema: Use org.gnome prefix and adapt to changes
+  * DBus: Use org.gnome prefix and adapt to changes
+  * project: Use org.gnome prefix in app id and adapt to changes
+  * debian: Remove old desktop files on upgrade
+  * flatpak: Change calls URL
+  * meson: Remove wayland option
+  * d/copyright: Dropped wayland sources
+  * debian: Change URL of homepage
+  * doap: Change URL of homepage
+  * sip: origin: Explicitly include contact header for sofia > 1.13
+  * meson: Conform to GNOME versioning
+  * d/gbp.conf: Remove hook that bumps project version in meson.build
+  * metainfo: Update mimetypes
+  * Document and release 41.alpha
+
+  [ Luna Jernberg ]
+  * po: Update Swedish translation
+
+  [ Yuri Chornoivan ]
+  * po: Update Ukrainian translation
+
+  [ Vittorio Monti ]
+  * po: Update italian translation
+
+  [ Guido Günther ]
+  * dbus-manager: Fix typo in log-domain
+  * Drop layer-surface
+  * dbus: Add more DBus properties
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+  * Update Greek translation
+
+  [ Andika Triwidada ]
+  * Update Indonesian translation
+
+  [ Adrien Plazas ]
+  * flatpak: Bump libical to 3.0.10
+  * main-window: Make it a HdyApplicationWindow
+  * main-window: Fix the indentation
+
+ -- Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>  Fri, 16 Jul 2021 11:55:08 +0200
+
 gnome-calls (0.3.4) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

@@ -67,9 +67,9 @@
     </content_rating>
 
     <releases>
-        <release version="0.0.0" date="2018-05-04">
-            <description>Pre-release development</description>
-        </release>
+      <release version="41.alpha" data="2021-07-16">
+        <description>First GNOME release</description>
+      </release>
     </releases>
 
     <custom>

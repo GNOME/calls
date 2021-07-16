@@ -1,0 +1,35 @@
+Calls 41.alpha
+--------------
+Released: July 2021
+* Major news items:
+ - Calls became a part of the GNOME project
+
+* Bugs fixed:
+ - #283 Cut and ellipsize long labels on the call display
+ - #288 Does not print 'unknown caller' in notification
+ - #294 Be consistent with  G_LOG_DOMAIN
+ - #298 flatpak: can't run because schemas are not being found
+ - #300 Peas prepending search path does not seem to work
+ - #303 Please move to org.gnome.Calls on DBus
+ - #304 Sofia 1.13.3 does not include the contact header
+
+* Translation updates:
+ - Greek, Modern (Efstathios Iosifidis)
+ - Indonesian (Andika Triwidada)
+ - Italian (Vittorio Monti)
+ - Persian (Danial Behzadi)
+ - Swedish (Luna Jernberg)
+ - Ukrainian (Yuri Chornoivan)
+
+
+Calls 0.3.4
+-----------
+Released: June 2021
+* Add support for using multiple provider plugins at the same time
+* Expose call objects on DBus
+* Add run script to the build directory
+* Use stricter warnings for the build
+* Translation updates:
+ - Italian
+ - Swedish
+ - Ukrainian
