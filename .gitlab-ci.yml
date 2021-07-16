@@ -79,6 +79,17 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.c' && { intltool-update -m; exit 1; } || exit 0
 
+validate-metadata:
+  stage: test
+  image: debian:bullseye
+  tags: []
+  before_script:
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get -y update
+    - apt-get -y install appstream-util
+  script:
+    - appstream-util validate data/org.gnome.Calls.metainfo.xml
+
 package-debian-bullseye:
   variables:
     EXP_DEPS: libhandy-1-dev/experimental libhandy-1-0/experimental gir1.2-handy-1/experimental libgladeui-common/experimental
