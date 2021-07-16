@@ -15,6 +15,8 @@
     
     <project_group>GNOME</project_group>
     <developer_name>Bob Ham</developer_name>
+    <developer_name>Evangelos Ribeiro Tzaras</developer_name>
+    <developer_name>Julian Sparber</developer_name>
 
     <recommends>
         <control>pointing</control>
