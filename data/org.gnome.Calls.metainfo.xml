@@ -10,8 +10,8 @@
         <p>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</p>
     </description>
 
-    <url type="homepage">https://source.puri.sm/Librem5/calls</url>
-    <url type="bugtracker">https://source.puri.sm/Librem5/calls/issues</url>
+    <url type="homepage">https://gitlab.gnome.org/GNOME/calls</url>
+    <url type="bugtracker">https://gitlab.gnome.org/GNOME/calls/issues</url>
     
     <project_group>GNOME</project_group>
     <developer_name>Bob Ham</developer_name>
