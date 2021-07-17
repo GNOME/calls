@@ -1,5 +1,5 @@
 # Calls
-[![Code coverage](https://source.puri.sm/Librem5/calls/badges/master/coverage.svg)](https://source.puri.sm/Librem5/calls/commits/master)
+[![Code coverage](https://gitlab.gnome.org/GNOME/calls/badges/master/coverage.svg)](https://gitlab.gnome.org/GNOME/calls/commits/master)
 
 A phone dialer and call handler.
 
@@ -8,7 +8,7 @@ A phone dialer and call handler.
 Calls is licensed under the GPLv3+.
 
 ## Dependencies
-To build Calls you need to first install the build-deps defined by [the debian/control file](https://source.puri.sm/Librem5/calls/blob/master/debian/control#L6)
+To build Calls you need to first install the build-deps defined by [the debian/control file](https://gitlab.gnome.org/GNOME/calls/blob/master/debian/control#L8)
 
 If you are running a Debian based distribution, you can easily install all those the dependencies making use of the following command
 
