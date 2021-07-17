@@ -206,45 +206,23 @@ origin_count_changed_cb (CallsNewCallBox *self)
   gtk_widget_set_sensitive (GTK_WIDGET (self->dial), n_items > 0);
 
   if (n_items)
-    hdy_combo_row_bind_name_model (self->origin_list, origins,
-                                   get_origin_name, self, NULL);
-  else
-    hdy_combo_row_bind_name_model (self->origin_list,
-                                   NULL, NULL, NULL, NULL);
-
-  if (n_items)
-    hdy_combo_row_set_selected_index (self->origin_list, 0);
-
-  dial_queued (self);
+    dial_queued (self);
 }
 
-static void
-provider_changed_cb (CallsNewCallBox *self)
-{
-  GListModel *origins;
-
-  g_assert (CALLS_IS_NEW_CALL_BOX (self));
-
-  origins = calls_manager_get_origins (calls_manager_get_default ());
-  if (origins) {
-    g_signal_connect_object (origins, "items-changed",
-                             G_CALLBACK (origin_count_changed_cb), self,
-                             G_CONNECT_SWAPPED);
-
-    origin_count_changed_cb (self);
-  }
-}
 
 static void
 calls_new_call_box_init (CallsNewCallBox *self)
 {
+  GListModel *origins;
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "notify::provider",
-                            G_CALLBACK (provider_changed_cb),
-                            self);
-  provider_changed_cb (self);
+  origins = calls_manager_get_origins (calls_manager_get_default ());
+  hdy_combo_row_bind_name_model (self->origin_list, origins,
+                                 get_origin_name, self, NULL);
+
+  g_signal_connect_swapped (origins, "items-changed",
+                            G_CALLBACK (origin_count_changed_cb), self);
 }
 
 
