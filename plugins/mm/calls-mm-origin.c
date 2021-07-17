@@ -72,6 +72,7 @@ enum {
   PROP_CALLS,
   PROP_MODEM,
   PROP_COUNTRY_CODE,
+  PROP_NUMERIC,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -666,6 +667,10 @@ get_property (GObject      *object,
     g_value_set_string (value, self->country_code);
     break;
 
+  case PROP_NUMERIC:
+    g_value_set_boolean (value, TRUE);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -881,6 +886,7 @@ calls_mm_origin_class_init (CallsMMOriginClass *klass)
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
+  IMPLEMENTS (PROP_NUMERIC, "numeric-addresses");
 
 #undef IMPLEMENTS
 

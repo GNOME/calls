@@ -52,6 +52,7 @@ typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, Cal
 
 char *                 calls_origin_get_name                (CallsOrigin *self);
 GList *                calls_origin_get_calls               (CallsOrigin *self);
+gboolean               calls_origin_get_numeric_addresses   (CallsOrigin *self);
 void                   calls_origin_foreach_call            (CallsOrigin *self,
                                                              CallsOriginForeachCallFunc callback,
                                                              gpointer     param);
