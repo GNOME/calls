@@ -287,7 +287,16 @@ dial (CallsOrigin *origin,
 
   g_debug ("Calling `%s' from origin '%s'", address, name);
 
-  add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
+  /* We don't require the user to input the prefix */
+  if (!g_str_has_prefix (address, "sip:") &&
+      !g_str_has_prefix (address, "sips:")) {
+    g_autofree char * address_prefix =
+      g_strconcat (self->protocol_prefix, ":", address, NULL);
+
+    add_call (CALLS_SIP_ORIGIN (origin), address_prefix, FALSE, nh);
+  } else {
+    add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
+  }
 }
 
 static void
