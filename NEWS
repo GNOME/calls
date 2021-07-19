@@ -3,8 +3,11 @@ Calls 41.alpha
 Released: July 2021
 * Major news items:
  - Calls became a part of the GNOME project
- - Breaks phoshs screen blank, because DBus paths changed from sm.puri.Calls to org.gnome.Calls
-   Dear packagers: Make sure to include a patch for phosh or wait for a new release!
+ - Change DBus path from /sm/puri/Calls to /org/gnome/Calls and interface name
+   from sm.puri.Calls to org.gnome.Calls. This is an incompatible change that breaks
+   existing applications. This affects at least phosh where it breaks unblanking
+   the screen on incoming calls and proximity sensor handling in ongoing calls.
+   This will be fixed with the next phosh release.
  - Dropped layer-surface support to allow phosh to pickup incoming calls on the lockscreen
 
 * Bugs fixed:
