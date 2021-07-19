@@ -1,4 +1,4 @@
-keypad > grid > button, .dial-button, .delete-button {
+keypad > grid > button, .dial-button, .delete-button .rounded-button {
   border-radius: 9999px;
   -gtk-outline-radius: 9999px;
 }
@@ -13,6 +13,10 @@ keypad > grid > button, .dial-button, .delete-button {
 
 .phone-number-entry {
   font-size: 24px;
+}
+
+.address-entry {
+  font-size: 18px;
 }
 
 .error-state-message {

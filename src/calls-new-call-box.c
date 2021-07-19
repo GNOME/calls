@@ -49,6 +49,8 @@ struct _CallsNewCallBox
   GtkButton *backspace;
   HdyKeypad *keypad;
   GtkButton *dial;
+  GtkEntry  *address_entry;
+  GtkButton *dial_result;
   GtkGestureLongPress *long_press_back_gesture;
 
   GList *dial_queue;
@@ -60,13 +62,29 @@ G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
 
 
 static CallsOrigin *
+get_selected_origin (CallsNewCallBox *self)
+{
+  g_autoptr (CallsOrigin) origin = NULL;
+  GListModel *model = hdy_combo_row_get_model (self->origin_list);
+  gint index = -1;
+
+  if (model)
+    index = hdy_combo_row_get_selected_index (self->origin_list);
+
+  if (model && index >= 0)
+    origin = g_list_model_get_item (model, index);
+
+  return origin;
+}
+
+
+static CallsOrigin *
 get_origin (CallsNewCallBox *self,
             const char      *target)
 {
   CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
   g_autoptr (CallsOrigin) origin = NULL;
   GListModel *model;
-  int index = -1;
   gboolean auto_use_def_origin =
     calls_application_get_use_default_origins_setting (app);
 
@@ -78,17 +96,10 @@ get_origin (CallsNewCallBox *self,
 
     origin = g_list_model_get_item (model, 0);
     return origin;
+
+  } else {
+    return get_selected_origin (self);
   }
-
-  model = hdy_combo_row_get_model (self->origin_list);
-
-  if (model)
-    index = hdy_combo_row_get_selected_index (self->origin_list);
-
-  if (model && index >= 0)
-    origin = g_list_model_get_item (model, index);
-
-  return origin;
 }
 
 
@@ -146,6 +157,18 @@ dial_clicked_cb (CallsNewCallBox *self)
     calls_main_window_dial (CALLS_MAIN_WINDOW (window), text);
   else
     calls_new_call_box_dial (self, text);
+}
+
+static void
+dial_result_clicked_cb (CallsNewCallBox *self)
+{
+  CallsOrigin *origin = get_selected_origin (self);
+  const char *address = gtk_entry_get_text (self->address_entry);
+
+  if (origin)
+    calls_origin_dial (origin, address);
+  else
+    g_warning ("No suitable origin found. How was this even clicked?");
 }
 
 
@@ -284,7 +307,9 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, long_press_back_gesture);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, keypad);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, address_entry);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, dial_result_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_back_cb);
 
