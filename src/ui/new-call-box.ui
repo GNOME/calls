@@ -22,6 +22,7 @@
         <child>
           <object class="HdyComboRow" id="origin_list">
             <property name="visible">True</property>
+            <signal name="notify::selected-index" handler="notify_selected_index_cb" swapped="yes"/>
           </object>
         </child>
       </object>

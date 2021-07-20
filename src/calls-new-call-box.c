@@ -104,6 +104,33 @@ get_origin (CallsNewCallBox *self,
 
 
 static void
+set_numeric (CallsNewCallBox *self,
+             gboolean         enable)
+{
+  if (enable == self->numeric_input_only)
+    return;
+
+  g_debug ("Numeric input %sabled", enable ? "en" : "dis");
+
+  self->numeric_input_only = enable;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NUMERIC_INPUT_ONLY]);
+}
+
+
+static void
+notify_selected_index_cb (CallsNewCallBox *self)
+{
+  CallsOrigin *origin = get_selected_origin (self);
+  gboolean numeric_input = TRUE;
+
+  if (origin)
+    g_object_get (origin, "numeric-addresses", &numeric_input, NULL);
+
+  set_numeric (self, numeric_input);
+}
+
+
+static void
 long_press_back_cb (CallsNewCallBox *self)
 {
   GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
@@ -312,6 +339,7 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, dial_result_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_back_cb);
+  gtk_widget_class_bind_template_callback (widget_class, notify_selected_index_cb);
 
   props[PROP_NUMERIC_INPUT_ONLY] =
     g_param_spec_boolean ("numeric-input-only",
