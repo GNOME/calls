@@ -33,6 +33,12 @@
 #include <glib/gi18n.h>
 #include <handy.h>
 
+enum {
+  PROP_0,
+  PROP_NUMERIC_INPUT_ONLY,
+  PROP_LAST_PROP
+};
+static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsNewCallBox
 {
@@ -46,6 +52,8 @@ struct _CallsNewCallBox
   GtkGestureLongPress *long_press_back_gesture;
 
   GList *dial_queue;
+
+  gboolean numeric_input_only;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
@@ -211,6 +219,25 @@ origin_count_changed_cb (CallsNewCallBox *self)
 
 
 static void
+calls_new_call_box_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
+
+  switch (property_id) {
+  case PROP_NUMERIC_INPUT_ONLY:
+    g_value_set_boolean (value, self->numeric_input_only);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+static void
 calls_new_call_box_init (CallsNewCallBox *self)
 {
   GListModel *origins;
@@ -228,7 +255,7 @@ calls_new_call_box_init (CallsNewCallBox *self)
 
 
 static void
-dispose (GObject *object)
+calls_new_call_box_dispose (GObject *object)
 {
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
@@ -247,7 +274,8 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose = dispose;
+  object_class->get_property = calls_new_call_box_get_property;
+  object_class->dispose = calls_new_call_box_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/new-call-box.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_list_box);
@@ -259,6 +287,15 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_back_cb);
+
+  props[PROP_NUMERIC_INPUT_ONLY] =
+    g_param_spec_boolean ("numeric-input-only",
+                          "Numeric input only",
+                          "Whether only numeric input is allowed (for the selected origin)",
+                          TRUE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
