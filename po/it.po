@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-07-08 15:25+0000\n"
-"PO-Revision-Date: 2021-07-07 17:04+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2021-07-20 20:19+0000\n"
+"PO-Revision-Date: 2021-07-21 23:13+0200\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -18,64 +18,64 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:390
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Chiamate"
 
-#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
 msgstr "Telefono"
 
-#: data/sm.puri.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:5
 msgid "A phone dialer and call handler"
 msgstr "Un dialer telefonico e un gestore di chiamate"
 
 #. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
-#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
 "Telephone;Call;Phone;Dial;Dialer;PSTN;Telefono;Chiamata;Chiama;Chiamante;"
 
-#: data/sm.puri.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
 msgstr "Chiamate (demone)"
 
-#: data/sm.puri.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Un dialer telefonico e un gestore di chiamate (demone)"
 
-#: src/calls-application.c:511
+#: src/calls-application.c:522
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Ho provato a comporre l'URI di telefono non analizzabile `%s'"
 
-#: src/calls-application.c:593
+#: src/calls-application.c:604
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:646
+#: src/calls-application.c:657
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Il nome del Plugin da usare per il Fornitore di chiamate"
 
-#: src/calls-application.c:647
+#: src/calls-application.c:658
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:652
+#: src/calls-application.c:663
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:669
 msgid "Dial a number"
 msgstr "Componi un numero"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:670
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:675
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
@@ -96,38 +96,38 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-main-window.c:121
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr ""
 "Pandolfo Antonio <ant.pandolfo@gmail.com>\n"
 "Vittorio <postav@pm.me>, 2021"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Non è possibile effettuare chiamate: nessun modem vocale"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Non è possibile effettuare chiamate: nessun modem o account VoIP disponibile"
 
-#: src/calls-main-window.c:328
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "Non è possibile effettuare chiamate: nessun servizio back-end"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "Non è possibile effettuare chiamate: nessun plugin"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Contacts"
 msgstr "Contatti"
 
-#: src/calls-main-window.c:382 src/ui/call-display.ui:289
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Tastiera"
 
-#: src/calls-main-window.c:390
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recenti"
 
@@ -187,7 +187,7 @@ msgstr "Nascondi tastiera"
 
 #: src/ui/call-record-row.ui:68
 msgid "Call the party"
-msgstr "Chiama l'interlocutore"
+msgstr "Chiama"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -239,25 +239,41 @@ msgstr "Opzioni"
 msgid "About Calls"
 msgstr "Informazioni su Chiamate"
 
-#: src/ui/main-window.ui:38
+#: src/ui/main-window.ui:76
 msgid "No modem found"
 msgstr "Nessun modem trovato"
 
-#: src/ui/main-window.ui:95
+#: src/ui/main-window.ui:118
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:104
+#: src/ui/main-window.ui:127
 msgid "_Cancel"
 msgstr "_Annulla"
 
-#: src/ui/main-window.ui:121
+#: src/ui/main-window.ui:144
 msgid "_Close"
 msgstr "_Chiudi"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:154
 msgid "_Send"
 msgstr "_Invia"
+
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "Account _VoIP"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "Scorciatoie da _tastiera"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Guida"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "Informazioni _su Chiamate"
 
 #: src/ui/new-call-box.ui:94
 msgid "Dial"
@@ -274,126 +290,3 @@ msgstr "Nuova chiamata"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Indietro"
-
-#~ msgid "View"
-#~ msgstr "Visualizza"
-
-#~ msgid "The CallsBestMatchView to monitor"
-#~ msgstr "CallsBestMatchView da monitorare"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
-
-#~ msgid "The display name of the best match"
-#~ msgstr "Il nome visualizzato della migliore corrispondenza"
-
-#~ msgid "Inbound"
-#~ msgstr "In entrata"
-
-#~ msgid "Whether the call is inbound"
-#~ msgstr "Se la chiamata è in entrata"
-
-#~ msgid "Number"
-#~ msgstr "Numero"
-
-#~ msgid "The number the call is connected to if known"
-#~ msgstr "Il numero a cui è connessa la chiamata, se noto"
-
-#~ msgid ""
-#~ "The name of the party the call is connected to, if the network provides it"
-#~ msgstr ""
-#~ "Il nome dell'interlocutore a cui è connessa la chiamata, se fornito dalla "
-#~ "rete"
-
-#~ msgid "State"
-#~ msgstr "Stato"
-
-#~ msgid "The current state of the call"
-#~ msgstr "Lo stato corrente della chiamata"
-
-#~ msgid "The party participating in the call"
-#~ msgstr "Il partecipante alla chiamata"
-
-#~ msgid "Data for the call this display will be associated with"
-#~ msgstr "Dati per la chiamata a cui verrà associata questa visualizzazione"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "The row ID"
-#~ msgstr "L'ID della riga"
-
-#~ msgid "Target"
-#~ msgstr "Destinazione"
-
-#~ msgid "The PTSN phone number or other address of the call"
-#~ msgstr "Il numero di telefono PTSN o altro indirizzo della chiamata"
-
-#~ msgid "Whether the call was an inbound call"
-#~ msgstr "Se la chiamata era una chiamata in entrata"
-
-#~ msgid "Start"
-#~ msgstr "Inizio"
-
-#~ msgid "Time stamp of the start of the call"
-#~ msgstr "Data e ora di inizio della chiamata"
-
-#~ msgid "Answered"
-#~ msgstr "Risposta"
-
-#~ msgid "Time stamp of when the call was answered"
-#~ msgstr "Data e ora di risposta alla chiamata"
-
-#~ msgid "End"
-#~ msgstr "Fine"
-
-#~ msgid "Time stamp of the end of the call"
-#~ msgstr "Data e ora della fine della chiamata"
-
-#~ msgid "Record"
-#~ msgstr "Record"
-
-#~ msgid "The call record for this row"
-#~ msgstr "Il record di chiamata per questa riga"
-
-#~ msgid "Interface for libfolks"
-#~ msgstr "Interfaccia per libfolks"
-
-#~ msgid "Call holder"
-#~ msgstr "Chiama il titolare"
-
-#~ msgid "The holder for this call"
-#~ msgstr "Il titolare di questa chiamata"
-
-#~ msgid "Encrypted"
-#~ msgstr "Cifrato"
-
-#~ msgid "model"
-#~ msgstr "tipo"
-
-#~ msgid "The data store containing call records"
-#~ msgstr "L'archivio dati contenente i record delle chiamate"
-
-#~ msgid "Can't place calls: No SIM card"
-#~ msgstr "Non è possibile effettuare chiamate: nessuna carta SIM"
-
-#~ msgid "Record store"
-#~ msgstr "Archivio dei record"
-
-#~ msgid "The store of call records"
-#~ msgstr "L'archivio dei record delle chiamate"
-
-#~ msgid "The party's name"
-#~ msgstr "Il nome dell'interlocutore"
-
-#~ msgid "The party's telephone number"
-#~ msgstr "Il numero di telefono dell'interlocutore"
-
-#~ msgid "Status"
-#~ msgstr "Stato"
-
-#~ msgid "A text string describing the status for display to the user"
-#~ msgstr "Una stringa di testo che descrive lo stato da mostrare all'utente"
-
-#~ msgid "Incoming call"
-#~ msgstr "Chiamata in arrivo"
