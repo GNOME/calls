@@ -32,7 +32,12 @@ const SecretSchema *
 calls_secret_get_schema (void)
 {
   static const SecretSchema schema = {
-    "sm.puri.Calls", SECRET_SCHEMA_NONE,
+    /** SECRET_SCHEMA_DONT_MATCH_NAME is used as a workaround for a bug in gnome-keyring
+     *  which prevents cold keyrings from being searched (and hence does not prompt for unlocking)
+     *  see https://gitlab.gnome.org/GNOME/gnome-keyring/-/issues/89 and
+     *  https://gitlab.gnome.org/GNOME/libsecret/-/issues/7 for more information
+     */
+    "sm.puri.Calls", SECRET_SCHEMA_DONT_MATCH_NAME,
     {
       { CALLS_USERNAME_ATTRIBUTE, SECRET_SCHEMA_ATTRIBUTE_STRING },
       { CALLS_SERVER_ATTRIBUTE, SECRET_SCHEMA_ATTRIBUTE_STRING },
