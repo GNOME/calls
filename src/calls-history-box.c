@@ -79,25 +79,6 @@ update (CallsHistoryBox *self)
 
 
 static void
-header_cb (GtkListBoxRow   *row,
-           GtkListBoxRow   *before,
-           CallsHistoryBox *self)
-{
-  if (!before)
-    {
-      return;
-    }
-
-  if (!gtk_list_box_row_get_header (row))
-    {
-      GtkWidget *header =
-        gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-
-      gtk_list_box_row_set_header (row, header);
-    }
-}
-
-static void
 delete_call_cb (CallsCallRecord    *record,
                 CallsHistoryBox    *self)
 {
@@ -177,11 +158,6 @@ constructed (GObject *object)
     g_signal_connect_swapped
     (self->model, "items-changed", G_CALLBACK (update), self);
   g_assert (self->model_changed_handler_id != 0);
-
-  gtk_list_box_set_header_func (self->history,
-                                (GtkListBoxUpdateHeaderFunc)header_cb,
-                                self,
-                                NULL);
 
   gtk_list_box_bind_model (self->history,
                            self->model,
