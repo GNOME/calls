@@ -64,6 +64,7 @@ struct _CallsSipAccountWidget {
   GtkEntry         *user;
   GtkEntry         *password;
   GtkEntry         *port;
+  char             *last_port;
   HdyComboRow      *protocol;
   GListStore       *protocols_store; /* bound model for protocol HdyComboRow */
 
@@ -74,6 +75,7 @@ struct _CallsSipAccountWidget {
 
   /* misc */
   gboolean          connecting;
+  gboolean          port_self_change;
 };
 
 G_DEFINE_TYPE (CallsSipAccountWidget, calls_sip_account_widget, GTK_TYPE_BOX)
@@ -115,6 +117,83 @@ on_text_changed (CallsSipAccountWidget *self)
                             is_form_valid (self));
 }
 
+
+/*
+ * Stop "insert-text" signal emission if any undesired port
+ * value occurs
+ */
+static void
+on_port_entry_insert_text (CallsSipAccountWidget *self,
+                           char                  *new_text,
+                           int                    new_text_length,
+                           gpointer               position,
+                           GtkEntry              *entry)
+{
+  size_t digit_end, len;
+  int *pos;
+
+  g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
+  g_assert (GTK_IS_ENTRY (entry));
+
+  if (!new_text || !*new_text || self->port_self_change)
+    return;
+
+  pos = (int *)position;
+  g_object_set_data (G_OBJECT (entry), "old-pos", GINT_TO_POINTER (*pos));
+
+  if (new_text_length == -1)
+    len = strlen (new_text);
+  else
+    len = new_text_length;
+
+  digit_end = strspn (new_text, "1234567890");
+
+  /* If user inserted something other than a digit,
+   * stop inserting the text and warn the user.
+   */
+  if (digit_end != len) {
+    g_signal_stop_emission_by_name (entry, "insert-text");
+    gtk_widget_error_bell (GTK_WIDGET (entry));
+  } else {
+    g_free (self->last_port);
+    self->last_port = g_strdup (gtk_entry_get_text (entry));
+  }
+}
+
+
+static gboolean
+update_port_cursor_position (GtkEntry *entry)
+{
+  int pos;
+
+  pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry), "old-pos"));
+  gtk_editable_set_position (GTK_EDITABLE (entry), pos);
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+on_port_entry_after_insert_text (CallsSipAccountWidget *self,
+                                 char                  *new_text,
+                                 int                    new_text_length,
+                                 gpointer               position,
+                                 GtkEntry              *entry)
+{
+  const char *text;
+  int port = 0;
+
+  text = gtk_entry_get_text (entry);
+  port = (int)g_ascii_strtod (text, NULL);
+
+  /* Reset to the old value if new port number is invalid */
+  if ((port < 0 || port > 65535) && self->last_port) {
+    self->port_self_change = TRUE;
+    gtk_entry_set_text (entry, self->last_port);
+    g_idle_add (G_SOURCE_FUNC (update_port_cursor_position), entry);
+    gtk_widget_error_bell (GTK_WIDGET (entry));
+    self->port_self_change = FALSE;
+  }
+}
 
 static void
 update_header (CallsSipAccountWidget *self)
@@ -348,6 +427,7 @@ calls_sip_account_widget_dispose (GObject *object)
 {
   CallsSipAccountWidget *self = CALLS_SIP_ACCOUNT_WIDGET (object);
 
+  g_clear_pointer (&self->last_port, g_free);
   g_clear_object (&self->protocols_store);
 
   G_OBJECT_CLASS (calls_sip_account_widget_parent_class)->dispose (object);
@@ -400,6 +480,8 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_apply_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_text_changed);
+  gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
+  gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
 }
 
 

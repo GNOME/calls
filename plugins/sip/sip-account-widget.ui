@@ -165,6 +165,8 @@
                     <property name="valign">center</property>
                     <property name="input-purpose">digits</property>
                     <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="insert-text" handler="on_port_entry_insert_text" swapped="yes"/>
+                    <signal name="insert-text" handler="on_port_entry_after_insert_text" swapped="yes" after="yes"/>
                   </object>
                 </child>
               </object>
