@@ -64,8 +64,8 @@
                   <class name="image-button"/>
                 </style>
                 <child internal-child="accessible">
-                  <object class="AtkObject" id="a11y-hide-dial-pad">
-                    <property name="accessible-name" translatable="yes">Call the party</property>
+                  <object class="AtkObject" id="a11y-call">
+                    <property name="accessible-name" translatable="yes">Call</property>
                   </object>
                 </child>
                 <child>
