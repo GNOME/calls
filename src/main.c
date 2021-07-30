@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "calls-application.h"
+#include "calls-log.h"
 #include "config.h"
 
 int
@@ -38,6 +39,8 @@ main (int    argc,
   textdomain (GETTEXT_PACKAGE);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+
+  calls_log_init ();
 
   app = G_APPLICATION (calls_application_new ());
   status = g_application_run (app, argc, argv);

@@ -40,6 +40,7 @@
 #include "calls-manager.h"
 #include "calls-settings.h"
 #include "calls-application.h"
+#include "calls-log.h"
 #include "version.h"
 
 #include <glib/gi18n.h>
@@ -78,6 +79,17 @@ G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
 
 static gboolean start_proper (CallsApplication *self);
 
+
+static gboolean
+cmd_verbose_cb (const char  *option_name,
+                const char  *value,
+                gpointer     data,
+                GError     **error)
+{
+  calls_log_increase_verbosity ();
+
+  return TRUE;
+}
 
 static gboolean
 calls_application_dbus_register (GApplication    *application,
@@ -681,7 +693,13 @@ calls_application_init (CallsApplication *self)
       _("NUMBER")
     },
     {
-      "version", 'v', G_OPTION_FLAG_NONE,
+      "verbose", 'v', G_OPTION_FLAG_NO_ARG,
+      G_OPTION_ARG_CALLBACK, cmd_verbose_cb,
+      _("Enable verbose debug messages"),
+      NULL
+    },
+    {
+      "version", 0, G_OPTION_FLAG_NONE,
       G_OPTION_ARG_NONE, NULL,
       _("Print current version"),
       NULL
