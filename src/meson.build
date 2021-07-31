@@ -114,6 +114,7 @@ calls_sources = files(['calls-message-source.c', 'calls-message-source.h',
                        'calls-account-row.c', 'calls-account-row.h',
                        'calls-settings.c', 'calls-settings.h',
                        'calls-secret-store.c', 'calls-secret-store.h',
+                       'calls-network-watch.c', 'calls-network-watch.h',
                       ]) + calls_generated_sources
 
 calls_config_data = config_data
