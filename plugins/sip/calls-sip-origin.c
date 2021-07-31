@@ -33,6 +33,7 @@
 #include "calls-sip-origin.h"
 #include "calls-sip-util.h"
 #include "calls-sip-media-manager.h"
+#include "calls-network-watch.h"
 #include "config.h"
 #include "enum-types.h"
 
@@ -1018,6 +1019,41 @@ init_sip_account (CallsSipOrigin *self,
 }
 
 
+static void
+deinit_sip_account (CallsSipOrigin *self)
+{
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+
+  if (self->state == CALLS_ACCOUNT_NULL)
+    return;
+
+  remove_calls (self, NULL);
+
+  if (self->nua) {
+    g_debug ("Requesting nua_shutdown ()");
+    self->is_nua_shutdown = FALSE;
+    nua_shutdown (self->nua);
+    // need to wait for nua_r_shutdown event before calling nua_destroy ()
+    while (!self->is_nua_shutdown)
+      su_root_step (self->ctx->root, 100);
+
+    g_debug ("nua_shutdown () complete. Destroying nua handle");
+    nua_destroy (self->nua);
+    self->nua = NULL;
+  }
+
+  self->state = CALLS_ACCOUNT_NULL;
+}
+
+
+static void
+on_network_changed (CallsSipOrigin *self)
+{
+  deinit_sip_account (self);
+  init_sip_account (self, NULL);
+}
+
+
 static gboolean
 supports_protocol (CallsOrigin *origin,
                    const char  *protocol)
@@ -1050,6 +1086,7 @@ update_name (CallsSipOrigin *self)
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NAME]);
 }
+
 
 static void
 calls_sip_origin_set_property (GObject      *object,
@@ -1227,27 +1264,10 @@ calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
-  if (self->state == CALLS_ACCOUNT_NULL)
-    return;
-
-  remove_calls (self, NULL);
-
   if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_ONLINE)
     go_online (CALLS_ACCOUNT (self), FALSE);
 
-  if (self->nua) {
-    g_debug ("Requesting nua_shutdown ()");
-    nua_shutdown (self->nua);
-    // need to wait for nua_r_shutdown event before calling nua_destroy ()
-    while (!self->is_nua_shutdown)
-      su_root_step (self->ctx->root, 100);
-
-    g_debug ("nua_shutdown () complete. Destroying nua handle");
-    nua_destroy (self->nua);
-    self->nua = NULL;
-  }
-
-  self->state = CALLS_ACCOUNT_NULL;
+  deinit_sip_account (self);
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->dispose (object);
 }
@@ -1398,7 +1418,14 @@ calls_sip_origin_accounts_interface_init (CallsAccountInterface *iface)
 static void
 calls_sip_origin_init (CallsSipOrigin *self)
 {
+  CallsNetworkWatch *nw = calls_network_watch_get_default ();
+
+  if (nw)
+    g_signal_connect_swapped (nw, "network-changed",
+                              G_CALLBACK (on_network_changed), self);
+
   self->call_handles = g_hash_table_new (NULL, NULL);
+
 }
 
 void
