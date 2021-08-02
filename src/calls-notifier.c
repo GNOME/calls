@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsNotifier"
+
 #include "calls-notifier.h"
 #include "calls-manager.h"
 #include "config.h"
