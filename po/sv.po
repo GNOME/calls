@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 10:33+0000\n"
-"PO-Revision-Date: 2021-07-20 22:18+0200\n"
+"POT-Creation-Date: 2021-08-11 11:12+0000\n"
+"PO-Revision-Date: 2021-08-11 18:43+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
@@ -46,37 +46,41 @@ msgstr "Samtal (demon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
 
-#: src/calls-application.c:522
+#: src/calls-application.c:544
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Försökte ringa tel-URI ”%s” som inte gick att tolka"
 
-#: src/calls-application.c:604
+#: src/calls-application.c:626
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:657
+#: src/calls-application.c:680
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Namnet på insticket att använda för samtalsleverantören"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:681
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:686
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:669
+#: src/calls-application.c:692
 msgid "Dial a number"
 msgstr "Slå ett nummer"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:693
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr "Aktivera utförliga felsökningsmeddelanden"
+
+#: src/calls-application.c:704
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
@@ -97,7 +101,7 @@ msgstr ""
 "%s\n"
 "igår"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr ""
 "Sebastian Rasmussen <sebras@gmail.com>\n"
@@ -107,53 +111,53 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Kan inte ringa: Inget röstkapabelt modem tillgängligt"
 
-#: src/calls-main-window.c:325
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan inte ringa: Inget modem eller VoIP-konto tillgängligt"
 
-#: src/calls-main-window.c:330
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "Kan inte ringa: Ingen bakändestjänst"
 
-#: src/calls-main-window.c:334
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "Kan inte ringa: Inget instick"
 
-#: src/calls-main-window.c:374
+#: src/calls-main-window.c:376
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: src/calls-main-window.c:384 src/ui/call-display.ui:289
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Knappsats"
 
-#: src/calls-main-window.c:392
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Senaste"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Missat samtal"
 
-#: src/calls-notifier.c:63
+#: src/calls-notifier.c:68
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Missat samtal från <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#: src/calls-notifier.c:70
 #, c-format
 msgid "Missed call from %s"
 msgstr "Missat samtal från %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:72
 msgid "Missed call from unknown caller"
 msgstr "Missat samtal från okänd uppringare"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:78
 msgid "Call back"
 msgstr "Ring tillbaka"
 
