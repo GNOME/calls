@@ -1,3 +1,105 @@
+gnome-calls (41~beta) byzantium; urgency=medium
+
+  [ Rafael Fontenelle ]
+  * doap: Add download and bug pages
+  * Update Brazilian Portuguese translation
+
+  [ Bruno Lopes da Silva ]
+  * Update Brazilian Portuguese translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * README: Update URLs
+  * metainfo: Update URLs
+  * metainfo: Update developers
+  * metainfo: Fix typo
+  * ci: Validate appstream metadata
+  * NEWS: Update with important information
+  * NEWS: Reword to be more precise
+  * HACKING: Fix style around signals
+  * Various codestyle fixes
+  * dir-locals: Treat more G_* macros as including a semicolon
+  * Remove CallsCredentials and adapt to changes
+  * account: Use explicit notify for account state property
+  * account: Add API to query account state
+  * account: Add address property
+  * manager: Add API to query loaded providers
+  * manager: Emit signal when loaded providers have changed
+  * manager: Temporarily hold a reference to provider being unloaded
+  * sip: provider: Use g_auto and GStrv
+  * sip: provider: Load credentials from GKeyFile
+  * sip: provider: Rename test environment variable
+  * sip: provider: Add API to remove origins
+  * sip: Introduce CallsSipAccountWidget
+  * account-provider: Repurpose to allow graphical credential editing
+  * sip: Implement CallsAccountProvider interface
+  * sip: account-widget: Emit "widget-edit-done" when done editting
+  * main-window: Add menu button
+  * Introduce CallsAccountOverview: A UI to allow managing VoIP accounts
+  * account-overview: Hook up available providers
+  * sip: provider: Add API to save credentials to GKeyFile
+  * sip: provider: Save accounts to disk
+  * sip: origin: Set and update name of origin
+  * sip: provider: Add argument to _add_origin() whether to store credentials
+  * debian: Add libsecret as a build dependency
+  * Introduce CallsSecretStore to store credentials
+  * sip: provider: Use the secret store to store credentials
+  * sip: provider: Update credentials on disk when removing origin
+  * sip: provider: Delete password from keyring when deleting account
+  * sip: provider: Retrieve password from keyring
+  * sip: provider: Don't store the password in the GKeyFile
+  * about: Update authors
+  * about: Update copyright
+  * main-window: Fix the action name for the about dialog
+  * secret-store: Work around bug in gnome-keyring preventing keyring unlocking
+  * sip: origin: Add protocol prefix if missing
+  * origin: Add "numeric-addresses" property
+  * new-call-box: Simplify HdyComboRow binding
+  * calls-new-call-box: Only show origin combo box if there is a choice
+  * new-call-box: Remove unused GtkListStore
+  * new-call-box: Remove unnecessary GtkBox
+  * new-call-box: Introduce numeric-input-only property
+  * new-call-box: Add entry for non-numeric inputs
+  * new-call-box: Set numeric input property based on selected origin
+  * new-call-box: Tweak the UI
+  * new-call-box: Add placeholder texts for text input fields
+  * meson: bump to 41.beta
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+  * Update Swedish translation
+
+  [ Vittorio Monti ]
+  * po: Update Italian translation
+
+  [ Fabio Tomat ]
+  * Update Friulian translation
+
+  [ Mohammed Sadiq ]
+  * application: Fix handling commandline arguments
+  * history-box: Use content style for listbox
+  * sip-account-widget: Validate port value on change
+  * Add and use new logger
+
+  [ Guido Günther ]
+  * calls-notifier: Set log domain
+  * build: Allow glib 2.70
+  * notifier: Add notification category
+
+  [ Мирослав Николић ]
+  * Update Serbian translation
+
+  [ Marc Riera ]
+  * Update Catalan translation
+
+  [ Kristjan SCHMIDT ]
+  * Add Esperanto translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Sat, 14 Aug 2021 21:52:41 +0200
+
 gnome-calls (41~alpha) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

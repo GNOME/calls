@@ -1,3 +1,32 @@
+Calls 41.beta
+-------------
+Released: 14. August 2021
+
+* Major news items:
+
+ First release with SIP base functionality:
+  - Managing SIP Account is now possible from the UI
+  - Placing and receiving VoIP calls is now possible from the dial pad
+
+Known Issues/Limitations:
+ - If you have multiple active network interfaces funkyness may ensue and 
+   you SIP messages are being sucked into a black hole of sorts
+ - If things go wrong with a VoIP call for example because your network is down
+   more funkyness may ensue
+
+* Translation updates:
+ - Catalan (Marc Riera)
+ - Esperanto (Kristjan SCHMIDT)
+ - Friulian (Fabio Tomat)
+ - Italian (antonio)
+ - Portuguese (Brazil) (Rafael Fontenelle)
+ - Serbian (Мирослав Николић)
+ - Swedish (Anders Jonsson)
+ - Ukrainian (Yuri Chornoivan)
+
+ There may be some dragons in this release so testing and filed issues would be greatly appreciated :)
+
+
 Calls 41.alpha
 --------------
 Released: July 2021
