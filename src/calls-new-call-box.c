@@ -223,6 +223,7 @@ calls_new_call_box_init (CallsNewCallBox *self)
 
   g_signal_connect_swapped (origins, "items-changed",
                             G_CALLBACK (origin_count_changed_cb), self);
+  origin_count_changed_cb (self);
 }
 
 
