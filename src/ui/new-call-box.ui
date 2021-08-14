@@ -31,6 +31,7 @@
       <object class="GtkEntry" id="address_entry">
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create|invert-boolean"/>
         <property name="xalign">0.5</property>
+        <property name="placeholder-text" translatable="yes">Enter a VoIP address</property>
         <style>
           <class name="address-entry"/>
         </style>
@@ -42,6 +43,7 @@
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create"/>
         <property name="hexpand">True</property>
         <property name="xalign">0.5</property>
+        <property name="placeholder-text" translatable="yes">Enter a number</property>
         <style>
           <class name="phone-number-entry"/>
         </style>
