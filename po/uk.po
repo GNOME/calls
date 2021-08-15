@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-11 11:12+0000\n"
-"PO-Revision-Date: 2021-08-11 19:29+0300\n"
+"POT-Creation-Date: 2021-08-14 19:22+0000\n"
+"PO-Revision-Date: 2021-08-15 15:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -77,8 +77,7 @@ msgstr "НОМЕР"
 
 #: src/calls-application.c:698
 msgid "Enable verbose debug messages"
-msgstr ""
-"Увімкнути докладні діагностичні повідомлення"
+msgstr "Увімкнути докладні діагностичні повідомлення"
 
 #: src/calls-application.c:704
 msgid "Print current version"
@@ -279,13 +278,28 @@ msgstr "_Довідка"
 msgid "_About Calls"
 msgstr "_Про «Дзвінки»"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:34
+msgid "Enter a VoIP address"
+msgstr ""
+"Введіть адресу VoIP"
+
+#: src/ui/new-call-box.ui:46
+#| msgid "Dial a number"
+msgid "Enter a number"
+msgstr "Введіть номер"
+
+#: src/ui/new-call-box.ui:90
 msgid "Dial"
 msgstr "Набір номера"
 
-#: src/ui/new-call-box.ui:122
+#: src/ui/new-call-box.ui:113
 msgid "Backspace through number"
 msgstr "Витирання номера"
+
+#: src/ui/new-call-box.ui:145
+#| msgid "_VoIP Accounts"
+msgid "SIP Account"
+msgstr "Обліковий запис SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
