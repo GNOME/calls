@@ -31,6 +31,7 @@
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create|invert-boolean"/>
         <property name="xalign">0.5</property>
         <property name="placeholder-text" translatable="yes">Enter a VoIP address</property>
+        <signal name="activate" handler="address_activate_cb" swapped="yes"/>
         <style>
           <class name="address-entry"/>
         </style>
@@ -42,6 +43,7 @@
         <property name="hexpand">True</property>
         <property name="xalign">0.5</property>
         <property name="placeholder-text" translatable="yes">Enter a number</property>
+        <signal name="activate" handler="dial_clicked_cb" swapped="yes"/>
         <style>
           <class name="phone-number-entry"/>
         </style>

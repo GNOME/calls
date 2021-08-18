@@ -104,6 +104,16 @@ get_origin (CallsNewCallBox *self,
 
 
 static void
+address_activate_cb (CallsNewCallBox *self)
+{
+  CallsOrigin *origin = get_selected_origin (self);
+  const char *address = gtk_entry_get_text (self->address_entry);
+
+  if (origin && address && *address != '\0')
+    calls_origin_dial (origin, address);
+}
+
+static void
 set_numeric (CallsNewCallBox *self,
              gboolean         enable)
 {
@@ -128,6 +138,7 @@ notify_selected_index_cb (CallsNewCallBox *self)
 
   set_numeric (self, numeric_input);
 }
+
 
 
 static void
@@ -192,7 +203,7 @@ dial_result_clicked_cb (CallsNewCallBox *self)
   CallsOrigin *origin = get_selected_origin (self);
   const char *address = gtk_entry_get_text (self->address_entry);
 
-  if (origin)
+  if (origin && address && *address != '\0')
     calls_origin_dial (origin, address);
   else
     g_warning ("No suitable origin found. How was this even clicked?");
@@ -335,6 +346,7 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, keypad);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, address_entry);
+  gtk_widget_class_bind_template_callback (widget_class, address_activate_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_result_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
