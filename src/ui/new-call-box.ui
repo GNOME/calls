@@ -32,6 +32,7 @@
         <property name="xalign">0.5</property>
         <property name="placeholder-text" translatable="yes">Enter a VoIP address</property>
         <signal name="activate" handler="address_activate_cb" swapped="yes"/>
+        <signal name="changed" handler="address_changed_cb" swapped="yes"/>
         <style>
           <class name="address-entry"/>
         </style>
@@ -138,7 +139,7 @@
         <property name="selection-mode">none</property>
         <child>
           <object class="HdyActionRow" id="result">
-            <property name="visible">True</property>
+            <property name="visible">False</property>
             <property name="title" bind-source="address_entry" bind-property="text"/>
             <property name="width-request">300</property>
             <property name="subtitle" translatable="yes">SIP Account</property>

@@ -50,6 +50,7 @@ struct _CallsNewCallBox
   HdyKeypad *keypad;
   GtkButton *dial;
   GtkEntry  *address_entry;
+  HdyActionRow *result;
   GtkButton *dial_result;
   GtkGestureLongPress *long_press_back_gesture;
 
@@ -112,6 +113,17 @@ address_activate_cb (CallsNewCallBox *self)
   if (origin && address && *address != '\0')
     calls_origin_dial (origin, address);
 }
+
+
+static void
+address_changed_cb (CallsNewCallBox *self)
+{
+  const char *address = gtk_entry_get_text (self->address_entry);
+
+  gtk_widget_set_visible (GTK_WIDGET (self->result),
+                          address && *address != '\0');
+}
+
 
 static void
 set_numeric (CallsNewCallBox *self,
@@ -347,6 +359,8 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, address_entry);
   gtk_widget_class_bind_template_callback (widget_class, address_activate_cb);
+  gtk_widget_class_bind_template_callback (widget_class, address_changed_cb);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, result);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_result_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
