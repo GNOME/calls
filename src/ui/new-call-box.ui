@@ -26,7 +26,6 @@
         </child>
       </object>
     </child>
-
     <child>
       <object class="GtkEntry" id="address_entry">
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create|invert-boolean"/>
@@ -37,7 +36,6 @@
         </style>
       </object>
     </child>
-
     <child>
       <object class="GtkEntry" id="keypad_entry">
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create"/>
@@ -69,69 +67,68 @@
         <property name="visible">True</property>
         <property name="maximum-size">250</property>
         <child>
-      <object class="GtkBox">
-        <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create"/>
-        <property name="can_focus">False</property>
-        <property name="orientation">horizontal</property>
-        <child type="center">
-          <object class="GtkButton" id="dial">
-            <property name="always_show_image">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="visible">True</property>
-            <signal name="clicked" handler="dial_clicked_cb" swapped="yes"/>
-            <style>
-              <class name="suggested-action"/>
-              <class name="image-button"/>
-              <class name="dial-button"/>
-            </style>
-            <child internal-child="accessible">
-              <object class="AtkObject" id="a11y-dial">
-                <property name="accessible-name" translatable="yes">Dial</property>
+          <object class="GtkBox">
+            <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create"/>
+            <property name="can_focus">False</property>
+            <property name="orientation">horizontal</property>
+            <child type="center">
+              <object class="GtkButton" id="dial">
+                <property name="always_show_image">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="visible">True</property>
+                <signal name="clicked" handler="dial_clicked_cb" swapped="yes"/>
+                <style>
+                  <class name="suggested-action"/>
+                  <class name="image-button"/>
+                  <class name="dial-button"/>
+                </style>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="a11y-dial">
+                    <property name="accessible-name" translatable="yes">Dial</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkImage" id="back_image">
+                    <property name="visible">True</property>
+                    <property name="icon-name">call-start-symbolic</property>
+                    <property name="icon-size">5</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
-              <object class="GtkImage" id="back_image">
+              <object class="GtkButton" id="backspace">
+                <property name="always_show_image">True</property>
                 <property name="visible">True</property>
-                <property name="icon-name">call-start-symbolic</property>
-                <property name="icon-size">5</property>
+                <property name="focus-on-click">False</property>
+                <property name="margin_right">15</property>
+                <property name="valign">center</property>
+                <property name="halign">center</property>
+                <signal name="clicked" handler="backspace_clicked_cb" swapped="yes"/>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="a11y-backspace">
+                    <property name="accessible-name" translatable="yes">Backspace through number</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="delete-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">edit-clear-symbolic</property>
+                  </object>
+                </child>
               </object>
+              <packing>
+                <property name="pack_type">end</property>
+              </packing>
             </child>
           </object>
-        </child>
-        <child>
-          <object class="GtkButton" id="backspace">
-            <property name="always_show_image">True</property>
-            <property name="visible">True</property>
-            <property name="focus-on-click">False</property>
-            <property name="margin_right">15</property>
-            <property name="valign">center</property>
-            <property name="halign">center</property>
-            <signal name="clicked" handler="backspace_clicked_cb" swapped="yes"/>
-            <child internal-child="accessible">
-              <object class="AtkObject" id="a11y-backspace">
-                <property name="accessible-name" translatable="yes">Backspace through number</property>
-              </object>
-            </child>
-            <style>
-              <class name="delete-button"/>
-            </style>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="icon-name">edit-clear-symbolic</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-          </packing>
-        </child>
-      </object>
         </child>
       </object>
     </child>
-
     <child>
       <object class="GtkListBox" id="result_list">
         <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create|invert-boolean"/>
@@ -170,7 +167,6 @@
         </child>
       </object>
     </child>
-
   </template>
   <object class="GtkGestureLongPress" id="long_press_back_gesture">
     <property name="widget">backspace</property>
