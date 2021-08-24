@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 10:33+0000\n"
-"PO-Revision-Date: 2021-08-06 09:32-0300\n"
+"POT-Creation-Date: 2021-08-14 19:22+0000\n"
+"PO-Revision-Date: 2021-08-24 10:42-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Gtranslator 40.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Chamadas"
@@ -46,37 +46,41 @@ msgstr "Chamadas (daemon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Discador de telefone e identificador de chamadas (modo daemon)"
 
-#: src/calls-application.c:522
+#: src/calls-application.c:544
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Tentativa de discar URI de tel não analisável “%s”"
 
-#: src/calls-application.c:604
+#: src/calls-application.c:626
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Não foi possível abrir “%s”"
 
-#: src/calls-application.c:657
+#: src/calls-application.c:680
 msgid "The name of the plugin to use for the call Provider"
 msgstr "O nome do plugin para usar para o provedor de chamada"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:681
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:686
 msgid "Whether to present the main window on startup"
 msgstr "Se deve-se apresentar a janela principal na inicialização"
 
-#: src/calls-application.c:669
+#: src/calls-application.c:692
 msgid "Dial a number"
 msgstr "Disca um número"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:693
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr "Habilita mensagens de depuração detalhadas"
+
+#: src/calls-application.c:704
 msgid "Print current version"
 msgstr "Exibe a versão atual"
 
@@ -98,60 +102,60 @@ msgstr ""
 "%s\n"
 "ontem"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr ""
 "Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Bruno Lopes <brunolopesdsilv@gmail.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No voice-capable modem available"
 msgstr ""
 "Não é possível fazer chamadas: Nenhum modem com capacidade de voz disponível"
 
-#: src/calls-main-window.c:325
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Não é possível fazer chamadas: Nenhum modem ou conta VoIP disponível"
 
-#: src/calls-main-window.c:330
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "Não é possível fazer chamadas: Nenhuma serviço de backend"
 
-#: src/calls-main-window.c:334
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "Não é possível fazer chamadas: Nenhum plugin"
 
-#: src/calls-main-window.c:374
+#: src/calls-main-window.c:376
 msgid "Contacts"
 msgstr "Contatos"
 
-#: src/calls-main-window.c:384 src/ui/call-display.ui:289
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Teclado de discagem"
 
-#: src/calls-main-window.c:392
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recentes"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Chamada perdida"
 
-#: src/calls-notifier.c:63
+#: src/calls-notifier.c:68
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chamada perdida de <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#: src/calls-notifier.c:70
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chamada perdida de %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:72
 msgid "Missed call from unknown caller"
 msgstr "Chamada perdida de número desconhecido"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:78
 msgid "Call back"
 msgstr "Chamar de volta"
 
@@ -274,17 +278,30 @@ msgid "_Help"
 msgstr "Aj_uda"
 
 #: src/ui/main-window.ui:253
-#| msgid "About Calls"
 msgid "_About Calls"
 msgstr "_Sobre o Chamadas"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:34
+msgid "Enter a VoIP address"
+msgstr "Insira um endereço VoIP"
+
+#: src/ui/new-call-box.ui:46
+#| msgid "Dial a number"
+msgid "Enter a number"
+msgstr "Insira um número"
+
+#: src/ui/new-call-box.ui:90
 msgid "Dial"
 msgstr "Discar"
 
-#: src/ui/new-call-box.ui:122
+#: src/ui/new-call-box.ui:113
 msgid "Backspace through number"
 msgstr "Apagar o número"
+
+#: src/ui/new-call-box.ui:145
+#| msgid "_VoIP Accounts"
+msgid "SIP Account"
+msgstr "Contas SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
