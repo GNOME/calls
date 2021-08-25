@@ -379,7 +379,7 @@ remove_provider (CallsManager *self,
 {
   GListModel *origins;
   guint n_items;
-  g_autoptr (CallsProvider) provider;
+  g_autoptr (CallsProvider) provider = NULL;
 
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (name);
