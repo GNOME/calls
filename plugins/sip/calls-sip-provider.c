@@ -375,7 +375,7 @@ calls_sip_provider_deinit_sip (CallsSipProvider *self)
     su_root_destroy (self->ctx->root);
 
     if (su_home_unref (self->ctx->home) != 1)
-      g_error ("Error in su_home_unref ()");
+      g_warning ("Error in su_home_unref ()");
   }
   g_clear_pointer (&self->ctx, g_free);
 

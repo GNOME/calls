@@ -121,7 +121,7 @@ on_pad_added (GstElement *rtpbin,
 
   sinkpad = gst_element_get_static_pad (depayloader, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK)
-    g_error ("Failed to link rtpbin to depayloader");
+    g_warning ("Failed to link rtpbin to depayloader");
 
   gst_object_unref (sinkpad);
 }
@@ -141,7 +141,7 @@ on_bus_message (GstBus     *bus,
       g_autofree char *msg = NULL;
 
       gst_message_parse_error (message, &error, &msg);
-      g_error ("Error: %s", msg);
+      g_warning ("Error on the message bus: %s (%s)", error->message, msg);
       break;
     }
 
@@ -151,7 +151,7 @@ on_bus_message (GstBus     *bus,
       g_autofree char *msg = NULL;
 
       gst_message_parse_warning (message, &error, &msg);
-      g_warning ("Warning: %s", msg);
+      g_warning ("Warning on the message bus: %s (%s)", error->message, msg);
       break;
     }
 
@@ -680,7 +680,7 @@ calls_sip_media_pipeline_new (MediaCodecInfo *codec)
                              "codec", codec,
                              NULL);
   if (pipeline == NULL)
-    g_error ("Media pipeline could not be initialized: %s", error->message);
+    g_warning ("Media pipeline could not be initialized: %s", error->message);
 
   return pipeline;
 }
