@@ -591,6 +591,7 @@ calls_sip_provider_account_provider_interface_init (CallsAccountProviderInterfac
 static void
 calls_sip_provider_init (CallsSipProvider *self)
 {
+  g_autofree char *directory = NULL;
   const char *filename_env = g_getenv ("CALLS_SIP_ACCOUNT_FILE");
 
   self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
@@ -602,6 +603,15 @@ calls_sip_provider_init (CallsSipProvider *self)
                                        APP_DATA_NAME,
                                        SIP_ACCOUNT_FILE,
                                        NULL);
+
+  directory = g_path_get_dirname (self->filename);
+  if (g_mkdir_with_parents (directory, 0750) == -1) {
+    int err_save = errno;
+    g_warning ("Failed to create directory '%s': %d\n"
+               "Can not store credentials persistently!",
+               directory, err_save);
+  }
+
 }
 
 /**
