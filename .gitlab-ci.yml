@@ -8,7 +8,7 @@ stages:
  - test-package
 
 variables:
-  L5_DOCKER_IMAGE: debian:bullseye
+  L5_DOCKER_IMAGE: debian:bookworm
 
 build:native:
   stage: build
@@ -19,19 +19,15 @@ build:native:
     COMMON_BUILD_OPTS: -Db_coverage=true --werror
     BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
     WANT_BUILD_DEPS: "true"
-    EXP_DEPS: libhandy-1-dev/experimental libhandy-1-0/experimental gir1.2-handy-1/experimental libgladeui-common/experimental
   except:
     variables:
       - $PKG_ONLY == "1"
-  image: debian:bullseye
+  image: debian:bookworm
   tags: []
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
     - apt-get -y install eatmydata
-    - echo "deb http://deb.debian.org/debian/ experimental main" > /etc/apt/sources.list.d/exp.list
-    - eatmydata apt-get -y update
-    - eatmydata apt-get -y install $EXP_DEPS
     - eatmydata apt-get -y install lcov
     - '[ "${WANT_BUILD_DEPS}" != "true" ] || eatmydata apt-get -y build-dep .'
     - ulimit -c unlimited
@@ -81,7 +77,7 @@ check-po:
 
 validate-metadata:
   stage: test
-  image: debian:bullseye
+  image: debian:bookworm
   tags: []
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
@@ -90,26 +86,17 @@ validate-metadata:
   script:
     - appstream-util validate data/org.gnome.Calls.metainfo.xml
 
-package-debian-bullseye:
-  variables:
-    EXP_DEPS: libhandy-1-dev/experimental libhandy-1-0/experimental gir1.2-handy-1/experimental libgladeui-common/experimental
+package-debian-bookworm:
   tags: []
   extends: .l5-build-debian-package
-  before_script:
-    - echo "deb http://deb.debian.org/debian/ experimental main" > /etc/apt/sources.list.d/exp.list
-    - apt-get -y update
-    - apt-get -y install $EXP_DEPS
 
-package-debian-bullseye:arm64:
+package-deb-pureos-byzantium:arm64:
   variables:
-    EXP_DEPS: libhandy-1-dev/experimental libhandy-1-0/experimental gir1.2-handy-1/experimental libgladeui-common/experimental
+    L5_DOCKER_IMAGE: pureos/byzantium
+    DEB_BUILD_PROFILES: nodoc
   tags:
     - aarch64
   extends: .l5-build-debian-package
-  before_script:
-    - echo "deb http://deb.debian.org/debian/ experimental main" > /etc/apt/sources.list.d/exp.list
-    - apt-get -y update
-    - apt-get -y install $EXP_DEPS
 
 # For some reason including https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml fails with a network error (status code 500), therefore it's copied here
 .flatpak:
