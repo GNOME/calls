@@ -473,7 +473,7 @@ calls_sip_provider_constructed (GObject *object)
       g_autoptr (GKeyFile) key_file = g_key_file_new ();
 
       if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
-        g_warning ("Error loading key file: %s", error->message);
+        g_debug ("Error loading key file: %s", error->message);
         goto out;
       }
       calls_sip_provider_load_accounts (self, key_file);
