@@ -288,6 +288,8 @@ origin_count_changed_cb (CallsNewCallBox *self)
 
   if (n_items)
     dial_queued (self);
+
+  notify_selected_index_cb (self);
 }
 
 
