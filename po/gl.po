@@ -1,0 +1,186 @@
+# Galician translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Fran Dieguez <frandieguez@gnome.gl>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-09-01 15:25+0000\n"
+"PO-Revision-Date: 2020-09-01 23:22+0200\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.gl>\n"
+"Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 3.36.0\n"
+
+#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Chamadas"
+
+#: src/calls-application.c:519
+msgid "The name of the plugin to use for the call Provider"
+msgstr "O nome do engadido a usar para o fornecedor de chamadas"
+
+#: src/calls-application.c:520
+msgid "PLUGIN"
+msgstr "ENGADIDO"
+
+#: src/calls-application.c:525
+msgid "Whether to present the main window on startup"
+msgstr "Indica se mostrar a xanela principal ao arrinque"
+
+#: src/calls-application.c:531
+msgid "Dial a number"
+msgstr "Chamar a un número"
+
+#: src/calls-application.c:532
+msgid "NUMBER"
+msgstr "NÚMERO"
+
+#: src/calls-call-display.c:246
+msgid "Calling…"
+msgstr "Chamando…"
+
+#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+msgid "Anonymous caller"
+msgstr ""
+
+#: src/calls-call-record-row.c:112
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"onte"
+
+#: src/calls-main-window.c:115
+msgid "translator-credits"
+msgstr "Fran Diéguez <frandieguez@gnome.org>, 2020."
+
+#: src/calls-main-window.c:173
+msgid "Can't place calls: No SIM card"
+msgstr "Non se poden realizar chamadas: Non hai tarxeta SIM"
+
+#: src/calls-main-window.c:178
+msgid "Can't place calls: No backend service"
+msgstr "Non se poden realizar chamadas: Non hai servizo de infraestrutura"
+
+#: src/calls-main-window.c:182
+msgid "Can't place calls: No plugin"
+msgstr "Non se poden realizar chamadas: Non hai engadido"
+
+#: src/calls-main-window.c:210 src/ui/call-display.ui:280
+msgid "Dial Pad"
+msgstr "Teclado telefónico"
+
+#: src/calls-main-window.c:219
+msgid "Recent"
+msgstr "Recentes"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Chamada de teléfono entrante"
+
+#: src/ui/call-display.ui:126
+msgid "Mute"
+msgstr "Silenciar"
+
+#: src/ui/call-display.ui:163
+msgid "Speaker"
+msgstr "Altoparlante"
+
+#: src/ui/call-display.ui:199
+msgid "Add call"
+msgstr "Engadir chamada"
+
+#: src/ui/call-display.ui:244
+msgid "Hold"
+msgstr "Manter"
+
+#: src/ui/call-display.ui:336
+msgid "Hang up"
+msgstr "Colgar"
+
+#: src/ui/call-display.ui:367
+msgid "Answer"
+msgstr "Responder"
+
+#: src/ui/call-display.ui:449
+msgid "Hide the dial pad"
+msgstr "Ocultar o teclado numérico"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr ""
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Elminar chamada"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+341234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "En espera"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Esta chamada non está cifrada"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Esta chamada está cifrada"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Non hai chamadas recentes"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Chamadas recentes"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Nova chamada…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Menú"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Sobre Chamadas"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Non se atopou un módem"
+
+#: src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Contactos"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Chamar"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr ""
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Nova chamada"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Atrás"
