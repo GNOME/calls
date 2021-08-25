@@ -210,7 +210,8 @@ on_origin_pw_cleared (GObject      *source,
   g_autoptr (GError) error = NULL;
 
   if (!secret_password_clear_finish (result, &error))
-    g_warning ("Could not delete the password in the keyring: %s", error->message);
+    g_warning ("Could not delete the password in the keyring: %s",
+               error ? error->message : "No reason given");
 }
 
 
@@ -243,7 +244,8 @@ on_origin_pw_saved (GObject      *source,
   g_autoptr (GError) error = NULL;
 
   if (!secret_password_store_finish (result, &error)) {
-    g_warning ("Could not store the password in the keyring: %s", error->message);
+    g_warning ("Could not store the password in the keyring: %s",
+               error ? error->message : "No reason given");
   }
 }
 
