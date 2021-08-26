@@ -325,6 +325,21 @@ edit_form (CallsSipAccountWidget *self,
 }
 
 
+static const char *
+get_selected_protocol (CallsSipAccountWidget *self)
+{
+  g_autoptr (HdyValueObject) obj = NULL;
+  const char *protocol = NULL;
+  gint i;
+
+  if ((i = hdy_combo_row_get_selected_index (self->protocol)) != -1) {
+    obj = g_list_model_get_item (G_LIST_MODEL (self->protocols_store), i);
+    protocol = hdy_value_object_get_string (obj);
+  }
+  return protocol;
+}
+
+
 static void
 on_login_clicked (CallsSipAccountWidget *self)
 {
@@ -337,7 +352,7 @@ on_login_clicked (CallsSipAccountWidget *self)
                                           gtk_entry_get_text (GTK_ENTRY (self->user)),
                                           gtk_entry_get_text (GTK_ENTRY (self->password)),
                                           gtk_entry_get_text (GTK_ENTRY (self->display_name)),
-                                          "UDP",
+                                          get_selected_protocol (self),
                                           0,
                                           TRUE);
 
@@ -370,7 +385,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     gtk_entry_get_text (self->user),
                                     gtk_entry_get_text (self->password),
                                     gtk_entry_get_text (self->display_name),
-                                    "UDP",
+                                    get_selected_protocol (self),
                                     0,
                                     TRUE);
 
