@@ -320,12 +320,6 @@ create_inbound (CallsSipOrigin *self,
 static void
 update_nua (CallsSipOrigin *self)
 {
-  gboolean use_sips = FALSE;
-  gboolean use_ipv6 = FALSE; /* TODO make configurable or use DNS to figure out if ipv6 is supported*/
-  char *ipv6_bind = "*";
-  char *ipv4_bind = "0.0.0.0";
-  g_autofree char *sip_url = NULL;
-  g_autofree char *sips_url = NULL;
   g_autofree char *from_str = NULL;
 
   g_assert (CALLS_IS_SIP_ORIGIN (self));
@@ -337,27 +331,9 @@ update_nua (CallsSipOrigin *self)
   self->address = g_strconcat (self->user, "@", self->host, NULL);
   from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
 
-  use_sips = check_sips (from_str);
-  use_ipv6 = check_ipv6 (self->host);
-
-  if (self->local_port > 0) {
-    sip_url = g_strdup_printf ("sip:%s:%d",
-                               use_ipv6 ? ipv6_bind : ipv4_bind,
-                               self->local_port);
-    sips_url = g_strdup_printf ("sips:%s:%d",
-                                use_ipv6 ? ipv6_bind : ipv4_bind,
-                                self->local_port);
-  } else {
-    sip_url = g_strdup_printf ("sip:%s:*",
-                               use_ipv6 ? ipv6_bind : ipv4_bind);
-    sips_url = g_strdup_printf ("sips:%s:*",
-                                use_ipv6 ? ipv6_bind : ipv4_bind);
-  }
-
   nua_set_params (self->nua,
-                  NUTAG_URL (sip_url),
-                  TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
                   SIPTAG_FROM_STR (from_str),
+                  TAG_IF (self->display_name, NUTAG_M_DISPLAY (self->display_name)),
                   TAG_NULL ());
 }
 
@@ -802,7 +778,7 @@ setup_nua (CallsSipOrigin *self)
   self->address = g_strconcat (self->user, "@", self->host, NULL);
   from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
 
-  use_sips = check_sips (self->address);
+  use_sips = check_sips (from_str);
   use_ipv6 = check_ipv6 (self->host);
 
   if (self->local_port > 0) {
@@ -818,6 +794,19 @@ setup_nua (CallsSipOrigin *self)
     sips_url = g_strdup_printf ("sips:%s:*",
                                 use_ipv6 ? ipv6_bind : ipv4_bind);
   }
+
+  /** For TLS nua_create() will error if NUTAG_URL includes ";transport=tls"
+   *  In that case NUTAG_SIPS_URL should be used and NUTAG_URL should be as usual
+   *  Since UDP is the default we only need to append the suffix in the TCP case
+   */
+  if (g_ascii_strcasecmp (self->transport_protocol, "TCP") == 0) {
+    char *temp = sip_url;
+
+    sip_url = g_strdup_printf ("%s;transport=%s", temp, self->transport_protocol);
+    g_free (temp);
+  }
+
+
 
   nua = nua_create (self->ctx->root,
                     sip_callback,
@@ -1458,4 +1447,9 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
 
   /* Propagate changes to nua stack */
   update_nua (self);
+  /* TODO:
+   * We need to recreate the nua stack when the transport protocol changes
+   * because nua_set_params cannot be used to update NUTAG_URL and friends.
+   * This will get easier with https://gitlab.gnome.org/GNOME/calls/-/merge_requests/402
+   */
 }
