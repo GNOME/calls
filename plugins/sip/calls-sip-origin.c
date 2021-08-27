@@ -888,6 +888,12 @@ go_online (CallsAccount *account,
 
   self = CALLS_SIP_ORIGIN (account);
 
+  if (!self->nua) {
+    g_warning ("Cannot go online: nua handle not initialized");
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
+    return;
+  }
+
   if (online) {
     g_autofree char *registrar_url = NULL;
 
