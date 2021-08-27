@@ -104,7 +104,7 @@ is_form_filled (CallsSipAccountWidget *self)
 
 
 static void
-on_text_changed (CallsSipAccountWidget *self)
+on_user_changed (CallsSipAccountWidget *self)
 {
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
@@ -505,7 +505,7 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_login_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_apply_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, on_text_changed);
+  gtk_widget_class_bind_template_callback (widget_class, on_user_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
 }

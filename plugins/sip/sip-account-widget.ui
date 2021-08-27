@@ -93,7 +93,7 @@
                   <object class="GtkEntry" id="host">
                     <property name="visible">True</property>
                     <property name="valign">center</property>
-                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -112,7 +112,7 @@
                   <object class="GtkEntry" id="display_name">
                     <property name="visible">True</property>
                     <property name="valign">center</property>
-                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -130,7 +130,7 @@
                   <object class="GtkEntry" id="user">
                     <property name="visible">True</property>
                     <property name="valign">center</property>
-                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -145,7 +145,7 @@
                     <property name="valign">center</property>
                     <property name="input-purpose">password</property>
                     <property name="visibility">False</property>
-                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -164,7 +164,7 @@
                     <property name="visible">True</property>
                     <property name="valign">center</property>
                     <property name="input-purpose">digits</property>
-                    <signal name="changed" handler="on_text_changed" swapped="yes"/>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                     <signal name="insert-text" handler="on_port_entry_insert_text" swapped="yes"/>
                     <signal name="insert-text" handler="on_port_entry_after_insert_text" swapped="yes" after="yes"/>
                   </object>
@@ -175,6 +175,7 @@
               <object class="HdyComboRow" id="protocol">
                 <property name="visible">True</property>
                 <property name="title" translatable="yes">Transport</property>
+                <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
               </object>
             </child>
           </object>
