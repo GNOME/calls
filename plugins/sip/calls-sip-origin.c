@@ -1440,7 +1440,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
   self->user = g_strdup (user);
 
   g_free (self->password);
-  self->password = g_strdup (self->password);
+  self->password = g_strdup (password);
 
   g_clear_pointer (&self->display_name, g_free);
   if (display_name)
