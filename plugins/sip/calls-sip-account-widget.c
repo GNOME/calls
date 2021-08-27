@@ -172,6 +172,20 @@ update_port_cursor_position (GtkEntry *entry)
   return G_SOURCE_REMOVE;
 }
 
+
+static int
+get_port (CallsSipAccountWidget *self)
+{
+  const char *text;
+  int port = 0;
+
+  text = gtk_entry_get_text (self->port);
+  port = (int)g_ascii_strtod (text, NULL);
+
+  return port;
+}
+
+
 static void
 on_port_entry_after_insert_text (CallsSipAccountWidget *self,
                                  char                  *new_text,
@@ -179,11 +193,7 @@ on_port_entry_after_insert_text (CallsSipAccountWidget *self,
                                  gpointer               position,
                                  GtkEntry              *entry)
 {
-  const char *text;
-  int port = 0;
-
-  text = gtk_entry_get_text (entry);
-  port = (int)g_ascii_strtod (text, NULL);
+  int port = get_port (self);
 
   /* Reset to the old value if new port number is invalid */
   if ((port < 0 || port > 65535) && self->last_port) {
@@ -353,7 +363,7 @@ on_login_clicked (CallsSipAccountWidget *self)
                                           gtk_entry_get_text (GTK_ENTRY (self->password)),
                                           gtk_entry_get_text (GTK_ENTRY (self->display_name)),
                                           get_selected_protocol (self),
-                                          0,
+                                          get_port (self),
                                           TRUE);
 
   self->origin = origin;
@@ -386,7 +396,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     gtk_entry_get_text (self->password),
                                     gtk_entry_get_text (self->display_name),
                                     get_selected_protocol (self),
-                                    0,
+                                    get_port (self),
                                     TRUE);
 
   update_header (self);
