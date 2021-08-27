@@ -400,6 +400,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     TRUE);
 
   update_header (self);
+  calls_sip_provider_save_accounts_to_disk (self->provider);
   g_signal_emit_by_name (self->provider, "widget-edit-done");
 }
 

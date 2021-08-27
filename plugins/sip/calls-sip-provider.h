@@ -62,6 +62,7 @@ void              calls_sip_provider_load_accounts          (CallsSipProvider *s
                                                              GKeyFile         *key_file);
 void              calls_sip_provider_save_accounts          (CallsSipProvider *self,
                                                              GKeyFile         *key_file);
+gboolean          calls_sip_provider_save_accounts_to_disk  (CallsSipProvider *self);
 void              peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS

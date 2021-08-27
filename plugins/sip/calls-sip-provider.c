@@ -303,20 +303,6 @@ origin_to_keyfile (CallsSipOrigin *origin,
 }
 
 
-static void
-save_to_disk (CallsSipProvider *self)
-{
-  g_autoptr (GKeyFile) key_file = g_key_file_new ();
-  g_autoptr (GError) error = NULL;
-
-  g_assert (CALLS_IS_SIP_PROVIDER (self));
-
-  calls_sip_provider_save_accounts (self, key_file);
-
-  if (!g_key_file_save_to_file (key_file, self->filename, &error))
-    g_warning ("Error saving keyfile to file %s: %s", self->filename, error->message);
-}
-
 static const char *
 calls_sip_provider_get_name (CallsProvider *provider)
 {
@@ -718,7 +704,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
   g_list_store_append (self->origins, origin);
 
   if (store_credentials && !self->use_memory_backend)
-    save_to_disk (self);
+    calls_sip_provider_save_accounts_to_disk (self);
 
   return origin;
 }
@@ -739,7 +725,7 @@ calls_sip_provider_remove_origin (CallsSipProvider *self,
 
     if (!self->use_memory_backend) {
       origin_pw_delete_secret (origin);
-      save_to_disk (self);
+      calls_sip_provider_save_accounts_to_disk (self);
     }
     g_object_unref (origin);
     return TRUE;
@@ -791,6 +777,25 @@ calls_sip_provider_save_accounts (CallsSipProvider *self,
     origin_to_keyfile (origin, key_file, group_name);
   }
 }
+
+
+gboolean
+calls_sip_provider_save_accounts_to_disk (CallsSipProvider *self)
+{
+  g_autoptr (GKeyFile) key_file = g_key_file_new ();
+  g_autoptr (GError) error = NULL;
+  gboolean saved = FALSE;
+
+  g_assert (CALLS_IS_SIP_PROVIDER (self));
+
+  calls_sip_provider_save_accounts (self, key_file);
+
+  if (!(saved = g_key_file_save_to_file (key_file, self->filename, &error)))
+    g_warning ("Error saving keyfile to file %s: %s", self->filename, error->message);
+
+  return saved;
+}
+
 
 
 G_MODULE_EXPORT void
