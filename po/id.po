@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-14 07:47+0000\n"
-"PO-Revision-Date: 2021-07-15 10:22+0700\n"
+"POT-Creation-Date: 2021-08-14 19:22+0000\n"
+"PO-Revision-Date: 2021-08-28 09:13+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural= n!=1;\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:390
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Panggilan"
@@ -44,37 +44,41 @@ msgstr "Panggilan (daemon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Pemutar-nomor telepon dan penangan panggilan (mode daemon)"
 
-#: src/calls-application.c:511
+#: src/calls-application.c:544
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Mencoba memanggil URI tel yang tak bisa diurai '%s'"
 
-#: src/calls-application.c:593
+#: src/calls-application.c:626
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Tidak tahu bagaimana membuka '%s'"
 
-#: src/calls-application.c:646
+#: src/calls-application.c:680
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Nama plugin yang digunakan untuk Penyedia panggilan"
 
-#: src/calls-application.c:647
+#: src/calls-application.c:681
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:652
+#: src/calls-application.c:686
 msgid "Whether to present the main window on startup"
 msgstr "Apakah menyajikan jendela utama pada saat mulai"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:692
 msgid "Dial a number"
 msgstr "Putar suatu nomor"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:693
 msgid "NUMBER"
 msgstr "NOMOR"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr "Fungsikan pesan awakutu cerewet"
+
+#: src/calls-application.c:704
 msgid "Print current version"
 msgstr "Cetak versi saat ini"
 
@@ -95,61 +99,60 @@ msgstr ""
 "%s\n"
 "kemarin"
 
-#: src/calls-main-window.c:121
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr "Andika Triwidada <andika@gmail.com>, 2020, 2021."
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No voice-capable modem available"
 msgstr ""
 "Tidak dapat melakukan panggilan: Tidak ada modem berkemampuan suara yang "
 "tersedia"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
-"Tidak dapat melakukan panggilan: Tidak ada modem atau akun VoIP yang "
-"tersedia"
+"Tidak dapat melakukan panggilan: Tidak ada modem atau akun VoIP yang tersedia"
 
-#: src/calls-main-window.c:328
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "Tidak dapat melakukan panggilan: Tidak ada layanan backend"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "Tidak dapat melakukan panggilan: Tidak ada plugin"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Contacts"
 msgstr "Kontak"
 
-#: src/calls-main-window.c:382 src/ui/call-display.ui:289
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Tombol Angka"
 
-#: src/calls-main-window.c:390
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Baru-baru Ini"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Panggilan tak terjawab"
 
-#: src/calls-notifier.c:63
+#: src/calls-notifier.c:68
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Panggilan tak terjawab dari <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#: src/calls-notifier.c:70
 #, c-format
 msgid "Missed call from %s"
 msgstr "Panggilan tak terjawab dari %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:72
 msgid "Missed call from unknown caller"
 msgstr "Panggilan tak terjawab dari pemanggil yang tidak dikenal"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:78
 msgid "Call back"
 msgstr "Telepon balik"
 
@@ -239,33 +242,61 @@ msgstr "Menu"
 msgid "About Calls"
 msgstr "Tentang Panggilan"
 
-#: src/ui/main-window.ui:38
+#: src/ui/main-window.ui:76
 msgid "No modem found"
 msgstr "Modem tak ditemukan"
 
-#: src/ui/main-window.ui:95
+#: src/ui/main-window.ui:118
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:104
+#: src/ui/main-window.ui:127
 msgid "_Cancel"
 msgstr "_Batal"
 
-#: src/ui/main-window.ui:121
+#: src/ui/main-window.ui:144
 msgid "_Close"
 msgstr "_Tutup"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:154
 msgid "_Send"
 msgstr "_Kirim"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "Akun _VoIP"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "Pintasan papan _ketik"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Bantuan"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "Tent_ang Panggilan"
+
+#: src/ui/new-call-box.ui:34
+msgid "Enter a VoIP address"
+msgstr "Masukkan suatu alamat VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Masukkan suatu nomor"
+
+#: src/ui/new-call-box.ui:90
 msgid "Dial"
 msgstr "Dial"
 
-#: src/ui/new-call-box.ui:122
+#: src/ui/new-call-box.ui:113
 msgid "Backspace through number"
 msgstr "Backspace melalui angka"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Akun SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
