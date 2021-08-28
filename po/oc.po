@@ -1,0 +1,303 @@
+# Occitan translation for calls.
+# Copyright (C) 2021 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Quentin PAGÈS <pages_quentin@hotmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2021-08-28 02:14+0000\n"
+"PO-Revision-Date: 2021-08-28 23:37+0200\n"
+"Language-Team: Occitan <totenoc@gmail.com>\n"
+"Language: oc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Quentin PAGÈS\n"
+"X-Generator: Poedit 3.0\n"
+
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Sonadas"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefòn"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Un telefòn e gestionari de sonadas"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefòn;sonada;sonar;VoIP;PSTN;crida;apèl;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr ""
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr ""
+
+#: src/calls-application.c:544
+#, c-format
+msgid "Tried dialing unparsable tel URI `%s'"
+msgstr ""
+
+#: src/calls-application.c:626
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr ""
+
+#: src/calls-application.c:680
+msgid "The name of the plugin to use for the call Provider"
+msgstr ""
+
+#: src/calls-application.c:681
+msgid "PLUGIN"
+msgstr "EMPEUTON"
+
+#: src/calls-application.c:686
+msgid "Whether to present the main window on startup"
+msgstr ""
+
+#: src/calls-application.c:692
+msgid "Dial a number"
+msgstr "Apelar un numèro"
+
+#: src/calls-application.c:693
+msgid "NUMBER"
+msgstr "NUMÈRO"
+
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr ""
+
+#: src/calls-application.c:704
+msgid "Print current version"
+msgstr "Afichar la version actuala"
+
+#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+msgid "Anonymous caller"
+msgstr "Sonaire anonim"
+
+#: src/calls-call-display.c:278
+msgid "Calling…"
+msgstr "Sonada…"
+
+#: src/calls-call-record-row.c:113
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"ièr"
+
+#: src/calls-main-window.c:125
+msgid "translator-credits"
+msgstr ""
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No voice-capable modem available"
+msgstr ""
+
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr ""
+
+#: src/calls-main-window.c:332
+msgid "Can't place calls: No backend service"
+msgstr ""
+
+#: src/calls-main-window.c:336
+msgid "Can't place calls: No plugin"
+msgstr ""
+
+#: src/calls-main-window.c:376
+msgid "Contacts"
+msgstr "Contactes"
+
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+msgid "Dial Pad"
+msgstr "Clavièr"
+
+#: src/calls-main-window.c:394
+msgid "Recent"
+msgstr "Recents"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Sonadas mancadas"
+
+#: src/calls-notifier.c:68
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Sonada mancada de <b>%s</b>"
+
+#: src/calls-notifier.c:70
+#, c-format
+msgid "Missed call from %s"
+msgstr "Sonada mancada de %s"
+
+#: src/calls-notifier.c:72
+msgid "Missed call from unknown caller"
+msgstr "Sonada mancada d’un sonaire anonim"
+
+#: src/calls-notifier.c:78
+msgid "Call back"
+msgstr "Tornar sonar"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Sonada entranta"
+
+#: src/ui/call-display.ui:135
+msgid "Mute"
+msgstr "Amudir"
+
+#: src/ui/call-display.ui:172
+msgid "Speaker"
+msgstr "Nautparlaire"
+
+#: src/ui/call-display.ui:208
+msgid "Add call"
+msgstr "Apondre una sonada"
+
+#: src/ui/call-display.ui:253
+msgid "Hold"
+msgstr "Metre en espèra"
+
+#: src/ui/call-display.ui:345
+msgid "Hang up"
+msgstr "Penjar"
+
+#: src/ui/call-display.ui:376
+msgid "Answer"
+msgstr "Respondre"
+
+#: src/ui/call-display.ui:458
+msgid "Hide the dial pad"
+msgstr "Amagar lo clavièr"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr ""
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Suprimir la sonada"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "_Copiar lo numèro"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "En espèra"
+
+#: src/ui/contacts-box.ui:66
+msgid "No contacts found"
+msgstr "Cap de contacte pas trobat"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Aquesta sonada es pas chifrada"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Aquesta sonada es chifrada"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Cap de sonada recenta"
+
+#: src/ui/history-header-bar.ui:7
+msgid "Recent Calls"
+msgstr ""
+
+#: src/ui/history-header-bar.ui:20
+msgid "New call…"
+msgstr ""
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:39
+msgid "Menu"
+msgstr "Menú"
+
+#: src/ui/history-header-bar.ui:70
+msgid "About Calls"
+msgstr "A prepaus de Sonadas"
+
+#: src/ui/main-window.ui:76
+msgid "No modem found"
+msgstr "Cap de modem pas trobat"
+
+#: src/ui/main-window.ui:118
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:127
+msgid "_Cancel"
+msgstr "_Anullar"
+
+#: src/ui/main-window.ui:144
+msgid "_Close"
+msgstr "_Tampar"
+
+#: src/ui/main-window.ui:154
+msgid "_Send"
+msgstr "_Enviar"
+
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "_Comptes VoIP"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "_Acorchis de clavièr"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Ajuda"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "_A prepaus de Sonadas"
+
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Picatz una adreça VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Picatz un numèro"
+
+#: src/ui/new-call-box.ui:91
+msgid "Dial"
+msgstr "Sonar"
+
+#: src/ui/new-call-box.ui:114
+msgid "Backspace through number"
+msgstr ""
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Compte SIP"
+
+#: src/ui/new-call-header-bar.ui:7
+msgid "New Call"
+msgstr "Sonada novèla"
+
+#: src/ui/new-call-header-bar.ui:20
+msgid "Back"
+msgstr "Retorn"
