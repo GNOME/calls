@@ -323,7 +323,10 @@ update_nua (CallsSipOrigin *self)
   g_autofree char *from_str = NULL;
 
   g_assert (CALLS_IS_SIP_ORIGIN (self));
-  g_assert (self->nua);
+  if (!self->nua) {
+    g_warning ("Cannot update nua stack, aborting");
+    return;
+  }
 
   self->protocol_prefix = get_protocol_prefix (self->transport_protocol);
 
