@@ -95,6 +95,7 @@ struct _CallsSipOrigin
 
   /* Needed to handle shutdown correctly. See sip_callback and dispose method */
   gboolean is_nua_shutdown;
+  gboolean is_shutdown_success;
 
   CallsAccountState state;
 
@@ -737,8 +738,14 @@ sip_callback (nua_event_t   event,
   case nua_r_shutdown:
     /* see also deinit_sip () */
     g_debug ("response to nua_shutdown: %03d %s", status, phrase);
-    if (status == 200)
+    if (status == 200) {
       origin->is_nua_shutdown = TRUE;
+      origin->is_shutdown_success = TRUE;
+    }
+    else if (status == 500) {
+      origin->is_nua_shutdown = TRUE;
+      origin->is_shutdown_success = FALSE;
+    }
     break;
 
     /* Deprecated events */
@@ -1019,38 +1026,44 @@ init_sip_account (CallsSipOrigin *self,
 }
 
 
-static void
+static gboolean
 deinit_sip_account (CallsSipOrigin *self)
 {
   g_assert (CALLS_IS_SIP_ORIGIN (self));
 
   if (self->state == CALLS_ACCOUNT_NULL)
-    return;
+    return TRUE;
 
   remove_calls (self, NULL);
 
   if (self->nua) {
     g_debug ("Requesting nua_shutdown ()");
     self->is_nua_shutdown = FALSE;
+    self->is_shutdown_success = FALSE;
     nua_shutdown (self->nua);
     // need to wait for nua_r_shutdown event before calling nua_destroy ()
     while (!self->is_nua_shutdown)
       su_root_step (self->ctx->root, 100);
 
-    g_debug ("nua_shutdown () complete. Destroying nua handle");
+    if (!self->is_shutdown_success) {
+      g_warning ("nua_shutdown() timed out. Cannot proceed");
+      return FALSE;
+    }
+    g_debug ("nua_shutdown() complete. Destroying nua handle");
     nua_destroy (self->nua);
     self->nua = NULL;
   }
 
   self->state = CALLS_ACCOUNT_NULL;
+  return TRUE;
 }
 
 
 static void
 on_network_changed (CallsSipOrigin *self)
 {
-  deinit_sip_account (self);
-  init_sip_account (self, NULL);
+  if (deinit_sip_account (self))
+    init_sip_account (self, NULL);
 }
 
 
