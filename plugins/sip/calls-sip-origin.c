@@ -1433,10 +1433,10 @@ calls_sip_origin_accounts_interface_init (CallsAccountInterface *iface)
 static void
 calls_sip_origin_init (CallsSipOrigin *self)
 {
-  CallsNetworkWatch *nw = calls_network_watch_get_default ();
+  const char *sip_test_env = g_getenv ("CALLS_SIP_TEST");
 
-  if (nw)
-    g_signal_connect_swapped (nw, "network-changed",
+  if (!sip_test_env || sip_test_env[0] == '\0')
+    g_signal_connect_swapped (calls_network_watch_get_default (), "network-changed",
                               G_CALLBACK (on_network_changed), self);
 
   self->call_handles = g_hash_table_new (NULL, NULL);
