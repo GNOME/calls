@@ -1,3 +1,60 @@
+gnome-calls (41.rc) UNRELEASED; urgency=medium
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Post-release version bump
+  * new-call-box: Reindent
+  * new-call-box: Press enter to place a call
+  * new-call-box: Hide empty results
+  * manager: Initialize g_auto variable to NULL
+  * flatpak: Update dependencies
+  * ci: Unbreak CI after Debian Bullseye release
+  * sip: Avoid g_error for non-fatal issues
+  * sip: provider: No need to print warning when no credentials file found
+  * sip: provider: Try to create folder for credentials
+  * sip: Avoid dereferencing a NULL pointer
+  * new-call-box: Always update the UI when the list of origins changes
+  * sip: origin: Bail when trying to go online but nua handle is not present
+  * account-widget: Actually use the selected protocol
+  * account-widget: Actually use the entered port
+  * sip: Make save_to_disk() public and use it when updating accounts
+  * origin: Fix the password when updating credentials
+  * account-widget: Fix apply button not becoming sensitive
+  * sip: origin: Include transport parameter in NUTAG_URL and friends
+  * sip: origin: Warn instead of asserting in update_nua() on nua stack
+  * Introduce CallsNetworkWatch to notify of network changes
+  * sip: origin: Recreate sofia handles on network change
+  * sip: origin: Handle nua_shutdown() timeout gracefully
+  * sip: origin: Destroy registration handle on deinit
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Michael Oppliger ]
+  * Update German translation
+
+  [ Rafael Fontenelle ]
+  * Update Brazilian Portuguese translation
+
+  [ Fran Dieguez ]
+  * Add Galician translation
+
+  [ Andika Triwidada ]
+  * Update Indonesian translation
+
+  [ Quentin PAGÈS ]
+  * Add Occitan translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 02 Sep 2021 22:22:07 +0200
+
 gnome-calls (41~beta) byzantium; urgency=medium
 
   [ Rafael Fontenelle ]

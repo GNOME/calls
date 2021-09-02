@@ -1,3 +1,21 @@
+Calls 41.rc
+-------------
+Released: September
+
+* Fix bug preventing SIP from working when using multiple network interfaces
+* Fixes around SIP account management and its UI
+
+* Translation updates:
+ - Galician (Fran Dieguez)
+ - German (Phillip Kiemle)
+ - Indonesian (Andika Triwidada)
+ - Occitan (Quentin PAGÈS)
+ - Persian (Danial Behzadi)
+ - Portuguese (Brazil) (Rafael Fontenelle)
+ - Romanian (Florentina Mușat)
+ - Swedish (Anders Jonsson)
+ - Ukrainian (Yuri Chornoivan)
+
 Calls 41.beta
 -------------
 Released: 14. August 2021

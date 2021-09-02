@@ -69,6 +69,9 @@
     </content_rating>
 
     <releases>
+      <release version="41.rc" date="2021-09-02">
+        <description>SIP Plugin polish and bugfixes.</description>
+      </release>
       <release version="41.beta" date="2021-08-14">
         <description>SIP Plugin usable from the UI.</description>
       </release>
