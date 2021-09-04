@@ -4,33 +4,10 @@
   <requires lib="gtk+" version="3.22"/>
   <template class="CallsHistoryBox" parent="GtkStack">
     <child>
-      <object class="GtkBox" id="empty">
-        <property name="visible">1</property>
-        <property name="halign">center</property>
-        <property name="valign">center</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">1</property>
-            <property name="icon-name">call-start-symbolic</property>
-            <property name="pixel-size">96</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="primary_label">
-            <property name="visible">1</property>
-            <property name="label" translatable="yes">No Recent Calls</property>
-            <property name="halign">start</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-              <attribute name="scale" value="1.2"/>
-            </attributes>
-          </object>
-        </child>
-        <style>
-         <class name="dim-label"/>
-        </style>
+      <object class="HdyStatusPage">
+        <property name="visible">True</property>
+        <property name="icon-name">call-start-symbolic</property>
+        <property name="title" translatable="yes">No Recent Calls</property>
       </object>
       <packing>
         <property name="name">empty</property>
