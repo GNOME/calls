@@ -770,6 +770,7 @@ sip_callback (nua_event_t   event,
 static nua_t *
 setup_nua (CallsSipOrigin *self)
 {
+  const char *sip_test_env = g_getenv ("CALLS_SIP_TEST");
   nua_t *nua;
   gboolean use_sips = FALSE;
   gboolean use_ipv6 = FALSE; /* TODO make configurable or use DNS to figure out if ipv6 is supported*/
@@ -780,6 +781,12 @@ setup_nua (CallsSipOrigin *self)
   g_autofree char *sip_url = NULL;
   g_autofree char *sips_url = NULL;
   g_autofree char *from_str = NULL;
+
+  if (!sip_test_env || sip_test_env[0] == '\0') {
+    CallsNetworkWatch *nw = calls_network_watch_get_default ();
+    ipv4_bind = calls_network_watch_get_ipv4 (nw);
+    ipv6_bind = calls_network_watch_get_ipv6 (nw);
+  }
 
   uuid = nua_generate_instance_identifier (self->ctx->home);
   urn_uuid = g_strdup_printf ("urn:uuid:%s", uuid);
