@@ -46,7 +46,6 @@
 #include <glib/gi18n.h>
 #include <handy.h>
 #include <libcallaudio.h>
-#include <libebook-contacts/libebook-contacts.h>
 
 /**
  * SECTION: calls-application
@@ -255,37 +254,47 @@ extract_dial_string (const char *number)
 
 
 static void
+call_number (CallsApplication *self,
+             const char       *number)
+{
+  g_autofree char *dial_string = NULL;
+  gboolean number_ok;
+
+ number_ok = check_dial_number (number);
+ if (!number_ok) {
+   g_warning ("Dial number `%s' is not a valid dial string",
+              number);
+   return;
+ }
+
+ dial_string = extract_dial_string (number);
+ if (!dial_string) {
+   return;
+ }
+
+ g_debug ("Dialing dial string `%s' extracted from number `%s'",
+          dial_string, number);
+
+ start_proper (self);
+
+ calls_main_window_dial (self->main_window,
+                         dial_string);
+
+}
+
+
+static void
 dial_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
   CallsApplication *self = CALLS_APPLICATION (user_data);
   const char *number;
-  gboolean number_ok;
-  g_autofree char *dial_string = NULL;
 
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
 
-  number_ok = check_dial_number (number);
-  if (!number_ok) {
-    g_warning ("Dial number `%s' is not a valid dial string",
-               number);
-    return;
-  }
-
-  dial_string = extract_dial_string (number);
-  if (!dial_string) {
-    return;
-  }
-
-  g_debug ("Dialing dial string `%s' extracted from number `%s'",
-           dial_string, number);
-
-  start_proper (self);
-
-  calls_main_window_dial (self->main_window,
-                          dial_string);
+  call_number (self, number);
 }
 
 static void
@@ -520,35 +529,23 @@ static void
 open_tel_uri (CallsApplication *self,
               const char       *uri)
 {
-  g_autoptr (EPhoneNumber) number = NULL;
-  g_autoptr (GError) error = NULL;
-  g_autofree char *dial_str = NULL;
-  g_autofree char *country_code = NULL;
-
-  g_object_get (calls_manager_get_default (),
-                "country-code", &country_code,
-                NULL);
+  const char *number = NULL;
 
   g_debug ("Opening tel URI `%s'", uri);
 
-  number = e_phone_number_from_string (uri, country_code, &error);
-  if (!number) {
+  number = &uri[4]; // tel:NUMBER
+  if (!number || number[0] == '\0') {
     g_autofree char *msg =
-      g_strdup_printf (_("Tried dialing unparsable tel URI `%s'"), uri);
+      g_strdup_printf (_("Tried invalid tel URI `%s'"), uri);
 
     g_signal_emit_by_name (calls_manager_get_default (),
                            "error",
                            msg);
-    g_warning ("Ignoring unparsable tel URI `%s': %s",
-               uri, error->message);
+    g_warning ("Ignoring invalid tel URI `%s'", uri);
     return;
   }
 
-  dial_str = e_phone_number_to_string
-    (number, E_PHONE_NUMBER_FORMAT_E164);
-
-  calls_main_window_dial (self->main_window,
-                          dial_str);
+  call_number (self, number);
 }
 
 static void
