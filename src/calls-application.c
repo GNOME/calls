@@ -267,12 +267,6 @@ dial_action (GSimpleAction *action,
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
 
-  if (g_str_has_prefix (number, "sip:") ||
-      g_str_has_prefix (number, "sips:")) {
-    dial_string = g_strdup (number);
-    goto proper;
-  }
-
   number_ok = check_dial_number (number);
   if (!number_ok) {
     g_warning ("Dial number `%s' is not a valid dial string",
@@ -288,7 +282,6 @@ dial_action (GSimpleAction *action,
   g_debug ("Dialing dial string `%s' extracted from number `%s'",
            dial_string, number);
 
- proper:
   start_proper (self);
 
   calls_main_window_dial (self->main_window,
@@ -689,7 +682,7 @@ calls_application_init (CallsApplication *self)
     {
       "dial", 'l', G_OPTION_FLAG_NONE,
       G_OPTION_ARG_STRING, NULL,
-      _("Dial a number"),
+      _("Dial a telephone number"),
       _("NUMBER")
     },
     {
