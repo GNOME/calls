@@ -207,6 +207,8 @@ dial_clicked_cb (CallsNewCallBox *self)
     calls_main_window_dial (CALLS_MAIN_WINDOW (window), text);
   else
     calls_new_call_box_dial (self, text);
+
+  gtk_entry_set_text (entry, "");
 }
 
 static void
@@ -219,6 +221,8 @@ dial_result_clicked_cb (CallsNewCallBox *self)
     calls_origin_dial (origin, address);
   else
     g_warning ("No suitable origin found. How was this even clicked?");
+
+  gtk_entry_set_text (self->address_entry, "");
 }
 
 
