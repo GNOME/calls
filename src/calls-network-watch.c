@@ -396,7 +396,6 @@ calls_network_watch_initable_init (GInitable    *initable,
                                    GError      **error)
 {
   CallsNetworkWatch *self = CALLS_NETWORK_WATCH (initable);
-  gboolean ret = FALSE;
 
   self->fd = socket (AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
   if (self->fd == -1 && error) {
@@ -406,16 +405,17 @@ calls_network_watch_initable_init (GInitable    *initable,
     return FALSE;
   }
 
-  if (fetch_ipv4 (self)) {
-    ret = TRUE;
+  if (fetch_ipv4 (self))
     self->ipv4 = g_strdup (self->tmp_addr);
-  }
-  if (fetch_ipv6 (self)) {
-    ret = TRUE;
-    self->ipv6 = g_strdup (self->tmp_addr);
-  }
+  else
+    self->ipv4 = g_strdup ("127.0.0.1");
 
-  return ret;
+  if (fetch_ipv6 (self))
+    self->ipv6 = g_strdup (self->tmp_addr);
+  else
+    self->ipv6 = g_strdup ("::1");
+
+  return TRUE;
 }
 
 
