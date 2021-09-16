@@ -399,7 +399,7 @@ calls_network_watch_initable_init (GInitable    *initable,
   gboolean ret = FALSE;
 
   self->fd = socket (AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
-  if (self->fd == -1) {
+  if (self->fd == -1 && error) {
     int errsv = errno;
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to create netlink socket: %d", errsv);
