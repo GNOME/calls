@@ -76,6 +76,8 @@ typedef struct _CallsNetworkWatch {
 
   guint timeout_id;
 
+  gboolean repeated_warning;
+
   char *ipv4;
   char *ipv6;
   char tmp_addr[INET6_ADDRSTRLEN];
@@ -195,9 +197,16 @@ talk_rtnl (CallsNetworkWatch *self)
 
   h = (struct nlmsghdr *) self->buf;
   if (h->nlmsg_type == NLMSG_ERROR) {
-    g_warning ("An error occured in the netlink stack");
+    /* TODO figure out why this fails and provide more information in the warning */
+    if (!self->repeated_warning)
+      g_warning ("Unexpected error response to netlink request while trying "
+                 "to fetch local IP address");
+
+    self->repeated_warning = TRUE;
     return FALSE;
   }
+
+  self->repeated_warning = FALSE;
 
   return TRUE;
 }
