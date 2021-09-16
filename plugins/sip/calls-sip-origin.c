@@ -803,8 +803,10 @@ setup_nua (CallsSipOrigin *self)
 
   if (!sip_test_env || sip_test_env[0] == '\0') {
     CallsNetworkWatch *nw = calls_network_watch_get_default ();
-    ipv4_bind = calls_network_watch_get_ipv4 (nw);
-    ipv6_bind = calls_network_watch_get_ipv6 (nw);
+    if (nw) {
+      ipv4_bind = calls_network_watch_get_ipv4 (nw);
+      ipv6_bind = calls_network_watch_get_ipv6 (nw);
+    }
   }
 
   uuid = nua_generate_instance_identifier (self->ctx->home);
@@ -1461,9 +1463,14 @@ calls_sip_origin_init (CallsSipOrigin *self)
 {
   const char *sip_test_env = g_getenv ("CALLS_SIP_TEST");
 
-  if (!sip_test_env || sip_test_env[0] == '\0')
-    g_signal_connect_swapped (calls_network_watch_get_default (), "network-changed",
-                              G_CALLBACK (on_network_changed), self);
+  if (!sip_test_env || sip_test_env[0] == '\0') {
+    CallsNetworkWatch *nw = calls_network_watch_get_default ();
+    if (nw)
+      g_signal_connect_swapped (calls_network_watch_get_default (), "network-changed",
+                                G_CALLBACK (on_network_changed), self);
+    else
+      g_warning ("Network watch unavailable. Unable to detect network changes.");
+  }
 
   self->call_handles = g_hash_table_new (NULL, NULL);
 
