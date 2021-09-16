@@ -513,25 +513,31 @@ sip_i_state (int              status,
     CALLS_EMIT_MESSAGE (origin, "DNS error", GTK_MESSAGE_ERROR);
   }
   /* XXX making some assumptions about the received SDP message here...
-   * namely: that there is only the session wide connection c= line
-   * and no individual connections per media stream.
-   * also: rtcp port = rtp port + 1
+   * namely: rtcp port = rtp port + 1
    */
   if (r_sdp) {
     g_autoptr (GList) codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
-    const char *remote_ip = NULL;
-    if (r_sdp->sdp_connection && r_sdp->sdp_connection->c_address) {
-      remote_ip = r_sdp->sdp_connection->c_address;
-    } else {
+    const char *session_ip = NULL;
+    const char *media_ip = NULL;
+
+    if (r_sdp->sdp_connection && r_sdp->sdp_connection->c_address)
+      session_ip = r_sdp->sdp_connection->c_address;
+
+    if (r_sdp->sdp_media && r_sdp->sdp_media->m_connections &&
+        r_sdp->sdp_media->m_connections->c_address)
+      media_ip = r_sdp->sdp_media->m_connections->c_address;
+
+    if (!session_ip && !media_ip) {
       g_warning ("Could not determine IP of remote peer. Hanging up");
       calls_call_hang_up (CALLS_CALL (call));
       return;
     }
+
     calls_sip_call_set_codecs (call, codecs);
     calls_sip_call_setup_remote_media_connection (call,
-                                                  remote_ip,
+                                                  media_ip ? : session_ip,
                                                   r_sdp->sdp_media->m_port,
                                                   r_sdp->sdp_media->m_port + 1);
   }
