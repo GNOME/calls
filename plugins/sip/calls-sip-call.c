@@ -462,5 +462,5 @@ calls_sip_call_set_codecs (CallsSipCall *self,
   g_return_if_fail (codecs);
 
   g_list_free (self->codecs);
-  self->codecs = codecs;
+  self->codecs = g_list_copy (codecs);
 }

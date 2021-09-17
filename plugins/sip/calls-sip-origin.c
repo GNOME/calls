@@ -518,7 +518,7 @@ sip_i_state (int              status,
    * also: rtcp port = rtp port + 1
    */
   if (r_sdp) {
-    GList *codecs =
+    g_autoptr (GList) codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
 
