@@ -204,7 +204,7 @@ calls_sip_media_manager_codec_candidates (CallsSipMediaManager *self)
  * @self: A #CallsSipMediaManager
  * @sdp: A #sdp_media_t media description
  *
- * Returns: (transfer full): A #GList of codecs found in the
+ * Returns: (transfer container): A #GList of codecs found in the
  * SDP message
  */
 GList *
