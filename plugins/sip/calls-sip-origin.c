@@ -522,6 +522,12 @@ sip_i_state (int              status,
     const char *session_ip = NULL;
     const char *media_ip = NULL;
 
+    if (!codecs) {
+      g_warning ("No common codecs in SDP. Hanging up");
+      calls_call_hang_up (CALLS_CALL (call));
+      return;
+    }
+
     if (r_sdp->sdp_connection && r_sdp->sdp_connection->c_address)
       session_ip = r_sdp->sdp_connection->c_address;
 
