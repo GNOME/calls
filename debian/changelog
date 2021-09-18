@@ -1,4 +1,20 @@
-gnome-calls (41.rc) UNRELEASED; urgency=medium
+gnome-calls (41.0) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * sip: provider: Skip creating credential directory on test
+  * sip: origin: Do not use CallsNetworkWatch during tests
+  * sip: origin: Bind sockets to NIC with default route
+  * meson: Post release bump
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Goran Vidović ]
+  * Add Croatian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Sat, 18 Sep 2021 17:25:43 +0200
+
+gnome-calls (41~rc) byzantium; urgency=medium
 
   [ Anders Jonsson ]
   * Update Swedish translation

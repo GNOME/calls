@@ -1,3 +1,13 @@
+Calls 41.0
+----------
+Released: September
+
+* Fixes for the multiple network interfaces case
+
+* Translation updates:
+- Croatian (Goran Vidović)
+- Dutch (Nathan Follens)
+
 Calls 41.rc
 -------------
 Released: September
