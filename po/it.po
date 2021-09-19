@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 20:19+0000\n"
-"PO-Revision-Date: 2021-07-21 23:13+0200\n"
+"POT-Creation-Date: 2021-08-19 00:17+0000\n"
+"PO-Revision-Date: 2021-08-15 18:39+0200\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Chiamate"
@@ -45,37 +45,41 @@ msgstr "Chiamate (demone)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Un dialer telefonico e un gestore di chiamate (demone)"
 
-#: src/calls-application.c:522
+#: src/calls-application.c:544
 #, c-format
 msgid "Tried dialing unparsable tel URI `%s'"
 msgstr "Ho provato a comporre l'URI di telefono non analizzabile `%s'"
 
-#: src/calls-application.c:604
+#: src/calls-application.c:626
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:657
+#: src/calls-application.c:680
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Il nome del Plugin da usare per il Fornitore di chiamate"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:681
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:686
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:669
+#: src/calls-application.c:692
 msgid "Dial a number"
 msgstr "Componi un numero"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:693
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr "Abilita i messaggi dettagliati di debug"
+
+#: src/calls-application.c:704
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
@@ -131,25 +135,25 @@ msgstr "Tastiera"
 msgid "Recent"
 msgstr "Recenti"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Chiamata persa"
 
-#: src/calls-notifier.c:63
+#: src/calls-notifier.c:68
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chiamata persa da <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#: src/calls-notifier.c:70
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chiamata persa da %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:72
 msgid "Missed call from unknown caller"
 msgstr "Chiamata persa da uno sconosciuto"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:78
 msgid "Call back"
 msgstr "Richiama"
 
@@ -275,13 +279,25 @@ msgstr "_Guida"
 msgid "_About Calls"
 msgstr "Informazioni _su Chiamate"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Inserire un indirizzo VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Inserire un numero"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Componi"
 
-#: src/ui/new-call-box.ui:122
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "Modifica il numero"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Account SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
