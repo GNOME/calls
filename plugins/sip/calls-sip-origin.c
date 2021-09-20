@@ -319,29 +319,6 @@ create_inbound (CallsSipOrigin *self,
   add_call (self, address, TRUE, handle);
 }
 
-static void
-update_nua (CallsSipOrigin *self)
-{
-  g_autofree char *from_str = NULL;
-
-  g_assert (CALLS_IS_SIP_ORIGIN (self));
-  if (!self->nua) {
-    g_warning ("Cannot update nua stack, aborting");
-    return;
-  }
-
-  self->protocol_prefix = get_protocol_prefix (self->transport_protocol);
-
-  g_free (self->address);
-  self->address = g_strconcat (self->user, "@", self->host, NULL);
-  from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
-
-  nua_set_params (self->nua,
-                  SIPTAG_FROM_STR (from_str),
-                  TAG_IF (self->display_name, NUTAG_M_DISPLAY (self->display_name)),
-                  TAG_NULL ());
-}
-
 
 static void
 sip_authenticate (CallsSipOrigin *self,
@@ -1090,7 +1067,7 @@ deinit_sip_account (CallsSipOrigin *self)
 
 
 static void
-on_network_changed (CallsSipOrigin *self)
+recreate_sip (CallsSipOrigin *self)
 {
   if (deinit_sip_account (self))
     init_sip_account (self, NULL);
@@ -1467,7 +1444,7 @@ calls_sip_origin_init (CallsSipOrigin *self)
     CallsNetworkWatch *nw = calls_network_watch_get_default ();
     if (nw)
       g_signal_connect_swapped (calls_network_watch_get_default (), "network-changed",
-                                G_CALLBACK (on_network_changed), self);
+                                G_CALLBACK (recreate_sip), self);
     else
       g_warning ("Network watch unavailable. Unable to detect network changes.");
   }
@@ -1521,13 +1498,5 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
 
   self->port = port;
 
-  update_name (self);
-
-  /* Propagate changes to nua stack */
-  update_nua (self);
-  /* TODO:
-   * We need to recreate the nua stack when the transport protocol changes
-   * because nua_set_params cannot be used to update NUTAG_URL and friends.
-   * This will get easier with https://gitlab.gnome.org/GNOME/calls/-/merge_requests/402
-   */
+  recreate_sip (self);
 }
