@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-14 19:22+0000\n"
-"PO-Revision-Date: 2021-08-14 23:12+0200\n"
+"POT-Creation-Date: 2021-09-20 01:57+0000\n"
+"PO-Revision-Date: 2021-09-20 11:48+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
@@ -46,41 +46,41 @@ msgstr "Samtal (demon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:539
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Försökte ringa tel-URI ”%s” som inte gick att tolka"
+msgid "Tried invalid tel URI `%s'"
+msgstr "Försökte med ogiltigt tel-URI ”%s”"
 
-#: src/calls-application.c:626
+#: src/calls-application.c:616
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:670
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Namnet på insticket att använda för samtalsleverantören"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:671
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:676
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Slå ett nummer"
+#: src/calls-application.c:682
+msgid "Dial a telephone number"
+msgstr "Slå ett telefonnummer"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:683
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:688
 msgid "Enable verbose debug messages"
 msgstr "Aktivera utförliga felsökningsmeddelanden"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:694
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
@@ -99,7 +99,7 @@ msgid ""
 "yesterday"
 msgstr ""
 "%s\n"
-"igår"
+"i går"
 
 #: src/calls-main-window.c:125
 msgid "translator-credits"
@@ -194,8 +194,8 @@ msgid "Hide the dial pad"
 msgstr "Göm knappsatsen"
 
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Ring parten"
+msgid "Call"
+msgstr "Ring"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -283,7 +283,7 @@ msgstr "_Hjälp"
 msgid "_About Calls"
 msgstr "_Om Samtal"
 
-#: src/ui/new-call-box.ui:34
+#: src/ui/new-call-box.ui:33
 msgid "Enter a VoIP address"
 msgstr "Ange en VoIP-adress"
 
@@ -291,11 +291,11 @@ msgstr "Ange en VoIP-adress"
 msgid "Enter a number"
 msgstr "Ange ett nummer"
 
-#: src/ui/new-call-box.ui:90
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Ring"
 
-#: src/ui/new-call-box.ui:113
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "Radera siffra från nummer"
 
@@ -310,3 +310,6 @@ msgstr "Nytt samtal"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Tillbaka"
+
+#~ msgid "Call the party"
+#~ msgstr "Ring parten"
