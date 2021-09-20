@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-14 19:22+0000\n"
-"PO-Revision-Date: 2021-09-01 18:07+0430\n"
+"POT-Creation-Date: 2021-09-20 01:57+0000\n"
+"PO-Revision-Date: 2021-09-20 17:48+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "تماس‌ها"
@@ -43,41 +43,41 @@ msgstr "تماس‌ها (خدمت)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "یک شماره‌گیر تلفن و برقرارکنندهٔ تماس (حالت خدمت)"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:539
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "برای شمارهگیری نشانی تلفنی تجزیه‌نشدنی«%s» تلاش شد"
+msgid "Tried invalid tel URI `%s'"
+msgstr "نشانی تلفن نامعتبر «%s» آزموده شد"
 
-#: src/calls-application.c:626
+#: src/calls-application.c:616
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:670
 msgid "The name of the plugin to use for the call Provider"
 msgstr "نام افزایهٔ استفاده‌شده برای فراهم‌کنندهٔ تماس"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:671
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:676
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "شماره‌ای بگیرید"
+#: src/calls-application.c:682
+msgid "Dial a telephone number"
+msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:683
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:688
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:694
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
@@ -185,8 +185,8 @@ msgid "Hide the dial pad"
 msgstr "نهفتن صفحهٔ شماره‌گیری"
 
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "تماس با گروه"
+msgid "Call"
+msgstr "تماس"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -274,7 +274,7 @@ msgstr "_راهنما"
 msgid "_About Calls"
 msgstr "_دربارهٔ تماس‌ها"
 
-#: src/ui/new-call-box.ui:34
+#: src/ui/new-call-box.ui:33
 msgid "Enter a VoIP address"
 msgstr "نشانی ویپی وارد کنید"
 
@@ -282,11 +282,11 @@ msgstr "نشانی ویپی وارد کنید"
 msgid "Enter a number"
 msgstr "شماره‌ای وارد کنید"
 
-#: src/ui/new-call-box.ui:90
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "شماره‌گیری"
 
-#: src/ui/new-call-box.ui:113
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "پس‌بر در شماره"
 
@@ -301,6 +301,9 @@ msgstr "تماس جدید"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "بازگشت"
+
+#~ msgid "Call the party"
+#~ msgstr "تماس با گروه"
 
 #~ msgid "View"
 #~ msgstr "نما"
