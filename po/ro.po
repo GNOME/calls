@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-14 19:22+0000\n"
-"PO-Revision-Date: 2021-08-15 18:31+0200\n"
+"POT-Creation-Date: 2021-09-20 01:57+0000\n"
+"PO-Revision-Date: 2021-09-20 19:30+0200\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Apeluri"
@@ -45,41 +45,43 @@ msgstr "Apeluri (serviciu)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Apelant telefonic și gestionarea apelurilor (mod serviciu)"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:539
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "S-a încercat apelarea URI-ului de telefon neanalizabil „%s”"
+#| msgid "Tried dialing unparsable tel URI `%s'"
+msgid "Tried invalid tel URI `%s'"
+msgstr "S-a încercat un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:626
+#: src/calls-application.c:616
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:670
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Numele modulului de utilizat pentru furnizorul de apel"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:671
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:676
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Apelează un număr"
+#: src/calls-application.c:682
+#| msgid "Dial a number"
+msgid "Dial a telephone number"
+msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:683
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:688
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:694
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
@@ -194,7 +196,8 @@ msgid "Hide the dial pad"
 msgstr "Ascunde tastatura"
 
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
+#| msgid "Calls"
+msgid "Call"
 msgstr "Apelează"
 
 #: src/ui/call-record-row.ui:112
@@ -283,25 +286,23 @@ msgstr "_Ajutor"
 msgid "_About Calls"
 msgstr "_Despre Apeluri"
 
-#: src/ui/new-call-box.ui:34
+#: src/ui/new-call-box.ui:33
 msgid "Enter a VoIP address"
 msgstr "Introdu o adresă VoIP"
 
 #: src/ui/new-call-box.ui:46
-#| msgid "Dial a number"
 msgid "Enter a number"
 msgstr "Introdu un număr"
 
-#: src/ui/new-call-box.ui:90
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Apelează"
 
-#: src/ui/new-call-box.ui:113
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "Modifică numărul"
 
 #: src/ui/new-call-box.ui:145
-#| msgid "_VoIP Accounts"
 msgid "SIP Account"
 msgstr "Cont SIP"
 
