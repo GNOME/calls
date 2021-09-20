@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-14 19:22+0000\n"
-"PO-Revision-Date: 2021-08-15 15:43+0300\n"
+"POT-Creation-Date: 2021-09-20 01:57+0000\n"
+"PO-Revision-Date: 2021-09-20 17:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Дзвінки"
@@ -45,41 +45,43 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:539
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Спроба набору за непридатною до обробки адресою телефону «%s»"
+#| msgid "Tried dialing unparsable tel URI `%s'"
+msgid "Tried invalid tel URI `%s'"
+msgstr "Спроба використання некоректної адреси телефону «%s»"
 
-#: src/calls-application.c:626
+#: src/calls-application.c:616
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:670
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Назва додатка, яку слід використовувати для надавача послуг дзвінка"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:671
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:676
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Набрати номер"
+#: src/calls-application.c:682
+#| msgid "Dial a number"
+msgid "Dial a telephone number"
+msgstr "Набрати телефонний номер"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:683
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:688
 msgid "Enable verbose debug messages"
 msgstr "Увімкнути докладні діагностичні повідомлення"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:694
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
@@ -189,8 +191,9 @@ msgid "Hide the dial pad"
 msgstr "Приховати панель набору"
 
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Подзвонити співрозмовнику"
+#| msgid "Calls"
+msgid "Call"
+msgstr "Виклик"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -278,26 +281,23 @@ msgstr "_Довідка"
 msgid "_About Calls"
 msgstr "_Про «Дзвінки»"
 
-#: src/ui/new-call-box.ui:34
+#: src/ui/new-call-box.ui:33
 msgid "Enter a VoIP address"
-msgstr ""
-"Введіть адресу VoIP"
+msgstr "Введіть адресу VoIP"
 
 #: src/ui/new-call-box.ui:46
-#| msgid "Dial a number"
 msgid "Enter a number"
 msgstr "Введіть номер"
 
-#: src/ui/new-call-box.ui:90
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Набір номера"
 
-#: src/ui/new-call-box.ui:113
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "Витирання номера"
 
 #: src/ui/new-call-box.ui:145
-#| msgid "_VoIP Accounts"
 msgid "SIP Account"
 msgstr "Обліковий запис SIP"
 
@@ -308,3 +308,6 @@ msgstr "Новий дзвінок"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Назад"
+
+#~ msgid "Call the party"
+#~ msgstr "Подзвонити співрозмовнику"
