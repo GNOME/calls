@@ -166,7 +166,7 @@ calls_contacts_box_init (CallsContactsBox *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  self->search_query = folks_simple_query_new ("", query_fields, 5);
+  self->search_query = folks_simple_query_new ("", query_fields, G_N_ELEMENTS (query_fields));
 
   gtk_list_box_set_header_func (GTK_LIST_BOX (self->contacts_listbox),
                                 (GtkListBoxUpdateHeaderFunc) header_cb,
