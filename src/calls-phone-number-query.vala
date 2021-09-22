@@ -26,8 +26,9 @@
 public class Calls.PhoneNumberQuery : Folks.Query
 {
     private E.PhoneNumber _number;
+    private string _country_code;
 
-    public PhoneNumberQuery (E.PhoneNumber number)
+    public PhoneNumberQuery (E.PhoneNumber number, string? country_code)
     {
         string[] match_fields =
         { Folks.PersonaStore.detail_key (Folks.PersonaDetail.PHONE_NUMBERS) };
@@ -35,6 +36,7 @@ public class Calls.PhoneNumberQuery : Folks.Query
         Object (match_fields: match_fields);
 
         this._number = number;
+        this._country_code = country_code;
     }
 
     public override uint is_match (Folks.Individual individual)
@@ -56,7 +58,7 @@ public class Calls.PhoneNumberQuery : Folks.Query
             try
             {
                 indiv_parsed =
-                    E.PhoneNumber.from_string (indiv_number, null);
+                    E.PhoneNumber.from_string (indiv_number, this._country_code);
             }
             catch (GLib.Error e)
             {

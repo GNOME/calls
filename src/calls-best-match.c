@@ -343,7 +343,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
     if (!number) {
       g_warning ("Failed to convert %s to a phone number: %s", phone_number, error->message);
     } else {
-      query = calls_phone_number_query_new (number);
+      query = calls_phone_number_query_new (number, self->country_code);
       self->view = folks_search_view_new (folks_individual_aggregator_dup (), FOLKS_QUERY (query));
 
       g_signal_connect_swapped (self->view,
