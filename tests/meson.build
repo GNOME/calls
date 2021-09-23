@@ -11,6 +11,7 @@ test_env = [
   'CALLS_SIP_TEST=1',
   'CALLS_AUDIOSRC=audiotestsrc',
   'CALLS_AUDIOSINK=fakesink',
+  'GSETTINGS_SCHEMA_DIR=@0@/data'.format(meson.project_build_root()),
 ]
 
 test_cflags = [
