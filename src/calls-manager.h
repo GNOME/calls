@@ -27,6 +27,7 @@
 
 #include "calls-contacts-provider.h"
 #include "calls-origin.h"
+#include "calls-settings.h"
 
 #include <glib-object.h>
 
@@ -50,6 +51,7 @@ typedef enum
 CallsManager          *calls_manager_new                      (void);
 CallsManager          *calls_manager_get_default              (void);
 CallsContactsProvider *calls_manager_get_contacts_provider    (CallsManager *self);
+CallsSettings         *calls_manager_get_settings             (CallsManager *self);
 void                   calls_manager_add_provider             (CallsManager *self,
                                                                const char   *name);
 void                   calls_manager_remove_provider          (CallsManager *self,

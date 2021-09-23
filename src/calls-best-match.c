@@ -135,7 +135,6 @@ set_property (GObject      *object,
               GParamSpec   *pspec)
 {
   CallsBestMatch *self = CALLS_BEST_MATCH (object);
-  const char *country_code;
 
   switch (property_id) {
   case PROP_PHONE_NUMBER:
@@ -143,15 +142,12 @@ set_property (GObject      *object,
     break;
 
   case PROP_COUNTRY_CODE:
-    country_code = g_value_get_string (value);
-    if (country_code) {
-      g_free (self->country_code);
-      self->country_code = g_strdup (country_code);
+    g_free (self->country_code);
+    self->country_code = g_value_dup_string (value);
 
-      if (self->phone_number) {
-        g_autofree char *number = g_strdup (self->phone_number);
-        calls_best_match_set_phone_number (self, number);
-      }
+    if (self->phone_number) {
+      g_autofree char *number = g_strdup (self->phone_number);
+      calls_best_match_set_phone_number (self, number);
     }
     break;
 
@@ -273,9 +269,6 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
 static void
 calls_best_match_init (CallsBestMatch *self)
 {
-  g_object_bind_property (calls_manager_get_default (), "country-code",
-                          self, "country-code",
-                          G_BINDING_SYNC_CREATE);
 }
 
 
@@ -307,23 +300,14 @@ calls_best_match_get_phone_number (CallsBestMatch *self)
 
 void
 calls_best_match_set_phone_number (CallsBestMatch *self,
-                                   const char    *phone_number)
+                                   const char     *phone_number)
 {
   g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
   g_autoptr (GError) error = NULL;
-  gboolean have_country_code_now = FALSE;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
   g_return_if_fail (phone_number);
-
-  have_country_code_now = !!self->country_code;
-
-  if (self->phone_number == phone_number &&
-      self->had_country_code_last_time == have_country_code_now)
-    return;
-
-  self->had_country_code_last_time = have_country_code_now;
 
   g_clear_pointer (&self->phone_number, g_free);
 
