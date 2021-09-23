@@ -24,11 +24,11 @@
 
 #define G_LOG_DOMAIN "CallsNewCallBox"
 
-#include "calls-application.h"
 #include "calls-new-call-box.h"
 #include "calls-ussd.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
+#include "calls-settings.h"
 
 #include <glib/gi18n.h>
 #include <handy.h>
@@ -83,11 +83,12 @@ static CallsOrigin *
 get_origin (CallsNewCallBox *self,
             const char      *target)
 {
-  CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
+  CallsManager *manager = calls_manager_get_default ();
+  CallsSettings *settings = calls_manager_get_settings (manager);
   g_autoptr (CallsOrigin) origin = NULL;
   GListModel *model;
   gboolean auto_use_def_origin =
-    calls_application_get_use_default_origins_setting (app);
+    calls_settings_get_use_default_origins (settings);
 
   if (auto_use_def_origin) {
     model = calls_manager_get_suitable_origins (calls_manager_get_default (),

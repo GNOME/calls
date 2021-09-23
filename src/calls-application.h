@@ -34,11 +34,5 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsApplication, calls_application, CALLS, APPLICATION, GtkApplication)
 
 CallsApplication   *calls_application_new                               (void);
-gboolean            calls_application_get_use_default_origins_setting   (CallsApplication *self);
-void                calls_application_set_use_default_origins_setting   (CallsApplication *self,
-                                                                         gboolean enabled);
-char               *calls_application_get_country_code_setting          (CallsApplication *self);
-void                calls_application_set_country_code_setting          (CallsApplication *self,
-                                                                         const char       *country_code);
 
 G_END_DECLS

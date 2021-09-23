@@ -38,7 +38,6 @@
 #include "calls-call-window.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
-#include "calls-settings.h"
 #include "calls-application.h"
 #include "calls-log.h"
 #include "version.h"
@@ -61,13 +60,11 @@ struct _CallsApplication
   GtkApplication parent_instance;
 
   gboolean          daemon;
-  CallsManager     *manager;
   CallsRinger      *ringer;
   CallsNotifier    *notifier;
   CallsRecordStore *record_store;
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
-  CallsSettings    *settings;
   CallsDBusManager *dbus_manager;
 
   char             *uri;
@@ -164,18 +161,19 @@ set_default_providers_action (GSimpleAction *action,
                               GVariant      *parameter,
                               gpointer       user_data)
 {
-  CallsApplication *self = CALLS_APPLICATION (user_data);
+  CallsManager *manager = calls_manager_get_default ();
+  CallsSettings *settings = calls_manager_get_settings (manager);
   g_auto (GStrv) plugins = NULL;
   /**
    * Only add default providers when there are none added yet,
    * This makes sure we're not resetting explicitly set providers
    */
-  if (calls_manager_has_any_provider (calls_manager_get_default ()))
+  if (calls_manager_has_any_provider (manager))
     return;
 
-  plugins = calls_settings_get_autoload_plugins (self->settings);
+  plugins = calls_settings_get_autoload_plugins (settings);
   for (guint i = 0; plugins[i] != NULL; i++) {
-    calls_manager_add_provider (calls_manager_get_default (), plugins[i]);
+    calls_manager_add_provider (manager, plugins[i]);
   }
 }
 
@@ -360,8 +358,6 @@ startup (GApplication *application)
 {
   g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
-  CallsApplication *self = CALLS_APPLICATION (application);
-  CallsManager *manager;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
@@ -380,14 +376,7 @@ startup (GApplication *application)
                                    G_N_ELEMENTS (actions),
                                    application);
 
-  self->settings = calls_settings_new ();
-  g_assert (self->settings != NULL);
-
-  manager = calls_manager_get_default ();
-  g_object_bind_property (self->settings, "country-code",
-                          manager, "country-code",
-                          G_BINDING_SYNC_CREATE);
-  g_signal_connect_swapped (manager,
+  g_signal_connect_swapped (calls_manager_get_default (),
                             "notify::state",
                             G_CALLBACK (manager_state_changed_cb),
                             application);
@@ -631,7 +620,6 @@ finalize (GObject *object)
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
-  g_clear_object (&self->settings);
   g_free (self->uri);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
@@ -711,38 +699,4 @@ calls_application_new (void)
                        "flags", G_APPLICATION_HANDLES_OPEN | G_APPLICATION_HANDLES_COMMAND_LINE,
                        "register-session", TRUE,
                        NULL);
-}
-
-gboolean
-calls_application_get_use_default_origins_setting (CallsApplication *self)
-{
-  g_return_val_if_fail (CALLS_IS_APPLICATION (self), FALSE);
-
-  return calls_settings_get_use_default_origins (self->settings);
-}
-
-void
-calls_application_set_use_default_origins_setting (CallsApplication *self,
-                                                   gboolean enabled)
-{
-  g_return_if_fail (CALLS_IS_APPLICATION (self));
-
-  calls_settings_set_use_default_origins (self->settings, enabled);
-}
-
-char *
-calls_application_get_country_code_setting (CallsApplication *self)
-{
-  g_return_val_if_fail (CALLS_IS_APPLICATION (self), FALSE);
-
-  return calls_settings_get_country_code (self->settings);
-}
-
-void
-calls_application_set_country_code_setting (CallsApplication *self,
-                                            const char       *country_code)
-{
-  g_return_if_fail (CALLS_IS_APPLICATION (self));
-
-  calls_settings_set_country_code (self->settings, country_code);
 }

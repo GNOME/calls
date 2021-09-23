@@ -27,6 +27,8 @@
 
 #pragma once
 
+#include "calls-settings.h"
+
 #include <glib-object.h>
 #include <folks/folks.h>
 #include <libebook-contacts/libebook-contacts.h>
@@ -48,7 +50,7 @@ typedef void (*IdleCallback) (gpointer        user_data,
 
 G_DECLARE_FINAL_TYPE (CallsContactsProvider, calls_contacts_provider, CALLS, CONTACTS_PROVIDER, GObject)
 
-CallsContactsProvider  *calls_contacts_provider_new                  (void);
+CallsContactsProvider  *calls_contacts_provider_new                  (CallsSettings         *settings);
 GeeCollection          *calls_contacts_provider_get_individuals      (CallsContactsProvider *self);
 CallsBestMatch         *calls_contacts_provider_lookup_phone_number  (CallsContactsProvider *self,
                                                                       const gchar           *number);
