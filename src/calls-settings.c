@@ -117,6 +117,10 @@ calls_settings_constructed (GObject *object)
 
   g_settings_bind (self->settings, "auto-use-default-origins",
                    self, "auto-use-default-origins", G_SETTINGS_BIND_DEFAULT);
+  g_settings_bind (self->settings, "country-code",
+                   self, "country-code", G_SETTINGS_BIND_DEFAULT);
+  g_settings_bind (self->settings, "autoload-plugins",
+                   self, "autoload-plugins", G_SETTINGS_BIND_DEFAULT);
 
   G_OBJECT_CLASS (calls_settings_parent_class)->constructed (object);
 }
