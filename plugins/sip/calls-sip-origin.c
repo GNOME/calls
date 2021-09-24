@@ -402,6 +402,10 @@ sip_r_register (int              status,
     g_debug ("REGISTER successful");
     origin->state = CALLS_ACCOUNT_ONLINE;
     nua_get_params (nua, TAG_ANY (), TAG_END());
+    if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
+      calls_sip_media_manager_set_session_ip (origin->media_manager,
+                                              sip->sip_contact->m_url->url_host);
+    }
 
   } else if (status == 401 || status == 407) {
     sip_authenticate (origin, nh, sip);
