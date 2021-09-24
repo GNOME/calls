@@ -70,6 +70,7 @@ search_view_prepare_cb (FolksSearchView *view,
     g_warning ("Failed to prepare Folks search view: %s", error->message);
 }
 
+
 static void
 notify_name (CallsBestMatch *self)
 {
@@ -77,12 +78,14 @@ notify_name (CallsBestMatch *self)
                             props[PROP_NAME]);
 }
 
+
 static void
 notify_avatar (CallsBestMatch *self)
 {
   g_object_notify_by_pspec (G_OBJECT (self),
                             props[PROP_AVATAR]);
 }
+
 
 static void
 update_best_match (CallsBestMatch *self)
@@ -157,6 +160,7 @@ set_property (GObject      *object,
     break;
   }
 }
+
 
 static void
 get_property (GObject      *object,
@@ -291,6 +295,7 @@ calls_best_match_has_individual (CallsBestMatch *self)
   return !!self->best_match;
 }
 
+
 const char *
 calls_best_match_get_phone_number (CallsBestMatch *self)
 {
@@ -298,6 +303,7 @@ calls_best_match_get_phone_number (CallsBestMatch *self)
 
   return self->phone_number;
 }
+
 
 void
 calls_best_match_set_phone_number (CallsBestMatch *self,
