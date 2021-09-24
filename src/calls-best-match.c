@@ -90,7 +90,7 @@ notify_avatar (CallsBestMatch *self)
 static void
 update_best_match (CallsBestMatch *self)
 {
-  g_autoptr (GeeSortedSet) individuals = folks_search_view_get_individuals (self->view);
+  GeeSortedSet *individuals = folks_search_view_get_individuals (self->view);
   FolksIndividual *best_match = NULL;
   gboolean notify_has_individual = FALSE;
 
