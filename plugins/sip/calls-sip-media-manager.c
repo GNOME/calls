@@ -39,10 +39,18 @@
  * shall also manage the #CallsSipMediaPipeline objects that are in use.
  */
 
+enum {
+  PROP_0,
+  PROP_SESSION_IP,
+  PROP_LAST_PROP
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
 typedef struct _CallsSipMediaManager
 {
   GObject parent;
 
+  char *session_ip;
   GList *supported_codecs;
 } CallsSipMediaManager;
 
@@ -50,11 +58,33 @@ G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
 
 
 static void
+calls_sip_media_manager_set_property (GObject      *object,
+                                      guint         property_id,
+                                      const GValue *value,
+                                      GParamSpec   *pspec)
+{
+  CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
+
+  switch (property_id) {
+  case PROP_SESSION_IP:
+    calls_sip_media_manager_set_session_ip (self, g_value_get_string (value));
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
 calls_sip_media_manager_finalize (GObject *object)
 {
+  CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
   gst_deinit ();
 
-  g_list_free (CALLS_SIP_MEDIA_MANAGER (object)->supported_codecs);
+  g_list_free (self->supported_codecs);
+  g_free (self->session_ip);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
 }
@@ -65,7 +95,17 @@ calls_sip_media_manager_class_init (CallsSipMediaManagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->set_property = calls_sip_media_manager_set_property;
   object_class->finalize = calls_sip_media_manager_finalize;
+
+  props[PROP_SESSION_IP] =
+    g_param_spec_string ("session-ip",
+                         "Session IP",
+                         "The public IP used as the session line in SDP",
+                         NULL,
+                         G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
@@ -145,11 +185,21 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
   g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", port + 1);
 
  done:
-  return g_strdup_printf ("v=0\r\n"
-                          "%s\r\n"
-                          "%s\r\n",
-                          media_line->str,
-                          attribute_lines->str);
+  if (self->session_ip && *self->session_ip)
+    return g_strdup_printf ("v=0\r\n"
+                            "s=%s\r\n"
+                            "%s\r\n"
+                            "%s\r\n",
+                            self->session_ip,
+                            media_line->str,
+                            attribute_lines->str);
+  else
+    return g_strdup_printf ("v=0\r\n"
+                            "%s\r\n"
+                            "%s\r\n",
+                            media_line->str,
+                            attribute_lines->str);
+
 }
 
 
@@ -235,4 +285,18 @@ calls_sip_media_manager_get_codecs_from_sdp (CallsSipMediaManager *self,
     g_warning ("Did not find any common codecs");
 
   return codecs;
+}
+
+
+void
+calls_sip_media_manager_set_session_ip (CallsSipMediaManager *self,
+                                        const char           *session_ip)
+{
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self));
+
+  g_clear_pointer (&self->session_ip, g_free);
+  if (session_ip && *session_ip) {
+    g_debug ("Setting session IP to %s", session_ip);
+    self->session_ip = g_strdup (session_ip);
+  }
 }
