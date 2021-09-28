@@ -65,7 +65,7 @@
                 </style>
                 <child internal-child="accessible">
                   <object class="AtkObject" id="a11y-call">
-                    <property name="accessible-name" translatable="yes">Call</property>
+                    <property name="accessible-name" translatable="yes" comments="Translators: This is a verb, not a noun. Call the number of the currently selected row.">Call</property>
                   </object>
                 </child>
                 <child>
