@@ -45,14 +45,14 @@
                             <property name="halign">center</property>
                             <property name="valign">center</property>
                             <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
+                            <property name="spacing">24</property>
                             <property name="margin">32</property>
                             <property name="expand">True</property>
                             <child>
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="pixel_size">32</property>
+                                <property name="pixel_size">128</property>
                                 <property name="icon_name">edit-find-symbolic</property>
                                 <style>
                                   <class name="dim-label"/>
@@ -63,10 +63,13 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">No contacts found</property>
-                                <attributes>
-                                  <attribute name="weight" value="bold"/>
-                                </attributes>
+                                <property name="wrap">True</property>
+                                <property name="wrap-mode">word-char</property>
+                                <property name="justify">center</property>
+                                <property name="label" translatable="yes">No Contacts Found</property>
+                                <style>
+                                  <class name="large-title"/>
+                                </style>
                               </object>
                             </child>
                           </object>
