@@ -9,6 +9,7 @@ stages:
 
 variables:
   L5_DOCKER_IMAGE: debian:bookworm
+  GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
   stage: build
