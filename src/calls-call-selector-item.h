@@ -29,8 +29,6 @@
 
 #include <gtk/gtk.h>
 
-typedef struct _CallsCallHolder CallsCallHolder;
-
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_CALL_SELECTOR_ITEM (calls_call_selector_item_get_type ())
