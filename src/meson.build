@@ -39,6 +39,7 @@ calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
                dependency('folks'),
                dependency('libcallaudio-0.1'),
                dependency('libsecret-1'),
+               libcall_ui_dep
              ]
 
 calls_vala_deps = [

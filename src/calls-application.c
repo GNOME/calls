@@ -42,6 +42,7 @@
 #include "calls-log.h"
 #include "version.h"
 
+#include <call-ui.h>
 #include <glib/gi18n.h>
 #include <handy.h>
 #include <libcallaudio.h>
@@ -367,6 +368,7 @@ startup (GApplication *application)
     {
       g_warning ("Failed to init libcallaudio: %s", error->message);
     }
+  cui_init (TRUE);
 
   g_set_prgname (APP_ID);
   g_set_application_name (_("Calls"));
@@ -439,6 +441,13 @@ calls_application_command_line (GApplication            *application,
 
   return 0;
 }
+
+static void
+app_shutdown (GApplication *application)
+{
+  cui_uninit ();
+}
+
 
 static void
 notify_window_visible_cb (GtkWidget       *window,
@@ -637,6 +646,7 @@ calls_application_class_init (CallsApplicationClass *klass)
   application_class->handle_local_options = calls_application_handle_local_options;
   application_class->startup = startup;
   application_class->command_line = calls_application_command_line;
+  application_class->shutdown = app_shutdown;
   application_class->activate = activate;
   application_class->open = app_open;
   application_class->dbus_register  = calls_application_dbus_register;
