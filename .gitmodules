@@ -1,0 +1,3 @@
+[submodule "subprojects/libcall-ui"]
+	path = subprojects/libcall-ui
+	url = https://gitlab.gnome.org/World/Phosh/libcall-ui.git
