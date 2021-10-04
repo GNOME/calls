@@ -1,0 +1,317 @@
+# Slovak translation for calls.
+# Copyright (C) 2021 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Dušan Kazik <prescott66@gmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls gnome-41\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2021-09-21 14:58+0000\n"
+"PO-Revision-Date: 2021-10-04 11:33+0200\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
+"X-Generator: Gtranslator 40.0\n"
+
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Hobvory"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefón"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Telefónny číselník a správca hovorov"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr ""
+"telefón;telefonovanie;telefonovať;hovor;vytočiť;vytočenie;číselník;volič;"
+"PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Hovory (démon)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Telefónny číselník a správca hovorov (režim démona)"
+
+#: src/calls-application.c:544
+#, c-format
+msgid "Tried dialing unparsable tel URI `%s'"
+msgstr "Pokúsili ste sa vytočiť nespracovateľnú telefónnu adresu URI „%s“"
+
+#: src/calls-application.c:626
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Nie je známe ako otvoriť adresu „%s“"
+
+# cmd line desc
+#: src/calls-application.c:680
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Názov zásuvného modulu, ktorý sa použije pre poskytovateľa hovoru"
+
+#: src/calls-application.c:681
+msgid "PLUGIN"
+msgstr "ZÁSUVNÝ_MODUL"
+
+# cmd line desc
+#: src/calls-application.c:686
+msgid "Whether to present the main window on startup"
+msgstr "Či sa má zobraziť hlavné okno po spustení"
+
+# cmd line desc
+#: src/calls-application.c:692
+msgid "Dial a number"
+msgstr "Vytočí číslo"
+
+#: src/calls-application.c:693
+msgid "NUMBER"
+msgstr "ČÍSLO"
+
+# cmd line desc
+#: src/calls-application.c:698
+msgid "Enable verbose debug messages"
+msgstr "Povolí podrobné ladiace správy"
+
+# cmd line desc
+#: src/calls-application.c:704
+msgid "Print current version"
+msgstr "Vypíše aktuálnu verziu"
+
+#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+msgid "Anonymous caller"
+msgstr "Anonymný volajúci"
+
+#: src/calls-call-display.c:278
+msgid "Calling…"
+msgstr "Volanie…"
+
+#: src/calls-call-record-row.c:113
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"včera"
+
+#: src/calls-main-window.c:125
+msgid "translator-credits"
+msgstr "Dušan Kazik <prescott66@gmail.com>"
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No voice-capable modem available"
+msgstr ""
+"Nedajú sa uskutočňovať hovory: Nie je dostupný žiadny modem, ktorý dokáže "
+"uskutočňovať hovory"
+
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr ""
+"Nedajú sa uskutočňovať hovory: Nie je dostupný žiadny modem alebo účet "
+"protokolu VoIP"
+
+#: src/calls-main-window.c:332
+msgid "Can't place calls: No backend service"
+msgstr "Nedajú sa uskutočňovať hovory: Žiadna podporná služba"
+
+#: src/calls-main-window.c:336
+msgid "Can't place calls: No plugin"
+msgstr "Nedajú sa uskutočňovať hovory: Žiadny zásuvný modul"
+
+#: src/calls-main-window.c:376
+msgid "Contacts"
+msgstr "Kontakty"
+
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+msgid "Dial Pad"
+msgstr "Klávesnica"
+
+#: src/calls-main-window.c:394
+msgid "Recent"
+msgstr "Nedávne"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Zmeškané hovory"
+
+#: src/calls-notifier.c:68
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Zmeškaný hovor od kontaktu <b>%s</b>"
+
+#: src/calls-notifier.c:70
+#, c-format
+msgid "Missed call from %s"
+msgstr "Zmeškaný hovor z čísla %s"
+
+#: src/calls-notifier.c:72
+msgid "Missed call from unknown caller"
+msgstr "Zmeškaný hovor od neznámeho volajúceho"
+
+#: src/calls-notifier.c:78
+msgid "Call back"
+msgstr "Zavolať späť"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Prichádzajúci telefónny hovor"
+
+#: src/ui/call-display.ui:135
+msgid "Mute"
+msgstr "Stlmiť"
+
+#: src/ui/call-display.ui:172
+msgid "Speaker"
+msgstr "Reproduktor"
+
+#: src/ui/call-display.ui:208
+msgid "Add call"
+msgstr "Pridať hovor"
+
+#: src/ui/call-display.ui:253
+msgid "Hold"
+msgstr "Pozdržať"
+
+#: src/ui/call-display.ui:345
+msgid "Hang up"
+msgstr "Zavesiť"
+
+#: src/ui/call-display.ui:376
+msgid "Answer"
+msgstr "Prijať"
+
+#: src/ui/call-display.ui:458
+msgid "Hide the dial pad"
+msgstr "Skryť klávesnicu"
+
+#: src/ui/call-record-row.ui:68
+msgid "Call the party"
+msgstr "Uskutočniť konferenčný hovor"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "O_dstrániť hovor"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "_Skopírovať číslo"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Pozdržaný"
+
+#: src/ui/contacts-box.ui:66
+msgid "No contacts found"
+msgstr "Nenašli sa žiadne kontakty"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Tento hovor nie je šifrovaný"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Tento hovor je šifrovaný"
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Žiadne nedávne hovory"
+
+#: src/ui/history-header-bar.ui:7
+msgid "Recent Calls"
+msgstr "Nedávne hovory"
+
+#: src/ui/history-header-bar.ui:20
+msgid "New call…"
+msgstr "Nový hovor…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:39
+msgid "Menu"
+msgstr "Ponuka"
+
+#: src/ui/history-header-bar.ui:70
+msgid "About Calls"
+msgstr "O aplikácii Hovory"
+
+#: src/ui/main-window.ui:76
+msgid "No modem found"
+msgstr "Nenašiel sa žiadny modem"
+
+#: src/ui/main-window.ui:118
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:127
+msgid "_Cancel"
+msgstr "_Zrušiť"
+
+#: src/ui/main-window.ui:144
+msgid "_Close"
+msgstr "Za_vrieť"
+
+#: src/ui/main-window.ui:154
+msgid "_Send"
+msgstr "Odo_slať"
+
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "Účty _VoIP"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "_Klávesové skratky"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Pomocník"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "_O aplikácii Hovory"
+
+# placeholder
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Zadajte adresu protokolu VoIP"
+
+# placeholder
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Zadajte číslo"
+
+#: src/ui/new-call-box.ui:91
+msgid "Dial"
+msgstr "Vytočiť"
+
+#: src/ui/new-call-box.ui:114
+msgid "Backspace through number"
+msgstr "Znak Backspace pomocou čísel"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Účet SIP"
+
+#: src/ui/new-call-header-bar.ui:7
+msgid "New Call"
+msgstr "Nový hovor"
+
+#: src/ui/new-call-header-bar.ui:20
+msgid "Back"
+msgstr "Späť"
