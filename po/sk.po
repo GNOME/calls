@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-21 14:58+0000\n"
-"PO-Revision-Date: 2021-10-04 11:33+0200\n"
+"POT-Creation-Date: 2021-10-04 09:34+0000\n"
+"PO-Revision-Date: 2021-10-04 11:40+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
 "X-Generator: Gtranslator 40.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
-msgstr "Hobvory"
+msgstr "Hovory"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
@@ -46,50 +46,52 @@ msgstr "Hovory (démon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Telefónny číselník a správca hovorov (režim démona)"
 
-#: src/calls-application.c:544
+#: src/calls-application.c:528
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Pokúsili ste sa vytočiť nespracovateľnú telefónnu adresu URI „%s“"
+#| msgid "Tried dialing unparsable tel URI `%s'"
+msgid "Tried invalid tel URI `%s'"
+msgstr "Skúsila sa neplatná telefónna adresa URI „%s“"
 
-#: src/calls-application.c:626
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nie je známe ako otvoriť adresu „%s“"
 
 # cmd line desc
-#: src/calls-application.c:680
+#: src/calls-application.c:658
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Názov zásuvného modulu, ktorý sa použije pre poskytovateľa hovoru"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "ZÁSUVNÝ_MODUL"
 
 # cmd line desc
-#: src/calls-application.c:686
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Či sa má zobraziť hlavné okno po spustení"
 
 # cmd line desc
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Vytočí číslo"
+#: src/calls-application.c:670
+#| msgid "Dial a number"
+msgid "Dial a telephone number"
+msgstr "Vytočí telefónne číslo"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "ČÍSLO"
 
 # cmd line desc
-#: src/calls-application.c:698
+#: src/calls-application.c:676
 msgid "Enable verbose debug messages"
 msgstr "Povolí podrobné ladiace správy"
 
 # cmd line desc
-#: src/calls-application.c:704
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Vypíše aktuálnu verziu"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonymný volajúci"
 
@@ -197,8 +199,9 @@ msgid "Hide the dial pad"
 msgstr "Skryť klávesnicu"
 
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Uskutočniť konferenčný hovor"
+#| msgid "Calls"
+msgid "Call"
+msgstr "Volať"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -315,3 +318,6 @@ msgstr "Nový hovor"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Späť"
+
+#~ msgid "Call the party"
+#~ msgstr "Uskutočniť konferenčný hovor"
