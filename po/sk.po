@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-04 09:34+0000\n"
-"PO-Revision-Date: 2021-10-04 11:38+0200\n"
+"POT-Creation-Date: 2021-09-21 14:58+0000\n"
+"PO-Revision-Date: 2021-10-04 11:33+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
-msgstr "Hovory"
+msgstr "Hobvory"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
