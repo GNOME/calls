@@ -16,7 +16,7 @@ build:native:
     paths:
       - _build
   variables:
-    COMMON_BUILD_OPTS: -Db_coverage=true --werror
+    COMMON_BUILD_OPTS: -Db_coverage=true
     BUILD_OPTS: -Dgtk_doc=true ${COMMON_BUILD_OPTS}
     WANT_BUILD_DEPS: "true"
   except:
