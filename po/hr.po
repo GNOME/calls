@@ -6,164 +6,93 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-04-18 03:25+0000\n"
-"PO-Revision-Date: 2020-04-18 15:38+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2021-09-20 01:57+0000\n"
+"PO-Revision-Date: 2021-10-06 12:37+0200\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Last-Translator: gogo <trebelnik2@gmail.com>\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 2.3\n"
 
-#: src/calls-application.c:308 src/calls-main-window.c:112
-#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Pozivi"
 
-#: src/calls-application.c:513
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefon"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Telefonsko biranje i upravljanje pozivima"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefon;Poziv;;Biranje;Birač;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Pozivi (pozadinski program)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr ""
+"Telefonsko biranje i upravljanje pozivima (način rada pozadinskog programa)"
+
+#: src/calls-application.c:539
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Pokušan je nevaljani tel URI `%s'"
+
+#: src/calls-application.c:616
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Ne znam kako otvoriti `%s'"
+
+#: src/calls-application.c:670
 msgid "The name of the plugin to use for the call Provider"
 msgstr "Naziv priključka koji se koristi za pružatelja usluga poziva"
 
-#: src/calls-application.c:514
+#: src/calls-application.c:671
 msgid "PLUGIN"
 msgstr "PRIKLJUČAK"
 
-#: src/calls-application.c:519
+#: src/calls-application.c:676
 msgid "Whether to present the main window on startup"
 msgstr "Treba li prikazati glavni prozor pri pokretanju"
 
-#: src/calls-application.c:525
-msgid "Dial a number"
-msgstr "Biraj broj"
+#: src/calls-application.c:682
+msgid "Dial a telephone number"
+msgstr "Biraj telefonski broj"
 
-#: src/calls-application.c:526
+#: src/calls-application.c:683
 msgid "NUMBER"
 msgstr "BROJ"
 
-#: src/calls-best-match.c:487
-msgid "View"
-msgstr "Pogled"
+#: src/calls-application.c:688
+msgid "Enable verbose debug messages"
+msgstr "Omogući otklanjanje grešaka poruka"
 
-#: src/calls-best-match.c:488
-msgid "The CallsBestMatchView to monitor"
-msgstr "Nadgledanje najboljeg podudaranja imena"
+#: src/calls-application.c:694
+msgid "Print current version"
+msgstr "Prikaži inačicu i zatvori"
 
-#: src/calls-best-match.c:494 src/calls-call.c:139 src/calls-party.c:186
-msgid "Name"
-msgstr "Ime"
+#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+msgid "Anonymous caller"
+msgstr "Anonimni pozivatelj"
 
-#: src/calls-best-match.c:495
-msgid "The display name of the best match"
-msgstr "Prikaži najbolje podudarano ime"
+#: src/calls-call-display.c:278
+msgid "Calling…"
+msgstr "Pozivanje…"
 
-#: src/calls-call.c:123 src/calls-call-record.c:206
-msgid "Inbound"
-msgstr "Dolazno"
-
-#: src/calls-call.c:124
-msgid "Whether the call is inbound"
-msgstr "Treba li nazvati dolazni poziv"
-
-#: src/calls-call.c:131 src/calls-party.c:193
-msgid "Number"
-msgstr "Broj"
-
-#: src/calls-call.c:132
-msgid "The number the call is connected to if known"
-msgstr "Broj na koji je poziv povezan ako je poznat"
-
-#: src/calls-call.c:140
-msgid "The name of the party the call is connected to, if the network provides it"
-msgstr "Naziv sugovornik s kojom je poziv povezan ako ga mreža pruža"
-
-#: src/calls-call.c:147
-msgid "State"
-msgstr "Stanje"
-
-#: src/calls-call.c:148
-msgid "The current state of the call"
-msgstr "Trenutno stanje poziva"
-
-#: src/calls-call-data.c:136 src/calls-call-holder.c:157
-msgid "Call"
-msgstr "Poziv"
-
-#: src/calls-call-data.c:137
-msgid "The call"
-msgstr "Poziv"
-
-#: src/calls-call-data.c:143
-msgid "Party"
-msgstr "Sugovornik"
-
-#: src/calls-call-data.c:144 src/calls-encryption-indicator.c:129
-msgid "The party participating in the call"
-msgstr "Sugovornik koji sudjeluje u pozivu"
-
-#: src/calls-call-display.c:245
-msgid "Calling..."
-msgstr "Pozivanje..."
-
-#: src/calls-call-display.c:598
-msgid "Call data"
-msgstr "Podaci poziva"
-
-#: src/calls-call-display.c:599
-msgid "Data for the call this display will be associated with"
-msgstr "Podaci za poziv ovog prikaza će biti pridruženi sa"
-
-#: src/calls-call-holder.c:158
-msgid "The call to hold"
-msgstr "Poziv na čeknju"
-
-#: src/calls-call-record.c:189
-msgid "ID"
-msgstr "ID"
-
-#: src/calls-call-record.c:190
-msgid "The row ID"
-msgstr "ID retka"
-
-#: src/calls-call-record.c:198
-msgid "Target"
-msgstr "Odredište"
-
-#: src/calls-call-record.c:199
-msgid "The PTSN phone number or other address of the call"
-msgstr "PTSN telefonski broj ili druga adresa poziva"
-
-#: src/calls-call-record.c:207
-msgid "Whether the call was an inbound call"
-msgstr "Treba li poziv biti dolazni poziv"
-
-#: src/calls-call-record.c:214
-msgid "Start"
-msgstr "Pokreni"
-
-#: src/calls-call-record.c:215
-msgid "Time stamp of the start of the call"
-msgstr "Vrijeme početka poziva"
-
-#: src/calls-call-record.c:222
-msgid "Answered"
-msgstr "Odgovoreno"
-
-#: src/calls-call-record.c:223
-msgid "Time stamp of when the call was answered"
-msgstr "Vrijeme odgovora na poziv"
-
-#: src/calls-call-record.c:230
-msgid "End"
-msgstr "Završetak"
-
-#: src/calls-call-record.c:231
-msgid "Time stamp of the end of the call"
-msgstr "Vrijeme završetka poziva"
-
-#: src/calls-call-record-row.c:103
+#: src/calls-call-record-row.c:113
 #, c-format
 msgid ""
 "%s\n"
@@ -172,133 +101,106 @@ msgstr ""
 "%s\n"
 "jučer"
 
-#: src/calls-call-record-row.c:505
-msgid "Record"
-msgstr "Zapis"
-
-#: src/calls-call-record-row.c:506
-msgid "The call record for this row"
-msgstr "Zapis poziva za ovaj redak"
-
-#: src/calls-call-record-row.c:512 src/calls-history-box.c:202
-#: src/calls-main-window.c:314 src/ui/main-window.ui:56
-msgid "Contacts"
-msgstr "Kontakti"
-
-#: src/calls-call-record-row.c:513 src/calls-history-box.c:203
-#: src/calls-main-window.c:315
-msgid "Interface for libfolks"
-msgstr "Sučelje za libfolks"
-
-#: src/calls-call-selector-item.c:174
-msgid "Call holder"
-msgstr "Čekanje poziva"
-
-#: src/calls-call-selector-item.c:175
-msgid "The holder for this call"
-msgstr "Čekanje za ovaj poziv"
-
-#: src/calls-encryption-indicator.c:128
-msgid "Encrypted"
-msgstr "Šifrirano"
-
-#: src/calls-history-box.c:195
-msgid "model"
-msgstr "model"
-
-#: src/calls-history-box.c:196
-msgid "The data store containing call records"
-msgstr "Pohrana podataka sadrži zapise poziva"
-
-#: src/calls-main-window.c:113
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  gogo https://launchpad.net/~trebelnik-stefina"
 
-#: src/calls-main-window.c:176
-msgid "Can't place calls: No SIM card"
-msgstr "Nemoguće spremanje poziva: Nema SIM kartice"
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Nemoguće spremanje poziva: Nema dostupnog glasovno sposobnog modula"
 
-#: src/calls-main-window.c:181
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Nemoguće spremanje poziva: Nema dostupnog modema ili VoIP računa"
+
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "Nemoguće spremanje poziva: Nema pozadinske usluge"
 
-#: src/calls-main-window.c:185
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "Nemoguće spremanje poziva: Nema priključka"
 
-#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+#: src/calls-main-window.c:376
+msgid "Contacts"
+msgstr "Kontakti"
+
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Biranje brojeva"
 
-#: src/calls-main-window.c:223
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Nedavno"
 
-#: src/calls-main-window.c:307
-msgid "Record store"
-msgstr "Spremište zapisa"
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Propušteni poziv"
 
-#: src/calls-main-window.c:308
-msgid "The store of call records"
-msgstr "Spremište zapisa poziva"
+#: src/calls-notifier.c:68
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Propušteni poziv od <b>%s</b>"
 
-#: src/calls-party.c:187
-msgid "The party's name"
-msgstr "Ime sugovornika"
+#: src/calls-notifier.c:70
+#, c-format
+msgid "Missed call from %s"
+msgstr "Propušteni poziv od %s"
 
-#: src/calls-party.c:194
-msgid "The party's telephone number"
-msgstr "Broj sugovornika"
+#: src/calls-notifier.c:72
+msgid "Missed call from unknown caller"
+msgstr "Propušteni poziv od nepoznatog pozivatelja"
 
-#: src/calls-provider.c:70
-msgid "Status"
-msgstr "Stanje"
-
-#: src/calls-provider.c:71
-msgid "A text string describing the status for display to the user"
-msgstr "Tekstni izraz koji opisuje stanje za prikaz korisniku"
-
-#: src/calls-ringer.c:204
-msgid "Incoming call"
-msgstr "Dolazni poziv"
+#: src/calls-notifier.c:78
+msgid "Call back"
+msgstr "Uzvrati poziv"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Dolazni telefonski poziv"
 
-#: src/ui/call-display.ui:124
+#: src/ui/call-display.ui:135
 msgid "Mute"
 msgstr "Utišaj"
 
-#: src/ui/call-display.ui:159
+#: src/ui/call-display.ui:172
 msgid "Speaker"
 msgstr "Zvučnik"
 
-#: src/ui/call-display.ui:193
+#: src/ui/call-display.ui:208
 msgid "Add call"
 msgstr "Dodaj poziv"
 
-#: src/ui/call-display.ui:236
+#: src/ui/call-display.ui:253
 msgid "Hold"
 msgstr "Čekanje"
 
-#: src/ui/call-display.ui:326
+#: src/ui/call-display.ui:345
 msgid "Hang up"
 msgstr "Prekini"
 
-#: src/ui/call-display.ui:357
+#: src/ui/call-display.ui:376
 msgid "Answer"
 msgstr "Odgovori"
 
-#: src/ui/call-display.ui:439
+#: src/ui/call-display.ui:458
 msgid "Hide the dial pad"
 msgstr "Sakrij biranje brojeva"
 
-#: src/ui/call-record-row.ui:65
-msgid "Call the party"
-msgstr "Nazovi ika"
+#: src/ui/call-record-row.ui:68
+msgid "Call"
+msgstr "Poziv"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Delete Call"
+msgstr "_Obriši poziv"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "_Kopiraj broj"
 
 #: src/ui/call-selector-item.ui:31
 msgid "+441234567890"
@@ -307,6 +209,10 @@ msgstr "+441234567890"
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
 msgstr "Na čekanju"
+
+#: src/ui/contacts-box.ui:66
+msgid "No contacts found"
+msgstr "Nema pronađenih kontakta"
 
 #: src/ui/encryption-indicator.ui:23
 msgid "This call is not encrypted"
@@ -320,39 +226,213 @@ msgstr "Ovaj poziv je šrifriran"
 msgid "No Recent Calls"
 msgstr "Nema nedavnih poziva"
 
-#: src/ui/history-header-bar.ui:8
+#: src/ui/history-header-bar.ui:7
 msgid "Recent Calls"
 msgstr "Nedavni pozivi"
 
-#: src/ui/history-header-bar.ui:21
+#: src/ui/history-header-bar.ui:20
 msgid "New call…"
 msgstr "Novi poziv…"
 
 #. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:40
+#: src/ui/history-header-bar.ui:39
 msgid "Menu"
 msgstr "Izbornik"
 
-#: src/ui/history-header-bar.ui:71
+#: src/ui/history-header-bar.ui:70
 msgid "About Calls"
 msgstr "O Pozivima"
 
-#: src/ui/main-window.ui:36
+#: src/ui/main-window.ui:76
 msgid "No modem found"
 msgstr "Modem nije pronađen"
 
-#: src/ui/new-call-box.ui:101
+#: src/ui/main-window.ui:118
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:127
+msgid "_Cancel"
+msgstr "_Odustani"
+
+#: src/ui/main-window.ui:144
+msgid "_Close"
+msgstr "_Zatvori"
+
+#: src/ui/main-window.ui:154
+msgid "_Send"
+msgstr "_Pošalji"
+
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "_VoIP računi"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "_Prečaci tipkovnice"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Priručnik"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "_O Pozivima"
+
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Upišite VoIP adresu"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Upišite broj"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Biraj"
 
-#: src/ui/new-call-box.ui:129
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
 msgstr "Povrat po brojevima"
 
-#: src/ui/new-call-header-bar.ui:8
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "SIP račun"
+
+#: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
 msgstr "Novi poziv"
 
-#: src/ui/new-call-header-bar.ui:21
+#: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Natrag"
+
+#~ msgid "View"
+#~ msgstr "Pogled"
+
+#~ msgid "The CallsBestMatchView to monitor"
+#~ msgstr "Nadgledanje najboljeg podudaranja imena"
+
+#~ msgid "Name"
+#~ msgstr "Ime"
+
+#~ msgid "The display name of the best match"
+#~ msgstr "Prikaži najbolje podudarano ime"
+
+#~ msgid "Inbound"
+#~ msgstr "Dolazno"
+
+#~ msgid "Whether the call is inbound"
+#~ msgstr "Treba li nazvati dolazni poziv"
+
+#~ msgid "Number"
+#~ msgstr "Broj"
+
+#~ msgid "The number the call is connected to if known"
+#~ msgstr "Broj na koji je poziv povezan ako je poznat"
+
+#~ msgid ""
+#~ "The name of the party the call is connected to, if the network provides it"
+#~ msgstr "Naziv sugovornik s kojom je poziv povezan ako ga mreža pruža"
+
+#~ msgid "State"
+#~ msgstr "Stanje"
+
+#~ msgid "The current state of the call"
+#~ msgstr "Trenutno stanje poziva"
+
+#~ msgid "The call"
+#~ msgstr "Poziv"
+
+#~ msgid "Party"
+#~ msgstr "Sugovornik"
+
+#~ msgid "The party participating in the call"
+#~ msgstr "Sugovornik koji sudjeluje u pozivu"
+
+#~ msgid "Data for the call this display will be associated with"
+#~ msgstr "Podaci za poziv ovog prikaza će biti pridruženi sa"
+
+#~ msgid "The call to hold"
+#~ msgstr "Poziv na čeknju"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "The row ID"
+#~ msgstr "ID retka"
+
+#~ msgid "Target"
+#~ msgstr "Odredište"
+
+#~ msgid "The PTSN phone number or other address of the call"
+#~ msgstr "PTSN telefonski broj ili druga adresa poziva"
+
+#~ msgid "Whether the call was an inbound call"
+#~ msgstr "Treba li poziv biti dolazni poziv"
+
+#~ msgid "Start"
+#~ msgstr "Pokreni"
+
+#~ msgid "Time stamp of the start of the call"
+#~ msgstr "Vrijeme početka poziva"
+
+#~ msgid "Answered"
+#~ msgstr "Odgovoreno"
+
+#~ msgid "Time stamp of when the call was answered"
+#~ msgstr "Vrijeme odgovora na poziv"
+
+#~ msgid "End"
+#~ msgstr "Završetak"
+
+#~ msgid "Time stamp of the end of the call"
+#~ msgstr "Vrijeme završetka poziva"
+
+#~ msgid "Record"
+#~ msgstr "Zapis"
+
+#~ msgid "The call record for this row"
+#~ msgstr "Zapis poziva za ovaj redak"
+
+#~ msgid "Interface for libfolks"
+#~ msgstr "Sučelje za libfolks"
+
+#~ msgid "Call holder"
+#~ msgstr "Čekanje poziva"
+
+#~ msgid "The holder for this call"
+#~ msgstr "Čekanje za ovaj poziv"
+
+#~ msgid "Encrypted"
+#~ msgstr "Šifrirano"
+
+#~ msgid "model"
+#~ msgstr "model"
+
+#~ msgid "The data store containing call records"
+#~ msgstr "Pohrana podataka sadrži zapise poziva"
+
+#~ msgid "Can't place calls: No SIM card"
+#~ msgstr "Nemoguće spremanje poziva: Nema SIM kartice"
+
+#~ msgid "Record store"
+#~ msgstr "Spremište zapisa"
+
+#~ msgid "The store of call records"
+#~ msgstr "Spremište zapisa poziva"
+
+#~ msgid "The party's name"
+#~ msgstr "Ime sugovornika"
+
+#~ msgid "Status"
+#~ msgstr "Stanje"
+
+#~ msgid "A text string describing the status for display to the user"
+#~ msgstr "Tekstni izraz koji opisuje stanje za prikaz korisniku"
+
+#~ msgid "Incoming call"
+#~ msgstr "Dolazni poziv"
+
+#~ msgid "Call the party"
+#~ msgstr "Nazovi ika"
