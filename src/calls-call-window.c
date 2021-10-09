@@ -32,6 +32,7 @@
 #include "calls-new-call-box.h"
 #include "calls-in-app-notification.h"
 #include "calls-manager.h"
+#include "calls-ui-call-data.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -127,8 +128,8 @@ new_call_submitted_cb (CallsCallWindow *self,
 
 
 static void
-set_focus (CallsCallWindow  *self,
-           CallsCallDisplay *display)
+set_focus (CallsCallWindow *self,
+           CuiCallDisplay  *display)
 {
   gtk_stack_set_visible_child_name (self->main_stack, "active-call");
   gtk_stack_set_visible_child (self->call_stack, GTK_WIDGET (display));
@@ -150,7 +151,7 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 {
   GtkWidget *widget = gtk_bin_get_child (GTK_BIN (child));
   CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
-  CallsCallDisplay *display = calls_call_selector_item_get_display (item);
+  CuiCallDisplay *display = calls_call_selector_item_get_display (item);
 
   set_focus (self, display);
 }
@@ -160,13 +161,15 @@ static void
 add_call (CallsCallWindow *self,
           CallsCall       *call)
 {
-  CallsCallDisplay *display;
+  CallsUiCallData *call_data;
+  CuiCallDisplay *display;
   CallsCallSelectorItem *item;
 
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  display = calls_call_display_new (call);
+  call_data = calls_ui_call_data_new (call);
+  display = cui_call_display_new (CUI_CALL (call_data));
   item = calls_call_selector_item_new (display);
   gtk_stack_add_named (self->call_stack, GTK_WIDGET (display),
                        calls_call_get_number (call));
@@ -191,9 +194,11 @@ remove_call (CallsCallWindow *self,
   for (guint i = 0; i < n_calls; i++) {
     g_autoptr (CallsCallSelectorItem) item =
       g_list_model_get_item (G_LIST_MODEL (self->calls), i);
-    CallsCallDisplay *display = calls_call_selector_item_get_display (item);
+    CuiCallDisplay *display = calls_call_selector_item_get_display (item);
+    CallsUiCallData *call_data =
+      CALLS_UI_CALL_DATA (cui_call_display_get_call (display));
 
-    if (calls_call_display_get_call (display) == call) {
+    if (calls_ui_call_data_get_call (call_data) == call) {
       g_list_store_remove (self->calls, i);
       gtk_container_remove (GTK_CONTAINER (self->call_stack),
                             GTK_WIDGET (display));

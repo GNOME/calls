@@ -23,7 +23,8 @@
  */
 
 #include "calls-call-selector-item.h"
-#include "calls-call-display.h"
+#include "calls-call.h"
+#include "calls-ui-call-data.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -35,7 +36,7 @@ struct _CallsCallSelectorItem
 {
   GtkEventBox parent_instance;
 
-  CallsCallDisplay *display;
+  CuiCallDisplay *display;
   CallsBestMatch *contact;
 
   GtkBox *main_box;
@@ -65,9 +66,9 @@ call_state_changed_cb (CallsCallSelectorItem *self,
 
 
 CallsCallSelectorItem *
-calls_call_selector_item_new (CallsCallDisplay *display)
+calls_call_selector_item_new (CuiCallDisplay *display)
 {
-  g_return_val_if_fail (CALLS_IS_CALL_DISPLAY (display), NULL);
+  g_return_val_if_fail (CUI_IS_CALL_DISPLAY (display), NULL);
 
   return g_object_new (CALLS_TYPE_CALL_SELECTOR_ITEM,
                        "display", display,
@@ -75,23 +76,36 @@ calls_call_selector_item_new (CallsCallDisplay *display)
 }
 
 
-CallsCallDisplay *
+CuiCallDisplay *
 calls_call_selector_item_get_display (CallsCallSelectorItem *item)
 {
   g_return_val_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (item), NULL);
   return item->display;
 }
 
+static CallsCall *
+display_get_call (CuiCallDisplay *display)
+{
+  CuiCall *call_data;
+
+  g_assert (CUI_IS_CALL_DISPLAY (display));
+
+  call_data = cui_call_display_get_call (display);
+  return calls_ui_call_data_get_call (CALLS_UI_CALL_DATA (call_data));
+}
+
 static void
 set_party (CallsCallSelectorItem *self)
 {
+  CallsCall *call;
   // FIXME: use HdyAvatar and the contact avatar
   GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
 
   gtk_box_pack_start (self->main_box, image, TRUE, TRUE, 0);
   gtk_widget_show (image);
 
-  self->contact = calls_call_get_contact (calls_call_display_get_call (self->display));
+  call = display_get_call (self->display);
+  self->contact = calls_call_get_contact (call);
 
   g_object_bind_property (self->contact, "name",
                           self->name, "label",
@@ -100,14 +114,14 @@ set_party (CallsCallSelectorItem *self)
 
 
 static void
-set_call_display (CallsCallSelectorItem *self, CallsCallDisplay *display)
+set_call_display (CallsCallSelectorItem *self, CuiCallDisplay *display)
 {
-  CallsCall *call = NULL;
+  CallsCall *call;
 
-  g_return_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (self));
-  g_return_if_fail (CALLS_IS_CALL_DISPLAY (display));
+  g_assert (CALLS_IS_CALL_SELECTOR_ITEM (self));
+  g_assert (CUI_IS_CALL_DISPLAY (display));
 
-  call = calls_call_display_get_call (display);
+  call = display_get_call (display);
   g_signal_connect_object (call, "state-changed",
                            G_CALLBACK (call_state_changed_cb),
                            self,
@@ -131,7 +145,7 @@ set_property (GObject      *object,
   switch (property_id) {
   case PROP_DISPLAY:
     set_call_display
-      (self, CALLS_CALL_DISPLAY (g_value_get_object (value)));
+      (self, CUI_CALL_DISPLAY (g_value_get_object (value)));
     break;
 
   default:
@@ -173,9 +187,9 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
     g_param_spec_object ("display",
                          "Call display",
                          "The display for this call",
-                         CALLS_TYPE_CALL_DISPLAY,
+                         CUI_TYPE_CALL_DISPLAY,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-   
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
