@@ -3,55 +3,97 @@
 # This file is distributed under the same license as the Calls package.
 # Amos Batto <amosbatto@yahoo.com>, 2020.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2020.
+# PerikiyoXD <perikiyoxd@gmail.com>, 2021.
+# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-07-25 15:24+0000\n"
-"PO-Revision-Date: 2020-07-27 08:43+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2021-10-09 08:05+0000\n"
+"PO-Revision-Date: 2021-10-13 09:22+0200\n"
+"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.36.0\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: src/calls-application.c:310 src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
+#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Llamadas"
 
-#: src/calls-application.c:519
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Teléfono"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Un marcador telefónico y gestor de llamadas"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Teléfono;Llamada;Teléfono fijo;Marcación;Marcador;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Llamadas (demonio)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Un marcador telefónico y gestor de llamadas (modo demonio)"
+
+#: src/calls-application.c:528
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Intento de URI «tel» no válido «%s»"
+
+#: src/calls-application.c:605
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "No se sabe cómo abrir «%s»"
+
+#: src/calls-application.c:658
 msgid "The name of the plugin to use for the call Provider"
 msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
 
-#: src/calls-application.c:520
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "COMPLEMENTO"
 
-#: src/calls-application.c:525
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Indica si se muestra la ventana principal al inicio"
 
-#: src/calls-application.c:531
-msgid "Dial a number"
-msgstr "Marcar un número"
+#: src/calls-application.c:670
+msgid "Dial a telephone number"
+msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:532
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-call-display.c:246
-msgid "Calling…"
-msgstr "Llamando…"
+#: src/calls-application.c:676
+msgid "Enable verbose debug messages"
+msgstr "Activar mensajes de depuración detallados"
 
-#: src/calls-call-record-row.c:39 src/calls-manager.c:547
+#: src/calls-application.c:682
+msgid "Print current version"
+msgstr "Imprimir versión actual"
+
+#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Llamada anónima"
 
-#: src/calls-call-record-row.c:112
+#: src/calls-call-display.c:278
+msgid "Calling…"
+msgstr "Llamando…"
+
+#: src/calls-call-record-row.c:113
 #, c-format
 msgid ""
 "%s\n"
@@ -60,71 +102,110 @@ msgstr ""
 "%s\n"
 "ayer"
 
-#: src/calls-main-window.c:115
+#: src/calls-main-window.c:125
 msgid "translator-credits"
 msgstr ""
+"Pedro Luis Valadés Viera <perikiyoxd@gmail.com>\n"
 "Amos Batto <amosbatto@yahoo.com>\n"
 "Daniel Mustieles <daniel.mustieles@gmail.com>"
 
-#: src/calls-main-window.c:173
-msgid "Can't place calls: No SIM card"
-msgstr "No puede hacer llamadas: no hay tarjeta SIM"
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No voice-capable modem available"
+msgstr ""
+"No se pueden realizar llamadas: no hay disponible ningún módem con capacidad "
+"de voz"
 
-#: src/calls-main-window.c:178
+#: src/calls-main-window.c:327
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "No se pueden realizar llamadas: no hay módem ni cuenta VoIP disponible"
+
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
-msgstr "No puede hacer llamadas: no hay «backend»"
+msgstr "No se pueden realizar llamadas: no hay servicio de «backend»"
 
-#: src/calls-main-window.c:182
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
-msgstr "No puede hacer llamadas: no hay complemento"
+msgstr "No se pueden realizar llamadas: no hay complemento"
 
-#: src/calls-main-window.c:210 src/ui/call-display.ui:280
+#: src/calls-main-window.c:376
+msgid "Contacts"
+msgstr "Contactos"
+
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
-msgstr "Teclado"
+msgstr "Teclado de marcado"
 
-#: src/calls-main-window.c:219
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recientes"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Llamada perdida"
+
+#: src/calls-notifier.c:68
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Llamada perdida de <b>%s</b>"
+
+#: src/calls-notifier.c:70
+#, c-format
+msgid "Missed call from %s"
+msgstr "Llamada perdida de %s"
+
+#: src/calls-notifier.c:72
+msgid "Missed call from unknown caller"
+msgstr "Llamada perdida de desconocido"
+
+#: src/calls-notifier.c:78
+msgid "Call back"
+msgstr "Volver a llamar"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Llamada entrante"
 
-#: src/ui/call-display.ui:126
+#: src/ui/call-display.ui:135
 msgid "Mute"
 msgstr "Silencio"
 
-#: src/ui/call-display.ui:163
+#: src/ui/call-display.ui:172
 msgid "Speaker"
 msgstr "Altavoz"
 
-#: src/ui/call-display.ui:199
+#: src/ui/call-display.ui:208
 msgid "Add call"
 msgstr "Añadir llamada"
 
-#: src/ui/call-display.ui:244
+#: src/ui/call-display.ui:253
 msgid "Hold"
 msgstr "Poner en espera"
 
-#: src/ui/call-display.ui:336
+#: src/ui/call-display.ui:345
 msgid "Hang up"
 msgstr "Colgar"
 
-#: src/ui/call-display.ui:367
+#: src/ui/call-display.ui:376
 msgid "Answer"
 msgstr "Contestar"
 
-#: src/ui/call-display.ui:449
+#: src/ui/call-display.ui:458
 msgid "Hide the dial pad"
 msgstr "Ocultar el teclado de marcado"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Llamar el contacto"
+msgid "Call"
+msgstr "Llamar"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
 msgstr "_Eliminar Llamada"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:117
+msgid "_Copy number"
+msgstr "Copiar número"
 
 #: src/ui/call-selector-item.ui:31
 msgid "+441234567890"
@@ -133,6 +214,10 @@ msgstr "+441234567890"
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
 msgstr "En espera"
+
+#: src/ui/contacts-box.ui:66
+msgid "No contacts found"
+msgstr "No se encontraron contactos"
 
 #: src/ui/encryption-indicator.ui:23
 msgid "This call is not encrypted"
@@ -146,43 +231,89 @@ msgstr "Esta llamada está cifrada"
 msgid "No Recent Calls"
 msgstr "No hay llamadas recientes"
 
-#: src/ui/history-header-bar.ui:8
+#: src/ui/history-header-bar.ui:7
 msgid "Recent Calls"
 msgstr "Llamadas recientes"
 
-#: src/ui/history-header-bar.ui:21
+#: src/ui/history-header-bar.ui:20
 msgid "New call…"
 msgstr "Llamada nueva…"
 
 #. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:40
+#: src/ui/history-header-bar.ui:39
 msgid "Menu"
 msgstr "Menú"
 
-#: src/ui/history-header-bar.ui:71
+#: src/ui/history-header-bar.ui:70
 msgid "About Calls"
 msgstr "Acerca de Llamadas"
 
-#: src/ui/main-window.ui:36
+#: src/ui/main-window.ui:76
 msgid "No modem found"
-msgstr "No encuentra ningún módem"
+msgstr "No se ha encontrado ningún módem"
 
-#: src/ui/main-window.ui:56
-msgid "Contacts"
-msgstr "Contactos"
+#: src/ui/main-window.ui:118
+msgid "USSD"
+msgstr "USSD"
 
-#: src/ui/new-call-box.ui:101
+#: src/ui/main-window.ui:127
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: src/ui/main-window.ui:144
+msgid "_Close"
+msgstr "_Cerrar"
+
+#: src/ui/main-window.ui:154
+msgid "_Send"
+msgstr "_Enviar"
+
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "Cuentas _VoIP"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "_Atajos de teclado"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Ayuda"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "_Acerca de Llamadas"
+
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Introduzca una dirección VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Introduzca un número"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Marcar"
 
-#: src/ui/new-call-box.ui:129
+#: src/ui/new-call-box.ui:114
 msgid "Backspace through number"
-msgstr "Retrocesos en el número"
+msgstr "Retroceder a lo largo del número"
 
-#: src/ui/new-call-header-bar.ui:8
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Cuenta SIP"
+
+#: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
 msgstr "Llamada nueva"
 
-#: src/ui/new-call-header-bar.ui:21
+#: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Atrás"
+
+#~ msgid "Can't place calls: No SIM card"
+#~ msgstr "No puede hacer llamadas: no hay tarjeta SIM"
+
+#~ msgid "Call the party"
+#~ msgstr "Llamar el contacto"
