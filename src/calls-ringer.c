@@ -34,8 +34,7 @@
 #include <libfeedback.h>
 
 
-struct _CallsRinger
-{
+struct _CallsRinger {
   GObject parent_instance;
 
   /* call_count keeps track of total ongoing calls.
@@ -59,14 +58,11 @@ on_event_triggered (LfbEvent     *event,
     g_return_if_fail (CALLS_IS_RINGER (self));
 
     if (lfb_event_trigger_feedback_finish (event, res, &err))
-      {
-        self->playing = TRUE;
-      }
+      self->playing = TRUE;
     else
-      {
-        g_warning ("Failed to trigger feedback for '%s': %s",
-                   lfb_event_get_event (event), err->message);
-      }
+      g_warning ("Failed to trigger feedback for '%s': %s",
+                 lfb_event_get_event (event), err->message);
+
     g_object_unref (self);
 }
 
@@ -75,18 +71,16 @@ start (CallsRinger *self)
 {
   g_return_if_fail (self->playing == FALSE);
 
-  if (self->event)
-    {
-      if (self->call_count > self->ring_count)
-        {
-          lfb_event_set_feedback_profile (self->event, "quiet");
-        }
-      g_object_ref (self);
-      lfb_event_trigger_feedback_async (self->event,
-                                        NULL,
-                                        (GAsyncReadyCallback)on_event_triggered,
-                                        self);
-    }
+  if (self->event) {
+    if (self->call_count > self->ring_count)
+      lfb_event_set_feedback_profile (self->event, "quiet");
+
+    g_object_ref (self);
+    lfb_event_trigger_feedback_async (self->event,
+                                      NULL,
+                                      (GAsyncReadyCallback)on_event_triggered,
+                                      self);
+  }
 }
 
 static void
@@ -95,22 +89,19 @@ on_event_feedback_ended (LfbEvent     *event,
                          CallsRinger  *self)
 {
     g_autoptr (GError) err = NULL;
+
     g_return_if_fail (LFB_IS_EVENT (event));
     g_return_if_fail (CALLS_IS_RINGER (self));
 
     if (lfb_event_end_feedback_finish (event, res, &err))
-      {
-        self->playing = FALSE;
-      }
+      self->playing = FALSE;
     else
-      {
-        g_warning ("Failed to end feedback for '%s': %s",
-                   lfb_event_get_event (event), err->message);
-      }
+      g_warning ("Failed to end feedback for '%s': %s",
+                 lfb_event_get_event (event), err->message);
 }
 
 static void
-on_feedback_ended (LfbEvent *event,
+on_feedback_ended (LfbEvent    *event,
                    CallsRinger *self)
 {
   g_debug ("Feedback ended");
@@ -131,36 +122,30 @@ stop (CallsRinger *self)
 static void
 update_ring (CallsRinger *self)
 {
-  if (!self->playing)
-    {
-      if (self->ring_count > 0)
-        {
-          g_debug ("Starting ringer");
-          start (self);
-        }
+  if (!self->playing) {
+    if (self->ring_count > 0) {
+      g_debug ("Starting ringer");
+      start (self);
     }
-  else
-    {
-      if (self->ring_count == 0)
-        {
-          g_debug ("Stopping ringer");
-          stop (self);
-        }
+  } else {
+    if (self->ring_count == 0) {
+      g_debug ("Stopping ringer");
+      stop (self);
     }
+  }
 }
 
 
 static inline gboolean
 is_ring_state (CallsCallState state)
 {
-  switch (state)
-    {
-    case CALLS_CALL_STATE_INCOMING:
-    case CALLS_CALL_STATE_WAITING:
-      return TRUE;
-    default:
-      return FALSE;
-    }
+  switch (state) {
+  case CALLS_CALL_STATE_INCOMING:
+  case CALLS_CALL_STATE_WAITING:
+    return TRUE;
+  default:
+    return FALSE;
+  }
 }
 
 
@@ -175,19 +160,13 @@ state_changed_cb (CallsRinger   *self,
 
   old_is_ring = is_ring_state (old_state);
   if (old_is_ring == is_ring_state (new_state))
-    {
-      // No change in ring state
-      return;
-    }
+    // No change in ring state
+    return;
 
   if (old_is_ring)
-    {
-      --self->ring_count;
-    }
+    --self->ring_count;
   else
-    {
-      ++self->ring_count;
-    }
+    ++self->ring_count;
 
   update_ring (self);
 }
@@ -201,16 +180,15 @@ update_count (CallsRinger    *self,
   self->call_count += delta;
 
   if (is_ring_state (calls_call_get_state (call)))
-    {
-      self->ring_count += delta;
-    }
+    self->ring_count += delta;
 
   update_ring (self);
 }
 
 
 static void
-call_added_cb (CallsRinger *self, CallsCall *call)
+call_added_cb (CallsRinger *self,
+               CallsCall *call)
 {
   update_count (self, call, +1);
 
@@ -222,7 +200,8 @@ call_added_cb (CallsRinger *self, CallsCall *call)
 
 
 static void
-call_removed_cb (CallsRinger *self, CallsCall *call)
+call_removed_cb (CallsRinger *self,
+                 CallsCall *call)
 {
   update_count (self, call, -1);
 
@@ -235,20 +214,17 @@ calls_ringer_init (CallsRinger *self)
 {
   g_autoptr (GError) err = NULL;
 
-  if (lfb_init (APP_ID, &err))
-    {
-      self->event = lfb_event_new ("phone-incoming-call");
-      /* Let feedbackd do the loop */
-      lfb_event_set_timeout (self->event, 0);
-      g_signal_connect (self->event,
-                        "feedback-ended",
-                        (GCallback)on_feedback_ended,
-                        self);
-    }
-  else
-    {
-      g_warning ("Failed to init libfeedback: %s", err->message);
-    }
+  if (lfb_init (APP_ID, &err)) {
+    self->event = lfb_event_new ("phone-incoming-call");
+    /* Let feedbackd do the loop */
+    lfb_event_set_timeout (self->event, 0);
+    g_signal_connect (self->event,
+                      "feedback-ended",
+                      G_CALLBACK (on_feedback_ended),
+                      self);
+  } else {
+    g_warning ("Failed to init libfeedback: %s", err->message);
+  }
 }
 
 
@@ -283,11 +259,10 @@ dispose (GObject *object)
 {
   CallsRinger *self = CALLS_RINGER (object);
 
-  if (self->event)
-    {
-      g_clear_object (&self->event);
-      lfb_uninit ();
-    }
+  if (self->event) {
+    g_clear_object (&self->event);
+    lfb_uninit ();
+  }
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
