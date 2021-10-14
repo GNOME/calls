@@ -465,6 +465,12 @@ add_call (CallsMMOrigin *self,
     }
 
   g_debug ("Call `%s' added", path);
+
+  /* FIXME: Hang up the call, since accepting a secondary call does not currently work.
+   * CallsMMCall[28822]: WARNING: Error accepting ModemManager call to `+4916XXXXXXXX': GDBus.Error:org.freedesktop.ModemManager1.Error.Core.Failed: This call was not ringing, cannot accept
+   */
+  if (g_hash_table_size (self->calls) > 1)
+    calls_call_hang_up (CALLS_CALL (call));
 }
 
 
