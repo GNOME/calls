@@ -52,8 +52,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 static void
-change_state (CallsCall      *call,
-              CallsDummyCall *self,
+change_state (CallsDummyCall *self,
               CallsCallState  state)
 {
   CallsCallState old_state = self->state;
@@ -65,7 +64,7 @@ change_state (CallsCall      *call,
 
   self->state = state;
   g_object_notify (G_OBJECT (self), "state");
-  g_signal_emit_by_name (call,
+  g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
                          old_state);
@@ -111,7 +110,7 @@ calls_dummy_call_answer (CallsCall *call)
 
   g_return_if_fail (self->state == CALLS_CALL_STATE_INCOMING);
 
-  change_state (call, self, CALLS_CALL_STATE_ACTIVE);
+  change_state (self, CALLS_CALL_STATE_ACTIVE);
 }
 
 static void
@@ -122,7 +121,7 @@ calls_dummy_call_hang_up (CallsCall *call)
   g_return_if_fail (CALLS_IS_DUMMY_CALL (call));
   self = CALLS_DUMMY_CALL (call);
 
-  change_state (call, self, CALLS_CALL_STATE_DISCONNECTED);
+  change_state (self, CALLS_CALL_STATE_DISCONNECTED);
 }
 
 static gboolean
@@ -131,14 +130,14 @@ outbound_timeout_cb (CallsDummyCall *self)
   switch (self->state)
     {
     case CALLS_CALL_STATE_DIALING:
-      change_state (CALLS_CALL (self), self,
+      change_state (self,
                     CALLS_CALL_STATE_ALERTING);
       g_timeout_add_seconds
         (3, (GSourceFunc)outbound_timeout_cb, self);
       break;
 
     case CALLS_CALL_STATE_ALERTING:
-      change_state (CALLS_CALL (self), self,
+      change_state (self,
                     CALLS_CALL_STATE_ACTIVE);
       break;
 
