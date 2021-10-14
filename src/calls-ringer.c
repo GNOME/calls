@@ -37,13 +37,9 @@
 struct _CallsRinger {
   GObject parent_instance;
 
-  /* call_count keeps track of total ongoing calls.
-   * ring_count keeps track of ringing calls.
-   */
-  unsigned  call_count;
-  unsigned  ring_count;
-  gboolean  playing;
+  GList *calls;
   LfbEvent *event;
+  gboolean playing;
 };
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
@@ -67,12 +63,13 @@ on_event_triggered (LfbEvent     *event,
 }
 
 static void
-start (CallsRinger *self)
+start (CallsRinger *self,
+       gboolean     quiet)
 {
   g_return_if_fail (self->playing == FALSE);
 
   if (self->event) {
-    if (self->call_count > self->ring_count)
+    if (quiet)
       lfb_event_set_feedback_profile (self->event, "quiet");
 
     g_object_ref (self);
@@ -82,6 +79,7 @@ start (CallsRinger *self)
                                       self);
   }
 }
+
 
 static void
 on_event_feedback_ended (LfbEvent     *event,
@@ -100,6 +98,7 @@ on_event_feedback_ended (LfbEvent     *event,
                  lfb_event_get_event (event), err->message);
 }
 
+
 static void
 on_feedback_ended (LfbEvent    *event,
                    CallsRinger *self)
@@ -107,6 +106,7 @@ on_feedback_ended (LfbEvent    *event,
   g_debug ("Feedback ended");
   self->playing = FALSE;
 }
+
 
 static void
 stop (CallsRinger *self)
@@ -116,23 +116,6 @@ stop (CallsRinger *self)
                                 NULL,
                                 (GAsyncReadyCallback)on_event_feedback_ended,
                                 self);
-}
-
-
-static void
-update_ring (CallsRinger *self)
-{
-  if (!self->playing) {
-    if (self->ring_count > 0) {
-      g_debug ("Starting ringer");
-      start (self);
-    }
-  } else {
-    if (self->ring_count == 0) {
-      g_debug ("Stopping ringer");
-      stop (self);
-    }
-  }
 }
 
 
@@ -149,53 +132,82 @@ is_ring_state (CallsCallState state)
 }
 
 
-static void
-state_changed_cb (CallsRinger   *self,
-                  CallsCallState new_state,
-                  CallsCallState old_state)
+static inline gboolean
+is_active_state (CallsCallState state)
 {
-  gboolean old_is_ring;
+  switch (state) {
+  case CALLS_CALL_STATE_ACTIVE:
+  case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_ALERTING:
+  case CALLS_CALL_STATE_HELD:
+    return TRUE;
+  default:
+    return FALSE;
+  }
+}
 
-  g_return_if_fail (old_state != new_state);
 
-  old_is_ring = is_ring_state (old_state);
-  if (old_is_ring == is_ring_state (new_state))
-    // No change in ring state
-    return;
+static gboolean
+has_active_call (CallsRinger *self)
+{
+  g_assert (CALLS_IS_RINGER (self));
 
-  if (old_is_ring)
-    --self->ring_count;
-  else
-    ++self->ring_count;
+  for (GList *node = self->calls; node != NULL; node = node->next) {
+    CallsCall *call = node->data;
 
-  update_ring (self);
+    if (is_active_state (calls_call_get_state (call)))
+      return TRUE;
+  }
+  return FALSE;
+}
+
+
+static gboolean
+has_incoming_call (CallsRinger *self)
+{
+  g_assert (CALLS_IS_RINGER (self));
+
+  for (GList *node = self->calls; node != NULL; node = node->next) {
+    CallsCall *call = node->data;
+
+    if (is_ring_state (calls_call_get_state (call)))
+      return TRUE;
+  }
+  return FALSE;
 }
 
 
 static void
-update_count (CallsRinger    *self,
-              CallsCall      *call,
-              short           delta)
+update_ring (CallsRinger *self)
 {
-  self->call_count += delta;
+  g_assert (CALLS_IS_RINGER (self));
 
-  if (is_ring_state (calls_call_get_state (call)))
-    self->ring_count += delta;
+  if (!self->event) {
+    g_debug ("Can't ring because libfeedback is not initialized");
+    return;
+  }
 
-  update_ring (self);
+  if (has_incoming_call (self))
+    start (self, has_active_call (self));
+  else
+    stop (self);
 }
 
 
 static void
 call_added_cb (CallsRinger *self,
-               CallsCall *call)
+               CallsCall   *call)
 {
-  update_count (self, call, +1);
+  g_assert (CALLS_IS_RINGER (self));
+  g_assert (CALLS_IS_CALL (call));
+
+  self->calls = g_list_append (self->calls, call);
 
   g_signal_connect_swapped (call,
                             "state-changed",
-                            G_CALLBACK (state_changed_cb),
+                            G_CALLBACK (update_ring),
                             self);
+  update_ring (self);
 }
 
 
@@ -203,9 +215,11 @@ static void
 call_removed_cb (CallsRinger *self,
                  CallsCall *call)
 {
-  update_count (self, call, -1);
+  self->calls = g_list_remove (self->calls, call);
 
   g_signal_handlers_disconnect_by_data (call, self);
+
+  update_ring (self);
 }
 
 
