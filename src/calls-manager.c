@@ -58,7 +58,6 @@ struct _CallsManager
   CallsContactsProvider *contacts_provider;
 
   CallsManagerState state;
-  CallsCall *primary_call;
   CallsSettings *settings;
 };
 
@@ -200,11 +199,6 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
   g_return_if_fail (CALLS_IS_CALL (call));
 
   g_signal_emit (self, signals[SIGNAL_CALL_ADD], 0, call, origin);
-
-  if (self->primary_call == NULL)
-    self->primary_call = call;
-  else
-    calls_call_hang_up (call);
 }
 
 static void
@@ -216,9 +210,6 @@ remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *or
 
   /* We ignore the reason for now, because it doesn't give any usefull information */
   g_signal_emit (self, signals[SIGNAL_CALL_REMOVE], 0, call, origin);
-
-  if (self->primary_call == call)
-    self->primary_call = NULL;
 }
 
 static void
@@ -666,7 +657,6 @@ calls_manager_init (CallsManager *self)
   const gchar *dir;
 
   self->state = CALLS_MANAGER_STATE_NO_PROVIDER;
-  self->primary_call = NULL;
   self->providers = g_hash_table_new_full (g_str_hash,
                                            g_str_equal,
                                            g_free,
