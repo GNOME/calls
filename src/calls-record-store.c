@@ -512,7 +512,7 @@ stamp_call (CallsCallRecord  *record,
 
 
   g_debug ("Stamping call `%s'", stamp_name);
-  stamp = g_date_time_new_now_local ();
+  stamp = g_date_time_new_now_utc ();
   g_object_set (record_obj,
                 stamp_name, stamp,
                 NULL);
@@ -601,7 +601,7 @@ call_added_cb (CallsRecordStore *self,
   GDateTime *start;
 
   g_assert (g_object_get_data (call_obj, "calls-call-start") == NULL);
-  start = g_date_time_new_now_local ();
+  start = g_date_time_new_now_utc ();
   g_object_set_data_full (call_obj, "calls-call-start",
                           start, (GDestroyNotify)g_date_time_unref);
 
