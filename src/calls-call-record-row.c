@@ -95,17 +95,19 @@ nice_time (GDateTime *t,
            gboolean *final)
 {
   GDateTime *now = g_date_time_new_now_local ();
+  g_autoptr (GTimeZone) local_tz = g_time_zone_new_local ();
+  g_autoptr (GDateTime) t_local_tz = g_date_time_to_timezone (t, local_tz);
   const gboolean today =
-    calls_date_time_is_same_day (now, t);
+    calls_date_time_is_same_day (now, t_local_tz);
   const gboolean yesterday =
-    (!today && calls_date_time_is_yesterday (now, t));
+    (!today && calls_date_time_is_yesterday (now, t_local_tz));
 
   g_assert (nice != NULL);
   g_assert (final != NULL);
 
   if (today || yesterday)
     {
-      gchar *n = g_date_time_format (t, "%R");
+      gchar *n = g_date_time_format (t_local_tz, "%R");
 
       if (yesterday)
         {
@@ -120,12 +122,12 @@ nice_time (GDateTime *t,
     }
   else if (calls_date_time_is_same_year (now, t))
     {
-      *nice = g_date_time_format (t, "%b %-d");
+      *nice = g_date_time_format (t_local_tz, "%b %-d");
       *final = FALSE;
     }
   else
     {
-      *nice = g_date_time_format (t, "%Y");
+      *nice = g_date_time_format (t_local_tz, "%Y");
       *final = TRUE;
     }
 
