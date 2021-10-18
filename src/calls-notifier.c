@@ -65,8 +65,10 @@ notify (CallsNotifier *self, CallsCall *call)
   got_number = !!number && (g_strcmp0 (number, "") != 0);
 
   if (calls_best_match_has_individual (contact))
+    /* %s is a name here */
     msg = g_strdup_printf (_("Missed call from <b>%s</b>"), name);
   else if (got_number)
+    /* %s is a number here */
     msg = g_strdup_printf (_("Missed call from %s"), number);
   else
     msg = g_strdup (_("Missed call from unknown caller"));
