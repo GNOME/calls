@@ -28,7 +28,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">3</property>
-                    <property name="label" translatable="yes">+441234567890</property>
+                    <property name="label">+441234567890</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
