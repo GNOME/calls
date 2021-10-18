@@ -11,6 +11,10 @@ Files: data/sm.puri.Calls.metainfo.xml
 Copyright: 2018-2021 Purism SPC
 License: CC0-1.0
 
+Files: data/screenshots/*
+Copyright: 2021 Purism SPC
+License: CC0-1.0
+
 License: GPL-3+
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software
