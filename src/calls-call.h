@@ -72,6 +72,8 @@ gboolean         calls_call_can_dtmf               (CallsCall *self);
 void             calls_call_send_dtmf_tone         (CallsCall *self,
                                                     char       key);
 CallsBestMatch  *calls_call_get_contact            (CallsCall *self);
+void             calls_call_silence_ring           (CallsCall *self);
+gboolean         calls_call_get_silenced           (CallsCall *self);
 
 void     calls_call_state_to_string  (GString         *string,
                                       CallsCallState   state);
