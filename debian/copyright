@@ -4,11 +4,11 @@ Source: https://gitlab.gnome.org/GNOME/calls
 License: GPL-3+
 
 Files: *
-Copyright: 2018 Purism SPC
+Copyright: 2018-2021 Purism SPC
 License: GPL-3+
 
 Files: data/sm.puri.Calls.metainfo.xml
-Copyright: 2018 Purism SPC
+Copyright: 2018-2021 Purism SPC
 License: CC0-1.0
 
 License: GPL-3+
