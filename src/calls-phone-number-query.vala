@@ -25,10 +25,11 @@
 
 public class Calls.PhoneNumberQuery : Folks.Query
 {
-    private E.PhoneNumber _number;
+    private string _number;
+    private E.PhoneNumber _ephonenumber;
     private string _country_code;
 
-    public PhoneNumberQuery (E.PhoneNumber number, string? country_code)
+    public PhoneNumberQuery (string number, string? country_code)
     {
         string[] match_fields =
         { Folks.PersonaStore.detail_key (Folks.PersonaDetail.PHONE_NUMBERS) };
@@ -37,11 +38,25 @@ public class Calls.PhoneNumberQuery : Folks.Query
 
         this._number = number;
         this._country_code = country_code;
+
+        try
+        {
+            this._ephonenumber =
+                E.PhoneNumber.from_string (this._number, this._country_code);
+        }
+        catch (GLib.Error e)
+        {
+        // Fall back to string comparison in this case
+        debug ("Failed to convert `%s' to a phone number: %s",
+               this._number,
+               e.message);
+        }
     }
 
     public override uint is_match (Folks.Individual individual)
     {
         const uint MATCH_MAX = 4;
+        bool use_ephone = this._ephonenumber != null;
 
         // Iterate over the set of phone numbers
         Gee.Iterator<Folks.PhoneFieldDetails> iter =
@@ -52,36 +67,52 @@ public class Calls.PhoneNumberQuery : Folks.Query
             // Get the phone number
             Folks.PhoneFieldDetails details = iter.get ();
             string indiv_number = details.value;
+            uint this_match = 0;
 
-            // Parse it
-            E.PhoneNumber indiv_parsed;
-            try
+            if (use_ephone)
             {
-                indiv_parsed =
-                    E.PhoneNumber.from_string (indiv_number, this._country_code);
+                // Parse it
+                E.PhoneNumber indiv_parsed;
+                try
+                {
+                    indiv_parsed =
+                        E.PhoneNumber.from_string (indiv_number, this._country_code);
+
+                    E.PhoneNumberMatch result =
+                    indiv_parsed.compare (this._ephonenumber);
+
+                    switch (result)
+                    {
+                    case E.PhoneNumberMatch.NONE:     this_match = 0; break;
+                    case E.PhoneNumberMatch.SHORT:    this_match = 0; break;
+                    case E.PhoneNumberMatch.NATIONAL: this_match = 1; break;
+                    case E.PhoneNumberMatch.EXACT:    this_match = MATCH_MAX; break;
+                    default:                          this_match = 0; break;
+                    }
+
+                }
+                catch (GLib.Error e)
+                {
+                    debug ("Error parsing Folks phone number `%s'" +
+                           " for Individual `%s': %s",
+                           indiv_number,
+                           individual.display_name,
+                           e.message);
+
+                    if (this._number == indiv_number)
+                    {
+                        this_match = MATCH_MAX;
+                    }
+
+                }
             }
-            catch (GLib.Error e)
+            else
             {
-                warning ("Error parsing Folks phone number `%s'" +
-                         " for Individual `%s': %s",
-                         indiv_number,
-                         individual.display_name,
-                         e.message);
-                continue;
-            }
-
-            // Compare the Individual's and query's numbers
-            E.PhoneNumberMatch result =
-                indiv_parsed.compare (this._number);
-
-            uint this_match;
-            switch (result)
-            {
-            case E.PhoneNumberMatch.NONE:     this_match = 0; break;
-            case E.PhoneNumberMatch.SHORT:    this_match = 0; break;
-            case E.PhoneNumberMatch.NATIONAL: this_match = 1; break;
-            case E.PhoneNumberMatch.EXACT:    this_match = MATCH_MAX; break;
-            default:                          this_match = 0; break;
+                // Fall back to string comparison
+                if (this._number == indiv_number)
+                {
+                    this_match = MATCH_MAX;
+                }
             }
 
             if (this_match > match)
