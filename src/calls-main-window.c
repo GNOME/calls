@@ -391,6 +391,7 @@ constructed (GObject *object)
   history = calls_history_box_new (self->record_store);
   widget = GTK_WIDGET (history);
   gtk_stack_add_titled (self->main_stack, widget,
+                        /* Recent as in "Recent calls" (the call history) */
                         "recent", _("Recent"));
   gtk_container_child_set
     (main_stack, widget,
