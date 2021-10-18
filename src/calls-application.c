@@ -655,7 +655,7 @@ calls_application_init (CallsApplication *self)
     {
       "provider", 'p', G_OPTION_FLAG_NONE,
       G_OPTION_ARG_STRING_ARRAY, NULL,
-      _("The name of the plugin to use for the call Provider"),
+      _("The name of the plugin to use as a call provider"),
       _("PLUGIN")
     },
     {
