@@ -302,9 +302,7 @@ void
 calls_best_match_set_phone_number (CallsBestMatch *self,
                                    const char     *phone_number)
 {
-  g_autoptr (EPhoneNumber) number = NULL;
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
-  g_autoptr (GError) error = NULL;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
   g_return_if_fail (phone_number);
@@ -328,23 +326,17 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
       g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
       return;
     }
-    number = e_phone_number_from_string (phone_number, self->country_code, &error);
+    query = calls_phone_number_query_new (phone_number, self->country_code);
+    self->view = folks_search_view_new (folks_individual_aggregator_dup (), FOLKS_QUERY (query));
 
-    if (!number) {
-      g_warning ("Failed to convert %s to a phone number: %s", phone_number, error->message);
-    } else {
-      query = calls_phone_number_query_new (number, self->country_code);
-      self->view = folks_search_view_new (folks_individual_aggregator_dup (), FOLKS_QUERY (query));
+    g_signal_connect_swapped (self->view,
+                              "individuals-changed-detailed",
+                              G_CALLBACK (update_best_match),
+                              self);
 
-      g_signal_connect_swapped (self->view,
-                                "individuals-changed-detailed",
-                                G_CALLBACK (update_best_match),
-                                self);
-
-      folks_search_view_prepare (FOLKS_SEARCH_VIEW (self->view),
-                                 (GAsyncReadyCallback) search_view_prepare_cb,
-                                 NULL);
-    }
+    folks_search_view_prepare (FOLKS_SEARCH_VIEW (self->view),
+                               (GAsyncReadyCallback) search_view_prepare_cb,
+                               NULL);
   }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
