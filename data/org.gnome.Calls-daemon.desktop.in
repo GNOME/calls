@@ -14,3 +14,4 @@ NoDisplay=true
 Terminal=false
 Categories=Network;GNOME;GTK;Telephony;
 X-GNOME-AutoRestart=true
+X-GNOME-UsesNotifications=true
