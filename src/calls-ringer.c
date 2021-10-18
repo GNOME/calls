@@ -255,7 +255,8 @@ has_incoming_call (CallsRinger *self)
   for (GList *node = self->calls; node != NULL; node = node->next) {
     CallsCall *call = node->data;
 
-    if (is_ring_state (calls_call_get_state (call)))
+    if (is_ring_state (calls_call_get_state (call)) &&
+        !calls_call_get_silenced (call))
       return TRUE;
   }
   return FALSE;
@@ -290,6 +291,10 @@ call_added_cb (CallsRinger *self,
 
   g_signal_connect_swapped (call,
                             "state-changed",
+                            G_CALLBACK (update_ring),
+                            self);
+  g_signal_connect_swapped (call,
+                            "notify::silenced",
                             G_CALLBACK (update_ring),
                             self);
   update_ring (self);
