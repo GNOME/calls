@@ -111,7 +111,7 @@
                 <signal name="clicked" handler="backspace_clicked_cb" swapped="yes"/>
                 <child internal-child="accessible">
                   <object class="AtkObject" id="a11y-backspace">
-                    <property name="accessible-name" translatable="yes">Backspace through number</property>
+                    <property name="accessible-name" translatable="yes">Delete character in front of cursor</property>
                   </object>
                 </child>
                 <style>
