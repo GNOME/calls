@@ -28,6 +28,10 @@
       </screenshot>
     </screenshots>
 
+    <requires>
+      <display_length compare="ge">360</display_length>
+    </requires>
+
     <recommends>
         <control>pointing</control>
         <control>keyboard</control>
@@ -67,8 +71,4 @@
       </release>
     </releases>
 
-    <custom>
-        <value key="Purism::form_factor">workstation</value>
-        <value key="Purism::form_factor">mobile</value>
-    </custom>
 </component>
