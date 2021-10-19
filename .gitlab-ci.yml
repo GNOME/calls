@@ -82,7 +82,8 @@ validate-metadata:
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
-    - apt-get -y install appstream-util
+    - apt-get -y install eatmydata ca-certificates
+    - eatmydata apt-get -y install appstream-util
   script:
     - appstream-util validate data/org.gnome.Calls.metainfo.xml
 
