@@ -75,9 +75,10 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.c' && { intltool-update -m; exit 1; } || exit 0
 
-validate-metadata:
+validate-metadata-strict:
   stage: test
   image: debian:bookworm
+  allow_failure: true
   tags: []
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
@@ -85,7 +86,7 @@ validate-metadata:
     - apt-get -y install eatmydata ca-certificates
     - eatmydata apt-get -y install appstream-util
   script:
-    - appstream-util validate data/org.gnome.Calls.metainfo.xml
+    - appstream-util validate-strict data/org.gnome.Calls.metainfo.xml
 
 package-debian-bookworm:
   tags: []
