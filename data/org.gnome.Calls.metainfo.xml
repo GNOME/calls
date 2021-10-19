@@ -49,6 +49,7 @@
         <mediatype>x-scheme-handler/tel</mediatype>
         <mediatype>x-scheme-handler/sip</mediatype>
         <mediatype>x-scheme-handler/sips</mediatype>
+        <dbus type="user">org.gnome.Calls</dbus>
     </provides>
 
     <content_rating type="oars-1.1">
