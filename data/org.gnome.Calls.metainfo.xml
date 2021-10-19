@@ -17,6 +17,7 @@
     
     <project_group>GNOME</project_group>
     <launchable type="desktop-id">org.gnome.Calls.desktop</launchable>
+    <translation type="gettext">calls</translation>
 
     <screenshots>
       <screenshot type="default">
