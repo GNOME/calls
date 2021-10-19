@@ -7,7 +7,9 @@
     <summary>Make phone and SIP calls</summary>
     
     <description>
-        <p>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</p>
+      <p>Calls is a simple, elegant phone dialer and call handler for GNOME.
+      It can be used with a cellular modem for plain old telephone
+      calls as well as VoIP calls using the SIP protocol.</p>
     </description>
 
     <url type="homepage">https://gitlab.gnome.org/GNOME/calls</url>
