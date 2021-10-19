@@ -14,9 +14,6 @@
     <url type="bugtracker">https://gitlab.gnome.org/GNOME/calls/issues</url>
     
     <project_group>GNOME</project_group>
-    <developer_name>Bob Ham</developer_name>
-    <developer_name>Evangelos Ribeiro Tzaras</developer_name>
-    <developer_name>Julian Sparber</developer_name>
 
     <screenshots>
       <screenshot type="default">
