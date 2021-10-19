@@ -28,7 +28,7 @@ build:native:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
     - apt-get -y install eatmydata
-    - eatmydata apt-get -y install lcov ca-certificates appstream-util
+    - eatmydata apt-get -y install lcov ca-certificates appstream
     - '[ "${WANT_BUILD_DEPS}" != "true" ] || eatmydata apt-get -y build-dep .'
     - ulimit -c unlimited
   script:
@@ -75,7 +75,7 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.c' && { intltool-update -m; exit 1; } || exit 0
 
-validate-metadata-strict:
+validate-metadata-pedantic:
   stage: test
   image: debian:bookworm
   allow_failure: true
@@ -84,9 +84,9 @@ validate-metadata-strict:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
     - apt-get -y install eatmydata ca-certificates
-    - eatmydata apt-get -y install appstream-util
+    - eatmydata apt-get -y install appstream
   script:
-    - appstream-util validate-strict data/org.gnome.Calls.metainfo.xml
+    - appstreamcli validate --pedantic data/org.gnome.Calls.metainfo.xml
 
 package-debian-bookworm:
   tags: []
