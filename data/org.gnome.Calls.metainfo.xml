@@ -4,7 +4,7 @@
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <name>Calls</name>
-    <summary>A phone dialer and call handler</summary>
+    <summary>Make phone and SIP calls</summary>
     
     <description>
         <p>Calls is a simple, elegant phone dialer and call handler built using GTK+ 3.</p>
