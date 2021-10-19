@@ -45,11 +45,11 @@
         <category>Audio</category>
     </categories>
 
-    <mimetypes>
-        <mimetype>x-scheme-handler/tel</mimetype>
-        <mimetype>x-scheme-handler/sip</mimetype>
-        <mimetype>x-scheme-handler/sips</mimetype>
-    </mimetypes>
+    <provides>
+        <mediatype>x-scheme-handler/tel</mediatype>
+        <mediatype>x-scheme-handler/sip</mediatype>
+        <mediatype>x-scheme-handler/sips</mediatype>
+    </provides>
 
     <content_rating type="oars-1.1">
         <content_attribute id="violence-cartoon">none</content_attribute>
