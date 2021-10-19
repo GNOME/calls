@@ -31,6 +31,10 @@
         </doc:doc>
       </arg>
     </method>
+    <method name="Silence"/>
+    <doc:doc>
+      <doc:summary>Silence the ringing</doc:summary>
+    </doc:doc>
     <property name="Inbound" type="b" access="read"/>
     <property name="State" type="u" access="read"/>
     <property name="Id" type="s" access="read">

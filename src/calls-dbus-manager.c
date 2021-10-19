@@ -182,6 +182,21 @@ on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
 }
 
 
+static gboolean
+on_handle_call_silence (CallsDBusCallsCall    *skeleton,
+                        GDBusMethodInvocation *invocation,
+                        CallsCall             *call)
+{
+  g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
+  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+
+  calls_call_silence_ring (call);
+
+  calls_dbus_calls_call_complete_silence (skeleton, invocation);
+  return TRUE;
+}
+
+
 static void
 call_added_cb (CallsDBusManager *self, CallsCall *call)
 {
@@ -203,6 +218,7 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
                     "object_signal::handle-accept", G_CALLBACK (on_handle_call_accept), call,
                     "object_signal::handle-hangup", G_CALLBACK (on_handle_call_hangup), call,
                     "object-signal::handle-send_dtmf", G_CALLBACK (on_handle_call_send_dtmf), call,
+                    "object_signal::handle-silence", G_CALLBACK (on_handle_call_silence), call,
                     NULL);
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
