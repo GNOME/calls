@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-04 09:34+0000\n"
-"PO-Revision-Date: 2021-10-04 11:40+0200\n"
+"POT-Creation-Date: 2021-10-19 08:33+0000\n"
+"PO-Revision-Date: 2021-10-21 07:43+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
-"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
@@ -48,7 +48,6 @@ msgstr "Telefónny číselník a správca hovorov (režim démona)"
 
 #: src/calls-application.c:528
 #, c-format
-#| msgid "Tried dialing unparsable tel URI `%s'"
 msgid "Tried invalid tel URI `%s'"
 msgstr "Skúsila sa neplatná telefónna adresa URI „%s“"
 
@@ -59,7 +58,7 @@ msgstr "Nie je známe ako otvoriť adresu „%s“"
 
 # cmd line desc
 #: src/calls-application.c:658
-msgid "The name of the plugin to use for the call Provider"
+msgid "The name of the plugin to use as a call provider"
 msgstr "Názov zásuvného modulu, ktorý sa použije pre poskytovateľa hovoru"
 
 #: src/calls-application.c:659
@@ -73,7 +72,6 @@ msgstr "Či sa má zobraziť hlavné okno po spustení"
 
 # cmd line desc
 #: src/calls-application.c:670
-#| msgid "Dial a number"
 msgid "Dial a telephone number"
 msgstr "Vytočí telefónne číslo"
 
@@ -99,7 +97,7 @@ msgstr "Anonymný volajúci"
 msgid "Calling…"
 msgstr "Volanie…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -140,7 +138,8 @@ msgstr "Kontakty"
 msgid "Dial Pad"
 msgstr "Klávesnica"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Nedávne"
 
@@ -148,21 +147,23 @@ msgstr "Nedávne"
 msgid "Missed call"
 msgstr "Zmeškané hovory"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Zmeškaný hovor od kontaktu <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Zmeškaný hovor z čísla %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Zmeškaný hovor od neznámeho volajúceho"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Zavolať späť"
 
@@ -198,8 +199,8 @@ msgstr "Prijať"
 msgid "Hide the dial pad"
 msgstr "Skryť klávesnicu"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-#| msgid "Calls"
 msgid "Call"
 msgstr "Volať"
 
@@ -211,10 +212,6 @@ msgstr "O_dstrániť hovor"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_Skopírovať číslo"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -304,8 +301,8 @@ msgid "Dial"
 msgstr "Vytočiť"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Znak Backspace pomocou čísel"
+msgid "Delete character in front of cursor"
+msgstr "Odstrániť znak pred kurzorom"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
@@ -318,6 +315,12 @@ msgstr "Nový hovor"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Späť"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Znak Backspace pomocou čísel"
 
 #~ msgid "Call the party"
 #~ msgstr "Uskutočniť konferenčný hovor"
