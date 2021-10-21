@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-20 01:57+0000\n"
-"PO-Revision-Date: 2021-09-20 11:48+0200\n"
+"POT-Creation-Date: 2021-10-19 09:08+0000\n"
+"PO-Revision-Date: 2021-10-21 08:45+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
@@ -46,45 +46,45 @@ msgstr "Samtal (demon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
 
-#: src/calls-application.c:539
+#: src/calls-application.c:528
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "Försökte med ogiltigt tel-URI ”%s”"
 
-#: src/calls-application.c:616
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:670
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Namnet på insticket att använda för samtalsleverantören"
+#: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "Namnet på insticket som ska användas som samtalsleverantör"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:670
 msgid "Dial a telephone number"
 msgstr "Slå ett telefonnummer"
 
-#: src/calls-application.c:683
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:676
 msgid "Enable verbose debug messages"
 msgstr "Aktivera utförliga felsökningsmeddelanden"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
 
@@ -92,7 +92,7 @@ msgstr "Anonym uppringare"
 msgid "Calling…"
 msgstr "Ringer…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -135,7 +135,8 @@ msgstr "Kontakter"
 msgid "Dial Pad"
 msgstr "Knappsats"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Senaste"
 
@@ -143,21 +144,23 @@ msgstr "Senaste"
 msgid "Missed call"
 msgstr "Missat samtal"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Missat samtal från <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Missat samtal från %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Missat samtal från okänd uppringare"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Ring tillbaka"
 
@@ -193,6 +196,7 @@ msgstr "Svara"
 msgid "Hide the dial pad"
 msgstr "Göm knappsatsen"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
 msgid "Call"
 msgstr "Ring"
@@ -205,10 +209,6 @@ msgstr "_Ta bort samtal"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_Kopiera nummer"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -296,8 +296,8 @@ msgid "Dial"
 msgstr "Ring"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Radera siffra från nummer"
+msgid "Delete character in front of cursor"
+msgstr "Radera tecken framför markören"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
@@ -310,6 +310,12 @@ msgstr "Nytt samtal"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Tillbaka"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Radera siffra från nummer"
 
 #~ msgid "Call the party"
 #~ msgstr "Ring parten"
