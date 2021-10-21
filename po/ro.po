@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-20 01:57+0000\n"
-"PO-Revision-Date: 2021-09-20 19:30+0200\n"
+"POT-Creation-Date: 2021-10-19 08:33+0000\n"
+"PO-Revision-Date: 2021-10-21 16:13+0200\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Apeluri"
@@ -45,47 +45,46 @@ msgstr "Apeluri (serviciu)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Apelant telefonic și gestionarea apelurilor (mod serviciu)"
 
-#: src/calls-application.c:539
+#: src/calls-application.c:528
 #, c-format
-#| msgid "Tried dialing unparsable tel URI `%s'"
 msgid "Tried invalid tel URI `%s'"
 msgstr "S-a încercat un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:616
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:670
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Numele modulului de utilizat pentru furnizorul de apel"
+#: src/calls-application.c:658
+#| msgid "The name of the plugin to use for the call Provider"
+msgid "The name of the plugin to use as a call provider"
+msgstr "Numele modulului de utilizat ca furnizor de apeluri"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:682
-#| msgid "Dial a number"
+#: src/calls-application.c:670
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:683
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:676
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Apelant anonim"
 
@@ -93,7 +92,7 @@ msgstr "Apelant anonim"
 msgid "Calling…"
 msgstr "Sună…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -137,7 +136,8 @@ msgstr "Contacte"
 msgid "Dial Pad"
 msgstr "Tastatură"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Recent"
 
@@ -145,21 +145,23 @@ msgstr "Recent"
 msgid "Missed call"
 msgstr "Apel pierdut"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Apel pierdut de la <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Apel pierdut de la %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Apel pierdut de la un necunoscut"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Sună din nou"
 
@@ -195,8 +197,8 @@ msgstr "Răspunde"
 msgid "Hide the dial pad"
 msgstr "Ascunde tastatura"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-#| msgid "Calls"
 msgid "Call"
 msgstr "Apelează"
 
@@ -208,10 +210,6 @@ msgstr "Șt_erge apelul"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_Copiază numărul"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -299,8 +297,8 @@ msgid "Dial"
 msgstr "Apelează"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Modifică numărul"
+msgid "Delete character in front of cursor"
+msgstr "Șterge caracterul din fața cursorului"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
