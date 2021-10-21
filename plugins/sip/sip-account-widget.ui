@@ -180,6 +180,24 @@
             </child>
           </object>
         </child>
+        <child>
+          <object class="HdyPreferencesGroup">
+            <property name="visible">True</property>
+            <child>
+              <object class="HdyActionRow">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Use for Phone Calls</property>
+                <child>
+                  <object class="GtkSwitch" id="tel_switch">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <signal name="notify::active" handler="on_user_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </template>

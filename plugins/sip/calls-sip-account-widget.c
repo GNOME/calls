@@ -67,6 +67,7 @@ struct _CallsSipAccountWidget {
   char             *last_port;
   HdyComboRow      *protocol;
   GListStore       *protocols_store; /* bound model for protocol HdyComboRow */
+  GtkSwitch        *tel_switch;
 
 
   /* properties */
@@ -266,6 +267,7 @@ clear_form (CallsSipAccountWidget *self)
   gtk_entry_set_text (self->password, "");
   gtk_entry_set_text (self->port, "0");
   hdy_combo_row_set_selected_index (self->protocol, 0);
+  gtk_switch_set_state (self->tel_switch, FALSE);
 
   self->origin = NULL;
 
@@ -288,6 +290,7 @@ edit_form (CallsSipAccountWidget *self,
   g_autofree char *protocol = NULL;
   gint port;
   guint protocol_index;
+  gboolean can_tel;
 
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
@@ -307,6 +310,7 @@ edit_form (CallsSipAccountWidget *self,
                 "password", &password,
                 "port", &port,
                 "transport-protocol", &protocol,
+                "can-tel", &can_tel,
                 NULL);
 
   port_str = g_strdup_printf ("%d", port);
@@ -325,6 +329,7 @@ edit_form (CallsSipAccountWidget *self,
   gtk_entry_set_text (self->password, password);
   gtk_entry_set_text (self->port, port_str);
   hdy_combo_row_set_selected_index (self->protocol, protocol_index);
+  gtk_switch_set_state (self->tel_switch, can_tel);
 
   gtk_widget_set_sensitive (self->apply_btn, FALSE);
 
@@ -397,7 +402,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     gtk_entry_get_text (self->display_name),
                                     get_selected_protocol (self),
                                     get_port (self),
-                                    FALSE,
+                                    gtk_switch_get_state (self->tel_switch),
                                     TRUE);
 
   update_header (self);
@@ -502,6 +507,7 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, password);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, port);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, protocol);
+  gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, tel_switch);
 
   gtk_widget_class_bind_template_callback (widget_class, on_login_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
