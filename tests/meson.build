@@ -115,4 +115,35 @@ t = executable('util', test_sources,
                )
 test('util', t, env: test_env)
 
+mock_link_args = [ test_link_args,
+                   '-Wl,--wrap=lfb_init',
+                   '-Wl,--wrap=lfb_uninit',
+                   '-Wl,--wrap=lfb_event_set_feedback_profile',
+                   '-Wl,--wrap=lfb_event_trigger_feedback_async',
+                   '-Wl,--wrap=lfb_event_trigger_feedback_finish',
+                   '-Wl,--wrap=lfb_event_end_feedback_async',
+                   '-Wl,--wrap=lfb_event_end_feedback_finish',
+                   '-Wl,--wrap=calls_contacts_provider_new',
+                 ]
+cmocka = dependency ('cmocka', required: false)
+
+if cmocka.found ()
+    test_sources = [
+                    'mock-call.c', 'mock-call.h', 'mock-libfeedback.h',
+                    'test-ringer.c'
+                   ]
+
+    t = executable('ringer', test_sources,
+                   c_args : test_cflags,
+                   link_args: mock_link_args,
+                   pie: true,
+                   link_with : [calls_vala, libcalls],
+                   dependencies: [calls_deps, cmocka],
+                   include_directories : [
+                       calls_includes,
+                     ]
+                   )
+    test('ringer', t, env: test_env)
+endif
+
 endif
