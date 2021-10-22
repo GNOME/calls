@@ -50,7 +50,7 @@ struct _CallsContactsProvider
   FolksIndividualAggregator *folks_aggregator;
   CallsSettings             *settings;
 
-  GHashTable                *phone_number_best_matches;
+  GHashTable                *best_matches;
 };
 
 G_DEFINE_TYPE (CallsContactsProvider, calls_contacts_provider, G_TYPE_OBJECT)
@@ -195,7 +195,7 @@ calls_contacts_provider_finalize (GObject *object)
 
   g_clear_object (&self->folks_aggregator);
   g_clear_object (&self->settings);
-  g_clear_pointer (&self->phone_number_best_matches, g_hash_table_unref);
+  g_clear_pointer (&self->best_matches, g_hash_table_unref);
 
   G_OBJECT_CLASS (calls_contacts_provider_parent_class)->finalize (object);
 }
@@ -261,10 +261,10 @@ calls_contacts_provider_init (CallsContactsProvider *self)
 
   folks_individual_aggregator_prepare (self->folks_aggregator, folks_prepare_cb, self);
 
-  self->phone_number_best_matches = g_hash_table_new_full (g_str_hash,
-                                                           g_str_equal,
-                                                           g_free,
-                                                           g_object_unref);
+  self->best_matches = g_hash_table_new_full (g_str_hash,
+                                              g_str_equal,
+                                              g_free,
+                                              g_object_unref);
 }
 
 CallsContactsProvider *
@@ -289,23 +289,23 @@ calls_contacts_provider_get_individuals (CallsContactsProvider *self)
 }
 
 /*
- * calls_contacts_provider_lookup_phone_number:
+ * calls_contacts_provider_lookup_id:
  * @self: The #CallsContactsProvider
- * @number: The phonenumber
+ * @id: The id (f.e. a phone number)
  *
- * Get a best contact match for a phone number
+ * Get a best contact match for a id
  *
  * Returns: (transfer full): The best match as #CallsBestMatch
  */
 CallsBestMatch *
-calls_contacts_provider_lookup_phone_number (CallsContactsProvider *self,
-                                             const gchar           *number)
+calls_contacts_provider_lookup_id (CallsContactsProvider *self,
+                                   const char            *id)
 {
   g_autoptr (CallsBestMatch) best_match = NULL;
 
   g_return_val_if_fail (CALLS_IS_CONTACTS_PROVIDER (self), NULL);
 
-  best_match = g_hash_table_lookup (self->phone_number_best_matches, number);
+  best_match = g_hash_table_lookup (self->best_matches, id);
 
   if (best_match) {
     g_object_ref (best_match);
@@ -313,13 +313,13 @@ calls_contacts_provider_lookup_phone_number (CallsContactsProvider *self,
     return g_steal_pointer (&best_match);
   }
 
-  best_match = calls_best_match_new (number);
+  best_match = calls_best_match_new (id);
 
   g_object_bind_property (self->settings, "country-code",
                           best_match, "country-code",
                           G_BINDING_SYNC_CREATE);
 
-  g_hash_table_insert (self->phone_number_best_matches, g_strdup (number), g_object_ref (best_match));
+  g_hash_table_insert (self->best_matches, g_strdup (id), g_object_ref (best_match));
 
   return g_steal_pointer (&best_match);
 }

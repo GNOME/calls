@@ -32,7 +32,7 @@
 struct _CallsDummyCall
 {
   GObject parent_instance;
-  gchar *number;
+  gchar *id;
   gboolean inbound;
   CallsCallState state;
 };
@@ -45,7 +45,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyCall, calls_dummy_call, CALLS_TYPE_CALL,
 
 enum {
   PROP_0,
-  PROP_NUMBER_CONSTRUCTOR,
+  PROP_ID_CONSTRUCTOR,
   PROP_INBOUND_CONSTRUCTOR,
   PROP_LAST_PROP
 };
@@ -71,11 +71,11 @@ change_state (CallsDummyCall *self,
 }
 
 static const char *
-calls_dummy_call_get_number (CallsCall *call)
+calls_dummy_call_get_id (CallsCall *call)
 {
   CallsDummyCall *self = CALLS_DUMMY_CALL (call);
 
-  return self->number;
+  return self->id;
 }
 
 static CallsCallState
@@ -157,13 +157,13 @@ outbound_timeout_cb (CallsDummyCall *self)
 
 
 CallsDummyCall *
-calls_dummy_call_new (const gchar *number,
+calls_dummy_call_new (const gchar *id,
                       gboolean     inbound)
 {
-  g_return_val_if_fail (number != NULL, NULL);
+  g_return_val_if_fail (id != NULL, NULL);
 
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
-                       "number-constructor", number,
+                       "id-constructor", id,
                        "inbound-constructor", inbound,
                        NULL);
 }
@@ -178,8 +178,8 @@ set_property (GObject      *object,
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   switch (property_id) {
-  case PROP_NUMBER_CONSTRUCTOR:
-    self->number = g_value_dup_string (value);
+  case PROP_ID_CONSTRUCTOR:
+    self->id = g_value_dup_string (value);
     break;
 
   case PROP_INBOUND_CONSTRUCTOR:
@@ -216,7 +216,7 @@ finalize (GObject *object)
 {
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
-  g_free (self->number);
+  g_free (self->id);
 
   G_OBJECT_CLASS (calls_dummy_call_parent_class)->finalize (object);
 }
@@ -232,7 +232,7 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   object_class->constructed = constructed;
   object_class->finalize = finalize;
 
-  call_class->get_number = calls_dummy_call_get_number;
+  call_class->get_id = calls_dummy_call_get_id;
   call_class->get_state = calls_dummy_call_get_state;
   call_class->get_inbound = calls_dummy_call_get_inbound;
   call_class->get_protocol = calls_dummy_call_get_protocol;
@@ -240,13 +240,13 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   call_class->hang_up = calls_dummy_call_hang_up;
   call_class->send_dtmf_tone = calls_dummy_call_send_dtmf_tone;
 
-  props[PROP_NUMBER_CONSTRUCTOR] =
-    g_param_spec_string ("number-constructor",
-                         "Number (constructor)",
-                         "The dialed number (dummy class constructor)",
+  props[PROP_ID_CONSTRUCTOR] =
+    g_param_spec_string ("id-constructor",
+                         "Id (constructor)",
+                         "The dialed id (dummy class constructor)",
                          "+441234567890",
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_NUMBER_CONSTRUCTOR, props[PROP_NUMBER_CONSTRUCTOR]);
+  g_object_class_install_property (object_class, PROP_ID_CONSTRUCTOR, props[PROP_ID_CONSTRUCTOR]);
 
   props[PROP_INBOUND_CONSTRUCTOR] =
     g_param_spec_boolean ("inbound-constructor",

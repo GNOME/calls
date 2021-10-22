@@ -340,7 +340,7 @@ setup_contact (CallsCallRecordRow *self)
 
   // Look up the best match object
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
-  self->contact = calls_contacts_provider_lookup_phone_number (contacts_provider, target);
+  self->contact = calls_contacts_provider_lookup_id (contacts_provider, target);
 
   g_object_bind_property (self->contact, "name",
                           self->target, "label",

@@ -135,12 +135,12 @@ calls_create_widget_cb (CallsCallSelectorItem *item,
 static void
 new_call_submitted_cb (CallsCallWindow *self,
                        CallsOrigin     *origin,
-                       const gchar     *number,
+                       const gchar     *id,
                        CallsNewCallBox *new_call_box)
 {
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
 
-  calls_origin_dial (origin, number);
+  calls_origin_dial (origin, id);
 }
 
 
@@ -189,7 +189,7 @@ add_call (CallsCallWindow *self,
   display = cui_call_display_new (CUI_CALL (call_data));
   item = calls_call_selector_item_new (display);
   gtk_stack_add_named (self->call_stack, GTK_WIDGET (display),
-                       calls_call_get_number (call));
+                       calls_call_get_id (call));
 
   g_list_store_append (self->calls, item);
 

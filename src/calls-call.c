@@ -36,7 +36,7 @@
  * @short_description: A call.
  * @Title: CallsCall
  *
- * This is the interface to a call.  It has a number, name and a
+ * This is the interface to a call.  It has a id, name and a
  * state.  Only the state changes after creation.  If the state is
  * #CALL_CALL_STATE_INCOMING, the call can be answered with #answer.
  * The call can also be hung up at any time with #hang_up.
@@ -52,7 +52,7 @@ G_DEFINE_ABSTRACT_TYPE (CallsCall, calls_call, G_TYPE_OBJECT)
 enum {
   PROP_0,
   PROP_INBOUND,
-  PROP_NUMBER,
+  PROP_ID,
   PROP_NAME,
   PROP_STATE,
   PROP_PROTOCOL,
@@ -68,7 +68,7 @@ static GParamSpec *properties[N_PROPS];
 static guint signals[N_SIGNALS];
 
 static const char *
-calls_call_real_get_number (CallsCall *self)
+calls_call_real_get_id (CallsCall *self)
 {
   return NULL;
 }
@@ -128,8 +128,8 @@ calls_call_get_property (GObject    *object,
       g_value_set_boolean (value, calls_call_get_inbound (self));
       break;
 
-    case PROP_NUMBER:
-      g_value_set_string (value, calls_call_get_number (self));
+    case PROP_ID:
+      g_value_set_string (value, calls_call_get_id (self));
       break;
 
     case PROP_NAME:
@@ -156,7 +156,7 @@ calls_call_class_init (CallsCallClass *klass)
 
   object_class->get_property = calls_call_get_property;
 
-  klass->get_number = calls_call_real_get_number;
+  klass->get_id = calls_call_real_get_id;
   klass->get_name = calls_call_real_get_name;
   klass->get_state = calls_call_real_get_state;
   klass->get_inbound = calls_call_real_get_inbound;
@@ -172,10 +172,10 @@ calls_call_class_init (CallsCallClass *klass)
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-  properties[PROP_NUMBER] =
-    g_param_spec_string ("number",
-                         "Number",
-                         "The number the call is connected to if known",
+  properties[PROP_ID] =
+    g_param_spec_string ("id",
+                         "Id",
+                         "The id the call is connected to if known",
                          NULL,
                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
@@ -227,21 +227,21 @@ calls_call_init (CallsCall *self)
 }
 
 /**
- * calls_call_get_number:
+ * calls_call_get_id:
  * @self: a #CallsCall
  *
- * Get the number the call is connected to.  It is possible that this
- * could return NULL if the number is not known, for example if an
+ * Get the id the call is connected to.  It is possible that this
+ * could return NULL if the id is not known, for example if an
  * incoming PTSN call has no caller ID information.
  *
- * Returns: (transfer none): the number, or NULL
+ * Returns: (transfer none): the id, or NULL
  */
 const char *
-calls_call_get_number (CallsCall *self)
+calls_call_get_id (CallsCall *self)
 {
   g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
 
-  return CALLS_CALL_GET_CLASS (self)->get_number (self);
+  return CALLS_CALL_GET_CLASS (self)->get_id (self);
 }
 
 /**
@@ -251,7 +251,7 @@ calls_call_get_number (CallsCall *self)
  * Get the name of the party the call is connected to, if the network
  * provides it.
  *
- * Returns the number, or NULL
+ * Returns the id, or NULL
  */
 const char *
 calls_call_get_name (CallsCall *self)
@@ -379,7 +379,7 @@ calls_call_send_dtmf_tone (CallsCall *self,
  * @self: a #CallsCall
  *
  * This a convenience function to optain the #CallsBestMatch matching the
- * phone number of the #CallsCall.
+ * phone id of the #CallsCall.
  *
  * Returns: (transfer full): A #CallsBestMatch
  */
@@ -393,8 +393,8 @@ calls_call_get_contact (CallsCall *self)
   contacts_provider =
     calls_manager_get_contacts_provider (calls_manager_get_default ());
 
-  return calls_contacts_provider_lookup_phone_number (contacts_provider,
-                                                      calls_call_get_number (self));
+  return calls_contacts_provider_lookup_id (contacts_provider,
+                                            calls_call_get_id (self));
 }
 
 void

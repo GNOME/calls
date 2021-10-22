@@ -57,7 +57,7 @@ static GParamSpec *props[PROP_LAST_PROP];
 struct _CallsSipCall
 {
   GObject parent_instance;
-  gchar *number;
+  gchar *id;
   gboolean inbound;
   CallsCallState state;
 
@@ -118,11 +118,11 @@ try_setting_up_media_pipeline (CallsSipCall *self)
 }
 
 static const char *
-calls_sip_call_get_number (CallsCall *call)
+calls_sip_call_get_id (CallsCall *call)
 {
   CallsSipCall *self = CALLS_SIP_CALL (call);
 
-  return self->number;
+  return self->id;
 }
 
 
@@ -149,7 +149,7 @@ calls_sip_call_get_protocol (CallsCall *call)
 {
   CallsSipCall *self = CALLS_SIP_CALL (call);
 
-  return get_protocol_from_address (self->number);
+  return get_protocol_from_address (self->id);
 }
 
 
@@ -274,7 +274,7 @@ calls_sip_call_finalize (GObject *object)
 {
   CallsSipCall *self = CALLS_SIP_CALL (object);
 
-  g_free (self->number);
+  g_free (self->id);
 
   if (self->pipeline) {
     calls_sip_media_pipeline_stop (self->pipeline);
@@ -297,7 +297,7 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
   object_class->set_property = calls_sip_call_set_property;
   object_class->finalize = calls_sip_call_finalize;
 
-  call_class->get_number = calls_sip_call_get_number;
+  call_class->get_id = calls_sip_call_get_id;
   call_class->get_state = calls_sip_call_get_state;
   call_class->get_inbound = calls_sip_call_get_inbound;
   call_class->get_protocol = calls_sip_call_get_protocol;
@@ -394,19 +394,19 @@ calls_sip_call_activate_media (CallsSipCall *self,
 
 
 CallsSipCall *
-calls_sip_call_new (const gchar  *number,
+calls_sip_call_new (const gchar  *id,
                     gboolean      inbound,
                     nua_handle_t *handle)
 {
   CallsSipCall *call;
 
-  g_return_val_if_fail (number != NULL, NULL);
+  g_return_val_if_fail (id != NULL, NULL);
 
   call = g_object_new (CALLS_TYPE_SIP_CALL,
                        "nua-handle", handle,
                        NULL);
 
-  call->number = g_strdup (number);
+  call->id = g_strdup (id);
   call->inbound = inbound;
 
   if (inbound)

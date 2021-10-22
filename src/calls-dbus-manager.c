@@ -206,7 +206,7 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
                     NULL);
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
-  g_object_bind_property (call, "number", iface, "id", G_BINDING_SYNC_CREATE);
+  g_object_bind_property (call, "id", iface, "id", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "protocol", iface, "protocol", G_BINDING_SYNC_CREATE);
   g_object_set (iface, "can-dtmf", calls_call_can_dtmf (call), NULL);
   /* TODO: once calls supports encryption */

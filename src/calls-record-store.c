@@ -446,7 +446,7 @@ record_call (CallsRecordStore *self,
 
   record = g_object_new (CALLS_TYPE_CALL_RECORD,
                          "repository", self->repository,
-                         "target", calls_call_get_number (call),
+                         "target", calls_call_get_id (call),
                          "inbound", calls_call_get_inbound (call),
                          "protocol", calls_call_get_protocol (call),
                          "start", start,

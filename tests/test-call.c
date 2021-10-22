@@ -24,13 +24,13 @@ test_dummy_call_object (CallFixture   *fixture,
 
 
 static void
-test_dummy_call_get_number (CallFixture   *fixture,
+test_dummy_call_get_id (CallFixture   *fixture,
                             gconstpointer  user_data)
 {
-  const gchar *number;
-  number = calls_call_get_number (CALLS_CALL (fixture->dummy_call));
-  g_assert_nonnull (number);
-  g_assert_cmpstr (number, ==, TEST_CALL_NUMBER);
+  const char *id;
+  id = calls_call_get_id (CALLS_CALL (fixture->dummy_call));
+  g_assert_nonnull (id);
+  g_assert_cmpstr (id, ==, TEST_CALL_NUMBER);
 }
 
 static void
@@ -71,7 +71,7 @@ main (gint   argc,
 #define add_test(name) add_calls_test(Call, call, name)
 
   add_test(object);
-  add_test(get_number);
+  add_test(get_id);
   add_test(get_state);
   add_test(hang_up);
 

@@ -58,7 +58,7 @@ calls_ui_call_data_get_id (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
   g_return_val_if_fail (!!self->call, NULL);
 
-  return calls_call_get_number (self->call);
+  return calls_call_get_id (self->call);
 }
 
 static CuiCallState
@@ -223,8 +223,8 @@ set_call_data (CallsUiCallData *self,
   contacts_provider = calls_manager_get_contacts_provider (manager);
 
   self->best_match =
-    calls_contacts_provider_lookup_phone_number (contacts_provider,
-                                                 calls_call_get_number (call));
+    calls_contacts_provider_lookup_id (contacts_provider,
+                                       calls_call_get_id (call));
 
   g_signal_connect_object (self->best_match,
                            "notify::name",

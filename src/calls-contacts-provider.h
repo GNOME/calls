@@ -52,8 +52,8 @@ G_DECLARE_FINAL_TYPE (CallsContactsProvider, calls_contacts_provider, CALLS, CON
 
 CallsContactsProvider  *calls_contacts_provider_new                  (CallsSettings         *settings);
 GeeCollection          *calls_contacts_provider_get_individuals      (CallsContactsProvider *self);
-CallsBestMatch         *calls_contacts_provider_lookup_phone_number  (CallsContactsProvider *self,
-                                                                      const gchar           *number);
+CallsBestMatch         *calls_contacts_provider_lookup_id            (CallsContactsProvider *self,
+                                                                      const char            *id);
 void                    calls_contacts_provider_consume_iter_on_idle (GeeIterator           *iter,
                                                                       IdleCallback           callback,
                                                                       gpointer               user_data);

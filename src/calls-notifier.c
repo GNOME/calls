@@ -51,8 +51,8 @@ notify (CallsNotifier *self, CallsCall *call)
   g_autofree gchar *ref = NULL;
   g_autofree gchar *label_callback = NULL;
   const char *name;
-  const char *number;
-  gboolean got_number;
+  const char *id;
+  gboolean got_id;
 
 #if GLIB_CHECK_VERSION(2,70,0)
   g_notification_set_category (notification, "x-gnome.call.unanswered");
@@ -60,27 +60,27 @@ notify (CallsNotifier *self, CallsCall *call)
   contact = calls_call_get_contact (call);
   // TODO: We need to update the notification when the contact name changes
   name = calls_best_match_get_name (contact);
-  number = calls_call_get_number (call);
+  id = calls_call_get_id (call);
 
-  got_number = !!number && (g_strcmp0 (number, "") != 0);
+  got_id = !!id && (g_strcmp0 (id, "") != 0);
 
   if (calls_best_match_has_individual (contact))
     /* %s is a name here */
     msg = g_strdup_printf (_("Missed call from <b>%s</b>"), name);
-  else if (got_number)
-    /* %s is a number here */
-    msg = g_strdup_printf (_("Missed call from %s"), number);
+  else if (got_id)
+    /* %s is a id here */
+    msg = g_strdup_printf (_("Missed call from %s"), id);
   else
     msg = g_strdup (_("Missed call from unknown caller"));
 
   g_notification_set_body (notification, msg);
 
-  if (got_number) {
-    label_callback = g_strdup_printf ("app.dial::%s", number);
+  if (got_id) {
+    label_callback = g_strdup_printf ("app.dial::%s", id);
     g_notification_add_button (notification, _("Call back"), label_callback);
   }
 
-  ref = g_strdup_printf ("missed-call-%s", number ?: "unknown");
+  ref = g_strdup_printf ("missed-call-%s", id ?: "unknown");
   g_application_send_notification (app, ref, notification);
 }
 

@@ -35,7 +35,7 @@ struct _CallsOfonoCall
 {
   GObject parent_instance;
   GDBOVoiceCall *voice_call;
-  gchar *number;
+  gchar *id;
   gchar *name;
   CallsCallState state;
   gchar *disconnect_reason;
@@ -85,11 +85,11 @@ change_state (CallsOfonoCall *self,
 }
 
 static const char *
-calls_ofono_call_get_number (CallsCall *call)
+calls_ofono_call_get_id (CallsCall *call)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
 
-  return self->number;
+  return self->id;
 }
 
 static const char *
@@ -142,7 +142,7 @@ operation_cb (GDBOVoiceCall                 *voice_call,
   if (!ok)
     {
       g_warning ("Error %s oFono voice call to `%s': %s",
-                 data->desc, data->self->number, error->message);
+                 data->desc, data->self->id, error->message);
       CALLS_ERROR (data->self, error);
     }
 
@@ -194,7 +194,7 @@ calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
   if (self->state != CALLS_CALL_STATE_ACTIVE)
     {
       g_warning ("Tone start requested for non-active call to `%s'",
-                 self->number);
+                 self->id);
       return;
     }
 
@@ -210,7 +210,7 @@ set_properties (CallsOfonoCall *self,
 
   g_return_if_fail (call_props != NULL);
 
-  g_variant_lookup (call_props, "LineIdentification", "s", &self->number);
+  g_variant_lookup (call_props, "LineIdentification", "s", &self->id);
   g_variant_lookup (call_props, "Name", "s", &self->name);
 
   g_variant_lookup (call_props, "State", "&s", &str);
@@ -261,7 +261,7 @@ property_changed_cb (CallsOfonoCall *self,
   {
     gchar *text = g_variant_print (value, TRUE);
     g_debug ("Property `%s' for oFono call to `%s' changed to: %s",
-             name, self->number, text);
+             name, self->id, text);
     g_free (text);
   }
 
@@ -283,7 +283,7 @@ property_changed_cb (CallsOfonoCall *self,
     {
       g_warning ("Could not parse new state `%s'"
                  " of oFono call to `%s'",
-                 str, self->number);
+                 str, self->id);
     }
 
   g_variant_unref (str_var);
@@ -337,7 +337,7 @@ finalize (GObject *object)
 
   g_free (self->disconnect_reason);
   g_free (self->name);
-  g_free (self->number);
+  g_free (self->id);
 
   G_OBJECT_CLASS (calls_ofono_call_parent_class)->finalize (object);
 }
@@ -355,7 +355,7 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  call_class->get_number = calls_ofono_call_get_number;
+  call_class->get_id = calls_ofono_call_get_id;
   call_class->get_name = calls_ofono_call_get_name;
   call_class->get_state = calls_ofono_call_get_state;
   call_class->get_inbound = calls_ofono_call_get_inbound;
