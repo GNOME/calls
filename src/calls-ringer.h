@@ -33,7 +33,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject);
 
-CallsRinger *calls_ringer_new (void);
+
+CallsRinger     *calls_ringer_new                 (void);
+gboolean         calls_ringer_get_is_ringing      (CallsRinger *self);
 
 G_END_DECLS
 
