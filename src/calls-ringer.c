@@ -277,6 +277,7 @@ dispose (GObject *object)
     g_clear_object (&self->event);
     lfb_uninit ();
   }
+  g_signal_handlers_disconnect_by_data (calls_manager_get_default (), self);
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
