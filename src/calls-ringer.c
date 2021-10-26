@@ -60,11 +60,29 @@ struct _CallsRinger {
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
 
+static const char *
+ring_state_to_string (CallsRingState state)
+{
+  switch (state) {
+  case CALLS_RING_STATE_INACTIVE:
+    return "inactive";
+  case CALLS_RING_STATE_REQUEST_PLAY:
+    return "request-play";
+  case CALLS_RING_STATE_PLAYING:
+    return "playing";
+  case CALLS_RING_STATE_REQUEST_STOP:
+    return "request-stop";
+  default:
+    return "unknown";
+  }
+}
 
 static void
 change_ring_state (CallsRinger   *self,
                    CallsRingState state)
 {
+  g_debug ("%s: old: %s; new: %s",
+           __func__, ring_state_to_string (self->state), ring_state_to_string (state));
   if (self->state == state)
     return;
 
@@ -74,6 +92,8 @@ change_ring_state (CallsRinger   *self,
   if (state == CALLS_RING_STATE_REQUEST_PLAY ||
       state == CALLS_RING_STATE_REQUEST_STOP)
     return;
+
+  g_debug ("%s: notify ring", __func__);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_IS_RINGING]);
 }
@@ -88,6 +108,7 @@ on_event_triggered (LfbEvent     *event,
     g_return_if_fail (LFB_IS_EVENT (event));
     g_return_if_fail (CALLS_IS_RINGER (self));
 
+    g_debug ("%s", __func__);
     if (lfb_event_trigger_feedback_finish (event, res, &err)) {
       change_ring_state (self, CALLS_RING_STATE_PLAYING);
     } else {
@@ -104,6 +125,7 @@ static void
 start (CallsRinger *self,
        gboolean     quiet)
 {
+  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
   if (self->event)
     lfb_event_set_feedback_profile (self->event, quiet ? "quiet" : NULL);
 
@@ -135,6 +157,8 @@ on_event_feedback_ended (LfbEvent     *event,
     g_return_if_fail (LFB_IS_EVENT (event));
     g_return_if_fail (CALLS_IS_RINGER (self));
 
+    g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
+
     if (self->state == CALLS_RING_STATE_REQUEST_PLAY ||
         self->state == CALLS_RING_STATE_PLAYING)
       g_warning ("Feedback ended although it should be playing");
@@ -152,6 +176,7 @@ on_feedback_ended (LfbEvent    *event,
                    CallsRinger *self)
 {
   g_debug ("Feedback ended");
+  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
   change_ring_state (self, CALLS_RING_STATE_INACTIVE);
 }
 
@@ -159,18 +184,21 @@ on_feedback_ended (LfbEvent    *event,
 static void
 stop (CallsRinger *self)
 {
+  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
   if (self->state == CALLS_RING_STATE_INACTIVE ||
       self->state == CALLS_RING_STATE_REQUEST_STOP)
     return;
 
   g_debug ("Stopping ringtone");
   if (self->state == CALLS_RING_STATE_PLAYING) {
+    g_debug ("ending event feedback");
     lfb_event_end_feedback_async (self->event,
                                   NULL,
                                   (GAsyncReadyCallback) on_event_feedback_ended,
                                   self);
     change_ring_state (self, CALLS_RING_STATE_REQUEST_STOP);
   } else if (self->state == CALLS_RING_STATE_REQUEST_PLAY) {
+    g_debug ("cancelling event feedback");
     g_cancellable_cancel (self->cancel_ring);
   }
 }
