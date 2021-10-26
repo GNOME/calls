@@ -11,6 +11,7 @@ Build-Depends:
  gstreamer1.0-plugins-good,
  gtk-doc-tools <!nodoc>,
  libcallaudio-dev (>= 0.0.5),
+ libcmocka-dev,
  libebook-contacts1.2-dev,
  libfeedback-dev,
  libfolks-dev,
