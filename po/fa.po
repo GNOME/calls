@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-20 01:57+0000\n"
-"PO-Revision-Date: 2021-09-20 17:48+0430\n"
+"POT-Creation-Date: 2021-10-19 08:33+0000\n"
+"PO-Revision-Date: 2021-10-26 17:20+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "تماس‌ها"
@@ -43,45 +43,45 @@ msgstr "تماس‌ها (خدمت)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "یک شماره‌گیر تلفن و برقرارکنندهٔ تماس (حالت خدمت)"
 
-#: src/calls-application.c:539
+#: src/calls-application.c:528
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "نشانی تلفن نامعتبر «%s» آزموده شد"
 
-#: src/calls-application.c:616
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:670
-msgid "The name of the plugin to use for the call Provider"
-msgstr "نام افزایهٔ استفاده‌شده برای فراهم‌کنندهٔ تماس"
+#: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "نام افزایه برای استفاده به عنوان فراهم‌کنندهٔ تماس"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:670
 msgid "Dial a telephone number"
 msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:683
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:676
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "تماس‌گیرندهٔ ناشناس"
 
@@ -89,7 +89,7 @@ msgstr "تماس‌گیرندهٔ ناشناس"
 msgid "Calling…"
 msgstr "در حال تماس…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -126,7 +126,8 @@ msgstr "آشنایان"
 msgid "Dial Pad"
 msgstr "صفحهٔ شماره‌گیری"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "اخیر"
 
@@ -134,21 +135,23 @@ msgstr "اخیر"
 msgid "Missed call"
 msgstr "تماس از دست رفته"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "تماس از دست رفته از <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "تماس از دست رفته از %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "تماس از دست رفته از تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "پاسخ تماس"
 
@@ -184,6 +187,7 @@ msgstr "پاسخ"
 msgid "Hide the dial pad"
 msgstr "نهفتن صفحهٔ شماره‌گیری"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
 msgid "Call"
 msgstr "تماس"
@@ -196,10 +200,6 @@ msgstr "_حذف تماس"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_رونوشت از شماره"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -287,8 +287,8 @@ msgid "Dial"
 msgstr "شماره‌گیری"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "پس‌بر در شماره"
+msgid "Delete character in front of cursor"
+msgstr "حذف نویسه‌های جلوی نشانگر"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
@@ -301,6 +301,12 @@ msgstr "تماس جدید"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "بازگشت"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "پس‌بر در شماره"
 
 #~ msgid "Call the party"
 #~ msgstr "تماس با گروه"
