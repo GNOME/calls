@@ -39,6 +39,8 @@
 #include <glib-object.h>
 #include <handy.h>
 
+#define CALLS_WINDOW_HIDE_DELAY 3
+
 struct _CallsCallWindow
 {
   GtkApplicationWindow parent_instance;
@@ -54,6 +56,7 @@ struct _CallsCallWindow
   GtkFlowBox *call_selector;
 
   guint inhibit_cookie;
+  guint hideout_id;
 
 };
 
@@ -83,19 +86,39 @@ session_inhibit (CallsCallWindow *self, gboolean inhibit)
 }
 
 
+static gboolean
+on_delayed_window_hide (gpointer user_data)
+{
+  CallsCallWindow *self = user_data;
+  g_assert (CALLS_IS_CALL_WINDOW (self));
+
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+
+  gtk_stack_set_visible_child_name (self->main_stack, "calls");
+  return G_SOURCE_REMOVE;
+}
+
 static void
 update_visibility (CallsCallWindow *self)
 {
   guint calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
 
-  gtk_widget_set_visible (GTK_WIDGET (self), calls > 0);
-  gtk_widget_set_sensitive (GTK_WIDGET (self->show_calls), calls > 1);
-
   if (calls == 0) {
-    gtk_stack_set_visible_child_name (self->main_stack, "calls");
-  } else if (calls == 1) {
-    gtk_stack_set_visible_child_name (self->main_stack, "active-call");
+    self->hideout_id =
+      g_timeout_add_seconds (CALLS_WINDOW_HIDE_DELAY,
+                             G_SOURCE_FUNC (on_delayed_window_hide),
+                             self);
+  } else {
+    if (self->hideout_id > 0) {
+      g_source_remove (self->hideout_id);
+      self->hideout_id = 0;
+    }
+    gtk_widget_set_visible (GTK_WIDGET (self), TRUE);
+
+    if (calls == 1)
+      gtk_stack_set_visible_child_name (self->main_stack, "active-call");
   }
+  gtk_widget_set_sensitive (GTK_WIDGET (self->show_calls), calls > 1);
 
   session_inhibit (self, !!calls);
 }
@@ -174,6 +197,24 @@ add_call (CallsCallWindow *self,
   set_focus (self, display);
 }
 
+struct DisplayData
+{
+  GtkStack *call_stack;
+  CuiCallDisplay *display;
+};
+
+static gboolean
+on_remove_delayed (gpointer user_data)
+{
+  struct DisplayData *display_data = user_data;
+
+  gtk_container_remove (GTK_CONTAINER (display_data->call_stack),
+                        GTK_WIDGET (display_data->display));
+
+  g_free (display_data);
+  return G_SOURCE_REMOVE;
+}
+
 static void
 remove_call (CallsCallWindow *self,
              CallsCall       *call,
@@ -193,9 +234,15 @@ remove_call (CallsCallWindow *self,
       CALLS_UI_CALL_DATA (cui_call_display_get_call (display));
 
     if (calls_ui_call_data_get_call (call_data) == call) {
+      struct DisplayData *display_data = g_new0 (struct DisplayData, 1);
+
       g_list_store_remove (self->calls, i);
-      gtk_container_remove (GTK_CONTAINER (self->call_stack),
-                            GTK_WIDGET (display));
+      display_data->call_stack = self->call_stack;
+      display_data->display = display;
+      g_timeout_add_seconds (CALLS_WINDOW_HIDE_DELAY,
+                             G_SOURCE_FUNC (on_remove_delayed),
+                             display_data);
+
       break;
     }
   }
@@ -313,3 +360,5 @@ calls_call_window_new (GtkApplication *application)
                        "application", application,
                        NULL);
 }
+
+#undef CALLS_WINDOW_HIDE_DELAY
