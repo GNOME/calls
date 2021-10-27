@@ -63,25 +63,22 @@ G_DEFINE_TYPE (CallsCallWindow, calls_call_window, GTK_TYPE_APPLICATION_WINDOW);
 static void
 session_inhibit (CallsCallWindow *self, gboolean inhibit)
 {
-  if (inhibit)
-    {
-      if (self->inhibit_cookie == 0)
-        self->inhibit_cookie =
-          gtk_application_inhibit (gtk_window_get_application (GTK_WINDOW (self)),
-                                   GTK_WINDOW (self),
-                                   GTK_APPLICATION_INHIBIT_SUSPEND |
-                                   GTK_APPLICATION_INHIBIT_IDLE |
-                                   GTK_APPLICATION_INHIBIT_LOGOUT |
-                                   GTK_APPLICATION_INHIBIT_SWITCH,
-                                   "call active");
-    }
-  else
-    {
-      if (self->inhibit_cookie != 0)
-        gtk_application_uninhibit (gtk_window_get_application (GTK_WINDOW (self)),
-                                   self->inhibit_cookie);
-      self->inhibit_cookie = 0;
-    }
+  if (inhibit) {
+    if (self->inhibit_cookie == 0)
+      self->inhibit_cookie =
+        gtk_application_inhibit (gtk_window_get_application (GTK_WINDOW (self)),
+                                 GTK_WINDOW (self),
+                                 GTK_APPLICATION_INHIBIT_SUSPEND |
+                                 GTK_APPLICATION_INHIBIT_IDLE |
+                                 GTK_APPLICATION_INHIBIT_LOGOUT |
+                                 GTK_APPLICATION_INHIBIT_SWITCH,
+                                 "call active");
+  } else {
+    if (self->inhibit_cookie != 0)
+      gtk_application_uninhibit (gtk_window_get_application (GTK_WINDOW (self)),
+                                 self->inhibit_cookie);
+    self->inhibit_cookie = 0;
+  }
 
 }
 
@@ -94,14 +91,11 @@ update_visibility (CallsCallWindow *self)
   gtk_widget_set_visible (GTK_WIDGET (self), calls > 0);
   gtk_widget_set_sensitive (GTK_WIDGET (self->show_calls), calls > 1);
 
-  if (calls == 0)
-    {
-      gtk_stack_set_visible_child_name (self->main_stack, "calls");
-    }
-  else if (calls == 1)
-    {
-      gtk_stack_set_visible_child_name (self->main_stack, "active-call");
-    }
+  if (calls == 0) {
+    gtk_stack_set_visible_child_name (self->main_stack, "calls");
+  } else if (calls == 1) {
+    gtk_stack_set_visible_child_name (self->main_stack, "active-call");
+  }
 
   session_inhibit (self, !!calls);
 }
@@ -282,9 +276,7 @@ dispose (GObject *object)
   CallsCallWindow *self = CALLS_CALL_WINDOW (object);
 
   if (self->calls)
-    {
-      remove_calls (self);
-    }
+    remove_calls (self);
 
   g_clear_object (&self->calls);
 
