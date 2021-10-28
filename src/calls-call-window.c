@@ -131,7 +131,6 @@ set_focus (CallsCallWindow  *self,
            CallsCallDisplay *display)
 {
   gtk_stack_set_visible_child_name (self->main_stack, "active-call");
-  gtk_stack_set_visible_child_name (self->header_bar_stack, "active-call");
   gtk_stack_set_visible_child (self->call_stack, GTK_WIDGET (display));
 }
 
@@ -140,9 +139,7 @@ static void
 show_calls_clicked_cb (GtkButton       *button,
                        CallsCallWindow *self)
 {
-  /* FIXME Setting only one of them should be enough as the properties are binded. */
   gtk_stack_set_visible_child_name (self->main_stack, "calls");
-  gtk_stack_set_visible_child_name (self->header_bar_stack, "calls");
 }
 
 
