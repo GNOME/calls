@@ -269,6 +269,7 @@ dial (CallsOrigin *origin,
   CallsSipOrigin *self;
   nua_handle_t *nh;
   g_autofree char *name = NULL;
+  g_autofree char *dial_target = NULL;
 
   g_assert (CALLS_ORIGIN (origin));
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
@@ -288,17 +289,23 @@ dial (CallsOrigin *origin,
                    SOATAG_ACTIVE_AUDIO (SOA_ACTIVE_SENDRECV),
                    TAG_END ());
 
+  /* Make sure @host is in the dial target */
+  if (g_strstr_len (address, -1, "@"))
+    dial_target = g_strdup (address);
+  else
+    dial_target = g_strconcat (address, "@", self->host, NULL);
+
   g_debug ("Calling `%s' from origin '%s'", address, name);
 
   /* We don't require the user to input the prefix */
   if (!g_str_has_prefix (address, "sip:") &&
       !g_str_has_prefix (address, "sips:")) {
-    g_autofree char * address_prefix =
-      g_strconcat (self->protocol_prefix, ":", address, NULL);
+    g_autofree char * target_with_prefix =
+      g_strconcat (self->protocol_prefix, ":", dial_target, NULL);
 
-    add_call (CALLS_SIP_ORIGIN (origin), address_prefix, FALSE, nh);
+    add_call (CALLS_SIP_ORIGIN (origin), target_with_prefix, FALSE, nh);
   } else {
-    add_call (CALLS_SIP_ORIGIN (origin), address, FALSE, nh);
+    add_call (CALLS_SIP_ORIGIN (origin), dial_target, FALSE, nh);
   }
 }
 
