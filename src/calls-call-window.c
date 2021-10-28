@@ -182,29 +182,23 @@ remove_call (CallsCallWindow *self,
              CallsCall       *call,
              const gchar     *reason)
 {
-  g_autoptr (CallsCallSelectorItem) item = NULL;
-  gint position;
+  guint n_calls;
 
   g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  position = 0;
-  item = g_list_model_get_item (G_LIST_MODEL (self->calls), position);
-  while (item != NULL) {
+  n_calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
+  for (guint i = 0; i < n_calls; i++) {
+    g_autoptr (CallsCallSelectorItem) item =
+      g_list_model_get_item (G_LIST_MODEL (self->calls), i);
     CallsCallDisplay *display = calls_call_selector_item_get_display (item);
 
     if (calls_call_display_get_call (display) == call) {
-      g_list_store_remove (self->calls, position);
+      g_list_store_remove (self->calls, i);
       gtk_container_remove (GTK_CONTAINER (self->call_stack),
                             GTK_WIDGET (display));
-
-
       break;
     }
-
-    g_object_unref (item);
-    position++;
-    item = g_list_model_get_item (G_LIST_MODEL (self->calls), position);
   }
 
   update_visibility (self);
