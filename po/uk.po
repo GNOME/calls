@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-19 08:33+0000\n"
-"PO-Revision-Date: 2021-10-21 12:30+0300\n"
+"POT-Creation-Date: 2021-10-28 12:04+0000\n"
+"PO-Revision-Date: 2021-10-28 15:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -45,6 +45,66 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
+#: plugins/sip/sip-account-widget.ui:11
+#| msgid "SIP Account"
+msgid "Add Account"
+msgstr "Додати обліковий запис"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr ""
+"_Увійти"
+
+#: plugins/sip/sip-account-widget.ui:42
+#| msgid "SIP Account"
+msgid "Manage Account"
+msgstr "Керування обліковим записом"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr ""
+"_Застосувати"
+
+#: plugins/sip/sip-account-widget.ui:61
+#| msgid "_Delete Call"
+msgid "_Delete"
+msgstr "В_илучити"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr ""
+"Сервер"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr ""
+"Екранне ім'я"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr ""
+"Необов'язково"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr ""
+"Ід. користувача"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr ""
+"Пароль"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr ""
+"Порт"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr ""
+"Спосіб передавання"
+
 #: src/calls-application.c:528
 #, c-format
 msgid "Tried invalid tel URI `%s'"
@@ -56,7 +116,6 @@ msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
 #: src/calls-application.c:658
-#| msgid "The name of the plugin to use for the call Provider"
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назва додатка, який слід використовувати як надавача послуг дзвінка"
 
@@ -84,7 +143,7 @@ msgstr "Увімкнути докладні діагностичні повід�
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
-#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
@@ -159,6 +218,29 @@ msgstr "Пропущено виклик від невідомого абонен
 #: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Передзвонити"
+
+#: src/ui/account-overview.ui:16
+#| msgid "_VoIP Accounts"
+msgid "VoIP Accounts"
+msgstr "Облікові записи VoIP"
+
+#: src/ui/account-overview.ui:41
+#| msgid "_VoIP Accounts"
+msgid "Add VoIP Accounts"
+msgstr "Додати облікові записи VoIP"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Тут ви можете додати обліковий запис VoIP. Програма надасть вам змогу дзвонити і отримувати дзвінки VoIP з використанням протоколу SIP. Ця можливість є відносно новою, тому реалізовано не усі її аспекти (наприклад, не реалізовано шифрування даних)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#| msgid "SIP Account"
+msgid "_Add Account"
+msgstr "_Додати обліковий запис"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
@@ -293,8 +375,7 @@ msgstr "Набір номера"
 
 #: src/ui/new-call-box.ui:114
 msgid "Delete character in front of cursor"
-msgstr ""
-"Вилучити символ перед курсором"
+msgstr "Вилучити символ перед курсором"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
