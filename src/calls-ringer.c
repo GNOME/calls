@@ -104,14 +104,14 @@ static void
 start (CallsRinger *self,
        gboolean     quiet)
 {
+  if (self->event)
+    lfb_event_set_feedback_profile (self->event, quiet ? "quiet" : NULL);
+
   if (self->state == CALLS_RING_STATE_PLAYING ||
       self->state == CALLS_RING_STATE_REQUEST_PLAY)
     return;
 
   if (self->event) {
-    if (quiet)
-      lfb_event_set_feedback_profile (self->event, "quiet");
-
     g_clear_object (&self->cancel_ring);
     self->cancel_ring = g_cancellable_new ();
 
