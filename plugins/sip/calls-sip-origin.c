@@ -275,7 +275,7 @@ dial (CallsOrigin *origin,
 
   name = calls_origin_get_name (origin);
 
-  if (address == NULL) {
+  if (!address || !*address) {
     g_warning ("Tried dialing on origin '%s' without an address",
                name);
     return;
