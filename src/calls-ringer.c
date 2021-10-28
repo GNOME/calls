@@ -91,9 +91,9 @@ on_event_triggered (LfbEvent     *event,
     if (lfb_event_trigger_feedback_finish (event, res, &err)) {
       change_ring_state (self, CALLS_RING_STATE_PLAYING);
     } else {
-      // if cancelled we should get a G_IO_ERROR_CANCELLED error
-      g_warning ("Failed to trigger feedback for '%s': %s",
-                 lfb_event_get_event (event), err->message);
+      if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        g_warning ("Failed to trigger feedback for '%s': %s",
+                   lfb_event_get_event (event), err->message);
       change_ring_state (self, CALLS_RING_STATE_INACTIVE);
     }
 
