@@ -55,6 +55,7 @@ CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *s
                                                              gboolean          auto_connect,
                                                              gboolean          direct_mode,
                                                              gint              local_port,
+                                                             gboolean          use_for_tel,
                                                              gboolean          store_credentials);
 gboolean          calls_sip_provider_remove_origin          (CallsSipProvider *self,
                                                              CallsSipOrigin   *origin);

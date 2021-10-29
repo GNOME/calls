@@ -114,6 +114,7 @@ on_origin_pw_looked_up (GObject      *source,
   gint local_port = 0;
   gboolean auto_connect = TRUE;
   gboolean direct_mode = FALSE;
+  gboolean can_tel = FALSE;
 
   g_assert (user_data);
 
@@ -135,6 +136,10 @@ on_origin_pw_looked_up (GObject      *source,
 
   if (g_key_file_has_key (data->key_file, data->name, "DirectMode", NULL))
     direct_mode = g_key_file_get_boolean (data->key_file, data->name, "DirectMode", NULL);
+
+  if (g_key_file_has_key (data->key_file, data->name, "CanTel", NULL))
+    can_tel =
+      g_key_file_get_boolean (data->key_file, data->name, "CanTel", NULL);
 
   /* PW */
   password = secret_password_lookup_finish (result, &error);
@@ -164,6 +169,7 @@ on_origin_pw_looked_up (GObject      *source,
                                       auto_connect,
                                       direct_mode,
                                       local_port,
+                                      can_tel,
                                       FALSE);
 }
 static void
@@ -265,6 +271,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   gint local_port;
   gboolean auto_connect;
   gboolean direct_mode;
+  gboolean can_tel;
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
   g_assert (key_file);
@@ -279,6 +286,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
                 "auto-connect", &auto_connect,
                 "direct-mode", &direct_mode,
                 "local-port", &local_port,
+                "can-tel", &can_tel,
                 NULL);
 
   g_key_file_set_string (key_file, name, "Host", host);
@@ -289,6 +297,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_key_file_set_boolean (key_file, name, "AutoConnect", auto_connect);
   g_key_file_set_boolean (key_file, name, "DirectMode", direct_mode);
   g_key_file_set_integer (key_file, name, "LocalPort", local_port);
+  g_key_file_set_boolean (key_file, name, "CanTel", can_tel);
 
   label_secret = g_strdup_printf ("Calls Password for %s",
                                   calls_account_get_address (CALLS_ACCOUNT (origin)));
@@ -639,6 +648,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                              TRUE,
                                              FALSE,
                                              0,
+                                             FALSE,
                                              store_credentials);
 }
 
@@ -653,6 +663,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
  * @auto_connect: Whether to automatically try going online
  * @direct_mode: Whether to use direct connection mode. Useful when you don't want to
  * connect to a SIP server. Mostly useful for testing and debugging.
+ * @can_tel: Whether this origin can be used for PSTN telephony
  * @store_credentials: Whether to store credentials for this origin to disk
  *
  * Adds a new origin (SIP account). If @direct_mode is %TRUE then @host, @user and
@@ -671,6 +682,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
                                     gboolean          auto_connect,
                                     gboolean          direct_mode,
                                     gint              local_port,
+                                    gboolean          can_tel,
                                     gboolean          store_credentials)
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
@@ -702,6 +714,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
                          "auto-connect", auto_connect,
                          "direct-mode", direct_mode,
                          "local-port", local_port,
+                         "can-tel", can_tel,
                          NULL);
 
   g_list_store_append (self->origins, origin);

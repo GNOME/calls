@@ -397,6 +397,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     gtk_entry_get_text (self->display_name),
                                     get_selected_protocol (self),
                                     get_port (self),
+                                    FALSE,
                                     TRUE);
 
   update_header (self);

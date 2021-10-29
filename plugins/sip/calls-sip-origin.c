@@ -74,6 +74,7 @@ enum {
   PROP_ACC_ADDRESS,
   PROP_CALLS,
   PROP_COUNTRY_CODE,
+  PROP_CAN_TEL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -109,6 +110,7 @@ struct _CallsSipOrigin
   char *transport_protocol;
   gboolean auto_connect;
   gboolean direct_mode;
+  gboolean can_tel;
   gint local_port;
 
   const char *protocol_prefix;
@@ -1102,10 +1104,13 @@ supports_protocol (CallsOrigin *origin,
 
   if (g_strcmp0 (protocol, "sip") == 0)
     return TRUE;
+
   if (g_strcmp0 (protocol, "sips") == 0)
     return g_strcmp0 (self->protocol_prefix, "sips") == 0;
 
-  /* TODO need to set a property (from the UI) to allow using origin for telephony */
+  if (g_strcmp0 (protocol, "tel") == 0)
+    return self->can_tel;
+
   return FALSE;
 }
 
@@ -1184,6 +1189,10 @@ calls_sip_origin_set_property (GObject      *object,
     self->local_port = g_value_get_int (value);
     break;
 
+  case PROP_CAN_TEL:
+    self->can_tel = g_value_get_boolean (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -1254,6 +1263,10 @@ calls_sip_origin_get_property (GObject      *object,
 
   case PROP_COUNTRY_CODE:
     g_value_set_string (value, NULL);
+    break;
+
+  case PROP_CAN_TEL:
+    g_value_set_boolean (value, self->can_tel);
     break;
 
   default:
@@ -1407,6 +1420,14 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_SIP_CONTEXT, props[PROP_SIP_CONTEXT]);
 
+  props[PROP_CAN_TEL] =
+    g_param_spec_boolean ("can-tel",
+                          "Can telephone",
+                          "Whether to this account can be used for PSTN telephony",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_CAN_TEL, props[PROP_CAN_TEL]);
+
   g_object_class_override_property (object_class, PROP_ACC_STATE, "account-state");
   props[PROP_ACC_STATE] = g_object_class_find_property (object_class, "account-state");
 
@@ -1472,6 +1493,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
                                   const char     *display_name,
                                   const char     *transport_protocol,
                                   gint            port,
+                                  gboolean        can_tel,
                                   gboolean        auto_connect)
 {
   g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
@@ -1508,6 +1530,8 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
     self->transport_protocol = g_strdup ("UDP");
 
   self->port = port;
+
+  self->can_tel = can_tel;
 
   recreate_sip (self);
 }

@@ -39,6 +39,7 @@ void              calls_sip_origin_set_credentials          (CallsSipOrigin *sel
                                                              const char     *display_name,
                                                              const char     *transport_protocol,
                                                              gint            port,
+                                                             gboolean        use_for_tel,
                                                              gboolean        auto_connect);
 
 G_END_DECLS

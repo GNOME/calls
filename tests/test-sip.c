@@ -371,6 +371,7 @@ setup_sip_origins (SipFixture   *fixture,
                                         FALSE,
                                         TRUE,
                                         5060,
+                                        FALSE,
                                         FALSE);
 
   fixture->origin_bob =
@@ -384,6 +385,7 @@ setup_sip_origins (SipFixture   *fixture,
                                         FALSE,
                                         TRUE,
                                         5061,
+                                        FALSE,
                                         FALSE);
 
   fixture->origin_offline =
@@ -397,6 +399,7 @@ setup_sip_origins (SipFixture   *fixture,
                                         FALSE,
                                         FALSE,
                                         0,
+                                        FALSE,
                                         FALSE);
 
 }
