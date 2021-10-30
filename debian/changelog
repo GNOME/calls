@@ -1,8 +1,142 @@
-gnome-calls (42~alpha.0) UNRELEASED; urgency=medium
+gnome-calls (42~alpha.0) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * po: Add missing files to POTFILES.in
+  * ci: Update from flatpak CI template
+  * flatpak: Update manifest
+  * main-window: Remove unused header
+  * Remove unused typedef
+  * call-window: Remove unused CALLS_WAYLAND ifdef
+  * ci: Grab submodules by setting GIT_SUBMODULE_STRATEGY
+  * po: Ignore subprojects
+  * ci: Complain about untranslated ui files
+  * Add libcall-ui as submodule
+  * application: Initialize libcall-ui
+  * call: Add API to query whether this call can do DTMF
+  * Introduce CallsUiCallData to feed CuiDisplay
+  * Switch from CallsCallDisplay to CuiCallDisplay
+  * Remove CallsCallDisplay
+  * ci: Use gcovr for coverage reports
+  * coverage: Exclude subprojects and generated dbus code
+  * meson: Don't build tests, examples or documentation for libcall-ui
+  * Update libcall-ui submodule
+  * call-data: Implement avatar property
+  * record-row: Use avatars in history
+  * po: Remove call display files
+  * Remove encryption indicator
+  * best-match: Rename best_match variable to matched_individual
+  * call-data: Fix assertion in notify handlers
+  * Update libcall-ui
+  * call-data: Notify on avatar changes
+  * README: Drop code coverage report
+  * README: Mark oFono backend as not actively developed
+  * README: Overhaul readme
+  * README: Add backend specific debugging information
+  * call: Get rid of tone_stop
+  * call: Get rid of unnecessary cast to int
+  * dummy: Add dummy send_dtmf_tone function
+  * util: Make dtmf tone checking function public
+  * tests: Add dtmf tone validity tests
+  * dbus: Set can-dtmf property
+  * dbus: Add API to send DTMF
+  * ci: Fix regex for reporting code coverage
+  * project: Post release version bump
+  * Update libcall-ui: Fix display showing number twice when not a contact
+  * record-row: Removed unused define
+  * call-window: codestyle
+  * call-window: Delay closing window
+  * flatpak: Poke hole to talk to callaudiod
+  * flatpak: Poke hole to talk to feedbackd
+  * ci: Drop pedantic metainfo validation job
+  * ci: Drop debian bookworm packaging job
+  * ci: Use PKG_ONLY variable to exclude flatpak job
+  * application: Codestyle
+  * history-box: Codestyle
+  * application: Chain up shutdown
+  * record-store: Get rid of unused code
+  * call: Rename property from "number" to "id"
+  * ringer: codestyle
+  * ringer: Refactor to keep track of ongoing calls
+  * ringer: Disconnect signal handlers on dispose
+  * ringer: Track ringer state
+  * ringer: Don't warn if feedback triggering got cancelled
+  * ringer: Make sure to reset feedback profile if not set to "quiet"
+  * ringer: Add debugging
+  * call: Add API to silence ringing
+  * ringer: Check if incoming call is silenced
+  * d/control: Add cmocka dependency
+  * flatpak: Add cmocka dependency
+  * tests: Add ringer tests
+  * ringer: Add is-quiet property and getter
+  * ringer: Restart ringer if quiet parameter changed
+  * test: ringer: Test quiet ringing
+  * call-window: Clear handle id when hiding call window
+  * call-window: Use g_clear_handle_id instead of emulating it
+  * dbus: Add method to silence ringing
+  * record-row: Codestyle
+  * tests: util: Codestyle
+  * util: Add API to query call icon names
+  * tests: util: Unit test call icon name function
+  * record-row: Use API to query call icon name
+  * record-row: Only create popover when needed
+  * Document and release 41.1
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+  * Update Swedish translation
+  * Update Swedish translation
 
   [ Vittorio Monti ]
   * po: Update Italian translation
   * Update Italian translation
+
+  [ Jordi Mas i Hernandez ]
+  * Update Catalan translation
+
+  [ Guido Günther ]
+  * dbus: Expose path to avatar icon file if it exists
+
+  [ Dorota Czaplejewicz ]
+  * gitlab: Update bug template
+
+  [ Christopher Davis ]
+  * main-window: Remove unused placeholder text
+  * Remove history-header-bar.ui
+  * history-box: Use HdyStatusPage for empty state
+  * contacts-box: mimmic HdyStatusPage styling for contacts
+  * flatpak: Use builddir: true
+  * new-call-box: Clamp everything
+  * application: Opt in to libhandy dark style preference
+  * application: Check libhandy version at compilation
+  * style: Make error color white in both light and dark mode
+  * ui: Remove explicit can-focus
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+  * Update Romanian translation
+
+  [ Rafael Fontenelle ]
+  * Update Brazilian Portuguese translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Mon, 13 Dec 2021 05:32:22 +0100
+
+gnome-calls (41.1) byzantium; urgency=medium
+
+  [ Dušan Kazik ]
+  * Add Slovak translation
+  * Update Slovak translation
+  * Add Slovak translation
+  * Update Slovak translation
+  * Update Slovak translation
+
+  [ Vittorio Monti ]
+  * po: Update Italian translation
 
   [ Evangelos Ribeiro Tzaras ]
   * application: Clarify that -l flag is to be used with numbers only
@@ -61,67 +195,16 @@ gnome-calls (42~alpha.0) UNRELEASED; urgency=medium
   * Let provider plugin decide whether to automatically hang up secondary calls
   * screenshots: Remove shell chrome
   * number-query: Fall back to string comparison if parsing EPhoneNumber fails
-  * po: Add missing files to POTFILES.in
   * call-window: Remove unnecessary code
   * call-window: Improve readability of remove_call function
   * sip: origin: Bail when trying to dial empty string
   * sip: origin: Make sure "@host" is in the dial string
-  * ci: Update from flatpak CI template
-  * flatpak: Update manifest
-  * main-window: Remove unused header
-  * Remove unused typedef
-  * call-window: Remove unused CALLS_WAYLAND ifdef
-  * ci: Grab submodules by setting GIT_SUBMODULE_STRATEGY
-  * po: Ignore subprojects
-  * ci: Complain about untranslated ui files
-  * Add libcall-ui as submodule
-  * application: Initialize libcall-ui
-  * call: Add API to query whether this call can do DTMF
-  * Introduce CallsUiCallData to feed CuiDisplay
-  * Switch from CallsCallDisplay to CuiCallDisplay
-  * Remove CallsCallDisplay
-  * ci: Use gcovr for coverage reports
-  * coverage: Exclude subprojects and generated dbus code
-  * meson: Don't build tests, examples or documentation for libcall-ui
-  * Update libcall-ui submodule
-  * call-data: Implement avatar property
-  * record-row: Use avatars in history
-  * po: Remove call display files
-  * Remove encryption indicator
-  * best-match: Rename best_match variable to matched_individual
-  * call-data: Fix assertion in notify handlers
-  * Update libcall-ui
-  * call-data: Notify on avatar changes
-  * README: Drop code coverage report
-  * README: Mark oFono backend as not actively developed
-  * README: Overhaul readme
-  * README: Add backend specific debugging information
-  * call: Get rid of tone_stop
-  * call: Get rid of unnecessary cast to int
-  * dummy: Add dummy send_dtmf_tone function
-  * util: Make dtmf tone checking function public
-  * tests: Add dtmf tone validity tests
-  * dbus: Set can-dtmf property
-  * dbus: Add API to send DTMF
-  * ci: Fix regex for reporting code coverage
-  * project: Post release version bump
-  * Update libcall-ui: Fix display showing number twice when not a contact
-  * record-row: Removed unused define
-  * call-window: codestyle
-  * call-window: Delay closing window
-  * flatpak: Poke hole to talk to callaudiod
-  * flatpak: Poke hole to talk to feedbackd
-  * ci: Drop pedantic metainfo validation job
-  * ci: Drop debian bookworm packaging job
-  * ci: Use PKG_ONLY variable to exclude flatpak job
+  * Document and release 41.1
 
   [ Anders Jonsson ]
   * Update Swedish translation
-  * Update Swedish translation
-  * Update Swedish translation
 
   [ Danial Behzadi ]
-  * Update Persian translation
   * Update Persian translation
   * Update Persian translation
 
@@ -129,10 +212,8 @@ gnome-calls (42~alpha.0) UNRELEASED; urgency=medium
   * Update Ukrainian translation
   * Update Ukrainian translation
   * Update Ukrainian translation
-  * Update Ukrainian translation
 
   [ Daniel Șerbănescu ]
-  * Update Romanian translation
   * Update Romanian translation
   * Update Romanian translation
 
@@ -142,11 +223,6 @@ gnome-calls (42~alpha.0) UNRELEASED; urgency=medium
   [ Jiri Groenroos ]
   * Update Finnish translation
   * Update Finnish translation
-
-  [ Dušan Kazik ]
-  * Add Slovak translation
-  * Update Slovak translation
-  * Update Slovak translation
 
   [ Goran Vidović ]
   * Update Croatian translation
@@ -160,27 +236,7 @@ gnome-calls (42~alpha.0) UNRELEASED; urgency=medium
   [ Luna Jernberg ]
   * Update Swedish translation
 
-  [ Jordi Mas i Hernandez ]
-  * Update Catalan translation
-
-  [ Guido Günther ]
-  * dbus: Expose path to avatar icon file if it exists
-
-  [ dcz ]
-  * gitlab: Update bug template
-
-  [ Christopher Davis ]
-  * main-window: Remove unused placeholder text
-  * Remove history-header-bar.ui
-  * history-box: Use HdyStatusPage for empty state
-  * contacts-box: mimmic HdyStatusPage styling for contacts
-  * flatpak: Use builddir: true
-  * new-call-box: Clamp everything
-  * application: Opt in to libhandy dark style preference
-  * application: Check libhandy version at compilation
-  * style: Make error color white in both light and dark mode
-
- -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Wed, 01 Dec 2021 21:37:13 +0100
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Sat, 30 Oct 2021 19:56:27 +0200
 
 gnome-calls (41.0) byzantium; urgency=medium
 

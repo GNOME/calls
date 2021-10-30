@@ -1,6 +1,76 @@
+Calls 42.alpha.0
+----------------
+Released: 12 December 2021
+
+New features:
+=============
+
+* Avatars in the call history and call display
+* Avatars exposed over DBus so phosh show them on the lockscreen
+* Can silence ringing over DBus (used in phosh-antispam by Chris Talbot)
+
+Maybe noteworthy:
+=================
+
+* Note to distribution packagers:
+Both Calls and current phosh (0.14.1) are embedding libcall-ui which will install
+translation files (typically installed to /usr/share/locale/*/LC_MESSAGES/call-ui.mo).
+The next phosh version will default to not installing i18n files of libcall-ui
+(https://gitlab.gnome.org/World/Phosh/phosh/-/merge_requests/963).
+For this version you should either cherry pick
+https://gitlab.gnome.org/World/Phosh/phosh/-/commit/b51e200189525c46aa2fa9832e8d861cf2d95a9d
+or exclude `call-ui.mo` when installing phosh's translations in your packaging.
+* Improved scrolling performance in the call history
+* Can use DTMF over DBus (used in phosh on the lockscreen)
+* Various UI fixes by Christopher Davis
+* Contributions by
+ - Christopher Davis
+ - Guido Günther
+ - Dorota Czaplejewicz
+
+Translation updates:
+====================
+ - Swedish (Anders Jonsson and Luna Jernberg)
+ - Spanish (Jordi Mas i Hernandez)
+ - Italian (Vittorio Monti)
+ - Persian (Danial Behzadi)
+ - Romanian (Daniel Șerbănescu)
+ - Ukranian (Yuri Chornoivan)
+ - Brazilian Portuguese (Rafael Fontenelle)
+
+The detailed changes can be found in debian/changelog
+
+Calls 41.1
+----------
+Released: 30 October 2021
+
+Noteworthy:
+* Fixes for contact lookups
+* Fix the wrong timestamps in the call history when history is loaded
+* Fill in @domain into the dial string for SIP
+
+Maybe noteworthy:
+* Network watch will not spam your logs with warnings any more
+
+Translation updates:
+ - Croatian (Goran Vidović)
+ - Finnish (Jiri Grönroos)
+ - Italian (antonio)
+ - Persian (Danial Behzadi)
+ - Portuguese (Hugo Carvalho)
+ - Romanian (Florentina Mușat)
+ - Slovak (Dušan Kazik)
+ - Slovenian (Martin Srebotnjak)
+ - Spanish (Daniel Mustieles García)
+ - Swedish (Anders Jonsson)
+ - Ukrainian (Yuri Chornoivan)
+
+The detailed changes can be found in debian/changelog
+
+
 Calls 41.0
 ----------
-Released: September
+Released: September 2021
 
 * Fixes for the multiple network interfaces case
 
@@ -8,9 +78,10 @@ Released: September
 - Croatian (Goran Vidović)
 - Dutch (Nathan Follens)
 
+
 Calls 41.rc
 -------------
-Released: September
+Released: September 2021
 
 * Fix bug preventing SIP from working when using multiple network interfaces
 * Fixes around SIP account management and its UI
@@ -25,6 +96,7 @@ Released: September
  - Romanian (Florentina Mușat)
  - Swedish (Anders Jonsson)
  - Ukrainian (Yuri Chornoivan)
+
 
 Calls 41.beta
 -------------
