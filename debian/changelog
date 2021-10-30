@@ -1,3 +1,115 @@
+gnome-calls (41.1) byzantium; urgency=medium
+
+  [ Dušan Kazik ]
+  * Add Slovak translation
+  * Update Slovak translation
+  * Add Slovak translation
+  * Update Slovak translation
+  * Update Slovak translation
+
+  [ Vittorio Monti ]
+  * po: Update Italian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * application: Clarify that -l flag is to be used with numbers only
+  * application: Do not prepend country code when dialing
+  * record-row: Reword accessible name
+  * new-call-box: Clear entry after dialing
+  * sip: media: Fix gtk-doc transfer annotation
+  * sip: origin: Fix memory leak
+  * sip: Fix possible NULL pointer dereference
+  * sip: sdp: Honour per media connections
+  * sip: sdp: Hang up call when there are no common codecs
+  * contact-box: Do not hardcode length of match_fields[]
+  * number-query: Take country code into account
+  * best-match: codestyle
+  * best-match: Don't free unowned data
+  * network-watch: More descriptive warning
+  * network-watch: Only g_set_error if error is not NULL
+  * network-watch: Don't fail initialization when unable to fetch local IP
+  * sip: Do not fail if CallsNetworkWatch is unavailable
+  * meson: Bump to 0.56.0
+  * tests: Add gsettings schema directory to environment
+  * settings: Add GSettings bindings
+  * Simplify country code handling
+  * record-row: Right justify time
+  * sip: origin: Recreate handles when updating credentials
+  * ci: Temporarily allow warnings to fix CI build failure
+  * media-manager: Use G_BEGIN_DECLS and G_END_DECLS in header
+  * sip: Gather public IP from REGISTER response and use it in SDP
+  * record-row: Clarify "Call" for translators with a comment
+  * record-store: Prefer using g_date_time_new_now_utc()
+  * record-row: Take timezone into account for displaying in the UI
+  * i18n: notifier: Use comment to clarify if a name or number is meant
+  * i18n: main-window: Clarify "Recent" to mean the call history
+  * selector-item: Name label does not need to be translatable
+  * application: Reword description for the -p flag
+  * new-call-box: Clarify accessible name
+  * d/copyright: Update copyright
+  * metainfo: Add screenshots
+  * ci: Upgrade certificates
+  * ci: Use strict metadata validation, but allow it to fail
+  * ci: Run relaxed appstream validation during tests
+  * metainfo: "mimetypes" tag is deprecated
+  * metainfo: Add DBus service to "provides" tag
+  * metainfo: Remove "developer_name" tag
+  * metainfo: Add notification "kudo" tag
+  * metainfo: Simplify content rating
+  * metainfo: Add "requires" tag in favour of custom tags
+  * metainfo: Update summary
+  * metainfo: Update description
+  * metainfo: Replace deprecated GPL license identifier
+  * metainfo: Add "launchable" tag
+  * metainfo: Add "translation" tag
+  * metainfo: Add URL tag for translations
+  * ci: Use appstreamcli instead of appstream-util
+  * dummy-call: Simplify change_state()
+  * Let provider plugin decide whether to automatically hang up secondary calls
+  * screenshots: Remove shell chrome
+  * number-query: Fall back to string comparison if parsing EPhoneNumber fails
+  * call-window: Remove unnecessary code
+  * call-window: Improve readability of remove_call function
+  * sip: origin: Bail when trying to dial empty string
+  * sip: origin: Make sure "@host" is in the dial string
+  * Document and release 41.1
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+  * Update Persian translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+  * Update Romanian translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Jiri Groenroos ]
+  * Update Finnish translation
+  * Update Finnish translation
+
+  [ Goran Vidović ]
+  * Update Croatian translation
+
+  [ Matej Urbančič ]
+  * Add Slovenian translation
+
+  [ Pedro Luis Valadés ]
+  * Update Spanish translation
+
+  [ Luna Jernberg ]
+  * Update Swedish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 30 Oct 2021 19:56:27 +0200
+
 gnome-calls (41.0) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

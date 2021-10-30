@@ -1,6 +1,34 @@
+Calls 41.1
+----------
+Released: 30 October 2021
+
+Noteworthy:
+* Fixes for contact lookups
+* Fix the wrong timestamps in the call history when history is loaded
+* Fill in @domain into the dial string for SIP
+
+Maybe noteworthy:
+* Network watch will not spam your logs with warnings any more
+
+Translation updates:
+ - Croatian (Goran Vidović)
+ - Finnish (Jiri Grönroos)
+ - Italian (antonio)
+ - Persian (Danial Behzadi)
+ - Portuguese (Hugo Carvalho)
+ - Romanian (Florentina Mușat)
+ - Slovak (Dušan Kazik)
+ - Slovenian (Martin Srebotnjak)
+ - Spanish (Daniel Mustieles García)
+ - Swedish (Anders Jonsson)
+ - Ukrainian (Yuri Chornoivan)
+
+The detailed changes can be found in debian/changelog
+
+
 Calls 41.0
 ----------
-Released: September
+Released: September 2021
 
 * Fixes for the multiple network interfaces case
 
@@ -8,9 +36,10 @@ Released: September
 - Croatian (Goran Vidović)
 - Dutch (Nathan Follens)
 
+
 Calls 41.rc
 -------------
-Released: September
+Released: September 2021
 
 * Fix bug preventing SIP from working when using multiple network interfaces
 * Fixes around SIP account management and its UI
@@ -25,6 +54,7 @@ Released: September
  - Romanian (Florentina Mușat)
  - Swedish (Anders Jonsson)
  - Ukrainian (Yuri Chornoivan)
+
 
 Calls 41.beta
 -------------

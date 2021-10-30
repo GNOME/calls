@@ -62,6 +62,20 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="41.1" data="2021-10-30">
+        <description>
+          <p>
+            GNOME Calls 41.1 release brings updated translations, fixes for the
+            SIP plugin and the wrong timestamp being shown in the call history
+            and makes it easier to use SIP for telephony by not requiring the user
+            to enter a domain when dialing.
+          </p>
+          <p>
+            It also improves stability by fixing crashes and reduces logspam
+            in some cases.
+          </p>
+        </description>
+      </release>
       <release version="41.0" date="2021-09-18">
         <description>SIP plugin bugfixes.</description>
       </release>
