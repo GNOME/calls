@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-19 09:08+0000\n"
-"PO-Revision-Date: 2021-10-21 08:45+0200\n"
+"POT-Creation-Date: 2021-10-28 15:18+0000\n"
+"PO-Revision-Date: 2021-11-03 00:23+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -45,6 +45,54 @@ msgstr "Samtal (demon)"
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Lägg till konto"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Logga in"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Hantera konto"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Verkställ"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Ta bort"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Valfritt"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Användar-ID"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Lösenord"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Transport"
 
 #: src/calls-application.c:528
 #, c-format
@@ -84,7 +132,7 @@ msgstr "Aktivera utförliga felsökningsmeddelanden"
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
-#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
 
@@ -163,6 +211,28 @@ msgstr "Missat samtal från okänd uppringare"
 #: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Ring tillbaka"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP-konton"
+
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Lägg till VoIP-konton"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Du kan lägga till ett VoIP-konto här. Det kommer låta dig ringa och ta emot "
+"VoIP-samtal med SIP-protokollet. Denna funktion är relativt ny och inte "
+"fullt funktionell ännu (d.v.s. inga krypterade media)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Lägg till konto"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
