@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 10:33+0000\n"
-"PO-Revision-Date: 2021-08-09 12:59+0200\n"
-"Last-Translator: Marc Riera <marcriera@softcatala.org>\n"
+"POT-Creation-Date: 2021-10-28 12:04+0000\n"
+"PO-Revision-Date: 2021-10-30 19:46+0200\n"
+"Last-Translator: maite guix <maite.guix@me.com>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Trucades"
@@ -40,41 +40,93 @@ msgstr "Trucades (dimoni)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Marcador telefònic i gestor de trucades (mode dimoni)"
 
-#: src/calls-application.c:522
-#, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "S'ha intentat marcat un URI tel no processable: «%s»"
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Afegeix un compte"
 
-#: src/calls-application.c:604
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Inicia sessió"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Administra el compte"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Aplica"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Suprimeix"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Servidor"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Nom a mostrar"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Opcional"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID Usuari"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Contrasenya"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Transport"
+
+#: src/calls-application.c:528
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "S'ha provat tel URI '%s' no vàlid"
+
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No s'ha pogut determinar com obrir «%s»"
 
-#: src/calls-application.c:657
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Nom del connector que s'utilitzarà per al proveïdor de trucades"
-
 #: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "El nom del connector a utilitzar com a proveïdor de trucades"
+
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "CONNECTOR"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Indica si s'ha de presentar la finestra principal a l'inici"
 
-#: src/calls-application.c:669
-msgid "Dial a number"
-msgstr "Marqueu un número"
-
 #: src/calls-application.c:670
+msgid "Dial a telephone number"
+msgstr "Marca un número de telèfon"
+
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:676
+msgid "Enable verbose debug messages"
+msgstr "Habilita els missatges de depuració detallats"
+
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Mostra la versió actual"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Trucada anònima"
 
@@ -82,7 +134,7 @@ msgstr "Trucada anònima"
 msgid "Calling…"
 msgstr "S'està trucant…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -91,59 +143,89 @@ msgstr ""
 "%s\n"
 "ahir"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:125
 msgid "translator-credits"
-msgstr "Marc Riera <marcriera@softcatala.org>"
+msgstr ""
+"equip de traducció:\n"
+"Marc Riera <marcriera@softcatala.org>\n"
+"Maite Guix <maite.guix@me.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "No es poden fer trucades: no hi ha cap mòdem amb funcions de veu"
 
-#: src/calls-main-window.c:325
+#: src/calls-main-window.c:327
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "No es poden fer trucades: no hi ha cap mòdem o compte de VoIP disponible"
+msgstr ""
+"No es poden fer trucades: no hi ha cap mòdem o compte de VoIP disponible"
 
-#: src/calls-main-window.c:330
+#: src/calls-main-window.c:332
 msgid "Can't place calls: No backend service"
 msgstr "No es poden fer trucades: no hi ha cap servei de rerefons"
 
-#: src/calls-main-window.c:334
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
 msgstr "No es poden fer trucades: no hi ha cap connector"
 
-#: src/calls-main-window.c:374
+#: src/calls-main-window.c:376
 msgid "Contacts"
 msgstr "Contactes"
 
-#: src/calls-main-window.c:384 src/ui/call-display.ui:289
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Teclat"
 
-#: src/calls-main-window.c:392
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Recents"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Trucada perduda"
 
-#: src/calls-notifier.c:63
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Trucada perduda de <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Trucada perduda de %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Trucada perduda d'una persona desconeguda"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Torna la trucada"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "Comptes VoIP"
+
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Afegeix comptes VoIP"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Podeu afegir el compte VoIP aquí. Us permetrà fer i rebre trucades VoIP "
+"mitjançant el protocol SIP. Aquesta característica encara és relativament "
+"nova i encara no s'ha completat la característica (és a dir, cap suport "
+"xifrat)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Afegeix compte"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
@@ -177,9 +259,10 @@ msgstr "Contesta"
 msgid "Hide the dial pad"
 msgstr "Amaga el teclat"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Truca al grup"
+msgid "Call"
+msgstr "Trucada"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -189,10 +272,6 @@ msgstr "_Suprimeix la trucada"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_Copia el número"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -267,13 +346,25 @@ msgstr "_Ajuda"
 msgid "_About Calls"
 msgstr "_Quant al Trucades"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Introduïu una adreça VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Introduïu un número"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Teclat"
 
-#: src/ui/new-call-box.ui:122
-msgid "Backspace through number"
-msgstr "Retrocedeix pel número"
+#: src/ui/new-call-box.ui:114
+msgid "Delete character in front of cursor"
+msgstr "Suprimeix el caràcter davant el cursor"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Compte SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
@@ -282,6 +373,15 @@ msgstr "Trucada nova"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Torna"
+
+#~ msgid "Call the party"
+#~ msgstr "Truca al grup"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Retrocedeix pel número"
 
 #~ msgid "Can't place calls: No SIM card"
 #~ msgstr "No es poden fer trucades: no hi ha cap targeta SIM"
