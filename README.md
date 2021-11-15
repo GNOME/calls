@@ -1,5 +1,4 @@
 # Calls
-[![Code coverage](https://gitlab.gnome.org/GNOME/calls/badges/master/coverage.svg)](https://gitlab.gnome.org/GNOME/calls/commits/master)
 
 A phone dialer and call handler.
 
