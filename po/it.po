@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-19 00:17+0000\n"
-"PO-Revision-Date: 2021-08-15 18:39+0200\n"
+"POT-Creation-Date: 2021-10-28 12:04+0000\n"
+"PO-Revision-Date: 2021-10-31 17:00+0100\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Chiamate"
@@ -45,45 +45,96 @@ msgstr "Chiamate (demone)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Un dialer telefonico e un gestore di chiamate (demone)"
 
-#: src/calls-application.c:544
-#, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Ho provato a comporre l'URI di telefono non analizzabile `%s'"
+#: plugins/sip/sip-account-widget.ui:11
+#| msgid "SIP Account"
+msgid "Add Account"
+msgstr "Aggiungi account"
 
-#: src/calls-application.c:626
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Login"
+
+#: plugins/sip/sip-account-widget.ui:42
+#| msgid "SIP Account"
+msgid "Manage Account"
+msgstr "Gestisci account"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Applica"
+
+#: plugins/sip/sip-account-widget.ui:61
+#| msgid "_Delete Call"
+msgid "_Delete"
+msgstr "_Elimina"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Facoltativo"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID utente"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Password"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Trasporto"
+
+#: src/calls-application.c:528
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Ho provato un URI telefonico non valido `%s'"
+
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:680
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Il nome del Plugin da usare per il Fornitore di chiamate"
+#: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "Il nome del plugin da usare come fornitore di chiamate"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Componi un numero"
+#: src/calls-application.c:670
+msgid "Dial a telephone number"
+msgstr "Componi un numero di telefono"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:676
 msgid "Enable verbose debug messages"
 msgstr "Abilita i messaggi dettagliati di debug"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Chiamante anonimo "
 
@@ -91,7 +142,7 @@ msgstr "Chiamante anonimo "
 msgid "Calling…"
 msgstr "Sto chiamando..."
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -131,7 +182,8 @@ msgstr "Contatti"
 msgid "Dial Pad"
 msgstr "Tastiera"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Recenti"
 
@@ -139,23 +191,50 @@ msgstr "Recenti"
 msgid "Missed call"
 msgstr "Chiamata persa"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chiamata persa da <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chiamata persa da %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Chiamata persa da uno sconosciuto"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Richiama"
+
+#: src/ui/account-overview.ui:16
+#| msgid "_VoIP Accounts"
+msgid "VoIP Accounts"
+msgstr "Account VoIP"
+
+#: src/ui/account-overview.ui:41
+#| msgid "_VoIP Accounts"
+msgid "Add VoIP Accounts"
+msgstr "Aggiungi account VoIP"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Qui puoi aggiungere un account VoIP. Ti permetterà di effettuare e ricevere "
+"chiamate VoIP utilizzando il protocollo SIP. Questa caratteristica è "
+"relativamente nuova e non ancora completa (cioè nessun media cifrato)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#| msgid "SIP Account"
+msgid "_Add Account"
+msgstr "_Aggiungi account"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
@@ -189,8 +268,9 @@ msgstr "Rispondi"
 msgid "Hide the dial pad"
 msgstr "Nascondi tastiera"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
+msgid "Call"
 msgstr "Chiama"
 
 #: src/ui/call-record-row.ui:112
@@ -201,10 +281,6 @@ msgstr "_Elimina chiamata"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "_Copia numero "
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -292,8 +368,8 @@ msgid "Dial"
 msgstr "Componi"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Modifica il numero"
+msgid "Delete character in front of cursor"
+msgstr "Cancella il carattere davanti al cursore"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
