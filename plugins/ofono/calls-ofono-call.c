@@ -188,7 +188,7 @@ calls_ofono_call_hang_up (CallsCall *call)
 
 
 static void
-calls_ofono_call_tone_start (CallsCall *call, gchar key)
+calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
   if (self->state != CALLS_CALL_STATE_ACTIVE)
@@ -362,7 +362,7 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   call_class->get_protocol = calls_ofono_call_get_protocol;
   call_class->answer = calls_ofono_call_answer;
   call_class->hang_up = calls_ofono_call_hang_up;
-  call_class->tone_start = calls_ofono_call_tone_start;
+  call_class->send_dtmf_tone = calls_ofono_call_send_dtmf_tone;
 
   props[PROP_VOICE_CALL] =
     g_param_spec_object ("voice-call",

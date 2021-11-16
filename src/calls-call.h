@@ -57,9 +57,7 @@ struct _CallsCallClass
   const char     *(*get_protocol)         (CallsCall *self);
   void            (*answer)               (CallsCall *self);
   void            (*hang_up)              (CallsCall *self);
-  void            (*tone_start)           (CallsCall *self,
-                                           char       key);
-  void            (*tone_stop)            (CallsCall *self,
+  void            (*send_dtmf_tone)       (CallsCall *self,
                                            char       key);
 };
 
@@ -71,10 +69,7 @@ const char      *calls_call_get_protocol   (CallsCall *self);
 void             calls_call_answer         (CallsCall *self);
 void             calls_call_hang_up        (CallsCall *self);
 gboolean         calls_call_can_dtmf       (CallsCall *self);
-void             calls_call_tone_start     (CallsCall *self,
-                                            gchar      key);
-gboolean         calls_call_tone_stoppable (CallsCall *self);
-void             calls_call_tone_stop      (CallsCall *self,
+void             calls_call_send_dtmf_tone (CallsCall *self,
                                             gchar      key);
 CallsBestMatch * calls_call_get_contact    (CallsCall *self);
 

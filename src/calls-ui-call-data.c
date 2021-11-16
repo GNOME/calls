@@ -39,16 +39,6 @@ struct DtmfData
   char dtmf;
 };
 
-
-static gboolean
-on_stop_dtmf (struct DtmfData *dtmf_data)
-{
-  calls_call_tone_stop (dtmf_data->call, dtmf_data->dtmf);
-
-  g_free (dtmf_data);
-  return G_SOURCE_REMOVE;
-}
-
 static const char *
 calls_ui_call_data_get_display_name (CuiCall *call_data)
 {
@@ -173,14 +163,7 @@ calls_ui_call_data_send_dtmf (CuiCall    *call_data,
   g_return_if_fail (CALLS_IS_UI_CALL_DATA (self));
   g_return_if_fail (!!self->call);
 
-  calls_call_tone_start (self->call, *dtmf);
-  if (calls_call_tone_stoppable (self->call)) {
-    struct DtmfData *dtmf_data = g_new0 (struct DtmfData, 1);
-    dtmf_data->call = self->call;
-    dtmf_data->dtmf = *dtmf;
-
-    g_timeout_add (250, G_SOURCE_FUNC (on_stop_dtmf), dtmf_data);
-  }
+  calls_call_send_dtmf_tone (self->call, *dtmf);
 }
 
 static void

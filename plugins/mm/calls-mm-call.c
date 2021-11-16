@@ -275,7 +275,7 @@ DEFINE_OPERATION(start, calls_mm_call_start_call, "starting outgoing call");
 
 
 static void
-calls_mm_call_tone_start (CallsCall *call, gchar key)
+calls_mm_call_send_dtmf_tone (CallsCall *call, gchar key)
 {
   CallsMMCall *self = CALLS_MM_CALL (call);
   struct CallsMMOperationData *data;
@@ -386,7 +386,7 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   call_class->get_protocol = calls_mm_call_get_protocol;
   call_class->answer = calls_mm_call_answer;
   call_class->hang_up = calls_mm_call_hang_up;
-  call_class->tone_start = calls_mm_call_tone_start;
+  call_class->send_dtmf_tone = calls_mm_call_send_dtmf_tone;
 
   props[PROP_MM_CALL] = g_param_spec_object ("mm-call",
                                              "MM call",

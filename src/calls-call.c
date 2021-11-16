@@ -41,8 +41,8 @@
  * #CALL_CALL_STATE_INCOMING, the call can be answered with #answer.
  * The call can also be hung up at any time with #hang_up.
  *
- * DTMF tones can be played the call using #tone_start and
- * #tone_stop.  Valid characters for the key are 0-9, '*', '#', 'A',
+ * DTMF tones can be played the call using #send_dtmf
+ * Valid characters for the key are 0-9, '*', '#', 'A',
  * 'B', 'C' and 'D'.
  */
 
@@ -108,17 +108,10 @@ calls_call_real_hang_up (CallsCall *self)
 }
 
 static void
-calls_call_real_tone_start (CallsCall *self,
-                            char       key)
+calls_call_real_send_dtmf_tone (CallsCall *self,
+                                char       key)
 {
   g_info ("Beep! (%c)", (int)key);
-}
-
-static void
-calls_call_real_tone_stop (CallsCall *self,
-                           char       key)
-{
-  g_info ("Beep end (%c)", (int)key);
 }
 
 static void
@@ -170,8 +163,7 @@ calls_call_class_init (CallsCallClass *klass)
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
   klass->hang_up = calls_call_real_hang_up;
-  klass->tone_start = calls_call_real_tone_start;
-  klass->tone_stop = calls_call_real_tone_stop;
+  klass->send_dtmf_tone = calls_call_real_send_dtmf_tone;
 
   properties[PROP_INBOUND] =
     g_param_spec_boolean ("inbound",
@@ -369,67 +361,27 @@ calls_call_can_dtmf (CallsCall *self)
 {
   g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
 
-  return CALLS_CALL_GET_CLASS (self)->tone_start != calls_call_real_tone_start;
+  return CALLS_CALL_GET_CLASS (self)->send_dtmf_tone != calls_call_real_send_dtmf_tone;
 }
 
 /**
- * calls_call_tone_start:
+ * calls_call_send_dtmf_tone:
  * @self: a #CallsCall
  * @key: which tone to start
  *
- * Start playing a DTMF tone for the specified key.  Implementations
+ * Start playing a DTMF tone for the specified key. Implementations
  * will stop playing the tone either after an implementation-specific
- * timeout, or after #calls_call_tone_stop is called with the same
- * value for @key.
+ * timeout.
  *
  */
 void
-calls_call_tone_start (CallsCall *self,
-                       gchar      key)
+calls_call_send_dtmf_tone (CallsCall *self,
+                           gchar      key)
 {
   g_return_if_fail (CALLS_IS_CALL (self));
   g_return_if_fail (tone_key_is_valid (key));
 
-  CALLS_CALL_GET_CLASS (self)->tone_start (self, key);
-}
-
-/**
- * calls_call_tone_stoppable:
- * @self: a #CallsCall
- *
- * Determine whether tones for this call can be stopped by calling
- * #calls_call_tone_stop.  Some implementations will only allow
- * fixed-length tones to be played.  In that case, this function
- * should return FALSE.
- *
- * Returns: whether calls to #calls_call_tone_stop will do anything
- *
- */
-gboolean
-calls_call_tone_stoppable (CallsCall *self)
-{
-  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
-
-  return CALLS_CALL_GET_CLASS (self)->tone_stop != calls_call_real_tone_stop;
-}
-
-/**
- * calls_call_tone_stop:
- * @self: a #CallsCall
- * @key: which tone to stop
- *
- * Stop playing a DTMF tone previously started with
- * #calls_call_tone_start.
- *
- */
-void
-calls_call_tone_stop (CallsCall *self,
-                      gchar      key)
-{
-  g_return_if_fail (CALLS_IS_CALL (self));
-  g_return_if_fail (tone_key_is_valid (key));
-
-  CALLS_CALL_GET_CLASS (self)->tone_stop (self, key);
+  CALLS_CALL_GET_CLASS (self)->send_dtmf_tone (self, key);
 }
 
 /**
