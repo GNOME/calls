@@ -254,3 +254,22 @@ get_protocol_from_address_with_fallback (const char *target)
 
   return protocol;
 }
+
+/**
+ * dtmf_tone_is_valid:
+ * @key:
+ *
+ * Checks if @key is a valid DTMF keytone
+ *
+ * Returns: %TRUE if @key is 0-9, A-D, * or #, %FALSE otherwise
+ */
+gboolean
+dtmf_tone_key_is_valid (gchar key)
+{
+  return
+    (key >= '0' && key <= '9')
+    || (key >= 'A' && key <= 'D')
+    ||  key == '*'
+    ||  key == '#';
+}
+
