@@ -9,6 +9,7 @@
 #include "util.h"
 
 #include <gtk/gtk.h>
+#include <limits.h>
 
 static void
 test_protocol_prefix (void)
@@ -23,6 +24,30 @@ test_protocol_prefix (void)
   g_assert_cmpstr (get_protocol_from_address ("mailto:charley@spam.com"), ==, NULL);
 }
 
+static gboolean
+string_contains_char (char *str, char c)
+{
+  size_t len = strlen (str);
+  for (guint i = 0; i < len; i++) {
+    if (str[i] == c)
+      return TRUE;
+  }
+
+  return FALSE;
+}
+static void
+test_dtmf_tone_validity (void)
+{
+  char *valid_tones = "0123456789ABCD*#";
+
+  for (char c = CHAR_MIN; c < CHAR_MAX; c++) {
+    if (string_contains_char (valid_tones, c))
+      g_assert_true (dtmf_tone_key_is_valid (c));
+    else
+      g_assert_false (dtmf_tone_key_is_valid (c));
+  }
+}
+
 
 int
 main (int   argc,
@@ -31,6 +56,7 @@ main (int   argc,
   gtk_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/util/protocol_prefix", (GTestFunc) test_protocol_prefix);
+  g_test_add_func ("/Calls/util/dtmf_tones", (GTestFunc) test_dtmf_tone_validity);
 
   g_test_run ();
 }
