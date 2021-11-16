@@ -1,0 +1,166 @@
+['# SOME DESCRIPTIVE TITLE.\n', "# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n", '# This file is distributed under the same license as the PACKAGE package.\n', '# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n', '#\n', '#, fuzzy\n', 'msgid ""\n', msgstr ”“ '"Project-Id-Version: PACKAGE VERSION\\n"\n', '"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\\n"\n', '"POT-Creation-Date: 2021-11-15 07:19+0000\\n"\n', '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n', '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"\n', '"Language-Team: LANGUAGE <LL@li.org>\\n"\n', '"Language: \\n"\n', '"MIME-Version: 1.0\\n"\n', '"Content-Type: text/plain; charset=UTF-8\\n"\n', '"Content-Transfer-Encoding: 8bit\\n"\n', '\n']
+
+['#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372\n', '#: src/ui/call-window.ui:10 src/ui/main-window.ui:8\n', 'msgid "Calls"\n', msgstr “电话” '\n']
+
+['#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4\n', 'msgid "Phone"\n', msgstr “电话” '\n']
+
+['#: data/org.gnome.Calls.desktop.in:5\n', 'msgid "A phone dialer and call handler"\n', msgstr “一个电话拨号器和调用处理程序” '\n']
+
+['#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.\n', '#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7\n', 'msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"\n', msgstr “电话,电话,手机,拨号;拨号器;PSTN;” '\n']
+
+['#: data/org.gnome.Calls-daemon.desktop.in:3\n', 'msgid "Calls (daemon)"\n', msgstr “电话(守护进程)” '\n']
+
+['#: data/org.gnome.Calls-daemon.desktop.in:5\n', 'msgid "A phone dialer and call handler (daemon mode)"\n', msgstr “一个电话拨号器和调用处理程序(守护进程模式)” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:11\n', 'msgid "Add Account"\n', msgstr “添加账户” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:17\n', 'msgid "_Log In"\n', msgstr “_Log” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:42\n', 'msgid "Manage Account"\n', msgstr “管理账户” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:47\n', 'msgid "_Apply"\n', msgstr “_Apply” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:61\n', 'msgid "_Delete"\n', msgstr “_Delete” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:91\n', 'msgid "Server"\n', msgstr “服务器” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:109\n', 'msgid "Display Name"\n', msgstr “显示名称” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:110\n', 'msgid "Optional"\n', msgstr “可选的” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:128\n', 'msgid "User ID"\n', msgstr “用户ID” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:141\n', 'msgid "Password"\n', msgstr “密码” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:161\n', 'msgid "Port"\n', msgstr “端口” '\n']
+
+['#: plugins/sip/sip-account-widget.ui:177\n', 'msgid "Transport"\n', msgstr “交通” '\n']
+
+['#: src/calls-application.c:528\n', '#, c-format\n', 'msgid "Tried invalid tel URI `%s\'"\n', msgstr “尝试无效电话URI % s \” '\n']
+
+['#: src/calls-application.c:605\n', '#, c-format\n', 'msgid "Don\'t know how to open `%s\'"\n', msgstr ”唐\ ' t知道如何打开“% s \ '” '\n']
+
+['#: src/calls-application.c:658\n', 'msgid "The name of the plugin to use as a call provider"\n', msgstr “插件使用的名称调用提供者” '\n']
+
+['#: src/calls-application.c:659\n', 'msgid "PLUGIN"\n', msgstr "PLUGIN" '\n']
+
+['#: src/calls-application.c:664\n', 'msgid "Whether to present the main window on startup"\n', msgstr “在启动时是否显示主窗口” '\n']
+
+['#: src/calls-application.c:670\n', 'msgid "Dial a telephone number"\n', msgstr “拨一个电话号码” '\n']
+
+['#: src/calls-application.c:671\n', 'msgid "NUMBER"\n', msgstr “数量” '\n']
+
+['#: src/calls-application.c:676\n', 'msgid "Enable verbose debug messages"\n', msgstr “启用详细调试消息” '\n']
+
+['#: src/calls-application.c:682\n', 'msgid "Print current version"\n', msgstr “打印当前版本” '\n']
+
+['#: src/calls-best-match.c:357 src/calls-call-record-row.c:40\n', 'msgid "Anonymous caller"\n', msgstr “匿名者” '\n']
+
+['#: src/calls-call-display.c:278\n', 'msgid "Calling…"\n', msgstr “叫…” '\n']
+
+['#: src/calls-call-record-row.c:115\n', '#, c-format\n', 'msgid ""\n', '"%s\\n"\n', '"yesterday"\n', msgstr ”“ '\n']
+
+['#: src/calls-main-window.c:125\n', 'msgid "translator-credits"\n', msgstr “translator-credits” '\n']
+
+['#: src/calls-main-window.c:323\n', 'msgid "Can\'t place calls: No voice-capable modem available"\n', msgstr “\ ' t地方电话:不能够调制解调器可用” '\n']
+
+['#: src/calls-main-window.c:327\n', 'msgid "Can\'t place calls: No modem or VoIP account available"\n', msgstr “\ ' t地方电话:没有调制解调器或VoIP账户可用” '\n']
+
+['#: src/calls-main-window.c:332\n', 'msgid "Can\'t place calls: No backend service"\n', msgstr “\ ' t地方电话:没有后端服务” '\n']
+
+['#: src/calls-main-window.c:336\n', 'msgid "Can\'t place calls: No plugin"\n', msgstr “\ ' t称:没有插件” '\n']
+
+['#: src/calls-main-window.c:376\n', 'msgid "Contacts"\n', msgstr “联系人” '\n']
+
+['#: src/calls-main-window.c:386 src/ui/call-display.ui:289\n', 'msgid "Dial Pad"\n', msgstr “按键” '\n']
+
+['#. Recent as in "Recent calls" (the call history)\n', '#: src/calls-main-window.c:395\n', 'msgid "Recent"\n', msgstr “最近” '\n']
+
+['#: src/calls-notifier.c:48\n', 'msgid "Missed call"\n', msgstr “未接电话” '\n']
+
+['#. %s is a name here\n', '#: src/calls-notifier.c:69\n', '#, c-format\n', 'msgid "Missed call from <b>%s</b>"\n', msgstr “错过了电话,< b > % s < / b >” '\n']
+
+['#. %s is a number here\n', '#: src/calls-notifier.c:72\n', '#, c-format\n', 'msgid "Missed call from %s"\n', msgstr “% s的未接电话” '\n']
+
+['#: src/calls-notifier.c:74\n', 'msgid "Missed call from unknown caller"\n', msgstr “从未知来电未接电话” '\n']
+
+['#: src/calls-notifier.c:80\n', 'msgid "Call back"\n', msgstr “回调” '\n']
+
+['#: src/ui/account-overview.ui:16\n', 'msgid "VoIP Accounts"\n', msgstr “VoIP帐户” '\n']
+
+['#: src/ui/account-overview.ui:41\n', 'msgid "Add VoIP Accounts"\n', msgstr “添加网络账户” '\n']
+
+['#: src/ui/account-overview.ui:43\n', 'msgid ""\n', '"You can add VoIP account here. It will allow you to place and receive VoIP "\n', '"calls using the SIP protocol. This feature is still relatively new and not "\n', '"yet feature complete (i.e. no encrypted media)."\n', msgstr ”“ '\n']
+
+['#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88\n', 'msgid "_Add Account"\n', msgstr “_Add账户” '\n']
+
+['#: src/ui/call-display.ui:33\n', 'msgid "Incoming phone call"\n', msgstr “传入的电话” '\n']
+
+['#: src/ui/call-display.ui:135\n', 'msgid "Mute"\n', msgstr “哑巴” '\n']
+
+['#: src/ui/call-display.ui:172\n', 'msgid "Speaker"\n', msgstr “议长” '\n']
+
+['#: src/ui/call-display.ui:208\n', 'msgid "Add call"\n', msgstr “添加调用” '\n']
+
+['#: src/ui/call-display.ui:253\n', 'msgid "Hold"\n', msgstr "持有" '\n']
+
+['#: src/ui/call-display.ui:345\n', 'msgid "Hang up"\n', msgstr “挂” '\n']
+
+['#: src/ui/call-display.ui:376\n', 'msgid "Answer"\n', msgstr “答案” '\n']
+
+['#: src/ui/call-display.ui:458\n', 'msgid "Hide the dial pad"\n', msgstr “隐藏盘垫” '\n']
+
+['#. Translators: This is a verb, not a noun. Call the number of the currently selected row.\n', '#: src/ui/call-record-row.ui:68\n', 'msgid "Call"\n', msgstr “电话” '\n']
+
+['#: src/ui/call-record-row.ui:112\n', 'msgid "_Delete Call"\n', msgstr “_Delete电话” '\n']
+
+['#. Translators: This is a phone number\n', '#: src/ui/call-record-row.ui:117\n', 'msgid "_Copy number"\n', msgstr “_Copy数字” '\n']
+
+['#: src/ui/call-selector-item.ui:44\n', 'msgid "On hold"\n', msgstr “搁置” '\n']
+
+['#: src/ui/contacts-box.ui:66\n', 'msgid "No contacts found"\n', msgstr “没有找到联系人” '\n']
+
+['#: src/ui/encryption-indicator.ui:23\n', 'msgid "This call is not encrypted"\n', msgstr “这叫不是加密” '\n']
+
+['#: src/ui/encryption-indicator.ui:45\n', 'msgid "This call is encrypted"\n', msgstr “这叫加密” '\n']
+
+['#: src/ui/history-box.ui:23\n', 'msgid "No Recent Calls"\n', msgstr “没有最近的电话” '\n']
+
+['#: src/ui/history-header-bar.ui:7\n', 'msgid "Recent Calls"\n', msgstr “最近所说的“ '\n']
+
+['#: src/ui/history-header-bar.ui:20\n', 'msgid "New call…"\n', msgstr “新电话…” '\n']
+
+['#. Translators: tooltip for the application menu button\n', '#: src/ui/history-header-bar.ui:39\n', 'msgid "Menu"\n', msgstr "Menu" '\n']
+
+['#: src/ui/history-header-bar.ui:70\n', 'msgid "About Calls"\n', msgstr “关于所谓的“ '\n']
+
+['#: src/ui/main-window.ui:76\n', 'msgid "No modem found"\n', msgstr “没有现代发现” '\n']
+
+['#: src/ui/main-window.ui:118\n', 'msgid "USSD"\n', msgstr “USSD” '\n']
+
+['#: src/ui/main-window.ui:127\n', 'msgid "_Cancel"\n', msgstr “_Cancel” '\n']
+
+['#: src/ui/main-window.ui:144\n', 'msgid "_Close"\n', msgstr “_Close” '\n']
+
+['#: src/ui/main-window.ui:154\n', 'msgid "_Send"\n', msgstr “_Send” '\n']
+
+['#: src/ui/main-window.ui:228\n', 'msgid "_VoIP Accounts"\n', msgstr “_VoIP帐户” '\n']
+
+['#: src/ui/main-window.ui:241\n', 'msgid "_Keyboard shortcuts"\n', msgstr “_Keyboard快捷键” '\n']
+
+['#: src/ui/main-window.ui:247\n', 'msgid "_Help"\n', msgstr “_Help” '\n']
+
+['#: src/ui/main-window.ui:253\n', 'msgid "_About Calls"\n', msgstr “_About所说的“ '\n']
+
+['#: src/ui/new-call-box.ui:33\n', 'msgid "Enter a VoIP address"\n', msgstr “输入网络地址” '\n']
+
+['#: src/ui/new-call-box.ui:46\n', 'msgid "Enter a number"\n', msgstr “输入一个数字” '\n']
+
+['#: src/ui/new-call-box.ui:91\n', 'msgid "Dial"\n', msgstr “拨” '\n']
+
+['#: src/ui/new-call-box.ui:114\n', 'msgid "Delete character in front of cursor"\n', msgstr “删除字符的指针” '\n']
+
+['#: src/ui/new-call-box.ui:145\n', 'msgid "SIP Account"\n', msgstr “SIP账户” '\n']
+
+['#: src/ui/new-call-header-bar.ui:7\n', 'msgid "New Call"\n', msgstr “新电话” '\n']
+
