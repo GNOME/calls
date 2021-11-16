@@ -124,6 +124,64 @@ static gboolean
 }
 
 
+static gboolean
+on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
+                          GDBusMethodInvocation *invocation,
+                          const char            *dtmf_tone,
+                          CallsCall             *call)
+{
+  g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
+  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+
+  if (!calls_call_can_dtmf (call)) {
+    g_dbus_method_invocation_return_error (invocation,
+                                           G_IO_ERROR,
+                                           G_IO_ERROR_FAILED,
+                                           "This call is not DTMF capable");
+    return TRUE;
+  }
+
+  if (!dtmf_tone || !*dtmf_tone) {
+    g_dbus_method_invocation_return_error (invocation,
+                                           G_IO_ERROR,
+                                           G_IO_ERROR_FAILED,
+                                           "Cannot send empty DTMF tone");
+    return TRUE;
+  }
+
+  if (dtmf_tone[1] != '\0') {
+    g_dbus_method_invocation_return_error (invocation,
+                                           G_IO_ERROR,
+                                           G_IO_ERROR_FAILED,
+                                           "Key '%s' must be a single valid tone",
+                                           dtmf_tone);
+    return TRUE;
+  }
+
+  if (!dtmf_tone_key_is_valid (*dtmf_tone)) {
+    g_dbus_method_invocation_return_error (invocation,
+                                           G_IO_ERROR,
+                                           G_IO_ERROR_FAILED,
+                                           "The key %s is not a valid DTMF tone",
+                                           dtmf_tone);
+    return TRUE;
+  }
+
+  if (calls_call_get_state (call) != CALLS_CALL_STATE_ACTIVE) {
+    g_dbus_method_invocation_return_error (invocation,
+                                           G_IO_ERROR,
+                                           G_IO_ERROR_FAILED,
+                                           "Can't send DTMF tone because call is inactive");
+    return TRUE;
+  }
+
+  calls_call_send_dtmf_tone (call, *dtmf_tone);
+  calls_dbus_calls_call_complete_send_dtmf (skeleton, invocation);
+
+  return TRUE;
+}
+
+
 static void
 call_added_cb (CallsDBusManager *self, CallsCall *call)
 {
@@ -144,6 +202,7 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
   g_object_connect (iface,
                     "object_signal::handle-accept", G_CALLBACK (on_handle_call_accept), call,
                     "object_signal::handle-hangup", G_CALLBACK (on_handle_call_hangup), call,
+                    "object-signal::handle-send_dtmf", G_CALLBACK (on_handle_call_send_dtmf), call,
                     NULL);
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
