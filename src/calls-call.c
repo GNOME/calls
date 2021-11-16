@@ -111,7 +111,7 @@ static void
 calls_call_real_send_dtmf_tone (CallsCall *self,
                                 char       key)
 {
-  g_info ("Beep! (%c)", (int)key);
+  g_info ("Beep! (%c)", key);
 }
 
 static void
