@@ -124,6 +124,13 @@ calls_dummy_call_hang_up (CallsCall *call)
   change_state (self, CALLS_CALL_STATE_DISCONNECTED);
 }
 
+static void
+calls_dummy_call_send_dtmf_tone (CallsCall *call,
+                                 char       key)
+{
+  g_debug ("Beep! (%c)", key);
+}
+
 static gboolean
 outbound_timeout_cb (CallsDummyCall *self)
 {
@@ -231,6 +238,7 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   call_class->get_protocol = calls_dummy_call_get_protocol;
   call_class->answer = calls_dummy_call_answer;
   call_class->hang_up = calls_dummy_call_hang_up;
+  call_class->send_dtmf_tone = calls_dummy_call_send_dtmf_tone;
 
   props[PROP_NUMBER_CONSTRUCTOR] =
     g_param_spec_string ("number-constructor",
