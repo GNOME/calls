@@ -42,8 +42,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.16.6.tar.xz",
-                    "sha256" : "2a90b6260f66d3135609d62667ada73416694d717e7fd9b73223e3703a499617"
+                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.18.2.tar.xz",
+                    "sha256" : "374be158ae1c1fb38a29eef1cc3cdf89ff3536b48ff1320d208ab204ea6c5f8a"
                 }
             ]
         },
@@ -80,8 +80,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/libpeas/1.25/libpeas-1.25.3.tar.xz",
-                    "sha256": "1c9bbb29740c29cd6e1dd0c9964722ff08cd5e6f68f1b5c135bc391a6ce97639"
+                    "url" : "https://download.gnome.org/sources/libpeas/1.30/libpeas-1.30.0.tar.xz",
+                    "sha256": "0bf5562e9bfc0382a9dcb81f64340787542568762a3a367d9d90f6185898b9a3"
                 }
             ]
         },
@@ -172,8 +172,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://github.com/libical/libical/releases/download/v3.0.10/libical-3.0.10.tar.gz",
-                    "sha256" : "f933b3e6cf9d56a35bb5625e8e4a9c3a50239a85aea05ed842932c1a1dc336b4"
+                    "url" : "https://github.com/libical/libical/releases/download/v3.0.11/libical-3.0.11.tar.gz",
+                    "sha256" : "1e6c5e10c5a48f7a40c68958055f0e2759d9ab3563aca17273fe35a5df7dbbf1"
                 }
             ]
         },
@@ -212,8 +212,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.40/evolution-data-server-3.40.2.tar.xz",
-                    "sha256" : "ec82951639f32a5cece80a8b0b9aa3f66b7d318e3ee2c1c35234f2e2bde8a418"
+                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.42/evolution-data-server-3.42.1.tar.xz",
+                    "sha256" : "e6e67f2a77d0ff3e6da50b03dc5fa266e716626bcda2ef44144e317e35f2f528"
                 }
             ]
         },
@@ -243,9 +243,8 @@
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://download-fallback.gnome.org/sources/folks/0.15/folks-0.15.2.tar.xz",
-                    "sha256" : "ef777b2696d15ec31ba8b940ecabc17fe7fab909584f9425258f54d295ccd122"
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/folks.git"
                 }
             ]
         },
@@ -256,8 +255,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.0+git20210426/feedbackd-v0.0.0+git20210426.tar.gz",
-                    "sha256" : "3e9ec7d521ff0dcbfff15708678650068ac744fad93e21959484226cd882916d"
+                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.0+git20211018/feedbackd-v0.0.0+git20211018.tar.gz",
+                    "sha256" : "52e075f4020ad2b69c38cc732942d06c84b68105058da9a86e8861d5df2dc647"
                 }
             ]
         },
@@ -267,8 +266,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://gitlab.com/mobian1/callaudiod/-/archive/0.1.0/callaudiod-0.1.0.tar.gz",
-                    "sha256" : "eb9202af99e7d5fdfb0c20fcb64a0384a2024c9ca27a4c8ba45113eb0ffb97fc"
+                    "url" : "https://gitlab.com/mobian1/callaudiod/-/archive/0.1.1/callaudiod-0.1.1.tar.gz",
+                    "sha256" : "950036e95a920bdaae74ec61912a3588b7e743b808c2c5a77337709351d4b227"
                 }
             ]
         },
@@ -278,8 +277,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.18.3/gstreamer-1.18.3.tar.gz",
-                    "sha256" : "d7e3917b5d3d9c3bd9bb70b7500314a5725377cff39bcd818df13c1fda0f60ba"
+                    "url" : "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.19.3/gstreamer-1.19.3.tar.gz",
+                    "sha256" : "f155fe7335de78988dc6264524e716b6e4f02be27d106b765c187cc2c1d5de7e"
                 }
             ]
         },
