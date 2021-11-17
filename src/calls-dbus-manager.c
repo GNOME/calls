@@ -100,6 +100,29 @@ on_handle_call_hangup (CallsDBusCallsCall    *skeleton,
   return TRUE;
 }
 
+static gboolean
+(avatar_loadable_icon_transform_to_image_path) (GBinding *binding,
+                                                const GValue *from_value,
+                                                GValue *to_value,
+                                                gpointer user_data)
+{
+  GLoadableIcon *icon = G_LOADABLE_ICON (g_value_get_object(from_value));
+
+  if (icon == NULL) {
+    g_value_set_string (to_value, NULL);
+    return TRUE;
+  }
+
+  if (G_IS_FILE_ICON (icon)) {
+    GFile *file = g_file_icon_get_file (G_FILE_ICON (icon));
+
+    g_value_take_string (to_value, g_file_get_path (file));
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 
 static void
 call_added_cb (CallsDBusManager *self, CallsCall *call)
@@ -133,7 +156,11 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
   match = calls_call_get_contact (call);
   if (calls_best_match_has_individual (match)) {
     g_object_bind_property (match, "name", iface, "display-name", G_BINDING_SYNC_CREATE);
-    /* TODO: avatar once https://source.puri.sm/Librem5/calls/-/issues/161 is fixed */
+    g_object_bind_property_full (match, "avatar",
+                                 iface, "image-path",
+                                 G_BINDING_SYNC_CREATE,
+                                 avatar_loadable_icon_transform_to_image_path,
+                                 NULL, NULL, NULL);
   }
   g_object_set_data_full (G_OBJECT (object), "contact", g_steal_pointer (&match), g_object_unref);
 
