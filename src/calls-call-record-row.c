@@ -353,6 +353,10 @@ setup_contact (CallsCallRecordRow *self)
                           self->avatar, "show-initials",
                           G_BINDING_SYNC_CREATE);
 
+  g_object_bind_property (self->contact, "avatar",
+                          self->avatar, "loadable-icon",
+                          G_BINDING_SYNC_CREATE);
+
   if (target[0] == '\0')
     {
       gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
