@@ -13,6 +13,7 @@ enum {
   PROP_STATE,
   PROP_ENCRYPTED,
   PROP_CAN_DTMF,
+  PROP_AVATAR_ICON,
   PROP_LAST_PROP
 };
 
@@ -128,6 +129,17 @@ calls_ui_call_data_get_can_dtmf (CuiCall *call_data)
 }
 
 
+static GLoadableIcon *
+calls_ui_call_data_get_avatar_icon (CuiCall *call_data)
+{
+  CallsUiCallData *self = (CallsUiCallData *) call_data;
+
+  g_return_val_if_fail (CALLS_UI_CALL_DATA (self), NULL);
+
+  return calls_best_match_get_avatar (self->best_match);
+}
+
+
 static void
 calls_ui_call_data_accept (CuiCall *call_data)
 {
@@ -179,6 +191,7 @@ calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface)
   iface->get_state = calls_ui_call_data_get_state;
   iface->get_encrypted = calls_ui_call_data_get_encrypted;
   iface->get_can_dtmf = calls_ui_call_data_get_can_dtmf;
+  iface->get_avatar_icon = calls_ui_call_data_get_avatar_icon;
 
   iface->accept = calls_ui_call_data_accept;
   iface->hang_up = calls_ui_call_data_hang_up;
@@ -295,6 +308,10 @@ calls_ui_call_data_get_property (GObject    *object,
     g_value_set_boolean (value, calls_ui_call_data_get_can_dtmf (cui_call));
     break;
 
+  case PROP_AVATAR_ICON:
+    g_value_set_object (value, calls_ui_call_data_get_avatar_icon (cui_call));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -350,6 +367,9 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   g_object_class_override_property (object_class, PROP_CAN_DTMF, "can-dtmf");
   props[PROP_CAN_DTMF] = g_object_class_find_property (object_class, "can-dtmf");
+
+  g_object_class_override_property (object_class, PROP_AVATAR_ICON, "avatar-icon");
+  props[PROP_AVATAR_ICON] = g_object_class_find_property (object_class, "avatar-icon");
 }
 
 CallsUiCallData *
