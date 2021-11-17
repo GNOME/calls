@@ -50,6 +50,7 @@ full_calls_plugin_builddir = join_paths(builddir, 'plugins')
 
 libcall_ui_dep = dependency('call-ui',
   fallback:  ['libcall-ui', 'libcall_ui_dep'],
+  default_options: ['tests=false', 'examples=false', 'gtk_doc=false'],
 )
 
 config_data = configuration_data()
