@@ -218,6 +218,15 @@ on_notify_name (CallsUiCallData *self)
 
 
 static void
+on_notify_avatar (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_AVATAR_ICON]);
+}
+
+
+static void
 set_call_data (CallsUiCallData *self,
                CallsCall       *call)
 {
@@ -242,6 +251,11 @@ set_call_data (CallsUiCallData *self,
   g_signal_connect_object (self->best_match,
                            "notify::has-individual",
                            G_CALLBACK (on_notify_name),
+                           self,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (self->best_match,
+                           "notify::avatar",
+                           G_CALLBACK (on_notify_avatar),
                            self,
                            G_CONNECT_SWAPPED);
   self->call = call;
