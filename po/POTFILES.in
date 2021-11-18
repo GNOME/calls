@@ -11,7 +11,6 @@ src/calls-call-window.c
 src/calls-contacts-box.c
 src/calls-contacts-provider.c
 src/calls-contacts-row.c
-src/calls-encryption-indicator.c
 src/calls-history-box.c
 src/calls-in-app-notification.c
 src/calls-main-window.c
@@ -29,7 +28,6 @@ src/ui/call-record-row.ui
 src/ui/call-selector-item.ui
 src/ui/call-window.ui
 src/ui/contacts-box.ui
-src/ui/encryption-indicator.ui
 src/ui/history-box.ui
 src/ui/history-header-bar.ui
 src/ui/in-app-notification.ui

@@ -31,7 +31,6 @@
 #include "calls-dbus-manager.h"
 #include "calls-history-box.h"
 #include "calls-new-call-box.h"
-#include "calls-encryption-indicator.h"
 #include "calls-ringer.h"
 #include "calls-notifier.h"
 #include "calls-record-store.h"
@@ -652,7 +651,6 @@ calls_application_class_init (CallsApplicationClass *klass)
   application_class->dbus_register  = calls_application_dbus_register;
   application_class->dbus_unregister  = calls_application_dbus_unregister;
 
-  g_type_ensure (CALLS_TYPE_ENCRYPTION_INDICATOR);
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);
   g_type_ensure (CALLS_TYPE_NEW_CALL_BOX);
 }
