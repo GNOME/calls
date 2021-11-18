@@ -202,7 +202,7 @@ calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface)
 static void
 on_notify_state (CallsUiCallData *self)
 {
-  g_assert (CALLS_UI_CALL_DATA (self));
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 }
@@ -211,7 +211,7 @@ on_notify_state (CallsUiCallData *self)
 static void
 on_notify_name (CallsUiCallData *self)
 {
-  g_assert (CALLS_UI_CALL_DATA (self));
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DISPLAY_NAME]);
 }
