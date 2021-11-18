@@ -29,7 +29,7 @@ build:native:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get -y update
     - apt-get -y install eatmydata
-    - eatmydata apt-get -y install lcov ca-certificates appstream
+    - eatmydata apt-get -y install gcovr ca-certificates appstream
     - '[ "${WANT_BUILD_DEPS}" != "true" ] || eatmydata apt-get -y build-dep .'
     - ulimit -c unlimited
   script:
