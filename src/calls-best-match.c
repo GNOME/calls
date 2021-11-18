@@ -36,7 +36,7 @@ struct _CallsBestMatch
   GObject parent_instance;
 
   FolksSearchView    *view;
-  FolksIndividual    *best_match;
+  FolksIndividual    *matched_individual;
   char               *phone_number;
   char               *country_code;
   char               *name_sip;
@@ -91,30 +91,30 @@ static void
 update_best_match (CallsBestMatch *self)
 {
   GeeSortedSet *individuals = folks_search_view_get_individuals (self->view);
-  FolksIndividual *best_match = NULL;
+  FolksIndividual *matched_individual = NULL;
   gboolean notify_has_individual = FALSE;
 
   g_return_if_fail (GEE_IS_COLLECTION (individuals));
 
   if (!gee_collection_get_is_empty (GEE_COLLECTION (individuals)))
-      best_match = gee_sorted_set_first (individuals);
+      matched_individual = gee_sorted_set_first (individuals);
 
-  if (best_match == self->best_match)
+  if (matched_individual == self->matched_individual)
     return;
 
-  if (self->best_match) {
-    g_signal_handlers_disconnect_by_data (self->best_match, self);
-    g_clear_object (&self->best_match);
+  if (self->matched_individual) {
+    g_signal_handlers_disconnect_by_data (self->matched_individual, self);
+    g_clear_object (&self->matched_individual);
     notify_has_individual = TRUE;
   }
 
-  if (best_match) {
-    g_set_object (&self->best_match, best_match);
-    g_signal_connect_swapped (self->best_match,
+  if (matched_individual) {
+    g_set_object (&self->matched_individual, matched_individual);
+    g_signal_connect_swapped (self->matched_individual,
                               "notify::display-name",
                               G_CALLBACK (notify_name),
                               self);
-    g_signal_connect_swapped (self->best_match,
+    g_signal_connect_swapped (self->matched_individual,
                               "notify::avatar",
                               G_CALLBACK (notify_avatar),
                               self);
@@ -208,9 +208,9 @@ dispose (GObject *object)
   g_clear_pointer (&self->country_code, g_free);
   g_clear_pointer (&self->name_sip, g_free);
 
-  if (self->best_match) {
-    g_signal_handlers_disconnect_by_data (self->best_match, self);
-    g_clear_object (&self->best_match);
+  if (self->matched_individual) {
+    g_signal_handlers_disconnect_by_data (self->matched_individual, self);
+    g_clear_object (&self->matched_individual);
   }
 
   G_OBJECT_CLASS (calls_best_match_parent_class)->dispose (object);
@@ -285,7 +285,7 @@ calls_best_match_has_individual (CallsBestMatch *self)
 {
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), FALSE);
 
-  return !!self->best_match;
+  return !!self->matched_individual;
 }
 
 
@@ -347,8 +347,8 @@ calls_best_match_get_name (CallsBestMatch *self)
 {
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
-  if (self->best_match)
-    return folks_individual_get_display_name (self->best_match);
+  if (self->matched_individual)
+    return folks_individual_get_display_name (self->matched_individual);
   else if (self->name_sip)
     return self->name_sip;
   else if (self->phone_number)
@@ -363,8 +363,8 @@ calls_best_match_get_avatar (CallsBestMatch *self)
 {
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
-  if (self->best_match)
-    return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->best_match));
+  if (self->matched_individual)
+    return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->matched_individual));
   else
     return NULL;
 }
