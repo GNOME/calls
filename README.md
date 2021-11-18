@@ -50,6 +50,8 @@ If your system is using systemd you may find
 [this guide](https://developer.puri.sm/Librem5/Development_Environment/Boards/Troubleshooting/Debugging.html)
 useful.
 
+For backend specific debugging, please see the sections below.
+
 ## Call provider backends
 
 Calls uses libpeas to support runtime loadable plugins which we call "providers".
@@ -83,12 +85,38 @@ This is the default backend for cellular calls. It uses `libmm-glib` to
 talk to ModemManager over DBus. It currently only supports one modem and
 one active call at a time.
 
+#### Debugging
+
+You can monitor the ModemManager messages on the DBus as follows:
+
+    gdbus monitor --system --dest org.freedesktop.ModemManager1
+
+For complete debugging logs you can set ModemManager's log verbosity to DEBUG as follows:
+
+    mmcli -G DEBUG
+
+and inspect the logs on a systemd based system with:
+
+    journalctl -u ModemManager.service
+
+For more information see [here](https://modemmanager.org/docs/modemmanager/debugging/)
 
 ### SIP
 
 This plugin uses the libsofia-sip library for SIP signalling and
 GStreamer for media handling. It supports multiple SIP accounts and
 currently one active call at a time (subject to change).
+
+#### Debugging
+
+You can print the sent and received SIP messages by setting the environment variable
+`TPORT_LOG=1`. To test the audio quality you can use one of the various public
+reachable echo test services, f.e. echo@conference.sip2sip.info. Please note that
+the SIP plugin currently doesn't support DTMF, which is used for some test
+services for navigating through a menu.
+
+If one or both sides can't hear any audio at all it is likely that the audio
+packets are not reaching the desired destination.
 
 ### Dummy
 
