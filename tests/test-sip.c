@@ -445,7 +445,7 @@ test_sip_media_manager (void)
 
   /* PCMA RTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 40002, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 40002, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -461,7 +461,7 @@ test_sip_media_manager (void)
 
   /* PCMA SRTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 42002, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42002, TRUE, codecs);
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "m=audio 42002 RTP/SAVP 8"));
@@ -475,7 +475,7 @@ test_sip_media_manager (void)
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 42042, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42042, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -496,7 +496,7 @@ test_sip_media_manager (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 33340, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 33340, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -520,7 +520,7 @@ test_sip_media_manager (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMU"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 18098, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 18098, TRUE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -535,7 +535,7 @@ test_sip_media_manager (void)
   g_test_expect_message ("CallsSipMediaManager", G_LOG_LEVEL_WARNING,
                          "No supported codecs found. Can't build meaningful SDP message");
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, 25048, FALSE, NULL);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 25048, FALSE, NULL);
 
   g_test_assert_expected_messages ();
   g_assert_true (sdp_message);

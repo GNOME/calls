@@ -52,11 +52,42 @@ typedef struct _CallsSipMediaManager
   GObject parent;
 
   char          *session_ip;
+  int            address_family;
+  struct         addrinfo hints;
+
   CallsSettings *settings;
   GList         *preferred_codecs;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
+
+
+static const char *
+get_address_family_string (CallsSipMediaManager *self,
+                           const char           *ip)
+{
+  struct addrinfo *result = NULL;
+  const char *family;
+
+  if (getaddrinfo (ip, NULL, &self->hints, &result) != 0) {
+    g_warning ("Cannot parse session IP %s", ip);
+    return NULL;
+  }
+
+  /* check if IP is IPv4 or IPv6. We need to specify this in the c= line of SDP */
+  self->address_family = result->ai_family;
+
+  if (result->ai_family == AF_INET)
+    family = "IP4";
+  else if (result->ai_family == AF_INET6)
+    family = "IP6";
+  else
+    family = NULL;
+
+  freeaddrinfo (result);
+
+  return family;
+}
 
 
 static void
@@ -167,6 +198,10 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
                             G_CALLBACK (on_notify_preferred_audio_codecs),
                             self);
   on_notify_preferred_audio_codecs (self);
+
+  /* Hints are used with getaddrinfo() when setting the session IP */
+  self->hints.ai_flags = AI_V4MAPPED | AI_ADDRCONFIG | AI_NUMERICHOST;
+  self->hints.ai_family = AF_UNSPEC;
 }
 
 
@@ -198,6 +233,7 @@ calls_sip_media_manager_default (void)
  */
 char *
 calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
+                                          const char           *own_ip,
                                           guint                 port,
                                           gboolean              use_srtp,
                                           GList                *supported_codecs)
@@ -206,6 +242,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
   g_autoptr (GString) media_line = NULL;
   g_autoptr (GString) attribute_lines = NULL;
   GList *node;
+  const char *address_family_string;
 
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
@@ -237,12 +274,16 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
   g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", port + 1);
 
  done:
-  if (self->session_ip && *self->session_ip)
+  if (own_ip && *own_ip)
+    address_family_string = get_address_family_string (self, own_ip);
+
+  if (own_ip && *own_ip && address_family_string)
     return g_strdup_printf ("v=0\r\n"
-                            "s=%s\r\n"
+                            "c=IN %s %s\r\n"
                             "%s\r\n"
                             "%s\r\n",
-                            self->session_ip,
+                            address_family_string,
+                            own_ip,
                             media_line->str,
                             attribute_lines->str);
   else
@@ -266,12 +307,14 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
  */
 char *
 calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
+                                             const char           *own_ip,
                                              guint                 port,
                                              gboolean              use_srtp)
 {
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
   return calls_sip_media_manager_get_capabilities (self,
+                                                   own_ip,
                                                    port,
                                                    use_srtp,
                                                    self->preferred_codecs);
@@ -348,7 +391,21 @@ calls_sip_media_manager_set_session_ip (CallsSipMediaManager *self,
 
   g_clear_pointer (&self->session_ip, g_free);
   if (session_ip && *session_ip) {
+    struct addrinfo *result = NULL;
+
+    if (getaddrinfo (session_ip, NULL, &self->hints, &result) != 0) {
+      g_warning ("Cannot parse session IP %s", session_ip);
+      return;
+    }
+
+    /* check if IP is IPv4 or IPv6. We need to specify this in the c= line of SDP */
+    self->address_family = result->ai_family;
+
     g_debug ("Setting session IP to %s", session_ip);
+
+    g_free (self->session_ip);
     self->session_ip = g_strdup (session_ip);
+
+    freeaddrinfo (result);
   }
 }

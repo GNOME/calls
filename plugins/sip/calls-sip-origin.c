@@ -111,6 +111,8 @@ struct _CallsSipOrigin
   gboolean auto_connect;
   gboolean direct_mode;
   gboolean can_tel;
+
+  char *own_ip;
   gint local_port;
 
   const char *protocol_prefix;
@@ -229,7 +231,7 @@ add_call (CallsSipOrigin *self,
       call_address = address_split[1];
   }
 
-  sip_call = calls_sip_call_new (call_address, inbound, handle);
+  sip_call = calls_sip_call_new (call_address, inbound, self->own_ip, handle);
   g_assert (sip_call != NULL);
 
   if (self->oper->call_handle)
@@ -251,6 +253,7 @@ add_call (CallsSipOrigin *self,
     calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
 
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
+                                                             self->own_ip,
                                                              local_port,
                                                              FALSE);
 
@@ -424,9 +427,10 @@ sip_r_register (int              status,
     g_debug ("REGISTER successful");
     origin->state = CALLS_ACCOUNT_ONLINE;
     nua_get_params (nua, TAG_ANY (), TAG_END());
+
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
-      calls_sip_media_manager_set_session_ip (origin->media_manager,
-                                              sip->sip_contact->m_url->url_host);
+      g_free (origin->own_ip);
+      origin->own_ip = g_strdup (sip->sip_contact->m_url->url_host);
     }
 
   } else if (status == 401 || status == 407) {
@@ -1316,6 +1320,8 @@ static void
 calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
+
+  g_clear_pointer (&self->own_ip, g_free);
 
   if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_ONLINE)
     go_online (CALLS_ACCOUNT (self), FALSE);

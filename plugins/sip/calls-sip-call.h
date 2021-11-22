@@ -37,6 +37,7 @@ G_DECLARE_FINAL_TYPE (CallsSipCall, calls_sip_call, CALLS, SIP_CALL, CallsCall)
 
 CallsSipCall          *calls_sip_call_new                               (const gchar  *number,
                                                                          gboolean      inbound,
+                                                                         const char   *own_ip,
                                                                          nua_handle_t *handle);
 void                   calls_sip_call_setup_remote_media_connection     (CallsSipCall *self,
                                                                          const char   *remote,

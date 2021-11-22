@@ -50,6 +50,7 @@
 enum {
   PROP_0,
   PROP_CALL_HANDLE,
+  PROP_IP,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -60,6 +61,8 @@ struct _CallsSipCall
 
   CallsSipMediaManager *manager;
   CallsSipMediaPipeline *pipeline;
+
+  char *ip;
 
   guint lport_rtp;
   guint lport_rtcp;
@@ -138,6 +141,7 @@ calls_sip_call_answer (CallsCall *call)
   calls_sip_call_setup_local_media_connection (self, local_port, local_port + 1);
 
   local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
+                                                        self->ip,
                                                         local_port,
                                                         FALSE,
                                                         self->codecs);
@@ -205,6 +209,11 @@ calls_sip_call_set_property (GObject      *object,
     self->nh = g_value_get_pointer (value);
     break;
 
+  case PROP_IP:
+    g_free (self->ip);
+    self->ip = g_value_dup_string (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -243,6 +252,7 @@ calls_sip_call_finalize (GObject *object)
   }
   g_clear_pointer (&self->codecs, g_list_free);
   g_clear_pointer (&self->remote, g_free);
+  g_clear_pointer (&self->ip, g_free);
 
   G_OBJECT_CLASS (calls_sip_call_parent_class)->finalize (object);
 }
@@ -266,7 +276,14 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
                           "NUA handle",
                           "The used NUA handler",
                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_CALL_HANDLE, props[PROP_CALL_HANDLE]);
+
+  props[PROP_IP] =
+    g_param_spec_string ("own-ip",
+                         "Own IP",
+                         "Own IP for media and SDP",
+                         NULL,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT);
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
@@ -353,14 +370,16 @@ calls_sip_call_activate_media (CallsSipCall *self,
 CallsSipCall *
 calls_sip_call_new (const gchar  *id,
                     gboolean      inbound,
+                    const char   *own_ip,
                     nua_handle_t *handle)
 {
   g_return_val_if_fail (id, NULL);
 
   return g_object_new (CALLS_TYPE_SIP_CALL,
-                       "nua-handle", handle,
                        "id", id,
                        "inbound", inbound,
+                       "own-ip", own_ip,
+                       "nua-handle", handle,
                        NULL);
 }
 
