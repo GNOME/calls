@@ -16,7 +16,7 @@
    the output below.
 
  - [ ] I used the precompiled Debian package (e.g. by running a prebuilt
-   image). Please paste the output of ``dpkg -s calls`` below.
+   image). Please paste the output of ``dpkg -s gnome-calls`` below.
 
 ```
   Calls Version:
