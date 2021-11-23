@@ -253,7 +253,13 @@ calls_settings_set_country_code (CallsSettings *self,
   g_settings_set_string (G_SETTINGS (self->settings), "country-code", country_code);
 }
 
-
+/**
+ * calls_settings_get_autoload_plugins:
+ * @self: A #CallsSettings
+ *
+ * Returns: (array zero-terminated=1) (transfer full): List of plugins that are automatically loaded on startup.
+ * Free with g_strfreev() when done.
+ */
 char **
 calls_settings_get_autoload_plugins (CallsSettings *self)
 {
@@ -262,7 +268,13 @@ calls_settings_get_autoload_plugins (CallsSettings *self)
   return g_settings_get_strv (G_SETTINGS (self->settings), "autoload-plugins");
 }
 
-
+/**
+ * calls_settings_set_autoload_plugins:
+ * @self: A #CallsSettings
+ * @plugins: (nullable) (array zero-terminated=1): The plugins to autoload
+ *
+ * Sets the plugins that should be loaded on startup.
+ */
 void
 calls_settings_set_autoload_plugins (CallsSettings      *self,
                                      const char * const *plugins)
