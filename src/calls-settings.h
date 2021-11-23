@@ -42,6 +42,9 @@ void               calls_settings_set_country_code               (CallsSettings 
 char             **calls_settings_get_autoload_plugins           (CallsSettings      *self);
 void               calls_settings_set_autoload_plugins           (CallsSettings      *self,
                                                                   const char * const *plugins);
+char             **calls_settings_get_preferred_audio_codecs     (CallsSettings      *self);
+void               calls_settings_set_preferred_audio_codecs     (CallsSettings      *self,
+                                                                  const char * const *codecs);
 
 G_END_DECLS
 

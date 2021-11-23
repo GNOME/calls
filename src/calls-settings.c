@@ -41,6 +41,7 @@ enum {
   PROP_AUTO_USE_DEFAULT_ORIGINS,
   PROP_COUNTRY_CODE,
   PROP_AUTOLOAD_PLUGINS,
+  PROP_PREFERRED_AUDIO_CODECS,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -75,6 +76,10 @@ calls_settings_set_property (GObject      *object,
     calls_settings_set_autoload_plugins (self, g_value_get_boxed (value));
     break;
 
+  case PROP_PREFERRED_AUDIO_CODECS:
+    calls_settings_set_preferred_audio_codecs (self, g_value_get_boxed (value));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -103,6 +108,10 @@ calls_settings_get_property (GObject    *object,
     g_value_set_boxed (value, calls_settings_get_autoload_plugins (self));
     break;
 
+  case PROP_PREFERRED_AUDIO_CODECS:
+    g_value_set_boxed (value, calls_settings_get_preferred_audio_codecs (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -123,6 +132,8 @@ calls_settings_constructed (GObject *object)
                    self, "country-code", G_SETTINGS_BIND_DEFAULT);
   g_settings_bind (self->settings, "autoload-plugins",
                    self, "autoload-plugins", G_SETTINGS_BIND_DEFAULT);
+  g_settings_bind (self->settings, "preferred-audio-codecs",
+                   self, "preferred-audio-codecs", G_SETTINGS_BIND_DEFAULT);
 }
 
 
@@ -164,6 +175,13 @@ calls_settings_class_init (CallsSettingsClass *klass)
     g_param_spec_boxed ("autoload-plugins",
                         "autoload plugins",
                         "The plugins to automatically load on startup",
+                        G_TYPE_STRV,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  props[PROP_PREFERRED_AUDIO_CODECS] =
+    g_param_spec_boxed ("preferred-audio-codecs",
+                        "Preferred audio codecs",
+                        "The audio codecs to prefer for VoIP calls",
                         G_TYPE_STRV,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
@@ -282,4 +300,36 @@ calls_settings_set_autoload_plugins (CallsSettings      *self,
   g_return_if_fail (CALLS_IS_SETTINGS (self));
 
   g_settings_set_strv (G_SETTINGS (self->settings), "autoload-plugins", plugins);
+}
+
+
+/**
+ * calls_settings_get_preferred_audio_codecs:
+ * @self: A #CallsSettings
+ *
+ * Returns: (transfer full): List of preferred audio codecs for VoIP calls.
+ * Free with g_strfreev() when done.
+ */
+char **
+calls_settings_get_preferred_audio_codecs (CallsSettings *self)
+{
+  g_return_val_if_fail (CALLS_IS_SETTINGS (self), NULL);
+
+  return g_settings_get_strv (self->settings, "preferred-audio-codecs");
+}
+
+/**
+ * calls_settings_set_preferred_audio_codecs:
+ * @self: A #CallsSettings
+ * @codecs: (nullable) (array zero-terminated=1): The preferred codecs
+ *
+ * Set the preferred audio codecs for VoIP calls.
+ */
+void
+calls_settings_set_preferred_audio_codecs (CallsSettings      *self,
+                                           const char * const *codecs)
+{
+  g_return_if_fail (CALLS_IS_SETTINGS (self));
+
+  g_settings_set_strv (self->settings, "preferred-audio-codecs", codecs);
 }
