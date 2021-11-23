@@ -24,6 +24,7 @@
 
 #define G_LOG_DOMAIN "CallsSipMediaManager"
 
+#include "calls-settings.h"
 #include "calls-sip-media-manager.h"
 #include "gst-rfc3551.h"
 
@@ -50,12 +51,57 @@ typedef struct _CallsSipMediaManager
 {
   GObject parent;
 
-  char *session_ip;
-  GList *supported_codecs;
+  char          *session_ip;
+  CallsSettings *settings;
+  GList         *preferred_codecs;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
 
+
+static void
+on_notify_preferred_audio_codecs (CallsSipMediaManager *self)
+{
+  GList *supported_codecs;
+  g_auto (GStrv) settings_codec_preference = NULL;
+
+  g_assert (CALLS_IS_SIP_MEDIA_MANAGER (self));
+
+  g_clear_list (&self->preferred_codecs, NULL);
+  supported_codecs = media_codecs_get_candidates ();
+
+  if (!supported_codecs) {
+    g_warning ("There aren't any supported codecs installed on your system");
+    return;
+  }
+
+  settings_codec_preference = calls_settings_get_preferred_audio_codecs (self->settings);
+
+  if (!settings_codec_preference) {
+    g_debug ("No audio codec preference set. Using all supported codecs");
+    self->preferred_codecs = supported_codecs;
+    return;
+  }
+
+  for (guint i = 0; settings_codec_preference[i] != NULL; i++) {
+    MediaCodecInfo *codec = media_codec_by_name (settings_codec_preference[i]);
+
+    if (!codec) {
+      g_debug ("Did not find audio codec %s", settings_codec_preference[i]);
+      continue;
+    }
+    if (media_codec_available_in_gst (codec))
+      self->preferred_codecs = g_list_append (self->preferred_codecs, codec);
+  }
+
+  if (!self->preferred_codecs) {
+    g_warning ("Cannot satisfy audio codec preference, "
+               "falling back to all supported codecs");
+    self->preferred_codecs = supported_codecs;
+  } else {
+    g_list_free (supported_codecs);
+  }
+}
 
 static void
 calls_sip_media_manager_set_property (GObject      *object,
@@ -83,8 +129,9 @@ calls_sip_media_manager_finalize (GObject *object)
   CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
   gst_deinit ();
 
-  g_list_free (self->supported_codecs);
+  g_list_free (self->preferred_codecs);
   g_free (self->session_ip);
+  g_object_unref (self->settings);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
 }
@@ -114,7 +161,12 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
 {
   gst_init (NULL, NULL);
 
-  self->supported_codecs = media_codecs_get_candidates ();
+  self->settings = calls_settings_new ();
+  g_signal_connect_swapped (self->settings,
+                            "notify::preferred-audio-codecs",
+                            G_CALLBACK (on_notify_preferred_audio_codecs),
+                            self);
+  on_notify_preferred_audio_codecs (self);
 }
 
 
@@ -222,7 +274,7 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
   return calls_sip_media_manager_get_capabilities (self,
                                                    port,
                                                    use_srtp,
-                                                   self->supported_codecs);
+                                                   self->preferred_codecs);
 }
 
 
@@ -245,7 +297,7 @@ calls_sip_media_manager_codec_candidates (CallsSipMediaManager *self)
 {
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
-  return self->supported_codecs;
+  return self->preferred_codecs;
 }
 
 
