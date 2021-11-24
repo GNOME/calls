@@ -47,7 +47,7 @@ test:native:
     - xvfb-run -s -noreset ninja -C _build test
     - cp _build/src/libcalls-vala.a.p/*.c _build
     - ninja -C _build coverage
-  coverage: '/^\s+lines\.+:\s+([\d.]+\%)\s+/'
+  coverage: '/^lines:\s+([\d.]+\%)\s+/'
 
 build-gtkdoc:
   extends: build:native
