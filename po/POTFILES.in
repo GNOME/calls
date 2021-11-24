@@ -29,7 +29,6 @@ src/ui/call-selector-item.ui
 src/ui/call-window.ui
 src/ui/contacts-box.ui
 src/ui/history-box.ui
-src/ui/history-header-bar.ui
 src/ui/in-app-notification.ui
 src/ui/main-window.ui
 src/ui/new-call-box.ui
