@@ -438,6 +438,8 @@ test_sip_media_manager (void)
   /* Check single codecs */
   codecs = g_list_append (NULL, media_codec_by_name ("PCMA"));
 
+  g_debug ("Testing generated SDP messages");
+
   /* PCMA RTP */
   sdp_message =
     calls_sip_media_manager_get_capabilities (manager, 40002, FALSE, codecs);
@@ -452,6 +454,8 @@ test_sip_media_manager (void)
 
   g_free (sdp_message);
 
+  g_debug ("PCMA RTP test OK");
+
   /* PCMA SRTP */
   sdp_message =
     calls_sip_media_manager_get_capabilities (manager, 42002, TRUE, codecs);
@@ -461,6 +465,8 @@ test_sip_media_manager (void)
 
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
+
+  g_debug ("PCMA SRTP test OK");
 
   /* G722 RTP */
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
@@ -478,6 +484,8 @@ test_sip_media_manager (void)
 
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
+
+  g_debug ("G722 RTP test OK");
 
   /* G722 PCMU PCMA RTP (in this order) */
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
@@ -500,7 +508,9 @@ test_sip_media_manager (void)
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
 
-  /* GSM PCMA G722 PCMU (in this order) */
+  g_debug ("multiple codecs RTP test OK");
+
+  /* GSM PCMA G722 PCMU SRTP (in this order) */
   codecs = g_list_append (NULL, media_codec_by_name ("GSM"));
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
   codecs = g_list_append (codecs, media_codec_by_name ("G722"));
@@ -516,6 +526,9 @@ test_sip_media_manager (void)
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
 
+  g_debug ("multiple codecs SRTP test OK");
+
+  /* no codecs */
   g_test_expect_message ("CallsSipMediaManager", G_LOG_LEVEL_WARNING,
                          "No supported codecs found. Can't build meaningful SDP message");
   sdp_message =
@@ -527,6 +540,8 @@ test_sip_media_manager (void)
                                              "m=audio 0 RTP/AVP"));
 
   g_free (sdp_message);
+
+  g_debug ("no codecs test OK");
 }
 
 gint
