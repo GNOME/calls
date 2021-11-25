@@ -66,7 +66,9 @@ media_codec_available_in_gst (MediaCodecInfo *codec) {
  *
  * @name: The name of the codec
  *
- * Returns: (transfer none): A #MediaCodecInfo, if found
+ * Returns: (transfer none): A #MediaCodecInfo, if found.
+ * You should check if the codec is available on your system before
+ * trying to use it with media_codec_available_in_gst()
  */
 MediaCodecInfo *
 media_codec_by_name (const char *name)
@@ -85,7 +87,9 @@ media_codec_by_name (const char *name)
  *
  * @payload_id: The payload id (see RFC 3551, 3555, 4733, 4855)
  *
- * Returns: (transfer none): A #MediaCodecInfo, if found
+ * Returns: (transfer none): A #MediaCodecInfo, if found.
+ * You should check if the codec is available on your system before
+ * trying to use it with media_codec_available_in_gst()
  */
 MediaCodecInfo *
 media_codec_by_payload_id (guint payload_id)
