@@ -15,7 +15,8 @@
         "--talk-name=org.gnome.evolution.dataserver.Sources5",
         "--talk-name=im.pidgin.purple.PurpleService",
         "--talk-name=org.gnome.evolution.dataserver.Subprocess.Backend.*",
-        "--talk-name=org.mobian_project.CallAudio"
+        "--talk-name=org.mobian_project.CallAudio",
+        "--talk-name=org.sigxcpu.Feedback"
     ],
     "cleanup" : [
         "/include",
