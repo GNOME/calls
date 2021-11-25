@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-28 15:18+0000\n"
-"PO-Revision-Date: 2021-11-03 00:23+0100\n"
+"POT-Creation-Date: 2021-11-24 15:53+0000\n"
+"PO-Revision-Date: 2021-11-25 15:34+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
@@ -94,51 +94,47 @@ msgstr "Port"
 msgid "Transport"
 msgstr "Transport"
 
-#: src/calls-application.c:528
+#: src/calls-application.c:536
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "Försökte med ogiltigt tel-URI ”%s”"
 
-#: src/calls-application.c:605
+#: src/calls-application.c:613
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:666
 msgid "The name of the plugin to use as a call provider"
 msgstr "Namnet på insticket som ska användas som samtalsleverantör"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:667
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:672
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:678
 msgid "Dial a telephone number"
 msgstr "Slå ett telefonnummer"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:679
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:684
 msgid "Enable verbose debug messages"
 msgstr "Aktivera utförliga felsökningsmeddelanden"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:690
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
 #: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
-
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Ringer…"
 
 #: src/calls-call-record-row.c:115
 #, c-format
@@ -149,7 +145,7 @@ msgstr ""
 "%s\n"
 "i går"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Sebastian Rasmussen <sebras@gmail.com>\n"
@@ -159,32 +155,32 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Kan inte ringa: Inget röstkapabelt modem tillgängligt"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan inte ringa: Inget modem eller VoIP-konto tillgängligt"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Kan inte ringa: Ingen bakändestjänst"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Kan inte ringa: Inget instick"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Knappsats"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:395
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Senaste"
 
@@ -234,38 +230,6 @@ msgstr ""
 msgid "_Add Account"
 msgstr "_Lägg till konto"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Inkommande telefonsamtal"
-
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Tyst"
-
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Högtalare"
-
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Lägg till samtal"
-
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Håll"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Lägg på"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Svara"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Göm knappsatsen"
-
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
 msgid "Call"
@@ -284,72 +248,43 @@ msgstr "_Kopiera nummer"
 msgid "On hold"
 msgstr "Samtal väntar"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:69
+msgid "No Contacts Found"
 msgstr "Inga kontakter hittades"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Detta samtal är inte krypterat"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Detta samtal är krypterat"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Inga senaste samtal"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Senaste samtal"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Nytt samtal…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Meny"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Om Samtal"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Inget modem hittades"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:117
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:126
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:143
 msgid "_Close"
 msgstr "S_täng"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:153
 msgid "_Send"
 msgstr "_Skicka"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:227
 msgid "_VoIP Accounts"
 msgstr "_VoIP-konton"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:240
 msgid "_Keyboard shortcuts"
 msgstr "_Tangentbordsgenvägar"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:246
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:252
 msgid "_About Calls"
 msgstr "_Om Samtal"
 
@@ -380,6 +315,54 @@ msgstr "Nytt samtal"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Tillbaka"
+
+#~ msgid "Calling…"
+#~ msgstr "Ringer…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Inkommande telefonsamtal"
+
+#~ msgid "Mute"
+#~ msgstr "Tyst"
+
+#~ msgid "Speaker"
+#~ msgstr "Högtalare"
+
+#~ msgid "Add call"
+#~ msgstr "Lägg till samtal"
+
+#~ msgid "Hold"
+#~ msgstr "Håll"
+
+#~ msgid "Hang up"
+#~ msgstr "Lägg på"
+
+#~ msgid "Answer"
+#~ msgstr "Svara"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Göm knappsatsen"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Detta samtal är inte krypterat"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Detta samtal är krypterat"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Senaste samtal"
+
+#~ msgid "New call…"
+#~ msgstr "Nytt samtal…"
+
+#~ msgid "Menu"
+#~ msgstr "Meny"
+
+#~ msgid "About Calls"
+#~ msgstr "Om Samtal"
+
+#~ msgid "No modem found"
+#~ msgstr "Inget modem hittades"
 
 #~ msgid "+441234567890"
 #~ msgstr "+441234567890"
