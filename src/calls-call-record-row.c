@@ -37,9 +37,6 @@
 #include <errno.h>
 
 
-#define ANONYMOUS_CALLER _("Anonymous caller")
-
-
 struct _CallsCallRecordRow
 {
   GtkListBoxRow parent_instance;
