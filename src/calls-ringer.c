@@ -58,6 +58,7 @@ struct _CallsRinger {
   GCancellable *cancel_ring;
   CallsRingState state;
 
+  guint restart_id;
   gboolean is_quiet;
 };
 
@@ -90,6 +91,10 @@ change_ring_state (CallsRinger   *self,
     return;
 
   self->state = state;
+
+  /* Currently restarting, so don't notify */
+  if (self->restart_id)
+    return;
 
   /* Ringing has not yet started/stopped */
   if (state == CALLS_RING_STATE_REQUEST_PLAY ||
@@ -124,6 +129,9 @@ on_event_triggered (LfbEvent     *event,
     g_object_unref (self);
 }
 
+
+static void restart (CallsRinger *self, gboolean quiet);
+
 static void
 start (CallsRinger *self,
        gboolean     quiet)
@@ -133,8 +141,12 @@ start (CallsRinger *self,
     lfb_event_set_feedback_profile (self->event, quiet ? "quiet" : NULL);
 
   if (self->state == CALLS_RING_STATE_PLAYING ||
-      self->state == CALLS_RING_STATE_REQUEST_PLAY)
+      self->state == CALLS_RING_STATE_REQUEST_PLAY) {
+    if (self->is_quiet != quiet)
+      restart (self, quiet);
+
     return;
+  }
 
   if (self->event) {
     g_clear_object (&self->cancel_ring);
@@ -205,6 +217,69 @@ stop (CallsRinger *self)
     g_debug ("cancelling event feedback");
     g_cancellable_cancel (self->cancel_ring);
   }
+}
+
+
+typedef struct {
+  CallsRinger *ringer;
+  gboolean     quiet;
+} RestartRingerData;
+
+
+static gboolean
+on_ringer_restart (gpointer user_data)
+{
+  RestartRingerData *data = user_data;
+
+  if (data->ringer->state == CALLS_RING_STATE_PLAYING) {
+    stop (data->ringer);
+
+    return G_SOURCE_CONTINUE;
+  }
+
+  /* wait until requests have been fulfilled */
+  if (data->ringer->state == CALLS_RING_STATE_REQUEST_PLAY ||
+      data->ringer->state == CALLS_RING_STATE_REQUEST_STOP) {
+    return G_SOURCE_CONTINUE;
+  }
+
+  if (data->ringer->state == CALLS_RING_STATE_INACTIVE) {
+    start (data->ringer, data->quiet);
+
+    return G_SOURCE_REMOVE;
+  }
+
+  g_return_val_if_reached (G_SOURCE_CONTINUE);
+}
+
+
+static void
+clean_up_restart_data (gpointer user_data)
+{
+  RestartRingerData *data = user_data;
+
+  data->ringer->restart_id = 0;
+
+  g_free (data);
+}
+
+
+static void
+restart (CallsRinger *self,
+         gboolean     quiet)
+{
+  RestartRingerData *data = g_new0 (RestartRingerData, 1);
+
+  data->ringer = self;
+  data->quiet = quiet;
+
+  if (self->restart_id)
+    g_source_remove (self->restart_id);
+
+  self->restart_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                      G_SOURCE_FUNC (on_ringer_restart),
+                                      data,
+                                      clean_up_restart_data);
 }
 
 
@@ -394,6 +469,8 @@ dispose (GObject *object)
     lfb_uninit ();
   }
   g_signal_handlers_disconnect_by_data (calls_manager_get_default (), self);
+
+  g_clear_handle_id (&self->restart_id, g_source_remove);
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
