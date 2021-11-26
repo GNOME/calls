@@ -36,6 +36,7 @@
 enum {
   PROP_0,
   PROP_IS_RINGING,
+  PROP_RING_IS_QUIET,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -56,6 +57,8 @@ struct _CallsRinger {
   LfbEvent *event;
   GCancellable *cancel_ring;
   CallsRingState state;
+
+  gboolean is_quiet;
 };
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
@@ -137,6 +140,7 @@ start (CallsRinger *self,
     g_clear_object (&self->cancel_ring);
     self->cancel_ring = g_cancellable_new ();
 
+    self->is_quiet = quiet;
     g_object_ref (self);
     lfb_event_trigger_feedback_async (self->event,
                                       self->cancel_ring,
@@ -343,6 +347,10 @@ get_property (GObject    *object,
     g_value_set_boolean (value, calls_ringer_get_is_ringing (CALLS_RINGER (object)));
     break;
 
+  case PROP_RING_IS_QUIET:
+    g_value_set_boolean (value, calls_ringer_get_ring_is_quiet (CALLS_RINGER (object)));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -407,6 +415,13 @@ calls_ringer_class_init (CallsRingerClass *klass)
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
+  props[PROP_RING_IS_QUIET] =
+    g_param_spec_boolean ("is-quiet",
+                          "is quiet",
+                          "Whether the ringing is of the quiet persuasion",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
   g_object_class_install_properties (object_class,
                                      PROP_LAST_PROP,
                                      props);
@@ -432,4 +447,18 @@ calls_ringer_get_is_ringing (CallsRinger *self)
 
   return self->state == CALLS_RING_STATE_PLAYING ||
     self->state == CALLS_RING_STATE_REQUEST_STOP;
+}
+
+/**
+ * calls_ringer_get_ring_is_quiet:
+ * @self: A #CallsRinger
+ *
+ * Returns: %TRUE if currently ringing quietly, %FALSE otherwise.
+ */
+gboolean
+calls_ringer_get_ring_is_quiet (CallsRinger *self)
+{
+  g_return_val_if_fail (CALLS_IS_RINGER (self), FALSE);
+
+  return calls_ringer_get_is_ringing (self) && self->is_quiet;
 }
