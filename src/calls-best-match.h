@@ -25,7 +25,7 @@
 #ifndef CALLS_BEST_MATCH_H__
 #define CALLS_BEST_MATCH_H__
 
-#include <gdk/gdk.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
