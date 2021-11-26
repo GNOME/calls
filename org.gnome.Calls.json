@@ -295,6 +295,7 @@
         },
         {
             "name" : "calls",
+            "builddir" : "true",
             "buildsystem" : "meson",
             "sources" : [
                 {
