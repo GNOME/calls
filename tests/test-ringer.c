@@ -482,6 +482,72 @@ test_ringing_multiple_calls (void **state)
 }
 
 
+static void
+t6_on_ringer_multiple_calls_with_restart (CallsRinger *ringer,
+                                          GParamSpec  *pspec,
+                                          gpointer     user_data)
+{
+  static guint test_phase = 0;
+  TestData *data = user_data;
+
+  switch (test_phase++) {
+  case 0:
+    assert_true (calls_ringer_get_is_ringing (ringer));
+    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+
+    calls_call_answer (CALLS_CALL (data->call_one));
+    break;
+  case 1:
+    assert_true (calls_ringer_get_is_ringing (ringer));
+    assert_true (calls_ringer_get_ring_is_quiet (ringer));
+
+    calls_call_hang_up (CALLS_CALL (data->call_one));
+    break;
+  case 2:
+    assert_true (calls_ringer_get_is_ringing (ringer));
+    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+
+    calls_call_hang_up (CALLS_CALL (data->call_two));
+    break;
+  case 3:
+    assert_false (calls_ringer_get_is_ringing (ringer));
+    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+
+    g_main_loop_quit (data->loop);
+    break;
+  default:
+    g_assert_not_reached (); /* did not find equivalent cmocka assertion */
+  }
+}
+
+static void
+test_ringing_multiple_calls_with_restart (void **state)
+{
+  TestData *data = *state;
+
+  assert_false (calls_ringer_get_is_ringing (data->ringer));
+
+  g_signal_connect (data->ringer,
+                    "notify::ringing",
+                    G_CALLBACK (t6_on_ringer_multiple_calls_with_restart),
+                    data);
+
+  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
+  will_return_always (__wrap_lfb_event_trigger_feedback_async, 10);
+  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
+  will_return_always (__wrap_lfb_event_end_feedback_async, 10);
+
+  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  add_call (data->manager, data->call_one);
+  calls_mock_call_set_state (data->call_two, CALLS_CALL_STATE_INCOMING);
+  add_call (data->manager, data->call_two);
+
+  /* main loop will quit in callback of notify::ring */
+  g_main_loop_run (data->loop);
+
+  assert_false (calls_ringer_get_is_ringing (data->ringer));
+}
+
 int
 main (int   argc,
       char *argv[])
@@ -502,6 +568,9 @@ main (int   argc,
     cmocka_unit_test_setup_teardown (test_ringing_multiple_calls,
                                      setup_test_data,
                                      tear_down_test_data),
+    cmocka_unit_test_setup_teardown (test_ringing_multiple_calls_with_restart,
+                                     setup_test_data,
+                                     tear_down_test_data)
   };
 
   return cmocka_run_group_tests (tests, NULL, NULL);
