@@ -119,6 +119,9 @@ package-deb-pureos-byzantium:arm64:
       paths:
         - '.flatpak-builder/cache'
         - '.flatpak-builder/ccache'
+  except:
+    variables:
+      - $PKG_ONLY == "1"
 
 flatpak:master:
   extends: .flatpak
