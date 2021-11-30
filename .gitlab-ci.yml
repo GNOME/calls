@@ -76,19 +76,6 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.\(c|ui\)' && { intltool-update -m; exit 1; } || exit 0
 
-validate-metadata-pedantic:
-  stage: test
-  image: debian:bookworm
-  allow_failure: true
-  tags: []
-  before_script:
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt-get -y update
-    - apt-get -y install eatmydata ca-certificates
-    - eatmydata apt-get -y install appstream
-  script:
-    - appstreamcli validate --pedantic data/org.gnome.Calls.metainfo.xml
-
 package-debian-bookworm:
   tags: []
   extends: .l5-build-debian-package
