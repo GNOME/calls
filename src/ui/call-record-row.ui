@@ -88,10 +88,8 @@
                 <property name="justify">right</property>
                 <style>
                   <class name="dim-label"/>
+                  <class name="caption"/>
                 </style>
-                <attributes>
-                  <attribute name="scale" value="0.7"/>
-                </attributes>
               </object>
               <packing>
                 <property name="pack_type">end</property>
