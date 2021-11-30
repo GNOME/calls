@@ -4,7 +4,6 @@
   <requires lib="gtk+" version="3.22"/>
   <requires lib="libhandy" version="1.0"/>
   <template class="CallsNewCallBox" parent="GtkBox">
-    <property name="can_focus">False</property>
     <property name="margin_bottom">16</property>
     <property name="margin_left">24</property>
     <property name="margin_right">24</property>
@@ -81,12 +80,10 @@
                 <child>
                   <object class="GtkBox">
                     <property name="visible" bind-source="CallsNewCallBox" bind-property="numeric-input-only" bind-flags="sync-create"/>
-                    <property name="can_focus">False</property>
                     <property name="orientation">horizontal</property>
                     <child type="center">
                       <object class="GtkButton" id="dial">
                         <property name="always_show_image">True</property>
-                        <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="visible">True</property>
                         <signal name="clicked" handler="dial_clicked_cb" swapped="yes"/>

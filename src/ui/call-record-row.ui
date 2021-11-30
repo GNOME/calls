@@ -4,7 +4,6 @@
   <requires lib="gtk+" version="3.20"/>
   <template class="CallsCallRecordRow" parent="GtkListBoxRow">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="activatable">False</property>
     <property name="selectable">False</property>
     <child>
@@ -13,11 +12,9 @@
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <child>
               <object class="HdyAvatar" id="avatar">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="margin_left">8</property>
                 <property name="margin_top">8</property>
                 <property name="margin_bottom">8</property>
@@ -32,7 +29,6 @@
             <child>
               <object class="GtkImage" id="type">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="margin_left">8</property>
               </object>
               <packing>
@@ -42,7 +38,6 @@
             <child>
               <object class="GtkLabel" id="target">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="margin_left">10</property>
                 <property name="ellipsize">middle</property>
               </object>
@@ -83,7 +78,6 @@
             <child>
               <object class="GtkLabel" id="time">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="margin_left">8</property>
                 <property name="justify">right</property>
                 <style>

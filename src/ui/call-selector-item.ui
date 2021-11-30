@@ -4,29 +4,24 @@
   <requires lib="gtk+" version="3.20"/>
   <template class="CallsCallSelectorItem" parent="GtkEventBox">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="visible_window">False</property>
     <property name="above_child">True</property>
     <child>
       <object class="GtkFrame">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="label_xalign">0</property>
         <property name="label_yalign">0</property>
         <property name="shadow_type">out</property>
         <child>
           <object class="GtkBox" id="main_box">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <child>
                   <object class="GtkLabel" id="name">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="margin_left">3</property>
                     <property name="label">+441234567890</property>
                   </object>
@@ -39,7 +34,6 @@
                 <child>
                   <object class="GtkLabel" id="status">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
                     <property name="margin_right">3</property>
                     <property name="label" translatable="yes">On hold</property>
                   </object>
