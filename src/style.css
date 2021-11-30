@@ -22,7 +22,7 @@ keypad > grid > button, .dial-button, .delete-button .rounded-button {
 .error-state-message {
   background-color: @error_color;
   border-bottom: 1px solid darker(@error_color);
-  color: @theme_base_color;
+  color: @white;
   padding: 6px;
 }
 
