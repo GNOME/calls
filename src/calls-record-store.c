@@ -158,7 +158,6 @@ load_calls_fetch_cb (GomResourceGroup *group,
   for (i = 0; i < count; ++i) {
     GomResource *resource;
     CallsCallRecord *record;
-    GDateTime *end = NULL;
 
     resource = gom_resource_group_get_index (group, i);
     g_assert (resource != NULL);
@@ -166,12 +165,6 @@ load_calls_fetch_cb (GomResourceGroup *group,
     record = CALLS_CALL_RECORD (resource);
 
     records[i] = record;
-
-    g_object_get (G_OBJECT (record),
-                  "end", &end,
-                  NULL);
-    if (end)
-      g_date_time_unref (end);
 
     g_signal_connect (record,
                       "call-delete",
