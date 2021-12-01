@@ -373,9 +373,8 @@ startup (GApplication *application)
 #endif
 
   if (!call_audio_init (&error))
-    {
-      g_warning ("Failed to init libcallaudio: %s", error->message);
-    }
+    g_warning ("Failed to init libcallaudio: %s", error->message);
+
   cui_init (TRUE);
 
   g_set_prgname (APP_ID);
