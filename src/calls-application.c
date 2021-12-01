@@ -453,6 +453,8 @@ static void
 app_shutdown (GApplication *application)
 {
   cui_uninit ();
+
+  G_APPLICATION_CLASS (calls_application_parent_class)->shutdown (application);
 }
 
 
