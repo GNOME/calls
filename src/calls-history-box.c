@@ -58,21 +58,16 @@ update (CallsHistoryBox *self)
 {
   gchar *child_name;
 
-  if (g_list_model_get_n_items (self->model) == 0)
-    {
-      child_name = "empty";
-    }
-  else
-    {
-      child_name = "history";
+  if (g_list_model_get_n_items (self->model) == 0) {
+    child_name = "empty";
+  } else {
+    child_name = "history";
 
-      /* Transition should only ever be from empty to non-empty */
-      if (self->model_changed_handler_id != 0)
-        {
-          calls_clear_signal (self->model,
-                              &self->model_changed_handler_id);
-        }
-    }
+    /* Transition should only ever be from empty to non-empty */
+    if (self->model_changed_handler_id != 0)
+      calls_clear_signal (self->model,
+                          &self->model_changed_handler_id);
+  }
 
   gtk_stack_set_visible_child_name (GTK_STACK (self), child_name);
 }
@@ -97,12 +92,11 @@ delete_call_cb (CallsCallRecord    *record,
                 &id,
                 NULL);
 
-  if (!ok)
-    {
-      g_warning ("Could not find record with id %u in model",
-                 id);
-      return;
-    }
+  if (!ok) {
+    g_warning ("Could not find record with id %u in model",
+               id);
+    return;
+  }
 
   g_list_store_remove ((GListStore *) self->model, position);
 
@@ -133,17 +127,16 @@ set_property (GObject      *object,
 {
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
-  switch (property_id)
-    {
-      case PROP_MODEL:
-        g_set_object (&self->model,
-                      G_LIST_MODEL (g_value_get_object (value)));
-        break;
+  switch (property_id) {
+  case PROP_MODEL:
+    g_set_object (&self->model,
+                  G_LIST_MODEL (g_value_get_object (value)));
+    break;
 
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
 }
 
 
