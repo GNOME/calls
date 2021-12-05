@@ -112,10 +112,8 @@ update_visibility (CallsCallWindow *self)
                              G_SOURCE_FUNC (on_delayed_window_hide),
                              self);
   } else {
-    if (self->hideout_id > 0) {
-      g_source_remove (self->hideout_id);
-      self->hideout_id = 0;
-    }
+    g_clear_handle_id (&self->hideout_id, g_source_remove);
+
     gtk_widget_set_visible (GTK_WIDGET (self), TRUE);
 
     if (calls == 1)
