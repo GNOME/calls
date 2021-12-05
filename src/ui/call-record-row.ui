@@ -46,6 +46,7 @@
                 <property name="action-name">app.dial</property>
                 <style>
                   <class name="image-button"/>
+                  <class name="circular"/>
                 </style>
                 <child internal-child="accessible">
                   <object class="AtkObject" id="a11y-call">
