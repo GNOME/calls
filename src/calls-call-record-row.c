@@ -43,7 +43,7 @@ struct _CallsCallRecordRow
 
   GtkWidget *avatar;
   GtkImage *type;
-  GtkLabel *target;
+  HdyActionRow *action_row;
   GtkLabel *time;
   GtkButton *button;
   GtkPopover *popover;
@@ -343,7 +343,7 @@ setup_contact (CallsCallRecordRow *self)
   self->contact = calls_contacts_provider_lookup_phone_number (contacts_provider, target);
 
   g_object_bind_property (self->contact, "name",
-                          self->target, "label",
+                          self->action_row, "title",
                           G_BINDING_SYNC_CREATE);
 
   g_object_bind_property (self->contact, "has-individual",
@@ -526,7 +526,7 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/call-record-row.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, avatar);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, type);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, target);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, action_row);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, button);
 

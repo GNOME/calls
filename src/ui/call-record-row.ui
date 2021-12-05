@@ -8,56 +8,40 @@
     <property name="activatable">False</property>
     <property name="selectable">False</property>
     <child>
+      <!-- When porting to GTK4 we can get rid of the EventBox and make the whole row an ActionRow -->
       <object class="GtkEventBox" id="event_box">
         <property name="visible">True</property>
         <child>
-          <object class="GtkBox">
+          <object class="HdyActionRow" id="action_row">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
+            <child type="prefix">
               <object class="HdyAvatar" id="avatar">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_left">8</property>
-                <property name="margin_top">8</property>
-                <property name="margin_bottom">8</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
                 <property name="size">48</property>
-                <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"></property>
+                <property name="text" bind-source="action_row" bind-property="title" bind-flags="sync-create"/>
                 <property name="show-initials">True</property>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
-            <child>
+            <child type="prefix">
               <object class="GtkImage" id="type">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_left">8</property>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="target">
+              <object class="GtkLabel" id="time">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_left">10</property>
-                <property name="ellipsize">middle</property>
+                <property name="justify">right</property>
+                <style>
+                  <class name="dim-label"/>
+                  <class name="caption"/>
+                </style>
               </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button">
                 <property name="visible">True</property>
-                <property name="margin_left">12</property>
-                <property name="margin_right">8</property>
-                <property name="margin_top">8</property>
-                <property name="margin_bottom">8</property>
-                <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="action-name">app.dial</property>
                 <style>
@@ -75,26 +59,6 @@
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="time">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="margin_left">8</property>
-                <property name="justify">right</property>
-                <style>
-                  <class name="dim-label"/>
-                  <class name="caption"/>
-                </style>
-              </object>
-              <packing>
-                <property name="pack_type">end</property>
-                <property name="position">4</property>
-              </packing>
             </child>
           </object>
         </child>
