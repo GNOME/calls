@@ -95,6 +95,9 @@ on_delayed_window_hide (gpointer user_data)
   gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
 
   gtk_stack_set_visible_child_name (self->main_stack, "calls");
+
+  self->hideout_id = 0;
+
   return G_SOURCE_REMOVE;
 }
 
