@@ -102,31 +102,25 @@ nice_time (GDateTime *t,
   g_assert (nice != NULL);
   g_assert (final != NULL);
 
-  if (today || yesterday)
-    {
-      gchar *n = g_date_time_format (t_local_tz, "%R");
+  if (today || yesterday) {
+    gchar *n = g_date_time_format (t_local_tz, "%R");
 
-      if (yesterday)
-        {
-          gchar *s;
-          s = g_strdup_printf (_("%s\nyesterday"), n);
-          g_free (n);
-          n = s;
-        }
+    if (yesterday) {
+      gchar *s;
+      s = g_strdup_printf (_("%s\nyesterday"), n);
+      g_free (n);
+      n = s;
+    }
 
-      *nice = n;
-      *final = FALSE;
-    }
-  else if (calls_date_time_is_same_year (now, t))
-    {
-      *nice = g_date_time_format (t_local_tz, "%b %-d");
-      *final = FALSE;
-    }
-  else
-    {
-      *nice = g_date_time_format (t_local_tz, "%Y");
-      *final = TRUE;
-    }
+    *nice = n;
+    *final = FALSE;
+  } else if (calls_date_time_is_same_year (now, t)) {
+    *nice = g_date_time_format (t_local_tz, "%b %-d");
+    *final = FALSE;
+  } else {
+    *nice = g_date_time_format (t_local_tz, "%Y");
+    *final = TRUE;
+  }
 
   g_date_time_unref (now);
 }
@@ -219,13 +213,9 @@ date_change_cb (CallsCallRecordRow *self)
   g_date_time_unref (end);
 
   if (final)
-    {
-      self->date_change_timeout = 0;
-    }
+    self->date_change_timeout = 0;
   else
-    {
-      setup_date_change_timeout (self);
-    }
+    setup_date_change_timeout (self);
 
   return FALSE;
 }
@@ -240,22 +230,17 @@ update_time (CallsCallRecordRow *self,
   gboolean missed = FALSE;
   gchar *type_icon_name;
 
-  if (end)
-    {
-      gboolean time_final;
+  if (end) {
+    gboolean time_final;
 
-      update_time_text (self, end, &time_final);
+    update_time_text (self, end, &time_final);
 
-      if (!time_final && !self->date_change_timeout)
-        {
-          setup_date_change_timeout (self);
-        }
+    if (!time_final && !self->date_change_timeout)
+      setup_date_change_timeout (self);
 
-      if (!answered)
-        {
-          missed = TRUE;
-        }
-    }
+    if (!answered)
+      missed = TRUE;
+  }
 
   type_icon_name = g_strdup_printf
     ("call-arrow-%s%s-symbolic",
@@ -285,16 +270,14 @@ notify_time_cb (CallsCallRecordRow *self,
 
   update_time (self, inbound, answered, end);
 
-  if (answered)
-    {
-      g_date_time_unref (answered);
-      calls_clear_signal (record, &self->answered_notify_handler_id);
-    }
-  if (end)
-    {
-      g_date_time_unref (end);
-      calls_clear_signal (record, &self->end_notify_handler_id);
-    }
+  if (answered) {
+    g_date_time_unref (answered);
+    calls_clear_signal (record, &self->answered_notify_handler_id);
+  }
+  if (end) {
+    g_date_time_unref (end);
+    calls_clear_signal (record, &self->end_notify_handler_id);
+  }
 }
 
 
@@ -304,23 +287,21 @@ setup_time (CallsCallRecordRow *self,
             GDateTime          *answered,
             GDateTime          *end)
 {
-  if (!end)
-    {
-      self->end_notify_handler_id =
+  if (!end) {
+    self->end_notify_handler_id =
+      g_signal_connect_swapped (self->record,
+                                "notify::end",
+                                G_CALLBACK (notify_time_cb),
+                                self);
+
+    if (!answered) {
+      self->answered_notify_handler_id =
         g_signal_connect_swapped (self->record,
-                                  "notify::end",
+                                  "notify::answered",
                                   G_CALLBACK (notify_time_cb),
                                   self);
-
-      if (!answered)
-        {
-          self->answered_notify_handler_id =
-            g_signal_connect_swapped (self->record,
-                                      "notify::answered",
-                                      G_CALLBACK (notify_time_cb),
-                                      self);
-        }
     }
+  }
 
   update_time (self, inbound, answered, end);
 }
@@ -354,16 +335,13 @@ setup_contact (CallsCallRecordRow *self)
                           self->avatar, "loadable-icon",
                           G_BINDING_SYNC_CREATE);
 
-  if (target[0] == '\0')
-    {
-      gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
-      g_simple_action_set_enabled (G_SIMPLE_ACTION (act), FALSE);
-    }
-  else
-    {
-      gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
-      g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
-    }
+  if (target[0] == '\0') {
+    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (act), FALSE);
+  } else {
+    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
+  }
 }
 
 
@@ -397,11 +375,11 @@ static gboolean
 calls_call_record_row_button_press_event (GtkWidget      *self,
                                           GdkEventButton *event)
 {
-  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
-    {
-      context_menu (self, (GdkEvent *) event);
-      return TRUE;
-    }
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
+    context_menu (self, (GdkEvent *) event);
+    return TRUE;
+  }
+
   return GTK_WIDGET_CLASS (calls_call_record_row_parent_class)->button_press_event (self, event);
 }
 
