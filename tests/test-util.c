@@ -24,6 +24,7 @@ test_protocol_prefix (void)
   g_assert_cmpstr (get_protocol_from_address ("mailto:charley@spam.com"), ==, NULL);
 }
 
+
 static gboolean
 string_contains_char (char *str, char c)
 {
@@ -35,6 +36,8 @@ string_contains_char (char *str, char c)
 
   return FALSE;
 }
+
+
 static void
 test_dtmf_tone_validity (void)
 {
