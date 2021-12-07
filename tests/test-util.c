@@ -52,6 +52,15 @@ test_dtmf_tone_validity (void)
 }
 
 
+static void
+test_call_icon_names (void)
+{
+  g_assert_cmpstr (get_call_icon_symbolic_name (FALSE, FALSE), ==, "call-arrow-outgoing-symbolic");
+  g_assert_cmpstr (get_call_icon_symbolic_name (FALSE, TRUE), ==, "call-arrow-outgoing-missed-symbolic");
+  g_assert_cmpstr (get_call_icon_symbolic_name (TRUE, FALSE), ==, "call-arrow-incoming-symbolic");
+  g_assert_cmpstr (get_call_icon_symbolic_name (TRUE, TRUE), ==, "call-arrow-incoming-missed-symbolic");
+}
+
 int
 main (int   argc,
       char *argv[])
@@ -60,6 +69,7 @@ main (int   argc,
 
   g_test_add_func ("/Calls/util/protocol_prefix", (GTestFunc) test_protocol_prefix);
   g_test_add_func ("/Calls/util/dtmf_tones", (GTestFunc) test_dtmf_tone_validity);
+  g_test_add_func ("/Calls/util/call_icon_names", (GTestFunc) test_call_icon_names);
 
   g_test_run ();
 }
