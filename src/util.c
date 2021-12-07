@@ -273,3 +273,28 @@ dtmf_tone_key_is_valid (gchar key)
     ||  key == '#';
 }
 
+
+static const char * const type_icon_name[] = {
+  "call-arrow-outgoing-symbolic",
+  "call-arrow-outgoing-missed-symbolic",
+  "call-arrow-incoming-symbolic",
+  "call-arrow-incoming-missed-symbolic",
+};
+
+/**
+ * get_call_icon_type_name:
+ * @inbound: Whether the call was inbound
+ * @missed: Whether the call was missed
+ *
+ * Returns: (transfer null): The icon symbolic name to use in the history, etc
+ */
+const char *
+get_call_icon_symbolic_name (gboolean inbound,
+                             gboolean missed)
+{
+  guint index = 0;
+
+  index = ((inbound) << 1) + missed;
+
+  return type_icon_name[index];
+}

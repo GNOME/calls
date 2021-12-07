@@ -142,6 +142,8 @@ const char* get_protocol_from_address (const char *target);
 const char* get_protocol_from_address_with_fallback (const char *target);
 
 gboolean dtmf_tone_key_is_valid (char key);
+const char *get_call_icon_symbolic_name (gboolean inbound,
+                                         gboolean missed);
 
 G_END_DECLS
 
