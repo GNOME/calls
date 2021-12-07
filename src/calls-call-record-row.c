@@ -227,9 +227,6 @@ update_time (CallsCallRecordRow *self,
              GDateTime          *answered,
              GDateTime          *end)
 {
-  gboolean missed = FALSE;
-  gchar *type_icon_name;
-
   if (end) {
     gboolean time_final;
 
@@ -237,19 +234,11 @@ update_time (CallsCallRecordRow *self,
 
     if (!time_final && !self->date_change_timeout)
       setup_date_change_timeout (self);
-
-    if (!answered)
-      missed = TRUE;
   }
 
-  type_icon_name = g_strdup_printf
-    ("call-arrow-%s%s-symbolic",
-     inbound ? "incoming" : "outgoing",
-     missed  ? "-missed"  : "");
-  gtk_image_set_from_icon_name (self->type, type_icon_name,
+  gtk_image_set_from_icon_name (self->type,
+                                get_call_icon_symbolic_name (inbound, !answered),
                                 GTK_ICON_SIZE_MENU);
-
-  g_free (type_icon_name);
 }
 
 
