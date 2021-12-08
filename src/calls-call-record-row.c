@@ -335,10 +335,23 @@ setup_contact (CallsCallRecordRow *self)
 
 
 static void
-context_menu (GtkWidget *self,
+context_menu (GtkWidget *widget,
               GdkEvent  *event)
 {
-  gtk_popover_popup (CALLS_CALL_RECORD_ROW (self)->popover);
+  CallsCallRecordRow *self;
+
+  g_assert (CALLS_IS_CALL_RECORD_ROW (widget));
+
+  self = CALLS_CALL_RECORD_ROW (widget);
+
+  if (!self->popover) {
+    self->popover = GTK_POPOVER (gtk_popover_new (widget));
+    gtk_popover_bind_model (self->popover,
+                            G_MENU_MODEL (self->context_menu),
+                            "row-history");
+    }
+
+  gtk_popover_popup (self->popover);
 }
 
 
@@ -498,7 +511,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, button);
 
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, event_box);
-  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, popover);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, context_menu);
 }
 
@@ -561,10 +573,6 @@ calls_call_record_row_init (CallsCallRecordRow *self)
   self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (self->gesture), TRUE);
   g_signal_connect (self->gesture, "pressed", G_CALLBACK (long_pressed), self);
-
-  gtk_popover_bind_model (self->popover,
-                          G_MENU_MODEL (self->context_menu),
-                          "row-history");
 }
 
 

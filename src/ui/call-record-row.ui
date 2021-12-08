@@ -97,9 +97,6 @@
       </object>
     </child>
   </template>
-  <object class="GtkPopover" id="popover">
-    <property name="relative-to">CallsCallRecordRow</property>
-  </object>
   <menu id="context_menu">
     <section>
       <item>
