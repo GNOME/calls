@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-28 12:49+0000\n"
-"PO-Revision-Date: 2021-10-31 16:59+0100\n"
+"POT-Creation-Date: 2021-11-24 15:53+0000\n"
+"PO-Revision-Date: 2021-11-25 12:41+0100\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Apeluri"
@@ -46,7 +46,6 @@ msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Apelant telefonic și gestionarea apelurilor (mod serviciu)"
 
 #: plugins/sip/sip-account-widget.ui:11
-#| msgid "SIP Account"
 msgid "Add Account"
 msgstr "Adaugă un cont"
 
@@ -55,7 +54,6 @@ msgid "_Log In"
 msgstr "_Conectare"
 
 #: plugins/sip/sip-account-widget.ui:42
-#| msgid "SIP Account"
 msgid "Manage Account"
 msgstr "Gestionare cont"
 
@@ -64,7 +62,6 @@ msgid "_Apply"
 msgstr "_Aplică"
 
 #: plugins/sip/sip-account-widget.ui:61
-#| msgid "_Delete Call"
 msgid "_Delete"
 msgstr "Șt_erge"
 
@@ -96,51 +93,47 @@ msgstr "Port"
 msgid "Transport"
 msgstr "Transport"
 
-#: src/calls-application.c:528
+#: src/calls-application.c:536
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "S-a încercat un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:605
+#: src/calls-application.c:613
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:666
 msgid "The name of the plugin to use as a call provider"
 msgstr "Numele modulului de utilizat ca furnizor de apeluri"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:667
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:672
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:678
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:679
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:684
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:690
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
 #: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Apelant anonim"
-
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Sună…"
 
 #: src/calls-call-record-row.c:115
 #, c-format
@@ -151,7 +144,7 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Bogdan Mințoi <mintoi.bogdan@gmail.com>, 2014\n"
@@ -161,33 +154,33 @@ msgstr ""
 "2020-2021\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019-2021"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Nu se pot efectua apeluri: nu s-a găsit niciun modem de voce"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Nu se pot efectua apeluri: Nu este disponibil un modem sau un cont VoIP"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Nu se pot efectua apeluri: nu există serviciu de suport"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Nu se pot efectua apeluri: nu există modul"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Contacte"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Tastatură"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:395
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recente"
 
@@ -216,12 +209,10 @@ msgid "Call back"
 msgstr "Sună din nou"
 
 #: src/ui/account-overview.ui:16
-#| msgid "_VoIP Accounts"
 msgid "VoIP Accounts"
 msgstr "Conturi VoIP"
 
 #: src/ui/account-overview.ui:41
-#| msgid "_VoIP Accounts"
 msgid "Add VoIP Accounts"
 msgstr "Adaugă conturi VoIP"
 
@@ -237,41 +228,8 @@ msgstr ""
 "cifrat)."
 
 #: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
-#| msgid "SIP Account"
 msgid "_Add Account"
 msgstr "_Adaugă un cont"
-
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Se primește apel"
-
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Mut"
-
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Difuzor"
-
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Adaugă un apel"
-
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Așteptare"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Închide"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Răspunde"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Ascunde tastatura"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
@@ -291,72 +249,44 @@ msgstr "_Copiază numărul"
 msgid "On hold"
 msgstr "În așteptare"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:69
+#| msgid "No contacts found"
+msgid "No Contacts Found"
 msgstr "Nu sunt contacte"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Acest apel nu este codat"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Acest apel este codat"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Nu sunt apeluri recente"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Apeluri recente"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Apel nou…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Meniu"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Despre Apeluri"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Nu s-a găsit niciun modem"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:117
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:126
 msgid "_Cancel"
 msgstr "_Anulează"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:143
 msgid "_Close"
 msgstr "În_chide"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:153
 msgid "_Send"
 msgstr "_Trimite"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:227
 msgid "_VoIP Accounts"
 msgstr "Conturi _VoIP"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:240
 msgid "_Keyboard shortcuts"
 msgstr "Taste _rapide"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:246
 msgid "_Help"
 msgstr "_Ajutor"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:252
 msgid "_About Calls"
 msgstr "_Despre Apeluri"
 
