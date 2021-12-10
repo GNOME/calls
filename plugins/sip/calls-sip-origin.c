@@ -215,11 +215,21 @@ add_call (CallsSipOrigin *self,
   CallsSipCall *sip_call;
   CallsCall *call;
   g_autofree gchar *local_sdp = NULL;
+  g_auto (GStrv)  address_split = NULL;
+  const char *call_address = address;
 
   /* TODO get free port by creating GSocket and passing that to the pipeline */
   guint local_port = get_port_for_rtp ();
 
-  sip_call = calls_sip_call_new (address, inbound, handle);
+  if (self->can_tel) {
+    address_split = g_strsplit_set (address, ":@;", -1);
+
+    if (g_strv_length (address_split) >=2 &&
+        g_strcmp0 (address_split[2], self->host) == 0)
+      call_address = address_split[2];
+  }
+
+  sip_call = calls_sip_call_new (call_address, inbound, handle);
   g_assert (sip_call != NULL);
 
   if (self->oper->call_handle)
@@ -247,8 +257,6 @@ add_call (CallsSipOrigin *self,
     g_assert (local_sdp);
 
     g_debug ("Setting local SDP for outgoing call to %s:\n%s", address, local_sdp);
-
-    /* TODO transform tel URI according to https://tools.ietf.org/html/rfc3261#section-19.1.6 */
 
     /* TODO handle IPv4 vs IPv6 for nua_invite (SOATAG_TAG) */
     nua_invite (self->oper->call_handle,
