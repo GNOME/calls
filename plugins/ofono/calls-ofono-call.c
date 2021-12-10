@@ -39,10 +39,6 @@ struct _CallsOfonoCall
   gchar *name;
   CallsCallState state;
   gchar *disconnect_reason;
-  /* `inbound` is derived from `state` at construction time.
-   * If the call was already somehow accepted and thus state=active,
-   * then it's not possible to know the correct value for `inbound`. */
-  gboolean inbound;
 };
 
 static void calls_ofono_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -106,14 +102,6 @@ calls_ofono_call_get_state (CallsCall *call)
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
 
   return self->state;
-}
-
-static gboolean
-calls_ofono_call_get_inbound (CallsCall *call)
-{
-  CallsOfonoCall *self = CALLS_OFONO_CALL (call);
-
-  return self->inbound;
 }
 
 static const char *
@@ -214,11 +202,6 @@ set_properties (CallsOfonoCall *self,
   g_variant_lookup (call_props, "State", "&s", &str);
   g_return_if_fail (str != NULL);
   calls_call_state_parse_nick (&self->state, str);
-
-  if (self->state == CALLS_CALL_STATE_INCOMING)
-    {
-      self->inbound = TRUE;
-    }
 }
 
 
@@ -347,7 +330,6 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   call_class->get_id = calls_ofono_call_get_id;
   call_class->get_name = calls_ofono_call_get_name;
   call_class->get_state = calls_ofono_call_get_state;
-  call_class->get_inbound = calls_ofono_call_get_inbound;
   call_class->get_protocol = calls_ofono_call_get_protocol;
   call_class->answer = calls_ofono_call_answer;
   call_class->hang_up = calls_ofono_call_hang_up;
@@ -393,14 +375,39 @@ calls_ofono_call_init (CallsOfonoCall *self)
 
 CallsOfonoCall *
 calls_ofono_call_new (GDBOVoiceCall *voice_call,
-                      GVariant      *properties)
+                      GVariant      *call_props)
 {
+  const char *state_str = NULL;
+  const char *name = NULL;
+  const char *id = NULL;
+  CallsCallState state = CALLS_CALL_STATE_UNKNOWN;
+  gboolean inbound = FALSE;
+
   g_return_val_if_fail (GDBO_IS_VOICE_CALL (voice_call), NULL);
-  g_return_val_if_fail (properties != NULL, NULL);
+  g_return_val_if_fail (call_props != NULL, NULL);
+
+  /* The following is a copy of set_properties() that we will get rid off
+     once all properties have been moved */
+  g_variant_lookup (call_props, "LineIdentification", "s", &id);
+  g_variant_lookup (call_props, "Name", "s", &name);
+
+  g_variant_lookup (call_props, "State", "&s", &state_str);
+  if (state_str)
+    calls_call_state_parse_nick (&state, state_str);
+
+  /* `inbound` is derived from `state` at construction time.
+   * If the call was already somehow accepted and thus state=active,
+   * then it's not possible to know the correct value for `inbound`. */
+  if (state == CALLS_CALL_STATE_INCOMING)
+    inbound = TRUE;
 
   return g_object_new (CALLS_TYPE_OFONO_CALL,
                        "voice-call", voice_call,
-                       "properties", properties,
+                       "properties", call_props,
+                       //"id", id,
+                       //"name", name,
+                       "inbound", inbound,
+                       //"state", state,
                        NULL);
 }
 

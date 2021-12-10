@@ -54,7 +54,6 @@ struct _CallsCallClass
   const char     *(*get_id)               (CallsCall *self);
   const char     *(*get_name)             (CallsCall *self);
   CallsCallState  (*get_state)            (CallsCall *self);
-  gboolean        (*get_inbound)          (CallsCall *self);
   const char     *(*get_protocol)         (CallsCall *self);
   void            (*answer)               (CallsCall *self);
   void            (*hang_up)              (CallsCall *self);

@@ -58,7 +58,6 @@ struct _CallsSipCall
 {
   GObject parent_instance;
   gchar *id;
-  gboolean inbound;
   CallsCallState state;
 
   CallsSipMediaManager *manager;
@@ -132,15 +131,6 @@ calls_sip_call_get_state (CallsCall *call)
   CallsSipCall *self = CALLS_SIP_CALL (call);
 
   return self->state;
-}
-
-
-static gboolean
-calls_sip_call_get_inbound (CallsCall *call)
-{
-  CallsSipCall *self = CALLS_SIP_CALL (call);
-
-  return self->inbound;
 }
 
 
@@ -299,7 +289,6 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
 
   call_class->get_id = calls_sip_call_get_id;
   call_class->get_state = calls_sip_call_get_state;
-  call_class->get_inbound = calls_sip_call_get_inbound;
   call_class->get_protocol = calls_sip_call_get_protocol;
   call_class->answer = calls_sip_call_answer;
   call_class->hang_up = calls_sip_call_hang_up;
@@ -404,10 +393,10 @@ calls_sip_call_new (const gchar  *id,
 
   call = g_object_new (CALLS_TYPE_SIP_CALL,
                        "nua-handle", handle,
+                       "inbound", inbound,
                        NULL);
 
   call->id = g_strdup (id);
-  call->inbound = inbound;
 
   if (inbound)
     call->state = CALLS_CALL_STATE_INCOMING;

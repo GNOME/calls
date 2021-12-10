@@ -24,7 +24,5 @@ void              calls_mock_call_set_name          (CallsMockCall *self,
                                                      const char    *name);
 void              calls_mock_call_set_state         (CallsMockCall *self,
                                                      CallsCallState state);
-void              calls_mock_call_set_inbound       (CallsMockCall *self,
-                                                     gboolean       inbound);
 
 G_END_DECLS

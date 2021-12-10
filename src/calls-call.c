@@ -67,6 +67,7 @@ static GParamSpec *properties[N_PROPS];
 static guint signals[N_SIGNALS];
 
 typedef struct {
+  gboolean inbound;
   gboolean silenced;
 } CallsCallPrivate;
 
@@ -91,12 +92,6 @@ calls_call_real_get_state (CallsCall *self)
   return 0;
 }
 
-static gboolean
-calls_call_real_get_inbound (CallsCall *self)
-{
-  return FALSE;
-}
-
 static const char *
 calls_call_real_get_protocol (CallsCall *self)
 {
@@ -119,6 +114,26 @@ calls_call_real_send_dtmf_tone (CallsCall *self,
 {
   g_info ("Beep! (%c)", key);
 }
+
+static void
+calls_call_set_property (GObject      *object,
+                         guint         prop_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  CallsCall *self = CALLS_CALL (object);
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  switch (prop_id) {
+  case PROP_INBOUND:
+    priv->inbound = g_value_get_boolean (value);
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
+}
+
 
 static void
 calls_call_get_property (GObject    *object,
@@ -164,11 +179,11 @@ calls_call_class_init (CallsCallClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->get_property = calls_call_get_property;
+  object_class->set_property = calls_call_set_property;
 
   klass->get_id = calls_call_real_get_id;
   klass->get_name = calls_call_real_get_name;
   klass->get_state = calls_call_real_get_state;
-  klass->get_inbound = calls_call_real_get_inbound;
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
   klass->hang_up = calls_call_real_hang_up;
@@ -179,7 +194,7 @@ calls_call_class_init (CallsCallClass *klass)
                           "Inbound",
                           "Whether the call is inbound",
                           FALSE,
-                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
   properties[PROP_ID] =
     g_param_spec_string ("id",
@@ -335,9 +350,11 @@ calls_call_hang_up (CallsCall *self)
 gboolean
 calls_call_get_inbound (CallsCall *self)
 {
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
   g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
 
-  return CALLS_CALL_GET_CLASS (self)->get_inbound (self);
+  return priv->inbound;
 }
 
 /**

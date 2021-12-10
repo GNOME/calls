@@ -207,16 +207,6 @@ calls_mm_call_get_state (CallsCall *call)
   return self->state;
 }
 
-static gboolean
-calls_mm_call_get_inbound (CallsCall *call)
-{
-  CallsMMCall *self = CALLS_MM_CALL (call);
-
-  if (self->mm_call)
-    return mm_call_get_direction (self->mm_call) == MM_CALL_DIRECTION_INCOMING;
-
-  return FALSE;
-}
 
 static const char *
 calls_mm_call_get_protocol (CallsCall *self)
@@ -380,7 +370,6 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
 
   call_class->get_id = calls_mm_call_get_id;
   call_class->get_state = calls_mm_call_get_state;
-  call_class->get_inbound = calls_mm_call_get_inbound;
   call_class->get_protocol = calls_mm_call_get_protocol;
   call_class->answer = calls_mm_call_answer;
   call_class->hang_up = calls_mm_call_hang_up;
@@ -410,10 +399,14 @@ calls_mm_call_init (CallsMMCall *self)
 CallsMMCall *
 calls_mm_call_new (MMCall *mm_call)
 {
+  gboolean inbound;
+
   g_return_val_if_fail (MM_IS_CALL (mm_call), NULL);
 
+  inbound = mm_call_get_direction (mm_call) == MM_CALL_DIRECTION_INCOMING;
   return g_object_new (CALLS_TYPE_MM_CALL,
                        "mm-call", mm_call,
+                       "inbound", inbound,
                        NULL);
 }
 
