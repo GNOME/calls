@@ -134,25 +134,24 @@ calls_dummy_call_send_dtmf_tone (CallsCall *call,
 static gboolean
 outbound_timeout_cb (CallsDummyCall *self)
 {
-  switch (self->state)
-    {
-    case CALLS_CALL_STATE_DIALING:
-      change_state (self,
-                    CALLS_CALL_STATE_ALERTING);
-      g_timeout_add_seconds
-        (3, (GSourceFunc)outbound_timeout_cb, self);
-      break;
+  switch (self->state) {
+  case CALLS_CALL_STATE_DIALING:
+    change_state (self,
+                  CALLS_CALL_STATE_ALERTING);
+    g_timeout_add_seconds
+      (3, (GSourceFunc)outbound_timeout_cb, self);
+    break;
 
-    case CALLS_CALL_STATE_ALERTING:
-      change_state (self,
-                    CALLS_CALL_STATE_ACTIVE);
-      break;
+  case CALLS_CALL_STATE_ALERTING:
+    change_state (self,
+                  CALLS_CALL_STATE_ACTIVE);
+    break;
 
-    default:
-      break;
-    }
+  default:
+    break;
+  }
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
 
 
