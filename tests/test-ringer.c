@@ -251,7 +251,7 @@ test_ringing_accept_call (void **state)
   /* delay before completion of __wrap_lfb_event_end_feedback_async() */
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
 
   /* main loop will quit in callback of notify::ring */
@@ -302,7 +302,7 @@ test_ringing_hang_up_call (void **state)
   /* delay before completion of __wrap_lfb_event_end_feedback_async() */
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
 
   /* main loop will quit in callback of notify::ring */
@@ -346,7 +346,7 @@ test_ringing_hang_up_call_ringer_cancelled (void **state)
   /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
   will_return (__wrap_lfb_event_trigger_feedback_async, 50);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
 
   g_timeout_add (10, G_SOURCE_FUNC (t3_on_ringer_timeout), data);
@@ -400,7 +400,7 @@ test_ringing_silence_call (void **state)
   /* delay before completion of __wrap_lfb_event_end_feedback_async() */
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
 
   /* main loop will quit in callback of notify::ring */
@@ -472,7 +472,7 @@ test_ringing_multiple_calls (void **state)
   /* delay before completion of __wrap_lfb_event_end_feedback_async() */
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
 
   /* main loop will quit in callback of notify::ring */
@@ -537,9 +537,9 @@ test_ringing_multiple_calls_with_restart (void **state)
   /* delay before completion of __wrap_lfb_event_end_feedback_async() */
   will_return_always (__wrap_lfb_event_end_feedback_async, 10);
 
-  calls_mock_call_set_state (data->call_one, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_one);
-  calls_mock_call_set_state (data->call_two, CALLS_CALL_STATE_INCOMING);
+  calls_call_set_state (CALLS_CALL (data->call_two), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->call_two);
 
   /* main loop will quit in callback of notify::ring */

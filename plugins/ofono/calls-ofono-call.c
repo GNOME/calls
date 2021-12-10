@@ -37,7 +37,6 @@ struct _CallsOfonoCall
   GDBOVoiceCall *voice_call;
   gchar *id;
   gchar *name;
-  CallsCallState state;
   gchar *disconnect_reason;
 };
 
@@ -61,25 +60,6 @@ enum {
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
 
-static void
-change_state (CallsOfonoCall *self,
-              CallsCallState  state)
-{
-  CallsCallState old_state = self->state;
-
-  if (old_state == state)
-    {
-      return;
-    }
-
-  self->state = state;
-  g_object_notify (G_OBJECT (self), "state");
-  g_signal_emit_by_name (CALLS_CALL (self),
-                         "state-changed",
-                         state,
-                         old_state);
-}
-
 static const char *
 calls_ofono_call_get_id (CallsCall *call)
 {
@@ -94,14 +74,6 @@ calls_ofono_call_get_name (CallsCall *call)
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
 
   return self->name;
-}
-
-static CallsCallState
-calls_ofono_call_get_state (CallsCall *call)
-{
-  CallsOfonoCall *self = CALLS_OFONO_CALL (call);
-
-  return self->state;
 }
 
 static const char *
@@ -178,7 +150,7 @@ static void
 calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
-  if (self->state != CALLS_CALL_STATE_ACTIVE) {
+  if (calls_call_get_state (call) != CALLS_CALL_STATE_ACTIVE) {
     g_warning ("Tone start requested for non-active call to `%s'",
                self->id);
     return;
@@ -192,6 +164,7 @@ static void
 set_properties (CallsOfonoCall *self,
                 GVariant       *call_props)
 {
+  CallsCallState state;
   const gchar *str = NULL;
 
   g_return_if_fail (call_props != NULL);
@@ -201,7 +174,8 @@ set_properties (CallsOfonoCall *self,
 
   g_variant_lookup (call_props, "State", "&s", &str);
   g_return_if_fail (str != NULL);
-  calls_call_state_parse_nick (&self->state, str);
+  if (calls_call_state_parse_nick (&state, str))
+    calls_call_set_state (CALLS_CALL (self), state);
 }
 
 
@@ -252,7 +226,7 @@ property_changed_cb (CallsOfonoCall *self,
 
   ok = calls_call_state_parse_nick (&state, str);
   if (ok)
-    change_state (self, state);
+    calls_call_set_state (CALLS_CALL (self), state);
   else
     g_warning ("Could not parse new state `%s'"
                " of oFono call to `%s'",
@@ -329,7 +303,6 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
 
   call_class->get_id = calls_ofono_call_get_id;
   call_class->get_name = calls_ofono_call_get_name;
-  call_class->get_state = calls_ofono_call_get_state;
   call_class->get_protocol = calls_ofono_call_get_protocol;
   call_class->answer = calls_ofono_call_answer;
   call_class->hang_up = calls_ofono_call_hang_up;
@@ -407,7 +380,7 @@ calls_ofono_call_new (GDBOVoiceCall *voice_call,
                        //"id", id,
                        //"name", name,
                        "inbound", inbound,
-                       //"state", state,
+                       "state", state,
                        NULL);
 }
 

@@ -575,7 +575,7 @@ sip_i_state (int              status,
     return;
   }
 
-  calls_sip_call_set_state (call, state);
+  calls_call_set_state (CALLS_CALL (call), state);
 }
 
 

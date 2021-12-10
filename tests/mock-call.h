@@ -22,7 +22,5 @@ void              calls_mock_call_set_id            (CallsMockCall *self,
                                                      const char    *id);
 void              calls_mock_call_set_name          (CallsMockCall *self,
                                                      const char    *name);
-void              calls_mock_call_set_state         (CallsMockCall *self,
-                                                     CallsCallState state);
 
 G_END_DECLS

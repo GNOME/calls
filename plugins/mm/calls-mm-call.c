@@ -38,7 +38,6 @@ struct _CallsMMCall
   GObject parent_instance;
   MMCall *mm_call;
   GString *id;
-  CallsCallState state;
   gchar *disconnect_reason;
 };
 
@@ -54,26 +53,6 @@ enum {
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
-
-static void
-change_state (CallsMMCall    *self,
-              CallsCallState  state)
-{
-  CallsCallState old_state = self->state;
-
-  if (old_state == state)
-    {
-      return;
-    }
-
-  self->state = state;
-  g_object_notify (G_OBJECT (self), "state");
-  g_signal_emit_by_name (CALLS_CALL (self),
-                         "state-changed",
-                         state,
-                         old_state);
-}
-
 
 static void
 notify_id_cb (CallsMMCall *self,
@@ -185,7 +164,7 @@ state_changed_cb (CallsMMCall       *self,
         {
           g_debug ("MM call state changed to `%s'",
                    map_row->name);
-          change_state (self, map_row->calls);
+          calls_call_set_state (CALLS_CALL (self), map_row->calls);
           return;
         }
     }
@@ -197,14 +176,6 @@ calls_mm_call_get_id (CallsCall *call)
   CallsMMCall *self = CALLS_MM_CALL (call);
 
   return self->id->str;
-}
-
-static CallsCallState
-calls_mm_call_get_state (CallsCall *call)
-{
-  CallsMMCall *self = CALLS_MM_CALL (call);
-
-  return self->state;
 }
 
 
@@ -369,7 +340,6 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   object_class->finalize = finalize;
 
   call_class->get_id = calls_mm_call_get_id;
-  call_class->get_state = calls_mm_call_get_state;
   call_class->get_protocol = calls_mm_call_get_protocol;
   call_class->answer = calls_mm_call_answer;
   call_class->hang_up = calls_mm_call_hang_up;

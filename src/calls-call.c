@@ -67,6 +67,7 @@ static GParamSpec *properties[N_PROPS];
 static guint signals[N_SIGNALS];
 
 typedef struct {
+  CallsCallState state;
   gboolean inbound;
   gboolean silenced;
 } CallsCallPrivate;
@@ -84,12 +85,6 @@ static const char *
 calls_call_real_get_name (CallsCall *self)
 {
   return NULL;
-}
-
-static CallsCallState
-calls_call_real_get_state (CallsCall *self)
-{
-  return 0;
 }
 
 static const char *
@@ -127,6 +122,14 @@ calls_call_set_property (GObject      *object,
   switch (prop_id) {
   case PROP_INBOUND:
     priv->inbound = g_value_get_boolean (value);
+    if (priv->inbound)
+      calls_call_set_state (self, CALLS_CALL_STATE_INCOMING);
+    else
+      calls_call_set_state (self, CALLS_CALL_STATE_DIALING);
+    break;
+
+  case PROP_STATE:
+    calls_call_set_state (self, g_value_get_enum (value));
     break;
 
   default:
@@ -183,7 +186,6 @@ calls_call_class_init (CallsCallClass *klass)
 
   klass->get_id = calls_call_real_get_id;
   klass->get_name = calls_call_real_get_name;
-  klass->get_state = calls_call_real_get_state;
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
   klass->hang_up = calls_call_real_hang_up;
@@ -216,7 +218,9 @@ calls_call_class_init (CallsCallClass *klass)
                        "The current state of the call",
                        CALLS_TYPE_CALL_STATE,
                        CALLS_CALL_STATE_UNKNOWN,
-                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+                       G_PARAM_READWRITE |
+                       G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
 
   properties[PROP_PROTOCOL] =
     g_param_spec_string ("protocol",
@@ -303,9 +307,42 @@ calls_call_get_name (CallsCall *self)
 CallsCallState
 calls_call_get_state (CallsCall *self)
 {
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
   g_return_val_if_fail (CALLS_IS_CALL (self), 0);
 
-  return CALLS_CALL_GET_CLASS (self)->get_state (self);
+  return priv->state;
+}
+
+/**
+ * calls_call_set_state:
+ * @self: a #CallsCall
+ * @state: a #CallsCallState
+ *
+ * Set the current state of the call.
+ */
+void
+calls_call_set_state (CallsCall     *self,
+                      CallsCallState state)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+  CallsCallState old_state;
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+
+  old_state = priv->state;
+
+  if (old_state == state) {
+    return;
+  }
+
+  priv->state = state;
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_STATE]);
+  g_signal_emit_by_name (CALLS_CALL (self),
+                         "state-changed",
+                         state,
+                         old_state);
 }
 
 /**
