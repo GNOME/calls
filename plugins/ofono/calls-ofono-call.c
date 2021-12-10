@@ -139,12 +139,11 @@ operation_cb (GDBOVoiceCall                 *voice_call,
   g_autoptr (GError) error = NULL;
 
   ok = data->finish_func (voice_call, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error %s oFono voice call to `%s': %s",
-                 data->desc, data->self->id, error->message);
-      CALLS_ERROR (data->self, error);
-    }
+  if (!ok) {
+    g_warning ("Error %s oFono voice call to `%s': %s",
+               data->desc, data->self->id, error->message);
+    CALLS_ERROR (data->self, error);
+  }
 
   g_object_unref (data->self);
   g_free (data);
@@ -191,12 +190,11 @@ static void
 calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
-  if (self->state != CALLS_CALL_STATE_ACTIVE)
-    {
-      g_warning ("Tone start requested for non-active call to `%s'",
-                 self->id);
-      return;
-    }
+  if (self->state != CALLS_CALL_STATE_ACTIVE) {
+    g_warning ("Tone start requested for non-active call to `%s'",
+               self->id);
+    return;
+  }
 
   g_signal_emit_by_name (self, "tone", key);
 }
@@ -257,18 +255,13 @@ property_changed_cb (CallsOfonoCall *self,
   gchar *str = NULL;
   CallsCallState state;
   gboolean ok;
+  g_autofree char *text = g_variant_print (value, TRUE);
 
-  {
-    gchar *text = g_variant_print (value, TRUE);
-    g_debug ("Property `%s' for oFono call to `%s' changed to: %s",
-             name, self->id, text);
-    g_free (text);
-  }
+  g_debug ("Property `%s' for oFono call to `%s' changed to: %s",
+           name, self->id, text);
 
   if (g_strcmp0 (name, "State") != 0)
-    {
-      return;
-    }
+    return;
 
   g_variant_get (value, "v", &str_var);
   g_variant_get (str_var, "&s", &str);
@@ -276,15 +269,11 @@ property_changed_cb (CallsOfonoCall *self,
 
   ok = calls_call_state_parse_nick (&state, str);
   if (ok)
-    {
-      change_state (self, state);
-    }
+    change_state (self, state);
   else
-    {
-      g_warning ("Could not parse new state `%s'"
-                 " of oFono call to `%s'",
-                 str, self->id);
-    }
+    g_warning ("Could not parse new state `%s'"
+               " of oFono call to `%s'",
+               str, self->id);
 
   g_variant_unref (str_var);
 }
