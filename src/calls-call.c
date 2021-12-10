@@ -200,7 +200,7 @@ calls_call_class_init (CallsCallClass *klass)
                        "State",
                        "The current state of the call",
                        CALLS_TYPE_CALL_STATE,
-                       CALLS_CALL_STATE_ACTIVE,
+                       CALLS_CALL_STATE_UNKNOWN,
                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   properties[PROP_PROTOCOL] =
