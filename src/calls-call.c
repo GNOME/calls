@@ -67,6 +67,7 @@ static GParamSpec *properties[N_PROPS];
 static guint signals[N_SIGNALS];
 
 typedef struct {
+  char *id;
   CallsCallState state;
   gboolean inbound;
   gboolean silenced;
@@ -74,12 +75,6 @@ typedef struct {
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
 
-
-static const char *
-calls_call_real_get_id (CallsCall *self)
-{
-  return NULL;
-}
 
 static const char *
 calls_call_real_get_name (CallsCall *self)
@@ -126,6 +121,10 @@ calls_call_set_property (GObject      *object,
       calls_call_set_state (self, CALLS_CALL_STATE_INCOMING);
     else
       calls_call_set_state (self, CALLS_CALL_STATE_DIALING);
+    break;
+
+  case PROP_ID:
+    calls_call_set_id (self, g_value_get_string (value));
     break;
 
   case PROP_STATE:
@@ -184,7 +183,6 @@ calls_call_class_init (CallsCallClass *klass)
   object_class->get_property = calls_call_get_property;
   object_class->set_property = calls_call_set_property;
 
-  klass->get_id = calls_call_real_get_id;
   klass->get_name = calls_call_real_get_name;
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
@@ -203,7 +201,10 @@ calls_call_class_init (CallsCallClass *klass)
                          "Id",
                          "The id the call is connected to if known",
                          NULL,
-                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+                         G_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT |
+                         G_PARAM_EXPLICIT_NOTIFY |
+                         G_PARAM_STATIC_STRINGS);
 
   properties[PROP_NAME] =
     g_param_spec_string ("name",
@@ -274,9 +275,36 @@ calls_call_init (CallsCall *self)
 const char *
 calls_call_get_id (CallsCall *self)
 {
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
   g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
 
-  return CALLS_CALL_GET_CLASS (self)->get_id (self);
+  return priv->id;
+}
+
+/**
+ * calls_call_set_id:
+ * @self: a #CallsCall
+ * @id: the id of the remote party
+ *
+ * Set the id of the call. Some implementations might only be able to set
+ * the id after construction.
+ */
+void
+calls_call_set_id (CallsCall  *self,
+                   const char *id)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+  g_return_if_fail (id);
+
+  if (g_strcmp0 (id, priv->id) == 0)
+    return;
+
+  g_free (priv->id);
+  priv->id = g_strdup (id);
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_ID]);
 }
 
 /**

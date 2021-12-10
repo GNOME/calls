@@ -37,7 +37,6 @@ struct _CallsMMCall
 {
   GObject parent_instance;
   MMCall *mm_call;
-  GString *id;
   gchar *disconnect_reason;
 };
 
@@ -58,8 +57,7 @@ static void
 notify_id_cb (CallsMMCall *self,
               const gchar *id)
 {
-  g_string_assign (self->id, id);
-  g_object_notify (G_OBJECT (self), "id");
+  calls_call_set_id (CALLS_CALL (self), id);
 }
 
 
@@ -170,14 +168,6 @@ state_changed_cb (CallsMMCall       *self,
     }
 }
 
-static const char *
-calls_mm_call_get_id (CallsCall *call)
-{
-  CallsMMCall *self = CALLS_MM_CALL (call);
-
-  return self->id->str;
-}
-
 
 static const char *
 calls_mm_call_get_protocol (CallsCall *self)
@@ -204,7 +194,9 @@ operation_cb (MMCall                      *mm_call,
   if (!ok)
     {
       g_warning ("Error %s ModemManager call to `%s': %s",
-                 data->desc, data->self->id->str, error->message);
+                 data->desc,
+                 calls_call_get_id (CALLS_CALL (data->self)),
+                 error->message);
       CALLS_ERROR (data->self, error);
     }
 
@@ -322,7 +314,6 @@ finalize (GObject *object)
   CallsMMCall *self = CALLS_MM_CALL (object);
 
   g_free (self->disconnect_reason);
-  g_string_free (self->id, TRUE);
 
   G_OBJECT_CLASS (calls_mm_call_parent_class)->finalize (object);
 }
@@ -339,7 +330,6 @@ calls_mm_call_class_init (CallsMMCallClass *klass)
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  call_class->get_id = calls_mm_call_get_id;
   call_class->get_protocol = calls_mm_call_get_protocol;
   call_class->answer = calls_mm_call_answer;
   call_class->hang_up = calls_mm_call_hang_up;
@@ -362,7 +352,6 @@ calls_mm_call_message_source_interface_init (CallsMessageSourceInterface *iface)
 static void
 calls_mm_call_init (CallsMMCall *self)
 {
-  self->id = g_string_new (NULL);
 }
 
 

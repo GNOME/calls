@@ -14,7 +14,6 @@
 enum {
   PROP_0,
   PROP_NAME,
-  PROP_ID,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -23,7 +22,6 @@ struct _CallsMockCall
 {
   CallsCall       parent_instance;
 
-  char           *id;
   char           *display_name;
 };
 
@@ -59,9 +57,6 @@ calls_mock_call_get_property (GObject    *object,
   CallsMockCall *self = CALLS_MOCK_CALL (object);
 
   switch (prop_id) {
-  case PROP_ID:
-    g_value_set_string (value, self->id);
-    break;
   case PROP_NAME:
     g_value_set_string (value, self->display_name);
     break;
@@ -76,7 +71,6 @@ calls_mock_call_finalize (GObject *object)
 {
   CallsMockCall *self = CALLS_MOCK_CALL (object);
 
-  g_free (self->id);
   g_free (self->display_name);
 
   G_OBJECT_CLASS (calls_mock_call_parent_class)->finalize (object);
@@ -96,11 +90,6 @@ calls_mock_call_class_init (CallsMockCallClass *klass)
   object_class->finalize = calls_mock_call_finalize;
 
   g_object_class_override_property (object_class,
-                                    PROP_ID,
-                                    "id");
-  props[PROP_ID] = g_object_class_find_property (object_class, "id");
-
-  g_object_class_override_property (object_class,
                                     PROP_NAME,
                                     "name");
   props[PROP_NAME] = g_object_class_find_property (object_class, "name");
@@ -111,7 +100,6 @@ static void
 calls_mock_call_init (CallsMockCall *self)
 {
   self->display_name = g_strdup ("John Doe");
-  self->id = g_strdup ("0800 1234");
 }
 
 
@@ -120,20 +108,8 @@ calls_mock_call_new (void)
 {
    return g_object_new (CALLS_TYPE_MOCK_CALL,
                         "inbound", TRUE,
+                        "id", "0800 1234",
                         NULL);
-}
-
-
-void
-calls_mock_call_set_id (CallsMockCall *self,
-                        const char   *id)
-{
-  g_return_if_fail (CALLS_IS_MOCK_CALL (self));
-
-  g_free (self->id);
-  self->id = g_strdup (id);
-
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ID]);
 }
 
 

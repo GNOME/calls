@@ -57,7 +57,6 @@ static GParamSpec *props[PROP_LAST_PROP];
 struct _CallsSipCall
 {
   GObject parent_instance;
-  gchar *id;
 
   CallsSipMediaManager *manager;
   CallsSipMediaPipeline *pipeline;
@@ -115,21 +114,11 @@ try_setting_up_media_pipeline (CallsSipCall *self)
   return TRUE;
 }
 
-static const char *
-calls_sip_call_get_id (CallsCall *call)
-{
-  CallsSipCall *self = CALLS_SIP_CALL (call);
-
-  return self->id;
-}
-
 
 static const char *
 calls_sip_call_get_protocol (CallsCall *call)
 {
-  CallsSipCall *self = CALLS_SIP_CALL (call);
-
-  return get_protocol_from_address (self->id);
+  return get_protocol_from_address (calls_call_get_id (call));
 }
 
 
@@ -255,8 +244,6 @@ calls_sip_call_finalize (GObject *object)
 {
   CallsSipCall *self = CALLS_SIP_CALL (object);
 
-  g_free (self->id);
-
   if (self->pipeline) {
     calls_sip_media_pipeline_stop (self->pipeline);
     g_clear_object (&self->pipeline);
@@ -278,7 +265,6 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
   object_class->set_property = calls_sip_call_set_property;
   object_class->finalize = calls_sip_call_finalize;
 
-  call_class->get_id = calls_sip_call_get_id;
   call_class->get_protocol = calls_sip_call_get_protocol;
   call_class->answer = calls_sip_call_answer;
   call_class->hang_up = calls_sip_call_hang_up;
@@ -377,19 +363,14 @@ calls_sip_call_new (const gchar  *id,
                     gboolean      inbound,
                     nua_handle_t *handle)
 {
-  CallsSipCall *call;
+  g_return_val_if_fail (id, NULL);
 
-  g_return_val_if_fail (id != NULL, NULL);
-
-  call = g_object_new (CALLS_TYPE_SIP_CALL,
+  return g_object_new (CALLS_TYPE_SIP_CALL,
                        "nua-handle", handle,
+                       "id", id,
                        "inbound", inbound,
                        "state", inbound ? CALLS_CALL_STATE_INCOMING : CALLS_CALL_STATE_DIALING,
                        NULL);
-
-  call->id = g_strdup (id);
-
-  return call;
 }
 
 /**

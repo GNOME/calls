@@ -32,7 +32,6 @@
 struct _CallsDummyCall
 {
   GObject parent_instance;
-  gchar *id;
 };
 
 static void calls_dummy_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -40,21 +39,6 @@ static void calls_dummy_call_message_source_interface_init (CallsMessageSourceIn
 G_DEFINE_TYPE_WITH_CODE (CallsDummyCall, calls_dummy_call, CALLS_TYPE_CALL,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
                                                 calls_dummy_call_message_source_interface_init))
-
-enum {
-  PROP_0,
-  PROP_ID_CONSTRUCTOR,
-  PROP_LAST_PROP
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
-static const char *
-calls_dummy_call_get_id (CallsCall *call)
-{
-  CallsDummyCall *self = CALLS_DUMMY_CALL (call);
-
-  return self->id;
-}
 
 static const char*
 calls_dummy_call_get_protocol (CallsCall *call)
@@ -121,29 +105,9 @@ calls_dummy_call_new (const gchar *id,
   g_return_val_if_fail (id != NULL, NULL);
 
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
-                       "id-constructor", id,
+                       "id", id,
                        "inbound", inbound,
                        NULL);
-}
-
-
-static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-  CallsDummyCall *self = CALLS_DUMMY_CALL (object);
-
-  switch (property_id) {
-  case PROP_ID_CONSTRUCTOR:
-    self->id = g_value_dup_string (value);
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
 }
 
 
@@ -158,16 +122,6 @@ constructed (GObject *object)
   G_OBJECT_CLASS (calls_dummy_call_parent_class)->constructed (object);
 }
 
-static void
-finalize (GObject *object)
-{
-  CallsDummyCall *self = CALLS_DUMMY_CALL (object);
-
-  g_free (self->id);
-
-  G_OBJECT_CLASS (calls_dummy_call_parent_class)->finalize (object);
-}
-
 
 static void
 calls_dummy_call_class_init (CallsDummyCallClass *klass)
@@ -175,23 +129,12 @@ calls_dummy_call_class_init (CallsDummyCallClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   CallsCallClass *call_class = CALLS_CALL_CLASS (klass);
 
-  object_class->set_property = set_property;
   object_class->constructed = constructed;
-  object_class->finalize = finalize;
 
-  call_class->get_id = calls_dummy_call_get_id;
   call_class->get_protocol = calls_dummy_call_get_protocol;
   call_class->answer = calls_dummy_call_answer;
   call_class->hang_up = calls_dummy_call_hang_up;
   call_class->send_dtmf_tone = calls_dummy_call_send_dtmf_tone;
-
-  props[PROP_ID_CONSTRUCTOR] =
-    g_param_spec_string ("id-constructor",
-                         "Id (constructor)",
-                         "The dialed id (dummy class constructor)",
-                         "+441234567890",
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_ID_CONSTRUCTOR, props[PROP_ID_CONSTRUCTOR]);
 }
 
 static void
