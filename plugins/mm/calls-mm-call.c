@@ -339,9 +339,7 @@ constructed (GObject *object)
   /* Start outgoing call */
   if (state == MM_CALL_STATE_UNKNOWN
       && mm_call_get_direction (self->mm_call) == MM_CALL_DIRECTION_OUTGOING)
-    {
-      calls_mm_call_start_call (CALLS_CALL (self));
-    }
+    calls_mm_call_start_call (CALLS_CALL (self));
 
   G_OBJECT_CLASS (calls_mm_call_parent_class)->constructed (object);
 }
