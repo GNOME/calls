@@ -25,7 +25,7 @@ test_dummy_call_object (CallFixture   *fixture,
 
 static void
 test_dummy_call_get_id (CallFixture   *fixture,
-                            gconstpointer  user_data)
+                        gconstpointer  user_data)
 {
   const char *id;
   id = calls_call_get_id (CALLS_CALL (fixture->dummy_call));
