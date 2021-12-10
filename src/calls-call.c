@@ -128,35 +128,34 @@ calls_call_get_property (GObject    *object,
 {
   CallsCall *self = CALLS_CALL (object);
 
-  switch (prop_id)
-    {
-    case PROP_INBOUND:
-      g_value_set_boolean (value, calls_call_get_inbound (self));
-      break;
+  switch (prop_id) {
+  case PROP_INBOUND:
+    g_value_set_boolean (value, calls_call_get_inbound (self));
+    break;
 
-    case PROP_ID:
-      g_value_set_string (value, calls_call_get_id (self));
-      break;
+  case PROP_ID:
+    g_value_set_string (value, calls_call_get_id (self));
+    break;
 
-    case PROP_NAME:
-      g_value_set_string (value, calls_call_get_name (self));
-      break;
+  case PROP_NAME:
+    g_value_set_string (value, calls_call_get_name (self));
+    break;
 
-    case PROP_STATE:
-      g_value_set_enum (value, calls_call_get_state (self));
-      break;
+  case PROP_STATE:
+    g_value_set_enum (value, calls_call_get_state (self));
+    break;
 
-    case PROP_PROTOCOL:
-      g_value_set_string (value, calls_call_get_protocol (self));
-      break;
+  case PROP_PROTOCOL:
+    g_value_set_string (value, calls_call_get_protocol (self));
+    break;
 
-    case PROP_SILENCED:
-      g_value_set_boolean (value, calls_call_get_silenced (self));
-      break;
+  case PROP_SILENCED:
+    g_value_set_boolean (value, calls_call_get_silenced (self));
+    break;
 
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
 }
 
 static void
@@ -462,11 +461,9 @@ calls_call_state_to_string (GString        *string,
 
   value = g_enum_get_value (klass, (gint)state);
   if (!value)
-    {
-      return g_string_printf (string,
-                              "Unknown call state (%d)",
-                              (gint)state);
-    }
+    return g_string_printf (string,
+                            "Unknown call state (%d)",
+                            (gint)state);
 
   g_string_assign (string, value->value_nick);
   string->str[0] = g_ascii_toupper (string->str[0]);
@@ -488,15 +485,12 @@ calls_call_state_parse_nick (CallsCallState *state,
   klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
   value = g_enum_get_value_by_nick (klass, nick);
 
-  if (value)
-    {
-      *state = (CallsCallState) value->value;
-      ret = TRUE;
-    }
-  else
-    {
-      ret = FALSE;
-    }
+  if (value) {
+    *state = (CallsCallState) value->value;
+    ret = TRUE;
+  } else {
+    ret = FALSE;
+  }
 
   g_type_class_unref (klass);
   return ret;
