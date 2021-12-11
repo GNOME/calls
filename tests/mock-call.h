@@ -20,7 +20,5 @@ G_DECLARE_FINAL_TYPE (CallsMockCall, calls_mock_call, CALLS, MOCK_CALL, CallsCal
 CallsMockCall    *calls_mock_call_new               (void);
 void              calls_mock_call_set_id            (CallsMockCall *self,
                                                      const char    *id);
-void              calls_mock_call_set_name          (CallsMockCall *self,
-                                                     const char    *name);
 
 G_END_DECLS

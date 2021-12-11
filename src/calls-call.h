@@ -51,7 +51,6 @@ struct _CallsCallClass
 {
   GObjectClass parent_iface;
 
-  const char     *(*get_name)             (CallsCall *self);
   const char     *(*get_protocol)         (CallsCall *self);
   void            (*answer)               (CallsCall *self);
   void            (*hang_up)              (CallsCall *self);
@@ -63,6 +62,8 @@ const char      *calls_call_get_id                 (CallsCall     *self);
 void             calls_call_set_id                 (CallsCall     *self,
                                                     const char    *id);
 const char      *calls_call_get_name               (CallsCall     *self);
+void             calls_call_set_name               (CallsCall     *self,
+                                                    const char    *name);
 CallsCallState   calls_call_get_state              (CallsCall     *self);
 void             calls_call_set_state              (CallsCall     *self,
                                                     CallsCallState state);

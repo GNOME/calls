@@ -68,6 +68,7 @@ static guint signals[N_SIGNALS];
 
 typedef struct {
   char *id;
+  char *name;
   CallsCallState state;
   gboolean inbound;
   gboolean silenced;
@@ -75,12 +76,6 @@ typedef struct {
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
 
-
-static const char *
-calls_call_real_get_name (CallsCall *self)
-{
-  return NULL;
-}
 
 static const char *
 calls_call_real_get_protocol (CallsCall *self)
@@ -125,6 +120,10 @@ calls_call_set_property (GObject      *object,
 
   case PROP_ID:
     calls_call_set_id (self, g_value_get_string (value));
+    break;
+
+  case PROP_NAME:
+    calls_call_set_name (self, g_value_get_string (value));
     break;
 
   case PROP_STATE:
@@ -183,7 +182,6 @@ calls_call_class_init (CallsCallClass *klass)
   object_class->get_property = calls_call_get_property;
   object_class->set_property = calls_call_set_property;
 
-  klass->get_name = calls_call_real_get_name;
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
   klass->hang_up = calls_call_real_hang_up;
@@ -211,7 +209,9 @@ calls_call_class_init (CallsCallClass *klass)
                          "Name",
                          "The name of the party the call is connected to, if the network provides it",
                          NULL,
-                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+                         G_PARAM_READWRITE |
+                         G_PARAM_EXPLICIT_NOTIFY |
+                         G_PARAM_STATIC_STRINGS);
 
   properties[PROP_STATE] =
     g_param_spec_enum ("state",
@@ -319,9 +319,33 @@ calls_call_set_id (CallsCall  *self,
 const char *
 calls_call_get_name (CallsCall *self)
 {
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
   g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
 
-  return CALLS_CALL_GET_CLASS (self)->get_name (self);
+  return priv->name;
+}
+
+/**
+ * calls_call_set_name:
+ * @self: a #CallsCall
+ * @name: the name to set
+ *
+ * Sets the name of the call as provided by the network.
+ */
+void
+calls_call_set_name (CallsCall  *self,
+                     const char *name)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+
+  g_clear_pointer (&priv->name, g_free);
+  if (name)
+    priv->name = g_strdup (name);
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_NAME]);
 }
 
 /**

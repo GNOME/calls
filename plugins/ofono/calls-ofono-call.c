@@ -35,7 +35,6 @@ struct _CallsOfonoCall
 {
   GObject parent_instance;
   GDBOVoiceCall *voice_call;
-  gchar *name;
   gchar *disconnect_reason;
 };
 
@@ -48,7 +47,6 @@ G_DEFINE_TYPE_WITH_CODE (CallsOfonoCall, calls_ofono_call, CALLS_TYPE_CALL,
 enum {
   PROP_0,
   PROP_VOICE_CALL,
-  PROP_PROPERTIES,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -58,14 +56,6 @@ enum {
   SIGNAL_LAST_SIGNAL,
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
-
-static const char *
-calls_ofono_call_get_name (CallsCall *call)
-{
-  CallsOfonoCall *self = CALLS_OFONO_CALL (call);
-
-  return self->name;
-}
 
 static const char *
 calls_ofono_call_get_protocol (CallsCall *call)
@@ -154,28 +144,6 @@ calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
 
 
 static void
-set_properties (CallsOfonoCall *self,
-                GVariant       *call_props)
-{
-  CallsCallState state;
-  const char *id = NULL;
-  const char *str = NULL;
-
-  g_return_if_fail (call_props != NULL);
-
-  g_variant_lookup (call_props, "LineIdentification", "s", &id);
-  calls_call_set_id (CALLS_CALL (self), id);
-
-  g_variant_lookup (call_props, "Name", "s", &self->name);
-
-  g_variant_lookup (call_props, "State", "&s", &str);
-  g_return_if_fail (str != NULL);
-  if (calls_call_state_parse_nick (&state, str))
-    calls_call_set_state (CALLS_CALL (self), state);
-}
-
-
-static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -187,10 +155,6 @@ set_property (GObject      *object,
   case PROP_VOICE_CALL:
     g_set_object
       (&self->voice_call, GDBO_VOICE_CALL (g_value_get_object (value)));
-    break;
-
-  case PROP_PROPERTIES:
-    set_properties (self, g_value_get_variant (value));
     break;
 
   default:
@@ -280,7 +244,6 @@ finalize (GObject *object)
   CallsOfonoCall *self = CALLS_OFONO_CALL (object);
 
   g_free (self->disconnect_reason);
-  g_free (self->name);
 
   G_OBJECT_CLASS (calls_ofono_call_parent_class)->finalize (object);
 }
@@ -298,7 +261,6 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
   object_class->dispose = dispose;
   object_class->finalize = finalize;
 
-  call_class->get_name = calls_ofono_call_get_name;
   call_class->get_protocol = calls_ofono_call_get_protocol;
   call_class->answer = calls_ofono_call_answer;
   call_class->hang_up = calls_ofono_call_hang_up;
@@ -311,15 +273,6 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
                          GDBO_TYPE_VOICE_CALL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_VOICE_CALL, props[PROP_VOICE_CALL]);
-
-  props[PROP_PROPERTIES] =
-    g_param_spec_variant ("properties",
-                          "Properties",
-                          "The a{sv} dictionary of properties for the voice call object",
-                          G_VARIANT_TYPE_ARRAY,
-                          NULL,
-                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
-  g_object_class_install_property (object_class, PROP_PROPERTIES, props[PROP_PROPERTIES]);
 
   signals[SIGNAL_TONE] =
     g_signal_newv ("tone",
@@ -355,8 +308,6 @@ calls_ofono_call_new (GDBOVoiceCall *voice_call,
   g_return_val_if_fail (GDBO_IS_VOICE_CALL (voice_call), NULL);
   g_return_val_if_fail (call_props != NULL, NULL);
 
-  /* The following is a copy of set_properties() that we will get rid off
-     once all properties have been moved */
   g_variant_lookup (call_props, "LineIdentification", "s", &id);
   g_variant_lookup (call_props, "Name", "s", &name);
 
@@ -374,7 +325,7 @@ calls_ofono_call_new (GDBOVoiceCall *voice_call,
                        "voice-call", voice_call,
                        "properties", call_props,
                        "id", id,
-                       //"name", name,
+                       "name", name,
                        "inbound", inbound,
                        "state", state,
                        NULL);
