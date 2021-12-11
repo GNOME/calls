@@ -115,13 +115,6 @@ try_setting_up_media_pipeline (CallsSipCall *self)
 }
 
 
-static const char *
-calls_sip_call_get_protocol (CallsCall *call)
-{
-  return get_protocol_from_address (calls_call_get_id (call));
-}
-
-
 static void
 calls_sip_call_answer (CallsCall *call)
 {
@@ -265,7 +258,6 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
   object_class->set_property = calls_sip_call_set_property;
   object_class->finalize = calls_sip_call_finalize;
 
-  call_class->get_protocol = calls_sip_call_get_protocol;
   call_class->answer = calls_sip_call_answer;
   call_class->hang_up = calls_sip_call_hang_up;
 

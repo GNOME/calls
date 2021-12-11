@@ -80,7 +80,7 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
 static const char *
 calls_call_real_get_protocol (CallsCall *self)
 {
-  return NULL;
+  return get_protocol_from_address_with_fallback (calls_call_get_id (self));
 }
 
 static void
