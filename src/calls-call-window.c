@@ -139,7 +139,7 @@ new_call_submitted_cb (CallsCallWindow *self,
                        const gchar     *id,
                        CallsNewCallBox *new_call_box)
 {
-  g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
+  g_assert (CALLS_IS_CALL_WINDOW (self));
 
   calls_origin_dial (origin, id);
 }
@@ -183,8 +183,8 @@ add_call (CallsCallWindow *self,
   CuiCallDisplay *display;
   CallsCallSelectorItem *item;
 
-  g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
-  g_return_if_fail (CALLS_IS_CALL (call));
+  g_assert (CALLS_IS_CALL_WINDOW (self));
+  g_assert (CALLS_IS_CALL (call));
 
   call_data = calls_ui_call_data_new (call);
   display = cui_call_display_new (CUI_CALL (call_data));
@@ -223,8 +223,8 @@ remove_call (CallsCallWindow *self,
 {
   guint n_calls;
 
-  g_return_if_fail (CALLS_IS_CALL_WINDOW (self));
-  g_return_if_fail (CALLS_IS_CALL (call));
+  g_assert (CALLS_IS_CALL_WINDOW (self));
+  g_assert (CALLS_IS_CALL (call));
 
   n_calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
   for (guint i = 0; i < n_calls; i++) {
