@@ -122,8 +122,10 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
                                           "The time the in-app notifaction should be shown",
                                           -1,
                                           G_MAXINT,
-                                          3,
-                                          G_PARAM_READWRITE);
+                                          DEFAULT_TIMEOUT_SECONDS,
+                                          G_PARAM_READWRITE |
+                                          G_PARAM_CONSTRUCT |
+                                          G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
@@ -137,7 +139,6 @@ static void
 calls_in_app_notification_init (CallsInAppNotification *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
-  self->timeout = DEFAULT_TIMEOUT_SECONDS;
 }
 
 
