@@ -282,6 +282,12 @@ dial (CallsOrigin *origin,
     return;
   }
 
+  if (calls_account_get_state (CALLS_ACCOUNT (origin)) != CALLS_ACCOUNT_ONLINE) {
+    g_warning ("Tried dialing on origin '%s', but it's not online",
+               name);
+    return;
+  }
+
   self = CALLS_SIP_ORIGIN (origin);
 
   nh = nua_handle (self->nua, self->oper,
