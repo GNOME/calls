@@ -29,6 +29,7 @@
 #include "calls-account-row.h"
 #include "calls-account-provider.h"
 #include "calls-manager.h"
+#include "calls-in-app-notification.h"
 
 
 /**
@@ -64,6 +65,7 @@ struct _CallsAccountOverview {
   /* misc */
   CallsAccountOverviewState  state;
   GList                     *providers;
+  CallsInAppNotification    *in_app_notification;
 };
 
 G_DEFINE_TYPE (CallsAccountOverview, calls_account_overview, HDY_TYPE_WINDOW)
@@ -168,6 +170,24 @@ on_edit_account_clicked (CallsAccountRow      *row,
 
 
 static void
+on_account_message (CallsAccount         *account,
+                    const char           *message,
+                    GtkMessageType        message_type,
+                    CallsAccountOverview *self)
+{
+  g_autofree char* notification = NULL;
+
+  g_assert (CALLS_IS_ACCOUNT (account));
+  g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
+
+  notification = g_strdup_printf ("%s: %s",
+                                  calls_account_get_address (account),
+                                  message);
+  calls_in_app_notification_show (self->in_app_notification, notification);
+}
+
+
+static void
 update_account_list (CallsAccountOverview *self)
 {
   gboolean removed_all = FALSE;
@@ -196,6 +216,11 @@ update_account_list (CallsAccountOverview *self)
     for (guint i = 0; i < n_origins; i++) {
       g_autoptr (CallsAccount) account = CALLS_ACCOUNT (g_list_model_get_item (model, i));
       CallsAccountRow *account_row = calls_account_row_new (provider, account);
+
+      g_signal_handlers_disconnect_by_data (account, self);
+      g_signal_connect (account, "message",
+                        G_CALLBACK (on_account_message),
+                        self);
 
       g_signal_connect (account_row, "edit-clicked",
                         G_CALLBACK (on_edit_account_clicked),
@@ -257,6 +282,8 @@ calls_account_overview_class_init (CallsAccountOverviewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, overview);
 
   gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, account_window);
+
+  gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, in_app_notification);
 
   gtk_widget_class_bind_template_callback (widget_class, on_add_account_clicked);
 }

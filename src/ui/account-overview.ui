@@ -29,6 +29,14 @@
         </child>
 
         <child>
+          <object class="GtkOverlay">
+            <property name="visible">True</property>
+            <child type="overlay">
+              <object class="CallsInAppNotification" id="in_app_notification">
+                <property name="visible">True</property>
+              </object>
+            </child>
+        <child>
           <object class="GtkStack" id="stack">
             <property name="visible">True</property>
             <property name="vexpand">True</property>
@@ -77,6 +85,8 @@
           </object>
         </child>
 
+      </object>
+    </child>
       </object>
     </child>
   </template>
