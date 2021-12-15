@@ -100,8 +100,7 @@ calls_in_app_notification_finalize (GObject *object)
 {
   CallsInAppNotification *self = CALLS_IN_APP_NOTIFICATION (object);
 
-  if (self->timeout_id)
-    g_source_remove (self->timeout_id);
+  g_clear_handle_id (&self->timeout_id, g_source_remove);
 
   G_OBJECT_CLASS (calls_in_app_notification_parent_class)->finalize (object);
 }
@@ -169,11 +168,7 @@ calls_in_app_notification_hide (CallsInAppNotification *self)
 {
   g_return_if_fail (CALLS_IS_IN_APP_NOTIFICATION (self));
 
-  if (self->timeout_id)
-    {
-      g_source_remove (self->timeout_id);
-      self->timeout_id = 0;
-    }
+  g_clear_handle_id (&self->timeout_id, g_source_remove);
 
   gtk_revealer_set_reveal_child (GTK_REVEALER(self), FALSE);
 }
