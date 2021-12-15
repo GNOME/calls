@@ -32,7 +32,7 @@ struct _CallsInAppNotification
 
   GtkLabel *label;
 
-  gint timeout;
+  guint timeout;
   guint timeout_id;
 };
 
@@ -65,7 +65,7 @@ calls_in_app_notification_get_property (GObject      *object,
 
   switch (property_id) {
   case PROP_TIMEOUT:
-    g_value_set_int (value, self->timeout);
+    g_value_set_uint (value, self->timeout);
     break;
 
   default:
@@ -85,7 +85,7 @@ calls_in_app_notification_set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_TIMEOUT:
-    self->timeout = g_value_get_int (value);
+    self->timeout = g_value_get_uint (value);
     break;
 
   default:
@@ -117,15 +117,15 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
   object_class->set_property = calls_in_app_notification_set_property;
   object_class->finalize = calls_in_app_notification_finalize;
 
-  props[PROP_TIMEOUT] = g_param_spec_int ("timeout",
-                                          "Timeout",
-                                          "The time the in-app notifaction should be shown",
-                                          -1,
-                                          G_MAXINT,
-                                          DEFAULT_TIMEOUT_SECONDS,
-                                          G_PARAM_READWRITE |
-                                          G_PARAM_CONSTRUCT |
-                                          G_PARAM_STATIC_STRINGS);
+  props[PROP_TIMEOUT] = g_param_spec_uint ("timeout",
+                                           "Timeout",
+                                           "The time the in-app notifaction should be shown",
+                                           1,
+                                           G_MAXUINT,
+                                           DEFAULT_TIMEOUT_SECONDS,
+                                           G_PARAM_READWRITE |
+                                           G_PARAM_CONSTRUCT |
+                                           G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
