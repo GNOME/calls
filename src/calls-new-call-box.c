@@ -31,6 +31,7 @@
 #include "calls-settings.h"
 #include "calls-ussd.h"
 
+#include <call-ui.h>
 #include <glib/gi18n.h>
 #include <handy.h>
 
@@ -46,13 +47,10 @@ struct _CallsNewCallBox {
 
   GtkListBox          *origin_list_box;
   HdyComboRow         *origin_list;
-  GtkButton           *backspace;
-  HdyKeypad           *keypad;
-  GtkButton           *dial;
+  CuiDialpad          *dialpad;
   GtkEntry            *address_entry;
   HdyActionRow        *result;
   GtkButton           *dial_result;
-  GtkGestureLongPress *long_press_back_gesture;
 
   GList               *dial_queue;
 
@@ -170,23 +168,6 @@ notify_selected_index_cb (CallsNewCallBox *self)
 }
 
 
-
-static void
-long_press_back_cb (CallsNewCallBox *self)
-{
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
-
-  gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
-}
-
-static void
-backspace_clicked_cb (CallsNewCallBox *self)
-{
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
-
-  g_signal_emit_by_name (entry, "backspace", NULL);
-}
-
 static void
 ussd_send_cb (GObject      *object,
               GAsyncResult *result,
@@ -215,20 +196,22 @@ ussd_send_cb (GObject      *object,
 }
 
 static void
-dial_clicked_cb (CallsNewCallBox *self)
+dialpad_dialed_cb (CuiDialpad      *dialpad,
+                   const char      *number,
+                   CallsNewCallBox *self)
 {
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
   GtkWidget *window;
-  const char *text;
+
+  g_assert (CALLS_IS_NEW_CALL_BOX (self));
 
   window = gtk_widget_get_toplevel (GTK_WIDGET (self));
-  text = gtk_entry_get_text (entry);
 
   if (CALLS_IS_MAIN_WINDOW (window))
-    calls_main_window_dial (CALLS_MAIN_WINDOW (window), text);
+    calls_main_window_dial (CALLS_MAIN_WINDOW (window), number);
   else
-    calls_new_call_box_dial (self, text);
+    calls_new_call_box_dial (self, number);
 }
+
 
 static void
 dial_result_clicked_cb (CallsNewCallBox *self)
@@ -306,7 +289,7 @@ origin_count_changed_cb (CallsNewCallBox *self)
   n_items = g_list_model_get_n_items (origins);
 
   gtk_widget_set_visible (GTK_WIDGET (self->origin_list_box), n_items > 1);
-  gtk_widget_set_sensitive (GTK_WIDGET (self->dial), n_items > 0);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->dialpad), n_items > 0);
 
   if (n_items)
     dial_queued (self);
@@ -358,9 +341,6 @@ calls_new_call_box_dispose (GObject *object)
 
   clear_dial_queue (self);
 
-  if (self->long_press_back_gesture != NULL)
-    g_object_unref (self->long_press_back_gesture);
-
   G_OBJECT_CLASS (calls_new_call_box_parent_class)->dispose (object);
 }
 
@@ -377,18 +357,13 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/new-call-box.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_list_box);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_list);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, backspace);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, long_press_back_gesture);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, keypad);
-  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dial);
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dialpad);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, address_entry);
   gtk_widget_class_bind_template_callback (widget_class, address_activate_cb);
   gtk_widget_class_bind_template_callback (widget_class, address_changed_cb);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, result);
-  gtk_widget_class_bind_template_callback (widget_class, dial_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, dialpad_dialed_cb);
   gtk_widget_class_bind_template_callback (widget_class, dial_result_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, long_press_back_cb);
   gtk_widget_class_bind_template_callback (widget_class, notify_selected_index_cb);
 
   props[PROP_NUMERIC_INPUT_ONLY] =
@@ -407,6 +382,7 @@ calls_new_call_box_new (void)
 {
   return g_object_new (CALLS_TYPE_NEW_CALL_BOX, NULL);
 }
+
 
 
 void
@@ -439,7 +415,6 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox    *self,
 {
   g_autoptr (CallsOrigin) origin = NULL;
   g_autoptr (GTask) task = NULL;
-  GtkEntry *entry;
 
   g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
@@ -463,9 +438,6 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox    *self,
 
   calls_ussd_initiate_async (CALLS_USSD (origin), target, cancellable,
                              ussd_send_cb, g_steal_pointer (&task));
-
-  entry = hdy_keypad_get_entry (self->keypad);
-  gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
 }
 
 char *
