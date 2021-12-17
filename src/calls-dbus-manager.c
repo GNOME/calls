@@ -9,6 +9,7 @@
 #define G_LOG_DOMAIN "CallsDBusManager"
 
 #include "calls-config.h"
+#include "calls-emergency-calls-manager.h"
 #include "calls-call.h"
 #include "calls-call-dbus.h"
 #include "calls-dbus-manager.h"
@@ -33,6 +34,7 @@ typedef struct _CallsDBusManager {
   GObject                   parent;
 
   GDBusObjectManagerServer *object_manager;
+  CallsEmergencyCallsManager *emergency_calls_manager;
 
   guint                     iface_num;
   GListStore               *objs;
@@ -347,6 +349,12 @@ calls_dbus_manager_dispose (GObject *object)
       g_dbus_object_manager_server_unexport (self->object_manager, path);
     }
   }
+
+  if (self->emergency_calls_manager) {
+    g_dbus_interface_skeleton_unexport (G_DBUS_INTERFACE_SKELETON (self->emergency_calls_manager));
+    g_clear_object (&self->emergency_calls_manager);
+  }
+
   g_clear_object (&self->objs);
   g_clear_object (&self->object_manager);
   g_clear_pointer (&self->object_path, g_free);
@@ -369,6 +377,7 @@ static void
 calls_dbus_manager_init (CallsDBusManager *self)
 {
   self->iface_num = 1;
+  self->emergency_calls_manager = calls_emergency_calls_manager_new ();
 }
 
 
@@ -385,12 +394,22 @@ calls_dbus_manager_register (CallsDBusManager *self,
                              const char       *object_path,
                              GError          **error)
 {
+  g_autoptr (GError) err = NULL;
+  gboolean success;
+
   g_return_val_if_fail (CALLS_IS_DBUS_MANAGER (self), FALSE);
 
   self->object_path = g_strdup (object_path);
   g_debug ("Registering at %s", self->object_path);
   self->object_manager = g_dbus_object_manager_server_new (object_path);
   g_dbus_object_manager_server_set_connection (self->object_manager, connection);
+
+  success = g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (self->emergency_calls_manager),
+                                              connection,
+                                              object_path,
+                                              &err);
+  if (success == FALSE)
+    g_critical ("Failed to export emergency call interface: %s", err->message);
 
   return TRUE;
 }
