@@ -44,6 +44,7 @@
       <xi:include href="xml/calls-contacts-provider.xml"/>
       <xi:include href="xml/calls-contacts-row.xml"/>
       <xi:include href="xml/calls-dbus-manager.xml"/>
+      <xi:include href="xml/calls-emergency-calls-manager.xml"/>
       <xi:include href="xml/calls-history-box.xml"/>
       <xi:include href="xml/calls-in-app-notification.xml"/>
       <xi:include href="xml/calls-main-window.xml"/>
