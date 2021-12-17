@@ -76,6 +76,7 @@
     <chapter id="dbus">
       <title>DBus interfaces</title>
       <xi:include href="../src/dbus/calls-org.gnome.Calls.Call.xml"/>
+      <xi:include href="../src/dbus/calls-org.gnome.Calls.EmergencyCalls.xml"/>
     </chapter>
 
     <chapter id="gen_dbus_server">

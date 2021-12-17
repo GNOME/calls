@@ -7,3 +7,8 @@ generated_dbus_sources += gnome.gdbus_codegen('calls-call-dbus',
                 interface_prefix: 'org.gnome',
                 object_manager: true,
                 namespace: 'CallsDBus')
+generated_dbus_sources += gnome.gdbus_codegen('calls-emergency-call-dbus',
+                'org.gnome.Calls.EmergencyCalls.xml',
+                docbook: 'calls',
+                interface_prefix: 'org.gnome.Calls',
+                namespace: 'CallsDBus')
