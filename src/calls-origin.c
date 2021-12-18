@@ -78,6 +78,19 @@ calls_origin_default_init (CallsOriginInterface *iface)
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
+  /**
+   * CallsOrigin:emergency-numbers:
+   *
+   * The available emergency numbers.
+   */
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_boxed ("emergency-numbers",
+                        "",
+                        "",
+                        G_TYPE_STRV,
+                        G_PARAM_READABLE));
+
   signals[SIGNAL_CALL_ADDED] =
     g_signal_newv ("call-added",
                    G_TYPE_FROM_INTERFACE (iface),
@@ -130,6 +143,23 @@ DEFINE_ORIGIN_GETTER (id, char *, NULL);
  * #CallsCall or NULL if there was an error.
  */
 DEFINE_ORIGIN_GETTER (calls, GList *, NULL);
+
+/**
+ * calls_origin_get_emergency_numbers:
+ * @self: a #CallsOrigin
+ *
+ * Returns: (transfer full): The supported emergency numbers
+ */
+GStrv
+calls_origin_get_emergency_numbers (CallsOrigin *origin)
+{
+  GStrv numbers;
+
+  g_return_val_if_fail (CALLS_IS_ORIGIN (origin), NULL);
+
+  g_object_get (origin, "emergency-numbers", &numbers, NULL);
+  return numbers;
+}
 
 /**
  * calls_origin_foreach_call:
