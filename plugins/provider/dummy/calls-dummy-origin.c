@@ -37,6 +37,8 @@ struct _CallsDummyOrigin {
   GList   *calls;
 };
 
+const char *emergency_numbers[] = { "123", "456", NULL };
+
 static void calls_dummy_origin_message_source_interface_init (CallsOriginInterface *iface);
 static void calls_dummy_origin_origin_interface_init (CallsOriginInterface *iface);
 
@@ -59,6 +61,7 @@ enum {
 
   PROP_CALLS,
   PROP_COUNTRY_CODE,
+  PROP_EMERGENCY_NUMBERS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -216,6 +219,10 @@ get_property (GObject    *object,
     g_value_set_string (value, NULL);
     break;
 
+  case PROP_EMERGENCY_NUMBERS:
+    g_value_set_boxed (value, emergency_numbers);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -273,6 +280,7 @@ calls_dummy_origin_class_init (CallsDummyOriginClass *klass)
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
+  IMPLEMENTS (PROP_EMERGENCY_NUMBERS, "emergency-numbers");
 
 #undef IMPLEMENTS
 }
