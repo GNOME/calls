@@ -59,7 +59,6 @@ enum {
   PROP_CALLS,
   PROP_MODEM,
   PROP_COUNTRY_CODE,
-  PROP_NUMERIC,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -175,10 +174,6 @@ get_property (GObject      *object,
 
   case PROP_COUNTRY_CODE:
     g_value_set_string (value, NULL);
-    break;
-
-  case PROP_NUMERIC:
-    g_value_set_boolean (value, TRUE);
     break;
 
   default:
@@ -577,7 +572,6 @@ calls_ofono_origin_class_init (CallsOfonoOriginClass *klass)
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
-  IMPLEMENTS (PROP_NUMERIC, "numeric-addresses");
 
 #undef IMPLEMENTS
 
