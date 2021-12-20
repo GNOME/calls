@@ -147,7 +147,7 @@ notify_selected_index_cb (CallsNewCallBox *self)
   gboolean numeric_input = TRUE;
 
   if (origin)
-    g_object_get (origin, "numeric-addresses", &numeric_input, NULL);
+    numeric_input = calls_origin_supports_protocol (origin, "tel");
 
   set_numeric (self, numeric_input);
 }
