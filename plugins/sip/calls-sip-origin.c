@@ -136,6 +136,25 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipOrigin, calls_sip_origin, G_TYPE_OBJECT,
                                                 calls_sip_origin_accounts_interface_init))
 
 static void
+change_state (CallsSipOrigin          *self,
+              CallsAccountState        new_state,
+              CallsAccountStateReason  reason)
+{
+  CallsAccountState old_state;
+
+  g_assert (CALLS_SIP_ORIGIN (self));
+
+  if (self->state == new_state)
+    return;
+
+  old_state = self->state;
+  self->state = new_state;
+
+  g_signal_emit_by_name (self, "account-state-changed", old_state, new_state, reason);
+}
+
+
+static void
 remove_call (CallsSipOrigin *self,
              CallsCall      *call,
              const gchar    *reason)
@@ -292,7 +311,9 @@ dial (CallsOrigin *origin,
     return;
   }
 
-  if (calls_account_get_state (CALLS_ACCOUNT (origin)) != CALLS_ACCOUNT_ONLINE) {
+  if (calls_account_get_state (CALLS_ACCOUNT (origin)) !=
+      CALLS_ACCOUNT_STATE_ONLINE) {
+
     g_warning ("Tried dialing '%s' on origin '%s', but it's not online",
                address, name);
     return;
@@ -416,7 +437,9 @@ sip_r_register (int              status,
 
   if (status == 200) {
     g_debug ("REGISTER successful");
-    origin->state = CALLS_ACCOUNT_ONLINE;
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_ONLINE,
+                  CALLS_ACCOUNT_STATE_REASON_CONNECTED);
     nua_get_params (nua, TAG_ANY (), TAG_END());
 
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
@@ -426,18 +449,19 @@ sip_r_register (int              status,
 
   } else if (status == 401 || status == 407) {
     sip_authenticate (origin, nh, sip);
-    origin->state = CALLS_ACCOUNT_AUTHENTICATING;
 
   } else if (status == 403) {
     g_warning ("wrong credentials?");
-    origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_OFFLINE,
+                  CALLS_ACCOUNT_STATE_REASON_AUTHENTICATION_FAILURE);
 
   } else if (status == 904) {
     g_warning ("unmatched challenge");
-    origin->state = CALLS_ACCOUNT_AUTHENTICATION_FAILURE;
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
   }
-
-  g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
 }
 
 
@@ -455,14 +479,15 @@ sip_r_unregister (int              status,
 
   if (status == 200) {
     g_debug ("Unregistering successful");
-    origin->state = CALLS_ACCOUNT_OFFLINE;
-
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_OFFLINE,
+                  CALLS_ACCOUNT_STATE_REASON_DISCONNECTED);
   } else {
     g_warning ("Unregisterung unsuccessful: %03d %s", status, phrase);
-    origin->state = CALLS_ACCOUNT_UNKNOWN_ERROR;
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_UNKNOWN);
   }
-
-  g_object_notify_by_pspec (G_OBJECT (origin), props[PROP_ACC_STATE]);
 }
 
 
@@ -925,7 +950,7 @@ go_online (CallsAccount *account,
   if (online) {
     g_autofree char *registrar_url = NULL;
 
-    if (self->state == CALLS_ACCOUNT_ONLINE)
+    if (self->state == CALLS_ACCOUNT_STATE_ONLINE)
       return;
 
     registrar_url = get_registrar_url (self);
@@ -937,7 +962,7 @@ go_online (CallsAccount *account,
                   TAG_END ());
 
   } else {
-    if (self->state == CALLS_ACCOUNT_OFFLINE)
+    if (self->state == CALLS_ACCOUNT_STATE_OFFLINE)
       return;
 
     nua_unregister (self->oper->register_handle,
@@ -1002,6 +1027,12 @@ static gboolean
 init_sip_account (CallsSipOrigin *self,
                   GError        **error)
 {
+  g_assert (CALLS_IS_SIP_ORIGIN (self));
+
+  change_state (self,
+                CALLS_ACCOUNT_STATE_INITIALIZING,
+                CALLS_ACCOUNT_STATE_REASON_INITIALIZATION_STARTED);
+
   if (self->use_direct_connection) {
     g_debug ("Direct connection case. Using user and hostname");
     setup_account_for_direct_connection (self);
@@ -1013,8 +1044,10 @@ init_sip_account (CallsSipOrigin *self,
                  "init_sip_account (). "
                  "Try again when account is setup");
 
-    self->state = CALLS_ACCOUNT_NO_CREDENTIALS;
-    goto err;
+    change_state (self,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_NO_CREDENTIALS);
+    return FALSE;
   }
 
   // setup_nua() and setup_sip_handles() only after account data has been set
@@ -1023,8 +1056,10 @@ init_sip_account (CallsSipOrigin *self,
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed setting up nua context");
 
-    self->state = CALLS_ACCOUNT_NULL;
-    goto err;
+    change_state (self,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
+    return FALSE;
   }
 
   self->oper = setup_sip_handles (self);
@@ -1032,26 +1067,21 @@ init_sip_account (CallsSipOrigin *self,
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed setting operation handles");
 
-    self->state = CALLS_ACCOUNT_NULL;
-    goto err;
+    change_state (self,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
+    return FALSE;
   }
 
   /* In the case of a direct connection we're immediately good to go */
-  if (self->use_direct_connection)
-    self->state = CALLS_ACCOUNT_ONLINE;
-  else {
-    self->state = CALLS_ACCOUNT_OFFLINE;
-  }
+  change_state (self,
+                self->use_direct_connection ? CALLS_ACCOUNT_STATE_ONLINE : CALLS_ACCOUNT_STATE_OFFLINE,
+                CALLS_ACCOUNT_STATE_REASON_INITIALIZED);
 
   if (self->auto_connect)
     go_online (CALLS_ACCOUNT (self), TRUE);
 
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return TRUE;
-
- err:
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
-  return FALSE;
 }
 
 
@@ -1060,8 +1090,12 @@ deinit_sip_account (CallsSipOrigin *self)
 {
   g_assert (CALLS_IS_SIP_ORIGIN (self));
 
-  if (self->state == CALLS_ACCOUNT_NULL)
+  if (self->state == CALLS_ACCOUNT_STATE_UNKNOWN)
     return TRUE;
+
+  change_state (self,
+                CALLS_ACCOUNT_STATE_DEINITIALIZING,
+                CALLS_ACCOUNT_STATE_REASON_DEINITIALIZATION_STARTED);
 
   remove_calls (self, NULL);
 
@@ -1078,6 +1112,9 @@ deinit_sip_account (CallsSipOrigin *self)
 
     if (!self->is_shutdown_success) {
       g_warning ("nua_shutdown() timed out. Cannot proceed");
+      change_state (self,
+                    CALLS_ACCOUNT_STATE_ERROR,
+                    CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
       return FALSE;
     }
     g_debug ("nua_shutdown() complete. Destroying nua handle");
@@ -1086,7 +1123,9 @@ deinit_sip_account (CallsSipOrigin *self)
   }
 
   g_clear_pointer (&self->own_ip, g_free);
-  self->state = CALLS_ACCOUNT_NULL;
+  change_state (self,
+                CALLS_ACCOUNT_STATE_UNKNOWN,
+                CALLS_ACCOUNT_STATE_REASON_DEINITIALIZED);
   return TRUE;
 }
 
@@ -1318,7 +1357,7 @@ calls_sip_origin_dispose (GObject *object)
 
   g_clear_pointer (&self->own_ip, g_free);
 
-  if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_ONLINE)
+  if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_STATE_ONLINE)
     go_online (CALLS_ACCOUNT (self), FALSE);
 
   deinit_sip_account (self);

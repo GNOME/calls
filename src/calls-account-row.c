@@ -74,7 +74,7 @@ on_account_state_changed (CallsAccountRow *self)
 {
   CallsAccountState state = calls_account_get_state (self->account);
 
-  gtk_switch_set_active (self->online_switch, state == CALLS_ACCOUNT_ONLINE);
+  gtk_switch_set_active (self->online_switch, state == CALLS_ACCOUNT_STATE_ONLINE);
 }
 
 static void

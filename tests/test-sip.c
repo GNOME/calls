@@ -110,9 +110,9 @@ test_sip_origin_objects (SipFixture   *fixture,
                 "account-state", &state_offline,
                 NULL);
 
-  g_assert_cmpint (state_alice, ==, CALLS_ACCOUNT_ONLINE);
-  g_assert_cmpint (state_bob, ==, CALLS_ACCOUNT_ONLINE);
-  g_assert_cmpint (state_offline, ==, CALLS_ACCOUNT_OFFLINE);
+  g_assert_cmpint (state_alice, ==, CALLS_ACCOUNT_STATE_ONLINE);
+  g_assert_cmpint (state_bob, ==, CALLS_ACCOUNT_STATE_ONLINE);
+  g_assert_cmpint (state_offline, ==, CALLS_ACCOUNT_STATE_OFFLINE);
 }
 
 static void

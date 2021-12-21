@@ -35,6 +35,12 @@
 
 G_DEFINE_INTERFACE (CallsAccount, calls_account, CALLS_TYPE_ORIGIN)
 
+enum {
+  SIGNAL_STATE_CHANGED,
+  SIGNAL_LAST_SIGNAL,
+};
+static guint signals [SIGNAL_LAST_SIGNAL];
+
 
 static void
 calls_account_default_init (CallsAccountInterface *iface)
@@ -44,7 +50,7 @@ calls_account_default_init (CallsAccountInterface *iface)
                        "Account state",
                        "The state of the account",
                        CALLS_TYPE_ACCOUNT_STATE,
-                       CALLS_ACCOUNT_NULL,
+                       CALLS_ACCOUNT_STATE_UNKNOWN,
                        G_PARAM_READABLE |
                        G_PARAM_STATIC_STRINGS |
                        G_PARAM_EXPLICIT_NOTIFY));
@@ -57,6 +63,24 @@ calls_account_default_init (CallsAccountInterface *iface)
                          G_PARAM_READABLE |
                          G_PARAM_STATIC_STRINGS |
                          G_PARAM_EXPLICIT_NOTIFY));
+
+  /**
+   * CallsAccount::account-state-changed:
+   * @self: The #CallsAccount
+   * @new_state: The new #CALLS_ACCOUNT_STATE of the account
+   * @old_state: The old #CALLS_ACCOUNT_STATE of the account
+   * @reason: The #CALLS_ACCOUNT_STATE_REASON for the change
+   */
+  signals[SIGNAL_STATE_CHANGED] =
+    g_signal_new ("account-state-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  3,
+                  CALLS_TYPE_ACCOUNT_STATE,
+                  CALLS_TYPE_ACCOUNT_STATE,
+                  CALLS_TYPE_ACCOUNT_STATE_REASON);
 }
 
 /**
@@ -91,7 +115,7 @@ calls_account_get_state (CallsAccount *self)
 {
   CallsAccountState state;
 
-  g_return_val_if_fail (CALLS_IS_ACCOUNT (self), CALLS_ACCOUNT_NULL);
+  g_return_val_if_fail (CALLS_IS_ACCOUNT (self), CALLS_ACCOUNT_STATE_UNKNOWN);
 
   g_object_get (self, "account-state", &state, NULL);
 
