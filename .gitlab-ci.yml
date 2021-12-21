@@ -9,6 +9,7 @@ stages:
 
 variables:
   L5_DOCKER_IMAGE: debian:bookworm
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20211221
   GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
@@ -23,15 +24,8 @@ build:native:
   except:
     variables:
       - $PKG_ONLY == "1"
-  image: debian:bookworm
+  image: "${DEBIAN_IMAGE}"
   tags: []
-  before_script:
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt-get -y update
-    - apt-get -y install eatmydata
-    - eatmydata apt-get -y install gcovr ca-certificates appstream
-    - '[ "${WANT_BUILD_DEPS}" != "true" ] || eatmydata apt-get -y build-dep .'
-    - ulimit -c unlimited
   script:
     - 'echo "Build opts: ${BUILD_OPTS}"'
     - meson ${BUILD_OPTS} . _build
