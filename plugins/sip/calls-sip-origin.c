@@ -200,9 +200,7 @@ on_call_state_changed (CallsSipOrigin *self,
   g_assert (CALLS_IS_CALL (call));
 
   if (new_state != CALLS_CALL_STATE_DISCONNECTED)
-    {
-      return;
-    }
+    return;
 
   remove_call (self, call, "Disconnected");
 }
@@ -359,12 +357,10 @@ sip_authenticate (CallsSipOrigin *self,
   if (www_auth) {
     scheme = www_auth->au_scheme;
     realm = msg_params_find (www_auth->au_params, "realm=");
-  }
-  else if (proxy_auth) {
+  } else if (proxy_auth) {
     scheme = proxy_auth->au_scheme;
     realm = msg_params_find (proxy_auth->au_params, "realm=");
-  }
-  else {
+  } else {
     g_warning ("No authentication context found");
     return;
   }
@@ -394,19 +390,14 @@ sip_r_invite (int              status,
     /* TODO call states (see i_state) */
     if (status == 401 || status == 407) {
       sip_authenticate (origin, nh, sip);
-    }
-    else if (status == 403) {
+    } else if (status == 403) {
       g_warning ("Response to outgoing INVITE: 403 wrong credentials?");
-    }
-    else if (status == 904) {
+    } else if (status == 904) {
       g_warning ("Response to outgoing INVITE: 904 unmatched challenge."
                  "Possibly the challenge was already answered?");
-    }
-    else if (status == 180) {
-    }
-    else if (status == 100) {
-    }
-    else if (status == 200) {
+    } else if (status == 180) {
+    } else if (status == 100) {
+    } else if (status == 200) {
     }
 }
 
@@ -657,10 +648,9 @@ sip_callback (nua_event_t   event,
     if (op->call_handle) {
       nua_respond (nh, 486, NULL, TAG_END ());
       g_debug ("Cannot handle more than one call. Rejecting");
-    }
-    else
+    } else {
       create_inbound (origin, from, nh);
-
+    }
     break;
 
   case nua_r_invite:
@@ -852,8 +842,6 @@ setup_nua (CallsSipOrigin *self)
     g_free (temp);
   }
 
-
-
   nua = nua_create (self->ctx->root,
                     sip_callback,
                     self,
@@ -875,6 +863,7 @@ setup_nua (CallsSipOrigin *self)
   return nua;
 }
 
+
 static char *
 get_registrar_url (CallsSipOrigin *self)
 {
@@ -885,6 +874,7 @@ get_registrar_url (CallsSipOrigin *self)
   else
     return g_strconcat (self->protocol_prefix, ":", self->host, NULL);
 }
+
 
 static CallsSipHandles *
 setup_sip_handles (CallsSipOrigin *self)
@@ -951,6 +941,7 @@ go_online (CallsAccount *account,
                     TAG_END ());
   }
 }
+
 
 static const char *
 get_address (CallsAccount *account)
