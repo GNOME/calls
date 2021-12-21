@@ -283,8 +283,8 @@ dial (CallsOrigin *origin,
   }
 
   if (calls_account_get_state (CALLS_ACCOUNT (origin)) != CALLS_ACCOUNT_ONLINE) {
-    g_warning ("Tried dialing on origin '%s', but it's not online",
-               name);
+    g_warning ("Tried dialing '%s' on origin '%s', but it's not online",
+               address, name);
     return;
   }
 
