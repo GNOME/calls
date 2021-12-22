@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 10:33+0000\n"
-"PO-Revision-Date: 2021-07-29 00:06+0200\n"
+"POT-Creation-Date: 2021-11-24 15:53+0000\n"
+"PO-Revision-Date: 2021-12-22 15:18+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Furlan (f.t.public@gmail.com)\n"
 "Language: fur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Clamadis"
@@ -44,49 +44,97 @@ msgstr "Clamadis (demoni)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Une tastiere telefoniche e gjestôr di clamadis (modalitât demoni)"
 
-#: src/calls-application.c:522
-#, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Si à cirût di componi l'URI di telefon che no si podeve analizâ `%s'"
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Zonte un Account"
 
-#: src/calls-application.c:604
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Jentre"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Gjestìs account"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Apliche"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Elimine"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Servidôr"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Non mostrât"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Opzionâl"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID utent"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Password"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Puarte"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Traspuart"
+
+#: src/calls-application.c:536
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Provât tel URI `%s' no valit"
+
+#: src/calls-application.c:613
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No sai cemût vierzi `%s'"
 
-#: src/calls-application.c:657
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Il non dal plugin di doprâ pal gjestôr des clamadis"
+#: src/calls-application.c:666
+msgid "The name of the plugin to use as a call provider"
+msgstr "Il non dal plugin di doprâ tant che gjestôr di clamadis"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:667
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:672
 msgid "Whether to present the main window on startup"
 msgstr "Indiche se presentâ il barcon principâl al inviament"
 
-#: src/calls-application.c:669
-msgid "Dial a number"
-msgstr "Fâs un numar"
+#: src/calls-application.c:678
+msgid "Dial a telephone number"
+msgstr "Fâs un numar di telefon"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:679
 msgid "NUMBER"
 msgstr "NUMAR"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:684
+msgid "Enable verbose debug messages"
+msgstr "Abilite messaçs di debug prolìs"
+
+#: src/calls-application.c:690
 msgid "Print current version"
 msgstr "Stampe la version curinte"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Telefonade anonime"
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Daûr a clamâ…"
-
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -95,95 +143,90 @@ msgstr ""
 "%s\n"
 "îr"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Fabio Tomat <f.t.publig@gmail.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Impussibil fâ clamadis: nissun modem disponibil cun capacitâts vocâls"
 
-#: src/calls-main-window.c:325
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Impussibil fâ clamadis: nissun modem o account VoIP disponibil"
 
-#: src/calls-main-window.c:330
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Impussibil clamâ: nissune servizi di backend"
 
-#: src/calls-main-window.c:334
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Impussibil clamâ: nissun plugin"
 
-#: src/calls-main-window.c:374
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Contats"
 
-#: src/calls-main-window.c:384 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Tastiere"
 
-#: src/calls-main-window.c:392
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Resint"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Clamade pierdude"
 
-#: src/calls-notifier.c:63
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Clamade pierdude di <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Clamade pierdude di %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Clamade pierdude di un numar no cognossût"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Torne clame"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Telefonade in jentrade"
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "Accounts VoIP"
 
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Cidine"
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Zonte accounts VoIP"
 
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Difusôr di vôs"
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Achì tu puedis zontâ un account VoIP. Ti permetarà di fâ e ricevi clamadis "
+"VoIP doprant il protocol SIP. Cheste funzionalitât e je ancjemò plui o "
+"mancul gnove e no je complete di dutis lis funzionalitâts (vâl a dî nissun "
+"media cifrât)."
 
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Zonte clamade"
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Zonte Account"
 
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Met in spiete"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Met jù"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Rispuint"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Plate la tastiere telefoniche"
-
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Clame il grup"
+msgid "Call"
+msgstr "Clame"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -194,90 +237,69 @@ msgstr "_Elimine clamade"
 msgid "_Copy number"
 msgstr "_Copie il numar"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
-
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
 msgstr "In spiete"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:69
+msgid "No Contacts Found"
 msgstr "Nissun contat cjatât"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Cheste clamade no je cifrade"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Cheste clamade e je cifrade"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Nissune clamade resinte"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Clamadis resintis"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Gnove clamade…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Menù"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Informazions su Clamadis"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Nissun modem cjatât"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:117
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:126
 msgid "_Cancel"
 msgstr "_Anule"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:143
 msgid "_Close"
 msgstr "_Siere"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:153
 msgid "_Send"
 msgstr "_Invie"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:227
 msgid "_VoIP Accounts"
 msgstr "Accounts _VoIP"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:240
 msgid "_Keyboard shortcuts"
 msgstr "_Scurtis di tastiere"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:246
 msgid "_Help"
 msgstr "_Jutori"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:252
 msgid "_About Calls"
 msgstr "_Informazions su Clamadis"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Inserìs une direzion VoIP"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Inserìs un numar"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Compon"
 
-#: src/ui/new-call-box.ui:122
-msgid "Backspace through number"
-msgstr "Va indaûr tal numar"
+#: src/ui/new-call-box.ui:114
+msgid "Delete character in front of cursor"
+msgstr "Elimine il caratar denant dal cursôr"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "Account SIP"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
@@ -286,6 +308,63 @@ msgstr "Gnove clamade"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Indaûr"
+
+#~ msgid "Calling…"
+#~ msgstr "Daûr a clamâ…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Telefonade in jentrade"
+
+#~ msgid "Mute"
+#~ msgstr "Cidine"
+
+#~ msgid "Speaker"
+#~ msgstr "Difusôr di vôs"
+
+#~ msgid "Add call"
+#~ msgstr "Zonte clamade"
+
+#~ msgid "Hold"
+#~ msgstr "Met in spiete"
+
+#~ msgid "Hang up"
+#~ msgstr "Met jù"
+
+#~ msgid "Answer"
+#~ msgstr "Rispuint"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Plate la tastiere telefoniche"
+
+#~ msgid "Call the party"
+#~ msgstr "Clame il grup"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Cheste clamade no je cifrade"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Cheste clamade e je cifrade"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Clamadis resintis"
+
+#~ msgid "New call…"
+#~ msgstr "Gnove clamade…"
+
+#~ msgid "Menu"
+#~ msgstr "Menù"
+
+#~ msgid "About Calls"
+#~ msgstr "Informazions su Clamadis"
+
+#~ msgid "No modem found"
+#~ msgstr "Nissun modem cjatât"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Va indaûr tal numar"
 
 #~ msgid "Can't place calls: No SIM card"
 #~ msgstr "Impussibil clamâ: nissune schede SIM"
