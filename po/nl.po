@@ -1,15 +1,15 @@
 # Dutch translation for calls.
 # Copyright (C) 2021 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# jjdekroon <jajadekroon@gmail.com>, 2021.
+# Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021.
 # Nathan Follens <nfollens@gnome.org>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-08-19 00:17+0000\n"
-"PO-Revision-Date: 2021-09-14 19:15+0200\n"
+"POT-Creation-Date: 2021-12-22 14:18+0000\n"
+"PO-Revision-Date: 2021-12-26 09:01+0100\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:374
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Oproepen"
 
@@ -47,54 +47,97 @@ msgstr "Oproepen (daemon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Een telefoonkiezer en oproepafhandelaar (daemonmodus)"
 
-#: src/calls-application.c:544
-#, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Geprobeerd om niet-parseerbare tel-URI `% s' te kiezen"
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Account toevoegen"
 
-#: src/calls-application.c:626
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "Aanme_lden"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Account beheren"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Toevoegen"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "Verwij_deren"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Weergavenaam"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Optioneel"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Gebruikers-ID"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Poort"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Transportprotocol"
+
+#: src/calls-application.c:546
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Ongeldige tel-URI `%s' geprobeerd"
+
+#: src/calls-application.c:623
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Kan `%s' niet openen"
 
-#: src/calls-application.c:680
-msgid "The name of the plugin to use for the call Provider"
-msgstr ""
-"De naam van de plug-in die moet worden gebruikt voor de oproepleverancier"
+#: src/calls-application.c:676
+msgid "The name of the plugin to use as a call provider"
+msgstr "De naam van de plug-in die als oproepprovider moet worden gebruikt"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:677
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:686
+#: src/calls-application.c:682
 msgid "Whether to present the main window on startup"
 msgstr "Of het hoofdvenster bij het opstarten moet worden weergegeven"
 
-#: src/calls-application.c:692
-msgid "Dial a number"
-msgstr "Een nummer kiezen"
+#: src/calls-application.c:688
+msgid "Dial a telephone number"
+msgstr "Bel een telefoonnummer"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:689
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:694
 msgid "Enable verbose debug messages"
 msgstr "Uitgebreide foutopsporingsberichten inschakelen"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:700
 msgid "Print current version"
 msgstr "Huidige versie weergeven"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Anonieme beller"
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Bellen…"
-
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -103,38 +146,39 @@ msgstr ""
 "%s\n"
 "gisteren"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
-"jjdekroon <jajadekroon@gmail.com>\n"
+"Jan Jasper de Kroon <jajadekroon@gmail.com>\n"
 "Nathan Follens <nfollens@gnome.org>\n"
 "\n"
 "Meer info over Gnome-NL https://nl.gnome.org"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Kan geen oproepen plaatsen: geen modem met stemfuncties beschikbaar"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan geen oproepen plaatsen: geen modem of VoIP-account beschikbaar"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Kan geen oproepen plaatsen: geen back-enddienst"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Kan geen oproepen plaatsen: geen plug-in"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Contacten"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Toetsenblok"
 
+#. Recent as in "Recent calls" (the call history)
 #: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recent"
@@ -143,170 +187,188 @@ msgstr "Recent"
 msgid "Missed call"
 msgstr "Gemiste oproep"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Gemiste oproep van <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a id here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Gemiste oproep van %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Gemiste oproep van onbekende beller"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Terugbellen"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Inkomende oproep"
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP-accounts"
 
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Dempen"
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "VoIP-accounts toevoegen"
 
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Luidspreker"
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Hier kunt u een VoIP-account toevoegen. Hiermee kunt u VoIP-gesprekken "
+"plaatsen en ontvangen via het SIP-protocol. Deze functie is nog relatief "
+"nieuw en nog niet afgewerkt (o.a. versleutelde media worden nog niet "
+"ondersteund)."
 
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Oproep toevoegen"
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Account toevoegen"
 
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "In de wacht"
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
+msgid "Call"
+msgstr "Oproep"
 
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Ophangen"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Beantwoorden"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Verberg het toetsenblok"
-
-#: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Bel de deelnemers"
-
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "Oproep verwij_deren"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "Nummer _kopiëren"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+311234567890"
-
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "In de wacht"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
 msgstr "Geen contacten gevonden"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Deze oproep is niet versleuteld"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Deze oproep is versleuteld"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Geen recente oproepen"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Recente oproepen"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Nieuwe oproep…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Menu"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Over Oproepen"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Geen modem gevonden"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "Sl_uiten"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "Ver_zenden"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "_VoIP-accounts"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "_Sneltoetsen"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Hulp"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Over Oproepen"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Voer een VoIP-adres in"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Voer een nummer in"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Kiezen"
 
-#: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Verwijder een cijfer uit het nummer"
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "Teken vóór de cursor verwijderen"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "SIP-account"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Nieuwe oproep"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Terug"
+
+#~ msgid "Calling…"
+#~ msgstr "Bellen…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Inkomende oproep"
+
+#~ msgid "Mute"
+#~ msgstr "Dempen"
+
+#~ msgid "Speaker"
+#~ msgstr "Luidspreker"
+
+#~ msgid "Add call"
+#~ msgstr "Oproep toevoegen"
+
+#~ msgid "Hold"
+#~ msgstr "In de wacht"
+
+#~ msgid "Hang up"
+#~ msgstr "Ophangen"
+
+#~ msgid "Answer"
+#~ msgstr "Beantwoorden"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Verberg het toetsenblok"
+
+#~ msgid "Call the party"
+#~ msgstr "Bel de deelnemers"
+
+#~ msgid "+441234567890"
+#~ msgstr "+311234567890"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Deze oproep is niet versleuteld"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Deze oproep is versleuteld"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Recente oproepen"
+
+#~ msgid "New call…"
+#~ msgstr "Nieuwe oproep…"
+
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgid "About Calls"
+#~ msgstr "Over Oproepen"
+
+#~ msgid "No modem found"
+#~ msgstr "Geen modem gevonden"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Verwijder een cijfer uit het nummer"
