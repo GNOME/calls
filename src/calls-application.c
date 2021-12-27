@@ -28,17 +28,18 @@
 #define G_LOG_DOMAIN "CallsApplication"
 
 #include "config.h"
+
+#include "calls-application.h"
+#include "calls-call-window.h"
 #include "calls-dbus-manager.h"
 #include "calls-history-box.h"
-#include "calls-new-call-box.h"
-#include "calls-ringer.h"
-#include "calls-notifier.h"
-#include "calls-record-store.h"
-#include "calls-call-window.h"
+#include "calls-log.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
-#include "calls-application.h"
-#include "calls-log.h"
+#include "calls-new-call-box.h"
+#include "calls-notifier.h"
+#include "calls-record-store.h"
+#include "calls-ringer.h"
 #include "version.h"
 
 #include <call-ui.h>
