@@ -85,6 +85,7 @@ enum {
 };
 static guint signals [SIGNAL_LAST_SIGNAL];
 
+
 static void
 set_state (CallsManager *self, CallsManagerState state)
 {
@@ -95,6 +96,7 @@ set_state (CallsManager *self, CallsManagerState state)
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 }
+
 
 static void
 update_state (CallsManager *self)
@@ -130,6 +132,7 @@ update_state (CallsManager *self)
     set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
 }
 
+
 static gboolean
 check_supported_protocol (CallsManager *self,
                           const char   *protocol)
@@ -146,6 +149,7 @@ check_supported_protocol (CallsManager *self,
 
   return FALSE;
 }
+
 
 /* This function will update self->supported_protocols from available provider plugins */
 static void
@@ -191,6 +195,7 @@ update_protocols (CallsManager *self)
   update_state (self);
 }
 
+
 static void
 add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 {
@@ -200,6 +205,7 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 
   g_signal_emit (self, signals[SIGNAL_CALL_ADD], 0, call, origin);
 }
+
 
 static void
 remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *origin)
@@ -212,6 +218,7 @@ remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *or
   g_signal_emit (self, signals[SIGNAL_CALL_REMOVE], 0, call, origin);
 }
 
+
 static void
 ussd_added_cb (CallsManager *self,
                char         *response,
@@ -222,6 +229,7 @@ ussd_added_cb (CallsManager *self,
 
   g_signal_emit (self, signals[USSD_ADDED], 0, ussd, response);
 }
+
 
 static void
 ussd_cancelled_cb (CallsManager *self,
@@ -234,6 +242,7 @@ ussd_cancelled_cb (CallsManager *self,
   g_signal_emit (self, signals[USSD_CANCELLED], 0, ussd);
 }
 
+
 static void
 ussd_state_changed_cb (CallsManager *self,
                        CallsUssd    *ussd)
@@ -243,6 +252,7 @@ ussd_state_changed_cb (CallsManager *self,
 
   g_signal_emit (self, signals[USSD_STATE_CHANGED], 0, ussd);
 }
+
 
 static void
 update_country_code_cb (CallsOrigin  *origin,
@@ -260,6 +270,7 @@ update_country_code_cb (CallsOrigin  *origin,
 
   calls_settings_set_country_code (self->settings, country_code);
 }
+
 
 static void
 add_origin (CallsManager *self, CallsOrigin *origin)
@@ -291,11 +302,13 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   calls_origin_foreach_call (origin, (CallsOriginForeachCallFunc) add_call, self);
 }
 
+
 static void
 remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
 {
   remove_call (self, call, NULL, origin);
 }
+
 
 static void
 remove_origin (CallsManager *self, CallsOrigin *origin)
@@ -360,6 +373,7 @@ rebuild_origins_by_protocols (CallsManager *self)
   }
 }
 
+
 static void
 remove_provider (CallsManager *self,
                  const char   *name)
@@ -404,6 +418,7 @@ remove_provider (CallsManager *self,
   g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
 
+
 static gboolean
 origin_found_in_any_provider (CallsManager *self,
                               CallsOrigin  *origin)
@@ -428,7 +443,6 @@ origin_found_in_any_provider (CallsManager *self,
 
   return FALSE;
 }
-
 
 
 static void
@@ -486,6 +500,7 @@ origin_items_changed_cb (GListModel   *model,
   update_state (self);
 }
 
+
 static void
 add_provider (CallsManager *self, const gchar *name)
 {
@@ -520,6 +535,7 @@ add_provider (CallsManager *self, const gchar *name)
 
   g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
+
 
 static void
 calls_manager_get_property (GObject    *object,
@@ -696,6 +712,7 @@ calls_manager_new (void)
   return g_object_new (CALLS_TYPE_MANAGER, NULL);
 }
 
+
 CallsManager *
 calls_manager_get_default (void)
 {
@@ -708,6 +725,7 @@ calls_manager_get_default (void)
   return instance;
 }
 
+
 CallsContactsProvider *
 calls_manager_get_contacts_provider (CallsManager *self)
 {
@@ -715,6 +733,7 @@ calls_manager_get_contacts_provider (CallsManager *self)
 
   return self->contacts_provider;
 }
+
 
 void
 calls_manager_add_provider (CallsManager *self,
@@ -725,6 +744,7 @@ calls_manager_add_provider (CallsManager *self,
 
   add_provider (self, name);
 }
+
 
 void
 calls_manager_remove_provider (CallsManager *self,
@@ -737,6 +757,7 @@ calls_manager_remove_provider (CallsManager *self,
   update_protocols (self);
 }
 
+
 gboolean
 calls_manager_has_provider (CallsManager *self,
                             const char   *name)
@@ -746,6 +767,7 @@ calls_manager_has_provider (CallsManager *self,
 
   return !!g_hash_table_lookup (self->providers, name);
 }
+
 
 gboolean
 calls_manager_is_modem_provider (CallsManager *self,
@@ -771,6 +793,7 @@ calls_manager_get_state (CallsManager *self)
   return self->state;
 }
 
+
 GListModel *
 calls_manager_get_origins (CallsManager *self)
 {
@@ -778,6 +801,7 @@ calls_manager_get_origins (CallsManager *self)
 
   return G_LIST_MODEL (self->origins);
 }
+
 
 GList *
 calls_manager_get_calls (CallsManager *self)
