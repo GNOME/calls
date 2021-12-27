@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_MESSAGE_SOURCE_H__
-#define CALLS_MESSAGE_SOURCE_H__
+#pragma once
 
 #include "util.h"
 
@@ -74,5 +73,3 @@ struct _CallsMessageSourceInterface
 
 
 G_END_DECLS
-
-#endif /* CALLS_MESSAGE_SOURCE_H__ */
