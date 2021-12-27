@@ -28,7 +28,6 @@
 #include "config.h"
 
 #include "calls-application.h"
-#include "calls-account-provider.h"
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
 #include "calls-provider.h"
