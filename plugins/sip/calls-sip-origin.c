@@ -151,6 +151,7 @@ change_state (CallsSipOrigin          *self,
   self->state = new_state;
 
   g_signal_emit_by_name (self, "account-state-changed", old_state, new_state, reason);
+  calls_account_emit_message_for_state_change (CALLS_ACCOUNT (self), new_state, reason);
 }
 
 
