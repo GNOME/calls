@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_MESSAGE_SOURCE (calls_message_source_get_type ())
 
-G_DECLARE_INTERFACE (CallsMessageSource, calls_message_source, CALLS, MESSAGE_SOURCE, GObject);
+G_DECLARE_INTERFACE (CallsMessageSource, calls_message_source, CALLS, MESSAGE_SOURCE, GObject)
 
 struct _CallsMessageSourceInterface
 {
