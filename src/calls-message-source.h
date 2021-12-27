@@ -69,5 +69,8 @@ struct _CallsMessageSourceInterface
 #define CALLS_ERROR(obj,error)                                  \
   CALLS_EMIT_MESSAGE (obj, error->message, GTK_MESSAGE_ERROR)
 
+void                   calls_message_source_emit_message (CallsMessageSource *self,
+                                                          const char         *message,
+                                                          GtkMessageType      message_type);
 
 G_END_DECLS

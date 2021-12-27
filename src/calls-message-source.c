@@ -56,7 +56,8 @@ calls_message_source_default_init (CallsMessageSourceInterface *iface)
    *
    * This signal is emitted when an implementing-object needs to emit
    * a message to the user.  The message should be suitable for
-   * presentation to the user as-is.
+   * presentation to the user as-is. This means it should be translated
+   * to the users locale.
    */
   signals[SIGNAL_MESSAGE] =
     g_signal_newv ("message",
@@ -65,4 +66,24 @@ calls_message_source_default_init (CallsMessageSourceInterface *iface)
 		   NULL, NULL, NULL, NULL,
 		   G_TYPE_NONE,
 		   2, arg_types);
+}
+
+/**
+ * calls_message_source_emit_message:
+ * @self: A #CallsMessageSource
+ * @message: The message to emit
+ * @message_type: The type of the message: Error, warning, etc
+ *
+ * Emits a message which should be shown to the user in the user interface.
+ * Messages should be translated into the users locale
+ */
+void
+calls_message_source_emit_message (CallsMessageSource *self,
+                                   const char         *message,
+                                   GtkMessageType      message_type)
+{
+  g_return_if_fail (CALLS_IS_MESSAGE_SOURCE (self));
+  g_return_if_fail (message || *message);
+
+  g_signal_emit (self, signals[SIGNAL_MESSAGE], 0, message, message_type);
 }
