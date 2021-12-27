@@ -36,6 +36,16 @@
       <doc:summary>Silence the ringing</doc:summary>
     </doc:doc>
     <property name="Inbound" type="b" access="read"/>
+    <!--
+        State:
+
+        State of the call.
+        Valid states: 0 = Unknown, 1 = Active, 2 = Held,
+        3 = Dialing, 4 = Alerting (deprecated),
+        5 = Incoming, 6 = Waiting (deprecated), 7 = Disconnected
+
+        Unrecognized values should be considered equal to Unknown.
+    -->
     <property name="State" type="u" access="read"/>
     <property name="Id" type="s" access="read">
       <doc:doc>
