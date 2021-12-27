@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-11-24 15:53+0000\n"
-"PO-Revision-Date: 2021-11-25 00:04+0200\n"
+"POT-Creation-Date: 2021-12-26 21:06+0000\n"
+"PO-Revision-Date: 2021-12-27 16:05+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Дзвінки"
 
@@ -93,49 +93,54 @@ msgstr "Порт"
 msgid "Transport"
 msgstr "Спосіб передавання"
 
-#: src/calls-application.c:536
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr ""
+"Використовувати для дзвінків"
+
+#: src/calls-application.c:546
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "Спроба використання некоректної адреси телефону «%s»"
 
-#: src/calls-application.c:613
+#: src/calls-application.c:623
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:666
+#: src/calls-application.c:676
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назва додатка, який слід використовувати як надавача послуг дзвінка"
 
-#: src/calls-application.c:667
+#: src/calls-application.c:677
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:672
+#: src/calls-application.c:682
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:678
+#: src/calls-application.c:688
 msgid "Dial a telephone number"
 msgstr "Набрати телефонний номер"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:689
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:684
+#: src/calls-application.c:694
 msgid "Enable verbose debug messages"
 msgstr "Увімкнути докладні діагностичні повідомлення"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:700
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
-#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
-#: src/calls-call-record-row.c:115
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -189,7 +194,7 @@ msgstr "Пропущено виклик"
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущено виклик від <b>%s</b>"
 
-#. %s is a number here
+#. %s is a id here
 #: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
@@ -227,25 +232,24 @@ msgid "_Add Account"
 msgstr "_Додати обліковий запис"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "Виклик"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "В_илучити дзвінок"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Копіювати номер"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Очікування"
 
-#: src/ui/contacts-box.ui:69
-#| msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
 msgstr "Не знайдено жодного контакту"
 
@@ -253,63 +257,63 @@ msgstr "Не знайдено жодного контакту"
 msgid "No Recent Calls"
 msgstr "Немає нещодавніх дзвінків"
 
-#: src/ui/main-window.ui:117
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:126
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "З_акрити"
 
-#: src/ui/main-window.ui:153
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Надіслати"
 
-#: src/ui/main-window.ui:227
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "_Облікові записи VoIP"
 
-#: src/ui/main-window.ui:240
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "_Клавіатурні скорочення"
 
-#: src/ui/main-window.ui:246
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Довідка"
 
-#: src/ui/main-window.ui:252
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Про «Дзвінки»"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Введіть адресу VoIP"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Введіть номер"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Набір номера"
 
-#: src/ui/new-call-box.ui:114
+#: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
 msgstr "Вилучити символ перед курсором"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "Обліковий запис SIP"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Новий дзвінок"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Назад"
 
