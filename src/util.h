@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS__UTIL_H__
-#define CALLS__UTIL_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -147,4 +146,3 @@ const char *get_call_icon_symbolic_name (gboolean inbound,
 
 G_END_DECLS
 
-#endif /* CALLS__UTIL_H__ */
