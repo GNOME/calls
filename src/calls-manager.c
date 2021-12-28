@@ -27,6 +27,7 @@
 
 #include "config.h"
 
+#include "calls-account.h"
 #include "calls-application.h"
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
@@ -199,6 +200,36 @@ update_protocols (CallsManager *self)
   update_state (self);
 }
 
+/* propagate any message from origins, providers, calls, etc */
+static void
+on_message (CallsMessageSource *source,
+            const char         *message,
+            GtkMessageType      message_type,
+            CallsManager       *self)
+{
+  g_autofree char *notification = NULL;
+
+  g_assert (CALLS_IS_MESSAGE_SOURCE (source));
+  g_assert (CALLS_IS_MANAGER (self));
+
+  /* Prefix the message with the name of the source, if known */
+  if (CALLS_IS_ACCOUNT (source)) {
+    notification = g_strdup_printf ("%s: %s",
+                                    calls_account_get_address (CALLS_ACCOUNT (source)),
+                                    message);
+  }
+
+  if (notification) {
+    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
+                                       notification,
+                                       message_type);
+  } else {
+    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
+                                       message,
+                                       message_type);
+  }
+}
+
 
 static void
 add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
@@ -287,6 +318,11 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   g_debug ("Adding origin %s (%p)", name, origin);
 
   g_list_store_append (self->origins, origin);
+
+  g_signal_connect (origin,
+                    "message",
+                    G_CALLBACK (on_message),
+                    self);
 
   g_signal_connect_object (origin,
                            "notify::country-code",
