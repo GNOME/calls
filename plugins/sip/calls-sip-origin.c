@@ -226,7 +226,7 @@ add_call (CallsSipOrigin *self,
 
     if (g_strv_length (address_split) >=2 &&
         g_strcmp0 (address_split[2], self->host) == 0)
-      call_address = address_split[2];
+      call_address = address_split[1];
   }
 
   sip_call = calls_sip_call_new (call_address, inbound, handle);
