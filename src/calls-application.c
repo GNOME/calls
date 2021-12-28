@@ -36,6 +36,7 @@
 #include "calls-log.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
+#include "calls-message-source.h"
 #include "calls-new-call-box.h"
 #include "calls-notifier.h"
 #include "calls-record-store.h"
@@ -542,13 +543,13 @@ open_tel_uri (CallsApplication *self,
   g_debug ("Opening tel URI `%s'", uri);
 
   number = &uri[4]; // tel:NUMBER
-  if (!number || number[0] == '\0') {
+  if (!number || !*number) {
     g_autofree char *msg =
-      g_strdup_printf (_("Tried invalid tel URI `%s'"), uri);
+      g_strdup_printf (_("Tried dialing invalid tel URI `%s'"), uri);
 
-    g_signal_emit_by_name (calls_manager_get_default (),
-                           "error",
-                           msg);
+    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (calls_manager_get_default ()),
+                                       "msg",
+                                       GTK_MESSAGE_WARNING);
     g_warning ("Ignoring invalid tel URI `%s'", uri);
     return;
   }
@@ -623,8 +624,9 @@ app_open (GApplication  *application,
 
     msg = g_strdup_printf (_("Don't know how to open `%s'"), uri);
 
-    g_signal_emit_by_name (calls_manager_get_default (),
-                           "error", msg);
+    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (calls_manager_get_default ()),
+                                       msg,
+                                       GTK_MESSAGE_WARNING);
   }
 }
 

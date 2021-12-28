@@ -73,9 +73,6 @@ static GParamSpec *props[PROP_LAST_PROP];
 enum {
   SIGNAL_CALL_ADD,
   SIGNAL_CALL_REMOVE,
-  /* TODO: currently this event isn't emitted since the plugins don't give use
-   * a usable error or error message. */
-  SIGNAL_ERROR,
   USSD_ADDED,
   USSD_CANCELLED,
   USSD_STATE_CHANGED,
@@ -602,16 +599,6 @@ calls_manager_class_init (CallsManagerClass *klass)
                  2,
                  CALLS_TYPE_CALL,
                  CALLS_TYPE_ORIGIN);
-
-  signals[SIGNAL_ERROR] =
-   g_signal_new ("error",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_FIRST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 1,
-                 G_TYPE_STRING);
 
   signals[USSD_ADDED] =
     g_signal_new ("ussd-added",

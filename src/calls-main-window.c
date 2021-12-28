@@ -355,7 +355,7 @@ constructed (GObject *object)
 
   // Show errors in in-app-notification
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "error",
+                            "message",
                             G_CALLBACK (calls_in_app_notification_show),
                             self->in_app_notification);
 
