@@ -361,7 +361,6 @@ calls_sip_call_new (const gchar  *id,
                        "nua-handle", handle,
                        "id", id,
                        "inbound", inbound,
-                       "state", inbound ? CALLS_CALL_STATE_INCOMING : CALLS_CALL_STATE_DIALING,
                        NULL);
 }
 
