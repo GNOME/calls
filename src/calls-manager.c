@@ -30,6 +30,7 @@
 #include "calls-application.h"
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
+#include "calls-message-source.h"
 #include "calls-provider.h"
 #include "calls-settings.h"
 #include "calls-ussd.h"
@@ -60,7 +61,14 @@ struct _CallsManager
   CallsSettings *settings;
 };
 
-G_DEFINE_TYPE (CallsManager, calls_manager, G_TYPE_OBJECT);
+static void
+calls_manager_message_source_interface_init (CallsMessageSourceInterface *iface)
+{
+}
+
+G_DEFINE_TYPE_WITH_CODE (CallsManager, calls_manager, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                                                calls_manager_message_source_interface_init))
 
 enum {
   PROP_0,
