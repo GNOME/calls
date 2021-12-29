@@ -25,7 +25,7 @@ endif
 gnome.gtkdoc('calls',
            main_xml: 'calls-docs.xml',
             src_dir: [
-                       join_paths(meson.source_root(), 'src'),
+                       join_paths(meson.project_source_root(), 'src'),
                        join_paths(meson.project_build_root(), 'src'),
                        join_paths(meson.project_build_root(), 'src/dbus'),
                        join_paths(meson.project_build_root(), 'plugins/ofono/libgdbofono'),
