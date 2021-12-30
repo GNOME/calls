@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-20 01:57+0000\n"
-"PO-Revision-Date: 2021-09-23 09:19+0300\n"
+"POT-Creation-Date: 2021-12-26 21:06+0000\n"
+"PO-Revision-Date: 2021-12-30 19:05+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Puhelut"
 
@@ -45,56 +45,104 @@ msgstr "Puhelut (taustapalvelu)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Puhelinsovellus (taustapalvelutila)"
 
-#: src/calls-application.c:539
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Lisää tili"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Kirjaudu sisään"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Hallitse tiliä"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Toteuta"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Poista"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Palvelin"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Valinnainen"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Käyttäjätunniste"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Salasana"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Portti"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Liikenne"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Käytä puheluihin"
+
+#: src/calls-application.c:546
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "Yritettiin virheellistä tel-URI:a `%s'"
 
-#: src/calls-application.c:616
+#: src/calls-application.c:623
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ei tietoa miten avata`%s'"
 
 # Provider - muuttuja, ohjelma vai taho?
-#: src/calls-application.c:670
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Liitännäisen nimi käytettäväksi puhelun luojalle"
+#: src/calls-application.c:676
+msgid "The name of the plugin to use as a call provider"
+msgstr "Liitännäisen nimi käytettäväksi puhelun tarjoajalle"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:677
 msgid "PLUGIN"
 msgstr "LIITÄNNÄINEN"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:682
 msgid "Whether to present the main window on startup"
 msgstr "Näytetäänkö pääikkunaa käynnistyksen yhteydessä"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:688
 msgid "Dial a telephone number"
 msgstr "Soita puhelinnumeroon"
 
-#: src/calls-application.c:683
+#: src/calls-application.c:689
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:694
 msgid "Enable verbose debug messages"
 msgstr "Käytä runsaita vianjäljitysviestejä"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:700
 msgid "Print current version"
 msgstr "Tulosta nykyinen versio"
 
 # Onko numero tuntematon vai soittaja anonymisoitu muuten?
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Tuntematon numero"
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Soittaa…"
-
 # Vai eilinen
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -103,37 +151,39 @@ msgstr ""
 "%s\n"
 "eilen"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Jiri Grönroos\n"
 "JRfi <starman@starman.fi>, 2020\n"
 "Timo Jyrinki <timo.jyrinki@iki.fi>, 2021"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Ei voi soittaa: ei puhetoiminnoilla varustettua modeemia"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "Ei voi soittaa: ei puhetoiminnoilla varustettua modeemia tai VoIP-tiliä"
+msgstr ""
+"Ei voi soittaa: ei puhetoiminnoilla varustettua modeemia tai VoIP-tiliä"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Ei voi soittaa: ei taustapalvelua"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Ei voi soittaa: ei liitännäistä"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Yhteystiedot"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Näppäimistö"
 
+#. Recent as in "Recent calls" (the call history)
 #: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Viimeisimmät"
@@ -142,176 +192,187 @@ msgstr "Viimeisimmät"
 msgid "Missed call"
 msgstr "Vastaamaton puhelu"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Vastamaaton puhelu henkilöltä <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a id here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Vastamaaton puhelu henkilöltä %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Vastamaaton puhelu tuntemattomalta soittajalta"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Soita takaisin"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Saapuva puhelu"
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP-tilit"
 
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Mykistys"
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Lisää _VoIP-tilejä"
 
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Kaiutin"
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Voit lisätä VoIP-tilin tätä kautta. Sen avulla voit soittaa ja "
+"vastaanottaa VoIP-puheluja SIP-protokollaa käyttäen. Tämä ominaisuus on "
+"vielä melko uusi, eikä kaikkia ominaisuuksia ole vielä toteutettu (esim. "
+"salattu media)."
 
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Lisää puhelu"
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Lisää tili"
 
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Pito"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Lopeta puhelu"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Vastaa"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Piilota näppäimistö"
-
-#: src/ui/call-record-row.ui:68
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "Puhelu"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "_Poista puhelu"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Kopioi numero"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+358123456789"
-
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Pidossa"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
 msgstr "Yhteystietoja ei löytynyt"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Tämä puhelu ei ole salattu"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Tämä puhelu on salattu"
-
 # Viimeaikaiset jätetty pois - selviää asiayhteydestä
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Ei puheluita"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Viimeisimmät puhelut"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Uusi puhelu…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Valikko"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Tietoja puhelusovelluksesta (Calls)"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Modeemia ei löydetty"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "_Sulje"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Lähetä"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "_VoIP-tilit"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "_Pikanäppäimet"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Ohje"
 
-#: src/ui/main-window.ui:253
-#| msgid "About Calls"
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Tietoja - Puhelut"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Kirjoita VoIP-osoite"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Näppäile numero"
 
 # Valitse vai näppäile?
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Valitse numero"
 
-#: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr ""
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "Poista merkki kursorin edestä"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "SIP-tili"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Uusi puhelu"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Takaisin"
+
+#~ msgid "Calling…"
+#~ msgstr "Soittaa…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Saapuva puhelu"
+
+#~ msgid "Mute"
+#~ msgstr "Mykistys"
+
+#~ msgid "Speaker"
+#~ msgstr "Kaiutin"
+
+#~ msgid "Add call"
+#~ msgstr "Lisää puhelu"
+
+#~ msgid "Hold"
+#~ msgstr "Pito"
+
+#~ msgid "Hang up"
+#~ msgstr "Lopeta puhelu"
+
+#~ msgid "Answer"
+#~ msgstr "Vastaa"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Piilota näppäimistö"
+
+#~ msgid "+441234567890"
+#~ msgstr "+358123456789"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Tämä puhelu ei ole salattu"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Tämä puhelu on salattu"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Viimeisimmät puhelut"
+
+#~ msgid "New call…"
+#~ msgstr "Uusi puhelu…"
+
+#~ msgid "Menu"
+#~ msgstr "Valikko"
+
+#~ msgid "About Calls"
+#~ msgstr "Tietoja puhelusovelluksesta (Calls)"
+
+#~ msgid "No modem found"
+#~ msgstr "Modeemia ei löydetty"
 
 # Tarkoittanee ryhmää?
 #~ msgid "Call the party"
