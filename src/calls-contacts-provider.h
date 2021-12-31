@@ -27,13 +27,12 @@
 
 #pragma once
 
+#include "calls-best-match.h"
 #include "calls-settings.h"
 
-#include <glib-object.h>
 #include <folks/folks.h>
+#include <glib-object.h>
 #include <libebook-contacts/libebook-contacts.h>
-
-#include "calls-best-match.h"
 
 G_BEGIN_DECLS
 

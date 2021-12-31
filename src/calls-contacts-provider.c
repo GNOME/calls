@@ -28,12 +28,12 @@
 # include "config.h"
 #endif
 
+#include "calls-contacts-provider.h"
+#include "calls-best-match.h"
+
 #include <gee-0.8/gee.h>
 #include <folks/folks.h>
 #include <libebook-contacts/libebook-contacts.h>
-
-#include "calls-contacts-provider.h"
-#include "calls-best-match.h"
 
 
 typedef struct
