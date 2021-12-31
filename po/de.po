@@ -11,21 +11,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-07-20 11:56+0000\n"
-"PO-Revision-Date: 2021-07-21 00:00+0200\n"
-"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"POT-Creation-Date: 2021-10-28 12:34+0000\n"
+"PO-Revision-Date: 2021-11-19 21:43+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: German <gnome-de@SPAMFREEgnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:401
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
 #: src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
-msgstr "Telefon"
+msgstr "Anrufe"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
@@ -42,48 +42,51 @@ msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Telefon;Handy;Anruf;Wählen;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
-msgstr ""
+msgstr "Anrufe (daemon)"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
-msgstr ""
+msgstr "Ein Telefonanwendung (daemon-Modus)"
 
-#: src/calls-application.c:522
+#: src/calls-application.c:528
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr ""
+msgid "Tried invalid tel URI `%s'"
+msgstr "Versuch mit der ungültigen Telefon-Adresse »%s«"
 
-#: src/calls-application.c:604
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr ""
-
-#: src/calls-application.c:657
-msgid "The name of the plugin to use for the call Provider"
-msgstr ""
-"Der Name des Plugins, das für den Telefonanbieter verwendet werden soll"
+msgstr "Es ist unbekannt wie »%s« geöffnet werden kann"
 
 #: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "Der Name des Plugins, das als Telefonanbieter verwendet werden soll"
+
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:663
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Legt fest, ob beim Start das Hauptfenster angezeigt werden soll"
 
-#: src/calls-application.c:669
-msgid "Dial a number"
-msgstr "Eine Nummer wählen"
-
 #: src/calls-application.c:670
+msgid "Dial a telephone number"
+msgstr "Eine Telefonnummer anrufen"
+
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:675
+#: src/calls-application.c:676
+msgid "Enable verbose debug messages"
+msgstr "Ausführliche Fehlerdiagnosemeldungen aktivieren"
+
+#: src/calls-application.c:682
 msgid "Print current version"
 msgstr "Aktuelle Versionsnummer ausgeben"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonymer Anrufer"
 
@@ -91,7 +94,7 @@ msgstr "Anonymer Anrufer"
 msgid "Calling…"
 msgstr "Anrufen …"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -132,29 +135,32 @@ msgstr "Kontakte"
 msgid "Dial Pad"
 msgstr "Ziffernblock"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Letzte"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Verpasster Anruf"
 
-#: src/calls-notifier.c:63
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Verpasster Anruf von <b>%s</b>"
 
-#: src/calls-notifier.c:65
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Verpasster Anruf von %s"
 
-#: src/calls-notifier.c:67
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Verpasster Anruf von unbekanntem Anrufer"
 
-#: src/calls-notifier.c:73
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Zurückrufen"
 
@@ -190,9 +196,10 @@ msgstr "Annehmen"
 msgid "Hide the dial pad"
 msgstr "Den Ziffernblock verbergen"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Telefonkonferenz anrufen"
+msgid "Call"
+msgstr "Anruf"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -202,10 +209,6 @@ msgstr "Anruf _löschen"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "Nummer _kopieren"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -280,13 +283,25 @@ msgstr "_Hilfe"
 msgid "_About Calls"
 msgstr "_Info zu Telefon"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "Geben Sie eine VoIP-Adresse ein"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Geben Sie eine Rufnummer ein"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Wählen"
 
-#: src/ui/new-call-box.ui:122
-msgid "Backspace through number"
-msgstr "Rücktaste"
+#: src/ui/new-call-box.ui:114
+msgid "Delete character in front of cursor"
+msgstr "Ein Zeichen vor der Eingabemarke löschen"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "SIP-Konto"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
@@ -295,6 +310,15 @@ msgstr "Neuer Anruf"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Zurück"
+
+#~ msgid "Call the party"
+#~ msgstr "Telefonkonferenz anrufen"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Rücktaste"
 
 #~ msgid "Can't place calls: No SIM card"
 #~ msgstr "Anrufe nicht möglich: Keine SIM Karte"
@@ -323,20 +347,14 @@ msgstr "Zurück"
 #~ msgid "The number the call is connected to if known"
 #~ msgstr "Die Zielrufnummer des Gesprächs, falls bekannt"
 
-#~ msgid ""
-#~ "The name of the party the call is connected to, if the network provides it"
-#~ msgstr ""
-#~ "Der Name des Teilnehmers, mit dem der Anruf verbunden ist, sofern vom "
-#~ "Telefonanbieter geliefert"
+#~ msgid "The name of the party the call is connected to, if the network provides it"
+#~ msgstr "Der Name des Teilnehmers, mit dem der Anruf verbunden ist, sofern vom Telefonanbieter geliefert"
 
 #~ msgid "State"
 #~ msgstr "Status"
 
 #~ msgid "The current state of the call"
 #~ msgstr "Der derzeitige Status des Anrufs"
-
-#~ msgid "Call"
-#~ msgstr "Anruf"
 
 #~ msgid "The call"
 #~ msgstr "Der Anruf"
@@ -419,9 +437,6 @@ msgstr "Zurück"
 #~ msgid "The party's name"
 #~ msgstr "Name des Teilnehmers"
 
-#~ msgid "The party's telephone number"
-#~ msgstr "Nummer des Teilnehmers"
-
 #~ msgid "Status"
 #~ msgstr "Status"
 
@@ -430,4 +445,3 @@ msgstr "Zurück"
 
 #~ msgid "Incoming call"
 #~ msgstr "Eingehender Anruf"
-
