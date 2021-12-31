@@ -56,5 +56,6 @@ CallsBestMatch         *calls_contacts_provider_lookup_id            (CallsConta
 void                    calls_contacts_provider_consume_iter_on_idle (GeeIterator           *iter,
                                                                       IdleCallback           callback,
                                                                       gpointer               user_data);
+gboolean                calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self);
 
 G_END_DECLS

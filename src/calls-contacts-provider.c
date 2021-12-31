@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Purism SPC
+ * Copyright (C) 2021, 2022 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -20,9 +20,12 @@
  *   Bob Ham <bob.ham@puri.sm>
  *   Mohammed Sadiq <sadiq@sadiqpk.org>
  *   Julian Sparber <julian@sparber.net>
+ *   Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+
+#define G_LOG_DOMAIN "CallsContactsProvider"
 
 #include "calls-contacts-provider.h"
 #include "calls-best-match.h"
@@ -31,6 +34,7 @@
 #include <folks/folks.h>
 #include <libebook-contacts/libebook-contacts.h>
 
+#define DBUS_BUS_NAME "org.gnome.Contacts"
 
 typedef struct
 {
@@ -48,6 +52,10 @@ struct _CallsContactsProvider
   CallsSettings             *settings;
 
   GHashTable                *best_matches;
+
+  guint                      bus_watch_id;
+  GDBusActionGroup          *contacts_action_group;
+  gboolean                   can_add_contacts;
 };
 
 G_DEFINE_TYPE (CallsContactsProvider, calls_contacts_provider, G_TYPE_OBJECT)
@@ -55,6 +63,7 @@ G_DEFINE_TYPE (CallsContactsProvider, calls_contacts_provider, G_TYPE_OBJECT)
 enum {
   PROP_0,
   PROP_SETTINGS,
+  PROP_CAN_ADD_CONTACTS,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -172,6 +181,54 @@ folks_prepare_cb (GObject      *obj,
 
 
 static void
+on_contacts_actions_updated (CallsContactsProvider *self)
+{
+  static const char *contact_action_name = "new-contact-data";
+
+  g_assert (CALLS_IS_CONTACTS_PROVIDER (self));
+
+  if (self->can_add_contacts)
+    return;
+
+  if (g_action_group_has_action (G_ACTION_GROUP (self->contacts_action_group),
+                                 contact_action_name) &&
+      g_action_group_get_action_enabled (G_ACTION_GROUP (self->contacts_action_group),
+                                         contact_action_name)) {
+    g_debug ("Can add contacts");
+
+    self->can_add_contacts = TRUE;
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CAN_ADD_CONTACTS]);
+  }
+}
+
+
+static void
+on_contacts_appeared (GDBusConnection    *connection,
+                      const char         *name,
+                      const char         *owner_name,
+                      gpointer            user_data)
+{
+  CallsContactsProvider *self;
+  g_autoptr (GError) error = NULL;
+
+  g_assert (CALLS_IS_CONTACTS_PROVIDER (user_data));
+
+  self = user_data;
+  g_clear_object (&self->contacts_action_group);
+  self->contacts_action_group = g_dbus_action_group_get (connection,
+                                                         name,
+                                                         "/org/gnome/Contacts");
+
+  g_signal_connect_swapped (self->contacts_action_group,
+                            "action-added",
+                            G_CALLBACK (on_contacts_actions_updated),
+                            self);
+
+  on_contacts_actions_updated (self);
+}
+
+
+static void
 calls_contacts_provider_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
@@ -192,10 +249,32 @@ calls_contacts_provider_set_property (GObject      *object,
 
 
 static void
+calls_contacts_provider_get_property (GObject    *object,
+                                      guint       property_id,
+                                      GValue     *value,
+                                      GParamSpec *pspec)
+{
+  CallsContactsProvider *self = CALLS_CONTACTS_PROVIDER (object);
+
+  switch (property_id) {
+  case PROP_CAN_ADD_CONTACTS:
+    g_value_set_boolean (value, calls_contacts_provider_get_can_add_contacts (self));
+    break;
+
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
 calls_contacts_provider_finalize (GObject *object)
 {
   CallsContactsProvider *self = CALLS_CONTACTS_PROVIDER (object);
 
+  g_clear_handle_id (&self->bus_watch_id, g_bus_unwatch_name);
+  g_clear_object (&self->contacts_action_group);
   g_clear_object (&self->folks_aggregator);
   g_clear_object (&self->settings);
   g_clear_pointer (&self->best_matches, g_hash_table_unref);
@@ -209,6 +288,7 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
 {
   GObjectClass *object_class  = G_OBJECT_CLASS (klass);
 
+  object_class->get_property = calls_contacts_provider_get_property;
   object_class->set_property = calls_contacts_provider_set_property;
   object_class->finalize = calls_contacts_provider_finalize;
 
@@ -240,6 +320,13 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY |
                          G_PARAM_STATIC_STRINGS);
 
+  props[PROP_CAN_ADD_CONTACTS] =
+    g_param_spec_boolean ("can-add-contacts",
+                          "Can add contacts",
+                          "Whether we can add contacts",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
@@ -268,6 +355,14 @@ calls_contacts_provider_init (CallsContactsProvider *self)
                                               g_str_equal,
                                               g_free,
                                               g_object_unref);
+
+  self->bus_watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
+                                         DBUS_BUS_NAME,
+                                         G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                                         on_contacts_appeared,
+                                         NULL,
+                                         self,
+                                         NULL);
 }
 
 
@@ -343,3 +438,14 @@ calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
                    data,
                    g_free);
 }
+
+
+gboolean
+calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self)
+{
+  g_return_val_if_fail (CALLS_IS_CONTACTS_PROVIDER (self), FALSE);
+
+  return self->can_add_contacts;
+}
+
+#undef DBUS_BUS_NAME
