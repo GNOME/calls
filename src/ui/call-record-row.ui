@@ -109,6 +109,11 @@
         <attribute name="action">copy-number</attribute>
         <attribute name="hidden-when">action-disabled</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Add contact</attribute>
+        <attribute name="action">new-contact</attribute>
+        <attribute name="hidden-when">action-disabled</attribute>
+      </item>
     </section>
   </menu>
 </interface>
