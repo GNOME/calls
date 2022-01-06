@@ -57,5 +57,7 @@ void                    calls_contacts_provider_consume_iter_on_idle (GeeIterato
                                                                       IdleCallback           callback,
                                                                       gpointer               user_data);
 gboolean                calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self);
+void                    calls_contacts_provider_add_new_contact      (CallsContactsProvider *self,
+                                                                      const char            *phone_number);
 
 G_END_DECLS

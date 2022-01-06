@@ -448,4 +448,35 @@ calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self)
   return self->can_add_contacts;
 }
 
+
+void
+calls_contacts_provider_add_new_contact (CallsContactsProvider *self,
+                                         const char            *phone_number)
+{
+  GVariant *contact_parameter;
+  GVariantBuilder contact_builder;
+  CallsBestMatch *best_match;
+
+  g_return_if_fail (CALLS_IS_CONTACTS_PROVIDER (self));
+  g_return_if_fail (phone_number || *phone_number);
+  g_return_if_fail (self->can_add_contacts);
+
+  best_match = g_hash_table_lookup (self->best_matches, phone_number);
+  if (best_match && calls_best_match_has_individual (best_match)) {
+    g_warning ("Cannot add contact. Contact '%s' with number '%s' already exists",
+               calls_best_match_get_name (best_match), phone_number);
+    return;
+  }
+
+  g_variant_builder_init (&contact_builder, G_VARIANT_TYPE_ARRAY);
+  g_variant_builder_add (&contact_builder, "(ss)",
+                         "phone-numbers",
+                         phone_number);
+  contact_parameter = g_variant_builder_end (&contact_builder);
+
+  g_action_group_activate_action (G_ACTION_GROUP (self->contacts_action_group),
+                                  "new-contact-data",
+                                  contact_parameter);
+}
+
 #undef DBUS_BUS_NAME
