@@ -43,6 +43,7 @@ typedef struct
   gpointer               user_data;
 } IdleData;
 
+
 struct _CallsContactsProvider
 {
   GObject                    parent_instance;
@@ -69,6 +70,7 @@ enum {
 };
 static guint signals[SIGNAL_LAST_SIGNAL];
 
+
 static void folks_remove_contact (CallsContactsProvider *self,
                                   FolksIndividual       *individual);
 static void folks_add_contact    (CallsContactsProvider *self,
@@ -84,6 +86,7 @@ folks_individual_has_phone_numbers (FolksIndividual *individual)
   return !gee_collection_get_is_empty (GEE_COLLECTION (phone_numbers));
 }
 
+
 static void
 folks_individual_property_changed_cb (CallsContactsProvider *self,
                                       GParamSpec            *pspec,
@@ -92,6 +95,7 @@ folks_individual_property_changed_cb (CallsContactsProvider *self,
   if (!folks_individual_has_phone_numbers (individual))
     folks_remove_contact (self, individual);
 }
+
 
 static int
 do_on_idle (IdleData *data)
@@ -104,6 +108,7 @@ do_on_idle (IdleData *data)
     return G_SOURCE_REMOVE;
   }
 }
+
 
 static void
 folks_add_contact (CallsContactsProvider *self,
@@ -155,6 +160,7 @@ folks_individuals_changed_cb (CallsContactsProvider *self,
                                                   self);
 }
 
+
 static void
 folks_prepare_cb (GObject      *obj,
                   GAsyncResult *res,
@@ -167,6 +173,7 @@ folks_prepare_cb (GObject      *obj,
   if (error)
     g_warning ("Failed to load Folks contacts: %s", error->message);
 }
+
 
 static void
 calls_contacts_provider_set_property (GObject      *object,
@@ -266,6 +273,7 @@ calls_contacts_provider_init (CallsContactsProvider *self)
                                               g_free,
                                               g_object_unref);
 }
+
 
 CallsContactsProvider *
 calls_contacts_provider_new (CallsSettings *settings)
