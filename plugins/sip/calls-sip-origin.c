@@ -252,7 +252,7 @@ add_call (CallsSipOrigin *self,
 
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
                                                              local_port,
-                                                             check_sips (address));
+                                                             FALSE);
 
     g_assert (local_sdp);
 
