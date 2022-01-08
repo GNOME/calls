@@ -40,18 +40,10 @@
  * shall also manage the #CallsSipMediaPipeline objects that are in use.
  */
 
-enum {
-  PROP_0,
-  PROP_SESSION_IP,
-  PROP_LAST_PROP
-};
-static GParamSpec *props[PROP_LAST_PROP];
-
 typedef struct _CallsSipMediaManager
 {
   GObject parent;
 
-  char          *session_ip;
   int            address_family;
   struct         addrinfo hints;
 
@@ -134,25 +126,6 @@ on_notify_preferred_audio_codecs (CallsSipMediaManager *self)
   }
 }
 
-static void
-calls_sip_media_manager_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec)
-{
-  CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
-
-  switch (property_id) {
-  case PROP_SESSION_IP:
-    calls_sip_media_manager_set_session_ip (self, g_value_get_string (value));
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
-}
-
 
 static void
 calls_sip_media_manager_finalize (GObject *object)
@@ -161,7 +134,6 @@ calls_sip_media_manager_finalize (GObject *object)
   gst_deinit ();
 
   g_list_free (self->preferred_codecs);
-  g_free (self->session_ip);
   g_object_unref (self->settings);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
@@ -173,17 +145,7 @@ calls_sip_media_manager_class_init (CallsSipMediaManagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = calls_sip_media_manager_set_property;
   object_class->finalize = calls_sip_media_manager_finalize;
-
-  props[PROP_SESSION_IP] =
-    g_param_spec_string ("session-ip",
-                         "Session IP",
-                         "The public IP used as the session line in SDP",
-                         NULL,
-                         G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
-
-  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
 
@@ -383,29 +345,3 @@ calls_sip_media_manager_get_codecs_from_sdp (CallsSipMediaManager *self,
 }
 
 
-void
-calls_sip_media_manager_set_session_ip (CallsSipMediaManager *self,
-                                        const char           *session_ip)
-{
-  g_return_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self));
-
-  g_clear_pointer (&self->session_ip, g_free);
-  if (session_ip && *session_ip) {
-    struct addrinfo *result = NULL;
-
-    if (getaddrinfo (session_ip, NULL, &self->hints, &result) != 0) {
-      g_warning ("Cannot parse session IP %s", session_ip);
-      return;
-    }
-
-    /* check if IP is IPv4 or IPv6. We need to specify this in the c= line of SDP */
-    self->address_family = result->ai_family;
-
-    g_debug ("Setting session IP to %s", session_ip);
-
-    g_free (self->session_ip);
-    self->session_ip = g_strdup (session_ip);
-
-    freeaddrinfo (result);
-  }
-}
