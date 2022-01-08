@@ -1,0 +1,308 @@
+# Polish translation for calls.
+# Copyright (C) 2022 calls' COPYRIGHT HOLDER
+# This file is distributed under the same license as the Calls package.
+# Piotr Włodarski <piotrwlodarski@interia.eu>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n\n"
+"POT-Creation-Date: 2021-11-19 21:38+0100\n"
+"PO-Revision-Date: 2022-01-08 15:56+0000\n"
+"Last-Translator: Piotr Włodarski <piotrwlodarski@interia.eu>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "Rozmowy"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefon"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Odbieranie i wykonywanie połączeń telefonicznych"
+
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefon;Rozmowa;Komórka;Wybierać;Dzwonić;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Rozmowy (proces)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Odbieranie i wykonywanie połączeń telefonicznych (praca w tle)"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Dodaj konto"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "Za_loguj"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Zarządzanie kontami"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "Z_atwierdź"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Usuń"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Serwer"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Wyświetl jako"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Opcjonalnie"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID użytkownika"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Hasło"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Protokół"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Używaj do rozmów tel."
+
+#: src/calls-application.c:546
+#, c-format
+msgid "Tried invalid tel URI `%s'"
+msgstr "Nieprawidłowy numer telefonu '%s'"
+
+#: src/calls-application.c:623
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Nie wiem jak otworzyć `%s'"
+
+#: src/calls-application.c:676
+msgid "The name of the plugin to use as a call provider"
+msgstr "Nazwa wtyczki użawanej do połączeń"
+
+#: src/calls-application.c:677
+msgid "PLUGIN"
+msgstr "WTYCZKA"
+
+#: src/calls-application.c:682
+msgid "Whether to present the main window on startup"
+msgstr "Wyświetl okno główne przy uruchomieniu"
+
+#: src/calls-application.c:688
+msgid "Dial a telephone number"
+msgstr "Wybierz numer telefonu"
+
+#: src/calls-application.c:689
+msgid "NUMBER"
+msgstr "NUMER"
+
+#: src/calls-application.c:694
+msgid "Enable verbose debug messages"
+msgstr "Włącz tryb debugowania"
+
+#: src/calls-application.c:700
+msgid "Print current version"
+msgstr "Wyświetl aktualną wersję"
+
+#: src/calls-best-match.c:357
+msgid "Anonymous caller"
+msgstr "Nieznany rozmówca"
+
+#: src/calls-call-record-row.c:110
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"wczoraj"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr ""
+"Piotr Włodarski <piotrwlodarski@interia.eu>, 2022"
+
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Rozmowy niedostępne: Brak modemu głosowego"
+
+#: src/calls-main-window.c:326
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Rozmowy niedostępne: Brak modemu lub konta VoIP"
+
+#: src/calls-main-window.c:331
+msgid "Can't place calls: No backend service"
+msgstr "Rozmowy niedostępne: Brak procesu w tle"
+
+#: src/calls-main-window.c:335
+msgid "Can't place calls: No plugin"
+msgstr "Rozmowy niedostępne: Brak wtyczki"
+
+#: src/calls-main-window.c:375
+msgid "Contacts"
+msgstr "Kontakty"
+
+#: src/calls-main-window.c:385
+msgid "Dial Pad"
+msgstr "Klawiatura"
+
+#: src/calls-main-window.c:394
+msgid "Recent"
+msgstr "Ostatnie"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Niedebrane połączenie"
+
+#: src/calls-notifier.c:69
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Niedebrane połączenie od <b>%s</b>"
+
+#: src/calls-notifier.c:72
+#, c-format
+msgid "Missed call from %s"
+msgstr "Niedebrane połączenie od %s"
+
+#: src/calls-notifier.c:74
+msgid "Missed call from unknown caller"
+msgstr "Nieodebrana rozmowa z nieznanego numeru"
+
+#: src/calls-notifier.c:80
+msgid "Call back"
+msgstr "Oddzwoń"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "Konta VoIP"
+
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Dodaj konto VoIp"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Tutaj możesz dodać swoje konto VoIP. Pozwoli Ci na wykonywanie połączeń VoIP "
+"używając protokołu SIP. Funkcjonalność nadal jest relatywnie nowa i nie jest "
+"w pełni kompletna (np. brak szyfrowania mediów)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "Dod_aj konto"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
+msgid "Call"
+msgstr "Zadzwoń"
+
+#: src/ui/call-record-row.ui:103
+msgid "_Delete Call"
+msgstr "_Usuń rozmowę"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:108
+msgid "_Copy number"
+msgstr "_Kopiuj numer"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "Zawieszone"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "Brak kontaktów"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "Brak ostatnich rozmów"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Anuluj"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "Za_mknij"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Wyślij"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "Konta _VoIP"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "Skróty _klawiszowe"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "Pomo_c"
+
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_O programie"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "Wprowadź adres VoIP"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "Wprowadź numer"
+
+#: src/ui/new-call-box.ui:97
+msgid "Dial"
+msgstr "Wybierz"
+
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "Usuń znak przed kursorem"
+
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "Konto SIP"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "Nowa rozmowa"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "Wstecz"
