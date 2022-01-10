@@ -913,6 +913,9 @@ go_online (CallsAccount *account,
 
   self = CALLS_SIP_ORIGIN (account);
 
+  if (self->use_direct_connection)
+    return;
+
   if (!self->nua) {
     g_warning ("Cannot go online: nua handle not initialized");
     g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
@@ -1038,10 +1041,10 @@ init_sip_account (CallsSipOrigin *self,
     self->state = CALLS_ACCOUNT_ONLINE;
   else {
     self->state = CALLS_ACCOUNT_OFFLINE;
-
-    if (self->auto_connect)
-      go_online (CALLS_ACCOUNT (self), TRUE);
   }
+
+  if (self->auto_connect)
+    go_online (CALLS_ACCOUNT (self), TRUE);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
   return TRUE;
