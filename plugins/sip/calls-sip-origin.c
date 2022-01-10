@@ -1091,6 +1091,7 @@ deinit_sip_account (CallsSipOrigin *self)
     self->nua = NULL;
   }
 
+  g_clear_pointer (&self->own_ip, g_free);
   self->state = CALLS_ACCOUNT_NULL;
   return TRUE;
 }
