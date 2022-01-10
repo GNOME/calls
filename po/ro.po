@@ -1,14 +1,14 @@
 # Romanian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Florentina Mușat <florentina.musat.28@gmail.com>, 2020-2021.
+# Florentina Mușat <florentina.musat.28@gmail.com>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-11-24 15:53+0000\n"
-"PO-Revision-Date: 2021-11-25 12:41+0100\n"
+"POT-Creation-Date: 2021-12-31 11:15+0000\n"
+"PO-Revision-Date: 2022-01-10 16:36+0100\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,8 +19,8 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Apeluri"
 
@@ -93,49 +93,53 @@ msgstr "Port"
 msgid "Transport"
 msgstr "Transport"
 
-#: src/calls-application.c:536
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Folosește pentru apeluri"
+
+#: src/calls-application.c:546
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "S-a încercat un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:613
+#: src/calls-application.c:623
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:666
+#: src/calls-application.c:676
 msgid "The name of the plugin to use as a call provider"
 msgstr "Numele modulului de utilizat ca furnizor de apeluri"
 
-#: src/calls-application.c:667
+#: src/calls-application.c:677
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:672
+#: src/calls-application.c:682
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:678
+#: src/calls-application.c:688
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:689
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:684
+#: src/calls-application.c:694
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:700
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
-#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Apelant anonim"
 
-#: src/calls-call-record-row.c:115
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -194,7 +198,7 @@ msgstr "Apel pierdut"
 msgid "Missed call from <b>%s</b>"
 msgstr "Apel pierdut de la <b>%s</b>"
 
-#. %s is a number here
+#. %s is a id here
 #: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
@@ -232,25 +236,24 @@ msgid "_Add Account"
 msgstr "_Adaugă un cont"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "Apelează"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "Șt_erge apelul"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Copiază numărul"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "În așteptare"
 
-#: src/ui/contacts-box.ui:69
-#| msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
 msgstr "Nu sunt contacte"
 
@@ -258,62 +261,62 @@ msgstr "Nu sunt contacte"
 msgid "No Recent Calls"
 msgstr "Nu sunt apeluri recente"
 
-#: src/ui/main-window.ui:117
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:126
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Anulează"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "În_chide"
 
-#: src/ui/main-window.ui:153
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Trimite"
 
-#: src/ui/main-window.ui:227
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "Conturi _VoIP"
 
-#: src/ui/main-window.ui:240
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "Taste _rapide"
 
-#: src/ui/main-window.ui:246
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Ajutor"
 
-#: src/ui/main-window.ui:252
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Despre Apeluri"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Introdu o adresă VoIP"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Introdu un număr"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Apelează"
 
-#: src/ui/new-call-box.ui:114
+#: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
 msgstr "Șterge caracterul din fața cursorului"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "Cont SIP"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Apel nou"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Înapoi"
