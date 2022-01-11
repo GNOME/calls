@@ -1,26 +1,26 @@
 # Swedish messages for Calls.
-# Copyright © 2020, 2021 Purism
+# Copyright © 2020-2022 Purism
 # This file is distributed under the same license as the Calls package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2020.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022.
 # Luna Jernberg <droidbittin@gmail.com>, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-26 21:06+0000\n"
-"PO-Revision-Date: 2021-12-26 22:15+0100\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"POT-Creation-Date: 2022-01-11 12:27+0000\n"
+"PO-Revision-Date: 2022-01-11 21:33+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
 #: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Samtal"
@@ -98,41 +98,41 @@ msgstr "Transport"
 msgid "Use for Phone Calls"
 msgstr "Använd för telefonsamtal"
 
-#: src/calls-application.c:546
+#: src/calls-application.c:548
 #, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "Försökte med ogiltigt tel-URI ”%s”"
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Försökte ringa ogiltig tel-URI ”%s”"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "Namnet på insticket som ska användas som samtalsleverantör"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "Slå ett telefonnummer"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "Aktivera utförliga felsökningsmeddelanden"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
@@ -216,11 +216,11 @@ msgstr "Ring tillbaka"
 msgid "VoIP Accounts"
 msgstr "VoIP-konton"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Lägg till VoIP-konton"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -230,7 +230,7 @@ msgstr ""
 "VoIP-samtal med SIP-protokollet. Denna funktion är relativt ny och inte "
 "fullt funktionell ännu (d.v.s. inga krypterade media)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Lägg till konto"
 
@@ -319,60 +319,3 @@ msgstr "Nytt samtal"
 #: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Tillbaka"
-
-#~ msgid "Calling…"
-#~ msgstr "Ringer…"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Inkommande telefonsamtal"
-
-#~ msgid "Mute"
-#~ msgstr "Tyst"
-
-#~ msgid "Speaker"
-#~ msgstr "Högtalare"
-
-#~ msgid "Add call"
-#~ msgstr "Lägg till samtal"
-
-#~ msgid "Hold"
-#~ msgstr "Håll"
-
-#~ msgid "Hang up"
-#~ msgstr "Lägg på"
-
-#~ msgid "Answer"
-#~ msgstr "Svara"
-
-#~ msgid "Hide the dial pad"
-#~ msgstr "Göm knappsatsen"
-
-#~ msgid "This call is not encrypted"
-#~ msgstr "Detta samtal är inte krypterat"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "Detta samtal är krypterat"
-
-#~ msgid "Recent Calls"
-#~ msgstr "Senaste samtal"
-
-#~ msgid "New call…"
-#~ msgstr "Nytt samtal…"
-
-#~ msgid "Menu"
-#~ msgstr "Meny"
-
-#~ msgid "About Calls"
-#~ msgstr "Om Samtal"
-
-#~ msgid "No modem found"
-#~ msgstr "Inget modem hittades"
-
-#~ msgid "+441234567890"
-#~ msgstr "+441234567890"
-
-#~ msgid "Backspace through number"
-#~ msgstr "Radera siffra från nummer"
-
-#~ msgid "Call the party"
-#~ msgstr "Ring parten"
