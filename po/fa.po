@@ -1,14 +1,14 @@
 # Persian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Danial Behzadi <dani.behzi@ubuntu.com>, 2020-2021.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-28 12:49+0000\n"
-"PO-Revision-Date: 2021-11-19 02:30+0330\n"
+"POT-Creation-Date: 2022-01-11 12:27+0000\n"
+"PO-Revision-Date: 2022-01-11 18:05+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "تماس‌ها"
 
@@ -91,53 +91,53 @@ msgstr "درگاه"
 msgid "Transport"
 msgstr "انتقال"
 
-#: src/calls-application.c:528
-#, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "نشانی تلفن نامعتبر «%s» آزموده شد"
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "استفاده برای تماس‌های تلفنی"
 
-#: src/calls-application.c:605
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "تلاش شد نشانی نامعتبر «%s» شماره‌گیری شود"
+
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "نام افزایه برای استفاده به عنوان فراهم‌کنندهٔ تماس"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
-#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "در حال تماس…"
-
-#: src/calls-call-record-row.c:115
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -146,36 +146,36 @@ msgstr ""
 "%s\n"
 "دیروز"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@gmail.com>"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "نمی‌توان تماس برقرار کرد: بدون مودم با قابلیت صوتی"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "نمی‌توان تماس برقرار کرد: بدون حساب ویپ یا مودم"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "نمی‌توان تماس برقرار کرد: بدون خدمت پشتانه"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "نمی‌توان تماس برقرار کرد: بدون افزایه"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "آشنایان"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "صفحهٔ شماره‌گیری"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:395
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "اخیر"
 
@@ -189,7 +189,7 @@ msgstr "تماس از دست رفته"
 msgid "Missed call from <b>%s</b>"
 msgstr "تماس از دست رفته از <b>%s</b>"
 
-#. %s is a number here
+#. %s is a id here
 #: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
@@ -207,170 +207,157 @@ msgstr "پاسخ تماس"
 msgid "VoIP Accounts"
 msgstr "حساب‌های ویپ"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "افزودن حساب ویپ"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
-"calls using the SIP protocol. This feature is still relatively new and not "
-"yet feature complete (i.e. no encrypted media)."
+"calls using the SIP protocol. This feature is still relatively new and not yet "
+"feature complete (i.e. no encrypted media)."
 msgstr ""
-"این‌جا می‌توانید حساب ویپ بیفزایید. این کار می‌گذارد با استفاده از شیوه‌نامهٔ "
-"سیپ، تماس‌های ویپ برقرار کنید. این ویژگی تقریباً جدید بوده و هنوز همهٔ ویژگی‌ها "
-"را ندارد (مثلاً رسانهٔ رمزنگاشته)."
+"این‌جا می‌توانید حساب ویپ بیفزایید. این کار می‌گذارد با استفاده از شیوه‌نامهٔ سیپ، "
+"تماس‌های ویپ برقرار کنید. این ویژگی تقریباً جدید بوده و هنوز همهٔ ویژگی‌ها را ندارد "
+"(مثلاً رسانهٔ رمزنگاشته)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_افزودن حساب"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "تماس تلفنی ورودی"
-
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "بی‌صدا"
-
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "بلندگو"
-
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "افزودن تماس"
-
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "انتظار"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "قطع تماس"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "پاسخ"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "نهفتن صفحهٔ شماره‌گیری"
-
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "تماس"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "_حذف تماس"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_رونوشت از شماره"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "در حال انتظار"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
 msgstr "هیچ آشنایی پیدا نشد"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "تماس رمزنگاری نشده است"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "تماس رمزنگاری شده است"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "هیج تماس اخیری نیست"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "تماس‌های اخیر"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "تماس جدید…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "فهرست"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "دربارهٔ تماس‌ها"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "هیچ مودمی پیدا نشد"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_لغو"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "_بستن"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_فرستادن"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "حساب‌های _ویپ"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "میان‌برهای _صفحه‌کلید"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_راهنما"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_دربارهٔ تماس‌ها"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "نشانی ویپی وارد کنید"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "شماره‌ای وارد کنید"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "شماره‌گیری"
 
-#: src/ui/new-call-box.ui:114
+#: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
 msgstr "حذف نویسه‌های جلوی نشانگر"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "حساب سیپ"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "تماس جدید"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "بازگشت"
+
+#~ msgid "Calling…"
+#~ msgstr "در حال تماس…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "تماس تلفنی ورودی"
+
+#~ msgid "Mute"
+#~ msgstr "بی‌صدا"
+
+#~ msgid "Speaker"
+#~ msgstr "بلندگو"
+
+#~ msgid "Add call"
+#~ msgstr "افزودن تماس"
+
+#~ msgid "Hold"
+#~ msgstr "انتظار"
+
+#~ msgid "Hang up"
+#~ msgstr "قطع تماس"
+
+#~ msgid "Answer"
+#~ msgstr "پاسخ"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "نهفتن صفحهٔ شماره‌گیری"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "تماس رمزنگاری نشده است"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "تماس رمزنگاری شده است"
+
+#~ msgid "Recent Calls"
+#~ msgstr "تماس‌های اخیر"
+
+#~ msgid "New call…"
+#~ msgstr "تماس جدید…"
+
+#~ msgid "Menu"
+#~ msgstr "فهرست"
+
+#~ msgid "About Calls"
+#~ msgstr "دربارهٔ تماس‌ها"
+
+#~ msgid "No modem found"
+#~ msgstr "هیچ مودمی پیدا نشد"
 
 #~ msgid "+441234567890"
 #~ msgstr "+441234567890"
