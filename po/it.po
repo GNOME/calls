@@ -1,14 +1,14 @@
 # Italian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# antonio <ant.pandolfo@gmail.com>, 2020-2021.
+# antonio <ant.pandolfo@gmail.com>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-28 12:04+0000\n"
-"PO-Revision-Date: 2021-10-31 17:00+0100\n"
+"POT-Creation-Date: 2021-12-26 21:06+0000\n"
+"PO-Revision-Date: 2022-01-10 16:33+0100\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chiamate"
 
@@ -46,7 +46,6 @@ msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Un dialer telefonico e un gestore di chiamate (demone)"
 
 #: plugins/sip/sip-account-widget.ui:11
-#| msgid "SIP Account"
 msgid "Add Account"
 msgstr "Aggiungi account"
 
@@ -55,7 +54,6 @@ msgid "_Log In"
 msgstr "_Login"
 
 #: plugins/sip/sip-account-widget.ui:42
-#| msgid "SIP Account"
 msgid "Manage Account"
 msgstr "Gestisci account"
 
@@ -64,7 +62,6 @@ msgid "_Apply"
 msgstr "_Applica"
 
 #: plugins/sip/sip-account-widget.ui:61
-#| msgid "_Delete Call"
 msgid "_Delete"
 msgstr "_Elimina"
 
@@ -96,53 +93,53 @@ msgstr "Port"
 msgid "Transport"
 msgstr "Trasporto"
 
-#: src/calls-application.c:528
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Utilizzare per le chiamate"
+
+#: src/calls-application.c:546
 #, c-format
 msgid "Tried invalid tel URI `%s'"
 msgstr "Ho provato un URI telefonico non valido `%s'"
 
-#: src/calls-application.c:605
+#: src/calls-application.c:623
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:658
+#: src/calls-application.c:676
 msgid "The name of the plugin to use as a call provider"
 msgstr "Il nome del plugin da usare come fornitore di chiamate"
 
-#: src/calls-application.c:659
+#: src/calls-application.c:677
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:664
+#: src/calls-application.c:682
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:670
+#: src/calls-application.c:688
 msgid "Dial a telephone number"
 msgstr "Componi un numero di telefono"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:689
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:694
 msgid "Enable verbose debug messages"
 msgstr "Abilita i messaggi dettagliati di debug"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:700
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
-#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Chiamante anonimo "
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Sto chiamando..."
-
-#: src/calls-call-record-row.c:115
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -151,39 +148,39 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Pandolfo Antonio <ant.pandolfo@gmail.com>\n"
 "Vittorio <postav@pm.me>, 2021"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Non è possibile effettuare chiamate: nessun modem vocale"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:326
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Non è possibile effettuare chiamate: nessun modem o account VoIP disponibile"
 
-#: src/calls-main-window.c:332
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Non è possibile effettuare chiamate: nessun servizio back-end"
 
-#: src/calls-main-window.c:336
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Non è possibile effettuare chiamate: nessun plugin"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Contatti"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Tastiera"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:395
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Recenti"
 
@@ -197,7 +194,7 @@ msgstr "Chiamata persa"
 msgid "Missed call from <b>%s</b>"
 msgstr "Chiamata persa da <b>%s</b>"
 
-#. %s is a number here
+#. %s is a id here
 #: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
@@ -212,12 +209,10 @@ msgid "Call back"
 msgstr "Richiama"
 
 #: src/ui/account-overview.ui:16
-#| msgid "_VoIP Accounts"
 msgid "VoIP Accounts"
 msgstr "Account VoIP"
 
 #: src/ui/account-overview.ui:41
-#| msgid "_VoIP Accounts"
 msgid "Add VoIP Accounts"
 msgstr "Aggiungi account VoIP"
 
@@ -232,153 +227,91 @@ msgstr ""
 "relativamente nuova e non ancora completa (cioè nessun media cifrato)."
 
 #: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
-#| msgid "SIP Account"
 msgid "_Add Account"
 msgstr "_Aggiungi account"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Chiamata in arrivo"
-
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Silenzia"
-
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Altoparlante"
-
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Aggiungi chiamata"
-
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Attesa"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Chiudi"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Rispondi"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Nascondi tastiera"
-
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "Chiama"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "_Elimina chiamata"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Copia numero "
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "In attesa"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
 msgstr "Nessun contatto trovato"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Questa chiamata non è cifrata"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Questa chiamata è cifrata"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Nessuna chiamata recente"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Chiamate recenti"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Nuova chiamata…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Opzioni"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Informazioni su Chiamate"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Nessun modem trovato"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Annulla"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "_Chiudi"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Invia"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "Account _VoIP"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "Scorciatoie da _tastiera"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Guida"
 
-#: src/ui/main-window.ui:253
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "Informazioni _su Chiamate"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Inserire un indirizzo VoIP"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Inserire un numero"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Componi"
 
-#: src/ui/new-call-box.ui:114
+#: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
 msgstr "Cancella il carattere davanti al cursore"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "Account SIP"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Nuova chiamata"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Indietro"
