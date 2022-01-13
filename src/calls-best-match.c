@@ -322,6 +322,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
     if (g_str_has_prefix (self->phone_number, "sip")) {
       g_auto (GStrv) split = g_strsplit_set (self->phone_number, ":@", -1);
 
+      g_free (self->name_sip);
       self->name_sip = g_strdup (split[1]);
       g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
       return;
