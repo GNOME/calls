@@ -1,6 +1,7 @@
 data/org.gnome.Calls.desktop.in
 data/org.gnome.Calls-daemon.desktop.in
 plugins/sip/sip-account-widget.ui
+src/account.c
 src/calls-application.c
 src/calls-best-match.c
 src/calls-call.c
