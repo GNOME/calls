@@ -219,15 +219,9 @@ on_message (CallsMessageSource *source,
                                     message);
   }
 
-  if (notification) {
-    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
-                                       notification,
-                                       message_type);
-  } else {
-    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
-                                       message,
-                                       message_type);
-  }
+  calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
+                                     notification ? : message,
+                                     message_type);
 }
 
 
