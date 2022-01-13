@@ -56,12 +56,6 @@ G_DEFINE_TYPE_WITH_CODE (CallsUiCallData, calls_ui_call_data, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (CUI_TYPE_CALL,
                                                 calls_ui_call_data_cui_call_interface_init))
 
-struct DtmfData
-{
-  CallsCall *call;
-  char dtmf;
-};
-
 static const char *
 calls_ui_call_data_get_display_name (CuiCall *call_data)
 {
