@@ -34,6 +34,7 @@
 #include "calls-message-source.h"
 #include "calls-provider.h"
 #include "calls-settings.h"
+#include "calls-ui-call-data.h"
 #include "calls-ussd.h"
 
 #include "enum-types.h"
@@ -58,6 +59,9 @@ struct _CallsManager
   GHashTable *origins_by_protocol;
   /* dial_actions_by_protocol maps protocol names to GSimpleActions */
   GHashTable *dial_actions_by_protocol;
+
+  /* map CallsCall to CallsUiCallData */
+  GHashTable *calls;
 
   CallsContactsProvider *contacts_provider;
 
@@ -85,6 +89,8 @@ static GParamSpec *props[PROP_LAST_PROP];
 enum {
   SIGNAL_CALL_ADD,
   SIGNAL_CALL_REMOVE,
+  UI_CALL_ADDDED, /* we're phasing out "call-added" in favour of "ui-call-added" */
+  UI_CALL_REMOVED,
   USSD_ADDED,
   USSD_CANCELLED,
   USSD_STATE_CHANGED,
@@ -225,21 +231,39 @@ on_message (CallsMessageSource *source,
 static void
 add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 {
+  CallsUiCallData *call_data;
+
   g_return_if_fail (CALLS_IS_MANAGER (self));
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
   g_return_if_fail (CALLS_IS_CALL (call));
 
+  call_data = calls_ui_call_data_new (call);
+  g_hash_table_insert (self->calls, call, call_data);
+
+  /* TODO get rid of SIGNAL_CALL_ADD signal */
   g_signal_emit (self, signals[SIGNAL_CALL_ADD], 0, call, origin);
+  g_signal_emit (self, signals[UI_CALL_ADDDED], 0, call_data);
 }
 
 
 static void
 remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *origin)
 {
+  CallsUiCallData *call_data;
+
   g_return_if_fail (CALLS_IS_MANAGER (self));
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
   g_return_if_fail (CALLS_IS_CALL (call));
 
+  call_data = g_hash_table_lookup (self->calls, call);
+  if (!call_data) {
+    g_warning ("Could not remove call %s from hash table", calls_call_get_id (call));
+  } else {
+    g_signal_emit (self, signals[UI_CALL_REMOVED], 0, call_data);
+    g_hash_table_remove (self->calls, call);
+  }
+
+  /* TODO get rid of SIGNAL_CALL_REMOVE signal */
   /* We ignore the reason for now, because it doesn't give any usefull information */
   g_signal_emit (self, signals[SIGNAL_CALL_REMOVE], 0, call, origin);
 }
@@ -631,6 +655,26 @@ calls_manager_class_init (CallsManagerClass *klass)
                  CALLS_TYPE_CALL,
                  CALLS_TYPE_ORIGIN);
 
+  signals[UI_CALL_ADDDED] =
+    g_signal_new ("ui-call-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  CALLS_TYPE_UI_CALL_DATA);
+
+  signals[UI_CALL_REMOVED] =
+    g_signal_new ("ui-call-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  CALLS_TYPE_UI_CALL_DATA);
+
   signals[USSD_ADDED] =
     g_signal_new ("ussd-added",
                   G_TYPE_FROM_CLASS (klass),
@@ -738,6 +782,9 @@ calls_manager_init (CallsManager *self)
   }
 
   self->origins = g_list_store_new (calls_origin_get_type ());
+
+  /* This hash table only owns the value, not the key */
+  self->calls = g_hash_table_new_full (NULL, NULL, NULL, g_object_unref);
 
   self->settings = calls_settings_new ();
   // Load the contacts provider
