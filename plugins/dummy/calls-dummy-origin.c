@@ -106,15 +106,14 @@ struct DisconnectedData
 
 
 static void
-call_state_changed_cb (CallsDummyOrigin *self,
-                       CallsCallState    new_state,
-                       CallsCallState    old_state,
-                       CallsCall        *call)
+call_state_changed_cb (CallsCall        *call,
+                       GParamSpec       *pspec,
+                       CallsDummyOrigin *self)
 {
   g_assert (CALLS_IS_DUMMY_ORIGIN (self));
   g_assert (CALLS_IS_DUMMY_CALL (call));
 
-  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
+  if (calls_call_get_state (call) != CALLS_CALL_STATE_DISCONNECTED)
     return;
 
   remove_call (self, call, "Disconnected");
@@ -132,9 +131,9 @@ add_call (CallsDummyOrigin *self, const gchar *number, gboolean inbound)
 
   call = CALLS_CALL (dummy_call);
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
-  g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (call_state_changed_cb),
-                            self);
+  g_signal_connect (call, "notify::state",
+                    G_CALLBACK (call_state_changed_cb),
+                    self);
 
   self->calls = g_list_append (self->calls, dummy_call);
 
