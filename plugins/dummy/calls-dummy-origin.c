@@ -111,13 +111,11 @@ call_state_changed_cb (CallsDummyOrigin *self,
                        CallsCallState    old_state,
                        CallsCall        *call)
 {
-  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
-    {
-      return;
-    }
+  g_assert (CALLS_IS_DUMMY_ORIGIN (self));
+  g_assert (CALLS_IS_DUMMY_CALL (call));
 
-  g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (self));
-  g_return_if_fail (CALLS_IS_CALL (call));
+  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
+    return;
 
   remove_call (self, call, "Disconnected");
 }
