@@ -27,6 +27,7 @@
 #include "calls-manager.h"
 
 #include <cui-call.h>
+#include <cui-enums.h>
 
 enum {
   PROP_0,
@@ -41,8 +42,13 @@ enum {
   PROP_LAST_PROP
 };
 
-static GParamSpec *props[PROP_LAST_PROP];
+enum {
+  STATE_CHANGED,
+  N_SIGNALS,
+};
 
+static GParamSpec *props[PROP_LAST_PROP];
+static guint signals[N_SIGNALS];
 
 struct _CallsUiCallData
 {
@@ -54,6 +60,8 @@ struct _CallsUiCallData
   GTimer       *timer;
   gdouble       active_time;
   guint         timer_id;
+
+  CuiCallState state;
 };
 
 static void calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface);
@@ -91,7 +99,7 @@ calls_ui_call_data_get_state (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), CUI_CALL_STATE_UNKNOWN);
   g_return_val_if_fail (!!self->call, CUI_CALL_STATE_UNKNOWN);
 
-  return calls_call_state_to_cui_call_state (calls_call_get_state (self->call));
+  return self->state;
 }
 
 
@@ -206,21 +214,43 @@ on_timer_ticked (CallsUiCallData *self)
 
 
 static void
-on_notify_state (CallsUiCallData *self)
+set_state (CallsUiCallData *self,
+           CuiCallState     new_state)
 {
+  CuiCallState old_state;
+
   g_assert (CALLS_IS_UI_CALL_DATA (self));
 
-  if (calls_call_get_state (self->call) == CALLS_CALL_STATE_ACTIVE) {
+  if (self->state == new_state)
+    return;
+
+  old_state = self->state;
+  self->state = new_state;
+
+  if (new_state == CUI_CALL_STATE_ACTIVE) {
     self->timer = g_timer_new ();
     self->timer_id = g_timeout_add (500,
                                     G_SOURCE_FUNC (on_timer_ticked),
                                     self);
-  } else if (calls_call_get_state (self->call) == CALLS_CALL_STATE_DISCONNECTED) {
+  } else if (new_state == CUI_CALL_STATE_DISCONNECTED) {
     g_clear_handle_id (&self->timer_id, g_source_remove);
     g_clear_pointer (&self->timer, g_timer_destroy);
   }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
+
+  g_signal_emit (self, signals[STATE_CHANGED], 0, new_state, old_state);
+}
+
+
+static void
+on_notify_state (CallsUiCallData *self)
+{
+  CallsCallState state;
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  state = calls_call_get_state (self->call);
+  set_state (self, calls_call_state_to_cui_call_state (state));
 }
 
 
@@ -410,6 +440,24 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   g_object_class_override_property (object_class, PROP_ACTIVE_TIME, "active-time");
   props[PROP_ACTIVE_TIME] = g_object_class_find_property (object_class, "active-time");
+
+  /**
+   * CallsUiCallData::state-changed:
+   * @self: The #CallsUiCallData instance.
+   * @new_state: The new state of the call.
+   * @old_state: The old state of the call.
+   *
+   * This signal is emitted when the state of the call changes, for
+   * example when it's answered or when the call is disconnected.
+   */
+  signals[STATE_CHANGED] =
+    g_signal_new ("state-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  2, CUI_TYPE_CALL_STATE, CUI_TYPE_CALL_STATE);
+
 }
 
 CallsUiCallData *
