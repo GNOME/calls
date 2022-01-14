@@ -390,11 +390,15 @@ calls_call_set_state (CallsCall     *self,
 
   priv->state = state;
 
+  g_object_ref (G_OBJECT (self));
+
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_STATE]);
   g_signal_emit_by_name (CALLS_CALL (self),
                          "state-changed",
                          state,
                          old_state);
+
+  g_object_unref (G_OBJECT (self));
 }
 
 /**
