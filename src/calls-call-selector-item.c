@@ -65,24 +65,6 @@ call_state_changed_cb (CallsCallSelectorItem *self,
 }
 
 
-CallsCallSelectorItem *
-calls_call_selector_item_new (CuiCallDisplay *display)
-{
-  g_return_val_if_fail (CUI_IS_CALL_DISPLAY (display), NULL);
-
-  return g_object_new (CALLS_TYPE_CALL_SELECTOR_ITEM,
-                       "display", display,
-                       NULL);
-}
-
-
-CuiCallDisplay *
-calls_call_selector_item_get_display (CallsCallSelectorItem *item)
-{
-  g_return_val_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (item), NULL);
-  return item->display;
-}
-
 static CallsCall *
 display_get_call (CuiCallDisplay *display)
 {
@@ -198,3 +180,24 @@ calls_call_selector_item_class_init (CallsCallSelectorItemClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallSelectorItem, name);
   gtk_widget_class_bind_template_child (widget_class, CallsCallSelectorItem, status);
 }
+
+
+CallsCallSelectorItem *
+calls_call_selector_item_new (CuiCallDisplay *display)
+{
+  g_return_val_if_fail (CUI_IS_CALL_DISPLAY (display), NULL);
+
+  return g_object_new (CALLS_TYPE_CALL_SELECTOR_ITEM,
+                       "display", display,
+                       NULL);
+}
+
+
+CuiCallDisplay *
+calls_call_selector_item_get_display (CallsCallSelectorItem *item)
+{
+  g_return_val_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (item), NULL);
+  return item->display;
+}
+
+
