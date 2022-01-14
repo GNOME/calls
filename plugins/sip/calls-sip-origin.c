@@ -211,18 +211,17 @@ remove_calls (CallsSipOrigin *self,
 
 
 static void
-on_call_state_changed (CallsSipOrigin *self,
-                       CallsCallState  new_state,
-                       CallsCallState  old_state,
-                       CallsCall      *call)
+on_call_state_changed (CallsSipCall   *call,
+                       GParamSpec     *pspec,
+                       CallsSipOrigin *self)
 {
   g_assert (CALLS_IS_SIP_ORIGIN (self));
   g_assert (CALLS_IS_CALL (call));
 
-  if (new_state != CALLS_CALL_STATE_DISCONNECTED)
+  if (calls_call_get_state (CALLS_CALL (call)) != CALLS_CALL_STATE_DISCONNECTED)
     return;
 
-  remove_call (self, call, "Disconnected");
+  remove_call (self, CALLS_CALL (call), "Disconnected");
 }
 
 
@@ -263,9 +262,9 @@ add_call (CallsSipOrigin *self,
   call = CALLS_CALL (sip_call);
 
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
-  g_signal_connect_swapped (call, "state-changed",
-                            G_CALLBACK (on_call_state_changed),
-                            self);
+  g_signal_connect (call, "notify::state",
+                    G_CALLBACK (on_call_state_changed),
+                    self);
 
   if (!inbound) {
     calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
