@@ -7,7 +7,7 @@
 #include "setup-provider.h"
 #include "calls-dummy-origin.h"
 
-#define TEST_ORIGIN_NAME "Dummy origin"
+#define TEST_ORIGIN_NAME "Test Dummy origin"
 
 #define TEST_CALL_NUMBER "0123456789"
 
