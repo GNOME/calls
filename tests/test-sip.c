@@ -156,13 +156,13 @@ on_call_answer_cb (gpointer user_data)
 }
 
 static void
-on_autoreject_state_changed_cb (CallsCall     *call,
-                                CallsCallState new_state,
-                                CallsCallState old_state,
-                                gpointer       user_data)
+on_autoreject_state_changed (CallsCall  *call,
+                             GParamSpec *pspec,
+                             gpointer    user_data)
 {
-  g_assert_cmpint (old_state, ==, CALLS_CALL_STATE_INCOMING);
-  g_assert_cmpint (new_state, ==, CALLS_CALL_STATE_DISCONNECTED);
+  CallsCallState state = calls_call_get_state (call);
+
+  g_assert_cmpint (state, ==, CALLS_CALL_STATE_DISCONNECTED);
 
   g_object_unref (call);
 
@@ -233,8 +233,9 @@ on_incoming_call_autoreject_cb (CallsOrigin *origin,
   g_object_ref (call);
   g_idle_add ((GSourceFunc) on_call_hangup_cb, call);
 
-  g_signal_connect (call, "state-changed",
-                    (GCallback) on_autoreject_state_changed_cb, NULL);
+  g_signal_connect (call, "notify::state",
+                    G_CALLBACK (on_autoreject_state_changed),
+                    NULL);
 
   return G_SOURCE_REMOVE;
 }
