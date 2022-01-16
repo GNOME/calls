@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-31 11:15+0000\n"
-"PO-Revision-Date: 2022-01-10 16:36+0100\n"
+"POT-Creation-Date: 2022-01-11 12:27+0000\n"
+"PO-Revision-Date: 2022-01-15 17:59+0100\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
 #: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Apeluri"
@@ -97,41 +97,42 @@ msgstr "Transport"
 msgid "Use for Phone Calls"
 msgstr "Folosește pentru apeluri"
 
-#: src/calls-application.c:546
+#: src/calls-application.c:548
 #, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "S-a încercat un URI telefonic greșit „%s”"
+#| msgid "Tried invalid tel URI `%s'"
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "S-a încercat apelarea un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "Numele modulului de utilizat ca furnizor de apeluri"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
@@ -216,11 +217,11 @@ msgstr "Sună din nou"
 msgid "VoIP Accounts"
 msgstr "Conturi VoIP"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Adaugă conturi VoIP"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -231,7 +232,7 @@ msgstr ""
 "relativ nouă și nu este încă completă (de exemplu, nu există conținut media "
 "cifrat)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Adaugă un cont"
 
