@@ -62,29 +62,6 @@ calls_ui_call_data_get_id (CuiCall *call_data)
 }
 
 static CuiCallState
-calls_state_to_cui_call_state (CallsCallState state)
-{
-  switch (state) {
-  case CALLS_CALL_STATE_ACTIVE:
-    return CUI_CALL_STATE_ACTIVE;
-  case CALLS_CALL_STATE_HELD:
-    return CUI_CALL_STATE_HELD;
-  case CALLS_CALL_STATE_DIALING:
-    return CUI_CALL_STATE_DIALING;
-  case CALLS_CALL_STATE_ALERTING:
-    return CUI_CALL_STATE_DIALING;
-  case CALLS_CALL_STATE_INCOMING:
-    return CUI_CALL_STATE_INCOMING;
-  case CALLS_CALL_STATE_WAITING:
-    return CUI_CALL_STATE_INCOMING;
-  case CALLS_CALL_STATE_DISCONNECTED:
-    return CUI_CALL_STATE_DISCONNECTED;
-  default:
-    return CUI_CALL_STATE_UNKNOWN;
-  }
-}
-
-static CuiCallState
 calls_ui_call_data_get_state (CuiCall *call_data)
 {
   CallsUiCallData *self = (CallsUiCallData *) call_data;
@@ -92,7 +69,7 @@ calls_ui_call_data_get_state (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), CUI_CALL_STATE_UNKNOWN);
   g_return_val_if_fail (!!self->call, CUI_CALL_STATE_UNKNOWN);
 
-  return calls_state_to_cui_call_state (calls_call_get_state (self->call));
+  return calls_call_state_to_cui_call_state (calls_call_get_state (self->call));
 }
 
 
@@ -383,3 +360,28 @@ calls_ui_call_data_get_call (CallsUiCallData *self)
 
   return self->call;
 }
+
+
+CuiCallState
+calls_call_state_to_cui_call_state (CallsCallState state)
+{
+  switch (state) {
+  case CALLS_CALL_STATE_ACTIVE:
+    return CUI_CALL_STATE_ACTIVE;
+  case CALLS_CALL_STATE_HELD:
+    return CUI_CALL_STATE_HELD;
+  case CALLS_CALL_STATE_DIALING:
+    return CUI_CALL_STATE_DIALING;
+  case CALLS_CALL_STATE_ALERTING:
+    return CUI_CALL_STATE_DIALING;
+  case CALLS_CALL_STATE_INCOMING:
+    return CUI_CALL_STATE_INCOMING;
+  case CALLS_CALL_STATE_WAITING:
+    return CUI_CALL_STATE_INCOMING;
+  case CALLS_CALL_STATE_DISCONNECTED:
+    return CUI_CALL_STATE_DISCONNECTED;
+  default:
+    return CUI_CALL_STATE_UNKNOWN;
+  }
+}
+
