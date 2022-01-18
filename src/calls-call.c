@@ -38,10 +38,10 @@
  *
  * This is the interface to a call.  It has a id, name and a
  * state.  Only the state changes after creation.  If the state is
- * #CALL_CALL_STATE_INCOMING, the call can be answered with #answer.
- * The call can also be hung up at any time with #hang_up.
+ * #CALLS_CALL_STATE_INCOMING, the call can be answered with #calls_call_answer.
+ * The call can also be hung up at any time with #calls_call_hang_up.
  *
- * DTMF tones can be played the call using #send_dtmf
+ * DTMF tones can be played to the call using #calls_call_send_dtmf_tone
  * Valid characters for the key are 0-9, '*', '#', 'A',
  * 'B', 'C' and 'D'.
  */
