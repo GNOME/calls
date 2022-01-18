@@ -195,7 +195,7 @@ folks_prepare_cb (GObject      *obj,
 static void
 on_contacts_actions_updated (CallsContactsProvider *self)
 {
-  static const char *contact_action_name = "new-contact-data";
+  const char *contact_action_name = "new-contact-data";
 
   g_assert (CALLS_IS_CONTACTS_PROVIDER (self));
 
