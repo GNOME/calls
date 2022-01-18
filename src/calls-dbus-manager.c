@@ -13,6 +13,7 @@
 #include "calls-call-dbus.h"
 #include "calls-dbus-manager.h"
 #include "calls-manager.h"
+#include "calls-ui-call-data.h"
 
 /**
  * SECTION:calls-dbus-manager
@@ -197,6 +198,20 @@ on_handle_call_silence (CallsDBusCallsCall    *skeleton,
 }
 
 
+static gboolean
+from_call_to_cui_state (GBinding     *binding,
+                        const GValue *from_value,
+                        GValue       *to_value,
+                        gpointer      unused)
+{
+  CallsCallState call_state = (CallsCallState) g_value_get_uint (from_value);
+  CuiCallState cui_state = calls_call_state_to_cui_call_state (call_state);
+  g_value_set_uint (to_value, cui_state);
+
+  return TRUE;
+}
+
+
 static void
 call_added_cb (CallsDBusManager *self, CallsCall *call)
 {
@@ -220,7 +235,8 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
                     "object-signal::handle-send_dtmf", G_CALLBACK (on_handle_call_send_dtmf), call,
                     "object_signal::handle-silence", G_CALLBACK (on_handle_call_silence), call,
                     NULL);
-  g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
+  g_object_bind_property_full (call, "state", iface, "state", G_BINDING_SYNC_CREATE,
+                               from_call_to_cui_state, NULL, NULL, NULL);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "id", iface, "id", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "protocol", iface, "protocol", G_BINDING_SYNC_CREATE);
