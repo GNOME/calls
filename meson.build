@@ -92,6 +92,7 @@ test_c_args = [
   '-Wformat-security',
   '-Winit-self',
   '-Wmaybe-uninitialized',
+  '-Wmisleading-indentation',
   '-Wmissing-include-dirs',
   '-Wmissing-noreturn',
   '-Wnested-externs',
