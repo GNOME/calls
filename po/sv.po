@@ -3,22 +3,22 @@
 # This file is distributed under the same license as the Calls package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2020.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022.
-# Luna Jernberg <droidbittin@gmail.com>, 2020, 2021.
+# Luna Jernberg <droidbittin@gmail.com>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-11 12:27+0000\n"
-"PO-Revision-Date: 2022-01-11 21:33+0100\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-01-18 13:39+0100\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
 #: src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -247,6 +247,10 @@ msgstr "_Ta bort samtal"
 #: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Kopiera nummer"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_Lägg till kontakt"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
