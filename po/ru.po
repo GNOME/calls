@@ -1,0 +1,324 @@
+# Russian translation for calls.
+# Copyright (C) 2022 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Deissson <lebami009@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-01-18 12:11+0300\n"
+"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "Вызовы"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Телефон"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Телефонный номеронабиратель и обработчик вызовов"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr ""
+"Telephone;Call;Phone;Dial;Dialer;PSTN;Телефон;Вызовы;Набор;Номера;Вызов;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Вызовы (демон)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr ""
+"Устройство для набора номера телефона и обработчик вызовов (режим демона)"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Добавить Учетную Запись"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Войти"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Управление Учетной Записью"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Применить"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Удалить"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Сервер"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Отображать имя"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Опцианально"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID Пользователя"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Пароль"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Порт"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Транспорт"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Использовать для Телефонных Вызовов"
+
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Попытка набрать недопустимый телефонный URI `%s'"
+
+#: src/calls-application.c:625
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Неизвестно как открыть `%s'"
+
+#: src/calls-application.c:679
+msgid "The name of the plugin to use as a call provider"
+msgstr "Имя плагина для использования в качестве поставщика вызовов"
+
+#: src/calls-application.c:680
+msgid "PLUGIN"
+msgstr "ПЛАГИН"
+
+#: src/calls-application.c:685
+msgid "Whether to present the main window on startup"
+msgstr "Показывать ли главное окно при запуске"
+
+#: src/calls-application.c:691
+msgid "Dial a telephone number"
+msgstr "Набрать телефонный номер"
+
+#: src/calls-application.c:692
+msgid "NUMBER"
+msgstr "НОМЕР"
+
+#: src/calls-application.c:697
+msgid "Enable verbose debug messages"
+msgstr "Включить подробные отладочные сообщения"
+
+#: src/calls-application.c:703
+msgid "Print current version"
+msgstr "Вывести текущую версию"
+
+#: src/calls-best-match.c:357
+msgid "Anonymous caller"
+msgstr "Анонимный абонент"
+
+#: src/calls-call-record-row.c:110
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"вчера"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr ""
+"Deissson <lebami009@gmail.com>, 2022\n"
+"Aleksandr Melman <alexmelman88@gmail.com>, 2022"
+
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No voice-capable modem available"
+msgstr ""
+"Невозможно совершать вызовы: Нет доступного модема с поддержкой голосовой "
+"связи"
+
+#: src/calls-main-window.c:326
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Невозможно совершать вызовы: Нет модема или учетной записи VoIP"
+
+#: src/calls-main-window.c:331
+msgid "Can't place calls: No backend service"
+msgstr "Невозможно совершать вызовы: Нет внутреннего сервиса"
+
+#: src/calls-main-window.c:335
+msgid "Can't place calls: No plugin"
+msgstr "Невозможно совершать вызовы: Нет плагина"
+
+#: src/calls-main-window.c:375
+msgid "Contacts"
+msgstr "Контакты"
+
+#: src/calls-main-window.c:385
+msgid "Dial Pad"
+msgstr "Панель набора номера"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:394
+msgid "Recent"
+msgstr "Недавние"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "Пропущенный вызов"
+
+#. %s is a name here
+#: src/calls-notifier.c:69
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Пропущенный вызов от <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:72
+#, c-format
+msgid "Missed call from %s"
+msgstr "Пропущенный вызов от %s"
+
+#: src/calls-notifier.c:74
+msgid "Missed call from unknown caller"
+msgstr "Пропущенный вызов от неизвестного абонента"
+
+#: src/calls-notifier.c:80
+msgid "Call back"
+msgstr "Перезвонить"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "Учетные записи VoIP"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "Добавление учетных записей VoIP"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Вы можете добавить учетную запись VoIP здесь. Это позволит вам совершать и "
+"принимать VoIP-вызовы с использованием протокола SIP. Эта функция все еще "
+"относительно новая и еще не завершена (т.е. нет зашифрованных носителей)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+msgid "_Add Account"
+msgstr "_Добавить Учетную Запись"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
+msgid "Call"
+msgstr "Позвонить"
+
+#: src/ui/call-record-row.ui:103
+msgid "_Delete Call"
+msgstr "_Удалить Вызов"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:108
+msgid "_Copy number"
+msgstr "_Скопировать номер"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_Добавить контакт"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "На удержании"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "Контактов Не Найдено"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "Нет Недавних Вызовов"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Отмена"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_Закрыть"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Отправить"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_VoIP Учетные Записи"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_Сочетания клавиш"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_Помощь"
+
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_О Программе"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "Введите VoIP-адрес"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "Введите номер"
+
+#: src/ui/new-call-box.ui:97
+msgid "Dial"
+msgstr "Набрать"
+
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "Удалить символ перед курсором"
+
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "Учетная запись SIP"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "Новый вызов"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "Назад"
