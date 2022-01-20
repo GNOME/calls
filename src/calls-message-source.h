@@ -41,7 +41,7 @@ struct _CallsMessageSourceInterface
 
 /**
  * CALLS_EMIT_MESSAGE:
- * @obj: an object which can be cast to a #CallsMesssageSource
+ * @obj: an object which can be cast to a #CallsMessageSource
  * @text: the message text as a string
  * @type: the type of the message
  *
@@ -57,7 +57,7 @@ struct _CallsMessageSourceInterface
 
 /**
  * CALLS_ERROR:
- * @obj: an object which can be cast to a #CallsMesssageSource
+ * @obj: an object which can be cast to a #CallsMessageSource
  * @error: a pointer to a #GError containing the error message
  *
  * Emit a message signal with an error type, the text of which is
