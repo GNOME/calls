@@ -21,16 +21,44 @@
 
 <node>
 
+  <!--
+      org.gnome.Calls.Call:
+
+      This objects lets applications accept, reject calls
+      and query call properties like the call state, the id of the remote
+      peer and more.
+  -->
   <interface name="org.gnome.Calls.Call">
+    <!--
+        Accept:
+
+        Accept the incoming call.
+    -->
     <method name="Accept"/>
+    <!--
+        Hangup:
+
+        Hang up the call
+    -->
     <method name="Hangup"/>
+    <!--
+        SendDtmf:
+        @tone: A one character string. One of: 0-9,A-D,* or #.
+
+        Send DTMF tone.
+    -->
     <method name="SendDtmf">
-      <arg name="Tone" type="s" direction="in">
+      <arg name="tone" type="s" direction="in">
         <doc:doc>
           <doc:summary>A one character string. One of: 0-9,A-D,* or #.</doc:summary>
         </doc:doc>
       </arg>
     </method>
+    <!--
+        Silence:
+
+        Silence the ringing of incoming call
+    -->
     <method name="Silence"/>
     <doc:doc>
       <doc:summary>Silence the ringing</doc:summary>
@@ -47,6 +75,10 @@
         Unrecognized values should be considered equal to Unknown.
     -->
     <property name="State" type="u" access="read"/>
+    <!--
+        Id:
+        The ID identifying the call, e.g. a phone number
+    -->
     <property name="Id" type="s" access="read">
       <doc:doc>
         <doc:description>
@@ -54,13 +86,23 @@
         </doc:description>
       </doc:doc>
     </property>
+    <!--
+        DisplayName:
+
+        The DisplayName of the calling party, e.g. from the address book
+    -->
     <property name="DisplayName" type="s" access="read">
       <doc:doc>
         <doc:description>
-          <doc:para>The DisplayName of the calling party, e.g. from address book</doc:para>
+          <doc:para>The DisplayName of the calling party, e.g. from the address book</doc:para>
         </doc:description>
       </doc:doc>
     </property>
+    <!--
+        ImagePath:
+
+        The path to an (avatar) image to display for this call.
+    -->
     <property name="ImagePath" type="s" access="read">
       <doc:doc>
         <doc:description>
@@ -68,6 +110,11 @@
         </doc:description>
       </doc:doc>
     </property>
+    <!--
+        Protocol:
+
+        The protocol used for this call, e.g. "tel" or "sip".
+    -->
     <property name="Protocol" type="s" access="read">
       <doc:doc>
         <doc:description>
@@ -75,6 +122,11 @@
         </doc:description>
       </doc:doc>
     </property>
+    <!--
+        Encrypted:
+
+        Whether this call is encrypted.
+    -->
     <property name="Encrypted" type="b" access="read">
       <doc:doc>
         <doc:description>
@@ -83,6 +135,11 @@
         </doc:description>
       </doc:doc>
     </property>
+    <!--
+        CanDtmf:
+
+        Whether this call is capable of sending DTMF.
+    -->
     <property name="CanDtmf" type="b" access="read">
       <doc:doc>
         <doc:description>
