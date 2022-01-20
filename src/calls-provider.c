@@ -174,7 +174,6 @@ calls_provider_get_status (CallsProvider *self)
 /**
  * calls_provider_get_origins:
  * @self: a #CallsProvider
- * @error: a #GError, or #NULL
  *
  * Get the list of #CallsOrigin interfaces offered by this provider.
  *
