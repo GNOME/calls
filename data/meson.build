@@ -42,6 +42,7 @@ if appstreamcli.found()
   test('Validate metainfo file', appstreamcli,
        args: ['validate',
               '--pedantic',
+              '--no-net',
               join_paths(meson.current_source_dir(),
                          'org.gnome.Calls.metainfo.xml')
              ])
