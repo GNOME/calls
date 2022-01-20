@@ -104,7 +104,6 @@ DEFINE_ORIGIN_GETTER(name, char *, NULL);
 /**
  * calls_origin_get_calls:
  * @self: a #CallsOrigin
- * @error: a #GError, or #NULL
  *
  * Get the list of current calls.
  *
