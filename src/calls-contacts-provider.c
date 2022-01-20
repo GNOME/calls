@@ -36,6 +36,18 @@
 
 #define DBUS_BUS_NAME "org.gnome.Contacts"
 
+
+/**
+ * SECTION:calls-contacts-provider
+ * @short_description: Provides contact information
+ * @Title: CallsContactsProvider
+ *
+ * This object tracks contacts reported by libfolks,
+ * allow to perform contact lookups and provides functions
+ * for adding new contacts.
+ */
+
+
 typedef struct
 {
   GeeIterator           *iter;
@@ -292,6 +304,14 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
   object_class->set_property = calls_contacts_provider_set_property;
   object_class->finalize = calls_contacts_provider_finalize;
 
+  /**
+   * CallsContactsProvider::added:
+   * @self: The #CallsContactsProvider instance
+   * @individual: A #FolksIndividual
+   *
+   * This signal is emitted when the backend reports a new contact
+   * having been added.
+   */
   signals[SIGNAL_ADDED] =
    g_signal_new ("added",
                  G_TYPE_FROM_CLASS (klass),
@@ -301,7 +321,14 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
                  G_TYPE_NONE,
                  1,
                  FOLKS_TYPE_INDIVIDUAL);
-
+  /**
+   * CallsContactsProvider::removed:
+   * @self: The #CallsContactsProvider instance
+   * @individual: A #FolksIndividual
+   *
+   * This signal is emitted when the backend reports a contact
+   * having been removed.
+   */
   signals[SIGNAL_REMOVED] =
    g_signal_new ("removed",
                  G_TYPE_FROM_CLASS (klass),
@@ -312,6 +339,12 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
                  1,
                  FOLKS_TYPE_INDIVIDUAL);
 
+  /**
+   * CallsContactsProvider::settings:
+   *
+   * The settings are used to get the country code
+   * which is used for contact lookups.
+   */
   props[PROP_SETTINGS] =
     g_param_spec_object ("settings",
                          "settings",
@@ -320,6 +353,11 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY |
                          G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsContactsProvider::can-add-contacts:
+   *
+   * Whether we can add contacts or not.
+   */
   props[PROP_CAN_ADD_CONTACTS] =
     g_param_spec_boolean ("can-add-contacts",
                           "Can add contacts",
@@ -423,6 +461,17 @@ calls_contacts_provider_lookup_id (CallsContactsProvider *self,
   return g_steal_pointer (&best_match);
 }
 
+/**
+ * calls_contacts_provider_consume_iter_on_idle:
+ * @iter: A #GeeIterator
+ * @callback: A callback to be called on all items of @iter
+ * @user_data: A pointer to be passed to the @callback
+ *
+ * Queue's processing of all #FolksIndividual items of @iter with @callback one
+ * individual per event loop iteration. Can be used to split up operating
+ * on potentially large set of individuals to prevent the
+ * event loop from being blocked for too long making the UI unresponsive.
+ */
 void
 calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
                                               IdleCallback callback,
@@ -439,7 +488,12 @@ calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
                    g_free);
 }
 
-
+/**
+ * calls_contacts_provider_get_can_add_contacts:
+ * @self: The #CallsContactsProvider
+ *
+ * Returns: %TRUE if contacts can be added, %FALSE otherwise
+ */
 gboolean
 calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self)
 {
@@ -448,7 +502,14 @@ calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self)
   return self->can_add_contacts;
 }
 
-
+/**
+ * calls_contacts_provider_add_new_contact:
+ * @self: The #CallsContactsProvider
+ * @phone_number: The phone number of the new contact
+ *
+ * Opens GNOME contacts and prepopulates the phone number for a new contact
+ * to be added.
+ */
 void
 calls_contacts_provider_add_new_contact (CallsContactsProvider *self,
                                          const char            *phone_number)
