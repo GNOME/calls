@@ -469,7 +469,7 @@ calls_call_get_inbound (CallsCall *self)
  *
  * Get the protocol of the call (i.e. "tel", "sip")
  *
- * Returns: The protocol used or %NULL when unknown
+ * Returns: (transfer none): The protocol used or %NULL when unknown
  */
 const char *
 calls_call_get_protocol (CallsCall *self)
