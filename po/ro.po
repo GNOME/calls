@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-11 12:27+0000\n"
-"PO-Revision-Date: 2022-01-15 17:59+0100\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-01-18 16:01+0100\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -99,7 +99,6 @@ msgstr "Folosește pentru apeluri"
 
 #: src/calls-application.c:548
 #, c-format
-#| msgid "Tried invalid tel URI `%s'"
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "S-a încercat apelarea un URI telefonic greșit „%s”"
 
@@ -249,6 +248,11 @@ msgstr "Șt_erge apelul"
 #: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Copiază numărul"
+
+#: src/ui/call-record-row.ui:113
+#| msgid "_Add Account"
+msgid "_Add contact"
+msgstr "_Adaugă un contact"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
