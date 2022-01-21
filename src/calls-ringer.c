@@ -370,7 +370,7 @@ call_added_cb (CallsRinger *self,
   self->calls = g_list_append (self->calls, call);
 
   g_signal_connect_swapped (call,
-                            "state-changed",
+                            "notify::state",
                             G_CALLBACK (update_ring),
                             self);
   g_signal_connect_swapped (call,
