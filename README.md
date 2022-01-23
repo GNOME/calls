@@ -33,6 +33,8 @@ with `-Ggtk_doc=true`
     ninja -C _build
     ninja -C _build calls-doc
 
+You can also browse the documentation [online](https://gnome.pages.gitlab.gnome.org/calls/)
+
 ## Running from the source tree
 
 The most comfortable way to run from the source tree is by using the provided
