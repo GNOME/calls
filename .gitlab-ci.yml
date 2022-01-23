@@ -6,6 +6,7 @@ stages:
  - test
  - package
  - test-package
+ - deploy
 
 variables:
   L5_DOCKER_IMAGE: debian:bookworm
@@ -127,3 +128,15 @@ flatpak:master:
     MESON_ARGS: ""
     APP_ID: "org.gnome.Calls"
     BUNDLE: "calls.flatpak"
+
+pages:
+  stage: deploy
+  needs:
+    - build-gtkdoc
+  script:
+    mv _reference/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
