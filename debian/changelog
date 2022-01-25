@@ -1,3 +1,154 @@
+gnome-calls (42~beta.0) byzantium; urgency=medium
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * sip: origin: Prevent dialing when not online
+  * in-app-notification: Codestyle
+  * in-app-notification: Use DEFAULT_TIMEOUT_SECONDS as the default timeout
+  * in-app-notification: Use unsigned integers for timeout property
+  * in-app-notification: Use g_clear_* instead of emulating it
+  * call: Codestyle
+  * ofono: call: Codestyle
+  * dummy: call: Codestyle
+  * mm: call: Codestyle
+  * test: call: Codestyle
+  * call-window: Use g_assert in private functions
+  * call: Add unknown state
+  * call: Move inbound property into base class
+  * call: Move state property into base class
+  * call: Move id property into base class
+  * call: Move name property to base class
+  * call: Use protocol fallback
+  * gitlab-ci: Use prebuilt containers
+  * ci: Use prebuilt debian images
+  * project: Do not allow deprecated gtk/gdk symbols
+  * best-match: Fix header include
+  * sip: codecs: Fix transfer annotation of media_codecs_get_candidates()
+  * settings: Chain up to parents constructed() early
+  * settings: Add docstring for autoload-plugins setter and getter
+  * test: sip: Add debug messages
+  * settings: Add GSetting for preferred audio codecs
+  * media-codecs: Add codec availability check to public API
+  * media-codecs: Clarify that codec availability should be checked before use
+  * media-manager: Take preferred audio codecs into account for SDP
+  * sip: origin: Include address in warning when we cannot dial
+  * new-call-box: Decide if numeric input is needed based on the origins protocol
+  * origin: Get rid of "numeric-addresses" property
+  * sip: origin: Add property tracking usage for tel URIs
+  * sip-account-widget: Add switch to specify account can handle tel URI
+  * sip: origin: Pass telephone number to the call object
+  * sip: origin: Fix host being passed as number
+  * meson: Don't use deprecated Dependency.get_pkgconfig_variable()
+  * meson: Don't use deprecated meson.build_root()
+  * meson: Don't use deprecated meson.source_root()
+  * sip: origin: Decouple TLS usage from target address
+  * sip: call: Remove unnecessary code
+  * sip: Use per origin IP instead of a global IP
+  * sip: media-manager: Get rid of global session IP
+  * sip: origin: Purge own IP when uninitialising account
+  * sip: origin: Codestyle
+  * manager: Codestyle
+  * util: Use pragma once instead of include guard
+  * message-source: Use pragma once instead of include guard
+  * message-source: Clean up includes
+  * message-source: Get rid of unnecessary semicolon
+  * manager: Clean up includes
+  * application: Sort includes alphabetically
+  * message-source: Add API to emit message
+  * manager: Remove the "error" signal and adapt to changes
+  * manager: Implement message source interface
+  * sip: origin: Make go_online() a no-op in the direct connection case
+  * account: Rework account states
+  * account: Add message emission API
+  * sip: origin: Emit user feedback on state change
+  * account-overview: Show notification on account message
+  * account-overview: Reindent ui file
+  * manager: Propagate messages from account
+  * contacts-provider: Sort includes
+  * contacts-provider: Codestyle
+  * contacts-provider: Remove unused config.h include
+  * contacts-provider: Add GDBusActionGroup to query if contacts can be added
+  * contacts-provider: Add API to add new contacts
+  * record-row: Add context menu entry for adding a new contact
+  * potfiles: Add src/account.c
+  * call: Fix typos in section docstring
+  * meson: Warn when using misleading indentation
+  * dbus: document states
+  * ui-call-data: Don't use deprecated states in mapping
+  * ui-call-data: Add call state mapping to public API
+  * dbus-manager: Use CuiCallStates instead of CallsCallStates
+  * meson: Don't access the network when validating metadata
+  * message-source: Fix typo
+  * provider: Remove unused parameter from docstring
+  * origin: Remove unused parameter from docstring
+  * contacts-provider: Overhaul documentation
+  * dbus: Document interface in a way that gtk-doc can use
+  * contacts-provider: Remove static from action name string
+  * call-selector-item: Codestyle
+  * ui-call-data: Add license header
+  * ui-call-data: Remove unused struct
+  * manager: Use ternary operator instead of if/else block
+  * best-match: Fix potential memory leak
+  * tests: dummy origin: Use correct origin
+  * dummy: origin: Use g_assert in non public functions
+  * call: Temporarily hold ref while setting new state
+  * dummy: origin: Switch to state notify signal
+  * mm: origin: Switch to state notify signal
+  * sip: origin: Switch to state notify signal
+  * tests: sip: Switch to state notify signal
+
+  [ Fabio Tomat ]
+  * Update Friulian translation
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Luna Jernberg ]
+  * Update Swedish Translation
+  * Update Swedish translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Christian Kirbach ]
+  * Update German translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ piotr-maker ]
+  * Add Polish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+  * Update Romanian translation
+  * Update Romanian translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+  * Update Italian translation
+
+  [ Matej Urbančič ]
+  * Update Slovenian translation
+
+  [ Aleksandr Melman ]
+  * Add Russian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 25 Jan 2022 13:55:36 +0100
+
 gnome-calls (42~alpha.0) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

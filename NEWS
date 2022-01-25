@@ -1,3 +1,38 @@
+Calls 42.beta.0
+---------------
+Released: 25 January 2021
+
+New features:
+=============
+
+* SIP providers can now handle tel URIs
+* Allow adding contacts from call history
+
+Maybe noteworthy:
+=================
+
+* In app feedback when SIP accounts go online/offline
+* Can set preferred audio codecs via gsetting
+
+Translation updates:
+====================
+ - Dutch (Nathan Follens)
+ - Finnish (Jiri Grönroos)
+ - Friulian (Fabio Tomat)
+ - Galician (Fran Dieguez)
+ - German (Christian Kirbach)
+ - Italian (Vittorio Monti)
+ - Persian (Danial Behzadi)
+ - Polish (Piotr Włodarski)
+ - Portuguese (Hugo Carvalho)
+ - Romanian (Daniel Șerbănescu)
+ - Russian (Aleksandr Melman)
+ - Slovenian (Matej Urbančič)
+ - Swedish (Luna Jernberg)
+ - Ukrainian (Yuri Chornoivan)
+
+The detailed changes can be found in debian/changelog
+
 Calls 42.alpha.0
 ----------------
 Released: 12 December 2021
