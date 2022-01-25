@@ -54,7 +54,6 @@
                 <property name="margin_bottom">8</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="action-name">app.dial</property>
                 <style>
                   <class name="image-button"/>
                 </style>

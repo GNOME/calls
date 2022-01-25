@@ -73,19 +73,6 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 
-static gboolean
-string_to_variant (GBinding *binding,
-                   const GValue *from_value,
-                   GValue *to_value)
-{
-  const gchar *target = g_value_get_string (from_value);
-  GVariant *variant = g_variant_new_string (target);
-
-  g_value_take_variant (to_value, variant);
-  return TRUE;
-}
-
-
 static void
 nice_time (GDateTime *t,
            gchar **nice,
@@ -359,7 +346,6 @@ setup_contact (CallsCallRecordRow *self)
     gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
     g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), FALSE);
   } else {
-    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), "app.dial");
     g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), TRUE);
   }
 }
@@ -445,22 +431,28 @@ constructed (GObject *object)
   gboolean inbound;
   GDateTime *answered;
   GDateTime *end;
+  g_autofree char *target_name = NULL;
+  g_autofree char *protocol = NULL;
+  g_autofree char *action_name = NULL;
 
   g_object_get (G_OBJECT (self->record),
                 "inbound", &inbound,
                 "answered", &answered,
                 "end", &end,
+                "protocol", &protocol,
                 NULL);
 
-  g_object_bind_property_full (self->record,
-                               "target",
-                               self->button,
-                               "action-target",
-                               G_BINDING_SYNC_CREATE,
-                               (GBindingTransformFunc) string_to_variant,
-                               NULL,
-                               NULL,
-                               NULL);
+  /* Fall back to "app.dial-tel" action if no protocol was given */
+  if (protocol)
+    action_name = g_strdup_printf ("app.dial-%s", protocol);
+  else
+    action_name = g_strdup ("app.dial-tel");
+
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), action_name);
+
+  /* TODO add origin ID to action target */
+  gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
+                                    "(ss)", self->target, "");
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
