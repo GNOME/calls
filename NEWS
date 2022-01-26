@@ -1,3 +1,16 @@
+Calls 42.beta.1
+---------------
+Released: 26 January 2021
+
+Maybe noteworthy:
+=================
+
+* Bugfix release
+* Updated libcall-ui to v0.0.1
+
+
+The detailed changes can be found in debian/changelog
+
 Calls 42.beta.0
 ---------------
 Released: 25 January 2021

@@ -62,6 +62,13 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="42.beta.1" date="2022-01-26">
+        <description>
+          <p>
+            Bugfix release and new translations from libcall-ui.
+          </p>
+        </description>
+      </release>
       <release version="42.beta.0" date="2022-01-25">
         <description>
           <p>

@@ -1,3 +1,12 @@
+gnome-calls (42~beta.1) byzantium; urgency=medium
+
+  * ci: Deploy documentation as gitlab pages
+  * readme: Mention that documentation is available as gitlab page
+  * dbus-manager: Fix critical when transforming call states
+  * Update libcall-ui subproject to v0.0.1
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Wed, 26 Jan 2022 14:30:38 +0100
+
 gnome-calls (42~beta.0) byzantium; urgency=medium
 
   [ Hugo Carvalho ]
@@ -147,7 +156,7 @@ gnome-calls (42~beta.0) byzantium; urgency=medium
   [ Aleksandr Melman ]
   * Add Russian translation
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 25 Jan 2022 13:55:36 +0100
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Tue, 25 Jan 2022 13:55:36 +0100
 
 gnome-calls (42~alpha.0) byzantium; urgency=medium
 
