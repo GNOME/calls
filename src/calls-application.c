@@ -324,9 +324,11 @@ static void
 manager_state_changed_cb (GApplication *application)
 {
   GAction* dial_action = g_action_map_lookup_action (G_ACTION_MAP (application), "dial");
-  CallsManagerState state = calls_manager_get_state (calls_manager_get_default ());
+  CallsManagerFlags state_flags = calls_manager_get_state_flags (calls_manager_get_default ());
+  gboolean enabled = (state_flags & CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM) ||
+    (state_flags & CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT);
 
-  g_simple_action_set_enabled (G_SIMPLE_ACTION (dial_action), state == CALLS_MANAGER_STATE_READY);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (dial_action), enabled);
 }
 
 static const GActionEntry actions[] =

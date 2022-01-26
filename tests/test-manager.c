@@ -32,7 +32,7 @@ test_calls_manager_without_provider (void)
   g_autoptr (CallsManager) manager = calls_manager_new ();
   g_assert_true (CALLS_IS_MANAGER (manager));
 
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 
   origins = calls_manager_get_origins (manager);
   no_origins = g_list_model_get_n_items (origins);
@@ -61,7 +61,7 @@ test_calls_manager_dummy_provider (void)
   g_autoptr (CallsOrigin) origin = NULL;
 
   g_assert_true (CALLS_IS_MANAGER (manager));
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 
   origins = calls_manager_get_origins (manager);
   g_assert_true (origins);
@@ -70,7 +70,10 @@ test_calls_manager_dummy_provider (void)
   calls_manager_add_provider (manager, "dummy");
   g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "dummy"));
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_READY);
+  /* Dummy plugin fakes being a modem */
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==,
+                    CALLS_MANAGER_FLAGS_HAS_CELLULAR_PROVIDER |
+                    CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM);
 
   g_assert_cmpuint (g_list_model_get_n_items (origins), >, 0);
   g_assert_null (calls_manager_get_calls (manager));
@@ -104,7 +107,7 @@ test_calls_manager_dummy_provider (void)
   g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
   g_assert_cmpuint (g_list_model_get_n_items (origins_tel), ==, 0);
 
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 }
 
 static void
@@ -114,13 +117,13 @@ test_calls_manager_mm_provider (void)
   g_autoptr (CallsManager) manager = calls_manager_new ();
   g_assert_true (CALLS_IS_MANAGER (manager));
 
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 
   calls_manager_add_provider (manager, "mm");
   g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "mm"));
 
-  g_assert_cmpuint (calls_manager_get_state (manager), >, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), >, CALLS_MANAGER_FLAGS_UNKNOWN);
 
   g_assert_null (calls_manager_get_calls (manager));
 
@@ -129,7 +132,7 @@ test_calls_manager_mm_provider (void)
   g_assert_cmpuint (g_list_model_get_n_items (origins_tel), ==, 0);
 
   calls_manager_remove_provider (manager, "mm");
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 }
 
 static void
@@ -148,7 +151,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
   origins = calls_manager_get_origins (manager);
   g_assert_true (G_IS_LIST_MODEL (origins));
 
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 
   origins_tel = calls_manager_get_suitable_origins (manager, "tel:+123456789");
   g_assert_nonnull (origins_tel);
@@ -167,6 +170,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
   g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "sip"));
   g_assert_true (calls_manager_is_modem_provider (manager, "sip") == FALSE);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_HAS_VOIP_PROVIDER);
 
   /* Still no origins */
   origins_tel = calls_manager_get_suitable_origins (manager, "tel:+123456789");
@@ -178,11 +182,8 @@ test_calls_manager_multiple_providers_mm_sip (void)
   origins_sips = calls_manager_get_suitable_origins (manager, "sips:bob@example.org");
   g_assert_cmpuint (g_list_model_get_n_items (origins_sips), ==, 0);
 
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_ORIGIN);
-
   /**
-   * If we now load the MM plugin, the manager state should be *_STATE_NO_VOICE_MODEM
-   * (unless run on a phone I guess?)
+   * If we now load the MM plugin, the manager flag _HAS_CELLULAR_PROVIDER should be set
    * TODO DBus mock to add modems
    * see https://source.puri.sm/Librem5/calls/-/issues/280
    * and https://source.puri.sm/Librem5/calls/-/issues/178
@@ -190,7 +191,9 @@ test_calls_manager_multiple_providers_mm_sip (void)
   calls_manager_add_provider (manager, "mm");
   g_assert_true (calls_manager_has_any_provider (manager));
   g_assert_true (calls_manager_has_provider (manager, "mm"));
-  g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
+  g_assert_cmpuint (calls_manager_get_state_flags (manager), ==,
+                    CALLS_MANAGER_FLAGS_HAS_VOIP_PROVIDER |
+                    CALLS_MANAGER_FLAGS_HAS_CELLULAR_PROVIDER);
 
 }
 

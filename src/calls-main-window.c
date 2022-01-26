@@ -313,34 +313,16 @@ state_changed_cb (CallsMainWindow *self,
                   CallsManager    *manager)
 {
   const gchar *error = NULL;
-  switch (calls_manager_get_state (manager))
-    {
-    case CALLS_MANAGER_STATE_READY:
-      break;
+  CallsManagerFlags state_flags = calls_manager_get_state_flags (manager);
 
-    case CALLS_MANAGER_STATE_NO_VOICE_MODEM:
-      error = _("Can't place calls: No voice-capable modem available");
-      break;
-
-    case CALLS_MANAGER_STATE_NO_ORIGIN:
-      error = _("Can't place calls: No modem or VoIP account available");
-      break;
-
-    case CALLS_MANAGER_STATE_UNKNOWN:
-    case CALLS_MANAGER_STATE_NO_PROVIDER:
-      error = _("Can't place calls: No backend service");
-      break;
-
-    case CALLS_MANAGER_STATE_NO_PLUGIN:
-      error = _("Can't place calls: No plugin");
-      break;
-
-    default:
-      g_assert_not_reached ();
-    }
+  if (!(state_flags & CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM) &&
+      !(state_flags & CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT))
+    error = _("Can't place calls: No modem or VoIP account available");
+  else if (state_flags & CALLS_MANAGER_FLAGS_UNKNOWN)
+    error = _("Can't place calls: No plugin loaded");
 
   gtk_label_set_text (self->permanent_error_label, error);
-  gtk_revealer_set_reveal_child (self->permanent_error_revealer, error != NULL);
+  gtk_revealer_set_reveal_child (self->permanent_error_revealer, !!error);
 }
 
 

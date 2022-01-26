@@ -61,7 +61,7 @@ struct _CallsManager
 
   CallsContactsProvider *contacts_provider;
 
-  CallsManagerState state;
+  CallsManagerFlags state_flags;
   CallsSettings *settings;
 };
 
@@ -76,7 +76,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsManager, calls_manager, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
-  PROP_STATE,
+  PROP_STATE_FLAGS,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -95,48 +95,44 @@ static guint signals [SIGNAL_LAST_SIGNAL];
 
 
 static void
-set_state (CallsManager *self, CallsManagerState state)
+set_state_flags (CallsManager *self, CallsManagerFlags state_flags)
 {
-  if (self->state == state)
+  if (self->state_flags == state_flags)
     return;
 
-  self->state = state;
+  self->state_flags = state_flags;
 
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE_FLAGS]);
 }
 
 
 static void
-update_state (CallsManager *self)
+update_state_flags (CallsManager *self)
 {
-  guint n_items;
   GHashTableIter iter;
   gpointer value;
+  CallsManagerFlags state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
 
   g_assert (CALLS_IS_MANAGER (self));
-
-  if (g_hash_table_size (self->providers) == 0) {
-    set_state (self, CALLS_MANAGER_STATE_NO_PROVIDER);
-    return;
-  }
 
   g_hash_table_iter_init (&iter, self->providers);
 
   while (g_hash_table_iter_next (&iter, NULL, &value)) {
     CallsProvider *provider = CALLS_PROVIDER (value);
 
-    if (calls_provider_is_modem (provider) && !calls_provider_is_operational (provider)) {
-      set_state (self, CALLS_MANAGER_STATE_NO_VOICE_MODEM);
-      return;
+    if (calls_provider_is_modem (provider)) {
+      state_flags |= CALLS_MANAGER_FLAGS_HAS_CELLULAR_PROVIDER;
+
+      if (calls_provider_is_operational (provider))
+        state_flags |= CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM;
+    } else {
+      state_flags |= CALLS_MANAGER_FLAGS_HAS_VOIP_PROVIDER;
+
+      if (calls_provider_is_operational (provider))
+        state_flags |= CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT;
     }
   }
-
-  n_items = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
-
-  if (n_items)
-    set_state (self, CALLS_MANAGER_STATE_READY);
-  else
-    set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
+  set_state_flags (self, state_flags);
 }
 
 
@@ -366,8 +362,6 @@ remove_origin (CallsManager *self, CallsOrigin *origin)
                origin);
   else
     g_list_store_remove (self->origins, position);
-
-  update_state (self);
 }
 
 /* rebuild_origins_by_protocols() when any origins were added or removed */
@@ -448,7 +442,7 @@ remove_provider (CallsManager *self,
   calls_provider_unload_plugin (name);
 
   rebuild_origins_by_protocols (self);
-  update_state (self);
+  update_state_flags (self);
 
   g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
@@ -532,7 +526,7 @@ origin_items_changed_cb (GListModel   *model,
   }
 
   rebuild_origins_by_protocols (self);
-  update_state (self);
+  update_state_flags (self);
 }
 
 
@@ -579,8 +573,8 @@ calls_manager_get_property (GObject    *object,
   CallsManager *self = CALLS_MANAGER (object);
 
   switch (property_id) {
-  case PROP_STATE:
-    g_value_set_enum (value, calls_manager_get_state (self));
+  case PROP_STATE_FLAGS:
+    g_value_set_flags (value, calls_manager_get_state_flags (self));
     break;
 
   default:
@@ -677,13 +671,13 @@ calls_manager_class_init (CallsManagerClass *klass)
                   G_TYPE_NONE,
                   0);
 
-  props[PROP_STATE] =
-    g_param_spec_enum ("state",
-                       "state",
-                       "The state of the Manager",
-                       CALLS_TYPE_MANAGER_STATE,
-                       CALLS_MANAGER_STATE_NO_PROVIDER,
-                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
+  props[PROP_STATE_FLAGS] =
+    g_param_spec_flags ("state",
+                        "state",
+                        "The state of the Manager",
+                        CALLS_TYPE_MANAGER_FLAGS,
+                        CALLS_MANAGER_FLAGS_UNKNOWN,
+                        G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -697,7 +691,7 @@ calls_manager_init (CallsManager *self)
   PeasEngine *peas;
   const gchar *dir;
 
-  self->state = CALLS_MANAGER_STATE_NO_PROVIDER;
+  self->state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
   self->providers = g_hash_table_new_full (g_str_hash,
                                            g_str_equal,
                                            g_free,
@@ -843,12 +837,12 @@ calls_manager_is_modem_provider (CallsManager *self,
 }
 
 
-CallsManagerState
-calls_manager_get_state (CallsManager *self)
+CallsManagerFlags
+calls_manager_get_state_flags (CallsManager *self)
 {
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), CALLS_MANAGER_STATE_UNKNOWN);
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), CALLS_MANAGER_FLAGS_UNKNOWN);
 
-  return self->state;
+  return self->state_flags;
 }
 
 
