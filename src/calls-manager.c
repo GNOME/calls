@@ -108,7 +108,6 @@ update_state (CallsManager *self)
 {
   guint n_items;
   GHashTableIter iter;
-  gpointer key;
   gpointer value;
 
   g_assert (CALLS_IS_MANAGER (self));
@@ -120,7 +119,7 @@ update_state (CallsManager *self)
 
   g_hash_table_iter_init (&iter, self->providers);
 
-  while (g_hash_table_iter_next (&iter, &key, &value)) {
+  while (g_hash_table_iter_next (&iter, NULL, &value)) {
     CallsProvider *provider = CALLS_PROVIDER (value);
 
     if (calls_provider_is_modem (provider) && !calls_provider_is_operational (provider)) {
@@ -374,7 +373,7 @@ static void
 rebuild_origins_by_protocols (CallsManager *self)
 {
   GHashTableIter iter;
-  gpointer key, value;
+  gpointer value;
   guint n_origins;
 
   g_assert (CALLS_IS_MANAGER (self));
@@ -382,7 +381,7 @@ rebuild_origins_by_protocols (CallsManager *self)
   /* Remove everything */
   g_hash_table_iter_init (&iter, self->origins_by_protocol);
 
-  while (g_hash_table_iter_next (&iter, &key, &value)) {
+  while (g_hash_table_iter_next (&iter, NULL, &value)) {
     GListStore *store = G_LIST_STORE (value);
     g_list_store_remove_all (store);
   }
@@ -458,13 +457,13 @@ origin_found_in_any_provider (CallsManager *self,
                               CallsOrigin  *origin)
 {
   GHashTableIter iter;
-  gpointer key, value;
+  gpointer value;
 
   g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
   g_return_val_if_fail (CALLS_IS_ORIGIN (origin), FALSE);
 
   g_hash_table_iter_init (&iter, self->providers);
-  while (g_hash_table_iter_next (&iter, &key, &value)) {
+  while (g_hash_table_iter_next (&iter, NULL, &value)) {
     guint position;
     CallsProvider *provider = CALLS_PROVIDER (value);
     GListModel *origins = calls_provider_get_origins (provider);
