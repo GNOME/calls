@@ -107,6 +107,12 @@ calls_dummy_provider_get_protocols (CallsProvider *provider)
   return supported_protocols;
 }
 
+static gboolean
+calls_dummy_provider_is_modem (CallsProvider *provider)
+{
+  return TRUE;
+}
+
 static void
 constructed (GObject *object)
 {
@@ -147,6 +153,7 @@ calls_dummy_provider_class_init (CallsDummyProviderClass *klass)
   provider_class->get_status = calls_dummy_provider_get_status;
   provider_class->get_origins = calls_dummy_provider_get_origins;
   provider_class->get_protocols = calls_dummy_provider_get_protocols;
+  provider_class->is_modem = calls_dummy_provider_is_modem;
 }
 
 
