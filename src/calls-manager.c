@@ -41,16 +41,17 @@
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
 
+static const char *protocols[] = {
+  "tel",
+  "sip",
+  "sips"
+};
+
 struct _CallsManager
 {
   GObject parent_instance;
 
   GHashTable *providers;
-  /* This is the protocols supported in principle. This is collected from the loaded
-     providers and does not imply that there are any origins able to handle a given protocol.
-     See origins_by_protocol for a GListStore of suitable origins per protocol.
-  */
-  GPtrArray *supported_protocols;
 
   GListStore *origins;
   /* origins_by_protocol maps protocol names to GListStore's of suitable origins */
@@ -136,68 +137,6 @@ update_state (CallsManager *self)
     set_state (self, CALLS_MANAGER_STATE_NO_ORIGIN);
 }
 
-
-static gboolean
-check_supported_protocol (CallsManager *self,
-                          const char   *protocol)
-{
-  guint index;
-  g_assert (CALLS_IS_MANAGER (self));
-  g_assert (protocol);
-
-  if (self->supported_protocols->len > 0)
-    return g_ptr_array_find_with_equal_func (self->supported_protocols,
-                                             protocol,
-                                             g_str_equal,
-                                             &index);
-
-  return FALSE;
-}
-
-
-/* This function will update self->supported_protocols from available provider plugins */
-static void
-update_protocols (CallsManager *self)
-{
-  GHashTableIter iter;
-  gpointer key, value;
-  const char * const *protocols;
-
-  g_assert (CALLS_IS_MANAGER (self));
-
-  g_ptr_array_remove_range (self->supported_protocols,
-                            0, self->supported_protocols->len);
-
-  g_hash_table_iter_init (&iter, self->providers);
-  while (g_hash_table_iter_next (&iter, &key, &value)) {
-    const char *name = key;
-    CallsProvider *provider = CALLS_PROVIDER (value);
-
-    protocols = calls_provider_get_protocols (provider);
-
-    if (protocols == NULL) {
-      g_debug ("Plugin %s does not provide any protocols", name);
-      continue;
-    }
-    for (guint i = 0; protocols[i] != NULL; i++) {
-      if (!check_supported_protocol (self, protocols[i]))
-        g_ptr_array_add (self->supported_protocols, g_strdup (protocols[i]));
-
-      if (!g_hash_table_contains (self->origins_by_protocol, protocols[i])) {
-        /* Add a new GListStore if there's none already.
-         * Actually adding origins to self->origins_by_protocol is done
-         * in rebuild_origins_by_protocol()
-         */
-        GListStore *store = g_list_store_new (CALLS_TYPE_ORIGIN);
-        g_hash_table_insert (self->origins_by_protocol,
-                             g_strdup (protocols[i]),
-                             store);
-      }
-    }
-  }
-
-  update_state (self);
-}
 
 /* propagate any message from origins, providers, calls, etc */
 static void
@@ -393,14 +332,13 @@ rebuild_origins_by_protocols (CallsManager *self)
     g_autoptr (CallsOrigin) origin =
       g_list_model_get_item (G_LIST_MODEL (self->origins), i);
 
-    for (guint j = 0; j < self->supported_protocols->len; j++) {
-      char *protocol = g_ptr_array_index (self->supported_protocols, j);
+    for (guint j = 0; j < G_N_ELEMENTS (protocols); j++) {
       GListStore *store =
-        G_LIST_STORE (g_hash_table_lookup (self->origins_by_protocol, protocol));
+        G_LIST_STORE (g_hash_table_lookup (self->origins_by_protocol, protocols[j]));
 
       g_assert (store);
 
-      if (calls_origin_supports_protocol (origin, protocol))
+      if (calls_origin_supports_protocol (origin, protocols[j]))
         g_list_store_append (store, origin);
     }
   }
@@ -444,9 +382,8 @@ remove_provider (CallsManager *self,
   g_hash_table_remove (self->providers, name);
   calls_provider_unload_plugin (name);
 
-  update_protocols (self);
-  update_state (self);
   rebuild_origins_by_protocols (self);
+  update_state (self);
 
   g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
@@ -555,8 +492,6 @@ add_provider (CallsManager *self, const gchar *name)
 
   g_hash_table_insert (self->providers, g_strdup (name), provider);
 
-  update_protocols (self);
-
   origins = calls_provider_get_origins (provider);
 
   g_signal_connect_object (origins, "items-changed",
@@ -601,7 +536,6 @@ calls_manager_finalize (GObject *object)
 
   g_clear_pointer (&self->providers, g_hash_table_unref);
   g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
-  g_clear_pointer (&self->supported_protocols, g_ptr_array_unref);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -706,8 +640,14 @@ calls_manager_init (CallsManager *self)
                                                      g_free,
                                                      g_object_unref);
 
+  for (guint i = 0; i < G_N_ELEMENTS (protocols); i++) {
+    GListStore *origin_store = g_list_store_new (calls_origin_get_type ());
+    g_hash_table_insert (self->origins_by_protocol,
+                         g_strdup (protocols[i]),
+                         origin_store);
+  }
+
   self->origins = g_list_store_new (calls_origin_get_type ());
-  self->supported_protocols = g_ptr_array_new_full (5, g_free);
 
   self->settings = calls_settings_new ();
   // Load the contacts provider
@@ -777,7 +717,6 @@ calls_manager_remove_provider (CallsManager *self,
   g_return_if_fail (name);
 
   remove_provider (self, name);
-  update_protocols (self);
 }
 
 
@@ -911,7 +850,8 @@ calls_manager_has_active_call (CallsManager *self)
  * @self: The #CallsManager
  * @target: The target number/address
  *
- * Returns (transfer none): A #GListModel of suitable origins
+ * Returns (transfer none): A #GListModel of suitable origins as long
+ * as the protocol to be used for @target is supported, %NULL otherwise
  */
 GListModel *
 calls_manager_get_suitable_origins (CallsManager *self,

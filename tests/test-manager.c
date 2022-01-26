@@ -40,9 +40,15 @@ test_calls_manager_without_provider (void)
 
   g_assert_null (calls_manager_get_calls (manager));
   g_assert_false (calls_manager_has_any_provider (manager));
-  g_assert_null (calls_manager_get_suitable_origins (manager, "tel:+123456789"));
-  g_assert_null (calls_manager_get_suitable_origins (manager, "sip:alice@example.org"));
-  g_assert_null (calls_manager_get_suitable_origins (manager, "sips:bob@example.org"));
+
+  origins = calls_manager_get_suitable_origins (manager, "tel:+123456789");
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
+
+  origins = calls_manager_get_suitable_origins (manager, "sip:alice@example.org");
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
+
+  origins = calls_manager_get_suitable_origins (manager, "sips:bob@example.org");
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
 }
 
 static void
@@ -143,17 +149,7 @@ test_calls_manager_multiple_providers_mm_sip (void)
   g_assert_true (G_IS_LIST_MODEL (origins));
 
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_PROVIDER);
-  g_assert_null (calls_manager_get_suitable_origins (manager, "tel:+123456789"));
-  g_assert_null (calls_manager_get_suitable_origins (manager, "sip:alice@example.org"));
-  g_assert_null (calls_manager_get_suitable_origins (manager, "sips:bob@example.org"));
 
-  /* First add the SIP provider, MM provider later */
-  calls_manager_add_provider (manager, "sip");
-  g_assert_true (calls_manager_has_any_provider (manager));
-  g_assert_true (calls_manager_has_provider (manager, "sip"));
-  g_assert_true (calls_manager_is_modem_provider (manager, "sip") == FALSE);
-
-  /* Now we should have (empty) GListModels for the suitable origins for our protocols */
   origins_tel = calls_manager_get_suitable_origins (manager, "tel:+123456789");
   g_assert_nonnull (origins_tel);
   g_assert_cmpuint (g_list_model_get_n_items (origins_tel), ==, 0);
@@ -164,6 +160,22 @@ test_calls_manager_multiple_providers_mm_sip (void)
 
   origins_sips = calls_manager_get_suitable_origins (manager, "sips:bob@example.org");
   g_assert_nonnull (origins_sips);
+  g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
+
+  /* First add the SIP provider, MM provider later */
+  calls_manager_add_provider (manager, "sip");
+  g_assert_true (calls_manager_has_any_provider (manager));
+  g_assert_true (calls_manager_has_provider (manager, "sip"));
+  g_assert_true (calls_manager_is_modem_provider (manager, "sip") == FALSE);
+
+  /* Still no origins */
+  origins_tel = calls_manager_get_suitable_origins (manager, "tel:+123456789");
+  g_assert_cmpuint (g_list_model_get_n_items (origins_tel), ==, 0);
+
+  origins_sip = calls_manager_get_suitable_origins (manager, "sip:alice@example.org");
+  g_assert_cmpuint (g_list_model_get_n_items (origins_sip), ==, 0);
+
+  origins_sips = calls_manager_get_suitable_origins (manager, "sips:bob@example.org");
   g_assert_cmpuint (g_list_model_get_n_items (origins_sips), ==, 0);
 
   g_assert_cmpuint (calls_manager_get_state (manager), ==, CALLS_MANAGER_STATE_NO_ORIGIN);
