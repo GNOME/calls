@@ -41,7 +41,7 @@
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
 
-static const char *protocols[] = {
+static const char * const protocols[] = {
   "tel",
   "sip",
   "sips"
@@ -56,6 +56,8 @@ struct _CallsManager
   GListStore *origins;
   /* origins_by_protocol maps protocol names to GListStore's of suitable origins */
   GHashTable *origins_by_protocol;
+  /* dial_actions_by_protocol maps protocol names to GSimpleActions */
+  GHashTable *dial_actions_by_protocol;
 
   CallsContactsProvider *contacts_provider;
 
@@ -138,7 +140,68 @@ update_state (CallsManager *self)
 }
 
 
-/* propagate any message from origins, providers, calls, etc */
+static CallsOrigin *
+lookup_origin_by_id (CallsManager *self,
+                     const char   *origin_id)
+{
+  return NULL;
+}
+
+
+static void
+on_dial_protocol_activated (GSimpleAction *action,
+                            GVariant      *parameter,
+                            CallsManager  *self)
+{
+  GApplication *application;
+  CallsOrigin *origin;
+  g_autofree char *target = NULL;
+  g_autofree char *origin_id = NULL;
+
+  g_variant_get (parameter, "(ss)", &target, &origin_id);
+  origin = lookup_origin_by_id (self, origin_id);
+
+  if (origin) {
+    calls_origin_dial (origin, target);
+    return;
+  }
+
+  if (origin_id && *origin_id)
+    g_debug ("Origin ID '%s' given, but was not found for call to '%s'",
+             origin_id, target);
+
+  /* fall back to the default action if we could not determine origin to place call from */
+  application = g_application_get_default ();
+  if (!application) {
+    g_warning ("Could not get default application, cannot activate action '%s'",
+               g_action_get_name (G_ACTION (action)));
+    return;
+  }
+
+  g_action_group_activate_action (G_ACTION_GROUP (application),
+                                  "dial",
+                                  g_variant_new_string (target));
+}
+
+
+static void
+update_protocol_dial_actions (CallsManager *self)
+{
+  g_assert (CALLS_IS_MANAGER (self));
+
+  for (guint i = 0; i < G_N_ELEMENTS (protocols); i++) {
+    GSimpleAction *action = g_hash_table_lookup (self->dial_actions_by_protocol,
+                                                 protocols[i]);
+    GListModel *protocol_origin = g_hash_table_lookup (self->origins_by_protocol,
+                                                       protocols[i]);
+    /* TODO take into account if origin is active: modem registered or VoIP account online */
+    gboolean action_enabled = g_list_model_get_n_items (protocol_origin) > 0;
+
+    g_simple_action_set_enabled (action, action_enabled);
+  }
+}
+
+
 static void
 on_message (CallsMessageSource *source,
             const char         *message,
@@ -342,6 +405,8 @@ rebuild_origins_by_protocols (CallsManager *self)
         g_list_store_append (store, origin);
     }
   }
+
+  update_protocol_dial_actions (self);
 }
 
 
@@ -536,6 +601,7 @@ calls_manager_finalize (GObject *object)
 
   g_clear_pointer (&self->providers, g_hash_table_unref);
   g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
+  g_clear_pointer (&self->dial_actions_by_protocol, g_hash_table_unref);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -626,6 +692,8 @@ calls_manager_class_init (CallsManagerClass *klass)
 static void
 calls_manager_init (CallsManager *self)
 {
+  g_autoptr (GVariantType) variant_type = NULL;
+  GApplication *application;
   PeasEngine *peas;
   const gchar *dir;
 
@@ -645,6 +713,34 @@ calls_manager_init (CallsManager *self)
     g_hash_table_insert (self->origins_by_protocol,
                          g_strdup (protocols[i]),
                          origin_store);
+  }
+
+  self->dial_actions_by_protocol = g_hash_table_new_full (g_str_hash,
+                                                          g_str_equal,
+                                                          g_free,
+                                                          g_object_unref);
+
+  application = g_application_get_default ();
+  variant_type = g_variant_type_new ("(ss)");
+
+  for (guint i = 0; i < G_N_ELEMENTS (protocols); i++) {
+    g_autofree char *action_name = g_strdup_printf ("dial-%s", protocols[i]);
+    GSimpleAction *action = g_simple_action_new (action_name, variant_type);
+    g_signal_connect (action,
+                      "activate",
+                      G_CALLBACK (on_dial_protocol_activated),
+                      self);
+
+    g_hash_table_insert (self->dial_actions_by_protocol,
+                         g_strdup (protocols[i]),
+                         g_object_ref (action));
+
+    /* Enable action if there are suitable origins */
+    g_simple_action_set_enabled (action, FALSE);
+
+    /* application can be NULL when running tests */
+    if (application)
+      g_action_map_add_action (G_ACTION_MAP (application), G_ACTION (action));
   }
 
   self->origins = g_list_store_new (calls_origin_get_type ());
