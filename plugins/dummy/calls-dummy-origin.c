@@ -157,7 +157,7 @@ supports_protocol (CallsOrigin *origin,
   g_assert (protocol != NULL);
   g_assert (CALLS_IS_DUMMY_ORIGIN (origin));
 
-  return TRUE;
+  return g_strcmp0 (protocol, "tel") == 0;
 }
 
 
