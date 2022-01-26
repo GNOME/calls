@@ -204,7 +204,7 @@ from_call_to_cui_state (GBinding     *binding,
                         GValue       *to_value,
                         gpointer      unused)
 {
-  CallsCallState call_state = (CallsCallState) g_value_get_uint (from_value);
+  CallsCallState call_state = g_value_get_enum (from_value);
   CuiCallState cui_state = calls_call_state_to_cui_call_state (call_state);
   g_value_set_uint (to_value, cui_state);
 
