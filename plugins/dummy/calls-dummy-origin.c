@@ -50,6 +50,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsDummyOrigin, calls_dummy_origin, G_TYPE_OBJECT,
 enum {
   PROP_0,
 
+  PROP_ID,
   /* Property for setting the origins name upon construction */
   PROP_DUMMY_NAME_CONSTRUCTOR,
 
@@ -182,6 +183,9 @@ set_property (GObject      *object,
     g_string_assign (self->name, g_value_get_string (value));
     break;
 
+  case PROP_ID: /* ignored for the dummy origin */
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -198,6 +202,10 @@ get_property (GObject      *object,
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID:
+    g_value_set_string (value, self->name->str);
+    break;
+
   case PROP_NAME:
     g_value_set_string (value, self->name->str);
     break;
@@ -263,6 +271,7 @@ calls_dummy_origin_class_init (CallsDummyOriginClass *klass)
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
 
+  IMPLEMENTS (PROP_ID, "id");
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");

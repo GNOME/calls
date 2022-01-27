@@ -60,6 +60,7 @@
 enum {
   PROP_0,
   PROP_NAME,
+  PROP_ID,
   PROP_ACC_HOST,
   PROP_ACC_USER,
   PROP_ACC_PASSWORD,
@@ -118,6 +119,7 @@ struct _CallsSipOrigin
   const char *protocol_prefix;
   char *address;
   char *name;
+  char *id;
 
   GList *calls;
   GHashTable *call_handles;
@@ -1188,6 +1190,10 @@ calls_sip_origin_set_property (GObject      *object,
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID: /* contruct only */
+    self->id = g_value_dup_string (value);
+    break;
+
   case PROP_ACC_HOST:
     g_free (self->host);
     self->host = g_value_dup_string (value);
@@ -1263,6 +1269,11 @@ calls_sip_origin_get_property (GObject      *object,
   case PROP_NAME:
     g_value_set_string (value, self->name);
     break;
+
+  case PROP_ID:
+    g_value_set_string (value, self->id);
+    break;
+
   case PROP_ACC_HOST:
     g_value_set_string (value, self->host);
     break;
@@ -1359,6 +1370,7 @@ calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
 
+  g_clear_pointer (&self->id, g_free);
   g_clear_pointer (&self->own_ip, g_free);
   g_clear_pointer (&self->transport_protocol, g_free);
   g_clear_pointer (&self->display_name, g_free);
@@ -1495,6 +1507,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
 
+  IMPLEMENTS (PROP_ID, "id");
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");

@@ -130,7 +130,9 @@ add_origin (CallsMMProvider *self,
 {
   MMObject *mm_obj;
   g_autoptr (CallsMMOrigin) origin = NULL;
+  g_autoptr (MMModem3gpp) modem_3gpp = NULL;
   const gchar *path;
+  g_autofree char *imei = NULL;
 
   mm_obj = MM_OBJECT (object);
   path = g_dbus_object_get_object_path (object);
@@ -146,7 +148,10 @@ add_origin (CallsMMProvider *self,
 
   g_assert (MM_IS_OBJECT (object));
 
-  origin = calls_mm_origin_new (mm_obj);
+  modem_3gpp = mm_object_get_modem_3gpp (mm_obj);
+
+  origin = calls_mm_origin_new (mm_obj,
+                                mm_modem_3gpp_get_imei (modem_3gpp));
   g_list_store_append (self->origins, origin);
 
   update_status (self);

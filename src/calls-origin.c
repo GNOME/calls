@@ -70,6 +70,14 @@ calls_origin_default_init (CallsOriginInterface *iface)
                          NULL,
                          G_PARAM_READABLE));
 
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_string ("id",
+                         "ID",
+                         "ID of the origin",
+                         NULL,
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
   signals[SIGNAL_CALL_ADDED] =
     g_signal_newv ("call-added",
 		   G_TYPE_FROM_INTERFACE (iface),
@@ -100,6 +108,17 @@ calls_origin_default_init (CallsOriginInterface *iface)
  * the caller.
  */
 DEFINE_ORIGIN_GETTER(name, char *, NULL);
+
+/**
+ * calls_origin_get_id:
+ * @self: a #CallsOrigin
+ *
+ * Get the id of the origin.
+ *
+ * Returns (transfer full): A string containing the id.  The string must be freed by
+ * the caller.
+ */
+DEFINE_ORIGIN_GETTER(id, char *, NULL);
 
 /**
  * calls_origin_get_calls:

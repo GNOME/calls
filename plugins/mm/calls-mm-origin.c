@@ -49,7 +49,9 @@ struct _CallsMMOrigin
   char *last_ussd_response;
 
   gulong           ussd_handle_id;
-  gchar *name;
+
+  char *id;
+  char *name;
   GHashTable *calls;
   char *country_code;
 };
@@ -68,6 +70,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsMMOrigin, calls_mm_origin, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
+  PROP_ID,
   PROP_NAME,
   PROP_CALLS,
   PROP_MODEM,
@@ -640,6 +643,10 @@ set_property (GObject      *object,
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID:
+    self->id = g_value_dup_string (value);
+    break;
+
   case PROP_MODEM:
     g_set_object (&self->mm_obj, g_value_get_object(value));
     break;
@@ -660,6 +667,10 @@ get_property (GObject      *object,
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID:
+    g_value_set_string (value, self->id);
+    break;
+
   case PROP_NAME:
     g_value_set_string (value, self->name);
     break;
@@ -884,6 +895,7 @@ calls_mm_origin_class_init (CallsMMOriginClass *klass)
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
 
+  IMPLEMENTS (PROP_ID, "id");
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
@@ -928,10 +940,12 @@ calls_mm_origin_init (CallsMMOrigin *self)
 }
 
 CallsMMOrigin *
-calls_mm_origin_new (MMObject *mm_obj)
+calls_mm_origin_new (MMObject   *mm_obj,
+                     const char *id)
 {
   return g_object_new (CALLS_TYPE_MM_ORIGIN,
                        "mm-object", mm_obj,
+                       "id", id,
                        NULL);
 }
 

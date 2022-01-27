@@ -116,6 +116,7 @@ on_origin_pw_looked_up (GObject      *source,
 {
   SipOriginLoadData *data;
   g_autoptr (GError) error = NULL;
+  g_autofree char *id = NULL;
   g_autofree char *name = NULL;
   g_autofree char *host = NULL;
   g_autofree char *user = NULL;
@@ -131,6 +132,11 @@ on_origin_pw_looked_up (GObject      *source,
   g_assert (user_data);
 
   data = user_data;
+
+  if (g_key_file_has_key (data->key_file, data->name, "Id", NULL))
+    id = g_key_file_get_string (data->key_file, data->name, "Id", NULL);
+  else
+    id = g_strdup (data->name);
 
   host = g_key_file_get_string (data->key_file, data->name, "Host", NULL);
   user = g_key_file_get_string (data->key_file, data->name, "User", NULL);
@@ -172,6 +178,7 @@ on_origin_pw_looked_up (GObject      *source,
 #undef IS_NULL_OR_EMPTY
 
   calls_sip_provider_add_origin_full (data->provider,
+                                      id,
                                       host,
                                       user,
                                       password,
@@ -273,6 +280,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
                    GKeyFile       *key_file,
                    const char     *name)
 {
+  g_autofree char *id = NULL;
   g_autofree char *host = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
@@ -289,6 +297,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_assert (key_file);
 
   g_object_get (origin,
+                "id", &id,
                 "host", &host,
                 "user", &user,
                 "password", &password,
@@ -301,6 +310,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
                 "can-tel", &can_tel,
                 NULL);
 
+  g_key_file_set_string (key_file, name, "Id", id);
   g_key_file_set_string (key_file, name, "Host", host);
   g_key_file_set_string (key_file, name, "User", user);
   g_key_file_set_string (key_file, name, "DisplayName", display_name ?: "");
@@ -311,8 +321,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_key_file_set_integer (key_file, name, "LocalPort", local_port);
   g_key_file_set_boolean (key_file, name, "CanTel", can_tel);
 
-  label_secret = g_strdup_printf ("Calls Password for %s",
-                                  calls_account_get_address (CALLS_ACCOUNT (origin)));
+  label_secret = g_strdup_printf ("Calls Password for %s", id);
 
   /* save to keyring */
   secret_password_store (calls_secret_get_schema (), NULL, label_secret, password,
@@ -632,6 +641,7 @@ calls_sip_provider_init (CallsSipProvider *self)
 /**
  * calls_sip_provider_add_origin:
  * @self: A #CallsSipProvider
+ * @id: The id of the new origin (should be unique)
  * @host: The host to connect to
  * @user: The username to use
  * @password: The password to use
@@ -645,6 +655,7 @@ calls_sip_provider_init (CallsSipProvider *self)
  */
 CallsSipOrigin *
 calls_sip_provider_add_origin (CallsSipProvider *self,
+                               const char       *id,
                                const char       *host,
                                const char       *user,
                                const char       *password,
@@ -654,6 +665,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                gboolean          store_credentials)
 {
   return calls_sip_provider_add_origin_full (self,
+                                             id,
                                              host,
                                              user,
                                              password,
@@ -670,6 +682,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
 /**
  * calls_sip_provider_add_origin_full:
  * @self: A #CallsSipProvider
+ * @id: The id of the new origin (should be unique)
  * @host: The host to connect to
  * @user: The username to use
  * @password: The password to use
@@ -688,6 +701,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
  */
 CallsSipOrigin *
 calls_sip_provider_add_origin_full (CallsSipProvider *self,
+                                    const char       *id,
                                     const char       *host,
                                     const char       *user,
                                     const char       *password,
@@ -704,6 +718,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
   g_autofree char *protocol = NULL;
 
   g_return_val_if_fail (CALLS_IS_SIP_PROVIDER (self), NULL);
+  g_return_val_if_fail (id || *id, NULL);
 
   /* direct-mode is mostly useful for testing without a SIP server */
   if (!direct_mode) {
@@ -719,6 +734,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
   }
 
   origin = g_object_new (CALLS_TYPE_SIP_ORIGIN,
+                         "id", id,
                          "sip-context", self->ctx,
                          "host", host,
                          "user", user,

@@ -55,6 +55,7 @@ G_DEFINE_TYPE_WITH_CODE (CallsOfonoOrigin, calls_ofono_origin, G_TYPE_OBJECT,
 
 enum {
   PROP_0,
+  PROP_ID,
   PROP_NAME,
   PROP_CALLS,
   PROP_MODEM,
@@ -143,6 +144,10 @@ set_property (GObject      *object,
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID:
+    /* we're using a hardcoded value, so let's ignore it */
+    break;
+
   case PROP_MODEM:
     g_set_object
       (&self->modem, GDBO_MODEM (g_value_get_object (value)));
@@ -164,6 +169,10 @@ get_property (GObject      *object,
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
   switch (property_id) {
+  case PROP_ID:
+    g_value_set_string (value, "ofono");
+    break;
+
   case PROP_NAME:
     g_value_set_string (value, self->name);
     break;
@@ -569,6 +578,7 @@ calls_ofono_origin_class_init (CallsOfonoOriginClass *klass)
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
 
+  IMPLEMENTS (PROP_NAME, "id");
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");

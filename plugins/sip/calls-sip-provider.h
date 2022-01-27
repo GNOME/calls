@@ -38,6 +38,7 @@ G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER,
 
 CallsSipProvider *calls_sip_provider_new                    (void);
 CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *self,
+                                                             const char       *id,
                                                              const char       *host,
                                                              const char       *user,
                                                              const char       *password,
@@ -46,6 +47,7 @@ CallsSipOrigin   *calls_sip_provider_add_origin             (CallsSipProvider *s
                                                              gint              port,
                                                              gboolean          store_credentials);
 CallsSipOrigin   *calls_sip_provider_add_origin_full        (CallsSipProvider *self,
+                                                             const char       *id,
                                                              const char       *host,
                                                              const char       *user,
                                                              const char       *password,

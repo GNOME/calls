@@ -364,6 +364,7 @@ setup_sip_origins (SipFixture   *fixture,
 
   fixture->origin_alice =
     calls_sip_provider_add_origin_full (fixture->provider,
+                                        "sip1",
                                         NULL,
                                         "alice",
                                         NULL,
@@ -378,6 +379,7 @@ setup_sip_origins (SipFixture   *fixture,
 
   fixture->origin_bob =
     calls_sip_provider_add_origin_full (fixture->provider,
+                                        "sip2",
                                         NULL,
                                         "bob",
                                         NULL,
@@ -392,6 +394,7 @@ setup_sip_origins (SipFixture   *fixture,
 
   fixture->origin_offline =
     calls_sip_provider_add_origin_full (fixture->provider,
+                                        "sip3",
                                         "sip.imaginary-host.org",
                                         "username",
                                         "password",

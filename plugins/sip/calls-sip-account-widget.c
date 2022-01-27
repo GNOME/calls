@@ -359,10 +359,12 @@ static void
 on_login_clicked (CallsSipAccountWidget *self)
 {
   CallsSipOrigin *origin;
+  g_autofree char *id = g_uuid_string_random ();
 
   g_debug ("Logging into newly created account");
 
   origin = calls_sip_provider_add_origin (self->provider,
+                                          id,
                                           gtk_entry_get_text (GTK_ENTRY (self->host)),
                                           gtk_entry_get_text (GTK_ENTRY (self->user)),
                                           gtk_entry_get_text (GTK_ENTRY (self->password)),
