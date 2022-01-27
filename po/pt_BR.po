@@ -1,26 +1,27 @@
 # Brazilian Portuguese translation for calls.
-# Copyright (C) 2021 calls's COPYRIGHT HOLDER
+# Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Bruno Lopes <brunolopesdsilv@gmail.com>, 2021.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
+# Matheus Barbosa <mdpb.matheus@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-11-24 15:53+0000\n"
-"PO-Revision-Date: 2021-12-10 06:35-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-01-24 19:35-0300\n"
+"Last-Translator: Matheus Barbosa <mdpb.matheus@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 40.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:373
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
 
@@ -94,50 +95,54 @@ msgstr "Porta"
 msgid "Transport"
 msgstr "Transporte"
 
-#: src/calls-application.c:536
-#, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "Tentativa de URI de tel inválida “%s”"
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Usar para ligações telefônicas"
 
-#: src/calls-application.c:613
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Tentou discar para um telefone URI “%s” inválido"
+
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Não foi possível abrir “%s”"
 
-#: src/calls-application.c:666
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "O nome do plugin para usar como o provedor de chamada"
 
-#: src/calls-application.c:667
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:672
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Se deve-se apresentar a janela principal na inicialização"
 
-#: src/calls-application.c:678
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "Disca um número de telefone"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:684
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "Habilita mensagens de depuração detalhadas"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "Exibe a versão atual"
 
 # Troquei o sujeito pela indetificação (o número) porque é mais inteligível do que "chamador desconhecido" ou "pessoa desconhecida"
-#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Número desconhecido"
 
-#: src/calls-call-record-row.c:115
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -150,7 +155,8 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Rafael Fontenelle <rafaelff@gnome.org>\n"
-"Bruno Lopes <brunolopesdsilv@gmail.com>"
+"Bruno Lopes <brunolopesdsilv@gmail.com>\n"
+"Matheus Barbosa <mdpb.matheus@gmail.com>"
 
 #: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
@@ -192,7 +198,7 @@ msgstr "Chamada perdida"
 msgid "Missed call from <b>%s</b>"
 msgstr "Chamada perdida de <b>%s</b>"
 
-#. %s is a number here
+#. %s is a id here
 #: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
@@ -210,11 +216,11 @@ msgstr "Chamar de volta"
 msgid "VoIP Accounts"
 msgstr "Contas VoIP"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Adiciona contas VoIP"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -225,29 +231,33 @@ msgstr ""
 "relativamente novo e ainda não está completo (por exemplo, sem mídia "
 "criptografada)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Adicionar conta"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:63
 msgid "Call"
 msgstr "Chamada"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "Apagar chama_da"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Copiar número"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_Adicionar contato"
+
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Em espera"
 
-#: src/ui/contacts-box.ui:69
+#: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
 msgstr "Nenhum contato encontrado"
 
@@ -255,63 +265,63 @@ msgstr "Nenhum contato encontrado"
 msgid "No Recent Calls"
 msgstr "Nenhuma chamada recente"
 
-#: src/ui/main-window.ui:117
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:126
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "C_ancelar"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "Fe_char"
 
-#: src/ui/main-window.ui:153
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Enviar"
 
-#: src/ui/main-window.ui:227
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "Contas _VoIP"
 
-#: src/ui/main-window.ui:240
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "Atalhos de _teclado"
 
-#: src/ui/main-window.ui:246
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "Aj_uda"
 
-#: src/ui/main-window.ui:252
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Sobre o Chamadas"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Insira um endereço VoIP"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Insira um número"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Discar"
 
-#: src/ui/new-call-box.ui:114
+#: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
 msgstr "Excluir caractere na frente do cursor"
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "Contas SIP"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Nova chamada"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Voltar"
 
