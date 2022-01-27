@@ -107,7 +107,7 @@ DEFINE_ORIGIN_GETTER(name, char *, NULL);
  *
  * Get the list of current calls.
  *
- * Returns: A newly-allocated GList of objects implementing
+ * Returns: (transfer container): A newly-allocated GList of objects implementing
  * #CallsCall or NULL if there was an error.
  */
 DEFINE_ORIGIN_GETTER(calls, GList *, NULL);
