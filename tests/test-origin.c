@@ -27,7 +27,7 @@ test_dummy_origin_get_name (OriginFixture *fixture,
                             gconstpointer user_data)
 {
   CallsOrigin *origin;
-  const gchar *name;
+  g_autofree char *name = NULL;
 
   origin = CALLS_ORIGIN (fixture->dummy_origin);
 
