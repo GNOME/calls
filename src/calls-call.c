@@ -174,6 +174,18 @@ calls_call_get_property (GObject    *object,
   }
 }
 
+
+static void
+calls_call_dispose (GObject *object)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (CALLS_CALL (object));
+
+  g_clear_pointer (&priv->id, g_free);
+  g_clear_pointer (&priv->name, g_free);
+
+  G_OBJECT_CLASS (calls_call_parent_class)->dispose (object);
+}
+
 static void
 calls_call_class_init (CallsCallClass *klass)
 {
@@ -181,6 +193,7 @@ calls_call_class_init (CallsCallClass *klass)
 
   object_class->get_property = calls_call_get_property;
   object_class->set_property = calls_call_set_property;
+  object_class->dispose = calls_call_dispose;
 
   klass->get_protocol = calls_call_real_get_protocol;
   klass->answer = calls_call_real_answer;
