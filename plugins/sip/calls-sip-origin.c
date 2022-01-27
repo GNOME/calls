@@ -1050,7 +1050,7 @@ init_sip_account (CallsSipOrigin *self,
     return FALSE;
   }
 
-  // setup_nua() and setup_sip_handles() only after account data has been set
+  /* setup_nua() and setup_sip_handles() only after account data has been set */
   self->nua = setup_nua (self);
   if (self->nua == NULL) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
