@@ -19,10 +19,10 @@
 
 #define DEFAULT_DOMAIN_PREFIX "Calls"
 
-char *domains;
+static char *domains;
 static int verbosity;
-gboolean any_domain;
-gboolean stderr_is_journal;
+static gboolean any_domain;
+static gboolean stderr_is_journal;
 
 static void
 log_str_append_log_domain (GString    *log_str,
