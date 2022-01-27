@@ -101,15 +101,15 @@ calls_settings_get_property (GObject    *object,
     break;
 
   case PROP_COUNTRY_CODE:
-    g_value_set_string (value, calls_settings_get_country_code (self));
+    g_value_take_string (value, calls_settings_get_country_code (self));
     break;
 
   case PROP_AUTOLOAD_PLUGINS:
-    g_value_set_boxed (value, calls_settings_get_autoload_plugins (self));
+    g_value_take_boxed (value, calls_settings_get_autoload_plugins (self));
     break;
 
   case PROP_PREFERRED_AUDIO_CODECS:
-    g_value_set_boxed (value, calls_settings_get_preferred_audio_codecs (self));
+    g_value_take_boxed (value, calls_settings_get_preferred_audio_codecs (self));
     break;
 
   default:
