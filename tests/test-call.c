@@ -47,7 +47,7 @@ static gboolean
 test_dummy_call_hang_up_idle_cb (CallsDummyOrigin *origin)
 {
   g_assert_null (calls_origin_get_calls (CALLS_ORIGIN (origin)));
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
 
 static void
