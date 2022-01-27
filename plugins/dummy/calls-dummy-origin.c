@@ -235,6 +235,7 @@ finalize (GObject *object)
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 
   g_string_free (self->name, TRUE);
+  g_list_free (self->calls);
 
   G_OBJECT_CLASS (calls_dummy_origin_parent_class)->finalize (object);
 }
