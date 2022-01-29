@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-11 12:27+0000\n"
-"PO-Revision-Date: 2022-01-11 18:05+0330\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-01-29 14:07+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -238,6 +238,10 @@ msgstr "_حذف تماس"
 #: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_رونوشت از شماره"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_افزودن آشنا"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
