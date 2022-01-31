@@ -6,19 +6,20 @@
 
 #include "calls-manager.h"
 
+#include <cui-call.h>
 #include <gtk/gtk.h>
 #include <libpeas/peas.h>
 
-CallsCall *test_call = NULL;
+CuiCall *test_call = NULL;
 
 static void
-call_add_cb (CallsManager *manager, CallsCall *call)
+call_add_cb (CallsManager *manager, CuiCall *call)
 {
   test_call = call;
 }
 
 static void
-call_remove_cb (CallsManager *manager, CallsCall *call)
+call_remove_cb (CallsManager *manager, CuiCall *call)
 {
   g_assert_true (call == test_call);
   test_call = NULL;
@@ -79,8 +80,8 @@ test_calls_manager_dummy_provider (void)
   g_assert_null (calls_manager_get_calls (manager));
 
   test_call = NULL;
-  g_signal_connect (manager, "call-add", G_CALLBACK (call_add_cb), NULL);
-  g_signal_connect (manager, "call-remove", G_CALLBACK (call_remove_cb), NULL);
+  g_signal_connect (manager, "ui-call-added", G_CALLBACK (call_add_cb), NULL);
+  g_signal_connect (manager, "ui-call-removed", G_CALLBACK (call_remove_cb), NULL);
 
   origin = g_list_model_get_item (origins, 0);
   g_assert_true (CALLS_IS_ORIGIN (origin));
@@ -91,8 +92,8 @@ test_calls_manager_dummy_provider (void)
   g_assert_true (g_list_store_find (G_LIST_STORE (origins_tel), origin, &position));
 
   calls_origin_dial (origin, "+393422342");
-  g_assert_true (CALLS_IS_CALL (test_call));
-  calls_call_hang_up (test_call);
+  g_assert_true (CUI_IS_CALL (test_call));
+  cui_call_hang_up (test_call);
   g_assert_null (test_call);
 
   /* Add new call do check if we remove it when we unload the provider */
