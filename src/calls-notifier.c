@@ -58,7 +58,10 @@ notify (CallsNotifier *self, CallsCall *call)
   g_notification_set_category (notification, "x-gnome.call.unanswered");
 #endif
   contact = calls_call_get_contact (call);
-  // TODO: We need to update the notification when the contact name changes
+  /* TODO: We need to update the notification when the contact name changes
+     We would need to resend the notification in this case, as changing the properties
+     after having called g_application_send_notification() will have no effect.
+  */
   name = calls_best_match_get_name (contact);
   id = calls_call_get_id (call);
 
