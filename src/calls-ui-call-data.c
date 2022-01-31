@@ -536,15 +536,6 @@ calls_ui_call_data_new (CallsCall *call)
   return g_object_new (CALLS_TYPE_UI_CALL_DATA, "call", call, NULL);
 }
 
-
-CallsCall *
-calls_ui_call_data_get_call (CallsUiCallData *self)
-{
-  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
-
-  return self->call;
-}
-
 /**
  * calls_ui_call_data_silence_ring:
  * @self: a #CallsUiCallData
