@@ -24,9 +24,10 @@
 
 #define G_LOG_DOMAIN "CallsNotifier"
 
-#include "calls-notifier.h"
-#include "calls-manager.h"
 #include "config.h"
+
+#include "calls-manager.h"
+#include "calls-notifier.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
