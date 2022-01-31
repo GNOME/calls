@@ -77,7 +77,10 @@ calls_ui_call_data_get_display_name (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
   g_return_val_if_fail (!!self->call, NULL);
 
-  return calls_best_match_get_name (self->best_match);
+  if (self->best_match)
+    return calls_best_match_get_name (self->best_match);
+  else
+    return calls_call_get_name (self->call);
 }
 
 static const char *
@@ -282,8 +285,21 @@ set_call_data (CallsUiCallData *self,
   g_return_if_fail (CALLS_IS_UI_CALL_DATA (self));
   g_return_if_fail (CALLS_IS_CALL (call));
 
+  self->call = call;
+  g_signal_connect_object (self->call,
+                           "notify::state",
+                           G_CALLBACK (on_notify_state),
+                           self,
+                           G_CONNECT_SWAPPED);
+
+  on_notify_state (self);
+
   manager = calls_manager_get_default ();
   contacts_provider = calls_manager_get_contacts_provider (manager);
+
+  /* the contacts provider should only be NULL when running the test suite */
+  if (!contacts_provider)
+    return;
 
   self->best_match =
     calls_contacts_provider_lookup_id (contacts_provider,
@@ -304,13 +320,7 @@ set_call_data (CallsUiCallData *self,
                            G_CALLBACK (on_notify_avatar),
                            self,
                            G_CONNECT_SWAPPED);
-  self->call = call;
 
-  g_signal_connect_object (self->call,
-                           "notify::state",
-                           G_CALLBACK (on_notify_state),
-                           self,
-                           G_CONNECT_SWAPPED);
 }
 
 static void
@@ -383,17 +393,17 @@ calls_ui_call_data_get_property (GObject    *object,
 }
 
 static void
-calls_ui_call_data_finalize (GObject *object)
+calls_ui_call_data_dispose (GObject *object)
 {
   CallsUiCallData *self = CALLS_UI_CALL_DATA (object);
 
-  g_object_unref (self->call);
-  g_object_unref (self->best_match);
+  g_clear_object (&self->call);
+  g_clear_object (&self->best_match);
 
   g_clear_handle_id (&self->timer_id, g_source_remove);
   g_clear_pointer (&self->timer, g_timer_destroy);
 
-  G_OBJECT_CLASS (calls_ui_call_data_parent_class)->finalize (object);
+  G_OBJECT_CLASS (calls_ui_call_data_parent_class)->dispose (object);
 }
 
 static void
@@ -408,7 +418,7 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   object_class->set_property = calls_ui_call_data_set_property;
   object_class->get_property = calls_ui_call_data_get_property;
-  object_class->finalize = calls_ui_call_data_finalize;
+  object_class->dispose = calls_ui_call_data_dispose;
 
   props[PROP_CALL] =
     g_param_spec_object ("call",
