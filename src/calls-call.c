@@ -54,7 +54,6 @@ enum {
   PROP_NAME,
   PROP_STATE,
   PROP_PROTOCOL,
-  PROP_SILENCED,
   N_PROPS,
 };
 
@@ -71,7 +70,6 @@ typedef struct {
   char *name;
   CallsCallState state;
   gboolean inbound;
-  gboolean silenced;
 } CallsCallPrivate;
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
@@ -165,10 +163,6 @@ calls_call_get_property (GObject    *object,
     g_value_set_string (value, calls_call_get_protocol (self));
     break;
 
-  case PROP_SILENCED:
-    g_value_set_boolean (value, calls_call_get_silenced (self));
-    break;
-
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -242,13 +236,6 @@ calls_call_class_init (CallsCallClass *klass)
                          "The protocol used for this call",
                          NULL,
                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-
-  properties[PROP_SILENCED] =
-    g_param_spec_boolean ("silenced",
-                          "Silenced",
-                          "Whether the call ringing should be silenced",
-                          FALSE,
-                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -536,42 +523,6 @@ calls_call_get_contact (CallsCall *self)
                                             calls_call_get_id (self));
 }
 
-/**
- * calls_call_silence_ring:
- * @self: a #CallsCall
- *
- * Inhibit ringing
- */
-void
-calls_call_silence_ring (CallsCall *self)
-{
-  CallsCallPrivate *priv = calls_call_get_instance_private (self);
-
-  g_return_if_fail (CALLS_IS_CALL (self));
-  g_return_if_fail (calls_call_get_state (self) == CALLS_CALL_STATE_INCOMING);
-
-  if (priv->silenced)
-    return;
-
-  priv->silenced = TRUE;
-  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_SILENCED]);
-}
-
-/**
- * calls_call_get_silenced:
- * @self: a #CallsCall
- *
- * Returns: %TRUE if call has been silenced to not ring, %FALSE otherwise
- */
-gboolean
-calls_call_get_silenced (CallsCall *self)
-{
-  CallsCallPrivate *priv = calls_call_get_instance_private (self);
-
-  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
-
-  return priv->silenced;
-}
 
 gboolean
 calls_call_state_parse_nick (CallsCallState *state,
