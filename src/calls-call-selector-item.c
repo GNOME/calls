@@ -37,7 +37,6 @@ struct _CallsCallSelectorItem
   GtkEventBox parent_instance;
 
   CuiCallDisplay *display;
-  CallsBestMatch *contact;
 
   GtkBox *main_box;
   GtkLabel *name;
@@ -56,40 +55,27 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static void
 call_state_changed_cb (CallsCallSelectorItem *self,
-                       CallsCallState         state)
+                       CuiCallState           state)
 {
-  GString *state_str = g_string_new("");
-  calls_call_state_to_string (state_str, state);
-  gtk_label_set_text (self->status, state_str->str);
-  g_string_free (state_str, TRUE);
+  const char * state_str = cui_call_state_to_string (state);
+
+  gtk_label_set_text (self->status, state_str);
 }
 
-
-static CallsCall *
-display_get_call (CuiCallDisplay *display)
-{
-  CuiCall *call_data;
-
-  g_assert (CUI_IS_CALL_DISPLAY (display));
-
-  call_data = cui_call_display_get_call (display);
-  return calls_ui_call_data_get_call (CALLS_UI_CALL_DATA (call_data));
-}
 
 static void
 set_party (CallsCallSelectorItem *self)
 {
-  CallsCall *call;
+  CuiCall *call;
   // FIXME: use HdyAvatar and the contact avatar
   GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
 
   gtk_box_pack_start (self->main_box, image, TRUE, TRUE, 0);
   gtk_widget_show (image);
 
-  call = display_get_call (self->display);
-  self->contact = calls_call_get_contact (call);
+  call = cui_call_display_get_call (self->display);
 
-  g_object_bind_property (self->contact, "name",
+  g_object_bind_property (call, "name",
                           self->name, "label",
                           G_BINDING_SYNC_CREATE);
 }
@@ -98,18 +84,18 @@ set_party (CallsCallSelectorItem *self)
 static void
 set_call_display (CallsCallSelectorItem *self, CuiCallDisplay *display)
 {
-  CallsCall *call;
+  CuiCall *call;
 
   g_assert (CALLS_IS_CALL_SELECTOR_ITEM (self));
   g_assert (CUI_IS_CALL_DISPLAY (display));
 
-  call = display_get_call (display);
-  g_signal_connect_object (call, "state-changed",
+  call = cui_call_display_get_call (display);
+  g_signal_connect_object (call, "notify::state",
                            G_CALLBACK (call_state_changed_cb),
                            self,
                            G_CONNECT_SWAPPED);
 
-  call_state_changed_cb (self, calls_call_get_state (call));
+  call_state_changed_cb (self, cui_call_get_state (call));
 
   g_set_object (&self->display, display);
   set_party (self);
@@ -150,7 +136,6 @@ dispose (GObject *object)
   CallsCallSelectorItem *self = CALLS_CALL_SELECTOR_ITEM (object);
 
   g_clear_object (&self->display);
-  g_clear_object (&self->contact);
 
   G_OBJECT_CLASS (calls_call_selector_item_parent_class)->dispose (object);
 }

@@ -177,20 +177,19 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 
 static void
 add_call (CallsCallWindow *self,
-          CallsCall       *call)
+          CallsUiCallData *ui_call_data)
 {
-  CallsUiCallData *call_data;
+  CuiCall *call = (CuiCall *) ui_call_data;
   CuiCallDisplay *display;
   CallsCallSelectorItem *item;
 
   g_assert (CALLS_IS_CALL_WINDOW (self));
-  g_assert (CALLS_IS_CALL (call));
+  g_assert (CUI_IS_CALL (call));
 
-  call_data = calls_ui_call_data_new (call);
-  display = cui_call_display_new (CUI_CALL (call_data));
+  display = cui_call_display_new (CUI_CALL (ui_call_data));
   item = calls_call_selector_item_new (display);
   gtk_stack_add_named (self->call_stack, GTK_WIDGET (display),
-                       calls_call_get_id (call));
+                       cui_call_get_id (call));
 
   g_list_store_append (self->calls, item);
 
@@ -218,23 +217,23 @@ on_remove_delayed (gpointer user_data)
 
 static void
 remove_call (CallsCallWindow *self,
-             CallsCall       *call,
+             CallsUiCallData *ui_call_data,
              const gchar     *reason)
 {
   guint n_calls;
 
   g_assert (CALLS_IS_CALL_WINDOW (self));
-  g_assert (CALLS_IS_CALL (call));
+  g_assert (CALLS_IS_UI_CALL_DATA (ui_call_data));
 
   n_calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
   for (guint i = 0; i < n_calls; i++) {
     g_autoptr (CallsCallSelectorItem) item =
       g_list_model_get_item (G_LIST_MODEL (self->calls), i);
     CuiCallDisplay *display = calls_call_selector_item_get_display (item);
-    CallsUiCallData *call_data =
+    CallsUiCallData *display_call_data =
       CALLS_UI_CALL_DATA (cui_call_display_get_call (display));
 
-    if (calls_ui_call_data_get_call (call_data) == call) {
+    if (display_call_data == ui_call_data) {
       struct DisplayData *display_data = g_new0 (struct DisplayData, 1);
 
       g_list_store_remove (self->calls, i);
@@ -302,12 +301,12 @@ calls_call_window_init (CallsCallWindow *self)
                             self->in_app_notification);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-add",
+                            "ui-call-added",
                             G_CALLBACK (add_call),
                             self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-remove",
+                            "ui-call-removed",
                             G_CALLBACK (remove_call),
                             self);
 
