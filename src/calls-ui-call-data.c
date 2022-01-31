@@ -41,6 +41,7 @@ enum {
   PROP_CAN_DTMF,
   PROP_AVATAR_ICON,
   PROP_ACTIVE_TIME,
+  PROP_SILENCED,
   PROP_LAST_PROP
 };
 
@@ -64,6 +65,7 @@ struct _CallsUiCallData
   guint         timer_id;
 
   CuiCallState state;
+  gboolean silenced;
 };
 
 static void calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface);
@@ -412,6 +414,9 @@ calls_ui_call_data_get_property (GObject    *object,
 
   case PROP_ACTIVE_TIME:
     g_value_set_double (value, self->active_time);
+
+  case PROP_SILENCED:
+    g_value_set_boolean (value, calls_ui_call_data_get_silenced (self));
     break;
 
   default:
@@ -476,6 +481,15 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   g_object_class_install_property (object_class, PROP_PROTOCOL, props[PROP_PROTOCOL]);
 
+  props[PROP_SILENCED] =
+    g_param_spec_boolean ("silenced",
+                          "Silenced",
+                          "Whether the call ringing should be silenced",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_SILENCED, props[PROP_SILENCED]);
+
   g_object_class_override_property (object_class, PROP_ID, "id");
   props[PROP_ID] = g_object_class_find_property (object_class, "id");
 
@@ -531,6 +545,39 @@ calls_ui_call_data_get_call (CallsUiCallData *self)
   return self->call;
 }
 
+/**
+ * calls_ui_call_data_silence_ring:
+ * @self: a #CallsUiCallData
+ *
+ * Inhibit ringing
+ */
+void
+calls_ui_call_data_silence_ring (CallsUiCallData *self)
+{
+  g_return_if_fail (CALLS_IS_UI_CALL_DATA (self));
+  g_return_if_fail (self->state == CUI_CALL_STATE_INCOMING);
+
+  if (self->silenced)
+    return;
+
+  self->silenced = TRUE;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SILENCED]);
+}
+
+/**
+ * calls_ui_call_data_get_silenced:
+ * @self: a #CallsUiCallData
+ *
+ * Returns: %TRUE if call has been silenced to not ring, %FALSE otherwise
+ */
+gboolean
+calls_ui_call_data_get_silenced (CallsUiCallData *self)
+{
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), FALSE);
+
+  return self->silenced;
+}
+
 
 CuiCallState
 calls_call_state_to_cui_call_state (CallsCallState state)
@@ -552,4 +599,3 @@ calls_call_state_to_cui_call_state (CallsCallState state)
     return CUI_CALL_STATE_UNKNOWN;
   }
 }
-

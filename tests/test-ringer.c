@@ -9,6 +9,7 @@
 
 #include "calls-manager.h"
 #include "calls-ringer.h"
+#include "calls-ui-call-data.h"
 #include "mock-call.h"
 #include "mock-libfeedback.h"
 #include "mock-contacts-provider.h"
@@ -146,33 +147,35 @@ __wrap_calls_contacts_provider_new (CallsSettings *settings)
 /* add or remove calls */
 
 static void
-add_call (CallsManager  *manager,
-          CallsMockCall *call)
+add_call (CallsManager    *manager,
+          CallsUiCallData *call)
 {
   g_assert (CALLS_IS_MANAGER (manager));
-  g_assert (CALLS_IS_MOCK_CALL (call));
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
 
-  g_signal_emit_by_name (manager, "call-add", CALLS_CALL (call), NULL);
+  g_signal_emit_by_name (manager, "ui-call-added", call, NULL);
 }
 
 
 static void
-remove_call (CallsManager  *manager,
-             CallsMockCall *call)
+remove_call (CallsManager    *manager,
+             CallsUiCallData *call)
 {
   g_assert (CALLS_IS_MANAGER (manager));
-  g_assert (CALLS_IS_MOCK_CALL (call));
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
 
-  g_signal_emit_by_name (manager, "call-remove", CALLS_CALL (call), NULL);
+  g_signal_emit_by_name (manager, "ui-call-removed", call, NULL);
 }
 
 /* TestData setup and tear down */
 typedef struct {
-  CallsManager  *manager;
-  CallsRinger   *ringer;
-  CallsMockCall *call_one;
-  CallsMockCall *call_two;
-  GMainLoop     *loop;
+  CallsManager    *manager;
+  CallsRinger     *ringer;
+  CallsMockCall   *call_one;
+  CallsUiCallData *ui_call_one;
+  CallsMockCall   *call_two;
+  CallsUiCallData *ui_call_two;
+  GMainLoop       *loop;
 } TestData;
 
 
@@ -187,7 +190,9 @@ setup_test_data (void **state)
   data->manager = calls_manager_get_default ();
   data->ringer = calls_ringer_new ();
   data->call_one = calls_mock_call_new ();
+  data->ui_call_one = calls_ui_call_data_new (CALLS_CALL (data->call_one));
   data->call_two = calls_mock_call_new ();
+  data->ui_call_two = calls_ui_call_data_new (CALLS_CALL (data->call_two));
   data->loop = g_main_loop_new (NULL, FALSE);
 
   *state = data;
@@ -202,7 +207,9 @@ tear_down_test_data (void **state)
   TestData *data = *state;
 
   g_object_unref (data->call_one);
+  g_object_unref (data->ui_call_one);
   g_object_unref (data->call_two);
+  g_object_unref (data->ui_call_two);
   g_object_unref (data->ringer);
   g_main_loop_unref (data->loop);
 
@@ -252,12 +259,12 @@ test_ringing_accept_call (void **state)
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
   g_main_loop_run (data->loop);
 
-  remove_call (data->manager, data->call_one);
+  remove_call (data->manager, data->ui_call_one);
   assert_false (calls_ringer_get_is_ringing (data->ringer));
 }
 
@@ -303,12 +310,12 @@ test_ringing_hang_up_call (void **state)
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
   g_main_loop_run (data->loop);
 
-  remove_call (data->manager, data->call_one);
+  remove_call (data->manager, data->ui_call_one);
   assert_false (calls_ringer_get_is_ringing (data->ringer));
 }
 
@@ -347,14 +354,14 @@ test_ringing_hang_up_call_ringer_cancelled (void **state)
   will_return (__wrap_lfb_event_trigger_feedback_async, 50);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
 
   g_timeout_add (10, G_SOURCE_FUNC (t3_on_ringer_timeout), data);
 
   /* main loop will quit in t3_on_ringer_timeout() */
   g_main_loop_run (data->loop);
 
-  remove_call (data->manager, data->call_one);
+  remove_call (data->manager, data->ui_call_one);
   assert_false (calls_ringer_get_is_ringing (data->ringer));
 }
 
@@ -370,8 +377,8 @@ t4_on_ringer_call_silence (CallsRinger *ringer,
   switch (test_phase++) {
   case 0: /* incoming call */
     assert_true (calls_ringer_get_is_ringing (ringer));
-    calls_call_silence_ring (CALLS_CALL (data->call_one));
-    assert_true (calls_call_get_silenced (CALLS_CALL (data->call_one)));
+    calls_ui_call_data_silence_ring (data->ui_call_one);
+    assert_true (calls_ui_call_data_get_silenced (data->ui_call_one));
     break;
   case 1: /* incoming call hung up */
     assert_false (calls_ringer_get_is_ringing (ringer));
@@ -401,12 +408,12 @@ test_ringing_silence_call (void **state)
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
   g_main_loop_run (data->loop);
 
-  remove_call (data->manager, data->call_one);
+  remove_call (data->manager, data->ui_call_one);
   assert_false (calls_ringer_get_is_ringing (data->ringer));
 }
 
@@ -419,13 +426,13 @@ t5_remove_calls (gpointer user_data)
   TestData *data = user_data;
 
   if (test_phase == 0) {
-    remove_call (data->manager, data->call_one);
+    remove_call (data->manager, data->ui_call_one);
     test_phase++;
     return G_SOURCE_CONTINUE;
   }
 
   assert_true (calls_ringer_get_is_ringing (data->ringer));
-  remove_call (data->manager, data->call_two);
+  remove_call (data->manager, data->ui_call_two);
 
   return G_SOURCE_REMOVE;
 }
@@ -442,7 +449,7 @@ t5_on_ringer_multiple_calls (CallsRinger *ringer,
   switch (test_phase++) {
   case 0: /* add second call, and schedule call removal */
     assert_true (calls_ringer_get_is_ringing (ringer));
-    add_call (data->manager, data->call_two);
+    add_call (data->manager, data->ui_call_two);
     g_timeout_add (25, t5_remove_calls, data);
     break;
   case 1: /* both calls should be removed now */
@@ -473,7 +480,7 @@ test_ringing_multiple_calls (void **state)
   will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
   g_main_loop_run (data->loop);
@@ -538,9 +545,9 @@ test_ringing_multiple_calls_with_restart (void **state)
   will_return_always (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_one);
+  add_call (data->manager, data->ui_call_one);
   calls_call_set_state (CALLS_CALL (data->call_two), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->call_two);
+  add_call (data->manager, data->ui_call_two);
 
   /* main loop will quit in callback of notify::ring */
   g_main_loop_run (data->loop);

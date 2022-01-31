@@ -27,6 +27,7 @@
 
 #include "calls-manager.h"
 #include "calls-ringer.h"
+#include "calls-ui-call-data.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
@@ -285,11 +286,13 @@ restart (CallsRinger *self,
 
 
 static inline gboolean
-is_ring_state (CallsCallState state)
+is_ring_state (CuiCallState state)
 {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
   switch (state) {
-  case CALLS_CALL_STATE_INCOMING:
-  case CALLS_CALL_STATE_WAITING:
+  case CUI_CALL_STATE_INCOMING:
+  case CUI_CALL_STATE_WAITING:
     return TRUE;
   default:
     return FALSE;
@@ -298,18 +301,19 @@ is_ring_state (CallsCallState state)
 
 
 static inline gboolean
-is_active_state (CallsCallState state)
+is_active_state (CuiCallState state)
 {
   switch (state) {
-  case CALLS_CALL_STATE_ACTIVE:
-  case CALLS_CALL_STATE_DIALING:
-  case CALLS_CALL_STATE_ALERTING:
-  case CALLS_CALL_STATE_HELD:
+  case CUI_CALL_STATE_ACTIVE:
+  case CUI_CALL_STATE_CALLING:
+  case CUI_CALL_STATE_ALERTING:
+  case CUI_CALL_STATE_HELD:
     return TRUE;
   default:
     return FALSE;
   }
 }
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 
 
 static gboolean
@@ -318,9 +322,9 @@ has_active_call (CallsRinger *self)
   g_assert (CALLS_IS_RINGER (self));
 
   for (GList *node = self->calls; node != NULL; node = node->next) {
-    CallsCall *call = node->data;
+    CallsUiCallData *call = node->data;
 
-    if (is_active_state (calls_call_get_state (call)))
+    if (is_active_state (cui_call_get_state (CUI_CALL (call))))
       return TRUE;
   }
   return FALSE;
@@ -333,10 +337,10 @@ has_incoming_call (CallsRinger *self)
   g_assert (CALLS_IS_RINGER (self));
 
   for (GList *node = self->calls; node != NULL; node = node->next) {
-    CallsCall *call = node->data;
+    CallsUiCallData *call = node->data;
 
-    if (is_ring_state (calls_call_get_state (call)) &&
-        !calls_call_get_silenced (call))
+    if (is_ring_state (cui_call_get_state (CUI_CALL (call))) &&
+        !calls_ui_call_data_get_silenced (call))
       return TRUE;
   }
   return FALSE;
@@ -361,11 +365,11 @@ update_ring (CallsRinger *self)
 
 
 static void
-call_added_cb (CallsRinger *self,
-               CallsCall   *call)
+call_added_cb (CallsRinger     *self,
+               CallsUiCallData *call)
 {
   g_assert (CALLS_IS_RINGER (self));
-  g_assert (CALLS_IS_CALL (call));
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
 
   self->calls = g_list_append (self->calls, call);
 
@@ -382,8 +386,8 @@ call_added_cb (CallsRinger *self,
 
 
 static void
-call_removed_cb (CallsRinger *self,
-                 CallsCall *call)
+call_removed_cb (CallsRinger     *self,
+                 CallsUiCallData *call)
 {
   self->calls = g_list_remove (self->calls, call);
 
@@ -442,12 +446,12 @@ constructed (GObject *object)
   CallsRinger *self = CALLS_RINGER (object);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-add",
+                            "ui-call-added",
                             G_CALLBACK (call_added_cb),
                             self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-remove",
+                            "ui-call-removed",
                             G_CALLBACK (call_removed_cb),
                             self);
 

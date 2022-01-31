@@ -37,6 +37,8 @@ G_DECLARE_FINAL_TYPE (CallsUiCallData, calls_ui_call_data, CALLS, UI_CALL_DATA, 
 
 CallsUiCallData         *calls_ui_call_data_new               (CallsCall       *call);
 CallsCall               *calls_ui_call_data_get_call          (CallsUiCallData *self);
+void                     calls_ui_call_data_silence_ring      (CallsUiCallData *self);
+gboolean                 calls_ui_call_data_get_silenced      (CallsUiCallData *self);
 CuiCallState             calls_call_state_to_cui_call_state   (CallsCallState   state);
 
 G_END_DECLS
