@@ -49,11 +49,11 @@ get_obj_path (CallsDBusManager *self, guint num)
 
 
 static CallsDBusObjectSkeleton *
-find_call (CallsDBusManager *self, CallsCall *call, int *pos)
+find_call (CallsDBusManager *self, CallsUiCallData *call, int *pos)
 {
   CallsDBusObjectSkeleton *found = NULL;
 
-  g_return_val_if_fail (CALLS_IS_CALL (call), NULL);
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), NULL);
 
   for (int i = 0; i >= 0; i++) {
     g_autoptr (CallsDBusObjectSkeleton) item = g_list_model_get_item (G_LIST_MODEL (self->objs), i);
@@ -75,12 +75,12 @@ find_call (CallsDBusManager *self, CallsCall *call, int *pos)
 static gboolean
 on_handle_call_accept (CallsDBusCallsCall    *skeleton,
                        GDBusMethodInvocation *invocation,
-                       CallsCall             *call)
+                       CallsUiCallData       *call)
 {
   g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
-  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), FALSE);
 
-  calls_call_answer (call);
+  cui_call_accept (CUI_CALL (call));
 
   calls_dbus_calls_call_complete_accept (skeleton, invocation);
   return TRUE;
@@ -90,12 +90,12 @@ on_handle_call_accept (CallsDBusCallsCall    *skeleton,
 static gboolean
 on_handle_call_hangup (CallsDBusCallsCall    *skeleton,
                        GDBusMethodInvocation *invocation,
-                       CallsCall             *call)
+                       CallsUiCallData       *call)
 {
   g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
-  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), FALSE);
 
-  calls_call_hang_up (call);
+  cui_call_hang_up (CUI_CALL (call));
 
   calls_dbus_calls_call_complete_hangup (skeleton, invocation);
   return TRUE;
@@ -129,12 +129,15 @@ static gboolean
 on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
                           GDBusMethodInvocation *invocation,
                           const char            *dtmf_tone,
-                          CallsCall             *call)
+                          CallsUiCallData       *call)
 {
-  g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
-  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+  CuiCall *cui_call;
 
-  if (!calls_call_can_dtmf (call)) {
+  g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), FALSE);
+
+  cui_call = CUI_CALL (call);
+  if (!cui_call_get_can_dtmf (cui_call)) {
     g_dbus_method_invocation_return_error (invocation,
                                            G_IO_ERROR,
                                            G_IO_ERROR_FAILED,
@@ -168,7 +171,7 @@ on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
     return TRUE;
   }
 
-  if (calls_call_get_state (call) != CALLS_CALL_STATE_ACTIVE) {
+  if (cui_call_get_state (cui_call) != CUI_CALL_STATE_ACTIVE) {
     g_dbus_method_invocation_return_error (invocation,
                                            G_IO_ERROR,
                                            G_IO_ERROR_FAILED,
@@ -176,7 +179,7 @@ on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
     return TRUE;
   }
 
-  calls_call_send_dtmf_tone (call, *dtmf_tone);
+  cui_call_send_dtmf (cui_call, dtmf_tone);
   calls_dbus_calls_call_complete_send_dtmf (skeleton, invocation);
 
   return TRUE;
@@ -186,34 +189,21 @@ on_handle_call_send_dtmf (CallsDBusCallsCall    *skeleton,
 static gboolean
 on_handle_call_silence (CallsDBusCallsCall    *skeleton,
                         GDBusMethodInvocation *invocation,
-                        CallsCall             *call)
+                        CallsUiCallData       *call)
 {
   g_return_val_if_fail (CALLS_DBUS_IS_CALLS_CALL (skeleton), FALSE);
-  g_return_val_if_fail (CALLS_IS_CALL (call), FALSE);
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), FALSE);
 
-  calls_call_silence_ring (call);
+  /* TODO switch to cui_call_silence_ring() once it's available in libcall-ui */
+  calls_ui_call_data_silence_ring (call);
 
   calls_dbus_calls_call_complete_silence (skeleton, invocation);
   return TRUE;
 }
 
 
-static gboolean
-from_call_to_cui_state (GBinding     *binding,
-                        const GValue *from_value,
-                        GValue       *to_value,
-                        gpointer      unused)
-{
-  CallsCallState call_state = g_value_get_enum (from_value);
-  CuiCallState cui_state = calls_call_state_to_cui_call_state (call_state);
-  g_value_set_uint (to_value, cui_state);
-
-  return TRUE;
-}
-
-
 static void
-call_added_cb (CallsDBusManager *self, CallsCall *call)
+call_added_cb (CallsDBusManager *self, CuiCall *call)
 {
   g_autofree char *path = NULL;
   g_autoptr (GError) error = NULL;
@@ -235,26 +225,21 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
                     "object-signal::handle-send_dtmf", G_CALLBACK (on_handle_call_send_dtmf), call,
                     "object_signal::handle-silence", G_CALLBACK (on_handle_call_silence), call,
                     NULL);
-  g_object_bind_property_full (call, "state", iface, "state", G_BINDING_SYNC_CREATE,
-                               from_call_to_cui_state, NULL, NULL, NULL);
+  g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "id", iface, "id", G_BINDING_SYNC_CREATE);
+  g_object_bind_property (call, "name", iface, "display-name", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "protocol", iface, "protocol", G_BINDING_SYNC_CREATE);
-  g_object_set (iface, "can-dtmf", calls_call_can_dtmf (call), NULL);
+  g_object_set (iface, "can-dtmf", cui_call_get_can_dtmf (call), NULL);
+
+  g_object_bind_property_full (call, "avatar-icon",
+                               iface, "image-path",
+                               G_BINDING_SYNC_CREATE,
+                               avatar_loadable_icon_transform_to_image_path,
+                               NULL, NULL, NULL);
+
   /* TODO: once calls supports encryption */
   calls_dbus_calls_call_set_encrypted (iface, FALSE);
-
-  /* Keep in sync BestMatch object */
-  match = calls_call_get_contact (call);
-  if (calls_best_match_has_individual (match)) {
-    g_object_bind_property (match, "name", iface, "display-name", G_BINDING_SYNC_CREATE);
-    g_object_bind_property_full (match, "avatar",
-                                 iface, "image-path",
-                                 G_BINDING_SYNC_CREATE,
-                                 avatar_loadable_icon_transform_to_image_path,
-                                 NULL, NULL, NULL);
-  }
-  g_object_set_data_full (G_OBJECT (object), "contact", g_steal_pointer (&match), g_object_unref);
 
   /* Export with properties bound to reduce DBus traffic: */
   g_debug ("Exporting %p at %s", call, path);
@@ -265,7 +250,7 @@ call_added_cb (CallsDBusManager *self, CallsCall *call)
 
 
 static void
-call_removed_cb (CallsDBusManager *self, CallsCall *call)
+call_removed_cb (CallsDBusManager *self, CallsUiCallData *call)
 {
   const char *path = NULL;
   CallsDBusObjectSkeleton *obj = NULL;
@@ -295,12 +280,12 @@ calls_dbus_manager_constructed (GObject *object)
   self->objs = g_list_store_new (CALLS_DBUS_TYPE_OBJECT_SKELETON);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-add",
+                            "ui-call-added",
                             G_CALLBACK (call_added_cb),
                             self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-remove",
+                            "ui-call-removed",
                             G_CALLBACK (call_removed_cb),
                             self);
   calls = calls_manager_get_calls (calls_manager_get_default ());
