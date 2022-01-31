@@ -32,6 +32,8 @@
 enum {
   PROP_0,
   PROP_CALL,
+  PROP_INBOUND,
+  PROP_PROTOCOL,
   PROP_DISPLAY_NAME,
   PROP_ID,
   PROP_STATE,
@@ -148,6 +150,24 @@ calls_ui_call_data_get_active_time (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), 0.0);
 
   return self->active_time;
+}
+
+
+static gboolean
+calls_ui_call_data_get_inbound (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  return calls_call_get_inbound (self->call);
+}
+
+
+static const char *
+calls_ui_call_data_get_protocol (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  return calls_call_get_protocol (self->call);
 }
 
 
@@ -358,6 +378,14 @@ calls_ui_call_data_get_property (GObject    *object,
     g_value_set_object (value, self->call);
     break;
 
+  case PROP_INBOUND:
+    g_value_set_boolean (value, calls_ui_call_data_get_inbound (self));
+    break;
+
+  case PROP_PROTOCOL:
+    g_value_set_string (value, calls_ui_call_data_get_protocol (self));
+    break;
+
   case PROP_DISPLAY_NAME:
     g_value_set_string (value, calls_ui_call_data_get_display_name (cui_call));
     break;
@@ -429,6 +457,24 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
                          G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_CALL, props[PROP_CALL]);
+
+  props[PROP_INBOUND] =
+    g_param_spec_boolean ("inbound",
+                          "Inbound",
+                          "Whether the call is inbound",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_INBOUND, props[PROP_INBOUND]);
+
+  props[PROP_PROTOCOL] =
+    g_param_spec_string ("protocol",
+                         "Protocol",
+                         "The protocol for the call, e.g. tel, sip",
+                         NULL,
+                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_PROTOCOL, props[PROP_PROTOCOL]);
 
   g_object_class_override_property (object_class, PROP_ID, "id");
   props[PROP_ID] = g_object_class_find_property (object_class, "id");
