@@ -573,27 +573,6 @@ calls_call_get_silenced (CallsCall *self)
   return priv->silenced;
 }
 
-void
-calls_call_state_to_string (GString        *string,
-                            CallsCallState  state)
-{
-  GEnumClass *klass;
-  GEnumValue *value;
-
-  klass = g_type_class_ref (CALLS_TYPE_CALL_STATE);
-
-  value = g_enum_get_value (klass, (gint)state);
-  if (!value)
-    return g_string_printf (string,
-                            "Unknown call state (%d)",
-                            (gint)state);
-
-  g_string_assign (string, value->value_nick);
-  string->str[0] = g_ascii_toupper (string->str[0]);
-
-  g_type_class_unref (klass);
-}
-
 gboolean
 calls_call_state_parse_nick (CallsCallState *state,
                              const char     *nick)

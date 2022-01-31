@@ -78,8 +78,6 @@ CallsBestMatch  *calls_call_get_contact            (CallsCall     *self);
 void             calls_call_silence_ring           (CallsCall     *self);
 gboolean         calls_call_get_silenced           (CallsCall     *self);
 
-void     calls_call_state_to_string  (GString         *string,
-                                      CallsCallState   state);
 gboolean calls_call_state_parse_nick (CallsCallState  *state,
                                       const char      *nick);
 
