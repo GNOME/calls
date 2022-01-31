@@ -37,6 +37,7 @@ enum {
   PROP_ENCRYPTED,
   PROP_CAN_DTMF,
   PROP_AVATAR_ICON,
+  PROP_ACTIVE_TIME,
   PROP_LAST_PROP
 };
 
@@ -49,6 +50,10 @@ struct _CallsUiCallData
 
   CallsCall *call;
   CallsBestMatch *best_match;
+
+  GTimer       *timer;
+  gdouble       active_time;
+  guint         timer_id;
 };
 
 static void calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface);
@@ -124,6 +129,17 @@ calls_ui_call_data_get_avatar_icon (CuiCall *call_data)
 }
 
 
+static gdouble
+calls_ui_call_data_get_active_time (CuiCall *call_data)
+{
+  CallsUiCallData *self = (CallsUiCallData *) call_data;
+
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), 0.0);
+
+  return self->active_time;
+}
+
+
 static void
 calls_ui_call_data_accept (CuiCall *call_data)
 {
@@ -169,6 +185,7 @@ calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface)
   iface->get_encrypted = calls_ui_call_data_get_encrypted;
   iface->get_can_dtmf = calls_ui_call_data_get_can_dtmf;
   iface->get_avatar_icon = calls_ui_call_data_get_avatar_icon;
+  iface->get_active_time = calls_ui_call_data_get_active_time;
 
   iface->accept = calls_ui_call_data_accept;
   iface->hang_up = calls_ui_call_data_hang_up;
@@ -176,10 +193,32 @@ calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface)
 }
 
 
+static gboolean
+on_timer_ticked (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  self->active_time = g_timer_elapsed (self->timer, NULL);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACTIVE_TIME]);
+
+  return G_SOURCE_CONTINUE;
+}
+
+
 static void
 on_notify_state (CallsUiCallData *self)
 {
   g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  if (calls_call_get_state (self->call) == CALLS_CALL_STATE_ACTIVE) {
+    self->timer = g_timer_new ();
+    self->timer_id = g_timeout_add (500,
+                                    G_SOURCE_FUNC (on_timer_ticked),
+                                    self);
+  } else if (calls_call_get_state (self->call) == CALLS_CALL_STATE_DISCONNECTED) {
+    g_clear_handle_id (&self->timer_id, g_source_remove);
+    g_clear_pointer (&self->timer, g_timer_destroy);
+  }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 }
@@ -303,6 +342,10 @@ calls_ui_call_data_get_property (GObject    *object,
     g_value_set_object (value, calls_ui_call_data_get_avatar_icon (cui_call));
     break;
 
+  case PROP_ACTIVE_TIME:
+    g_value_set_double (value, self->active_time);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -316,6 +359,9 @@ calls_ui_call_data_finalize (GObject *object)
 
   g_object_unref (self->call);
   g_object_unref (self->best_match);
+
+  g_clear_handle_id (&self->timer_id, g_source_remove);
+  g_clear_pointer (&self->timer, g_timer_destroy);
 
   G_OBJECT_CLASS (calls_ui_call_data_parent_class)->finalize (object);
 }
@@ -361,6 +407,9 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   g_object_class_override_property (object_class, PROP_AVATAR_ICON, "avatar-icon");
   props[PROP_AVATAR_ICON] = g_object_class_find_property (object_class, "avatar-icon");
+
+  g_object_class_override_property (object_class, PROP_ACTIVE_TIME, "active-time");
+  props[PROP_ACTIVE_TIME] = g_object_class_find_property (object_class, "active-time");
 }
 
 CallsUiCallData *
