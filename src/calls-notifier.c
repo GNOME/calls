@@ -37,7 +37,6 @@ struct _CallsNotifier
   GObject parent_instance;
 
   GListStore    *unanswered;
-  GList         *notifications;
 };
 
 G_DEFINE_TYPE (CallsNotifier, calls_notifier, G_TYPE_OBJECT);
