@@ -434,12 +434,14 @@ constructed (GObject *object)
   g_autofree char *target_name = NULL;
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
+  g_autofree char *target = NULL;
 
   g_object_get (self->record,
                 "inbound", &inbound,
                 "answered", &answered,
                 "end", &end,
                 "protocol", &protocol,
+                "target", &target,
                 NULL);
 
   /* Fall back to "app.dial-tel" action if no protocol was given */
@@ -452,7 +454,7 @@ constructed (GObject *object)
 
   /* TODO add origin ID to action target */
   gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
-                                    "(ss)", self->target, "");
+                                    "(ss)", target, "");
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
