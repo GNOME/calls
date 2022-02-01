@@ -435,7 +435,7 @@ constructed (GObject *object)
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
 
-  g_object_get (G_OBJECT (self->record),
+  g_object_get (self->record,
                 "inbound", &inbound,
                 "answered", &answered,
                 "end", &end,
