@@ -220,10 +220,10 @@ call_added_cb (CallsDBusManager *self, CuiCall *call)
   /* Keep in sync with call object */
   g_object_set_data_full (G_OBJECT (object), "call", g_object_ref (call), g_object_unref);
   g_object_connect (iface,
-                    "object_signal::handle-accept", G_CALLBACK (on_handle_call_accept), call,
-                    "object_signal::handle-hangup", G_CALLBACK (on_handle_call_hangup), call,
+                    "object-signal::handle-accept", G_CALLBACK (on_handle_call_accept), call,
+                    "object-signal::handle-hangup", G_CALLBACK (on_handle_call_hangup), call,
                     "object-signal::handle-send_dtmf", G_CALLBACK (on_handle_call_send_dtmf), call,
-                    "object_signal::handle-silence", G_CALLBACK (on_handle_call_silence), call,
+                    "object-signal::handle-silence", G_CALLBACK (on_handle_call_silence), call,
                     NULL);
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
