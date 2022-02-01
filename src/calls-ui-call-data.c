@@ -42,6 +42,7 @@ enum {
   PROP_AVATAR_ICON,
   PROP_ACTIVE_TIME,
   PROP_SILENCED,
+  PROP_UI_ACTIVE,
   PROP_LAST_PROP
 };
 
@@ -66,6 +67,9 @@ struct _CallsUiCallData
 
   CuiCallState state;
   gboolean silenced;
+
+  gboolean ui_active; /* whether a UI should be shown (or the ringer should ring) */
+  guint set_active_id;
 };
 
 static void calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface);
@@ -260,6 +264,7 @@ set_state (CallsUiCallData *self,
   } else if (new_state == CUI_CALL_STATE_DISCONNECTED) {
     g_clear_handle_id (&self->timer_id, g_source_remove);
     g_clear_pointer (&self->timer, g_timer_destroy);
+    g_clear_handle_id (&self->set_active_id, g_source_remove);
   }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
@@ -345,6 +350,56 @@ set_call_data (CallsUiCallData *self,
 
 }
 
+
+static void
+set_ui_active (CallsUiCallData *self,
+               gboolean         active)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  if (self->ui_active == active)
+    return;
+
+  self->ui_active = active;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_UI_ACTIVE]);
+}
+
+
+static gboolean
+on_delay_set_active (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  set_ui_active (self, TRUE);
+
+  self->set_active_id = 0;
+  g_object_unref (self);
+
+  return G_SOURCE_REMOVE;
+}
+
+
+#define DELAY_UI_MS 15
+static void
+calls_ui_call_data_constructed (GObject *object)
+{
+  CallsUiCallData *self = CALLS_UI_CALL_DATA (object);
+
+  G_OBJECT_CLASS (calls_ui_call_data_parent_class)->constructed (object);
+
+  if (!calls_call_get_inbound (self->call) || self->state != CUI_CALL_STATE_INCOMING) {
+    set_ui_active (self, TRUE);
+    return;
+  }
+
+  set_ui_active (self, FALSE);
+  self->set_active_id = g_timeout_add (DELAY_UI_MS,
+                                       G_SOURCE_FUNC (on_delay_set_active),
+                                       g_object_ref (self));
+}
+#undef DELAY_UI_MS
+
+
 static void
 calls_ui_call_data_set_property (GObject      *object,
                                  guint         property_id,
@@ -419,6 +474,10 @@ calls_ui_call_data_get_property (GObject    *object,
     g_value_set_boolean (value, calls_ui_call_data_get_silenced (self));
     break;
 
+  case PROP_UI_ACTIVE:
+    g_value_set_boolean (value, calls_ui_call_data_get_ui_active (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -449,6 +508,7 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed = calls_ui_call_data_constructed;
   object_class->set_property = calls_ui_call_data_set_property;
   object_class->get_property = calls_ui_call_data_get_property;
   object_class->dispose = calls_ui_call_data_dispose;
@@ -489,6 +549,15 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_SILENCED, props[PROP_SILENCED]);
+
+  props[PROP_UI_ACTIVE] =
+    g_param_spec_boolean ("ui-active",
+                          "UI active",
+                          "Whether the UI should be shown",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  g_object_class_install_property (object_class, PROP_UI_ACTIVE, props[PROP_UI_ACTIVE]);
 
   g_object_class_override_property (object_class, PROP_ID, "id");
   props[PROP_ID] = g_object_class_find_property (object_class, "id");
@@ -569,6 +638,19 @@ calls_ui_call_data_get_silenced (CallsUiCallData *self)
   return self->silenced;
 }
 
+/**
+ * calls_ui_call_data_get_ui_active:
+ * @self: a #CallsUiCallData
+ *
+ * Returns: %TRUE if the UI should be shown, %FALSE otherwise
+ */
+gboolean
+calls_ui_call_data_get_ui_active (CallsUiCallData *self)
+{
+  g_return_val_if_fail (CALLS_UI_CALL_DATA (self), FALSE);
+
+  return self->ui_active;
+}
 
 /**
  * calls_call_state_to_cui_call_state:
