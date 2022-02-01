@@ -228,7 +228,7 @@ call_added_cb (CallsDBusManager *self, CuiCall *call)
   g_object_bind_property (call, "state", iface, "state", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "inbound", iface, "inbound", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "id", iface, "id", G_BINDING_SYNC_CREATE);
-  g_object_bind_property (call, "name", iface, "display-name", G_BINDING_SYNC_CREATE);
+  g_object_bind_property (call, "display-name", iface, "display-name", G_BINDING_SYNC_CREATE);
   g_object_bind_property (call, "protocol", iface, "protocol", G_BINDING_SYNC_CREATE);
   g_object_set (iface, "can-dtmf", cui_call_get_can_dtmf (call), NULL);
 
