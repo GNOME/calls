@@ -176,8 +176,8 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
 
 
 static void
-add_call (CallsCallWindow *self,
-          CallsUiCallData *ui_call_data)
+add_call_to_window (CallsCallWindow *self,
+                    CallsUiCallData *ui_call_data)
 {
   CuiCall *call = (CuiCall *) ui_call_data;
   CuiCallDisplay *display;
@@ -195,6 +195,42 @@ add_call (CallsCallWindow *self,
 
   update_visibility (self);
   set_focus (self, display);
+}
+
+
+static void
+on_call_notify_active_ui (CallsUiCallData *call,
+                          GParamSpec      *unused,
+                          CallsCallWindow *self)
+{
+  g_assert (CALLS_IS_CALL_WINDOW (self));
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
+
+  if (!calls_ui_call_data_get_ui_active (call)) {
+    g_warning ("UI for a call should never switch back to being inactive");
+    return;
+  }
+
+  add_call_to_window (self, call);
+}
+
+
+static void
+add_call (CallsCallWindow *self,
+          CallsUiCallData *call)
+{
+  g_assert (CALLS_IS_CALL_WINDOW (self));
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
+
+  if (calls_ui_call_data_get_ui_active (call)) {
+    add_call_to_window (self, call);
+    return;
+  }
+
+  g_signal_connect (call,
+                    "notify::ui-active",
+                    G_CALLBACK (on_call_notify_active_ui),
+                    self);
 }
 
 struct DisplayData
@@ -224,6 +260,8 @@ remove_call (CallsCallWindow *self,
 
   g_assert (CALLS_IS_CALL_WINDOW (self));
   g_assert (CALLS_IS_UI_CALL_DATA (ui_call_data));
+
+  g_signal_handlers_disconnect_by_data (ui_call_data, self);
 
   n_calls = g_list_model_get_n_items (G_LIST_MODEL (self->calls));
   for (guint i = 0; i < n_calls; i++) {
