@@ -115,10 +115,14 @@ t = executable('util', test_sources,
                )
 test('util', t, env: test_env)
 
-test_sources = [ 'test-ui-call.c' ]
+mock_link_args = [ test_link_args,
+                   '-Wl,--wrap=calls_contacts_provider_new',
+                 ]
+
+test_sources = [ 'test-ui-call.c', 'mock-call.c', 'mock-call.h' ]
 t = executable('ui-call', test_sources,
                c_args : test_cflags,
-               link_args : test_link_args,
+               link_args : mock_link_args,
                pie: true,
                link_with : [calls_vala, libcalls],
                dependencies : calls_deps,
