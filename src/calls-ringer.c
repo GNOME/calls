@@ -340,7 +340,8 @@ has_incoming_call (CallsRinger *self)
     CallsUiCallData *call = node->data;
 
     if (is_ring_state (cui_call_get_state (CUI_CALL (call))) &&
-        !calls_ui_call_data_get_silenced (call))
+        !calls_ui_call_data_get_silenced (call) &&
+        calls_ui_call_data_get_ui_active (call))
       return TRUE;
   }
   return FALSE;
@@ -373,14 +374,12 @@ call_added_cb (CallsRinger     *self,
 
   self->calls = g_list_append (self->calls, call);
 
-  g_signal_connect_swapped (call,
-                            "notify::state",
-                            G_CALLBACK (update_ring),
-                            self);
-  g_signal_connect_swapped (call,
-                            "notify::silenced",
-                            G_CALLBACK (update_ring),
-                            self);
+  g_object_connect (call,
+                    "swapped-signal::notify::state", G_CALLBACK (update_ring), self,
+                    "swapped-signal::notify::silenced", G_CALLBACK (update_ring), self,
+                    "swapped-signal::notify::ui-active", G_CALLBACK (update_ring), self,
+                    NULL);
+
   update_ring (self);
 }
 

@@ -356,7 +356,10 @@ test_ringing_hang_up_call_ringer_cancelled (void **state)
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
 
-  g_timeout_add (10, G_SOURCE_FUNC (t3_on_ringer_timeout), data);
+  /** this timeout needs to be longer than the delay for activating the UI/ringer,
+   * see DELAY_UI_MS in calls-ui-call-data.c
+   */
+  g_timeout_add (20, G_SOURCE_FUNC (t3_on_ringer_timeout), data);
 
   /* main loop will quit in t3_on_ringer_timeout() */
   g_main_loop_run (data->loop);
