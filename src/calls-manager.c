@@ -902,28 +902,20 @@ calls_manager_get_origins (CallsManager *self)
 }
 
 
+/**
+ * calls_manager_get_calls:
+ * @self: A #CallsManager
+ *
+ * Returns: (transfer container): Returns a list of all known calls.
+ * The calls are objects of type #CallsUiCallData. Use g_list_free() when
+ * done using the list.
+ */
 GList *
 calls_manager_get_calls (CallsManager *self)
 {
-  GListModel *origins = NULL;
-  g_autoptr (GList) calls = NULL;
-  guint n_items = 0;
-
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
 
-  origins = calls_manager_get_origins (self);
-  if (origins)
-    n_items = g_list_model_get_n_items (origins);
-
-  for (guint i = 0; i < n_items; i++)
-    {
-      g_autoptr (CallsOrigin) origin = NULL;
-
-      origin = g_list_model_get_item (origins, i);
-      calls = g_list_concat (calls, calls_origin_get_calls (origin));
-    }
-
-  return g_steal_pointer (&calls);
+  return g_hash_table_get_values (self->calls);
 }
 
 /**
@@ -935,22 +927,28 @@ calls_manager_get_calls (CallsManager *self)
 void
 calls_manager_hang_up_all_calls (CallsManager *self)
 {
-  g_autoptr (GList) calls = NULL;
+  GListModel *origins;
   GList *node;
   CallsCall *call;
+  uint n_items;
 
   g_return_if_fail (CALLS_IS_MANAGER (self));
 
-  calls = calls_manager_get_calls (self);
+  origins = G_LIST_MODEL (self->origins);
+  n_items = g_list_model_get_n_items (origins);
 
-  for (node = calls; node; node = node->next)
-    {
+  for (uint i = 0; i < n_items; i++) {
+    g_autoptr (CallsOrigin) origin = g_list_model_get_item (origins, i);
+    g_autoptr (GList) calls = calls_origin_get_calls (origin);
+
+    for (node = calls; node; node = node->next) {
       call = node->data;
       g_debug ("Hanging up on call %s", calls_call_get_name (call));
       calls_call_hang_up (call);
     }
+  }
 
-  g_debug ("Hanged up on all calls");
+  g_debug ("Hung up on all calls");
 }
 
 /**
