@@ -570,6 +570,12 @@ calls_ui_call_data_get_silenced (CallsUiCallData *self)
 }
 
 
+/**
+ * calls_call_state_to_cui_call_state:
+ * @state: A #CallsCallState
+ *
+ * Returns: a #CuiCallState @state is mapped to.
+ */
 CuiCallState
 calls_call_state_to_cui_call_state (CallsCallState state)
 {
