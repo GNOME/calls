@@ -115,6 +115,19 @@ t = executable('util', test_sources,
                )
 test('util', t, env: test_env)
 
+test_sources = [ 'test-ui-call.c' ]
+t = executable('ui-call', test_sources,
+               c_args : test_cflags,
+               link_args : test_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies : calls_deps,
+               include_directories : [
+                   calls_includes
+                 ]
+               )
+test('ui-call', t, env: test_env)
+
 mock_link_args = [ test_link_args,
                    '-Wl,--wrap=lfb_init',
                    '-Wl,--wrap=lfb_uninit',
