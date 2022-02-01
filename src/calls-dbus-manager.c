@@ -202,6 +202,38 @@ on_handle_call_silence (CallsDBusCallsCall    *skeleton,
 }
 
 
+static GVariant *
+build_hints (CallsUiCallData *call)
+{
+  GVariantDict dict;
+
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (call), NULL);
+
+  g_variant_dict_init (&dict, NULL);
+
+  g_variant_dict_insert (&dict, "ui-active", "b",
+                         calls_ui_call_data_get_ui_active (call));
+
+  return g_variant_dict_end (&dict);
+}
+
+
+static void
+on_notify_update_hints (CallsUiCallData    *call,
+                        GParamSpec         *unused,
+                        CallsDBusCallsCall *iface)
+{
+  GVariant *hints;
+
+  g_assert (CALLS_IS_UI_CALL_DATA (call));
+  g_assert (CALLS_DBUS_IS_CALLS_CALL (iface));
+
+  hints = build_hints (call);
+
+  calls_dbus_calls_call_set_hints (iface, hints);
+}
+
+
 static void
 call_added_cb (CallsDBusManager *self, CuiCall *call)
 {
@@ -240,6 +272,12 @@ call_added_cb (CallsDBusManager *self, CuiCall *call)
 
   /* TODO: once calls supports encryption */
   calls_dbus_calls_call_set_encrypted (iface, FALSE);
+
+  g_signal_connect (call,
+                    "notify::ui-active",
+                    G_CALLBACK (on_notify_update_hints),
+                    iface);
+  on_notify_update_hints (CALLS_UI_CALL_DATA (call), NULL, iface);
 
   /* Export with properties bound to reduce DBus traffic: */
   g_debug ("Exporting %p at %s", call, path);

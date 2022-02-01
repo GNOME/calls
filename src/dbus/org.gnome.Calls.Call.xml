@@ -147,5 +147,19 @@
         </doc:description>
       </doc:doc>
     </property>
+
+    <!--
+        Hints:
+
+        Additional property dictionary with hints.
+        "ui-active" hints whether the UI should be shown or not.
+    -->
+    <property name="Hints" type="a{sv}" access="read">
+      <doc:doc>
+        <doc:description>
+          <doc:para>Additional hints about this call</doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
   </interface>
 </node>
