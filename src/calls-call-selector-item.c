@@ -75,7 +75,7 @@ set_party (CallsCallSelectorItem *self)
 
   call = cui_call_display_get_call (self->display);
 
-  g_object_bind_property (call, "name",
+  g_object_bind_property (call, "display-name",
                           self->name, "label",
                           G_BINDING_SYNC_CREATE);
 }
