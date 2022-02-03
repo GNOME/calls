@@ -246,27 +246,62 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 }
 
 
+struct CallsRemoveData
+{
+  CallsManager *manager;
+  CallsCall    *call;
+};
+
+
+static gboolean
+on_remove_delayed (struct CallsRemoveData *data)
+{
+  CallsUiCallData *call_data;
+
+  g_assert (CALLS_IS_MANAGER (data->manager));
+  g_assert (CALLS_IS_CALL (data->call));
+
+  call_data = g_hash_table_lookup (data->manager->calls, data->call);
+  if (!call_data) {
+    g_warning ("Could not find call %s in UI call hash table",
+               calls_call_get_id (data->call));
+  } else {
+    g_signal_emit (data->manager, signals[UI_CALL_REMOVED], 0, call_data);
+    g_hash_table_remove (data->manager->calls, data->call);
+  }
+
+  g_free (data);
+
+  return G_SOURCE_REMOVE;
+}
+
+
+#define DELAY_CALL_REMOVE_MS 3000
 static void
 remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *origin)
 {
-  CallsUiCallData *call_data;
+  struct CallsRemoveData *data;
 
   g_return_if_fail (CALLS_IS_MANAGER (self));
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  call_data = g_hash_table_lookup (self->calls, call);
-  if (!call_data) {
-    g_warning ("Could not remove call %s from hash table", calls_call_get_id (call));
-  } else {
-    g_signal_emit (self, signals[UI_CALL_REMOVED], 0, call_data);
-    g_hash_table_remove (self->calls, call);
-  }
+  data = g_new (struct CallsRemoveData, 1);
+  data->manager = self;
+  data->call = call;
+
+  /** Having the delay centrally managed makes sure our UI
+   *  and the DBus side stays consistent
+   */
+  g_timeout_add (DELAY_CALL_REMOVE_MS,
+                 G_SOURCE_FUNC (on_remove_delayed),
+                 data);
 
   /* TODO get rid of SIGNAL_CALL_REMOVE signal */
   /* We ignore the reason for now, because it doesn't give any usefull information */
   g_signal_emit (self, signals[SIGNAL_CALL_REMOVE], 0, call, origin);
 }
+#undef DELAY_CALL_REMOVE_MS
 
 
 static void

@@ -5,24 +5,76 @@
  */
 
 #include "calls-manager.h"
+#include "mock-contacts-provider.h"
 
 #include <cui-call.h>
 #include <gtk/gtk.h>
 #include <libpeas/peas.h>
 
-CuiCall *test_call = NULL;
+CallsContactsProvider *
+__wrap_calls_contacts_provider_new (CallsSettings *settings)
+{
+  return NULL;
+}
+
+struct TestData {
+  GMainLoop *loop;
+  CallsManager *manager;
+  GListModel *origins;
+  GListModel *origins_tel;
+  CallsOrigin *origin;
+  CuiCall *call;
+};
 
 static void
-call_add_cb (CallsManager *manager, CuiCall *call)
+call_add_cb (CallsManager    *manager,
+             CuiCall         *call,
+             struct TestData *data)
 {
-  test_call = call;
+  static guint phase = 0;
+
+  data->call = call;
+  switch (phase++) {
+  case 0:
+    cui_call_hang_up (call);
+    break;
+
+  case 1:
+    /* Unload the provider */
+    calls_manager_remove_provider (data->manager, "dummy");
+    g_assert_false (calls_manager_has_provider (data->manager, "dummy"));
+    g_assert_false (calls_manager_has_any_provider (data->manager));
+
+    break;
+
+  default:
+    g_assert_not_reached ();
+  }
 }
 
 static void
-call_remove_cb (CallsManager *manager, CuiCall *call)
+call_remove_cb (CallsManager    *manager,
+                CuiCall         *call,
+                struct TestData *data)
 {
-  g_assert_true (call == test_call);
-  test_call = NULL;
+  static guint phase = 0;
+
+  g_assert_true (call == data->call);
+  data->call = NULL;
+  switch (phase++) {
+  case 0:
+    /* Add new call do check if we remove it when we unload the provider */
+    calls_origin_dial (data->origin, "+393422342");
+    break;
+
+  case 1:
+    g_main_loop_quit (data->loop);
+    break;
+
+  default:
+    g_assert_not_reached ();
+  }
+
 }
 
 static void
@@ -55,16 +107,21 @@ test_calls_manager_without_provider (void)
 static void
 test_calls_manager_dummy_provider (void)
 {
-  g_autoptr (CallsManager) manager = calls_manager_new ();
+  CallsManager *manager;
   GListModel *origins;
   GListModel *origins_tel;
   guint position;
-  g_autoptr (CallsOrigin) origin = NULL;
+  struct TestData *test_data;
 
+  test_data = g_new0 (struct TestData, 1);
+  test_data->manager = calls_manager_new ();
+  manager = test_data->manager;
   g_assert_true (CALLS_IS_MANAGER (manager));
   g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
 
-  origins = calls_manager_get_origins (manager);
+
+  test_data->origins = calls_manager_get_origins (manager);
+  origins = test_data->origins;
   g_assert_true (origins);
   g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
 
@@ -79,36 +136,35 @@ test_calls_manager_dummy_provider (void)
   g_assert_cmpuint (g_list_model_get_n_items (origins), >, 0);
   g_assert_null (calls_manager_get_calls (manager));
 
-  test_call = NULL;
-  g_signal_connect (manager, "ui-call-added", G_CALLBACK (call_add_cb), NULL);
-  g_signal_connect (manager, "ui-call-removed", G_CALLBACK (call_remove_cb), NULL);
+  test_data->origin = g_list_model_get_item (origins, 0);
+  g_assert_true (CALLS_IS_ORIGIN (test_data->origin));
 
-  origin = g_list_model_get_item (origins, 0);
-  g_assert_true (CALLS_IS_ORIGIN (origin));
-
-  origins_tel = calls_manager_get_suitable_origins (manager, "tel:+393422342");
+  test_data->origins_tel = calls_manager_get_suitable_origins (manager, "tel:+393422342");
+  origins_tel = test_data->origins_tel;
   g_assert_true (G_IS_LIST_MODEL (origins_tel));
   g_assert_true (G_IS_LIST_STORE (origins_tel));
-  g_assert_true (g_list_store_find (G_LIST_STORE (origins_tel), origin, &position));
+  g_assert_true (g_list_store_find (G_LIST_STORE (origins_tel), test_data->origin, &position));
 
-  calls_origin_dial (origin, "+393422342");
-  g_assert_true (CUI_IS_CALL (test_call));
-  cui_call_hang_up (test_call);
-  g_assert_null (test_call);
+  g_signal_connect (manager, "ui-call-added", G_CALLBACK (call_add_cb), test_data);
+  g_signal_connect (manager, "ui-call-removed", G_CALLBACK (call_remove_cb), test_data);
 
-  /* Add new call do check if we remove it when we unload the provider */
-  calls_origin_dial (origin, "+393422342");
+  calls_origin_dial (test_data->origin, "+393422343");
+  g_assert_true (CUI_IS_CALL (test_data->call));
 
-  /* Unload the provider */
-  calls_manager_remove_provider (manager, "dummy");
-  g_assert_false (calls_manager_has_provider (manager, "dummy"));
-  g_assert_false (calls_manager_has_any_provider (manager));
+  test_data->loop = g_main_loop_new (NULL, FALSE);
+  g_main_loop_run (test_data->loop);
 
-  g_assert_null (test_call);
+  g_main_loop_unref (test_data->loop);
+
   g_assert_cmpuint (g_list_model_get_n_items (origins), ==, 0);
   g_assert_cmpuint (g_list_model_get_n_items (origins_tel), ==, 0);
 
   g_assert_cmpuint (calls_manager_get_state_flags (manager), ==, CALLS_MANAGER_FLAGS_UNKNOWN);
+
+  g_assert_finalize_object (test_data->origin);
+  g_assert_finalize_object (test_data->manager);
+
+  g_free (test_data);
 }
 
 static void
