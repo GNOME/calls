@@ -243,12 +243,14 @@ static void
 add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 {
   CallsUiCallData *call_data;
+  g_autofree char *origin_id = NULL;
 
   g_return_if_fail (CALLS_IS_MANAGER (self));
   g_return_if_fail (CALLS_IS_ORIGIN (origin));
   g_return_if_fail (CALLS_IS_CALL (call));
 
-  call_data = calls_ui_call_data_new (call);
+  origin_id = calls_origin_get_id (origin);
+  call_data = calls_ui_call_data_new (call, origin_id);
   g_hash_table_insert (self->calls, call, call_data);
 
   /* TODO get rid of SIGNAL_CALL_ADD signal */

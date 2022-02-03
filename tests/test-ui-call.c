@@ -53,11 +53,12 @@ test_cui_call_properties (void)
 
   g_assert_true (CALLS_IS_CALL (mock_call));
   call = CALLS_CALL (mock_call);
-  ui_call = calls_ui_call_data_new (call);
+  ui_call = calls_ui_call_data_new (call, "test-id");
 
   g_assert_true (CUI_IS_CALL (ui_call));
   cui_call = CUI_CALL (ui_call);
 
+  g_assert_cmpstr (calls_ui_call_data_get_origin_id (ui_call), ==, "test-id");
   g_assert_true (calls_call_get_id (call) == cui_call_get_id (cui_call));
   g_assert_true (calls_call_get_name (call) == cui_call_get_display_name (cui_call));
   g_assert_true (calls_call_state_to_cui_call_state (calls_call_get_state (call)) ==

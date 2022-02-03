@@ -32,6 +32,7 @@
 enum {
   PROP_0,
   PROP_CALL,
+  PROP_ORIGIN_ID,
   PROP_INBOUND,
   PROP_PROTOCOL,
   PROP_DISPLAY_NAME,
@@ -66,6 +67,7 @@ struct _CallsUiCallData
   guint         timer_id;
 
   CuiCallState state;
+  char *origin_id;
   gboolean silenced;
 
   gboolean ui_active; /* whether a UI should be shown (or the ringer should ring) */
@@ -420,6 +422,10 @@ calls_ui_call_data_set_property (GObject      *object,
     set_call_data (self, g_value_dup_object (value));
     break;
 
+  case PROP_ORIGIN_ID:
+    self->origin_id = g_value_dup_string (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -439,6 +445,10 @@ calls_ui_call_data_get_property (GObject    *object,
   switch (property_id) {
   case PROP_CALL:
     g_value_set_object (value, self->call);
+    break;
+
+  case PROP_ORIGIN_ID:
+    g_value_set_string (value, calls_ui_call_data_get_origin_id (self));
     break;
 
   case PROP_INBOUND:
@@ -498,6 +508,8 @@ calls_ui_call_data_dispose (GObject *object)
   g_clear_object (&self->call);
   g_clear_object (&self->best_match);
 
+  g_clear_pointer (&self->origin_id, g_free);
+
   g_clear_handle_id (&self->timer_id, g_source_remove);
   g_clear_pointer (&self->timer, g_timer_destroy);
 
@@ -528,6 +540,16 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
                          G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_CALL, props[PROP_CALL]);
+
+  props[PROP_ORIGIN_ID] =
+    g_param_spec_string ("origin-id",
+                         "Origin ID",
+                         "ID of the origin used for the call",
+                         NULL,
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
+                         G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_ORIGIN_ID, props[PROP_ORIGIN_ID]);
 
   props[PROP_INBOUND] =
     g_param_spec_boolean ("inbound",
@@ -606,9 +628,13 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 }
 
 CallsUiCallData *
-calls_ui_call_data_new (CallsCall *call)
+calls_ui_call_data_new (CallsCall  *call,
+                        const char *origin_id)
 {
-  return g_object_new (CALLS_TYPE_UI_CALL_DATA, "call", call, NULL);
+  return g_object_new (CALLS_TYPE_UI_CALL_DATA,
+                       "call", call,
+                       "origin-id", origin_id,
+                       NULL);
 }
 
 /**
@@ -671,6 +697,21 @@ calls_ui_call_data_get_call_type (CallsUiCallData *self)
   g_return_val_if_fail (CALLS_CALL (self->call), CALLS_CALL_TYPE_UNKNOWN);
 
   return calls_call_get_call_type (self->call);
+}
+
+/**
+ * calls_ui_call_data_get_origin_id:
+ * @self: a #CallsUiCallData
+ *
+ * Returns: (transfer none): The id of the origin this call was placed from
+ * or %NULL, if unknown.
+ */
+const char *
+calls_ui_call_data_get_origin_id (CallsUiCallData *self)
+{
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
+
+  return self->origin_id;
 }
 
 /**

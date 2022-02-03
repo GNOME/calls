@@ -190,9 +190,9 @@ setup_test_data (void **state)
   data->manager = calls_manager_get_default ();
   data->ringer = calls_ringer_new ();
   data->call_one = calls_mock_call_new ();
-  data->ui_call_one = calls_ui_call_data_new (CALLS_CALL (data->call_one));
+  data->ui_call_one = calls_ui_call_data_new (CALLS_CALL (data->call_one), NULL);
   data->call_two = calls_mock_call_new ();
-  data->ui_call_two = calls_ui_call_data_new (CALLS_CALL (data->call_two));
+  data->ui_call_two = calls_ui_call_data_new (CALLS_CALL (data->call_two), NULL);
   data->loop = g_main_loop_new (NULL, FALSE);
 
   *state = data;
