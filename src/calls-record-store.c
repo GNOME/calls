@@ -24,11 +24,12 @@
 
 #define G_LOG_DOMAIN "CallsRecordStore"
 
-#include "calls-record-store.h"
+#include "config.h"
+
+#include "calls-call.h"
 #include "calls-call-record.h"
 #include "calls-manager.h"
-#include "calls-call.h"
-#include "config.h"
+#include "calls-record-store.h"
 
 #include <gom/gom.h>
 #include <glib/gi18n.h>
