@@ -98,9 +98,7 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 enum {
-  SIGNAL_CALL_ADD,
-  SIGNAL_CALL_REMOVE,
-  UI_CALL_ADDDED, /* we're phasing out "call-added" in favour of "ui-call-added" */
+  UI_CALL_ADDDED,
   UI_CALL_REMOVED,
   USSD_ADDED,
   USSD_CANCELLED,
@@ -245,8 +243,6 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
   call_data = calls_ui_call_data_new (call, origin_id);
   g_hash_table_insert (self->calls, call, call_data);
 
-  /* TODO get rid of SIGNAL_CALL_ADD signal */
-  g_signal_emit (self, signals[SIGNAL_CALL_ADD], 0, call, origin);
   g_signal_emit (self, signals[UI_CALL_ADDDED], 0, call_data);
 }
 
@@ -301,10 +297,6 @@ remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *or
   g_timeout_add (DELAY_CALL_REMOVE_MS,
                  G_SOURCE_FUNC (on_remove_delayed),
                  data);
-
-  /* TODO get rid of SIGNAL_CALL_REMOVE signal */
-  /* We ignore the reason for now, because it doesn't give any usefull information */
-  g_signal_emit (self, signals[SIGNAL_CALL_REMOVE], 0, call, origin);
 }
 #undef DELAY_CALL_REMOVE_MS
 
@@ -672,28 +664,6 @@ calls_manager_class_init (CallsManagerClass *klass)
 
   object_class->get_property = calls_manager_get_property;
   object_class->finalize = calls_manager_finalize;
-
-  signals[SIGNAL_CALL_ADD] =
-   g_signal_new ("call-add",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_FIRST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 2,
-                 CALLS_TYPE_CALL,
-                 CALLS_TYPE_ORIGIN);
-
-  signals[SIGNAL_CALL_REMOVE] =
-   g_signal_new ("call-remove",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_FIRST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 2,
-                 CALLS_TYPE_CALL,
-                 CALLS_TYPE_ORIGIN);
 
   signals[UI_CALL_ADDDED] =
     g_signal_new ("ui-call-added",
