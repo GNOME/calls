@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_CALL_H__
-#define CALLS_CALL_H__
+#pragma once
 
 #include <glib-object.h>
 
@@ -85,4 +84,3 @@ gboolean calls_call_state_parse_nick (CallsCallState  *state,
 
 G_END_DECLS
 
-#endif /* CALLS_CALL_H__ */
