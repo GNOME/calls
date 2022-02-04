@@ -26,9 +26,9 @@
 
 #include "config.h"
 
-#include "calls-call.h"
 #include "calls-call-record.h"
 #include "calls-manager.h"
+#include "calls-ui-call-data.h"
 #include "calls-record-store.h"
 
 #include <gom/gom.h>
@@ -51,25 +51,27 @@ typedef enum
 
 
 static CallsCallRecordState
-state_to_record_state (CallsCallState call_state)
+state_to_record_state (CuiCallState call_state)
 {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   switch (call_state) {
-  case CALLS_CALL_STATE_DIALING:
-  case CALLS_CALL_STATE_ALERTING:
-  case CALLS_CALL_STATE_INCOMING:
-  case CALLS_CALL_STATE_WAITING:
+  case CUI_CALL_STATE_CALLING:
+  case CUI_CALL_STATE_ALERTING:
+  case CUI_CALL_STATE_INCOMING:
+  case CUI_CALL_STATE_WAITING:
     return STARTED;
 
-  case CALLS_CALL_STATE_ACTIVE:
-  case CALLS_CALL_STATE_HELD:
+  case CUI_CALL_STATE_ACTIVE:
+  case CUI_CALL_STATE_HELD:
     return ANSWERED;
 
-  case CALLS_CALL_STATE_DISCONNECTED:
+  case CUI_CALL_STATE_DISCONNECTED:
     return ENDED;
 
   default:
     g_assert_not_reached ();
   }
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 }
 
 
@@ -393,7 +395,7 @@ open_repo (CallsRecordStore *self)
 struct CallsRecordCallData
 {
   CallsRecordStore *self;
-  CallsCall *call;
+  CallsUiCallData *call;
 };
 
 
@@ -433,23 +435,27 @@ record_call_save_cb (GomResource                *resource,
 
 static void
 record_call (CallsRecordStore *self,
-             CallsCall        *call)
+             CallsUiCallData  *call)
 {
   GObject * const call_obj = G_OBJECT (call);
   GDateTime *start;
   CallsCallRecord *record;
   struct CallsRecordCallData *data;
+  gboolean inbound;
+  g_autofree char *protocol = NULL;
 
   g_assert (g_object_get_data (call_obj, "calls-call-record") == NULL);
 
   start = g_object_get_data (call_obj, "calls-call-start");
   g_assert (start != NULL);
 
+  g_object_get (call, "inbound", &inbound, "protocol", &protocol, NULL);
+
   record = g_object_new (CALLS_TYPE_CALL_RECORD,
                          "repository", self->repository,
-                         "target", calls_call_get_id (call),
-                         "inbound", calls_call_get_inbound (call),
-                         "protocol", calls_call_get_protocol (call),
+                         "target", cui_call_get_id (CUI_CALL (call)),
+                         "inbound", inbound,
+                         "protocol", protocol,
                          "start", start,
                          NULL);
 
@@ -520,9 +526,9 @@ stamp_call (CallsCallRecord  *record,
 
 static void
 state_changed_cb (CallsRecordStore *self,
-                  CallsCallState    new_state,
-                  CallsCallState    old_state,
-                  CallsCall        *call)
+                  CuiCallState      new_state,
+                  CuiCallState      old_state,
+                  CallsUiCallData  *call)
 {
   GObject *call_obj = G_OBJECT (call);
   CallsCallRecord *record =
@@ -589,7 +595,7 @@ state_changed_cb (CallsRecordStore *self,
 
 static void
 call_added_cb (CallsRecordStore *self,
-               CallsCall        *call)
+               CallsUiCallData  *call)
 {
   GObject * const call_obj = G_OBJECT (call);
   GDateTime *start;
@@ -615,7 +621,7 @@ call_added_cb (CallsRecordStore *self,
 
 static void
 call_removed_cb (CallsRecordStore *self,
-                 CallsCall        *call,
+                 CallsUiCallData  *call,
                  const gchar      *reason)
 {
   /* Stamp the call as ended if it hasn't already been done */
@@ -639,12 +645,12 @@ constructed (GObject *object)
   open_repo (self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-add",
+                            "ui-call-added",
                             G_CALLBACK (call_added_cb),
                             self);
 
   g_signal_connect_swapped (calls_manager_get_default (),
-                            "call-remove",
+                            "ui-call-removed",
                             G_CALLBACK (call_removed_cb),
                             self);
 
