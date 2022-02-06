@@ -27,17 +27,80 @@
     </copyright>
   </bookinfo>
 
-  <chapter id="provider-abstraction">
-    <title>Provider abstraction</title>
-    <xi:include href="xml/calls-message-source.xml"/>
-    <xi:include href="xml/calls-provider.xml"/>
-    <xi:include href="xml/calls-origin.xml"/>
-    <xi:include href="xml/calls-call.xml"/>
-  </chapter>
+  <part id="api-reference">
+    <title>Api Reference</title>
+    <chapter id="classes">
+      <title>Widgets and Objects</title>
+      <xi:include href="xml/calls-account.xml"/>
+      <xi:include href="xml/calls-account-overview.xml"/>
+      <xi:include href="xml/calls-account-provider.xml"/>
+      <xi:include href="xml/calls-account-row.xml"/>
+      <xi:include href="xml/calls-best-match.xml"/>
+      <xi:include href="xml/calls-call-record.xml"/>
+      <xi:include href="xml/calls-call-record-row.xml"/>
+      <xi:include href="xml/calls-call-selector-item.xml"/>
+      <xi:include href="xml/calls-call-window.xml"/>
+      <xi:include href="xml/calls-contacts-box.xml"/>
+      <xi:include href="xml/calls-contacts-provider.xml"/>
+      <xi:include href="xml/calls-contacts-row.xml"/>
+      <xi:include href="xml/calls-dbus-manager.xml"/>
+      <xi:include href="xml/calls-history-box.xml"/>
+      <xi:include href="xml/calls-in-app-notification.xml"/>
+      <xi:include href="xml/calls-main-window.xml"/>
+      <xi:include href="xml/calls-manager.xml"/>
+      <xi:include href="xml/calls-network-watch.xml"/>
+      <xi:include href="xml/calls-new-call-box.xml"/>
+      <xi:include href="xml/calls-notifier.xml"/>
+      <xi:include href="xml/calls-record-store.xml"/>
+      <xi:include href="xml/calls-ringer.xml"/>
+      <xi:include href="xml/calls-secret-store.xml"/>
+      <xi:include href="xml/calls-settings.xml"/>
+      <xi:include href="xml/calls-ui-call-data.xml"/>
+      <xi:include href="xml/calls-ussd.xml"/>
+    </chapter>
 
-  <chapter id="dbus">
-    <title>DBus interfaces</title>
-    <xi:include href="../src/dbus/calls-org.gnome.Calls.Call.xml"/>
-  </chapter>
+    <chapter id="utils">
+      <title>Utilities</title>
+      <xi:include href="xml/calls-log.xml"/>
+      <xi:include href="xml/util.xml"/>
+    </chapter>
+
+    <chapter id="provider-abstraction">
+      <title>Provider abstraction</title>
+      <xi:include href="xml/calls-message-source.xml"/>
+      <xi:include href="xml/calls-provider.xml"/>
+      <xi:include href="xml/calls-origin.xml"/>
+      <xi:include href="xml/calls-call.xml"/>
+    </chapter>
+
+    <chapter id="dbus">
+      <title>DBus interfaces</title>
+      <xi:include href="../src/dbus/calls-org.gnome.Calls.Call.xml"/>
+    </chapter>
+
+    <chapter id="gen_dbus_server">
+      <title>Generated DBus Servers</title>
+      <xi:include href="xml/calls-call-dbus.xml"/>
+    </chapter>
+
+  </part>
+
+  <part id="annexes">
+    <title>Annexes</title>
+    <chapter id="object-tree">
+      <title>Object Hierarchy</title>
+      <xi:include href="xml/tree_index.sgml"/>
+    </chapter>
+
+    <index id="api-index-full">
+      <title>API Index</title>
+      <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
+    </index>
+
+    <index id="annotations-glossary">
+      <title>Annotations glossary</title>
+      <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
+    </index>
+  </part>
 
 </book>
