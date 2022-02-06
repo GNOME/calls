@@ -42,6 +42,17 @@
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
 
+/**
+ * SECTION:manager
+ * @short_description: Central management object
+ * @Title: CallsManager
+ *
+ * #CallsManager is a singleton that manages lists of loaded #CallsProvider,
+ * #CallsOrigin and #CallsCall objects. It keeps track of which #CallsOrigin
+ * supports which protocol. It also checks which #CallsCall are ongoing and
+ * emits signals for the UI and other parts of the application to act on.
+ */
+
 static const char * const protocols[] = {
   "tel",
   "sip",
