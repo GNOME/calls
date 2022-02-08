@@ -157,6 +157,23 @@ static CallsOrigin *
 lookup_origin_by_id (CallsManager *self,
                      const char   *origin_id)
 {
+  uint n_origins;
+
+  g_assert (CALLS_IS_MANAGER (self));
+
+  if (!origin_id || !*origin_id)
+    goto out;
+
+  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+  for (uint i = 0; i < n_origins; i++) {
+    g_autoptr (CallsOrigin) origin =
+      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
+    g_autofree char *id = calls_origin_get_id (origin);
+
+    if (g_strcmp0 (id, origin_id) == 0)
+      return origin;
+  }
+ out:
   return NULL;
 }
 
