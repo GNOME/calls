@@ -24,7 +24,6 @@
 
 #include "calls-call.h"
 #include "calls-message-source.h"
-#include "calls-manager.h"
 #include "enum-types.h"
 #include "util.h"
 
@@ -499,30 +498,6 @@ calls_call_send_dtmf_tone (CallsCall *self,
 
   CALLS_CALL_GET_CLASS (self)->send_dtmf_tone (self, key);
 }
-
-/**
- * calls_call_get_contact:
- * @self: a #CallsCall
- *
- * This a convenience function to optain the #CallsBestMatch matching the
- * phone id of the #CallsCall.
- *
- * Returns: (transfer full): A #CallsBestMatch
- */
-CallsBestMatch *
-calls_call_get_contact (CallsCall *self)
-{
-  CallsContactsProvider *contacts_provider;
-
-  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
-
-  contacts_provider =
-    calls_manager_get_contacts_provider (calls_manager_get_default ());
-
-  return calls_contacts_provider_lookup_id (contacts_provider,
-                                            calls_call_get_id (self));
-}
-
 
 gboolean
 calls_call_state_parse_nick (CallsCallState *state,

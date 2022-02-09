@@ -25,8 +25,6 @@
 #ifndef CALLS_CALL_H__
 #define CALLS_CALL_H__
 
-#include "calls-best-match.h"
-
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -74,7 +72,6 @@ void             calls_call_hang_up                (CallsCall     *self);
 gboolean         calls_call_can_dtmf               (CallsCall     *self);
 void             calls_call_send_dtmf_tone         (CallsCall     *self,
                                                     char           key);
-CallsBestMatch  *calls_call_get_contact            (CallsCall     *self);
 
 gboolean calls_call_state_parse_nick (CallsCallState  *state,
                                       const char      *nick);
