@@ -53,6 +53,7 @@ enum {
   PROP_NAME,
   PROP_STATE,
   PROP_PROTOCOL,
+  PROP_CALL_TYPE,
   N_PROPS,
 };
 
@@ -69,6 +70,7 @@ typedef struct {
   char *name;
   CallsCallState state;
   gboolean inbound;
+  CallsCallType call_type;
 } CallsCallPrivate;
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
@@ -127,6 +129,10 @@ calls_call_set_property (GObject      *object,
     calls_call_set_state (self, g_value_get_enum (value));
     break;
 
+  case PROP_CALL_TYPE:
+    priv->call_type = g_value_get_enum (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -160,6 +166,10 @@ calls_call_get_property (GObject    *object,
 
   case PROP_PROTOCOL:
     g_value_set_string (value, calls_call_get_protocol (self));
+    break;
+
+  case PROP_CALL_TYPE:
+    g_value_set_enum (value, calls_call_get_call_type (self));
     break;
 
   default:
@@ -235,6 +245,16 @@ calls_call_class_init (CallsCallClass *klass)
                          "The protocol used for this call",
                          NULL,
                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  properties[PROP_CALL_TYPE] =
+    g_param_spec_enum ("call-type",
+                       "Call type",
+                       "The type of call (f.e. cellular, sip voice)",
+                       CALLS_TYPE_CALL_TYPE,
+                       CALLS_CALL_TYPE_UNKNOWN,
+                       G_PARAM_READWRITE |
+                       G_PARAM_CONSTRUCT_ONLY |
+                       G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -398,6 +418,22 @@ calls_call_set_state (CallsCall     *self,
                          old_state);
 
   g_object_unref (G_OBJECT (self));
+}
+
+/**
+ * calls_call_get_call_type:
+ * @self: a #CallsCall
+ *
+ * Returns: The type of call, or #CALLS_CALL_TYPE_UNKNOWN if not known.
+ */
+CallsCallType
+calls_call_get_call_type (CallsCall *self)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), CALLS_CALL_TYPE_UNKNOWN);
+
+  return priv->call_type;
 }
 
 /**

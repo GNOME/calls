@@ -33,8 +33,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_DERIVABLE_TYPE (CallsCall, calls_call, CALLS, CALL, GObject)
 
-typedef enum
-{
+typedef enum {
   CALLS_CALL_STATE_UNKNOWN = 0,
   CALLS_CALL_STATE_ACTIVE,
   CALLS_CALL_STATE_HELD,
@@ -44,6 +43,12 @@ typedef enum
   CALLS_CALL_STATE_WAITING,
   CALLS_CALL_STATE_DISCONNECTED
 } CallsCallState;
+
+typedef enum {
+  CALLS_CALL_TYPE_UNKNOWN = 0,
+  CALLS_CALL_TYPE_CELLULAR,
+  CALLS_CALL_TYPE_SIP_VOICE,
+} CallsCallType;
 
 struct _CallsCallClass
 {
@@ -65,6 +70,7 @@ void             calls_call_set_name               (CallsCall     *self,
 CallsCallState   calls_call_get_state              (CallsCall     *self);
 void             calls_call_set_state              (CallsCall     *self,
                                                     CallsCallState state);
+CallsCallType    calls_call_get_call_type          (CallsCall     *self);
 gboolean         calls_call_get_inbound            (CallsCall     *self);
 const char      *calls_call_get_protocol           (CallsCall     *self);
 void             calls_call_answer                 (CallsCall     *self);

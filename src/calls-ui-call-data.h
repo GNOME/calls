@@ -39,6 +39,8 @@ CallsUiCallData         *calls_ui_call_data_new               (CallsCall       *
 void                     calls_ui_call_data_silence_ring      (CallsUiCallData *self);
 gboolean                 calls_ui_call_data_get_silenced      (CallsUiCallData *self);
 gboolean                 calls_ui_call_data_get_ui_active     (CallsUiCallData *self);
+CallsCallType            calls_ui_call_data_get_call_type     (CallsUiCallData *self);
+
 CuiCallState             calls_call_state_to_cui_call_state   (CallsCallState   state);
 
 G_END_DECLS

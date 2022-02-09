@@ -653,6 +653,21 @@ calls_ui_call_data_get_ui_active (CallsUiCallData *self)
 }
 
 /**
+ * calls_ui_call_data_get_call_type:
+ * @self: a #CallsUiCallData
+ *
+ * Returns: The type of call, or #CALLS_CALL_TYPE_UNKNOWN if not known.
+ */
+CallsCallType
+calls_ui_call_data_get_call_type (CallsUiCallData *self)
+{
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), CALLS_CALL_TYPE_UNKNOWN);
+  g_return_val_if_fail (CALLS_CALL (self->call), CALLS_CALL_TYPE_UNKNOWN);
+
+  return calls_call_get_call_type (self->call);
+}
+
+/**
  * calls_call_state_to_cui_call_state:
  * @state: A #CallsCallState
  *
