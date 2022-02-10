@@ -62,9 +62,6 @@ gboolean               calls_manager_is_modem_provider        (CallsManager *sel
 CallsManagerFlags      calls_manager_get_state_flags          (CallsManager *self);
 GListModel            *calls_manager_get_origins              (CallsManager *self);
 GList                 *calls_manager_get_calls                (CallsManager *self);
-void                   calls_manager_dial                     (CallsManager *self,
-                                                               CallsOrigin  *origin,
-                                                               const char   *target);
 GListModel            *calls_manager_get_suitable_origins     (CallsManager *self,
                                                                const char   *target);
 const gchar           *calls_manager_get_contact_name         (CallsCall    *call);
