@@ -153,31 +153,6 @@ update_state_flags (CallsManager *self)
 }
 
 
-static CallsOrigin *
-lookup_origin_by_id (CallsManager *self,
-                     const char   *origin_id)
-{
-  uint n_origins;
-
-  g_assert (CALLS_IS_MANAGER (self));
-
-  if (!origin_id || !*origin_id)
-    goto out;
-
-  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
-  for (uint i = 0; i < n_origins; i++) {
-    g_autoptr (CallsOrigin) origin =
-      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
-    g_autofree char *id = calls_origin_get_id (origin);
-
-    if (g_strcmp0 (id, origin_id) == 0)
-      return origin;
-  }
- out:
-  return NULL;
-}
-
-
 static void
 on_dial_protocol_activated (GSimpleAction *action,
                             GVariant      *parameter,
@@ -189,7 +164,7 @@ on_dial_protocol_activated (GSimpleAction *action,
   g_autofree char *origin_id = NULL;
 
   g_variant_get (parameter, "(ss)", &target, &origin_id);
-  origin = lookup_origin_by_id (self, origin_id);
+  origin = calls_manager_get_origin_by_id (self, origin_id);
 
   if (origin) {
     calls_origin_dial (origin, target);
@@ -1131,4 +1106,33 @@ calls_manager_get_settings (CallsManager *self)
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
 
   return self->settings;
+}
+
+/**
+ * calls_manager_get_origin_by_id:
+ * @self: The #CallsManager
+ * @origin_id: The id to use for the lookup
+ *
+ * Returns: (transfer none): The #CallsOrigin if found, %NULL otherwise
+ */
+CallsOrigin *
+calls_manager_get_origin_by_id (CallsManager *self,
+                                const char   *origin_id)
+{
+  uint n_origins;
+
+  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
+  g_return_val_if_fail (origin_id && *origin_id, NULL);
+
+  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+  for (uint i = 0; i < n_origins; i++) {
+    g_autoptr (CallsOrigin) origin =
+      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
+    g_autofree char *id = calls_origin_get_id (origin);
+
+    if (g_strcmp0 (id, origin_id) == 0)
+      return origin;
+  }
+
+  return NULL;
 }

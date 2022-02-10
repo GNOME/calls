@@ -42,6 +42,7 @@ gboolean                 calls_ui_call_data_get_silenced      (CallsUiCallData *
 gboolean                 calls_ui_call_data_get_ui_active     (CallsUiCallData *self);
 CallsCallType            calls_ui_call_data_get_call_type     (CallsUiCallData *self);
 const char              *calls_ui_call_data_get_origin_id     (CallsUiCallData *self);
+char                    *calls_ui_call_data_dup_origin_name   (CallsUiCallData *self);
 
 CuiCallState             calls_call_state_to_cui_call_state   (CallsCallState   state);
 

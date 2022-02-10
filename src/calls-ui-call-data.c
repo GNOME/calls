@@ -715,6 +715,28 @@ calls_ui_call_data_get_origin_id (CallsUiCallData *self)
 }
 
 /**
+ * calls_ui_call_data_dup_origin_name:
+ * @self: a #CallsUiCallData
+ *
+ * Returns: (transfer full): The name of the origin this call was placed from
+ * or %NULL, if unknown.
+ */
+char *
+calls_ui_call_data_dup_origin_name (CallsUiCallData *self)
+{
+  CallsOrigin *origin;
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
+
+  origin = calls_manager_get_origin_by_id (calls_manager_get_default (),
+                                           self->origin_id);
+
+  if (origin)
+    return calls_origin_get_name (origin);
+
+  return NULL;
+}
+
+/**
  * calls_call_state_to_cui_call_state:
  * @state: A #CallsCallState
  *
