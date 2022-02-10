@@ -1,0 +1,320 @@
+# Hebrew translation for calls.
+# Copyright (C) 2022 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Yosef Or Boczko <yoseforb@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-02-10 23:00+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"Language-Team: Hebrew <>\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
+"2 : 3)\n"
+"X-Generator: Gtranslator 40.0\n"
+
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "שיחות"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "טלפון"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "חייגן לטלפון עם אפשרויות שיחה"
+
+#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "טלפון;פלאפון;שיחות;שיחה;חיוג;חייגן;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "שיחות (שרת)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "חייגן לטלפון עם אפשרויות שיחה (מצב שרת)"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "הוספת חשבון"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_כניסה"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "ניהול חשבון"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "ה_חלה"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_מחיקה"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "שרת"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "שם התצוגה"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "אפשרי"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "מזהה משתמש"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "ססמה"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "פתחה"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "תעבורה"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "שימוש עבור שיחות טלפון"
+
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
+
+#: src/calls-application.c:625
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "לא יודע איך לפתוח את „%s”"
+
+#: src/calls-application.c:679
+msgid "The name of the plugin to use as a call provider"
+msgstr "The name of the plugin to use as a call provider"
+
+#: src/calls-application.c:680
+msgid "PLUGIN"
+msgstr "PLUGIN"
+
+#: src/calls-application.c:685
+msgid "Whether to present the main window on startup"
+msgstr "Whether to present the main window on startup"
+
+#: src/calls-application.c:691
+msgid "Dial a telephone number"
+msgstr "Dial a telephone number"
+
+#: src/calls-application.c:692
+msgid "NUMBER"
+msgstr "NUMBER"
+
+#: src/calls-application.c:697
+msgid "Enable verbose debug messages"
+msgstr "Enable verbose debug messages"
+
+#: src/calls-application.c:703
+msgid "Print current version"
+msgstr "Print current version"
+
+#: src/calls-best-match.c:357
+msgid "Anonymous caller"
+msgstr "חסוי"
+
+#: src/calls-call-record-row.c:110
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"אתמול"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr ""
+"יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
+"\n"
+"<a href=\"https://l10n.gnome.org/teams/he/\">מיזם תרגום GNOME לעברית</a>"
+
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "לא נִתן לחייג: אין מודם זמין בעל יכולת שמע"
+
+#: src/calls-main-window.c:326
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "לא נִתן לחייג: אין מודם או חשבון VoIP זמין"
+
+#: src/calls-main-window.c:331
+msgid "Can't place calls: No backend service"
+msgstr "לא נִתן לחייג: אין שירות צד־שרת"
+
+#: src/calls-main-window.c:335
+msgid "Can't place calls: No plugin"
+msgstr "לא נִתן לחייג: אין תוסף"
+
+#: src/calls-main-window.c:375
+msgid "Contacts"
+msgstr "אנשי קשר"
+
+#: src/calls-main-window.c:385
+msgid "Dial Pad"
+msgstr "לוח חיוג"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:394
+msgid "Recent"
+msgstr "אחרונים"
+
+#: src/calls-notifier.c:48
+msgid "Missed call"
+msgstr "שיחה שלא נענתה"
+
+#. %s is a name here
+#: src/calls-notifier.c:69
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "שיחה שלא נענתה מאת <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:72
+#, c-format
+msgid "Missed call from %s"
+msgstr "שיחה שלא נענתה מאת %s"
+
+#: src/calls-notifier.c:74
+msgid "Missed call from unknown caller"
+msgstr "שיחה שלא נענתה ממספר לא מזוהה"
+
+#: src/calls-notifier.c:80
+msgid "Call back"
+msgstr "להתקשר חזרה"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "חשבונות VoIP"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "הוספת חשבונות VoIP"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"נִתן להוסיף כאן חשבון VoIP. הדבר יאפשר לך לבצע ולקבל שיחות VoIP באמצעות "
+"פרוטוקול SIP. תכוּנה זו חדשה יחסית ועוד לא בנויה כהלכה (למשל אין הצפנת מדיה)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+msgid "_Add Account"
+msgstr "_הוספת חשבון"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
+msgid "Call"
+msgstr "להתקשר"
+
+#: src/ui/call-record-row.ui:103
+msgid "_Delete Call"
+msgstr "_מחיקת שיחה"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:108
+msgid "_Copy number"
+msgstr "_העתקת מספר"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_הוספת איש קשר"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "בהמתנה"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "לא נמצאו אנשי קשר"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "אין שיחות אחרונות"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_ביטול"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_סגירה"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_שליחה"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "חשבונות _VoIP"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "צירופי _מקשים"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_עזרה"
+
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_על אודות שיחות"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "הזנת כתובת VoIP"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "הזנת מספר"
+
+#: src/ui/new-call-box.ui:97
+msgid "Dial"
+msgstr "חיוג"
+
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "מחיקת תו שתחת הסמן"
+
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "חשבון SIP"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "שיחה חדשה"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "חזרה"
