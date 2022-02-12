@@ -575,7 +575,11 @@ initable_init (GInitable    *initable,
   /* in/receive direction */
   /* request and link the pads */
   srcpad = gst_element_get_static_pad (self->rtp_src, "src");
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtp_sink_0");
+#else
   sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtp_sink_0");
+#endif
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtpsrc to rtpbin");
@@ -585,7 +589,11 @@ initable_init (GInitable    *initable,
   gst_object_unref (sinkpad);
 
   srcpad = gst_element_get_static_pad (self->rtcp_recv_src, "src");
+#if GST_CHECK_VERSION (1, 20 , 0)
+  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtcp_sink_0");
+#else
   sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtcp_sink_0");
+#endif
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtcpsrc to rtpbin");
@@ -594,7 +602,11 @@ initable_init (GInitable    *initable,
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
 
+#if GST_CHECK_VERSION (1, 20, 0)
+  srcpad = gst_element_request_pad_simple (self->recv_rtpbin, "send_rtcp_src_0");
+#else
   srcpad = gst_element_get_request_pad (self->recv_rtpbin, "send_rtcp_src_0");
+#endif
   sinkpad = gst_element_get_static_pad (self->rtcp_recv_sink, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -610,7 +622,11 @@ initable_init (GInitable    *initable,
 
   /* out/send direction */
   /* link payloader src to RTP sink pad */
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtp_sink_0");
+#else
   sinkpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtp_sink_0");
+#endif
   srcpad = gst_element_get_static_pad (self->payloader, "src");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -632,7 +648,11 @@ initable_init (GInitable    *initable,
   gst_object_unref (sinkpad);
 
   /* RTCP srcpad to udpsink */
+#if GST_CHECK_VERSION (1, 20, 0)
+  srcpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtcp_src_0");
+#else
   srcpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtcp_src_0");
+#endif
   sinkpad = gst_element_get_static_pad (self->rtcp_send_sink, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -644,7 +664,11 @@ initable_init (GInitable    *initable,
 
   /* receive RTCP */
   srcpad = gst_element_get_static_pad (self->rtcp_send_src, "src");
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "recv_rtcp_sink_0");
+#else
   sinkpad = gst_element_get_request_pad (self->send_rtpbin, "recv_rtcp_sink_0");
+#endif
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Failed to link rtcpsrc to rtpbin");
