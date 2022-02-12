@@ -366,6 +366,7 @@ calls_mm_call_new (MMCall *mm_call)
   return g_object_new (CALLS_TYPE_MM_CALL,
                        "mm-call", mm_call,
                        "inbound", inbound,
+                       "call-type", CALLS_CALL_TYPE_CELLULAR,
                        NULL);
 }
 

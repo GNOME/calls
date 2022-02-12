@@ -328,6 +328,7 @@ calls_ofono_call_new (GDBOVoiceCall *voice_call,
                        "name", name,
                        "inbound", inbound,
                        "state", state,
+                       "call-type", CALLS_CALL_TYPE_CELLULAR,
                        NULL);
 }
 

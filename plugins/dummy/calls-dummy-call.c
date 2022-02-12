@@ -105,6 +105,7 @@ calls_dummy_call_new (const gchar *id,
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
                        "id", id,
                        "inbound", inbound,
+                       "call-type", CALLS_CALL_TYPE_CELLULAR,
                        NULL);
 }
 

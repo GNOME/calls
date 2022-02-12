@@ -382,6 +382,7 @@ calls_sip_call_new (const gchar  *id,
                        "inbound", inbound,
                        "own-ip", own_ip,
                        "nua-handle", handle,
+                       "call-type", CALLS_CALL_TYPE_SIP_VOICE,
                        NULL);
 }
 
