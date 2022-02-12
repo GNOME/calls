@@ -284,6 +284,51 @@ call_number (CallsApplication *self,
 
 
 static void
+open_sip_uri (CallsApplication *self,
+              const char       *uri)
+{
+  g_auto (GStrv) tokens = NULL;
+  g_assert (uri);
+
+  tokens = g_strsplit (uri, "///", 2);
+
+  if (g_strv_length (tokens) == 2) {
+    /* Remove "///" from "sip:///user@host" */
+    g_autofree char *dial_string = g_strconcat (tokens[0], tokens[1], NULL);
+
+    calls_main_window_dial (self->main_window, dial_string);
+  } else {
+    /* Dial the uri as it is */
+    calls_main_window_dial (self->main_window, uri);
+  }
+}
+
+
+static void
+open_tel_uri (CallsApplication *self,
+              const char       *uri)
+{
+  const char *number = NULL;
+
+  g_debug ("Opening tel URI `%s'", uri);
+
+  number = &uri[4]; // tel:NUMBER
+  if (!number || !*number) {
+    g_autofree char *msg =
+      g_strdup_printf (_("Tried dialing invalid tel URI `%s'"), uri);
+
+    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (calls_manager_get_default ()),
+                                       "msg",
+                                       GTK_MESSAGE_WARNING);
+    g_warning ("Ignoring invalid tel URI `%s'", uri);
+    return;
+  }
+
+  call_number (self, number);
+}
+
+
+static void
 dial_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
@@ -294,7 +339,13 @@ dial_action (GSimpleAction *action,
   number = g_variant_get_string (parameter, NULL);
   g_return_if_fail (number != NULL);
 
-  call_number (self, number);
+  if (g_str_has_prefix (number, "sip:") ||
+      g_str_has_prefix (number, "sips:"))
+    open_sip_uri (self, number);
+  else if (g_str_has_prefix (number, "tel:"))
+    open_tel_uri (self, number);
+  else
+    call_number (self, number);
 }
 
 static void
@@ -512,51 +563,6 @@ start_proper (CallsApplication  *self)
                     self);
 
   return TRUE;
-}
-
-static void
-open_sip_uri (CallsApplication *self,
-              const char       *uri)
-{
-  char **tokens = NULL;
-  g_assert (uri);
-
-  tokens = g_strsplit (uri, "///", 2);
-
-  if (tokens) {
-    /* Remove "///" from "sip:///user@host" */
-    g_autofree char *dial_string = g_strconcat (tokens[0], tokens[1], NULL);
-
-    calls_main_window_dial (self->main_window, dial_string);
-
-    g_strfreev (tokens);
-  } else {
-    /* Dial the uri as it is */
-    calls_main_window_dial (self->main_window, uri);
-  }
-}
-
-static void
-open_tel_uri (CallsApplication *self,
-              const char       *uri)
-{
-  const char *number = NULL;
-
-  g_debug ("Opening tel URI `%s'", uri);
-
-  number = &uri[4]; // tel:NUMBER
-  if (!number || !*number) {
-    g_autofree char *msg =
-      g_strdup_printf (_("Tried dialing invalid tel URI `%s'"), uri);
-
-    calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (calls_manager_get_default ()),
-                                       "msg",
-                                       GTK_MESSAGE_WARNING);
-    g_warning ("Ignoring invalid tel URI `%s'", uri);
-    return;
-  }
-
-  call_number (self, number);
 }
 
 static void
