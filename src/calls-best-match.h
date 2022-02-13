@@ -40,6 +40,8 @@ void             calls_best_match_set_phone_number   (CallsBestMatch     *self,
                                                       const char         *phone_number);
 const char      *calls_best_match_get_name           (CallsBestMatch     *self);
 GLoadableIcon   *calls_best_match_get_avatar         (CallsBestMatch     *self);
+const char      *calls_best_match_get_primary_info   (CallsBestMatch     *self);
+const char      *calls_best_match_get_secondary_info (CallsBestMatch     *self);
 
 G_END_DECLS
 

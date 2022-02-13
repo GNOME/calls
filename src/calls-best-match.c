@@ -53,6 +53,8 @@ enum {
   PROP_AVATAR,
   PROP_HAS_INDIVIDUAL,
   PROP_COUNTRY_CODE,
+  PROP_PRIMARY_INFO,
+  PROP_SECONDARY_INFO,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -72,11 +74,22 @@ search_view_prepare_cb (FolksSearchView *view,
 
 
 static void
+notify_display_info (CallsBestMatch *self)
+{
+  g_assert (CALLS_IS_BEST_MATCH (self));
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PRIMARY_INFO]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SECONDARY_INFO]);
+}
+
+
+static void
 notify_name (CallsBestMatch *self)
 {
   g_assert (CALLS_IS_BEST_MATCH (self));
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NAME]);
+  notify_display_info (self);
 }
 
 
@@ -193,6 +206,16 @@ get_property (GObject      *object,
                         calls_best_match_get_avatar (self));
     break;
 
+  case PROP_PRIMARY_INFO:
+    g_value_set_string (value,
+                        calls_best_match_get_primary_info (self));
+    break;
+
+  case PROP_SECONDARY_INFO:
+    g_value_set_string (value,
+                        calls_best_match_get_secondary_info (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -263,6 +286,19 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
                          G_TYPE_LOADABLE_ICON,
                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 
+  props[PROP_PRIMARY_INFO] =
+    g_param_spec_string ("primary-info",
+                         "Primary Information",
+                         "Primary information to display",
+                         NULL,
+                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
+
+  props[PROP_SECONDARY_INFO] =
+    g_param_spec_string ("secondary-info",
+                         "Secondary Information",
+                         "Secondary information to display",
+                         NULL,
+                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
@@ -327,6 +363,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
       g_free (self->name_sip);
       self->name_sip = g_strdup (split[1]);
       g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
+      notify_display_info (self);
       return;
     }
     query = calls_phone_number_query_new (phone_number, self->country_code);
@@ -343,6 +380,7 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   }
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PHONE_NUMBER]);
+  notify_display_info (self);
 }
 
 const char *
@@ -354,10 +392,8 @@ calls_best_match_get_name (CallsBestMatch *self)
     return folks_individual_get_display_name (self->matched_individual);
   else if (self->name_sip)
     return self->name_sip;
-  else if (self->phone_number)
-    return self->phone_number;
-  else
-    return _("Anonymous caller");
+
+  return NULL;
 }
 
 
@@ -370,4 +406,61 @@ calls_best_match_get_avatar (CallsBestMatch *self)
     return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->matched_individual));
   else
     return NULL;
+}
+
+/**
+ * calls_best_match_get_primary_info:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: (transfer none): The contact description to be used
+ * for primary labels
+ */
+const char *
+calls_best_match_get_primary_info (CallsBestMatch *self)
+{
+  const char *name;
+
+  if (!self)
+    goto anon;
+
+  g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
+
+  name = calls_best_match_get_name (self);
+  if (name)
+    return name;
+
+  if (self->phone_number)
+    return self->phone_number;
+
+  anon:
+    return _("Anonymous caller");
+}
+
+/**
+ * calls_best_match_get_secondary_info:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: (transfer none): The contact description to be used
+ * for secondary labels
+ */
+const char *
+calls_best_match_get_secondary_info (CallsBestMatch *self)
+{
+  if (!self)
+    goto anon;
+
+  g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
+
+  if (self->matched_individual)
+    return self->phone_number;
+  else if (self->name_sip)
+    return self->phone_number; /* XXX despite the misnomer, this is actually a SIP address */
+
+  /** TODO for phone calls:
+   *  lookup location information based on country/area code
+   *  https://gitlab.gnome.org/GNOME/calls/-/issues/358
+   */
+
+ anon:
+  return "";
 }
