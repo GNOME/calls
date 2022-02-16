@@ -344,7 +344,6 @@ calls_call_set_id (CallsCall  *self,
   CallsCallPrivate *priv = calls_call_get_instance_private (self);
 
   g_return_if_fail (CALLS_IS_CALL (self));
-  g_return_if_fail (id);
 
   if (g_strcmp0 (id, priv->id) == 0)
     return;
