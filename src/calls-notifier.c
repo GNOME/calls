@@ -146,6 +146,8 @@ calls_notifier_constructed (GObject *object)
   GList *c;
   CallsNotifier *self = CALLS_NOTIFIER (object);
 
+  G_OBJECT_CLASS (calls_notifier_parent_class)->constructed (object);
+
   g_signal_connect_swapped (calls_manager_get_default (),
                             "ui-call-added",
                             G_CALLBACK (call_added_cb),
@@ -156,8 +158,6 @@ calls_notifier_constructed (GObject *object)
     {
       call_added_cb (self, c->data);
     }
-
-  G_OBJECT_CLASS (calls_notifier_parent_class)->constructed (object);
 }
 
 
