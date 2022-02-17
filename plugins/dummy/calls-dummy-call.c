@@ -102,8 +102,6 @@ CallsDummyCall *
 calls_dummy_call_new (const gchar *id,
                       gboolean     inbound)
 {
-  g_return_val_if_fail (id != NULL, NULL);
-
   return g_object_new (CALLS_TYPE_DUMMY_CALL,
                        "id", id,
                        "inbound", inbound,

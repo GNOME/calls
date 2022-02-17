@@ -296,7 +296,6 @@ void
 calls_dummy_origin_create_inbound (CallsDummyOrigin *self,
                                    const gchar      *number)
 {
-  g_return_if_fail (number != NULL);
   g_return_if_fail (CALLS_IS_DUMMY_ORIGIN (self));
 
   add_call (self, number, TRUE);
