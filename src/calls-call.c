@@ -203,6 +203,11 @@ calls_call_class_init (CallsCallClass *klass)
   klass->hang_up = calls_call_real_hang_up;
   klass->send_dtmf_tone = calls_call_real_send_dtmf_tone;
 
+  /**
+   * CallsCall:inbound: (attributes org.gtk.Property.get=calls_call_get_inbound)
+   *
+   * %TRUE if the call is inbound, %FALSE otherwise.
+   */
   properties[PROP_INBOUND] =
     g_param_spec_boolean ("inbound",
                           "Inbound",
@@ -210,6 +215,13 @@ calls_call_class_init (CallsCallClass *klass)
                           FALSE,
                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsCall:id: (attributes org.gtk.Property.get=calls_call_get_id org.gtk.Property.set=calls_call_set_id)
+
+   * Get the id (number, SIP address)  the call is connected to.  It is possible that this
+   * could return %NULL if the id is not known, for example if an
+   * incoming PTSN call has no caller ID information.
+   */
   properties[PROP_ID] =
     g_param_spec_string ("id",
                          "Id",
@@ -220,6 +232,11 @@ calls_call_class_init (CallsCallClass *klass)
                          G_PARAM_EXPLICIT_NOTIFY |
                          G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsCall:name: (attributes org.gtk.Property.get=calls_call_get_name org.gtk.Property.set=calls_call_set_name)
+   *
+   * The (network provided) name of the call. For the name of a contact, see #calls_best_match_get_name
+   */
   properties[PROP_NAME] =
     g_param_spec_string ("name",
                          "Name",
@@ -229,6 +246,11 @@ calls_call_class_init (CallsCallClass *klass)
                          G_PARAM_EXPLICIT_NOTIFY |
                          G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsCall:state: (attributes org.gtk.Property.get=calls_call_get_state org.gtk.Property.set=calls_call_set_state)
+   *
+   * The state of the call or %CALLS_CALL_STATE_UNKNOWN if unknown.
+   */
   properties[PROP_STATE] =
     g_param_spec_enum ("state",
                        "State",
@@ -239,6 +261,11 @@ calls_call_class_init (CallsCallClass *klass)
                        G_PARAM_EXPLICIT_NOTIFY |
                        G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsCall:protocol: (attributes org.gtk.Property.get=calls_call_get_protocol)
+   *
+   * The protocol for this call, f.e. tel or sip
+   */
   properties[PROP_PROTOCOL] =
     g_param_spec_string ("protocol",
                          "Protocol",
@@ -246,6 +273,11 @@ calls_call_class_init (CallsCallClass *klass)
                          NULL,
                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
+  /**
+   * CallsCall:call-type: (attributes org.gtk.Property.get=calls_call_get_call_type)
+   *
+   * The type of this call or #CALLS_CALL_TYPE_UNKNOWN if unknown
+   */
   properties[PROP_CALL_TYPE] =
     g_param_spec_enum ("call-type",
                        "Call type",
@@ -282,14 +314,10 @@ calls_call_init (CallsCall *self)
 }
 
 /**
- * calls_call_get_id:
+ * calls_call_get_id: (attributes org.gtk.Method.get_property=id)
  * @self: a #CallsCall
  *
- * Get the id the call is connected to.  It is possible that this
- * could return NULL if the id is not known, for example if an
- * incoming PTSN call has no caller ID information.
- *
- * Returns: (transfer none): the id, or NULL
+ * Returns: (transfer none) (nullable): the id, or %NULL if the id is unknown
  */
 const char *
 calls_call_get_id (CallsCall *self)
@@ -302,7 +330,7 @@ calls_call_get_id (CallsCall *self)
 }
 
 /**
- * calls_call_set_id:
+ * calls_call_set_id: (attributes org.gtk.Method.set_property=id)
  * @self: a #CallsCall
  * @id: the id of the remote party
  *
@@ -327,7 +355,7 @@ calls_call_set_id (CallsCall  *self,
 }
 
 /**
- * calls_call_get_name:
+ * calls_call_get_name: (attributes org.gtk.Method.get_property=name)
  * @self: a #CallsCall
  *
  * Get the name of the party the call is connected to, if the network
@@ -346,7 +374,7 @@ calls_call_get_name (CallsCall *self)
 }
 
 /**
- * calls_call_set_name:
+ * calls_call_set_name: (attributes org.gtk.Method.set_property=name)
  * @self: a #CallsCall
  * @name: the name to set
  *
@@ -368,7 +396,7 @@ calls_call_set_name (CallsCall  *self,
 }
 
 /**
- * calls_call_get_state:
+ * calls_call_get_state: (attributes org.gtk.Method.get_property=state)
  * @self: a #CallsCall
  *
  * Get the current state of the call.
@@ -386,7 +414,7 @@ calls_call_get_state (CallsCall *self)
 }
 
 /**
- * calls_call_set_state:
+ * calls_call_set_state: (attributes org.gtk.Method.set_property=state org.gtk.Method.signal=state-changed)
  * @self: a #CallsCall
  * @state: a #CallsCallState
  *
@@ -421,7 +449,7 @@ calls_call_set_state (CallsCall     *self,
 }
 
 /**
- * calls_call_get_call_type:
+ * calls_call_get_call_type: (attributes org.gtk.Method.get_property=call-type)
  * @self: a #CallsCall
  *
  * Returns: The type of call, or #CALLS_CALL_TYPE_UNKNOWN if not known.
@@ -468,7 +496,7 @@ calls_call_hang_up (CallsCall *self)
 
 
 /**
- * calls_call_get_inbound:
+ * calls_call_get_inbound: (attributes org.gtk.Method.get_property=inbound)
  * @self: a #CallsCall
  *
  * Get the direction of the call.
@@ -486,7 +514,7 @@ calls_call_get_inbound (CallsCall *self)
 }
 
 /**
- * calls_call_get_protocol:
+ * calls_call_get_protocol: (attributes org.gtk.Method.get_property=protocol)
  * @self: a #CallsCall
  *
  * Get the protocol of the call (i.e. "tel", "sip")
