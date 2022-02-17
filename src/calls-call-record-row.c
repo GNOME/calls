@@ -319,7 +319,7 @@ setup_contact (CallsCallRecordRow *self)
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
   self->contact = calls_contacts_provider_lookup_id (contacts_provider, target);
 
-  g_object_bind_property (self->contact, "name",
+  g_object_bind_property (self->contact, "primary-info",
                           self->target, "label",
                           G_BINDING_SYNC_CREATE);
 
