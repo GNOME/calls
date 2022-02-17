@@ -310,14 +310,39 @@ setup_contact (CallsCallRecordRow *self)
   g_autofree gchar *target = NULL;
   CallsContactsProvider *contacts_provider;
 
+  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
+
+  if (calls_contacts_provider_get_can_add_contacts (contacts_provider)) {
+    on_notify_can_add_contacts (self);
+  } else {
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_new_contact), FALSE);
+    g_signal_connect_swapped (contacts_provider,
+                              "notify::can-add-contacts",
+                              G_CALLBACK (on_notify_can_add_contacts),
+                              self);
+  }
+
+
+
   // Get the target number
   g_object_get (G_OBJECT (self->record),
                 "target", &target,
                 NULL);
 
+  if (!target || target[0] == '\0') {
+    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), FALSE);
+  } else {
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), TRUE);
+  }
+
   // Look up the best match object
-  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
   self->contact = calls_contacts_provider_lookup_id (contacts_provider, target);
+
+  if (!self->contact) {
+    gtk_label_set_text (self->target, calls_best_match_get_primary_info (NULL));
+    return;
+  }
 
   g_object_bind_property (self->contact, "primary-info",
                           self->target, "label",
@@ -331,23 +356,6 @@ setup_contact (CallsCallRecordRow *self)
                           self->avatar, "loadable-icon",
                           G_BINDING_SYNC_CREATE);
 
-  if (calls_contacts_provider_get_can_add_contacts (contacts_provider)) {
-    on_notify_can_add_contacts (self);
-  } else {
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_new_contact), FALSE);
-    g_signal_connect_swapped (contacts_provider,
-                              "notify::can-add-contacts",
-                              G_CALLBACK (on_notify_can_add_contacts),
-                              self);
-  }
-
-
-  if (target[0] == '\0') {
-    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), FALSE);
-  } else {
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), TRUE);
-  }
 }
 
 
@@ -453,8 +461,11 @@ constructed (GObject *object)
   gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), action_name);
 
   /* TODO add origin ID to action target */
-  gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
-                                    "(ss)", target, "");
+  if (target && *target)
+    gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
+                                      "(ss)", target, "");
+  else
+    ;
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
