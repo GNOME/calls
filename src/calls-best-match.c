@@ -74,6 +74,8 @@ search_view_prepare_cb (FolksSearchView *view,
 static void
 notify_name (CallsBestMatch *self)
 {
+  g_assert (CALLS_IS_BEST_MATCH (self));
+
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NAME]);
 }
 
@@ -81,6 +83,8 @@ notify_name (CallsBestMatch *self)
 static void
 notify_avatar (CallsBestMatch *self)
 {
+  g_assert (CALLS_IS_BEST_MATCH (self));
+
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_AVATAR]);
 }
 
