@@ -144,7 +144,10 @@ calls_ui_call_data_get_avatar_icon (CuiCall *call_data)
 
   g_return_val_if_fail (CALLS_UI_CALL_DATA (self), NULL);
 
-  return calls_best_match_get_avatar (self->best_match);
+  if (self->best_match)
+    return calls_best_match_get_avatar (self->best_match);
+  else
+    return NULL;
 }
 
 
@@ -331,6 +334,9 @@ set_call_data (CallsUiCallData *self,
   self->best_match =
     calls_contacts_provider_lookup_id (contacts_provider,
                                        calls_call_get_id (call));
+
+  if (!self->best_match)
+    return;
 
   g_signal_connect_object (self->best_match,
                            "notify::name",
