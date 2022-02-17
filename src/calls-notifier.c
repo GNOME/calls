@@ -44,6 +44,7 @@ struct _CallsNotifier
 
 G_DEFINE_TYPE (CallsNotifier, calls_notifier, G_TYPE_OBJECT);
 
+
 static void
 notify (CallsNotifier *self, CuiCall *call)
 {
@@ -109,16 +110,15 @@ state_changed_cb (CallsNotifier *self,
 
   /* Can use g_list_store_find with newer glib */
   n = g_list_model_get_n_items (G_LIST_MODEL (self->unanswered));
-  for (int i = 0; i < n; i++)
-    {
-      g_autoptr (CuiCall) item = g_list_model_get_item (G_LIST_MODEL (self->unanswered), i);
-      if (item == call)
-        {
-          g_list_store_remove (self->unanswered, i);
-          g_signal_handlers_disconnect_by_data (item, self);
-        }
+  for (int i = 0; i < n; i++) {
+    g_autoptr (CuiCall) item = g_list_model_get_item (G_LIST_MODEL (self->unanswered), i);
+    if (item == call) {
+      g_list_store_remove (self->unanswered, i);
+      g_signal_handlers_disconnect_by_data (item, self);
     }
+  }
 }
+
 
 static void
 call_added_cb (CallsNotifier *self, CuiCall *call)
@@ -155,9 +155,7 @@ calls_notifier_constructed (GObject *object)
 
   calls = calls_manager_get_calls (calls_manager_get_default ());
   for (c = calls; c != NULL; c = c->next)
-    {
-      call_added_cb (self, c->data);
-    }
+    call_added_cb (self, c->data);
 }
 
 
@@ -181,6 +179,7 @@ calls_notifier_class_init (CallsNotifierClass *klass)
   object_class->constructed = calls_notifier_constructed;
   object_class->dispose = calls_notifier_dispose;
 }
+
 
 CallsNotifier *
 calls_notifier_new (void)
