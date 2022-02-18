@@ -61,6 +61,15 @@ test_call_icon_names (void)
   g_assert_cmpstr (get_call_icon_symbolic_name (TRUE, TRUE), ==, "call-arrow-incoming-missed-symbolic");
 }
 
+
+static void
+test_null_empty_strings (void)
+{
+  g_assert_true (STR_IS_NULL_OR_EMPTY ((const char *) NULL));
+  g_assert_true (STR_IS_NULL_OR_EMPTY (""));
+  g_assert_false (STR_IS_NULL_OR_EMPTY ("lorem ipsum"));
+}
+
 int
 main (int   argc,
       char *argv[])
@@ -70,6 +79,7 @@ main (int   argc,
   g_test_add_func ("/Calls/util/protocol_prefix", (GTestFunc) test_protocol_prefix);
   g_test_add_func ("/Calls/util/dtmf_tones", (GTestFunc) test_dtmf_tone_validity);
   g_test_add_func ("/Calls/util/call_icon_names", (GTestFunc) test_call_icon_names);
+  g_test_add_func ("/Calls/util/null-or-empty-strings", (GTestFunc) test_null_empty_strings);
 
   g_test_run ();
 }
