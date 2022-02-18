@@ -164,4 +164,17 @@ if cmocka.found ()
     test('ringer', t, env: test_env)
 endif
 
+test_sources = [ 'test-contacts.c' ]
+t = executable('contacts', test_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('contacts', t, env: test_env)
+
 endif
