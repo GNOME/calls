@@ -28,6 +28,8 @@
 
 G_BEGIN_DECLS
 
+#define STR_IS_NULL_OR_EMPTY(x) ((x) == NULL || (x)[0] == '\0')
+
 /*
  * For defining simple interface functions
  */
