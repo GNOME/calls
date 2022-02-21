@@ -503,6 +503,7 @@ sip_i_state (int              status,
 {
   const sdp_session_t *r_sdp = NULL;
   const sdp_session_t *l_sdp = NULL;
+  const char *r_sdp_str = NULL;
   gint call_state = nua_callstate_init;
   CallsCallState state;
   CallsSipCall *call;
@@ -525,6 +526,7 @@ sip_i_state (int              status,
   tl_gets (tags,
            SOATAG_LOCAL_SDP_REF (l_sdp),
            SOATAG_REMOTE_SDP_REF (r_sdp),
+           SOATAG_REMOTE_SDP_STR_REF (r_sdp_str),
            NUTAG_CALLSTATE_REF (call_state),
            NUTAG_OFFER_SENT_REF (offer_sent),
            NUTAG_OFFER_RECV_REF (offer_recv),
@@ -545,8 +547,10 @@ sip_i_state (int              status,
     const char *session_ip = NULL;
     const char *media_ip = NULL;
 
+    g_debug ("Remote SDP was set to:\n%s", r_sdp_str);
+
     if (!codecs) {
-      g_warning ("No common codecs in SDP. Hanging up");
+      g_warning ("No common codecs in SDP. Hanging up. Remote SDP:\n%s", r_sdp_str);
       calls_call_hang_up (CALLS_CALL (call));
       return;
     }

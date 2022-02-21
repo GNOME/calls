@@ -90,6 +90,8 @@ try_setting_up_media_pipeline (CallsSipCall *self)
 
   if (self->pipeline == NULL) {
     MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
+
+    g_debug ("Creating new pipeline using codec: %s", codec->name);
     self->pipeline = calls_sip_media_pipeline_new (codec);
   }
 
