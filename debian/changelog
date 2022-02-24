@@ -1,3 +1,100 @@
+gnome-calls (42~rc.0) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * sip: origin: Fix comment style
+  * origin: Add transfer annotation for calls_origin_get_calls ()
+  * sip: origin: Fix memory leak
+  * tests: call: Prefer G_SOURCE_REMOVE instead of FALSE
+  * call: Fix memory leaks
+  * tests: origin: Fix memory leaks
+  * dummy: origin: Fix memory leaks
+  * log: Fix One Definition Rule
+  * settings: Fix memory leak
+  * Update libcallui subproject and adjust to CuiCallState changes
+  * ui-call-data: Implement "active-time" property
+  * manager: Remove unused key argument in g_hash_table_iter_next()
+  * dummy: origin: Restrict supported protocols to "tel"
+  * manager: Hardcode supported protocols and adapt to changes
+  * manager: Add per protocol dial actions
+  * record-row: Use per protocol dial action
+  * dummy: provider: Fake being a modem
+  * manager: Use state flags instead of an enum and adapt to changes
+  * ringer: Reorder headers
+  * notifier: Sort include headers
+  * notifier: Remove unused GList
+  * notifier: Expand on comment
+  * tests: mock-contacts-provider: Add license header
+  * call: Add transfer annotation for get_protocol()
+  * ringer: Switch to state notify signal
+  * ui-call-data: Add "state-changed" signal
+  * manager: Add new set of add and remove signals for CuiCalls
+  * tests: manager: Switch to CallsUiCallData
+  * ui-call-data: Allow contact provider to be NULL
+  * ui-call-data: Add proxy properties for CallsCall
+  * call-window: Switch to CallsUiCallData
+  * call: Remove unused calls_call_state_to_string()
+  * ringer: Use CallsUiCallData instead of CallsCall
+  * dbus-manager: Switch to CallsUiCallData
+  * call: Remove API for silencing
+  * ui-call-data: Remove get_call() function
+  * manager: Switch to CallsUiCallData
+  * notifier: Switch to CallsUiCallData
+  * ui-call-data: Document calls_call_state_to_cui_call_state()
+  * record-row: Remove unnecessary G_OBJECT cast
+  * dbus-manager: Prefer canonical signal names
+  * dbus-manager: Fix wrong property being bound
+  * record-row: Fix passing widget instead of string as action target
+  * tests: Fix typo
+  * tests: Add ui-call tests
+  * tests: ui-call: Test property equality
+  * selector: Fix property binding
+  * dummy-origin: Emit call-added only after adding to list
+  * ui-call-data: Add property to delay showing call display and ringing
+  * ringer: Take ui-active property into account
+  * call-window: Take ui-active property into account
+  * dbus: Add hint property
+  * manager: Delay UI Call removal and adjust to changes
+  * doc: meson: Get rid of redundant if block
+  * doc: Include API reference for all core sources
+  * manager: Add section documentation
+  * call: Get rid of get_contact() API
+  * call: Add call-type property
+  * ci: Bump used debian image
+  * meson: Post release bump
+  * main-window: Bump copyright year in about window
+  * media-pipeline: Put deprecated GStreamer function behind version check macro
+  * contacts-provider: Guard against lookup with NULL id
+  * application: Reuse existing functions in app.dial action
+  * best-match: Codestyle
+  * best-match: Assert CALLS_IS_BEST_MATCH in private functions
+  * notifier: Chain up to parents constructed() before doing anything else
+  * notifier: Codestyle
+  * call: Annotate properties and add introspection attributes on getters/setters
+  * call: Allow setting NULL id
+  * contacts-provider: Don't throw a critical when trying to lookup NULL id
+  * ui-call-data: Handle anonymous callers gracefully
+  * dummy-provider: Add new anonymous incoming call on SIGUSR2
+  * best-match: Add property for primary and secondary display information
+  * tests: Add primitive contact tests
+  * record-row: Use primary info instead of name property
+  * record-row: Handle calls with NULL id gracefully
+  * util: Add STR_IS_NULL_OR_EMPTY macro
+  * tests: util: Test STR_IS_NULL_OR_EMPTY macro
+  * notifier: Fix expression testing if there is a contact
+  * notifier: Fix logic error
+  * Update libcall-ui
+
+  [ Matheus Barbosa ]
+  * Update Brazilian Portuguese translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Yosef Or Boczko ]
+  * Add Hebrew translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 24 Feb 2022 10:24:18 +0100
+
 gnome-calls (42~beta.1) byzantium; urgency=medium
 
   * ci: Deploy documentation as gitlab pages

@@ -1,6 +1,25 @@
+Calls 42.rc.0
+---------------
+Released: 24 February 2022
+
+Maybe noteworthy:
+=================
+
+* Bugfix release
+* Updated libcall-ui to v0.0.2
+* Call time now in sync with phosh (phosh 0.16.0 required)
+
+Translation updates:
+====================
+ - Brazilian Portuguese (Matheus Barbosa)
+ - Persian (Danial Behzadi)
+ - Hebrew (Yosef Or Boczko)
+
+The detailed changes can be found in debian/changelog
+
 Calls 42.beta.1
 ---------------
-Released: 26 January 2021
+Released: 26 January 2022
 
 Maybe noteworthy:
 =================
@@ -13,7 +32,7 @@ The detailed changes can be found in debian/changelog
 
 Calls 42.beta.0
 ---------------
-Released: 25 January 2021
+Released: 25 January 2022
 
 New features:
 =============

@@ -62,6 +62,15 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="42.rc.0" date="2022-02-24">
+        <description>
+          <p>
+            Bugfix release, new translations from libcall-ui
+            and allow phosh (0.16.0) and Calls to have the call time
+            in sync.
+          </p>
+        </description>
+      </release>
       <release version="42.beta.1" date="2022-01-26">
         <description>
           <p>
