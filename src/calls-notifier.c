@@ -68,8 +68,8 @@ notify (CallsNotifier *self, CuiCall *call)
   name = cui_call_get_display_name (call);
   id = cui_call_get_id (call);
 
-  got_id = STR_IS_NULL_OR_EMPTY (id);
-  got_contact = STR_IS_NULL_OR_EMPTY (name);
+  got_id = !STR_IS_NULL_OR_EMPTY (id);
+  got_contact = !STR_IS_NULL_OR_EMPTY (name);
 
   if (got_contact)
     /* %s is a name here */
