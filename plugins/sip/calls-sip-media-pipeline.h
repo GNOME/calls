@@ -28,6 +28,8 @@
 
 #include <glib-object.h>
 
+G_BEGIN_DECLS
+
 #define CALLS_TYPE_SIP_MEDIA_PIPELINE (calls_sip_media_pipeline_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, CALLS, SIP_MEDIA_PIPELINE, GObject)
@@ -37,3 +39,5 @@ CallsSipMediaPipeline* calls_sip_media_pipeline_new                    (MediaCod
 void                   calls_sip_media_pipeline_start                  (CallsSipMediaPipeline *self);
 void                   calls_sip_media_pipeline_stop                   (CallsSipMediaPipeline *self);
 void                   calls_sip_media_pipeline_pause                  (CallsSipMediaPipeline *self);
+
+G_END_DECLS
