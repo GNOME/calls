@@ -30,6 +30,11 @@
 
 #include <gst/gst.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+
 /**
  * SECTION:sip-media-manager
  * @short_description: The media manager singleton

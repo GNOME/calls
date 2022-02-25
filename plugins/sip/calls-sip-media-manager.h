@@ -26,7 +26,6 @@
 
 #include "gst-rfc3551.h"
 
-#include <sofia-sip/nua.h>
 #include <sofia-sip/sdp.h>
 #include <glib-object.h>
 
