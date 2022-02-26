@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Purism SPC
+ * Copyright (C) 2021-2022 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -25,9 +25,21 @@
 #define G_LOG_DOMAIN "CallsSipMediaPipeline"
 
 #include "calls-sip-media-pipeline.h"
+#include "util.h"
 
 #include <gst/gst.h>
 #include <gio/gio.h>
+
+#define MAKE_ELEMENT(var, element, name)                        \
+  self->var = gst_element_factory_make (element, name);         \
+  if (!self->var) {                                             \
+    if (error)                                                  \
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,        \
+                   "Could not create '%s' element of type %s",  \
+                   name ? : "unnamed", element);                \
+    return FALSE;                                               \
+  }
+
 
 /**
  * SECTION:sip-media-pipeline
@@ -118,6 +130,8 @@ on_pad_added (GstElement *rtpbin,
   g_debug ("pad added: %s", GST_PAD_NAME (srcpad));
 
   sinkpad = gst_element_get_static_pad (depayloader, "sink");
+  g_debug ("linking to %s", GST_PAD_NAME (sinkpad));
+
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK)
     g_warning ("Failed to link rtpbin to depayloader");
 
@@ -178,6 +192,402 @@ on_bus_message (GstBus     *bus,
   }
 
   /* keep watching for messages on the bus */
+  return TRUE;
+}
+
+
+/* Setting up pipelines */
+
+static gboolean
+send_pipeline_link_elements (CallsSipMediaPipeline *self,
+                             GError               **error)
+{
+  g_autoptr (GstPad) srcpad = NULL;
+  g_autoptr (GstPad) sinkpad = NULL;
+
+  g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtp_sink_0");
+#else
+  sinkpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtp_sink_0");
+#endif
+  srcpad = gst_element_get_static_pad (self->payloader, "src");
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link payloader to rtpbin");
+    return FALSE;
+  }
+
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+  /* link RTP srcpad to udpsink */
+  srcpad = gst_element_get_static_pad (self->send_rtpbin, "send_rtp_src_0");
+  sinkpad = gst_element_get_static_pad (self->rtp_sink, "sink");
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtpbin to rtpsink");
+    return FALSE;
+  }
+
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+  /* RTCP srcpad to udpsink */
+#if GST_CHECK_VERSION (1, 20, 0)
+  srcpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtcp_src_0");
+#else
+  srcpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtcp_src_0");
+#endif
+  sinkpad = gst_element_get_static_pad (self->rtcp_send_sink, "sink");
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtpbin to rtcpsink");
+    return FALSE;
+  }
+
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+  /* receive RTCP */
+  srcpad = gst_element_get_static_pad (self->rtcp_send_src, "src");
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "recv_rtcp_sink_0");
+#else
+  sinkpad = gst_element_get_request_pad (self->send_rtpbin, "recv_rtcp_sink_0");
+#endif
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                 "Failed to link rtcpsrc to rtpbin");
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+
+static gboolean
+send_pipeline_setup_codecs (CallsSipMediaPipeline *self,
+                            MediaCodecInfo        *codec,
+                            GError               **error)
+{
+  g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  g_assert (codec);
+
+  /* TODO check if codec is available */
+  MAKE_ELEMENT (encoder, codec->gst_encoder_name, "encoder");
+  MAKE_ELEMENT (payloader, codec->gst_payloader_name, "payloader");
+
+  gst_bin_add_many (GST_BIN (self->send_pipeline), self->payloader, self->encoder,
+                    self->audiosrc, NULL);
+
+  if (!gst_element_link_many (self->audiosrc, self->encoder, self->payloader, NULL)) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link audiosrc encoder and payloader");
+    return FALSE;
+  }
+
+  return send_pipeline_link_elements (self, error);
+}
+
+/** TODO: we're describing the desired state (not the current state)
+ * Prepare a skeleton send pipeline where we can later
+ * plug the codec specific elements into.
+ *
+ * In contrast to the receiver pipeline there is no need to start the
+ * pipeline until we actually want to establish a media session.
+ *
+ * The receiver pipeline should have been initialized at this point
+ * allowing us to reuse GSockets.
+ */
+static gboolean
+send_pipeline_init (CallsSipMediaPipeline *self,
+                    GCancellable          *cancellable,
+                    GError               **error)
+{
+  const char *env_var;
+
+  g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
+
+  self->send_pipeline = gst_pipeline_new ("rtp-send-pipeline");
+
+  if (!self->send_pipeline) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Could not create send pipeline");
+    return FALSE;
+  }
+
+  gst_object_ref_sink (self->send_pipeline);
+
+  env_var = g_getenv ("CALLS_AUDIOSRC");
+  if (!STR_IS_NULL_OR_EMPTY (env_var)) {
+    MAKE_ELEMENT (audiosrc, env_var, "audiosource");
+  } else {
+    g_autoptr (GstStructure) gst_props = NULL;
+
+    MAKE_ELEMENT (audiosrc, "pulsesrc", "audiosource");
+
+    /* enable echo cancellation and set buffer size to 40ms */
+    gst_props = gst_structure_new ("props",
+                                   "media.role", G_TYPE_STRING, "phone",
+                                   "filter.want", G_TYPE_STRING, "echo-cancel",
+                                   NULL);
+
+    g_object_set (self->audiosrc,
+                  "buffer-time", (gint64) 40000,
+                  "stream-properties", gst_props,
+                  NULL);
+  }
+
+  MAKE_ELEMENT (send_rtpbin, "rtpbin", "send-rtpbin");
+  MAKE_ELEMENT (rtp_sink, "udpsink", "rtp-udp-sink");
+  MAKE_ELEMENT (rtcp_send_src, "udpsrc", "rtcp-udp-send-src");
+  MAKE_ELEMENT (rtcp_send_sink, "udpsink", "rtcp-udp-send-sink");
+
+  g_object_set (self->rtcp_send_sink,
+                "async", FALSE,
+                "sync", FALSE,
+                NULL);
+
+  g_object_bind_property (self, "rport-rtp",
+                          self->rtp_sink, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "remote",
+                          self->rtp_sink, "host",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "lport-rtcp",
+                          self->rtcp_send_src, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "rport-rtcp",
+                          self->rtcp_send_sink, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "remote",
+                          self->rtcp_send_sink, "host",
+                          G_BINDING_BIDIRECTIONAL);
+
+  gst_bin_add (GST_BIN (self->send_pipeline), self->send_rtpbin);
+  gst_bin_add_many (GST_BIN (self->send_pipeline), self->rtp_sink,
+                    self->rtcp_send_src, self->rtcp_send_sink, NULL);
+
+  /* TODO setting up codecs should be delayed in the future until after
+   * codecs have been negotiated
+   */
+  if (!send_pipeline_setup_codecs (self, self->codec, error))
+    return FALSE;
+
+  self->bus_send = gst_pipeline_get_bus (GST_PIPELINE (self->send_pipeline));
+  self->bus_watch_send = gst_bus_add_watch (self->bus_send, on_bus_message, self);
+
+  return TRUE;
+}
+
+
+static gboolean
+recv_pipeline_link_elements (CallsSipMediaPipeline *self,
+                             GError               **error)
+{
+  g_autoptr (GstPad) srcpad = NULL;
+  g_autoptr (GstPad) sinkpad = NULL;
+
+  g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+
+  srcpad = gst_element_get_static_pad (self->rtp_src, "src");
+#if GST_CHECK_VERSION (1, 20, 0)
+  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtp_sink_0");
+#else
+  sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtp_sink_0");
+#endif
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtpsrc to rtpbin");
+    return FALSE;
+  }
+
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+  srcpad = gst_element_get_static_pad (self->rtcp_recv_src, "src");
+#if GST_CHECK_VERSION (1, 20 , 0)
+  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtcp_sink_0");
+#else
+  sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtcp_sink_0");
+#endif
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtcpsrc to rtpbin");
+    return FALSE;
+  }
+
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
+#if GST_CHECK_VERSION (1, 20, 0)
+  srcpad = gst_element_request_pad_simple (self->recv_rtpbin, "send_rtcp_src_0");
+#else
+  srcpad = gst_element_get_request_pad (self->recv_rtpbin, "send_rtcp_src_0");
+#endif
+  sinkpad = gst_element_get_static_pad (self->rtcp_recv_sink, "sink");
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtpbin to rtcpsink");
+    return FALSE;
+  }
+
+  g_signal_connect (self->recv_rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
+
+  return TRUE;
+}
+
+
+static gboolean
+recv_pipeline_setup_codecs (CallsSipMediaPipeline *self,
+                            MediaCodecInfo        *codec,
+                            GError               **error)
+{
+  g_autoptr (GstCaps) caps = NULL;
+  g_autofree char *caps_string = NULL;
+
+  g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  g_assert (codec);
+
+  /* TODO check if codec is available */
+  MAKE_ELEMENT (decoder, codec->gst_decoder_name, "decoder");
+  MAKE_ELEMENT (depayloader, codec->gst_depayloader_name, "depayloader");
+
+  gst_bin_add_many (GST_BIN (self->recv_pipeline), self->depayloader, self->decoder,
+                    self->audiosink, NULL);
+
+  if (!gst_element_link_many (self->depayloader, self->decoder, self->audiosink, NULL)) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link depayloader decoder and audiosink");
+    return FALSE;
+  }
+
+  /* UDP src capabilities */
+  caps_string = media_codec_get_gst_capabilities (codec);
+  g_debug ("Capabilities:\n%s", caps_string);
+
+  caps = gst_caps_from_string (caps_string);
+
+  /* set udp sinks and sources for RTP and RTCP */
+  g_object_set (self->rtp_src,
+                "caps", caps,
+                NULL);
+
+  return recv_pipeline_link_elements (self, error);
+}
+
+
+/** TODO: we're describing the desired state (not the current state)
+ * Prepares a skeleton receiver pipeline which can later be
+ * used to plug codec specific element in.
+ * This pipeline just consists of (minimally linked) rtpbin
+ * audio sink and two udpsrc elements, one for RTP and one for RTCP.
+ *
+ * The pipeline will be started and stopped to let the OS allocate
+ * sockets for us instead of building and providing GSockets ourselves
+ * by hand. These GSockets will later be reused for any outgoing
+ * traffic for of our hole punching scheme as a simple NAT traversal
+ * technique.
+ */
+static gboolean
+recv_pipeline_init (CallsSipMediaPipeline *self,
+                    GCancellable          *cancellable,
+                    GError               **error)
+{
+  const char *env_var;
+
+  g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
+
+  self->recv_pipeline = gst_pipeline_new ("rtp-recv-pipeline");
+
+  if (!self->recv_pipeline) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Could not create receiver pipeline");
+    return FALSE;
+  }
+
+  gst_object_ref_sink (self->recv_pipeline);
+
+  env_var = g_getenv ("CALLS_AUDIOSINK");
+  if (!STR_IS_NULL_OR_EMPTY (env_var)) {
+    MAKE_ELEMENT (audiosink, env_var, "audiosink");
+  } else {
+      g_autoptr (GstStructure) gst_props = NULL;
+
+      MAKE_ELEMENT (audiosink, "pulsesink", "audiosink");
+
+      /* enable echo cancellation and set buffer size to 40ms */
+      gst_props = gst_structure_new ("props",
+                                     "media.role", G_TYPE_STRING, "phone",
+                                     "filter.want", G_TYPE_STRING, "echo-cancel",
+                                     NULL);
+
+      g_object_set (self->audiosink,
+                    "buffer-time", (gint64) 40000,
+                    "stream-properties", gst_props,
+                    NULL);
+
+  }
+
+  MAKE_ELEMENT (recv_rtpbin, "rtpbin", "recv-rtpbin")
+  MAKE_ELEMENT (rtp_src, "udpsrc", "rtp-udp-src");
+  MAKE_ELEMENT (rtcp_recv_src, "udpsrc", "rtcp-udp-recv-src");
+  MAKE_ELEMENT (rtcp_recv_sink, "udpsink", "rtcp-udp-recv-sink");
+
+
+  g_object_set (self->rtcp_recv_sink,
+                "async", FALSE,
+                "sync", FALSE,
+                NULL);
+
+
+  g_object_bind_property (self, "lport-rtp",
+                          self->rtp_src, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "lport-rtcp",
+                          self->rtcp_recv_src, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "rport-rtcp",
+                          self->rtcp_recv_sink, "port",
+                          G_BINDING_BIDIRECTIONAL);
+
+  g_object_bind_property (self, "remote",
+                          self->rtcp_recv_sink, "host",
+                          G_BINDING_BIDIRECTIONAL);
+
+  gst_bin_add (GST_BIN (self->recv_pipeline), self->recv_rtpbin);
+  gst_bin_add_many (GST_BIN (self->recv_pipeline), self->rtp_src,
+                    self->rtcp_recv_src, self->rtcp_recv_sink, NULL);
+
+  /* TODO this should be delayed until negotiation is complete */
+  if (!recv_pipeline_setup_codecs (self, self->codec, error))
+    return FALSE;
+
+
+  /* TODO use temporary bus watch for the initial pipeline start/stop */
+  self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
+  self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
+
+
   return TRUE;
 }
 
@@ -355,342 +765,26 @@ calls_sip_media_pipeline_init (CallsSipMediaPipeline *self)
 
 
 static gboolean
-initable_init (GInitable    *initable,
-               GCancellable *cancelable,
-               GError      **error)
+pipelines_initable_init (GInitable    *initable,
+                         GCancellable *cancellable,
+                         GError      **error)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (initable);
-  g_autoptr (GstCaps) caps = NULL;
-  g_autofree char *caps_string = NULL;
-  GstPad *srcpad, *sinkpad;
-  GstStructure *gst_props = NULL;
-  const char *env_var;
 
-  env_var = g_getenv ("CALLS_AUDIOSINK");
-  if (env_var) {
-    self->audiosink = gst_element_factory_make (env_var, "sink");
-  } else {
-    /* could also use autoaudiosink instead of pulsesink */
-    self->audiosink = gst_element_factory_make ("pulsesink", "sink");
-
-    /* enable echo cancellation and set buffer size to 40ms */
-    gst_props = gst_structure_new ("props",
-                                   "media.role", G_TYPE_STRING, "phone",
-                                   "filter.want", G_TYPE_STRING, "echo-cancel",
-                                   NULL);
-
-    g_object_set (self->audiosink,
-                  "buffer-time", (gint64) 40000,
-                  "stream-properties", gst_props,
-                  NULL);
-
-    gst_structure_free (gst_props);
-  }
-
-  env_var = g_getenv ("CALLS_AUDIOSRC");
-  if (env_var) {
-    self->audiosrc = gst_element_factory_make (env_var, "source");
-  } else {
-    /* could also use autoaudiosrc instead of pulsesrc */
-    self->audiosrc = gst_element_factory_make ("pulsesrc", "source");
-
-    /* enable echo cancellation and set buffer size to 40ms */
-    gst_props = gst_structure_new ("props",
-                                   "media.role", G_TYPE_STRING, "phone",
-                                   "filter.want", G_TYPE_STRING, "echo-cancel",
-                                   NULL);
-
-    g_object_set (self->audiosrc,
-                  "buffer-time", (gint64) 40000,
-                  "stream-properties", gst_props,
-                  NULL);
-
-    gst_structure_free (gst_props);
-  }
-
-  if (!self->audiosrc || !self->audiosink) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create audiosink or audiosrc");
+  if (!recv_pipeline_init (self, cancellable, error))
     return FALSE;
-  }
 
-  /* maybe we need to also explicitly add audioconvert and audioresample elements */
-  self->send_rtpbin = gst_element_factory_make ("rtpbin", "send-rtpbin");
-  self->recv_rtpbin = gst_element_factory_make ("rtpbin", "recv-rtpbin");
-  if (!self->send_rtpbin || !self->recv_rtpbin) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create send/receive rtpbin");
+  if (!send_pipeline_init (self, cancellable, error))
     return FALSE;
-  }
-
-  self->decoder = gst_element_factory_make (self->codec->gst_decoder_name, "decoder");
-  if (!self->decoder) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create decoder %s", self->codec->gst_decoder_name);
-    return FALSE;
-  }
-
-  self->depayloader = gst_element_factory_make (self->codec->gst_depayloader_name, "depayloader");
-  if (!self->depayloader) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create depayloader %s", self->codec->gst_depayloader_name);
-    return FALSE;
-  }
-
-  self->encoder = gst_element_factory_make (self->codec->gst_encoder_name, "encoder");
-  if (!self->encoder) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create encoder %s", self->codec->gst_encoder_name);
-    return FALSE;
-  }
-
-  self->payloader = gst_element_factory_make (self->codec->gst_payloader_name, "payloader");
-  if (!self->encoder) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create payloader %s", self->codec->gst_payloader_name);
-    return FALSE;
-  }
-
-  self->rtp_src = gst_element_factory_make ("udpsrc", "rtp-udp-src");
-  self->rtp_sink = gst_element_factory_make ("udpsink", "rtp-udp-sink");
-  self->rtcp_recv_sink = gst_element_factory_make ("udpsink", "rtcp-udp-recv-sink");
-  self->rtcp_recv_src = gst_element_factory_make ("udpsrc", "rtcp-udp-recv-src");
-  self->rtcp_send_sink = gst_element_factory_make ("udpsink", "rtcp-udp-send-sink");
-  self->rtcp_send_src = gst_element_factory_make ("udpsrc", "rtcp-udp-send-src");
-
-  if (!self->rtp_src || !self->rtp_sink ||
-      !self->rtcp_recv_sink || !self->rtcp_recv_src ||
-      !self->rtcp_send_sink || !self->rtcp_send_src) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create udp sinks or sources");
-    return FALSE;
-  }
-
-  self->send_pipeline = gst_pipeline_new ("rtp-send-pipeline");
-  self->recv_pipeline = gst_pipeline_new ("rtp-recv-pipeline");
-
-  if (!self->send_pipeline || !self->recv_pipeline) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Could not create send or receiver pipeline");
-    return FALSE;
-  }
-
-  gst_object_ref_sink (self->send_pipeline);
-  gst_object_ref_sink (self->recv_pipeline);
-
-/* get the busses and establish watches */
-  self->bus_send = gst_pipeline_get_bus (GST_PIPELINE (self->send_pipeline));
-  self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
-  self->bus_watch_send = gst_bus_add_watch (self->bus_send, on_bus_message, self);
-  self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
-
-  gst_bin_add_many (GST_BIN (self->recv_pipeline), self->depayloader, self->decoder,
-                    self->audiosink, NULL);
-  gst_bin_add_many (GST_BIN (self->send_pipeline), self->payloader, self->encoder,
-                    self->audiosrc, NULL);
-
-  if (!gst_element_link_many (self->depayloader, self->decoder, self->audiosink, NULL)) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link depayloader decoder and audiosink");
-    return FALSE;
-  }
-
-  if (!gst_element_link_many (self->audiosrc, self->encoder, self->payloader, NULL)) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link audiosrc encoder and payloader");
-    return FALSE;
-  }
-
-  gst_bin_add (GST_BIN (self->send_pipeline), self->send_rtpbin);
-  gst_bin_add (GST_BIN (self->recv_pipeline), self->recv_rtpbin);
-
-  gst_bin_add_many (GST_BIN (self->send_pipeline), self->rtp_sink,
-                    self->rtcp_send_src, self->rtcp_send_sink, NULL);
-  gst_bin_add_many (GST_BIN (self->recv_pipeline), self->rtp_src,
-                    self->rtcp_recv_src, self->rtcp_recv_sink, NULL);
-
-  caps_string = media_codec_get_gst_capabilities (self->codec);
-  g_debug ("Capabilities:\n%s", caps_string);
-
-  caps = gst_caps_from_string (caps_string);
-
-  /* set udp sinks and sources for RTP and RTCP */
-  g_object_set (self->rtp_src,
-                "caps", caps,
-                NULL);
-
-  g_object_set (self->rtcp_recv_sink,
-                "async", FALSE,
-                "sync", FALSE,
-                NULL);
-
-  g_object_set (self->rtcp_send_sink,
-                "async", FALSE,
-                "sync", FALSE,
-                NULL);
-
-  /* bind to properties of udp sinks and sources */
-  /* Receiver side */
-  if (self->remote == NULL)
-    self->remote = g_strdup ("localhost");
-
-  g_object_bind_property (self, "lport-rtp",
-                          self->rtp_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "lport-rtcp",
-                          self->rtcp_recv_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "rport-rtcp",
-                          self->rtcp_recv_sink, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "remote",
-                          self->rtcp_recv_sink, "host",
-                          G_BINDING_BIDIRECTIONAL);
-
-  /* Sender side */
-  g_object_bind_property (self, "rport-rtp",
-                          self->rtp_sink, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "remote",
-                          self->rtp_sink, "host",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "lport-rtcp",
-                          self->rtcp_send_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "rport-rtcp",
-                          self->rtcp_send_sink, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "remote",
-                          self->rtcp_send_sink, "host",
-                          G_BINDING_BIDIRECTIONAL);
-
-  /* Link pads */
-  /* in/receive direction */
-  /* request and link the pads */
-  srcpad = gst_element_get_static_pad (self->rtp_src, "src");
-#if GST_CHECK_VERSION (1, 20, 0)
-  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtp_sink_0");
-#endif
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtpsrc to rtpbin");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  srcpad = gst_element_get_static_pad (self->rtcp_recv_src, "src");
-#if GST_CHECK_VERSION (1, 20 , 0)
-  sinkpad = gst_element_request_pad_simple (self->recv_rtpbin, "recv_rtcp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->recv_rtpbin, "recv_rtcp_sink_0");
-#endif
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtcpsrc to rtpbin");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-#if GST_CHECK_VERSION (1, 20, 0)
-  srcpad = gst_element_request_pad_simple (self->recv_rtpbin, "send_rtcp_src_0");
-#else
-  srcpad = gst_element_get_request_pad (self->recv_rtpbin, "send_rtcp_src_0");
-#endif
-  sinkpad = gst_element_get_static_pad (self->rtcp_recv_sink, "sink");
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtpbin to rtcpsink");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  /* need to link RTP pad to the depayloader */
-  g_signal_connect (self->recv_rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
-
-
-  /* out/send direction */
-  /* link payloader src to RTP sink pad */
-#if GST_CHECK_VERSION (1, 20, 0)
-  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtp_sink_0");
-#endif
-  srcpad = gst_element_get_static_pad (self->payloader, "src");
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link payloader to rtpbin");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  /* link RTP srcpad to udpsink */
-  srcpad = gst_element_get_static_pad (self->send_rtpbin, "send_rtp_src_0");
-  sinkpad = gst_element_get_static_pad (self->rtp_sink, "sink");
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtpbin to rtpsink");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  /* RTCP srcpad to udpsink */
-#if GST_CHECK_VERSION (1, 20, 0)
-  srcpad = gst_element_request_pad_simple (self->send_rtpbin, "send_rtcp_src_0");
-#else
-  srcpad = gst_element_get_request_pad (self->send_rtpbin, "send_rtcp_src_0");
-#endif
-  sinkpad = gst_element_get_static_pad (self->rtcp_send_sink, "sink");
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtpbin to rtcpsink");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  /* receive RTCP */
-  srcpad = gst_element_get_static_pad (self->rtcp_send_src, "src");
-#if GST_CHECK_VERSION (1, 20, 0)
-  sinkpad = gst_element_request_pad_simple (self->send_rtpbin, "recv_rtcp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->send_rtpbin, "recv_rtcp_sink_0");
-#endif
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to link rtcpsrc to rtpbin");
-    goto err;
-  }
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
 
   return TRUE;
-
- err:
-  gst_object_unref (srcpad);
-  gst_object_unref (sinkpad);
-
-  return FALSE;
 }
 
 
 static void
 initable_iface_init (GInitableIface *iface)
 {
-  iface->init = initable_init;
+  iface->init = pipelines_initable_init;
 }
 
 
@@ -843,3 +937,5 @@ calls_sip_media_pipeline_pause (CallsSipMediaPipeline *self,
   self->is_running = !self->is_running;
 }
 
+
+#undef MAKE_ELEMENT
