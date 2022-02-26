@@ -1,15 +1,15 @@
 # Portuguese translations for calls package.
 # Copyright (C) 2020 THE calls'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2022.
 # Juliano de Souza Camargo <julianosc@protonmail.com>, 2020-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-10 17:47+0000\n"
-"PO-Revision-Date: 2021-12-14 15:33+0000\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-02-26 18:15+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese < https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-DL-Domain: po\n"
 "X-DL-State: None\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
 #: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
@@ -98,41 +98,45 @@ msgstr "Porta"
 msgid "Transport"
 msgstr "Transporte"
 
-#: src/calls-application.c:546
-#, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "URI de tel inválido '%s'"
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Uso para chamadas telefónicas"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Tentar marcar URI de tel `%s' inválido"
+
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Não foi possível abrir '%s'"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "O nome da extensão a utilizar para a operadora"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "EXTENSÃO"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Se a janela principal deve ser apresentada no arranque"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "Marque um número de telefone"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "Ativar mensagens de depuração detalhadas"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "Mostrar a versão atual"
 
@@ -215,11 +219,11 @@ msgstr "Chamar de volta"
 msgid "VoIP Accounts"
 msgstr "Contas VoIP"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Adicionar contas VoIP"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -229,7 +233,7 @@ msgstr ""
 "VoIP com o protocolo SIP. Esta funcionalidade é relativamente nova e não "
 "está completa (i.e. sem meios encriptados)"
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Adicionar conta"
 
@@ -246,6 +250,10 @@ msgstr "Eliminar chama_da"
 #: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Copiar número"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_Adicionar contacto"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
