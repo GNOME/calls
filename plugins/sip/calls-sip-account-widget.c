@@ -119,6 +119,40 @@ on_user_changed (CallsSipAccountWidget *self)
 }
 
 
+static void
+set_password_visibility (CallsSipAccountWidget *self, gboolean visible)
+{
+    const char* icon_name;
+
+    g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
+    g_assert (GTK_IS_ENTRY (self->password));
+
+    icon_name = visible ?
+            "view-conceal-symbolic" :
+            "view-reveal-symbolic";
+
+    gtk_entry_set_visibility (self->password, visible);
+    gtk_entry_set_icon_from_icon_name (self->password, GTK_ENTRY_ICON_SECONDARY,
+                                       icon_name);
+}
+
+
+static void
+on_password_visibility_changed(CallsSipAccountWidget *self,
+                               GtkEntryIconPosition   icon_pos,
+                               GdkEvent              *event,
+                               GtkEntry              *entry)
+{
+    gboolean visible;
+
+    g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
+    g_assert (GTK_IS_ENTRY (entry));
+    g_assert (icon_pos == GTK_ENTRY_ICON_SECONDARY);
+
+    visible = !gtk_entry_get_visibility (entry);
+    set_password_visibility (self, visible);
+}
+
 /*
  * Stop "insert-text" signal emission if any undesired port
  * value occurs
@@ -327,6 +361,7 @@ edit_form (CallsSipAccountWidget *self,
   gtk_entry_set_text (self->display_name, display_name ?: "");
   gtk_entry_set_text (self->user, user);
   gtk_entry_set_text (self->password, password);
+  set_password_visibility (self, FALSE);
   gtk_entry_set_text (self->port, port_str);
   hdy_combo_row_set_selected_index (self->protocol, protocol_index);
   gtk_switch_set_state (self->tel_switch, can_tel);
@@ -515,6 +550,7 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_apply_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_user_changed);
+  gtk_widget_class_bind_template_callback (widget_class, on_password_visibility_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
 }

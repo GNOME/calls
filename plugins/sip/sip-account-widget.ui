@@ -145,7 +145,12 @@
                     <property name="valign">center</property>
                     <property name="input-purpose">password</property>
                     <property name="visibility">False</property>
+                    <property name="primary_icon_sensitive">False</property>
+                    <property name="secondary_icon_activatable">True</property>
+                    <property name="secondary_icon_name">view-reveal-symbolic</property>
+                    <property name="secondary_icon_sensitive">True</property>
                     <signal name="changed" handler="on_user_changed" swapped="yes"/>
+                    <signal name="icon-press" handler="on_password_visibility_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
