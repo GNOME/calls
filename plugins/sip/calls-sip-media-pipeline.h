@@ -36,6 +36,8 @@ G_DECLARE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, CALLS, SI
 
 
 CallsSipMediaPipeline* calls_sip_media_pipeline_new                    (MediaCodecInfo *codec);
+void                   calls_sip_media_pipeline_set_codec              (CallsSipMediaPipeline *self,
+                                                                        MediaCodecInfo        *info);
 void                   calls_sip_media_pipeline_start                  (CallsSipMediaPipeline *self);
 void                   calls_sip_media_pipeline_stop                   (CallsSipMediaPipeline *self);
 void                   calls_sip_media_pipeline_pause                  (CallsSipMediaPipeline *self,

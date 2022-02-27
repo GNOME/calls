@@ -380,12 +380,6 @@ send_pipeline_init (CallsSipMediaPipeline *self,
   gst_bin_add_many (GST_BIN (self->send_pipeline), self->rtp_sink,
                     self->rtcp_send_src, self->rtcp_send_sink, NULL);
 
-  /* TODO setting up codecs should be delayed in the future until after
-   * codecs have been negotiated
-   */
-  if (!send_pipeline_setup_codecs (self, self->codec, error))
-    return FALSE;
-
   self->bus_send = gst_pipeline_get_bus (GST_PIPELINE (self->send_pipeline));
   self->bus_watch_send = gst_bus_add_watch (self->bus_send, on_bus_message, self);
 
@@ -578,11 +572,6 @@ recv_pipeline_init (CallsSipMediaPipeline *self,
   gst_bin_add_many (GST_BIN (self->recv_pipeline), self->rtp_src,
                     self->rtcp_recv_src, self->rtcp_recv_sink, NULL);
 
-  /* TODO this should be delayed until negotiation is complete */
-  if (!recv_pipeline_setup_codecs (self, self->codec, error))
-    return FALSE;
-
-
   /* TODO use temporary bus watch for the initial pipeline start/stop */
   self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
   self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
@@ -646,7 +635,7 @@ calls_sip_media_pipeline_set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_CODEC:
-    self->codec = g_value_get_pointer (value);
+    calls_sip_media_pipeline_set_codec (self, g_value_get_pointer (value));
     break;
 
   case PROP_REMOTE:
@@ -714,7 +703,7 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
   props[PROP_CODEC] = g_param_spec_pointer ("codec",
                                             "Codec",
                                             "Media codec",
-                                            G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+                                            G_PARAM_READWRITE);
 
   props[PROP_REMOTE] = g_param_spec_string ("remote",
                                             "Remote",
@@ -795,14 +784,49 @@ calls_sip_media_pipeline_new (MediaCodecInfo *codec)
   g_autoptr (GError) error = NULL;
 
   pipeline = g_initable_new (CALLS_TYPE_SIP_MEDIA_PIPELINE, NULL, &error,
-                             "codec", codec,
                              NULL);
-  if (pipeline == NULL)
+
+  if (pipeline)
+    g_object_set (pipeline, "codec", codec, NULL);
+  else
     g_warning ("Media pipeline could not be initialized: %s", error->message);
 
   return pipeline;
 }
 
+
+void
+calls_sip_media_pipeline_set_codec (CallsSipMediaPipeline *self,
+                                    MediaCodecInfo        *codec)
+{
+  g_autoptr (GError) error = NULL;
+
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  g_return_if_fail (codec);
+
+  if (self->codec == codec)
+    return;
+
+  if (self->codec) {
+    g_warning ("Cannot change codec of a pipeline. Use a new pipeline instead.");
+    return;
+  }
+
+  if (!recv_pipeline_setup_codecs (self, codec, &error)) {
+    g_warning ("Error trying to setup codec for receive pipeline: %s",
+               error->message);
+    return;
+  }
+
+  if (!send_pipeline_setup_codecs (self, codec, &error)) {
+    g_warning ("Error trying to setup codec for send pipeline: %s",
+               error->message);
+    return;
+  }
+
+  self->codec = codec;
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CODEC]);
+}
 
 static void
 diagnose_used_ports_in_socket (GSocket *socket)
