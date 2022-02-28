@@ -457,6 +457,8 @@ static gboolean
 send_pipeline_init (CallsSipMediaPipeline *self,
                     GError               **error)
 {
+  g_autoptr (GSocket) rtp_sock = NULL;
+  g_autoptr (GSocket) rtcp_sock = NULL;
   const char *env_var;
 
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
@@ -518,7 +520,36 @@ send_pipeline_init (CallsSipMediaPipeline *self,
                           self->rtcp_send_sink, "host",
                           G_BINDING_BIDIRECTIONAL);
 
-  /* TODO bind sockets */
+  /* bind sockets for hole punching scheme */
+  g_object_get (self->rtp_src, "used-socket", &rtp_sock, NULL);
+  if (!rtp_sock) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Could not retrieve used socket from RTP udpsrc element");
+    return FALSE;
+  }
+
+  g_object_set (self->rtp_sink,
+                "socket", rtp_sock,
+                "close-socket", FALSE,
+                NULL);
+
+
+  g_object_get (self->rtcp_recv_src, "used-socket", &rtcp_sock, NULL);
+  if (!rtcp_sock) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Could not retrieve used socket from RTCP udpsrc element");
+    return FALSE;
+  }
+  g_object_set (self->rtcp_send_sink,
+                "socket", rtcp_sock,
+                "close-socket", FALSE,
+                NULL);
+  g_object_set (self->rtcp_send_src,
+                "socket", rtcp_sock,
+                "close-socket", FALSE,
+                NULL);
 
   gst_bin_add (GST_BIN (self->send_pipeline), self->send_rtpbin);
   gst_bin_add_many (GST_BIN (self->send_pipeline), self->rtp_sink,
@@ -645,6 +676,7 @@ static gboolean
 recv_pipeline_init (CallsSipMediaPipeline *self,
                     GError               **error)
 {
+  g_autoptr (GSocket) rtcp_sock = NULL;
   const char *env_var;
 
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
@@ -712,8 +744,31 @@ recv_pipeline_init (CallsSipMediaPipeline *self,
   self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
   self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
 
+  g_object_set (self->rtp_src,
+                "close-socket", FALSE,
+                "reuse", TRUE,
+                NULL);
+  g_object_set (self->rtcp_recv_src,
+                "close-socket", FALSE,
+                "reuse", TRUE,
+                NULL);
+
   /* Set pipeline to ready to get ports allocated */
   gst_element_set_state (self->recv_pipeline, GST_STATE_READY);
+
+  g_object_get (self->rtcp_recv_src, "used-socket", &rtcp_sock, NULL);
+  if (!rtcp_sock) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Could not retrieve used socket from RTCP udpsrc element");
+    return FALSE;
+  }
+
+  /* Ports are allocated. Let's reuse the socket for rtcp source in the sink for NAT traversal*/
+  g_object_set (self->rtcp_recv_sink,
+                "socket", rtcp_sock,
+                "close-socket", FALSE,
+                NULL);
 
   return TRUE;
 }
@@ -1036,7 +1091,6 @@ diagnose_ports_in_use (CallsSipMediaPipeline *self)
 void
 calls_sip_media_pipeline_start (CallsSipMediaPipeline *self)
 {
-  GSocket *socket;
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
   if (self->state != CALLS_MEDIA_PIPELINE_STATE_READY) {
@@ -1046,24 +1100,12 @@ calls_sip_media_pipeline_start (CallsSipMediaPipeline *self)
 
   g_debug ("Starting media pipeline");
 
-  /* First start the receiver pipeline so that
-     we may reuse the socket in the sender pipeline */
-  /* TODO can we do something similar for RTCP? */
   gst_element_set_state (self->recv_pipeline, GST_STATE_PLAYING);
-
-  g_object_get (self->rtp_src, "used-socket", &socket, NULL);
-
-  if (socket) {
-    g_object_set (self->rtp_sink,
-                  "close-socket", FALSE,
-                  "socket", socket,
-                  NULL);
-  }
-  else
-    g_warning ("Could not get used socket of udpsrc element");
-
-  /* Now start the sender pipeline */
   gst_element_set_state (self->send_pipeline, GST_STATE_PLAYING);
+
+  g_debug ("RTP/RTCP port after starting pipeline: %d/%d",
+           calls_sip_media_pipeline_get_rtp_port (self),
+           calls_sip_media_pipeline_get_rtcp_port (self));
 
   set_state (self, CALLS_MEDIA_PIPELINE_STATE_PLAY_PENDING);
 
