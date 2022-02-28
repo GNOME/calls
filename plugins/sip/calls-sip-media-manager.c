@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Purism SPC
+ * Copyright (C) 2021-2022 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -26,8 +26,11 @@
 
 #include "calls-settings.h"
 #include "calls-sip-media-manager.h"
+#include "calls-sip-media-pipeline.h"
 #include "gst-rfc3551.h"
+#include "util.h"
 
+#include <gio/gio.h>
 #include <gst/gst.h>
 
 #include <sys/types.h>
@@ -41,8 +44,8 @@
  * @Title: CallsSipMediaManager
  *
  * #CallsSipMediaManager is mainly responsible for generating appropriate
- * SDP messages for the set of supported codecs. In the future it
- * shall also manage the #CallsSipMediaPipeline objects that are in use.
+ * SDP messages for the set of supported codecs. It also holds a list of
+ * #CallsSipMediaPipeline objects that are ready to be used.
  */
 
 typedef struct _CallsSipMediaManager
@@ -54,6 +57,7 @@ typedef struct _CallsSipMediaManager
 
   CallsSettings *settings;
   GList         *preferred_codecs;
+  GListStore    *pipelines;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
@@ -133,12 +137,25 @@ on_notify_preferred_audio_codecs (CallsSipMediaManager *self)
 
 
 static void
+add_new_pipeline (CallsSipMediaManager *self)
+{
+  CallsSipMediaPipeline *pipeline;
+
+  g_assert (CALLS_IS_SIP_MEDIA_MANAGER (self));
+
+  pipeline = calls_sip_media_pipeline_new (NULL);
+  g_list_store_append (self->pipelines, pipeline);
+}
+
+
+static void
 calls_sip_media_manager_finalize (GObject *object)
 {
   CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
 
   g_list_free (self->preferred_codecs);
   g_object_unref (self->settings);
+  g_object_unref (self->pipelines);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
 }
@@ -169,6 +186,10 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
   /* Hints are used with getaddrinfo() when setting the session IP */
   self->hints.ai_flags = AI_V4MAPPED | AI_ADDRCONFIG | AI_NUMERICHOST;
   self->hints.ai_family = AF_UNSPEC;
+
+  self->pipelines = g_list_store_new (CALLS_TYPE_SIP_MEDIA_PIPELINE);
+
+  add_new_pipeline (self);
 }
 
 
@@ -342,4 +363,25 @@ calls_sip_media_manager_get_codecs_from_sdp (CallsSipMediaManager *self,
   return codecs;
 }
 
+/**
+ * calls_sip_media_manager_get_pipeline:
+ * @self: A #CallsSipMediaManager
+ *
+ * Returns: (transfer full): A #CallsSipMediaPipeline
+ */
+CallsSipMediaPipeline *
+calls_sip_media_manager_get_pipeline (CallsSipMediaManager *self)
+{
+  g_autoptr (CallsSipMediaPipeline) pipeline = NULL;
 
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
+
+  pipeline = g_list_model_get_item (G_LIST_MODEL (self->pipelines), 0);
+
+  g_list_store_remove (self->pipelines, 0);
+
+  /* add a pipeline for the one we just removed */
+  add_new_pipeline (self);
+
+  return pipeline;
+}
