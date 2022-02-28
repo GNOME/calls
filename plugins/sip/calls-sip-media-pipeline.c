@@ -114,8 +114,6 @@ on_pad_added (GstElement *rtpbin,
               GstElement *depayloader)
 {
   GstPad *sinkpad;
-  /* there might still be another rtp src bin linked to the depayloader */
-  //GstPad *other_srcpad;
 
   g_debug ("pad added: %s", GST_PAD_NAME (srcpad));
 
