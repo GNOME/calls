@@ -183,10 +183,10 @@ on_bus_message (GstBus     *bus,
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+calls_sip_media_pipeline_get_property (GObject    *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
 
@@ -227,10 +227,10 @@ get_property (GObject      *object,
 
 
 static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
+calls_sip_media_pipeline_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
 
@@ -272,7 +272,7 @@ set_property (GObject      *object,
 
 
 static void
-finalize (GObject *object)
+calls_sip_media_pipeline_finalize (GObject *object)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
 
@@ -296,9 +296,9 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = set_property;
-  object_class->get_property = get_property;
-  object_class->finalize = finalize;
+  object_class->set_property = calls_sip_media_pipeline_set_property;
+  object_class->get_property = calls_sip_media_pipeline_get_property;
+  object_class->finalize = calls_sip_media_pipeline_finalize;
 
   /* Maybe we want to turn Codec into a GObject later */
   props[PROP_CODEC] = g_param_spec_pointer ("codec",
