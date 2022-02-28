@@ -51,6 +51,7 @@ enum {
   PROP_0,
   PROP_CALL_HANDLE,
   PROP_IP,
+  PROP_PIPELINE,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -85,14 +86,15 @@ try_setting_up_media_pipeline (CallsSipCall *self)
 {
   g_assert (CALLS_SIP_CALL (self));
 
-  if (self->codecs == NULL)
+  if (!self->codecs)
     return FALSE;
 
-  if (self->pipeline == NULL) {
+  if (calls_sip_media_pipeline_get_state (self->pipeline) ==
+      CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC) {
     MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
 
-    g_debug ("Creating new pipeline using codec: %s", codec->name);
-    self->pipeline = calls_sip_media_pipeline_new (codec);
+    g_debug ("Setting codec '%s' for pipeline", codec->name);
+    calls_sip_media_pipeline_set_codec (self->pipeline, codec);
   }
 
   if (!self->lport_rtp || !self->lport_rtcp || !self->remote ||
@@ -216,6 +218,10 @@ calls_sip_call_set_property (GObject      *object,
     self->ip = g_value_dup_string (value);
     break;
 
+  case PROP_PIPELINE:
+    self->pipeline = g_value_dup_object (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -248,10 +254,9 @@ calls_sip_call_finalize (GObject *object)
 {
   CallsSipCall *self = CALLS_SIP_CALL (object);
 
-  if (self->pipeline) {
-    calls_sip_media_pipeline_stop (self->pipeline);
-    g_clear_object (&self->pipeline);
-  }
+  calls_sip_media_pipeline_stop (self->pipeline);
+
+  g_clear_object (&self->pipeline);
   g_clear_pointer (&self->codecs, g_list_free);
   g_clear_pointer (&self->remote, g_free);
   g_clear_pointer (&self->ip, g_free);
@@ -285,6 +290,14 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
                          "Own IP for media and SDP",
                          NULL,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT);
+
+  props[PROP_PIPELINE] =
+    g_param_spec_object ("pipeline",
+                         "Pipeline",
+                         "Media pipeline for this call",
+                         CALLS_TYPE_SIP_MEDIA_PIPELINE,
+                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
@@ -370,10 +383,11 @@ calls_sip_call_activate_media (CallsSipCall *self,
 
 
 CallsSipCall *
-calls_sip_call_new (const gchar  *id,
-                    gboolean      inbound,
-                    const char   *own_ip,
-                    nua_handle_t *handle)
+calls_sip_call_new (const gchar           *id,
+                    gboolean               inbound,
+                    const char            *own_ip,
+                    CallsSipMediaPipeline *pipeline,
+                    nua_handle_t          *handle)
 {
   g_return_val_if_fail (id, NULL);
 
@@ -381,6 +395,7 @@ calls_sip_call_new (const gchar  *id,
                        "id", id,
                        "inbound", inbound,
                        "own-ip", own_ip,
+                       "pipeline", pipeline,
                        "nua-handle", handle,
                        "call-type", CALLS_CALL_TYPE_SIP_VOICE,
                        NULL);

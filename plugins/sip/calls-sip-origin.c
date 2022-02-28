@@ -235,12 +235,14 @@ add_call (CallsSipOrigin *self,
 {
   CallsSipCall *sip_call;
   CallsCall *call;
+  CallsSipMediaPipeline *pipeline;
   g_autofree gchar *local_sdp = NULL;
   g_auto (GStrv)  address_split = NULL;
   const char *call_address = address;
 
   /* TODO get free port by creating GSocket and passing that to the pipeline */
   guint local_port = get_port_for_rtp ();
+  pipeline = calls_sip_media_manager_get_pipeline (self->media_manager);
 
   if (self->can_tel) {
     address_split = g_strsplit_set (address, ":@;", -1);
@@ -250,7 +252,7 @@ add_call (CallsSipOrigin *self,
       call_address = address_split[1];
   }
 
-  sip_call = calls_sip_call_new (call_address, inbound, self->own_ip, handle);
+  sip_call = calls_sip_call_new (call_address, inbound, self->own_ip, pipeline, handle);
   g_assert (sip_call != NULL);
 
   if (self->oper->call_handle)
