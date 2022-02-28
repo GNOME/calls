@@ -65,8 +65,6 @@ struct _CallsSipCall
 
   char *ip;
 
-  guint lport_rtp;
-  guint lport_rtcp;
   guint rport_rtp;
   guint rport_rtcp;
   gchar *remote;
@@ -97,18 +95,6 @@ try_setting_up_media_pipeline (CallsSipCall *self)
     calls_sip_media_pipeline_set_codec (self->pipeline, codec);
   }
 
-  if (!self->lport_rtp || !self->lport_rtcp || !self->remote ||
-      !self->rport_rtp || !self->rport_rtcp)
-    return FALSE;
-
-  g_debug ("Setting local ports: RTP/RTCP %u/%u",
-           self->lport_rtp, self->lport_rtcp);
-
-  g_object_set (G_OBJECT (self->pipeline),
-                "lport-rtp", self->lport_rtp,
-                "lport-rtcp", self->lport_rtcp,
-                NULL);
-
   g_debug ("Setting remote ports: RTP/RTCP %u/%u",
            self->rport_rtp, self->rport_rtcp);
 
@@ -127,7 +113,7 @@ calls_sip_call_answer (CallsCall *call)
 {
   CallsSipCall *self;
   g_autofree gchar *local_sdp = NULL;
-  guint local_port = get_port_for_rtp ();
+  guint rtp_port, rtcp_port;
 
   g_assert (CALLS_IS_CALL (call));
   g_assert (CALLS_IS_SIP_CALL (call));
@@ -141,12 +127,15 @@ calls_sip_call_answer (CallsCall *call)
     return;
   }
 
-  /* TODO get free port by creating GSocket and passing that to the pipeline */
-  calls_sip_call_setup_local_media_connection (self, local_port, local_port + 1);
+  rtp_port = calls_sip_media_pipeline_get_rtp_port (self->pipeline);
+  rtcp_port = calls_sip_media_pipeline_get_rtcp_port (self->pipeline);
+
+  calls_sip_call_setup_local_media_connection (self);
 
   local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
                                                         self->ip,
-                                                        local_port,
+                                                        rtp_port,
+                                                        rtcp_port,
                                                         FALSE,
                                                         self->codecs);
 
@@ -317,19 +306,13 @@ calls_sip_call_init (CallsSipCall *self)
 /**
  * calls_sip_call_setup_local_media_connection:
  * @self: A #CallsSipCall
- * @port_rtp: The RTP port on the the local host
- * @port_rtcp: The RTCP port on the local host
  */
 void
-calls_sip_call_setup_local_media_connection (CallsSipCall *self,
-                                             guint         port_rtp,
-                                             guint         port_rtcp)
+calls_sip_call_setup_local_media_connection (CallsSipCall *self)
 {
   g_return_if_fail (CALLS_IS_SIP_CALL (self));
 
-  self->lport_rtp = port_rtp;
-  self->lport_rtcp = port_rtcp;
-
+  /* XXX maybe we can get rid of this completely */
   try_setting_up_media_pipeline (self);
 }
 

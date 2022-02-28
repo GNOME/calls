@@ -222,7 +222,8 @@ calls_sip_media_manager_default (void)
 char *
 calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                                           const char           *own_ip,
-                                          guint                 port,
+                                          gint                  rtp_port,
+                                          gint                  rtcp_port,
                                           gboolean              use_srtp,
                                           GList                *supported_codecs)
 {
@@ -245,7 +246,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 
   /* media lines look f.e like "audio 31337 RTP/AVP 9 8 0" */
   g_string_append_printf (media_line,
-                          "m=audio %d RTP/%s", port, payload_type);
+                          "m=audio %d RTP/%s", rtp_port, payload_type);
 
   for (node = supported_codecs; node != NULL; node = node->next) {
     MediaCodecInfo *codec = node->data;
@@ -259,7 +260,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                             "\r\n");
   }
 
-  g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", port + 1);
+  g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", rtcp_port);
 
  done:
   if (own_ip && *own_ip)
@@ -287,7 +288,8 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 /* calls_sip_media_manager_static_capabilities:
  *
  * @self: A #CallsSipMediaManager
- * @port: Should eventually come from the ICE stack
+ * @rtp_port: Port to use for RTP. Should eventually come from the ICE stack
+ * @rtcp_port: Port to use for RTCP.Should eventually come from the ICE stack
  * @use_srtp: Whether to use srtp (not really handled)
  *
  * Returns: (transfer full): string describing capabilities
@@ -296,14 +298,16 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 char *
 calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
                                              const char           *own_ip,
-                                             guint                 port,
+                                             gint                  rtp_port,
+                                             gint                  rtcp_port,
                                              gboolean              use_srtp)
 {
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
   return calls_sip_media_manager_get_capabilities (self,
                                                    own_ip,
-                                                   port,
+                                                   rtp_port,
+                                                   rtcp_port,
                                                    use_srtp,
                                                    self->preferred_codecs);
 }

@@ -48,7 +48,7 @@ test_sip_media_manager_caps (void)
 
   /* PCMA RTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 40002, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 40002, 40003, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -64,7 +64,7 @@ test_sip_media_manager_caps (void)
 
   /* PCMA SRTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 42002, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42002, 42003, TRUE, codecs);
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "m=audio 42002 RTP/SAVP 8"));
@@ -78,7 +78,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 42042, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42042, 55543, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -86,7 +86,7 @@ test_sip_media_manager_caps (void)
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "a=rtpmap:9 G722/8000"));
   g_assert_true (find_string_in_sdp_message (sdp_message,
-                                             "a=rtcp:42043"));
+                                             "a=rtcp:55543"));
 
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
@@ -99,7 +99,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 33340, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 33340, 33341, FALSE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -123,7 +123,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMU"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 18098, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 18098, 18099, TRUE, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -138,7 +138,7 @@ test_sip_media_manager_caps (void)
   g_test_expect_message ("CallsSipMediaManager", G_LOG_LEVEL_WARNING,
                          "No supported codecs found. Can't build meaningful SDP message");
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 25048, FALSE, NULL);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 25048, 25049, FALSE, NULL);
 
   g_test_assert_expected_messages ();
   g_assert_true (sdp_message);

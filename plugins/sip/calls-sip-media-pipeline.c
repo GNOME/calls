@@ -95,9 +95,7 @@ enum {
   PROP_0,
   PROP_CODEC,
   PROP_REMOTE,
-  PROP_LPORT_RTP,
   PROP_RPORT_RTP,
-  PROP_LPORT_RTCP,
   PROP_RPORT_RTCP,
   PROP_DEBUG,
   PROP_STATE,
@@ -128,10 +126,8 @@ struct _CallsSipMediaPipeline {
   char *remote;
 
   gint rport_rtp;
-  gint lport_rtp;
 
   gint rport_rtcp;
-  gint lport_rtcp;
 
   /* Gstreamer Elements (sending) */
   GstElement *send_pipeline;
@@ -740,14 +736,6 @@ calls_sip_media_pipeline_get_property (GObject    *object,
     g_value_set_string (value, self->remote);
     break;
 
-  case PROP_LPORT_RTP:
-    g_value_set_uint (value, self->lport_rtp);
-    break;
-
-  case PROP_LPORT_RTCP:
-    g_value_set_uint (value, self->lport_rtcp);
-    break;
-
   case PROP_RPORT_RTP:
     g_value_set_uint (value, self->rport_rtp);
     break;
@@ -787,14 +775,6 @@ calls_sip_media_pipeline_set_property (GObject      *object,
   case PROP_REMOTE:
     g_free (self->remote);
     self->remote = g_value_dup_string (value);
-    break;
-
-  case PROP_LPORT_RTP:
-    self->lport_rtp = g_value_get_uint (value);
-    break;
-
-  case PROP_LPORT_RTCP:
-    self->lport_rtcp = g_value_get_uint (value);
     break;
 
   case PROP_RPORT_RTP:
@@ -883,18 +863,6 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
                                             "Remote host",
                                             NULL,
                                             G_PARAM_READWRITE);
-
-  props[PROP_LPORT_RTP] = g_param_spec_uint ("lport-rtp",
-                                             "lport-rtp",
-                                             "local rtp port",
-                                             1025, 65535, 5002,
-                                             G_PARAM_READWRITE);
-
-  props[PROP_LPORT_RTCP] = g_param_spec_uint ("lport-rtcp",
-                                              "lport-rtcp",
-                                              "local rtcp port",
-                                              1025, 65535, 5003,
-                                              G_PARAM_READWRITE);
 
   props[PROP_RPORT_RTP] = g_param_spec_uint ("rport-rtp",
                                              "rport-rtp",

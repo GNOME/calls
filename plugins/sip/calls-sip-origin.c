@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Purism SPC
+ * Copyright (C) 2021-2022 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -239,10 +239,11 @@ add_call (CallsSipOrigin *self,
   g_autofree gchar *local_sdp = NULL;
   g_auto (GStrv)  address_split = NULL;
   const char *call_address = address;
+  gint rtp_port, rtcp_port;
 
-  /* TODO get free port by creating GSocket and passing that to the pipeline */
-  guint local_port = get_port_for_rtp ();
   pipeline = calls_sip_media_manager_get_pipeline (self->media_manager);
+  rtp_port = calls_sip_media_pipeline_get_rtp_port (pipeline);
+  rtcp_port = calls_sip_media_pipeline_get_rtcp_port (pipeline);
 
   if (self->can_tel) {
     address_split = g_strsplit_set (address, ":@;", -1);
@@ -271,11 +272,12 @@ add_call (CallsSipOrigin *self,
                     self);
 
   if (!inbound) {
-    calls_sip_call_setup_local_media_connection (sip_call, local_port, local_port + 1);
+    calls_sip_call_setup_local_media_connection (sip_call);
 
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
                                                              self->own_ip,
-                                                             local_port,
+                                                             rtp_port,
+                                                             rtcp_port,
                                                              FALSE);
 
     g_assert (local_sdp);
