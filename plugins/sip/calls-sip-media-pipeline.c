@@ -279,7 +279,6 @@ send_pipeline_setup_codecs (CallsSipMediaPipeline *self,
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
   g_assert (codec);
 
-  /* TODO check if codec is available */
   MAKE_ELEMENT (encoder, codec->gst_encoder_name, "encoder");
   MAKE_ELEMENT (payloader, codec->gst_payloader_name, "payloader");
 
@@ -458,7 +457,6 @@ recv_pipeline_setup_codecs (CallsSipMediaPipeline *self,
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
   g_assert (codec);
 
-  /* TODO check if codec is available */
   MAKE_ELEMENT (decoder, codec->gst_decoder_name, "decoder");
   MAKE_ELEMENT (depayloader, codec->gst_depayloader_name, "depayloader");
 
@@ -809,6 +807,12 @@ calls_sip_media_pipeline_set_codec (CallsSipMediaPipeline *self,
 
   if (self->codec) {
     g_warning ("Cannot change codec of a pipeline. Use a new pipeline instead.");
+    return;
+  }
+
+  if (!media_codec_available_in_gst (codec)) {
+    g_warning ("Cannot setup pipeline with codec '%s' because it's not available in GStreamer",
+               codec->name);
     return;
   }
 
