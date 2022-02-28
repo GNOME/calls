@@ -822,11 +822,24 @@ calls_sip_media_pipeline_stop (CallsSipMediaPipeline *self)
 
 
 void
-calls_sip_media_pipeline_pause (CallsSipMediaPipeline *self)
+calls_sip_media_pipeline_pause (CallsSipMediaPipeline *self,
+                                gboolean               pause)
 {
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
-  g_debug ("Pause/unpause media pipeline");
-  self->is_running = FALSE;
+  if (self->is_running != pause)
+    return;
+
+  g_debug ("%s media pipeline", self->is_running ?
+           "Pausing" :
+           "Unpausing");
+  gst_element_set_state (self->recv_pipeline, self->is_running ?
+                         GST_STATE_PAUSED :
+                         GST_STATE_PLAYING);
+  gst_element_set_state (self->send_pipeline, self->is_running ?
+                         GST_STATE_PAUSED :
+                         GST_STATE_PLAYING);
+
+  self->is_running = !self->is_running;
 }
 
