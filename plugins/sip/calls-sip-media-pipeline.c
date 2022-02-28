@@ -295,7 +295,7 @@ send_pipeline_setup_codecs (CallsSipMediaPipeline *self,
   return send_pipeline_link_elements (self, error);
 }
 
-/** TODO: we're describing the desired state (not the current state)
+/**
  * Prepare a skeleton send pipeline where we can later
  * plug the codec specific elements into.
  *
@@ -363,10 +363,6 @@ send_pipeline_init (CallsSipMediaPipeline *self,
                           self->rtp_sink, "host",
                           G_BINDING_BIDIRECTIONAL);
 
-  g_object_bind_property (self, "lport-rtcp",
-                          self->rtcp_send_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
   g_object_bind_property (self, "rport-rtcp",
                           self->rtcp_send_sink, "port",
                           G_BINDING_BIDIRECTIONAL);
@@ -374,6 +370,8 @@ send_pipeline_init (CallsSipMediaPipeline *self,
   g_object_bind_property (self, "remote",
                           self->rtcp_send_sink, "host",
                           G_BINDING_BIDIRECTIONAL);
+
+  /* TODO bind sockets */
 
   gst_bin_add (GST_BIN (self->send_pipeline), self->send_rtpbin);
   gst_bin_add_many (GST_BIN (self->send_pipeline), self->rtp_sink,
@@ -485,17 +483,16 @@ recv_pipeline_setup_codecs (CallsSipMediaPipeline *self,
 }
 
 
-/** TODO: we're describing the desired state (not the current state)
+/**
  * Prepares a skeleton receiver pipeline which can later be
  * used to plug codec specific element in.
  * This pipeline just consists of (minimally linked) rtpbin
  * audio sink and two udpsrc elements, one for RTP and one for RTCP.
  *
- * The pipeline will be started and stopped to let the OS allocate
- * sockets for us instead of building and providing GSockets ourselves
- * by hand. These GSockets will later be reused for any outgoing
- * traffic for of our hole punching scheme as a simple NAT traversal
- * technique.
+ * The pipeline will be set ready to let the OS allocate sockets
+ * for us instead of building and providing GSockets ourselves
+ * by hand. These GSockets are reused for any outgoing traffic in our
+ * hole punching scheme as a simple NAT traversal technique.
  */
 static gboolean
 recv_pipeline_init (CallsSipMediaPipeline *self,
@@ -550,13 +547,9 @@ recv_pipeline_init (CallsSipMediaPipeline *self,
                 NULL);
 
 
-  g_object_bind_property (self, "lport-rtp",
-                          self->rtp_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
-
-  g_object_bind_property (self, "lport-rtcp",
-                          self->rtcp_recv_src, "port",
-                          G_BINDING_BIDIRECTIONAL);
+  /* port 0 means allocate */
+  g_object_set (self->rtp_src, "port", 0, NULL);
+  g_object_set (self->rtcp_recv_src, "port", 0, NULL);
 
   g_object_bind_property (self, "rport-rtcp",
                           self->rtcp_recv_sink, "port",
@@ -570,10 +563,11 @@ recv_pipeline_init (CallsSipMediaPipeline *self,
   gst_bin_add_many (GST_BIN (self->recv_pipeline), self->rtp_src,
                     self->rtcp_recv_src, self->rtcp_recv_sink, NULL);
 
-  /* TODO use temporary bus watch for the initial pipeline start/stop */
   self->bus_recv = gst_pipeline_get_bus (GST_PIPELINE (self->recv_pipeline));
   self->bus_watch_recv = gst_bus_add_watch (self->bus_recv, on_bus_message, self);
 
+  /* Set pipeline to ready to get ports allocated */
+  gst_element_set_state (self->recv_pipeline, GST_STATE_READY);
 
   return TRUE;
 }
@@ -972,5 +966,30 @@ calls_sip_media_pipeline_pause (CallsSipMediaPipeline *self,
   self->is_running = !self->is_running;
 }
 
+
+int
+calls_sip_media_pipeline_get_rtp_port (CallsSipMediaPipeline *self)
+{
+  int port;
+
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self), 0);
+
+  g_object_get (self->rtp_src, "port", &port, NULL);
+
+  return port;
+}
+
+
+int
+calls_sip_media_pipeline_get_rtcp_port (CallsSipMediaPipeline *self)
+{
+  int port;
+
+  g_return_val_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self), 0);
+
+  g_object_get (self->rtcp_recv_src, "port", &port, NULL);
+
+  return port;
+}
 
 #undef MAKE_ELEMENT

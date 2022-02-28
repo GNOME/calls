@@ -42,5 +42,7 @@ void                   calls_sip_media_pipeline_start                  (CallsSip
 void                   calls_sip_media_pipeline_stop                   (CallsSipMediaPipeline *self);
 void                   calls_sip_media_pipeline_pause                  (CallsSipMediaPipeline *self,
                                                                         gboolean               pause);
+int                    calls_sip_media_pipeline_get_rtp_port           (CallsSipMediaPipeline *self);
+int                    calls_sip_media_pipeline_get_rtcp_port          (CallsSipMediaPipeline *self);
 
 G_END_DECLS
