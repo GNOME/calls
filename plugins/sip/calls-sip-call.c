@@ -110,7 +110,7 @@ try_setting_up_media_pipeline (CallsSipCall *self)
   g_debug ("Setting remote ports: RTP/RTCP %u/%u",
            self->rport_rtp, self->rport_rtcp);
 
-  g_object_set (G_OBJECT (self->pipeline),
+  g_object_set (self->pipeline,
                 "remote", self->remote,
                 "rport-rtp", self->rport_rtp,
                 "rport-rtcp", self->rport_rtcp,
