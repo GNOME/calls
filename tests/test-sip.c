@@ -64,7 +64,7 @@ static void
 setup_sip_provider (SipFixture   *fixture,
                     gconstpointer user_data)
 {
-  CallsProvider *provider = calls_provider_load_plugin ("sip");
+  CallsProvider *provider = g_object_new (CALLS_TYPE_SIP_PROVIDER, NULL);
   fixture->provider = CALLS_SIP_PROVIDER (provider);
 
   is_call_test_done = FALSE;
@@ -76,7 +76,6 @@ tear_down_sip_provider (SipFixture   *fixture,
                         gconstpointer user_data)
 {
   g_clear_object (&fixture->provider);
-  calls_provider_unload_plugin ("sip");
 }
 
 
