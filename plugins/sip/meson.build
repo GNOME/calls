@@ -55,6 +55,14 @@ sip_sources = files(
   ]
 )
 
+pipeline_enum_headers = [
+  'calls-sip-media-pipeline.h',
+]
+
+pipeline_enums = gnome.mkenums_simple('calls-media-pipeline-enums',
+                                      sources: pipeline_enum_headers)
+sip_sources += pipeline_enums
+
 sip_enum_headers = [
   'calls-sip-util.h',
 ]
