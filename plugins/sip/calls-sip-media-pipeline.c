@@ -784,10 +784,12 @@ calls_sip_media_pipeline_new (MediaCodecInfo *codec)
   pipeline = g_initable_new (CALLS_TYPE_SIP_MEDIA_PIPELINE, NULL, &error,
                              NULL);
 
-  if (pipeline)
-    g_object_set (pipeline, "codec", codec, NULL);
-  else
+  if (pipeline) {
+    if (codec)
+      g_object_set (pipeline, "codec", codec, NULL);
+  } else {
     g_warning ("Media pipeline could not be initialized: %s", error->message);
+  }
 
   return pipeline;
 }
@@ -900,6 +902,11 @@ calls_sip_media_pipeline_start (CallsSipMediaPipeline *self)
 {
   GSocket *socket;
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+
+  if (!self->codec) {
+    g_warning ("Codec not set for this pipeline. Cannot start");
+    return;
+  }
 
   g_debug ("Starting media pipeline");
   self->is_running = TRUE;
