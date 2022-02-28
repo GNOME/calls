@@ -543,15 +543,15 @@ sip_i_state (int              status,
   if (status == 503) {
     CALLS_EMIT_MESSAGE (origin, "DNS error", GTK_MESSAGE_ERROR);
   }
-  /* XXX making some assumptions about the received SDP message here...
-   * namely: rtcp port = rtp port + 1
-   */
+
   if (r_sdp) {
     g_autoptr (GList) codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
     const char *session_ip = NULL;
     const char *media_ip = NULL;
+    int rtp_port;
+    int rtcp_port = 0;
 
     g_debug ("Remote SDP was set to:\n%s", r_sdp_str);
 
@@ -575,10 +575,24 @@ sip_i_state (int              status,
     }
 
     calls_sip_call_set_codecs (call, codecs);
+
+    /* TODO This needs to adapt for the ICE case */
+    rtp_port = r_sdp->sdp_media->m_port;
+    for (sdp_attribute_t *attr = r_sdp->sdp_media->m_attributes; attr; attr = attr->a_next) {
+      if (g_strcmp0 (attr->a_name, "rtcp") == 0) {
+        rtcp_port = atoi (attr->a_value);
+        break;
+      }
+    }
+
+    /* Legacy fallback */
+    if (rtcp_port == 0)
+      rtcp_port = rtp_port + 1;
+
     calls_sip_call_setup_remote_media_connection (call,
                                                   media_ip ? : session_ip,
-                                                  r_sdp->sdp_media->m_port,
-                                                  r_sdp->sdp_media->m_port + 1);
+                                                  rtp_port,
+                                                  rtcp_port);
   }
 
   switch (call_state) {
