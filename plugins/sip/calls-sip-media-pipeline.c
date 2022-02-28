@@ -159,12 +159,12 @@ struct _CallsSipMediaPipeline {
   guint bus_watch_recv;
 };
 
+#if GLIB_CHECK_VERSION(2, 70, 0)
+G_DEFINE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
+#else
+G_DEFINE_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
+#endif
 
-static void initable_iface_init (GInitableIface *iface);
-
-
-G_DEFINE_TYPE_WITH_CODE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE, initable_iface_init));
 
 
 static void
@@ -459,7 +459,6 @@ send_pipeline_setup_codecs (CallsSipMediaPipeline *self,
  */
 static gboolean
 send_pipeline_init (CallsSipMediaPipeline *self,
-                    GCancellable          *cancellable,
                     GError               **error)
 {
   const char *env_var;
@@ -648,7 +647,6 @@ recv_pipeline_setup_codecs (CallsSipMediaPipeline *self,
  */
 static gboolean
 recv_pipeline_init (CallsSipMediaPipeline *self,
-                    GCancellable          *cancellable,
                     GError               **error)
 {
   const char *env_var;
@@ -819,6 +817,32 @@ calls_sip_media_pipeline_set_property (GObject      *object,
 
 
 static void
+calls_sip_media_pipeline_constructed (GObject *object)
+{
+  g_autoptr (GError) error = NULL;
+  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
+
+  G_OBJECT_CLASS (calls_sip_media_pipeline_parent_class)->constructed (object);
+
+  set_state (self, CALLS_MEDIA_PIPELINE_STATE_INITIALIZING);
+
+  if (!recv_pipeline_init (self, &error)) {
+    g_warning ("Could not create receive pipeline: %s", error->message);
+    set_state (self, CALLS_MEDIA_PIPELINE_STATE_ERROR);
+    return;
+  }
+
+  if (!send_pipeline_init (self, &error)) {
+    g_warning ("Could not create send pipeline: %s", error->message);
+    set_state (self, CALLS_MEDIA_PIPELINE_STATE_ERROR);
+    return;
+  }
+
+  set_state (self, CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC);
+}
+
+
+static void
 calls_sip_media_pipeline_finalize (GObject *object)
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (object);
@@ -844,6 +868,7 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = calls_sip_media_pipeline_set_property;
+  object_class->constructed = calls_sip_media_pipeline_constructed;
   object_class->get_property = calls_sip_media_pipeline_get_property;
   object_class->finalize = calls_sip_media_pipeline_finalize;
 
@@ -915,52 +940,15 @@ calls_sip_media_pipeline_init (CallsSipMediaPipeline *self)
 }
 
 
-static gboolean
-pipelines_initable_init (GInitable    *initable,
-                         GCancellable *cancellable,
-                         GError      **error)
-{
-  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (initable);
-
-  set_state (self, CALLS_MEDIA_PIPELINE_STATE_INITIALIZING);
-
-  if (!recv_pipeline_init (self, cancellable, error))
-    goto err;
-
-  if (!send_pipeline_init (self, cancellable, error))
-    goto err;
-
-  set_state (self, CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC);
-  return TRUE;
-
- err:
-  set_state (self, CALLS_MEDIA_PIPELINE_STATE_ERROR);
-  return FALSE;
-}
-
-
-static void
-initable_iface_init (GInitableIface *iface)
-{
-  iface->init = pipelines_initable_init;
-}
-
-
 CallsSipMediaPipeline*
 calls_sip_media_pipeline_new (MediaCodecInfo *codec)
 {
   CallsSipMediaPipeline *pipeline;
-  g_autoptr (GError) error = NULL;
 
-  pipeline = g_initable_new (CALLS_TYPE_SIP_MEDIA_PIPELINE, NULL, &error,
-                             NULL);
+  pipeline = g_object_new (CALLS_TYPE_SIP_MEDIA_PIPELINE, NULL);
 
-  if (pipeline) {
-    if (codec)
-      g_object_set (pipeline, "codec", codec, NULL);
-  } else {
-    g_warning ("Media pipeline could not be initialized: %s", error->message);
-  }
+  if (codec)
+    g_object_set (pipeline, "codec", codec, NULL);
 
   return pipeline;
 }
