@@ -93,6 +93,20 @@ t = executable('plugins', test_sources,
                 )
 test('plugins', t, env: test_env)
 
+test_sources = [ 'test-media.c' ]
+t = executable('media', test_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               pie: true,
+               link_with : [calls_vala, calls_sip, libcalls],
+               dependencies: [calls_deps, sip_deps],
+               include_directories : [
+                   calls_includes,
+                   sip_include,
+                 ]
+               )
+test('media', t, env: test_env)
+
 test_sources = [ 'test-sip.c' ]
 t = executable('sip', test_sources,
                c_args : test_cflags,
