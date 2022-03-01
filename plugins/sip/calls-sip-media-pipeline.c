@@ -349,6 +349,8 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
 static void
 calls_sip_media_pipeline_init (CallsSipMediaPipeline *self)
 {
+  if (!gst_is_initialized ())
+    gst_init (NULL, NULL);
 }
 
 
