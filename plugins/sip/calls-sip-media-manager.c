@@ -156,7 +156,8 @@ calls_sip_media_manager_class_init (CallsSipMediaManagerClass *klass)
 static void
 calls_sip_media_manager_init (CallsSipMediaManager *self)
 {
-  gst_init (NULL, NULL);
+  if (!gst_is_initialized())
+    gst_init (NULL, NULL);
 
   self->settings = calls_settings_new ();
   g_signal_connect_swapped (self->settings,
