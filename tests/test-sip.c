@@ -548,10 +548,10 @@ test_sip_media_manager (void)
   g_debug ("no codecs test OK");
 }
 
-gint
-main (gint   argc,
-      gchar *argv[])
 {
+int
+main (int   argc,
+      char *argv[])
   gtk_test_init (&argc, &argv, NULL);
 
 #ifdef PLUGIN_BUILDDIR
