@@ -59,10 +59,8 @@ sip_enum_headers = [
   'calls-sip-util.h',
 ]
 
-sip_enums = gnome.mkenums('calls-sip-enums',
-  h_template: 'calls-sip-enums.h.in',
-  c_template: 'calls-sip-enums.c.in',
-  sources: sip_enum_headers,
+sip_enums = gnome.mkenums_simple('calls-sip-enums',
+                                 sources: sip_enum_headers,
 )
 
 sip_sources += sip_enums
