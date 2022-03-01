@@ -136,7 +136,6 @@ static void
 calls_sip_media_manager_finalize (GObject *object)
 {
   CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
-  gst_deinit ();
 
   g_list_free (self->preferred_codecs);
   g_object_unref (self->settings);
