@@ -288,13 +288,6 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
 }
 
 
-MediaCodecInfo*
-get_best_codec (CallsSipMediaManager *self)
-{
-  return media_codec_by_name ("PCMA");
-}
-
-
 /* calls_sip_media_manager_codec_candiates:
  *
  * @self: A #CallsSipMediaManager
