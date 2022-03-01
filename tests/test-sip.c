@@ -16,6 +16,8 @@
 
 #include <gtk/gtk.h>
 
+#include <gst/gst.h>
+
 #include <sofia-sip/su_uniqueid.h>
 #include <libpeas/peas.h>
 
@@ -552,7 +554,12 @@ test_sip_media_manager (void)
 int
 main (int   argc,
       char *argv[])
+{
+  int ret;
+
   gtk_test_init (&argc, &argv, NULL);
+
+  gst_init (NULL, NULL);
 
 #ifdef PLUGIN_BUILDDIR
   peas_engine_add_search_path (peas_engine_get_default (), PLUGIN_BUILDDIR, NULL);
@@ -577,5 +584,9 @@ main (int   argc,
 
   g_test_add_func ("/Calls/SIP/media_manager", test_sip_media_manager);
 
-  return g_test_run();
+  ret = g_test_run();
+
+  gst_deinit ();
+
+  return ret;
 }
