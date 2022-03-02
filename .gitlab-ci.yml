@@ -84,6 +84,7 @@ package-deb-pureos-byzantium:arm64:
   image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
   stage: 'package'
   interruptible: true
+  timeout: 4h
   tags:
     - flatpak
   script:
