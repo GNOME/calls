@@ -21,7 +21,7 @@
     </key>
 
     <key name="preferred-audio-codecs" type="as">
-      <default>["PCMA", "PCMU", "GSM", "G722"]</default>
+      <default>["G722", "PCMA", "PCMU", "GSM"]</default>
       <summary>Audio codecs to use for VoIP calls in order of preference</summary>
       <description>The preferred audio codecs to use for VoIP calls (if available)</description>
     </key>
