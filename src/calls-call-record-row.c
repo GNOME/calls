@@ -294,11 +294,16 @@ on_notify_can_add_contacts (CallsCallRecordRow *self)
   if (!calls_contacts_provider_get_can_add_contacts (contacts_provider))
     return;
 
+  g_signal_handlers_disconnect_by_data(contacts_provider, self);
+
+  /* The record has a NULL id */
+  if (!self->contact)
+    return;
+
   g_object_bind_property (self->contact, "has-individual",
                           action_new_contact, "enabled",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
-  g_signal_handlers_disconnect_by_data(contacts_provider, self);
 }
 
 
