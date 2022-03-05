@@ -62,6 +62,14 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="42.rc.1" date="2022-03-05">
+        <description>
+          <p>
+            This release sets G722 as the preferred codec and brings some improvements
+            to the SIP media pipeline.
+          </p>
+        </description>
+      </release>
       <release version="42.rc.0" date="2022-02-24">
         <description>
           <p>

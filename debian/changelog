@@ -1,3 +1,58 @@
+gnome-calls (42~rc.1) byzantium; urgency=medium
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * sip: media-pipeline: Add G_BEGIN_DECLS and G_END_DECLS to header
+  * sip: media-manager: Don't include sofia-sip/nua.h in public header
+  * sip: Debug print remote SDP and codec to be used
+  * sip: build: Use simple variant of gnome.mkenums
+  * sip: media-pipeline: Remove comment about preexisting linked pads
+  * sip: media-pipeline: Prefix overriden GObjectClass methods
+  * sip: call: Remove unnecessary G_OBJECT() cast
+  * media-manager: Don't run deinitialize GStreamer in finalize()
+  * sip: media-manager: Initialize GStreamer if it's not already initialized
+  * sip: media-pipeline: Initialize GStreamer if it's not already initialized
+  * tests: sip: Codestyle: Use int and char instead of gint and gchar
+  * tests: sip: Initialize and deinitialize GStreamer explicitly
+  * tests: Split media tests into separate file
+  * sip: media-manager: Remove unused code
+  * tests: build: Avoid linking against sip module
+  * flatpak: Update dependencies
+  * ci: Bump flatpak job timeout to 4 hours
+  * desktop: Add X-GNOME-UsesNotification
+  * schema: Set G722 as the preferred audio codec
+  * record-store: Sort include headers
+  * call: Prefer pragma once over explicit include guard
+  * manager: Remove unused function declaration
+  * plugins: Implement call-type property
+  * origin: Add id property and adapt to changes
+  * ui-call-data: Store origin id and adapt to changes
+  * manager: Implement lookup_origin_by_id()
+  * ui-call-data: Provide API to get the name of the origin used
+  * record-store: Switch to CallsUiCallData
+  * manager: Remove call-add and call-remove signal
+  * record-row: Avoid raising critical
+  * meson: Post release bump to 42.rc.1
+  * ci: Fix typo in packaging job name
+  * sip: media-pipeline: Allow pausing pipeline
+  * sip: media-pipeline: Split initialization per GstPipeline
+  * sip: media-pipeline: Delay setting codec
+  * sip: media-pipeline: Check codec availability before setup
+  * sip: media-pipeline: Allow new pipeline without codec set
+  * sip: media-pipeline: Let the OS allocate sockets for udpsrc
+  * sip: media-pipeline: Keep track of pipeline state
+  * sip: media-pipeline: Don't implement GInitable
+  * media manager: Manage and hand out available pipelines
+  * sip: call: Add pipeline as a construct only property
+  * sip: media-pipeline: Remove lport-rtp and lport-rtcp property
+  * sip: origin: Try fetching RTCP port from SDP attributes
+  * sip: media-pipeline: Setup socket reuse for RTP and RTCP during initialization
+  * tests: media: Test pipeline
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 05 Mar 2022 23:07:23 +0100
+
 gnome-calls (42~rc.0) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]
