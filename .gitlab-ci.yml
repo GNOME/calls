@@ -71,7 +71,7 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.\(c|ui\)' && { intltool-update -m; exit 1; } || exit 0
 
-package-deb-pureos-byzantium:arm64:
+package:deb-pureos-byzantium:arm64:
   variables:
     L5_DOCKER_IMAGE: pureos/byzantium
     DEB_BUILD_PROFILES: nodoc
