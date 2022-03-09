@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-26 21:06+0000\n"
-"PO-Revision-Date: 2021-12-30 19:05+0200\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-03-09 22:06+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
 #: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Puhelut"
@@ -97,42 +97,42 @@ msgstr "Liikenne"
 msgid "Use for Phone Calls"
 msgstr "Käytä puheluihin"
 
-#: src/calls-application.c:546
+#: src/calls-application.c:548
 #, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "Yritettiin virheellistä tel-URI:a `%s'"
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Yritettiin soittaa virheelliseen tel-URI:in `%s'"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ei tietoa miten avata`%s'"
 
 # Provider - muuttuja, ohjelma vai taho?
-#: src/calls-application.c:676
+#: src/calls-application.c:679
 msgid "The name of the plugin to use as a call provider"
 msgstr "Liitännäisen nimi käytettäväksi puhelun tarjoajalle"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "LIITÄNNÄINEN"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Näytetäänkö pääikkunaa käynnistyksen yhteydessä"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:691
 msgid "Dial a telephone number"
 msgstr "Soita puhelinnumeroon"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:697
 msgid "Enable verbose debug messages"
 msgstr "Käytä runsaita vianjäljitysviestejä"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:703
 msgid "Print current version"
 msgstr "Tulosta nykyinen versio"
 
@@ -216,22 +216,21 @@ msgstr "Soita takaisin"
 msgid "VoIP Accounts"
 msgstr "VoIP-tilit"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Lisää _VoIP-tilejä"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Voit lisätä VoIP-tilin tätä kautta. Sen avulla voit soittaa ja "
-"vastaanottaa VoIP-puheluja SIP-protokollaa käyttäen. Tämä ominaisuus on "
-"vielä melko uusi, eikä kaikkia ominaisuuksia ole vielä toteutettu (esim. "
-"salattu media)."
+"Voit lisätä VoIP-tilin tätä kautta. Sen avulla voit soittaa ja vastaanottaa "
+"VoIP-puheluja SIP-protokollaa käyttäen. Tämä ominaisuus on vielä melko uusi, "
+"eikä kaikkia ominaisuuksia ole vielä toteutettu (esim. salattu media)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Lisää tili"
 
@@ -248,6 +247,10 @@ msgstr "_Poista puhelu"
 #: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "_Kopioi numero"
+
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "_Lisää yhteystieto"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
