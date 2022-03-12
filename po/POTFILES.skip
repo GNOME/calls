@@ -1,9 +1,2 @@
-plugins/dummy/calls-dummy-call.c
-plugins/dummy/calls-dummy-origin.c
-plugins/mm/calls-mm-call.c
-plugins/mm/calls-mm-origin.c
-plugins/mm/calls-mm-provider.c
-plugins/ofono/calls-ofono-call.c
-plugins/ofono/calls-ofono-origin.c
-plugins/ofono/calls-ofono-provider.c
-subprojects/**
+# List of source files that should *not* be translated.
+subprojects/
