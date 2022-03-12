@@ -2,7 +2,7 @@
 Name=Calls
 GenericName=Phone
 Comment=A phone dialer and call handler
-# Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 Keywords=Telephone;Call;Phone;Dial;Dialer;PSTN;
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=org.gnome.Calls
