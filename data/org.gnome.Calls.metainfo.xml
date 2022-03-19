@@ -62,7 +62,26 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
-      <release version="42.rc.1" date="2022-03-05">
+      <release version="42.0" date="2022-03-19">
+        <description>
+          <p>
+            Calls 42.0 release brings a number of improvements to the SIP plugin,
+            a couple of fixes and updated translations
+          </p>
+          <ul>
+            <li>Changed preferred audio codec for SIP to G722</li>
+            <li>Better support for using the SIP for phone calls</li>
+            <li>Call time in sync with Phosh</li>
+            <li>Add contacts from history popover menu (if supported)</li>
+            <li>In app feedback about SIP account state changes</li>
+            <li>Improved scrolling performance</li>
+            <li>Avatars call history and call display</li>
+            <li>A couple of UI tweaks</li>
+            <li>Updated translations</li>
+          </ul>
+        </description>
+      </release>
+      <release version="42~rc.1" date="2022-03-05">
         <description>
           <p>
             This release sets G722 as the preferred codec and brings some improvements
@@ -70,7 +89,7 @@
           </p>
         </description>
       </release>
-      <release version="42.rc.0" date="2022-02-24">
+      <release version="42~rc.0" date="2022-02-24">
         <description>
           <p>
             Bugfix release, new translations from libcall-ui
@@ -79,14 +98,14 @@
           </p>
         </description>
       </release>
-      <release version="42.beta.1" date="2022-01-26">
+      <release version="42~beta.1" date="2022-01-26">
         <description>
           <p>
             Bugfix release and new translations from libcall-ui.
           </p>
         </description>
       </release>
-      <release version="42.beta.0" date="2022-01-25">
+      <release version="42~beta.0" date="2022-01-25">
         <description>
           <p>
             This release allows the SIP plugin to be used more easily for PSTN calls
@@ -98,7 +117,7 @@
           </p>
         </description>
       </release>
-      <release version="42.alpha.0" date="2021-12-12">
+      <release version="42~alpha.0" date="2021-12-12">
         <description>
           <p>
             This releases brings avatars in more places and includes various UI fixes

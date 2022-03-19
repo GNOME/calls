@@ -1,3 +1,19 @@
+Calls 42.0
+Released: 19 March 2022
+
+Translation updates:
+====================
+
+ - Finnish (Jiri Grönroos)
+ - Serbian (Мирослав Николић)
+ - Catalan (Jordi Mas i Hernandez)
+ - Turkish (Emin Tufan Çetin)
+ - Ukranian (Yuri Chornoivan)
+ - Armenian (Avag Sayan)
+
+The detailed changes can be found in debian/changelog
+
+
 Calls 42.rc.1
 ---------------
 Released: 5 March 2022

@@ -1,3 +1,35 @@
+gnome-calls (42.0) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * meson: Post release bump
+  * NEWS: Remove trailing whitespace
+  * po: Add Armenian to LINGUAS
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Мирослав Николић ]
+  * Update Serbian translation
+
+  [ Jordi Mas i Hernandez ]
+  * Update Catalan translation
+
+  [ Emin Tufan Çetin ]
+  * Update Turkish translation
+
+  [ Piotr Drąg ]
+  * Remove .pot file
+  * Use standard translator comments in .desktop files
+  * Update POTFILES.in and POTFILES.skip
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ AvagSayan ]
+  * Add new file for Armenian Lang.
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 19 Mar 2022 21:35:28 +0100
+
 gnome-calls (42~rc.1) byzantium; urgency=medium
 
   [ Hugo Carvalho ]
