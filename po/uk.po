@@ -7,19 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-01-18 18:28+0200\n"
+"POT-Creation-Date: 2022-03-19 19:44+0000\n"
+"PO-Revision-Date: 2022-03-19 22:20+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Дзвінки"
 
@@ -31,7 +32,7 @@ msgstr "Телефон"
 msgid "A phone dialer and call handler"
 msgstr "Засіб набирання номерів та обробки викликів"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
@@ -45,101 +46,197 @@ msgstr "Дзвінки (фонова служба)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Засіб набирання номерів та обробки викликів (фонова служба)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Додати обліковий запис"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Телефонні дзвінки і дзвінки SIP"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_Увійти"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"«Дзвінки» є простою, елегантною програмою для викликів та обробки дзвінків"
+" для GNOME. Нею можна скористатися як стільниковим модемом для звичайних"
+" телефонних дзвінків, а також для інтернет-викликів за використанням"
+" протоколу SIP."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Керування обліковим записом"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+#| msgid "Incoming phone call"
+msgid "Placing a call"
+msgstr "Влаштування виклику"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Застосувати"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+#| msgid "This call is encrypted"
+msgid "The call history"
+msgstr "Журнал викликів"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "В_илучити"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr ""
+"Визначає, чи слід автоматично використовувати для дзвінків типове походження"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Сервер"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Код країни, який повідомляє модем"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Екранне ім'я"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Код країни буде використано для пошуку контактів"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Необов'язково"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Додатки, які слід завантажувати автоматично"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "Ід. користувача"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Ці додатки буде автоматично завантажено при запуску програми."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Пароль"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr ""
+"Звукові кодеки, якими слід скористатися для інтернет-викликів, за порядком"
+" пріоритетності"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Порт"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"Бажані звукові кодеки, якими слід скористатися для інтернет-викликів (якщо"
+" доступні)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Спосіб передавання"
+#: src/calls-account.c:203
+msgid "Default (uninitialized) state"
+msgstr "Типовий (неініціалізований) стан"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "Використовувати для дзвінків"
+#: src/calls-account.c:206
+msgid "Initializing account…"
+msgstr "Ініціалізуємо обліковий запис…"
 
-#: src/calls-application.c:548
+#: src/calls-account.c:209
+msgid "Uninitializing account…"
+msgstr "Скасовуємо ініціалізацію облікового запису…"
+
+#: src/calls-account.c:212
+msgid "Connecting to server…"
+msgstr "Встановлюємо з'єднання із сервером…"
+
+#: src/calls-account.c:215
+msgid "Account is online"
+msgstr "Обліковий запис у мережі"
+
+#: src/calls-account.c:218
+msgid "Disconnecting from server…"
+msgstr "Від'єднуємося від сервера…"
+
+#: src/calls-account.c:221
+msgid "Account is offline"
+msgstr "Обліковий запис поза мережею"
+
+#: src/calls-account.c:224
+msgid "Account encountered an error"
+msgstr "З обліковим записом сталася помилка"
+
+#: src/calls-account.c:242
+msgid "No reason given"
+msgstr "Причину не вказано"
+
+#: src/calls-account.c:245
+msgid "Initialization started"
+msgstr "Розпочато ініціалізацію"
+
+#: src/calls-account.c:248
+msgid "Initialization complete"
+msgstr "Ініціалізацію завершено"
+
+#: src/calls-account.c:251
+msgid "Uninitialization started"
+msgstr "Розпочато скасування ініціалізації"
+
+#: src/calls-account.c:254
+msgid "Uninitialization complete"
+msgstr "Скасування ініціалізації завершено"
+
+#: src/calls-account.c:257
+msgid "No credentials set"
+msgstr "Не встановлено реєстраційних даних"
+
+#: src/calls-account.c:260
+msgid "Starting to connect"
+msgstr "Розпочинаємо з'єднання"
+
+#: src/calls-account.c:263
+msgid "Connection timed out"
+msgstr "Вичерпано час очікування на з’єднання"
+
+#: src/calls-account.c:266
+msgid "Domain name could not be resolved"
+msgstr "Не вдалося обробити назву домену"
+
+#: src/calls-account.c:269
+msgid "Server did not accept username or password"
+msgstr "Сервером не прийнято ім'я користувача або пароль"
+
+#: src/calls-account.c:272
+msgid "Connecting complete"
+msgstr "Встановлення з'єднання завершено"
+
+#: src/calls-account.c:275
+msgid "Starting to disconnect"
+msgstr "Розпочинаємо розірвання з'єднання"
+
+#: src/calls-account.c:278
+msgid "Disconnecting complete"
+msgstr "Розірвання з'єднання завершено"
+
+#: src/calls-account.c:281
+msgid "Internal error occurred"
+msgstr "Сталася внутрішня помилка"
+
+#: src/calls-application.c:318
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Спроба набору номера з некоректною адресою телефону «%s»"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:633
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:687
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назва додатка, який слід використовувати як надавача послуг дзвінка"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:688
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:693
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:699
 msgid "Dial a telephone number"
 msgstr "Набрати телефонний номер"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:700
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:705
 msgid "Enable verbose debug messages"
 msgstr "Увімкнути докладні діагностичні повідомлення"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:711
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:436
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -152,58 +249,51 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Не вдалося розмістити дзвінки: немає модема із голосовими можливостями"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Не вдалося розмістити дзвінки: немає модема або облікового запису інтернет-"
 "телефонії"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Не вдалося розмістити дзвінки: немає служби обробки"
+#: src/calls-main-window.c:322
+#| msgid "Can't place calls: No plugin"
+msgid "Can't place calls: No plugin loaded"
+msgstr "Не вдалося розмістити дзвінки: не завантажено додатків"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Не вдалося розмістити дзвінки: немає додатка"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Контакти"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Панель набору"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Нещодавні"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Пропущено виклик"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущено виклик від <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущено виклик від %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Пропущено виклик від невідомого абонента"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Передзвонити"
 
@@ -231,21 +321,20 @@ msgid "_Add Account"
 msgstr "_Додати обліковий запис"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Виклик"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "В_илучити дзвінок"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_Копіювати номер"
 
-#: src/ui/call-record-row.ui:113
-#| msgid "_Add Account"
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Додати контакт"
 
@@ -321,11 +410,131 @@ msgstr "Новий дзвінок"
 msgid "Back"
 msgstr "Назад"
 
+#: plugins/mm/calls-mm-call.c:75
+msgid "Call disconnected (unknown reason)"
+msgstr "Виклик від'єднано (невідома причина)"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Outgoing call started"
+msgstr "Розпочато зовнішній виклик"
+
+#: plugins/mm/calls-mm-call.c:77
+#| msgid "Incoming phone call"
+msgid "New incoming call"
+msgstr "Новий вхідний дзвінок"
+
+#: plugins/mm/calls-mm-call.c:78
+#| msgid "Call back"
+msgid "Call accepted"
+msgstr "Виклик прийнято"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call ended"
+msgstr "Виклик завершено"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (busy or call refused)"
+msgstr "Виклик від'єднано (зайнято або відмовлено у виклику)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Виклик від'єднано (помилковий ідентифікатор або проблем із мережею)"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Виклик від'єднано (помилка під час налаштовування звукового каналу)"
+
+#: plugins/mm/calls-mm-call.c:83
+msgid "Call transferred"
+msgstr "Виклик передано"
+
+#: plugins/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Виклик відхилено"
+
+#: plugins/mm/calls-mm-call.c:113
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Виклик від'єднано (невідома причина, код %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "ModemManager недоступний"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+#| msgid "Can't place calls: No voice-capable modem available"
+msgid "No voice-capable modem available"
+msgstr "Немає модема із голосовими можливостями"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "Звичайний"
+
+#: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialised"
+msgstr "Ініціалізовано"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "DBus є недоступним"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Додати обліковий запис"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Увійти"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Керування обліковим записом"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Застосувати"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "В_илучити"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Сервер"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Екранне ім'я"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Необов'язково"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Ід. користувача"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Пароль"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Порт"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Спосіб передавання"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Використовувати для дзвінків"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "Не вдалося розмістити дзвінки: немає служби обробки"
+
 #~ msgid "Calling…"
 #~ msgstr "Виклик…"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Вхідний телефонний дзвінок"
 
 #~ msgid "Mute"
 #~ msgstr "Вимкнути звук"
@@ -350,9 +559,6 @@ msgstr "Назад"
 
 #~ msgid "This call is not encrypted"
 #~ msgstr "Цей дзвінок не зашифровано"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "Цей дзвінок зашифровано"
 
 #~ msgid "Recent Calls"
 #~ msgstr "Нещодавні дзвінки"
