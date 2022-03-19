@@ -1,14 +1,14 @@
 # Turkish translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-02-23 15:25+0000\n"
-"PO-Revision-Date: 2021-03-14 13:14+0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-01-18 02:44+0000\n"
+"PO-Revision-Date: 2022-03-19 12:47+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -16,73 +16,131 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:310
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
+#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Aramalar"
 
-#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
 msgstr "Telefon"
 
-#: data/sm.puri.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:5
 msgid "A phone dialer and call handler"
 msgstr "Telefon çevirici ve arama işleyici"
 
 #. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
-#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr "Telefon;Arama;Ara;Çağrı;Çevir;Tuşla;Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;PSTN;"
+msgstr ""
+"Telefon;Arama;Ara;Çağrı;Çevir;Tuşla;Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;"
+"PSTN;"
 
-#: data/sm.puri.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
 msgstr "Aramalar (art alan)"
 
-#: data/sm.puri.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Telefon çevirici ve arama işleyici (art alan kipi)"
 
-#: src/calls-application.c:430
-#, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "`%s' ayrıştırılamayan tel URIʼsini arama denendi"
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Hesap Ekle"
 
-#: src/calls-application.c:481
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Giriş Yap"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Hesabı Yönet"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Uygula"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Sil"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Sunucu"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Görünüm Adı"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "İsteğe Bağlı"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Kullanıcı Kimliği"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Parola"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Bağlantı Noktası"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Taşıma"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Telefon Aramalarında Kullan"
+
+#: src/calls-application.c:548
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "`%s' geçersiz tel URIʼsini arama denendi"
+
+#: src/calls-application.c:625
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s' nasıl açılır bilinmiyor"
 
-#: src/calls-application.c:532
-msgid "The name of the plugin to use for the call Provider"
-msgstr "Arama Sağlayıcı için kullanılacak eklentinin adı"
+#: src/calls-application.c:679
+msgid "The name of the plugin to use as a call provider"
+msgstr "Arama sağlayıcı olarak kullanılacak eklentinin adı"
 
-#: src/calls-application.c:533
+#: src/calls-application.c:680
 msgid "PLUGIN"
 msgstr "EKLENTİ"
 
-#: src/calls-application.c:538
+#: src/calls-application.c:685
 msgid "Whether to present the main window on startup"
 msgstr "Ana ekranın başlangıçta sunulup sunulmayacağı"
 
-#: src/calls-application.c:544
-msgid "Dial a number"
-msgstr "Numara çevir"
+#: src/calls-application.c:691
+msgid "Dial a telephone number"
+msgstr "Telefon numarası çevir"
 
-#: src/calls-application.c:545
+#: src/calls-application.c:692
 msgid "NUMBER"
 msgstr "NUMARA"
 
-#: src/calls-best-match.c:331 src/calls-call-record-row.c:40
+#: src/calls-application.c:697
+msgid "Enable verbose debug messages"
+msgstr "Ayrıntılı hata ayıklama iletilerini etkinleştir"
+
+#: src/calls-application.c:703
+msgid "Print current version"
+msgstr "Geçerli sürümü yazdır"
+
+#: src/calls-best-match.c:357
 msgid "Anonymous caller"
 msgstr "Anonim çağrı"
 
-#: src/calls-call-display.c:292
-msgid "Calling…"
-msgstr "Aranıyor…"
-
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:110
 #, c-format
 msgid ""
 "%s\n"
@@ -91,170 +149,225 @@ msgstr ""
 "%s\n"
 "dün"
 
-#: src/calls-main-window.c:120
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No voice-capable modem available"
 msgstr "Aranamıyor: Ses yetili modem yok"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:326
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Aranamıyor: Modem veya uygun VoIP hesabı yok"
+
+#: src/calls-main-window.c:331
 msgid "Can't place calls: No backend service"
 msgstr "Aranamıyor: Arka yüz hizmeti yok"
 
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:335
 msgid "Can't place calls: No plugin"
 msgstr "Aranamıyor: Eklenti yok"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:375
 msgid "Contacts"
 msgstr "Kişiler"
 
-#: src/calls-main-window.c:374 src/ui/call-display.ui:287
+#: src/calls-main-window.c:385
 msgid "Dial Pad"
 msgstr "Tuş Takımı"
 
-#: src/calls-main-window.c:382
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:394
 msgid "Recent"
 msgstr "Son"
 
-#: src/calls-notifier.c:53
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Yanıtsız arama"
 
-#: src/calls-notifier.c:60
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Yanıtsız arama: <b>%s</b>"
 
-#: src/calls-notifier.c:62
+#. %s is a id here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Yanıtsız arama: %s"
 
-#: src/calls-notifier.c:68
+#: src/calls-notifier.c:74
+msgid "Missed call from unknown caller"
+msgstr "Bilinmeyen arayandan yanıtsız arama"
+
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Geri ara"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Gelen telefon araması"
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP Hesapları"
 
-#: src/ui/call-display.ui:133
-msgid "Mute"
-msgstr "Sessiz"
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "VoIP Hesapları Ekle"
 
-#: src/ui/call-display.ui:170
-msgid "Speaker"
-msgstr "Hoparlör"
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Buradan VoIP hesabınızı ekleyebilirsiniz. SIP iletişim kuralı kullanarak "
+"VoIP aramaları yapmanız ve almanız sağlanacak. Bu özellik henüz yeni "
+"sayılır ve tümüyle tamamlanmamıştır (örn. şifrelenmiş ortam yoktur)."
 
-#: src/ui/call-display.ui:206
-msgid "Add call"
-msgstr "Arama ekle"
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+msgid "_Add Account"
+msgstr "Hesap _Ekle"
 
-#: src/ui/call-display.ui:251
-msgid "Hold"
-msgstr "Beklet"
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:63
+msgid "Call"
+msgstr "Ara"
 
-#: src/ui/call-display.ui:343
-msgid "Hang up"
-msgstr "Kapat"
-
-#: src/ui/call-display.ui:374
-msgid "Answer"
-msgstr "Yanıtla"
-
-#: src/ui/call-display.ui:456
-msgid "Hide the dial pad"
-msgstr "Tuş takımını gizle"
-
-#: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Tarafı ara"
-
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:103
 msgid "_Delete Call"
 msgstr "Aramayı _Sil"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:108
 msgid "_Copy number"
 msgstr "Numarayı _kopyala"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+901234567890"
+#: src/ui/call-record-row.ui:113
+msgid "_Add contact"
+msgstr "Kişi _ekle"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Beklemede"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
-msgstr "Kişi bulunamadı"
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "Kişi Bulunamadı"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Bu arama şifrelenmedi"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Bu arama şifrelendi"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Son Aranan Yok"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Son Aramalar"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Yeni arama…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Menü"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "Aramalar Hakkında"
-
-#: src/ui/main-window.ui:38
-msgid "No modem found"
-msgstr "Modem bulunamadı"
-
-#: src/ui/main-window.ui:95
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:104
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "İptal _Et"
 
-#: src/ui/main-window.ui:121
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "_Kapat"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Gönder"
 
-#: src/ui/new-call-box.ui:101
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_VoIP Hesapları"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_Klavye kısayolları"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_Yardım"
+
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "Aramalar _Hakkında"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "VoIP hesabı gir"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "Numara gir"
+
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Tuşla"
 
-#: src/ui/new-call-box.ui:129
-msgid "Backspace through number"
-msgstr "Numarayı sil"
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "İmlecin önündeki karakteri sil"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "SIP Hesabı"
+
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Yeni Arama"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Geri"
+
+#~ msgid "Calling…"
+#~ msgstr "Aranıyor…"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Gelen telefon araması"
+
+#~ msgid "Mute"
+#~ msgstr "Sessiz"
+
+#~ msgid "Speaker"
+#~ msgstr "Hoparlör"
+
+#~ msgid "Add call"
+#~ msgstr "Arama ekle"
+
+#~ msgid "Hold"
+#~ msgstr "Beklet"
+
+#~ msgid "Hang up"
+#~ msgstr "Kapat"
+
+#~ msgid "Answer"
+#~ msgstr "Yanıtla"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Tuş takımını gizle"
+
+#~ msgid "Call the party"
+#~ msgstr "Tarafı ara"
+
+#~ msgid "+441234567890"
+#~ msgstr "+901234567890"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Bu arama şifrelenmedi"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Bu arama şifrelendi"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Son Aramalar"
+
+#~ msgid "New call…"
+#~ msgstr "Yeni arama…"
+
+#~ msgid "Menu"
+#~ msgstr "Menü"
+
+#~ msgid "No modem found"
+#~ msgstr "Modem bulunamadı"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Numarayı sil"
