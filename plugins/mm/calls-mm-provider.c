@@ -458,7 +458,7 @@ calls_mm_provider_message_source_interface_init (CallsMessageSourceInterface *if
 static void
 calls_mm_provider_init (CallsMMProvider *self)
 {
-  self->status = g_strdup (_("Initialised"));
+  self->status = g_strdup (_("Initialized"));
   self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
 }
 
