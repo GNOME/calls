@@ -1,0 +1,340 @@
+# Armenian language translation for calls.
+# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Avag Sayan <translate@armath.am>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls master\n"
+"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
+"POT-Creation-Date: 2020-05-14 03:25+0000\n"
+"PO-Revision-Date: 2022-03-19 20:30+0400\n"
+"Last-Translator: Avag Sayan <translate@armath.am>\n"
+"Language-Team: Armenian - Armenia <info@armath.am>\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: src/calls-application.c:308 src/calls-main-window.c:112
+#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+msgid "Calls"
+msgstr "Զանգեր"
+
+#: src/calls-application.c:513
+msgid "The name of the plugin to use for the call Provider"
+msgstr "Զանգ ծառայության համար օգտագործվող հավելվածի անվանումը"
+
+#: src/calls-application.c:514
+msgid "PLUGIN"
+msgstr "PLUG-IN"
+
+#: src/calls-application.c:519
+msgid "Whether to present the main window on startup"
+msgstr "Արդյո՞ք պետք է ներկայացնել հիմնական պատուհանը գործարկման ժամանակ"
+
+#: src/calls-application.c:525
+msgid "Dial a number"
+msgstr "Հավաքել հեռախոսահամար"
+
+#: src/calls-application.c:526
+msgid "NUMBER"
+msgstr "ՀԱՄԱՐ"
+
+#: src/calls-best-match.c:487
+msgid "View"
+msgstr "Դիտել"
+
+#: src/calls-best-match.c:488
+msgid "The CallsBestMatchView to monitor"
+msgstr "Զանգերի լավագույն համընկնման տեսքը էկրանի համար"
+
+#: src/calls-best-match.c:494 src/calls-call.c:139 src/calls-party.c:186
+msgid "Name"
+msgstr "Անուն"
+
+#: src/calls-best-match.c:495
+msgid "The display name of the best match"
+msgstr "Լավագույն համընկնման ցուցադրվող անունը"
+
+#: src/calls-call.c:123 src/calls-call-record.c:206
+msgid "Inbound"
+msgstr "Մուտքային"
+
+#: src/calls-call.c:124
+msgid "Whether the call is inbound"
+msgstr "Արդյոք զանգը մուտքային է"
+
+#: src/calls-call.c:131 src/calls-party.c:193
+msgid "Number"
+msgstr "Համար"
+
+#: src/calls-call.c:132
+msgid "The number the call is connected to if known"
+msgstr "Հայտնի համարը, որին միացված է զանգը"
+
+#: src/calls-call.c:140
+msgid "The name of the party the call is connected to, if the network provides it"
+msgstr "Մյուս կողմի անունը, որին միացված է զանգը, եթե դա տրամադրում է ցանցը"
+
+#: src/calls-call.c:147
+msgid "State"
+msgstr "Կարգավիճակ"
+
+#: src/calls-call.c:148
+msgid "The current state of the call"
+msgstr "Զանգի ընթացիկ վիճակը"
+
+#: src/calls-encryption-indicator.c:129
+msgid "The party participating in the call"
+msgstr "Զանգին մասնակցող մյուս կողմը"
+
+#: src/calls-call-display.c:245
+msgid "Calling..."
+msgstr "Զանգում է..."
+
+#: src/calls-call-display.c:598
+msgid "Call data"
+msgstr "Զանգի տվյալներ"
+
+#: src/calls-call-display.c:599
+msgid "Data for the call this display will be associated with"
+msgstr "Զանգի տվյալները կկապվեն այս ցուցադրման հետ"
+
+#: src/calls-call-record.c:189
+msgid "ID"
+msgstr "ID"
+
+#: src/calls-call-record.c:190
+msgid "The row ID"
+msgstr "Շարքի ID"
+
+#: src/calls-call-record.c:198
+msgid "Target"
+msgstr "Թիրախ"
+
+#: src/calls-call-record.c:199
+msgid "The PTSN phone number or other address of the call"
+msgstr " PTSN հեռախոսահամար կամ զանգի այլ հասցեներ"
+
+#: src/calls-call-record.c:207
+msgid "Whether the call was an inbound call"
+msgstr "Արդյոք զանգը մուտքային էր"
+
+#: src/calls-call-record.c:214
+msgid "Start"
+msgstr "Սկսել"
+
+#: src/calls-call-record.c:215
+msgid "Time stamp of the start of the call"
+msgstr "Զանգի մեկնարկի ժամանակի կնիք"
+
+#: src/calls-call-record.c:222
+msgid "Answered"
+msgstr "Պատասխանած"
+
+#: src/calls-call-record.c:223
+msgid "Time stamp of when the call was answered"
+msgstr "Զանգին պատասխանելու ժամանակի կնիք"
+
+#: src/calls-call-record.c:230
+msgid "End"
+msgstr "Վերջ"
+
+#: src/calls-call-record.c:231
+msgid "Time stamp of the end of the call"
+msgstr "Զանգը ընդհատելու ժամանակի կնիք"
+
+#: src/calls-call-record-row.c:103
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"երեկ"
+
+#: src/calls-call-record-row.c:505
+msgid "Record"
+msgstr "Ձայնագրել"
+
+#: src/calls-call-record-row.c:506
+msgid "The call record for this row"
+msgstr "Այս շարքի զանգերի ձայնագրությունները"
+
+#: src/calls-call-record-row.c:512 src/calls-history-box.c:202
+#: src/calls-main-window.c:314 src/ui/main-window.ui:56
+msgid "Contacts"
+msgstr "Կոնկտակտներ"
+
+#: src/calls-call-record-row.c:513 src/calls-history-box.c:203
+#: src/calls-main-window.c:315
+msgid "Interface for libfolks"
+msgstr "libfolks֊ի միջերես"
+
+#: src/calls-call-selector-item.c:174
+msgid "Call holder"
+msgstr "Պահել զանգը"
+
+#: src/calls-call-selector-item.c:175
+msgid "The holder for this call"
+msgstr "Այս զանգի holder֊ը"
+
+#: src/calls-encryption-indicator.c:128
+msgid "Encrypted"
+msgstr "Գաղտնագրված"
+
+#: src/calls-history-box.c:195
+msgid "model"
+msgstr "մոդել"
+
+#: src/calls-history-box.c:196
+msgid "The data store containing call records"
+msgstr "Պահոց, որտեղ առկա են բոլո զանգերի ձայնագրությունները"
+
+#: src/calls-main-window.c:113
+msgid "translator-credits"
+msgstr "Avag Sayan <info@armath.am>"
+
+#: src/calls-main-window.c:176
+msgid "Can't place calls: No SIM card"
+msgstr "Հնարավոր չէ զանգ կատարել՝ SIM քարտն առկա չէ"
+
+#: src/calls-main-window.c:181
+msgid "Can't place calls: No backend service"
+msgstr "Հնարավոր չէ զանգ կատարել՝ ծառայությունը անհասանելի է"
+
+#: src/calls-main-window.c:185
+msgid "Can't place calls: No plugin"
+msgstr "Հնարավոր չէ զանգ կատարել՝ կապակցում առկա չէ"
+
+#: src/calls-main-window.c:213 src/ui/call-display.ui:270
+msgid "Dial Pad"
+msgstr "Զանգի ստեղնաշար"
+
+#: src/calls-main-window.c:223
+msgid "Recent"
+msgstr "Վերջին"
+
+#: src/calls-main-window.c:307
+msgid "Record store"
+msgstr "Ձայնագրության պահոց"
+
+#: src/calls-main-window.c:308
+msgid "The store of call records"
+msgstr "Զանգերի ձայնագրությունների պահոց"
+
+#: src/calls-party.c:187
+msgid "The party's name"
+msgstr "Կողմի անունը"
+
+#: src/calls-party.c:194
+msgid "The party's telephone number"
+msgstr "Կողմի հեռախոսի համարը"
+
+#: src/calls-provider.c:70
+msgid "Status"
+msgstr "Կարգավիճակ"
+
+#: src/calls-provider.c:71
+msgid "A text string describing the status for display to the user"
+msgstr "Տեքստի տող, որտեղ նկարագրվում է օգտատիրոջ կարգավիճակը"
+
+#: src/calls-ringer.c:204
+msgid "Incoming call"
+msgstr "Մուտքային զանգ"
+
+#: src/ui/call-display.ui:33
+msgid "Incoming phone call"
+msgstr "Մուտքային հեռախոսազանգ"
+
+#: src/ui/call-display.ui:124
+msgid "Mute"
+msgstr "Անձայն"
+
+#: src/ui/call-display.ui:159
+msgid "Speaker"
+msgstr "Բարձրախոս"
+
+#: src/ui/call-display.ui:193
+msgid "Add call"
+msgstr "Ավելացնել զանգ"
+
+#: src/ui/call-display.ui:236
+msgid "Hold"
+msgstr "Պահել"
+
+#: src/ui/call-display.ui:326
+msgid "Hang up"
+msgstr "Անջատել"
+
+#: src/ui/call-display.ui:357
+msgid "Answer"
+msgstr "Պատասխանել"
+
+#: src/ui/call-display.ui:439
+msgid "Hide the dial pad"
+msgstr "Թաքցնել համարների ստեղնաշարը"
+
+#: src/ui/call-record-row.ui:65
+msgid "Call the party"
+msgstr "Զանգի կողմը"
+
+#: src/ui/call-selector-item.ui:31
+msgid "+441234567890"
+msgstr "+441234567890"
+
+#: src/ui/call-selector-item.ui:44
+msgid "On hold"
+msgstr "Պահել"
+
+#: src/ui/encryption-indicator.ui:23
+msgid "This call is not encrypted"
+msgstr "Այս զանգը գաղտնագրված չէ"
+
+#: src/ui/encryption-indicator.ui:45
+msgid "This call is encrypted"
+msgstr "Այս զանգը գաղտնագրված է "
+
+#: src/ui/history-box.ui:23
+msgid "No Recent Calls"
+msgstr "Առկա չէ վերջին զանգեր"
+
+#: src/ui/history-header-bar.ui:8
+msgid "Recent Calls"
+msgstr "Վերջին զանգերը"
+
+#: src/ui/history-header-bar.ui:21
+msgid "New call…"
+msgstr "Նոր զանգ…"
+
+#. Translators: tooltip for the application menu button
+#: src/ui/history-header-bar.ui:40
+msgid "Menu"
+msgstr "Ընտրացանկ"
+
+#: src/ui/history-header-bar.ui:71
+msgid "About Calls"
+msgstr "Զանգի մասին"
+
+#: src/ui/main-window.ui:36
+msgid "No modem found"
+msgstr "Մոդեմ չի գտնվել"
+
+#: src/ui/new-call-box.ui:101
+msgid "Dial"
+msgstr "Զանգ"
+
+#: src/ui/new-call-box.ui:129
+msgid "Backspace through number"
+msgstr "Հետ տանել համարի միջոցով"
+
+#: src/ui/new-call-header-bar.ui:8
+msgid "New Call"
+msgstr "Նոր զանգ"
+
+#: src/ui/new-call-header-bar.ui:21
+msgid "Back"
+msgstr "Հետ"
