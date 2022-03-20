@@ -61,6 +61,7 @@ enum {
   PROP_0,
   PROP_NAME,
   PROP_ID,
+  PROP_EMERGENCY_NUMBERS,
   PROP_ACC_HOST,
   PROP_ACC_USER,
   PROP_ACC_PASSWORD,
@@ -1401,6 +1402,10 @@ calls_sip_origin_get_property (GObject    *object,
     g_value_set_string (value, self->id);
     break;
 
+  case PROP_EMERGENCY_NUMBERS:
+    g_value_set_boxed (value, NULL);
+    break;
+
   case PROP_ACC_HOST:
     g_value_set_string (value, self->host);
     break;
@@ -1648,6 +1653,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
   IMPLEMENTS (PROP_ACC_STATE, "account-state");
   IMPLEMENTS (PROP_ACC_ADDRESS, "address");
+  IMPLEMENTS (PROP_EMERGENCY_NUMBERS, "emergency-numbers");
 
 #undef IMPLEMENTS
 }
