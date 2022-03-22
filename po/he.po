@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-02-10 23:00+0200\n"
+"POT-Creation-Date: 2022-03-19 19:44+0000\n"
+"PO-Revision-Date: 2022-03-22 21:12+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: Hebrew <>\n"
 "Language: he\n"
@@ -19,8 +19,8 @@ msgstr ""
 "2 : 3)\n"
 "X-Generator: Gtranslator 40.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "שיחות"
 
@@ -32,7 +32,7 @@ msgstr "טלפון"
 msgid "A phone dialer and call handler"
 msgstr "חייגן לטלפון עם אפשרויות שיחה"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "טלפון;פלאפון;שיחות;שיחה;חיוג;חייגן;PSTN;"
@@ -45,101 +45,189 @@ msgstr "שיחות (שרת)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "חייגן לטלפון עם אפשרויות שיחה (מצב שרת)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "הוספת חשבון"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "ביוע שיחות טלפון ו־VoIP (שיחות על גבי רשת האינטרנט)"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_כניסה"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"שיחות הוא חייגן שיחות פשוט ואלגנטי עבור GNOME, המאפשר הוצאת וקבלת שיחות. הוא "
+"מאפשר שימוש ברשת סלולרית לשיחות טלפון רגילות, כמו גם שיחות VoIP באמצעות "
+"פרוטוקול SIP (שיחות על גבי רשת האינטרנט)."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "ניהול חשבון"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "חיוג"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "ה_חלה"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "היסטוריית שיחות"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "_מחיקה"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Whether calls should automatically use the default origin"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "שרת"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "The country code as reported by the modem"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "שם התצוגה"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "The country code is used for contact name lookup"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "אפשרי"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "The plugins to load automatically"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "מזהה משתמש"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "These plugins will be automatically loaded on application startup."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "ססמה"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Audio codecs to use for VoIP calls in order of preference"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "פתחה"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "The preferred audio codecs to use for VoIP calls (if available)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "תעבורה"
+#: src/calls-account.c:203
+msgid "Default (uninitialized) state"
+msgstr "מצב בררת מחדל (לא מאותחל)"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "שימוש עבור שיחות טלפון"
+#: src/calls-account.c:206
+msgid "Initializing account…"
+msgstr "מאתחל חשבון…"
 
-#: src/calls-application.c:548
+#: src/calls-account.c:209
+msgid "Uninitializing account…"
+msgstr "מבטל אתחול חשבון…"
+
+#: src/calls-account.c:212
+msgid "Connecting to server…"
+msgstr "מתבצעת התחברות לשרת…"
+
+#: src/calls-account.c:215
+msgid "Account is online"
+msgstr "חשבון במצב מקוון"
+
+#: src/calls-account.c:218
+msgid "Disconnecting from server…"
+msgstr "מתבצעת התנתקות מהשרת…"
+
+#: src/calls-account.c:221
+msgid "Account is offline"
+msgstr "חשבון במצב לא מקוון"
+
+#: src/calls-account.c:224
+msgid "Account encountered an error"
+msgstr "החשבון נתקל בתקלהה"
+
+#: src/calls-account.c:242
+msgid "No reason given"
+msgstr "לא ניתנה סיבה"
+
+#: src/calls-account.c:245
+msgid "Initialization started"
+msgstr "אתחול החל"
+
+#: src/calls-account.c:248
+msgid "Initialization complete"
+msgstr "אתחול הושלם"
+
+#: src/calls-account.c:251
+msgid "Uninitialization started"
+msgstr "ביטול אתחול החל"
+
+#: src/calls-account.c:254
+msgid "Uninitialization complete"
+msgstr "ביטול אתחול הושלם"
+
+#: src/calls-account.c:257
+msgid "No credentials set"
+msgstr "לא הוגדרו אישורים"
+
+#: src/calls-account.c:260
+msgid "Starting to connect"
+msgstr "מתחיל להתחבר"
+
+#: src/calls-account.c:263
+msgid "Connection timed out"
+msgstr "תם זמן ניסיון ההתחברות"
+
+#: src/calls-account.c:266
+msgid "Domain name could not be resolved"
+msgstr "לא ניתן לפתור את שם המתחם"
+
+#: src/calls-account.c:269
+msgid "Server did not accept username or password"
+msgstr "השרת לא קיבל שם משתמש או ססמה"
+
+#: src/calls-account.c:272
+msgid "Connecting complete"
+msgstr "ההתחברות הושלמה"
+
+#: src/calls-account.c:275
+msgid "Starting to disconnect"
+msgstr "מתחיל התנתקות"
+
+#: src/calls-account.c:278
+msgid "Disconnecting complete"
+msgstr "התנתקות הושלמה"
+
+#: src/calls-account.c:281
+msgid "Internal error occurred"
+msgstr "אירעה שגיאה פנימית"
+
+#: src/calls-application.c:318
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:633
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "לא יודע איך לפתוח את „%s”"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:687
 msgid "The name of the plugin to use as a call provider"
 msgstr "The name of the plugin to use as a call provider"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:688
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:693
 msgid "Whether to present the main window on startup"
 msgstr "Whether to present the main window on startup"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:699
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:700
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:705
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:711
 msgid "Print current version"
 msgstr "Print current version"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:436
 msgid "Anonymous caller"
 msgstr "חסוי"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -155,56 +243,49 @@ msgstr ""
 "\n"
 "<a href=\"https://l10n.gnome.org/teams/he/\">מיזם תרגום GNOME לעברית</a>"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "לא נִתן לחייג: אין מודם זמין בעל יכולת שמע"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "לא נִתן לחייג: אין מודם או חשבון VoIP זמין"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "לא נִתן לחייג: אין שירות צד־שרת"
+#: src/calls-main-window.c:322
+#| msgid "Can't place calls: No plugin"
+msgid "Can't place calls: No plugin loaded"
+msgstr "לא נִתן לחייג: אין תוסף טעון"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "לא נִתן לחייג: אין תוסף"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "אנשי קשר"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "לוח חיוג"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "אחרונים"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "שיחה שלא נענתה"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "שיחה שלא נענתה מאת <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "שיחה שלא נענתה מאת %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "שיחה שלא נענתה ממספר לא מזוהה"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "להתקשר חזרה"
 
@@ -230,20 +311,20 @@ msgid "_Add Account"
 msgstr "_הוספת חשבון"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "להתקשר"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "_מחיקת שיחה"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_העתקת מספר"
 
-#: src/ui/call-record-row.ui:113
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_הוספת איש קשר"
 
@@ -318,3 +399,125 @@ msgstr "שיחה חדשה"
 #: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "חזרה"
+
+#: plugins/mm/calls-mm-call.c:75
+msgid "Call disconnected (unknown reason)"
+msgstr "שיחה התנתקה (סיבה לא ידועה)"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Outgoing call started"
+msgstr "החלה שיחה"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "New incoming call"
+msgstr "שיחה נכנסת חדשה"
+
+#: plugins/mm/calls-mm-call.c:78
+#| msgid "Call back"
+msgid "Call accepted"
+msgstr "שיחה נענתה"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call ended"
+msgstr "שיחה הסתיימה"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (busy or call refused)"
+msgstr "שיחה התנתקה (קו תפוס או שיחה נדחתה)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "שיחה התנתקה (מזהה שגוי או תקלת רשת)"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "שיחה התנתקה (שגיאה בהגדרת ערוץ שמע)"
+
+#: plugins/mm/calls-mm-call.c:83
+msgid "Call transferred"
+msgstr "שיחה הועברה"
+
+#: plugins/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "שיחה שורשרה"
+
+#: plugins/mm/calls-mm-call.c:113
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "שיחה התנתקה (סיבה לא ידועה בקוד %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "‏ModemManager לא זמין"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+#| msgid "Can't place calls: No voice-capable modem available"
+msgid "No voice-capable modem available"
+msgstr "אין מודם זמין בעל יכולת שמע"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "רגיל"
+
+#: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialised"
+msgstr "אותחל"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "‏DBus לא זמין"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "הוספת חשבון"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_כניסה"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "ניהול חשבון"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "ה_חלה"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_מחיקה"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "שרת"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "שם התצוגה"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "אפשרי"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "מזהה משתמש"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "ססמה"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "פתחה"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "תעבורה"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "שימוש עבור שיחות טלפון"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "לא נִתן לחייג: אין שירות צד־שרת"
