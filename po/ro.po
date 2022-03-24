@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-01-18 16:01+0100\n"
+"POT-Creation-Date: 2022-03-19 19:44+0000\n"
+"PO-Revision-Date: 2022-03-20 19:35+0100\n"
 "Last-Translator: Florentina Mușat <florentina.musat.28@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,8 +19,8 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.30.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Apeluri"
 
@@ -32,7 +32,7 @@ msgstr "Telefon"
 msgid "A phone dialer and call handler"
 msgstr "Apelant telefonic și gestionarea apelurilor"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Telefon;Apel;Apelează;Apelant;"
@@ -45,101 +45,193 @@ msgstr "Apeluri (serviciu)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Apelant telefonic și gestionarea apelurilor (mod serviciu)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Adaugă un cont"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Efectuare apeluri telefonice și SIP"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_Conectare"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Apeluri este un program simplu și elegant de apelare telefonică și de "
+"gestionare a apelurilor pentru GNOME. Acesta poate fi utilizat cu un modem "
+"celular pentru apeluri telefonice obișnuite și pentru apeluri VoIP folosind "
+"protocolul SIP."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Gestionare cont"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Efectuarea unui apel"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Aplică"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "Cronologia apelurilor"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "Șt_erge"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Dacă apelurile trebuie să utilizeze automat originea prestabilită"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Server"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Codul țării așa cum este indicat de modem"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Nume afișat"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Codul țării este utilizat pentru căutarea numelui persoanei de contact"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Opțional"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Module care se încarcă automat"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "ID utilizator"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Aceste module vor fi încărcate automat la pornirea aplicației."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Parola"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr ""
+"Codecuri audio de utilizat pentru apelurile VoIP, în ordinea preferințelor"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Port"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"Codecurile audio preferate de utilizat pentru apelurile VoIP (dacă sunt "
+"disponibile)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Transport"
+#: src/calls-account.c:203
+msgid "Default (uninitialized) state"
+msgstr "Stare prestabilită (neinițializată)"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "Folosește pentru apeluri"
+#: src/calls-account.c:206
+msgid "Initializing account…"
+msgstr "Se inițializează contul…"
 
-#: src/calls-application.c:548
+#: src/calls-account.c:209
+msgid "Uninitializing account…"
+msgstr "Se anulează inițializarea contului…"
+
+#: src/calls-account.c:212
+msgid "Connecting to server…"
+msgstr "Se conectează la server…"
+
+#: src/calls-account.c:215
+msgid "Account is online"
+msgstr "Contul este conectat"
+
+#: src/calls-account.c:218
+msgid "Disconnecting from server…"
+msgstr "Se deconectează de la server…"
+
+#: src/calls-account.c:221
+msgid "Account is offline"
+msgstr "Contul este deconectat"
+
+#: src/calls-account.c:224
+msgid "Account encountered an error"
+msgstr "Contul a întâmpinat o eroare"
+
+#: src/calls-account.c:242
+msgid "No reason given"
+msgstr "Niciun motiv precizat"
+
+#: src/calls-account.c:245
+msgid "Initialization started"
+msgstr "A început inițializarea"
+
+#: src/calls-account.c:248
+msgid "Initialization complete"
+msgstr "Inițializare terminată"
+
+#: src/calls-account.c:251
+msgid "Uninitialization started"
+msgstr "A început anularea inițializării"
+
+#: src/calls-account.c:254
+msgid "Uninitialization complete"
+msgstr "S-a terminat anularea inițializării"
+
+#: src/calls-account.c:257
+msgid "No credentials set"
+msgstr "Date de acces neprecizate"
+
+#: src/calls-account.c:260
+msgid "Starting to connect"
+msgstr "Se începe conectarea"
+
+#: src/calls-account.c:263
+msgid "Connection timed out"
+msgstr "Conexiunea a expirat"
+
+#: src/calls-account.c:266
+msgid "Domain name could not be resolved"
+msgstr "Numele de domeniu nu a putut fi găsit"
+
+#: src/calls-account.c:269
+msgid "Server did not accept username or password"
+msgstr "Serverul nu a acceptat numele de utilizator sau parola"
+
+#: src/calls-account.c:272
+msgid "Connecting complete"
+msgstr "Conectare efectuată"
+
+#: src/calls-account.c:275
+msgid "Starting to disconnect"
+msgstr "Se începe deconectarea"
+
+#: src/calls-account.c:278
+msgid "Disconnecting complete"
+msgstr "Deconectare efectuată"
+
+#: src/calls-account.c:281
+msgid "Internal error occurred"
+msgstr "S-a produs o eroare internă"
+
+#: src/calls-application.c:318
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "S-a încercat apelarea un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:633
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:687
 msgid "The name of the plugin to use as a call provider"
 msgstr "Numele modulului de utilizat ca furnizor de apeluri"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:688
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:693
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:699
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:700
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:705
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:711
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:436
 msgid "Anonymous caller"
 msgstr "Apelant anonim"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -158,57 +250,50 @@ msgstr ""
 "2020-2021\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019-2021"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Nu se pot efectua apeluri: nu s-a găsit niciun modem de voce"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Nu se pot efectua apeluri: Nu este disponibil un modem sau un cont VoIP"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Nu se pot efectua apeluri: nu există serviciu de suport"
+#: src/calls-main-window.c:322
+#| msgid "Can't place calls: No plugin"
+msgid "Can't place calls: No plugin loaded"
+msgstr "Nu se pot efectua apeluri: Nu s-a încărcat niciun modul"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Nu se pot efectua apeluri: nu există modul"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contacte"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Tastatură"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recente"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Apel pierdut"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Apel pierdut de la <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Apel pierdut de la %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Apel pierdut de la un necunoscut"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Sună din nou"
 
@@ -236,21 +321,20 @@ msgid "_Add Account"
 msgstr "_Adaugă un cont"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Apelează"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "Șt_erge apelul"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_Copiază numărul"
 
-#: src/ui/call-record-row.ui:113
-#| msgid "_Add Account"
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Adaugă un contact"
 
@@ -325,3 +409,122 @@ msgstr "Apel nou"
 #: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Înapoi"
+
+#: plugins/mm/calls-mm-call.c:75
+msgid "Call disconnected (unknown reason)"
+msgstr "Apel întrerupt (motiv necunoscut)"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Outgoing call started"
+msgstr "Se efectuează apel"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "New incoming call"
+msgstr "Se primește apel"
+
+#: plugins/mm/calls-mm-call.c:78
+#| msgid "Call back"
+msgid "Call accepted"
+msgstr "Apel acceptat"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call ended"
+msgstr "Apel terminat"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (busy or call refused)"
+msgstr "Apel întrerupt (ocupat sau apel refuzat)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Apel întrerupt (ID greșit sau problemă de rețea)"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Apel întrerupt (eroare de stabilire a canalului audio)"
+
+#: plugins/mm/calls-mm-call.c:83
+msgid "Call transferred"
+msgstr "Apel transferat"
+
+#: plugins/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Apel deviat"
+
+#: plugins/mm/calls-mm-call.c:113
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Apel întrerupt (codul motivului necunoscut %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "ModemManager indisponibil"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+#| msgid "Can't place calls: No voice-capable modem available"
+msgid "No voice-capable modem available"
+msgstr "Nu s-a găsit niciun modem de voce"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "Normal"
+
+#: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialised"
+msgstr "Inițializat"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "DBus indisponibil"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Adaugă un cont"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Conectare"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Gestionare cont"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Aplică"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "Șt_erge"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Nume afișat"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Opțional"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID utilizator"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Parola"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Transport"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Use for Phone Calls"
+msgstr "Folosește pentru apeluri"
