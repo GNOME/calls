@@ -5,20 +5,21 @@
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2020.
 # PerikiyoXD <perikiyoxd@gmail.com>, 2021.
 # Daniel Mustieles García <daniel.mustieles@gmail.com>, 2021.
+# Pablo Correa Gómez <ablocorrea@hotmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-09 08:05+0000\n"
-"PO-Revision-Date: 2021-10-13 09:22+0200\n"
-"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2021-10-28 12:34+0000\n"
+"PO-Revision-Date: 2022-03-24 11:19+0100\n"
+"Last-Translator: Pablo Correa Gómez <ablocorrea@hotmail.com>\n"
+"Language-Team: Spanish; Castilian <gnome-es-list@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 41.0\n"
+"X-Generator: Gtranslator 3.36.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
@@ -58,8 +59,9 @@ msgid "Don't know how to open `%s'"
 msgstr "No se sabe cómo abrir «%s»"
 
 #: src/calls-application.c:658
-msgid "The name of the plugin to use for the call Provider"
-msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
+#| msgid "The name of the plugin to use for the call Provider"
+msgid "The name of the plugin to use as a call provider"
+msgstr "El nombre del complemento utilizado para realizar llamadas"
 
 #: src/calls-application.c:659
 msgid "PLUGIN"
@@ -85,7 +87,7 @@ msgstr "Activar mensajes de depuración detallados"
 msgid "Print current version"
 msgstr "Imprimir versión actual"
 
-#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Llamada anónima"
 
@@ -93,7 +95,7 @@ msgstr "Llamada anónima"
 msgid "Calling…"
 msgstr "Llamando…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -133,9 +135,10 @@ msgstr "Contactos"
 
 #: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
-msgstr "Teclado de marcado"
+msgstr "Teclado"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
 msgstr "Recientes"
 
@@ -143,21 +146,23 @@ msgstr "Recientes"
 msgid "Missed call"
 msgstr "Llamada perdida"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Llamada perdida de <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Llamada perdida de %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:74
 msgid "Missed call from unknown caller"
 msgstr "Llamada perdida de desconocido"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Volver a llamar"
 
@@ -167,7 +172,7 @@ msgstr "Llamada entrante"
 
 #: src/ui/call-display.ui:135
 msgid "Mute"
-msgstr "Silencio"
+msgstr "Silenciar"
 
 #: src/ui/call-display.ui:172
 msgid "Speaker"
@@ -191,7 +196,7 @@ msgstr "Contestar"
 
 #: src/ui/call-display.ui:458
 msgid "Hide the dial pad"
-msgstr "Ocultar el teclado de marcado"
+msgstr "Esconder teclado"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
@@ -206,10 +211,6 @@ msgstr "_Eliminar Llamada"
 #: src/ui/call-record-row.ui:117
 msgid "_Copy number"
 msgstr "Copiar número"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
 
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
@@ -297,8 +298,8 @@ msgid "Dial"
 msgstr "Marcar"
 
 #: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Retroceder a lo largo del número"
+msgid "Delete character in front of cursor"
+msgstr "Eliminar caracter delante del cursor"
 
 #: src/ui/new-call-box.ui:145
 msgid "SIP Account"
@@ -311,6 +312,12 @@ msgstr "Llamada nueva"
 #: src/ui/new-call-header-bar.ui:20
 msgid "Back"
 msgstr "Atrás"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Retroceder a lo largo del número"
 
 #~ msgid "Can't place calls: No SIM card"
 #~ msgstr "No puede hacer llamadas: no hay tarjeta SIM"
