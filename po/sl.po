@@ -2,14 +2,14 @@
 # Copyright (C) 2021 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 #
-# Matej Urbančič <mateju@src.gnome.org>, 2021–2022.
+# Martin Srebotnjak <miles@filmsi.net>, 2021–2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-03-19 19:44+0000\n"
-"PO-Revision-Date: 2022-03-22 15:34+0100\n"
+"POT-Creation-Date: 2022-03-24 11:39+0000\n"
+"PO-Revision-Date: 2022-03-25 09:40+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -109,7 +109,6 @@ msgid "Initializing account…"
 msgstr "Inicializacija računa ..."
 
 #: src/calls-account.c:209
-#, fuzzy
 msgid "Uninitializing account…"
 msgstr "Deincializacija računa …"
 
@@ -146,12 +145,10 @@ msgid "Initialization complete"
 msgstr "Inicializacija končana"
 
 #: src/calls-account.c:251
-#, fuzzy
 msgid "Uninitialization started"
 msgstr "Deincializacija se je začela"
 
 #: src/calls-account.c:254
-#, fuzzy
 msgid "Uninitialization complete"
 msgstr "Deinicializacija končana"
 
@@ -444,12 +441,11 @@ msgid "Call deflected"
 msgstr "Klic preusmerjen"
 
 #: plugins/mm/calls-mm-call.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Klic razvezan (neznan razlog, koda %i)"
 
 #: plugins/mm/calls-mm-provider.c:86
-#, fuzzy
 msgid "ModemManager unavailable"
 msgstr "ModemManager ni na voljo"
 
