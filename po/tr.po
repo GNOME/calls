@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-03-19 19:44+0000\n"
-"PO-Revision-Date: 2022-03-21 13:36+0300\n"
+"POT-Creation-Date: 2022-03-29 20:32+0000\n"
+"PO-Revision-Date: 2022-03-30 20:17+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -455,7 +455,7 @@ msgid "Normal"
 msgstr "Olağan"
 
 #: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
-msgid "Initialised"
+msgid "Initialized"
 msgstr "Çalıştı"
 
 #: plugins/ofono/calls-ofono-provider.c:97
@@ -502,15 +502,15 @@ msgstr "Kullanıcı Kimliği"
 msgid "Password"
 msgstr "Parola"
 
-#: plugins/sip/sip-account-widget.ui:161
+#: plugins/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Bağlantı Noktası"
 
-#: plugins/sip/sip-account-widget.ui:177
+#: plugins/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Taşıma"
 
-#: plugins/sip/sip-account-widget.ui:189
+#: plugins/sip/sip-account-widget.ui:194
 msgid "Use for Phone Calls"
 msgstr "Telefon Aramalarında Kullan"
 
