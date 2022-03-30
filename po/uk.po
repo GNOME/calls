@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-03-19 19:44+0000\n"
-"PO-Revision-Date: 2022-03-19 22:20+0200\n"
+"POT-Creation-Date: 2022-03-29 20:32+0000\n"
+"PO-Revision-Date: 2022-03-30 13:51+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -56,20 +56,18 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"«Дзвінки» є простою, елегантною програмою для викликів та обробки дзвінків"
-" для GNOME. Нею можна скористатися як стільниковим модемом для звичайних"
-" телефонних дзвінків, а також для інтернет-викликів за використанням"
-" протоколу SIP."
+"«Дзвінки» є простою, елегантною програмою для викликів та обробки дзвінків "
+"для GNOME. Нею можна скористатися як стільниковим модемом для звичайних "
+"телефонних дзвінків, а також для інтернет-викликів за використанням "
+"протоколу SIP."
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
-#| msgid "Incoming phone call"
 msgid "Placing a call"
 msgstr "Влаштування виклику"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:31
-#| msgid "This call is encrypted"
 msgid "The call history"
 msgstr "Журнал викликів"
 
@@ -97,14 +95,14 @@ msgstr "Ці додатки буде автоматично завантажен
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
 msgstr ""
-"Звукові кодеки, якими слід скористатися для інтернет-викликів, за порядком"
-" пріоритетності"
+"Звукові кодеки, якими слід скористатися для інтернет-викликів, за порядком "
+"пріоритетності"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
-"Бажані звукові кодеки, якими слід скористатися для інтернет-викликів (якщо"
-" доступні)"
+"Бажані звукові кодеки, якими слід скористатися для інтернет-викликів (якщо "
+"доступні)"
 
 #: src/calls-account.c:203
 msgid "Default (uninitialized) state"
@@ -256,7 +254,6 @@ msgstr ""
 "телефонії"
 
 #: src/calls-main-window.c:322
-#| msgid "Can't place calls: No plugin"
 msgid "Can't place calls: No plugin loaded"
 msgstr "Не вдалося розмістити дзвінки: не завантажено додатків"
 
@@ -419,12 +416,10 @@ msgid "Outgoing call started"
 msgstr "Розпочато зовнішній виклик"
 
 #: plugins/mm/calls-mm-call.c:77
-#| msgid "Incoming phone call"
 msgid "New incoming call"
 msgstr "Новий вхідний дзвінок"
 
 #: plugins/mm/calls-mm-call.c:78
-#| msgid "Call back"
 msgid "Call accepted"
 msgstr "Виклик прийнято"
 
@@ -462,7 +457,6 @@ msgid "ModemManager unavailable"
 msgstr "ModemManager недоступний"
 
 #: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
-#| msgid "Can't place calls: No voice-capable modem available"
 msgid "No voice-capable modem available"
 msgstr "Немає модема із голосовими можливостями"
 
@@ -471,7 +465,8 @@ msgid "Normal"
 msgstr "Звичайний"
 
 #: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
-msgid "Initialised"
+#| msgid "Initialised"
+msgid "Initialized"
 msgstr "Ініціалізовано"
 
 #: plugins/ofono/calls-ofono-provider.c:97
@@ -518,15 +513,15 @@ msgstr "Ід. користувача"
 msgid "Password"
 msgstr "Пароль"
 
-#: plugins/sip/sip-account-widget.ui:161
+#: plugins/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Порт"
 
-#: plugins/sip/sip-account-widget.ui:177
+#: plugins/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Спосіб передавання"
 
-#: plugins/sip/sip-account-widget.ui:189
+#: plugins/sip/sip-account-widget.ui:194
 msgid "Use for Phone Calls"
 msgstr "Використовувати для дзвінків"
 
