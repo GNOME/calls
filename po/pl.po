@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-03-19 21:05+0000\n"
-"PO-Revision-Date: 2022-03-20 13:55+0100\n"
+"POT-Creation-Date: 2022-03-29 20:32+0000\n"
+"PO-Revision-Date: 2022-04-01 15:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -463,7 +463,7 @@ msgid "Normal"
 msgstr "Zwykły"
 
 #: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
-msgid "Initialised"
+msgid "Initialized"
 msgstr "Zainicjowano"
 
 #: plugins/ofono/calls-ofono-provider.c:97
@@ -510,14 +510,14 @@ msgstr "Identyfikator użytkownika"
 msgid "Password"
 msgstr "Hasło"
 
-#: plugins/sip/sip-account-widget.ui:161
+#: plugins/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Port"
 
-#: plugins/sip/sip-account-widget.ui:177
+#: plugins/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Protokół"
 
-#: plugins/sip/sip-account-widget.ui:189
+#: plugins/sip/sip-account-widget.ui:194
 msgid "Use for Phone Calls"
 msgstr "Używanie do połączeń telefonicznych"
