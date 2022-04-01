@@ -1092,7 +1092,10 @@ calls_manager_get_origin_by_id (CallsManager *self,
   uint n_origins;
 
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
-  g_return_val_if_fail (origin_id && *origin_id, NULL);
+
+  /* TODO Turn this into a critical once https://gitlab.gnome.org/GNOME/calls/-/merge_requests/505 is in */
+  if (origin_id && *origin_id)
+    return NULL;
 
   n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
   for (uint i = 0; i < n_origins; i++) {
