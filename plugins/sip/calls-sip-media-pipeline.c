@@ -167,6 +167,12 @@ static void
 set_state (CallsSipMediaPipeline  *self,
            CallsMediaPipelineState state)
 {
+  g_autoptr (GEnumClass) enum_class = NULL;
+  GEnumValue *enum_val;
+
+  g_autofree char *recv_fname = NULL;
+  g_autofree char *send_fname = NULL;
+
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
 
   if (self->state == state)
@@ -176,6 +182,22 @@ set_state (CallsSipMediaPipeline  *self,
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 
   self->emitted_sending_signal = FALSE;
+
+  if (state == CALLS_MEDIA_PIPELINE_STATE_INITIALIZING)
+    return;
+
+  enum_class = g_type_class_ref (CALLS_TYPE_MEDIA_PIPELINE_STATE);
+  enum_val = g_enum_get_value (enum_class, state);
+
+  recv_fname = g_strdup_printf ("recv-%s", enum_val->value_nick);
+  send_fname = g_strdup_printf ("send-%s", enum_val->value_nick);
+
+  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->recv_pipeline),
+                                     GST_DEBUG_GRAPH_SHOW_ALL,
+                                     recv_fname);
+  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->send_pipeline),
+                                     GST_DEBUG_GRAPH_SHOW_ALL,
+                                     send_fname);
 }
 
 
