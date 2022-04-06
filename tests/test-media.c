@@ -264,11 +264,11 @@ main (int   argc,
 
   gst_init (NULL, NULL);
 
-  g_test_add_func ("/Calls/SIP/media_manager/capabilities", test_sip_media_manager_caps);
-  g_test_add_func ("/Calls/SIP/pipeline/states", test_media_pipeline_states);
-  g_test_add_func ("/Calls/SIP/pipeline/setup_codecs", test_media_pipeline_setup_codecs);
-  g_test_add_func ("/Calls/SIP/pipeline/start_no_codec", test_media_pipeline_start_no_codec);
-  g_test_add_func ("/Calls/SIP/pipeline/finalized_in_call", test_media_pipeline_finalized_in_call);
+  g_test_add_func ("/Calls/media/media_manager/capabilities", test_sip_media_manager_caps);
+  g_test_add_func ("/Calls/media/pipeline/states", test_media_pipeline_states);
+  g_test_add_func ("/Calls/media/pipeline/setup_codecs", test_media_pipeline_setup_codecs);
+  g_test_add_func ("/Calls/media/pipeline/start_no_codec", test_media_pipeline_start_no_codec);
+  g_test_add_func ("/Calls/media/pipeline/finalized_in_call", test_media_pipeline_finalized_in_call);
 
   ret = g_test_run();
 
