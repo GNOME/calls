@@ -1226,29 +1226,3 @@ calls_sip_media_pipeline_get_state (CallsSipMediaPipeline *self)
 
   return self->state;
 }
-
-#undef MAKE_ELEMENT
-
-#undef EL_SEND_PIPELINE
-#undef EL_SEND_AUDIO_SRC
-#undef EL_SEND_RTPBIN
-#undef EL_SEND_RTP_SINK
-#undef EL_SEND_RTCP_SINK
-#undef EL_SEND_RTCP_SRC
-#undef EL_SEND_PAYLOADER
-#undef EL_SEND_ENCODER
-
-#undef EL_SEND_ALL_RTP
-#undef EL_SEND_SENDING
-
-#undef EL_RECV_PIPELINE
-#undef EL_RECV_AUDIO_SINK
-#undef EL_RECV_RTPBIN
-#undef EL_RECV_RTP_SRC
-#undef EL_RECV_RTCP_SINK
-#undef EL_RECV_RTCP_SRC
-#undef EL_RECV_DEPAYLOADER
-#undef EL_RECV_DECODER
-
-#undef EL_RECV_ALL_RTP
-
