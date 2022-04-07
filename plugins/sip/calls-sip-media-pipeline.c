@@ -206,22 +206,25 @@ set_state (CallsSipMediaPipeline  *self,
 static void
 check_element_maps (CallsSipMediaPipeline *self)
 {
+  uint all_rtp_elements;
+
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
-  /* TODO take encryption into account */
-  if (self->element_map_playing == EL_ALL_RTP) {
+  all_rtp_elements = self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP;
+
+  if (self->element_map_playing == all_rtp_elements) {
     g_debug ("All pipeline elements are playing");
     set_state (self, CALLS_MEDIA_PIPELINE_STATE_PLAYING);
     return;
   }
 
-  if (self->element_map_paused == EL_ALL_RTP) {
+  if (self->element_map_paused == all_rtp_elements) {
     g_debug ("All pipeline elements are paused");
     set_state (self, CALLS_MEDIA_PIPELINE_STATE_PAUSED);
     return;
   }
 
-  if (self->element_map_stopped == EL_ALL_RTP) {
+  if (self->element_map_stopped == all_rtp_elements) {
     g_debug ("All pipeline elements are stopped");
     set_state (self, CALLS_MEDIA_PIPELINE_STATE_STOPPED);
     return;
@@ -319,13 +322,10 @@ on_bus_message (GstBus     *bus,
     else if (message->src == GST_OBJECT (self->rtcp_sink))
       element_id = EL_RTCP_SINK;
 
-    /* TODO srtp encryption
-       else if (message->src == GST_OBJECT (self->srtpenc))
-       element_id = EL_SRTP_ENCODER;
-       else if (message->src == GST_OBJECT (self->srtpdec))
-       element_id = EL_SRTP_DECODER;
-     */
-
+    else if (message->src == GST_OBJECT (self->srtpenc))
+      element_id = EL_SRTP_ENCODER;
+    else if (message->src == GST_OBJECT (self->srtpdec))
+      element_id = EL_SRTP_DECODER;
 
     else if (message->src == GST_OBJECT (self->audio_src))
       element_id = EL_AUDIO_SRC;
