@@ -146,6 +146,17 @@ struct _CallsSipMediaPipeline {
   GstElement             *depayloader;
   GstElement             *decoder;
 
+  /* SRTP */
+  gboolean                use_srtp;
+
+  GstElement             *srtpenc;
+  GstElement             *srtpdec;
+
+  gulong                  request_rtpbin_rtp_decoder_id;
+  gulong                  request_rtpbin_rtp_encoder_id;
+  gulong                  request_rtpbin_rtcp_encoder_id;
+  gulong                  request_rtpbin_rtcp_decoder_id;
+
   /* Gstreamer busses */
   GstBus                 *bus;
   guint                   bus_watch_id;
@@ -362,6 +373,51 @@ on_bus_message (GstBus     *bus,
 }
 
 
+/* SRTP setup */
+
+static GstCaps *
+on_srtpdec_request_key (GstElement *srtpdec,
+                        guint       ssrc,
+                        gpointer    user_data)
+{
+  /* TODO get key */
+  return gst_caps_new_simple ("application/x-srtp",
+                              "srtp-cipher", G_TYPE_STRING, "null",
+                              "srtcp-cipher", G_TYPE_STRING, "null",
+                              "srtp-auth", G_TYPE_STRING, "null",
+                              "srtcp-auth", G_TYPE_STRING, "null",
+                              NULL);
+}
+
+
+static GstElement *
+on_rtpbin_request_decoder (GstElement *rtpbin,
+                           guint       session_id,
+                           gpointer    user_data)
+{
+  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (user_data);
+
+  if (!self->use_srtp)
+    return NULL;
+
+  return gst_object_ref (self->srtpdec);
+}
+
+
+static GstElement *
+on_rtpbin_request_encoder (GstElement *rtpbin,
+                           guint       session_id,
+                           gpointer    user_data)
+{
+  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (user_data);
+
+  if (!self->use_srtp)
+    return NULL;
+
+  return gst_object_ref (self->srtpenc);
+}
+
+
 /* Pipeline setup */
 
 static gboolean
@@ -416,6 +472,7 @@ static gboolean
 pipeline_init (CallsSipMediaPipeline *self,
                GError               **error)
 {
+  GstPad *tmppad;
   const char *env_var;
 
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
@@ -478,6 +535,56 @@ pipeline_init (CallsSipMediaPipeline *self,
   /* rtpbin */
   MAKE_ELEMENT (rtpbin, "rtpbin", "rtpbin");
 
+  /* srtp elements */
+  MAKE_ELEMENT (srtpdec, "srtpdec", "srtpdec");
+  g_signal_connect (self->srtpdec,
+                    "request-key",
+                    G_CALLBACK (on_srtpdec_request_key),
+                    self);
+
+  MAKE_ELEMENT (srtpenc, "srtpenc", "srtpenc");
+  g_object_set (self->srtpenc,
+                "rtp-cipher", 0, "rtp-auth", 0, "rtcp-cipher", 0, "rtcp-auth", 0, NULL);
+
+#if GST_CHECK_VERSION (1, 20, 0)
+  tmppad = gst_element_request_pad_simple (self->srtpenc, "rtp_sink_0");
+#else
+  tmppad = gst_element_get_request_pad (self->srtpenc, "rtp_sink_0");
+#endif
+  gst_object_unref (tmppad);
+
+#if GST_CHECK_VERSION (1, 20, 0)
+  tmppad = gst_element_request_pad_simple (self->srtpenc, "rtcp_sink_0");
+#else
+  tmppad = gst_element_get_request_pad (self->srtpenc, "rtcp_sink_0");
+#endif
+  gst_object_unref (tmppad);
+
+
+  self->request_rtpbin_rtp_encoder_id =
+    g_signal_connect (self->rtpbin,
+                      "request-rtp-encoder",
+                      G_CALLBACK (on_rtpbin_request_encoder),
+                      self);
+
+  self->request_rtpbin_rtp_decoder_id =
+    g_signal_connect (self->rtpbin,
+                      "request-rtp-decoder",
+                      G_CALLBACK (on_rtpbin_request_decoder),
+                      self);
+
+  self->request_rtpbin_rtcp_encoder_id =
+    g_signal_connect (self->rtpbin,
+                      "request-rtcp-encoder",
+                      G_CALLBACK (on_rtpbin_request_encoder),
+                      self);
+
+  self->request_rtpbin_rtcp_decoder_id =
+    g_signal_connect (self->rtpbin,
+                      "request-rtcp-decoder",
+                      G_CALLBACK (on_rtpbin_request_decoder),
+                      self);
+
   /* UDP sources and sinks for RTP and RTCP */
   MAKE_ELEMENT (rtp_src, "udpsrc", "rtp-udp-src");
   MAKE_ELEMENT (rtp_sink, "udpsink", "rtp-udp-sink");
@@ -535,6 +642,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
 {
   g_autoptr (GstPad) srcpad = NULL;
   g_autoptr (GstPad) sinkpad = NULL;
+  GstPadLinkReturn ret;
 
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
@@ -562,7 +670,8 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
 #else
   sinkpad = gst_element_get_request_pad (self->rtpbin, "recv_rtp_sink_0");
 #endif
-  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+  ret = gst_pad_link (srcpad, sinkpad);
+  if (ret != GST_PAD_LINK_OK) {
     if (error)
       g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                    "Failed to link rtpsrc to rtpbin");
@@ -616,6 +725,19 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   /* can only link to depayloader after RTP payload has been verified */
   g_signal_connect (self->rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
 
+  /* request-encoder and request-decoder signals have been emitted after linking pads from rtpbin */
+  if (self->request_rtpbin_rtp_decoder_id)
+    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtp_decoder_id);
+
+  if (self->request_rtpbin_rtp_encoder_id)
+    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtp_encoder_id);
+
+  if (self->request_rtpbin_rtcp_decoder_id)
+    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtcp_decoder_id);
+
+  if (self->request_rtpbin_rtcp_encoder_id)
+    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtcp_encoder_id);
+
   return TRUE;
 }
 
@@ -657,7 +779,7 @@ pipeline_setup_codecs (CallsSipMediaPipeline *self,
   }
 
   /* UDP src capabilities */
-  caps_string = media_codec_get_gst_capabilities (codec, FALSE);
+  caps_string = media_codec_get_gst_capabilities (codec, self->use_srtp);
   g_debug ("Capabilities:\n%s", caps_string);
 
   caps = gst_caps_from_string (caps_string);
@@ -778,6 +900,8 @@ calls_sip_media_pipeline_finalize (GObject *object)
   gst_object_unref (self->pipeline);
   gst_bus_remove_watch (self->bus);
   gst_object_unref (self->bus);
+  gst_object_unref (self->srtpenc);
+  gst_object_unref (self->srtpdec);
 
   g_free (self->remote);
 
@@ -854,7 +978,7 @@ usr2_handler (CallsSipMediaPipeline *self)
            self->element_map_playing,
            self->element_map_paused,
            self->element_map_stopped,
-           EL_ALL_RTP,
+           self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
            self->state);
 
   GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->pipeline),
