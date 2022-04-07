@@ -28,6 +28,7 @@
 #include "calls-sip-media-pipeline.h"
 #include "util.h"
 
+#include <glib-unix.h>
 #include <gst/gst.h>
 #include <gio/gio.h>
 
@@ -842,11 +843,38 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
 }
 
 
+static gboolean
+usr2_handler (CallsSipMediaPipeline *self)
+{
+  g_print ("playing: %d\n"
+           "paused: %d\n"
+           "stopped: %d\n"
+           "target map: %d\n"
+           "current state: %d\n",
+           self->element_map_playing,
+           self->element_map_paused,
+           self->element_map_stopped,
+           EL_ALL_RTP,
+           self->state);
+
+  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->pipeline),
+                                     GST_DEBUG_GRAPH_SHOW_ALL,
+                                     "usr2-debug");
+
+  return G_SOURCE_CONTINUE;
+}
+
+
 static void
 calls_sip_media_pipeline_init (CallsSipMediaPipeline *self)
 {
   if (!gst_is_initialized ())
     gst_init (NULL, NULL);
+
+  /* Pipeline debugging */
+  g_unix_signal_add (SIGUSR2,
+                     (GSourceFunc) usr2_handler,
+                     self);
 }
 
 
