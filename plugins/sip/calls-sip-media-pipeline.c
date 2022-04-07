@@ -656,7 +656,7 @@ pipeline_setup_codecs (CallsSipMediaPipeline *self,
   }
 
   /* UDP src capabilities */
-  caps_string = media_codec_get_gst_capabilities (codec);
+  caps_string = media_codec_get_gst_capabilities (codec, FALSE);
   g_debug ("Capabilities:\n%s", caps_string);
 
   caps = gst_caps_from_string (caps_string);

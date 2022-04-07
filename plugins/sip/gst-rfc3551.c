@@ -106,15 +106,18 @@ media_codec_by_payload_id (guint payload_id)
 /* media_codec_get_gst_capabilities:
  *
  * @codec: A #MediaCodecInfo
+ * @use_srtp: Whether to use SRTP
  *
  * Returns: (transfer full): The capability string describing GstCaps.
  * Used for the RTP source element.
  */
 gchar *
-media_codec_get_gst_capabilities (MediaCodecInfo *codec)
+media_codec_get_gst_capabilities (MediaCodecInfo *codec,
+                                  gboolean        use_srtp)
 {
-  return g_strdup_printf ("application/x-rtp,media=(string)audio,clock-rate=(int)%u"
+  return g_strdup_printf ("application/%s,media=(string)audio,clock-rate=(int)%u"
                           ",encoding-name=(string)%s,payload=(int)%u",
+                          use_srtp ? "x-srtp" : "x-rtp",
                           codec->clock_rate,
                           codec->name,
                           codec->payload_id);
