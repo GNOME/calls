@@ -8,6 +8,7 @@ Uploaders:
 Build-Depends:
  debhelper (>= 11),
  desktop-file-utils,
+ gstreamer1.0-plugins-bad,
  gstreamer1.0-plugins-good,
  gtk-doc-tools <!nodoc>,
  libcallaudio-dev (>= 0.0.5),
