@@ -323,7 +323,6 @@ calls_ofono_call_new (GDBOVoiceCall *voice_call,
 
   return g_object_new (CALLS_TYPE_OFONO_CALL,
                        "voice-call", voice_call,
-                       "properties", call_props,
                        "id", id,
                        "name", name,
                        "inbound", inbound,
