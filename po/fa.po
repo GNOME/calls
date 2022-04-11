@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-01-29 14:07+0330\n"
+"POT-Creation-Date: 2022-03-29 20:32+0000\n"
+"PO-Revision-Date: 2022-04-11 18:16+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "تماس‌ها"
 
@@ -30,7 +30,7 @@ msgstr "تلفن"
 msgid "A phone dialer and call handler"
 msgstr "یک شماره‌گیر تلفن و برقرارکنندهٔ تماس"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;تلفن;تماس;زنگ;گوشی;"
@@ -43,101 +43,189 @@ msgstr "تماس‌ها (خدمت)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "یک شماره‌گیر تلفن و برقرارکنندهٔ تماس (حالت خدمت)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "افزودن حساب"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "برقراری تماس‌های تلفنی و سیپ"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_ورود"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can be "
+"used with a cellular modem for plain old telephone calls as well as VoIP calls "
+"using the SIP protocol."
+msgstr ""
+"تماس‌ها،‌شماره‌گیر و مدیر تماسی ساده و زیبا برای گنوم است. این برنامه می‌تواند به "
+"منظور تماس‌های تلفنی سادهٔ قدیمی از یک مودم استفاده کرده و هم‌چنین با استفاده از "
+"شیوه‌نامهٔ سیپ، تماس‌های ویپ برقرار کند."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "مدیریت حساب"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "برقراری یک تماس"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_اعمال"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "تاریخچهٔ تماس"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "_حذف"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "این که تماس‌ها باید به صورت خودکار از خاستگاه پیش‌گزیده استفاده کنند یا نه"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "کارساز"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "کد کشور بر اساس اعلام مودم"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "نام نمایشی"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "کد کشور استفاده شده برای جست‌وجوی نام آشنا"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "اختیاری"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "افزایه‌ها برای بار کردن خودکار"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "شناسهٔ کاربری"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "این افزایه‌ها هنگام آغاز برنامه به صورت خودکار بار خواهند شد."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "گذرواژه"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "رمزینه‌های صوتی برای استفاده در تماس‌های ویپ به ترتیب ترجیح"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "درگاه"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "رمزینه‌های صوتی ترجیحی برای استفاده در تماس‌های ویپ (در صورت وجود)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "انتقال"
+#: src/calls-account.c:203
+msgid "Default (uninitialized) state"
+msgstr "وضعیت پیش‌گزیده (مقداردهی نشده)"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "استفاده برای تماس‌های تلفنی"
+#: src/calls-account.c:206
+msgid "Initializing account…"
+msgstr "مقدار دهی نخستین حساب…"
 
-#: src/calls-application.c:548
+#: src/calls-account.c:209
+msgid "Uninitializing account…"
+msgstr "لغو مقداردهی حساب…"
+
+#: src/calls-account.c:212
+msgid "Connecting to server…"
+msgstr "وصل شدن به کارساز…"
+
+#: src/calls-account.c:215
+msgid "Account is online"
+msgstr "حساب برخط است"
+
+#: src/calls-account.c:218
+msgid "Disconnecting from server…"
+msgstr "قطع شدن از کارساز…"
+
+#: src/calls-account.c:221
+msgid "Account is offline"
+msgstr "حساب برون‌خط است"
+
+#: src/calls-account.c:224
+msgid "Account encountered an error"
+msgstr "حساب به خطا خورد"
+
+#: src/calls-account.c:242
+msgid "No reason given"
+msgstr "دلیلی داده نشده"
+
+#: src/calls-account.c:245
+msgid "Initialization started"
+msgstr "مقداردهی نخستین آغاز شد"
+
+#: src/calls-account.c:248
+msgid "Initialization complete"
+msgstr "مقداردهی نخستین کامل شد"
+
+#: src/calls-account.c:251
+msgid "Uninitialization started"
+msgstr "لغو مقداردهی آغاز شد"
+
+#: src/calls-account.c:254
+msgid "Uninitialization complete"
+msgstr "لغو مقداردهی کامل شد"
+
+#: src/calls-account.c:257
+msgid "No credentials set"
+msgstr "هیچ اعتباری تنظیم نشده"
+
+#: src/calls-account.c:260
+msgid "Starting to connect"
+msgstr "آغاز به وصل"
+
+#: src/calls-account.c:263
+msgid "Connection timed out"
+msgstr "زمان اتّصال به سر رسید"
+
+#: src/calls-account.c:266
+msgid "Domain name could not be resolved"
+msgstr "نام دامنه نتوانست پیدا شود"
+
+#: src/calls-account.c:269
+msgid "Server did not accept username or password"
+msgstr "کارساز، نام کاربری و گذرواژه را نپذیرفت"
+
+#: src/calls-account.c:272
+msgid "Connecting complete"
+msgstr "وصل کامل شد"
+
+#: src/calls-account.c:275
+msgid "Starting to disconnect"
+msgstr "آغاز به قطع"
+
+#: src/calls-account.c:278
+msgid "Disconnecting complete"
+msgstr "قطع کامل شد"
+
+#: src/calls-account.c:281
+msgid "Internal error occurred"
+msgstr "خزایی داخلی رخ داد"
+
+#: src/calls-application.c:318
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "تلاش شد نشانی نامعتبر «%s» شماره‌گیری شود"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:633
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:687
 msgid "The name of the plugin to use as a call provider"
 msgstr "نام افزایه برای استفاده به عنوان فراهم‌کنندهٔ تماس"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:688
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:693
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:699
 msgid "Dial a telephone number"
 msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:700
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:705
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:711
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:436
 msgid "Anonymous caller"
 msgstr "تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -150,56 +238,48 @@ msgstr ""
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@gmail.com>"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "نمی‌توان تماس برقرار کرد: بدون مودم با قابلیت صوتی"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "نمی‌توان تماس برقرار کرد: بدون حساب ویپ یا مودم"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "نمی‌توان تماس برقرار کرد: بدون خدمت پشتانه"
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No plugin loaded"
+msgstr "نمی‌توان تماس برقرار کرد: افزایه‌ای بار نشده"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "نمی‌توان تماس برقرار کرد: بدون افزایه"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "آشنایان"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "صفحهٔ شماره‌گیری"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "اخیر"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "تماس از دست رفته"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "تماس از دست رفته از <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "تماس از دست رفته از %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "تماس از دست رفته از تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "پاسخ تماس"
 
@@ -226,20 +306,20 @@ msgid "_Add Account"
 msgstr "_افزودن حساب"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "تماس"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "_حذف تماس"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_رونوشت از شماره"
 
-#: src/ui/call-record-row.ui:113
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_افزودن آشنا"
 
@@ -315,6 +395,126 @@ msgstr "تماس جدید"
 msgid "Back"
 msgstr "بازگشت"
 
+#: plugins/mm/calls-mm-call.c:75
+msgid "Call disconnected (unknown reason)"
+msgstr "تماس قطع شد (دلیل نامشخّص)"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Outgoing call started"
+msgstr "تماس خروجی آغاز شد"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "New incoming call"
+msgstr "تماس ورودی جدید"
+
+#: plugins/mm/calls-mm-call.c:78
+msgid "Call accepted"
+msgstr "تماس پذیرفته شد"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call ended"
+msgstr "تماس پایان یافت"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (busy or call refused)"
+msgstr "تماس قطع شد (اشغال یا رد تماس)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "تماس قطع شد (شناسهٔ اشتباه یا مشکل شبکه)"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "تماس قطع شد (خطای برپایی کانال صوتی)"
+
+#: plugins/mm/calls-mm-call.c:83
+msgid "Call transferred"
+msgstr "تماس منتقل شد"
+
+#: plugins/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "تماس منحرف شد"
+
+#: plugins/mm/calls-mm-call.c:113
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "تماس قطع شد (دلیل نامشخّص با رمز %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "مدیر مودم موجود نیست"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+msgid "No voice-capable modem available"
+msgstr "مودمی با قابلیت صوتی موجود نیست"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "عادی"
+
+#: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialized"
+msgstr "مقداردهی شد"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "دی‌باس موجود نیست"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "افزودن حساب"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_ورود"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "مدیریت حساب"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_اعمال"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_حذف"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "کارساز"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "نام نمایشی"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "اختیاری"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "شناسهٔ کاربری"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "گذرواژه"
+
+#: plugins/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "درگاه"
+
+#: plugins/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "انتقال"
+
+#: plugins/sip/sip-account-widget.ui:194
+msgid "Use for Phone Calls"
+msgstr "استفاده برای تماس‌های تلفنی"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "نمی‌توان تماس برقرار کرد: بدون خدمت پشتانه"
+
 #~ msgid "Calling…"
 #~ msgstr "در حال تماس…"
 
@@ -344,9 +544,6 @@ msgstr "بازگشت"
 
 #~ msgid "This call is not encrypted"
 #~ msgstr "تماس رمزنگاری نشده است"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "تماس رمزنگاری شده است"
 
 #~ msgid "Recent Calls"
 #~ msgstr "تماس‌های اخیر"
@@ -451,9 +648,6 @@ msgstr "بازگشت"
 #~ msgid "Interface for libfolks"
 #~ msgstr "واسط libfolks"
 
-#~ msgid "Call holder"
-#~ msgstr "نگه‌دارندهٔ تماس"
-
 #~ msgid "The holder for this call"
 #~ msgstr "نگه‌دارنده برای این تماس"
 
@@ -480,6 +674,3 @@ msgstr "بازگشت"
 
 #~ msgid "A text string describing the status for display to the user"
 #~ msgstr "متنی که وضعیت را برای نمایش به کاربر شرح می‌دهد"
-
-#~ msgid "Incoming call"
-#~ msgstr "تماس ورودی"
