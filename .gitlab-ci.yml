@@ -10,7 +10,7 @@ stages:
 
 variables:
   L5_DOCKER_IMAGE: debian:bookworm
-  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20220212
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20220412
   GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
