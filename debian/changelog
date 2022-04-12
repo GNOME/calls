@@ -1,3 +1,58 @@
+gnome-calls (43~alpha.0) UNRELEASED; urgency=medium
+
+  [ Piotr Drąg ]
+  * Update Polish translation
+  * Update Polish translation
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+  * Update Italian translation
+
+  [ Emin Tufan Çetin ]
+  * Update Turkish translation
+  * Update Turkish translation
+
+  [ Martin ]
+  * Update Slovenian translation
+  * Update Slovenian translation
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+  * Update Hebrew translation
+
+  [ Pablo Correa Gómez ]
+  * Update Spanish translation
+  * Update Spanish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+  * Update Romanian translation
+
+  [ Andrey Skvortsov ]
+  * sip-account-widget: Add switch to display password
+
+  [ Anders Jonsson ]
+  * plugins: Use American spelling
+  * Update Swedish translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * manager: Don't raise critical when origin id lookup fails
+  * sip: media-pipeline: Use debug macros to allow graphing pipelines
+  * sip: media-pipeline: No need to undef locally declared macros
+  * tests: media: Rename tests
+  * sip: pipeline: Unify send and receive pipeline
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Eugenio Paolantonio (g7) ]
+  * ofono: call: do not try to pass the "properties" property
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 12 Apr 2022 10:35:09 +0200
+
 gnome-calls (42.0) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]
