@@ -51,6 +51,7 @@ sip_sources = files(
     'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
     'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
     'calls-sip-account-widget.c', 'calls-sip-account-widget.h',
+    'calls-srtp-utils.c', 'calls-srtp-utils.h',
     'gst-rfc3551.c', 'gst-rfc3551.h',
   ]
 )
