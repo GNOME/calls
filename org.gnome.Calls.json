@@ -1,7 +1,7 @@
 {
     "app-id" : "org.gnome.Calls",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "41",
     "sdk" : "org.gnome.Sdk",
     "command" : "gnome-calls",
     "finish-args" : [

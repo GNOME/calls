@@ -102,7 +102,7 @@ package-deb-pureos-byzantium:arm64:
 
 # For some reason including https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml fails with a network error (status code 500), therefore it's copied here
 .flatpak:
-  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
+  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:41'
   stage: 'package'
   interruptible: true
   tags:
