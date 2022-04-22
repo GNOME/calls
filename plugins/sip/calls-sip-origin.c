@@ -451,6 +451,7 @@ sip_r_register (int              status,
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
       g_free (origin->own_ip);
       origin->own_ip = g_strdup (sip->sip_contact->m_url->url_host);
+      g_debug ("Own IP as reported by the registrar: %s", origin->own_ip);
     }
 
   } else if (status == 401 || status == 407) {
