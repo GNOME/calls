@@ -370,8 +370,9 @@ setup_socket_reuse (CallsSipMediaPipeline *self,
   g_autoptr (GSocket) rtp_sock = NULL;
   g_autoptr (GSocket) rtcp_sock = NULL;
 
-  /* Set udp sources to ready to get ports allocated */
-  gst_element_set_state (self->pipeline, GST_STATE_READY);
+  /* set rtp element ready and lock it's state so it doesn't get stopped */
+  gst_element_set_locked_state (self->rtp_src, TRUE);
+  gst_element_set_state (self->rtp_src, GST_STATE_READY);
 
   g_object_get (self->rtp_src, "used-socket", &rtp_sock, NULL);
   if (!rtp_sock) {
@@ -381,6 +382,16 @@ setup_socket_reuse (CallsSipMediaPipeline *self,
     return FALSE;
   }
 
+  /* configure socket and don't close it, since it belongs to rtp_src */
+  g_object_set (self->rtp_sink,
+                "socket", rtp_sock,
+                "close-socket", FALSE,
+                NULL);
+
+  /* set rtcp element ready and lock it's state so it doesn't get stopped */
+  gst_element_set_locked_state (self->rtcp_src, TRUE);
+  gst_element_set_state (self->rtcp_src, GST_STATE_READY);
+
   g_object_get (self->rtcp_src, "used-socket", &rtcp_sock, NULL);
   if (!rtcp_sock) {
     if (error)
@@ -389,12 +400,8 @@ setup_socket_reuse (CallsSipMediaPipeline *self,
     return FALSE;
   }
 
-  /* Ports are allocated. Let's reuse the socket for rtcp source in the sink for NAT traversal*/
-  g_object_set (self->rtp_sink,
-                "socket", rtp_sock,
-                "close-socket", FALSE,
-                NULL);
 
+  /* configure socket and don't close it, since it belongs to rtcp_src */
   g_object_set (self->rtcp_sink,
                 "socket", rtcp_sock,
                 "close-socket", FALSE,
@@ -478,17 +485,9 @@ pipeline_init (CallsSipMediaPipeline *self,
   MAKE_ELEMENT (rtcp_sink, "udpsink", "rtcp-udp-sink");
 
   /* port 0 means letting the OS allocate */
-  g_object_set (self->rtp_src,
-                "port", 0,
-                "close-socket", FALSE,
-                "reuse", TRUE,
-                NULL);
+  g_object_set (self->rtp_src, "port", 0, NULL);
 
-  g_object_set (self->rtcp_src,
-                "port", 0,
-                "close-socket", FALSE,
-                "reuse", TRUE,
-                NULL);
+  g_object_set (self->rtcp_src, "port", 0, NULL);
 
   g_object_set (self->rtp_sink, "async", FALSE, "sync", FALSE, NULL);
   g_object_set (self->rtcp_sink, "async", FALSE, "sync", FALSE, NULL);
@@ -993,6 +992,10 @@ calls_sip_media_pipeline_start (CallsSipMediaPipeline *self)
            calls_sip_media_pipeline_get_rtp_port (self),
            calls_sip_media_pipeline_get_rtcp_port (self));
 
+  /* unlock the state of our udp sources, see setup_socket_reuse() */
+  gst_element_set_locked_state (self->rtp_src, FALSE);
+  gst_element_set_locked_state (self->rtcp_src, FALSE);
+
   gst_element_set_state (self->pipeline, GST_STATE_PLAYING);
 
   g_debug ("RTP/RTCP port after starting pipeline: %d/%d",
@@ -1012,6 +1015,11 @@ calls_sip_media_pipeline_stop (CallsSipMediaPipeline *self)
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
   g_debug ("Stopping media pipeline");
+
+  gst_element_set_locked_state (self->rtp_src, FALSE);
+  gst_element_set_locked_state (self->rtcp_src, FALSE);
+  gst_element_set_locked_state (self->rtp_sink, FALSE);
+  gst_element_set_locked_state (self->rtcp_sink, FALSE);
 
   gst_element_set_state (self->pipeline, GST_STATE_NULL);
 
@@ -1047,6 +1055,12 @@ calls_sip_media_pipeline_pause (CallsSipMediaPipeline *self,
            "Pausing" :
            "Unpausing");
 
+
+  /* leave udpsrc running to prevent timeouts */
+  gst_element_set_locked_state (self->rtp_src, pause);
+  gst_element_set_locked_state (self->rtcp_src, pause);
+  gst_element_set_locked_state (self->rtp_sink, pause);
+  gst_element_set_locked_state (self->rtcp_sink, pause);
 
   gst_element_set_state (self->pipeline, pause ?
                          GST_STATE_PAUSED :
