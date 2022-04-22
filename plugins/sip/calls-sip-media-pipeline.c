@@ -408,8 +408,6 @@ static gboolean
 pipeline_init (CallsSipMediaPipeline *self,
                GError               **error)
 {
-  g_autoptr (GSocket) rtp_sock = NULL;
-  g_autoptr (GSocket) rtcp_sock = NULL;
   const char *env_var;
 
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
