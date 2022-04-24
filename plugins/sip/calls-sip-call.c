@@ -56,21 +56,20 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-struct _CallsSipCall
-{
-  GObject parent_instance;
+struct _CallsSipCall {
+  GObject                parent_instance;
 
-  CallsSipMediaManager *manager;
+  CallsSipMediaManager  *manager;
   CallsSipMediaPipeline *pipeline;
 
-  char *ip;
+  char                  *ip;
 
-  guint rport_rtp;
-  guint rport_rtcp;
-  gchar *remote;
+  guint                  rport_rtp;
+  guint                  rport_rtcp;
+  gchar                 *remote;
 
-  nua_handle_t *nh;
-  GList *codecs;
+  nua_handle_t          *nh;
+  GList                 *codecs;
 };
 
 static void calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -219,10 +218,10 @@ calls_sip_call_set_property (GObject      *object,
 
 
 static void
-calls_sip_call_get_property (GObject      *object,
-                             guint         property_id,
-                             GValue       *value,
-                             GParamSpec   *pspec)
+calls_sip_call_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
 {
   CallsSipCall *self = CALLS_SIP_CALL (object);
 

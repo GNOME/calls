@@ -32,16 +32,15 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsOfonoOrigin
-{
-  GObject parent_instance;
-  GDBusConnection *connection;
-  GDBOModem *modem;
-  gchar *name;
+struct _CallsOfonoOrigin {
+  GObject               parent_instance;
+  GDBusConnection      *connection;
+  GDBOModem            *modem;
+  gchar                *name;
   GDBOVoiceCallManager *voice;
-  gboolean sending_tones;
-  GString *tone_queue;
-  GHashTable *calls;
+  gboolean              sending_tones;
+  GString              *tone_queue;
+  GHashTable           *calls;
 };
 
 static void calls_ofono_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -66,22 +65,22 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
-dial_cb (GDBOVoiceCallManager  *voice,
-         GAsyncResult          *res,
-         CallsOfonoOrigin      *self)
+dial_cb (GDBOVoiceCallManager *voice,
+         GAsyncResult         *res,
+         CallsOfonoOrigin     *self)
 {
   gboolean ok;
+
   g_autoptr (GError) error = NULL;
 
   ok = gdbo_voice_call_manager_call_dial_finish
-    (voice, NULL, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error dialing number on modem `%s': %s",
-                 self->name, error->message);
-      CALLS_ERROR (self, error);
-      return;
-    }
+         (voice, NULL, res, &error);
+  if (!ok) {
+    g_warning ("Error dialing number on modem `%s': %s",
+               self->name, error->message);
+    CALLS_ERROR (self, error);
+    return;
+  }
 
   /* We will add the call through the call-added signal */
 }
@@ -96,11 +95,11 @@ dial (CallsOrigin *origin, const gchar *number)
 
   gdbo_voice_call_manager_call_dial
     (self->voice,
-     number,
-     "default" /* default caller id settings */,
-     NULL,
-     (GAsyncReadyCallback) dial_cb,
-     self);
+    number,
+    "default" /* default caller id settings */,
+    NULL,
+    (GAsyncReadyCallback) dial_cb,
+    self);
 }
 
 
@@ -161,10 +160,10 @@ set_property (GObject      *object,
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
@@ -178,7 +177,7 @@ get_property (GObject      *object,
     break;
 
   case PROP_CALLS:
-    g_value_set_pointer(value, g_hash_table_get_values (self->calls));
+    g_value_set_pointer (value, g_hash_table_get_values (self->calls));
     break;
 
   case PROP_COUNTRY_CODE:
@@ -199,14 +198,13 @@ remove_call (CallsOfonoOrigin *self,
 {
   const gchar *path = calls_ofono_call_get_object_path (call);
 
-  g_signal_emit_by_name (CALLS_ORIGIN(self), "call-removed",
-                         CALLS_CALL(call), reason);
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-removed",
+                         CALLS_CALL (call), reason);
   g_hash_table_remove (self->calls, path);
 }
 
 
-struct CallsRemoveCallsData
-{
+struct CallsRemoveCallsData {
   CallsOrigin *origin;
   const gchar *reason;
 };
@@ -217,7 +215,7 @@ remove_calls_cb (const gchar                 *path,
                  struct CallsRemoveCallsData *data)
 {
   g_signal_emit_by_name (data->origin, "call-removed",
-                         CALLS_CALL(call), data->reason);
+                         CALLS_CALL (call), data->reason);
   return TRUE;
 }
 
@@ -232,8 +230,7 @@ remove_calls (CallsOfonoOrigin *self, const gchar *reason)
 }
 
 
-struct CallsVoiceCallProxyNewData
-{
+struct CallsVoiceCallProxyNewData {
   CallsOfonoOrigin *self;
   GVariant         *properties;
 };
@@ -249,33 +246,28 @@ send_tones_cb (GDBOVoiceCallManager *voice,
 
   /* Deal with old tones */
   ok = gdbo_voice_call_manager_call_send_tones_finish
-    (voice, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error sending DTMF tones to network on modem `%s': %s",
-                 self->name, error->message);
-      CALLS_EMIT_MESSAGE (self, error->message, GTK_MESSAGE_WARNING);
-    }
+         (voice, res, &error);
+  if (!ok) {
+    g_warning ("Error sending DTMF tones to network on modem `%s': %s",
+               self->name, error->message);
+    CALLS_EMIT_MESSAGE (self, error->message, GTK_MESSAGE_WARNING);
+  }
 
   /* Possibly send new tones */
-  if (self->tone_queue)
-    {
-      g_debug ("Sending queued DTMF tones `%s'", self->tone_queue->str);
+  if (self->tone_queue) {
+    g_debug ("Sending queued DTMF tones `%s'", self->tone_queue->str);
 
-      gdbo_voice_call_manager_call_send_tones
-        (voice,
-         self->tone_queue->str,
-         NULL,
-         (GAsyncReadyCallback) send_tones_cb,
-         self);
+    gdbo_voice_call_manager_call_send_tones (voice,
+                                             self->tone_queue->str,
+                                             NULL,
+                                             (GAsyncReadyCallback) send_tones_cb,
+                                             self);
 
-      g_string_free (self->tone_queue, TRUE);
-      self->tone_queue = NULL;
-    }
-  else
-    {
-      self->sending_tones = FALSE;
-    }
+    g_string_free (self->tone_queue, TRUE);
+    self->tone_queue = NULL;
+  } else {
+    self->sending_tones = FALSE;
+  }
 }
 
 
@@ -285,63 +277,56 @@ tone_cb (CallsOfonoOrigin *self,
 {
   const gchar key_str[2] = { key, '\0' };
 
-  if (self->sending_tones)
-    {
-      if (self->tone_queue)
-        {
-          g_string_append_c (self->tone_queue, key);
-        }
-      else
-        {
-          self->tone_queue = g_string_new (key_str);
-        }
+  if (self->sending_tones) {
+    if (self->tone_queue) {
+      g_string_append_c (self->tone_queue, key);
+    } else {
+      self->tone_queue = g_string_new (key_str);
     }
-  else
-    {
-      g_debug ("Sending immediate DTMF tone `%c'", key);
+  } else {
+    g_debug ("Sending immediate DTMF tone `%c'", key);
 
-      gdbo_voice_call_manager_call_send_tones
-        (self->voice,
-         key_str,
-         NULL,
-         (GAsyncReadyCallback) send_tones_cb,
-         self);
+    gdbo_voice_call_manager_call_send_tones (self->voice,
+                                             key_str,
+                                             NULL,
+                                             (GAsyncReadyCallback) send_tones_cb,
+                                             self);
 
-      self->sending_tones = TRUE;
-    }
+    self->sending_tones = TRUE;
+  }
 }
 
 static void
-voice_call_proxy_new_cb (GDBusConnection *connection,
-                         GAsyncResult *res,
+voice_call_proxy_new_cb (GDBusConnection                   *connection,
+                         GAsyncResult                      *res,
                          struct CallsVoiceCallProxyNewData *data)
 {
   CallsOfonoOrigin *self = data->self;
   GDBOVoiceCall *voice_call;
+
   g_autoptr (GError) error = NULL;
   const gchar *path;
   CallsOfonoCall *call;
 
   voice_call = gdbo_voice_call_proxy_new_finish (res, &error);
-  if (!voice_call)
-    {
-      g_variant_unref (data->properties);
-      g_free (data);
-      g_warning ("Error creating oFono VoiceCall proxy: %s",
-                 error->message);
-      CALLS_ERROR (self, error);
-      return;
-    }
+  if (!voice_call) {
+    g_variant_unref (data->properties);
+    g_free (data);
+    g_warning ("Error creating oFono VoiceCall proxy: %s",
+               error->message);
+    CALLS_ERROR (self, error);
+    return;
+  }
 
   call = calls_ofono_call_new (voice_call, data->properties);
   g_signal_connect_swapped (call, "tone",
                             G_CALLBACK (tone_cb), self);
 
   path = g_dbus_proxy_get_object_path (G_DBUS_PROXY (voice_call));
-  g_hash_table_insert (self->calls, g_strdup(path), call);
+  g_hash_table_insert (self->calls, g_strdup (path), call);
 
-  g_signal_emit_by_name (CALLS_ORIGIN(self), "call-added",
-                         CALLS_CALL(call));
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added",
+                         CALLS_CALL (call));
 
   g_debug ("Call `%s' added", path);
 }
@@ -357,11 +342,10 @@ call_added_cb (GDBOVoiceCallManager *voice,
 
   g_debug ("Adding call `%s'", path);
 
-  if (g_hash_table_lookup (self->calls, path))
-    {
-      g_warning ("Call `%s' already exists", path);
-      return;
-    }
+  if (g_hash_table_lookup (self->calls, path)) {
+    g_warning ("Call `%s' already exists", path);
+    return;
+  }
 
   data = g_new0 (struct CallsVoiceCallProxyNewData, 1);
   data->self = self;
@@ -370,12 +354,12 @@ call_added_cb (GDBOVoiceCallManager *voice,
 
   gdbo_voice_call_proxy_new
     (self->connection,
-     G_DBUS_PROXY_FLAGS_NONE,
-     g_dbus_proxy_get_name (G_DBUS_PROXY (voice)),
-     path,
-     NULL,
-     (GAsyncReadyCallback) voice_call_proxy_new_cb,
-     data);
+    G_DBUS_PROXY_FLAGS_NONE,
+    g_dbus_proxy_get_name (G_DBUS_PROXY (voice)),
+    path,
+    NULL,
+    (GAsyncReadyCallback) voice_call_proxy_new_cb,
+    data);
 
   g_debug ("Call `%s' addition in progress", path);
 }
@@ -393,24 +377,22 @@ call_removed_cb (GDBOVoiceCallManager *voice,
   g_debug ("Removing call `%s'", path);
 
   ofono_call = g_hash_table_lookup (self->calls, path);
-  if (!ofono_call)
-    {
-      g_warning ("Could not find removed call `%s'", path);
-      return;
-    }
+  if (!ofono_call) {
+    g_warning ("Could not find removed call `%s'", path);
+    return;
+  }
 
   reason = g_string_new ("Call removed");
 
   ofono_reason = calls_ofono_call_get_disconnect_reason (ofono_call);
-  if (ofono_reason)
-    {
-      /* The oFono reason is either "local", "remote" or "network".
-       * We just capitalise that to create a nice reason string.
-       */
-      g_string_assign (reason, ofono_reason);
-      reason->str[0] = g_ascii_toupper (reason->str[0]);
-      g_string_append (reason, " disconnection");
-    }
+  if (ofono_reason) {
+    /* The oFono reason is either "local", "remote" or "network".
+     * We just capitalise that to create a nice reason string.
+     */
+    g_string_assign (reason, ofono_reason);
+    reason->str[0] = g_ascii_toupper (reason->str[0]);
+    g_string_append (reason, " disconnection");
+  }
 
   remove_call (self, ofono_call, reason->str);
 
@@ -426,21 +408,21 @@ get_calls_cb (GDBOVoiceCallManager *voice,
 {
   gboolean ok;
   GVariant *calls_with_properties = NULL;
+
   g_autoptr (GError) error = NULL;
   GVariantIter *iter = NULL;
   const gchar *path;
   GVariant *properties;
 
   ok = gdbo_voice_call_manager_call_get_calls_finish
-    (voice, &calls_with_properties, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error getting calls from oFono"
-                 " VoiceCallManager `%s': %s",
-                 self->name, error->message);
-      CALLS_ERROR (self, error);
-      return;
-    }
+         (voice, &calls_with_properties, res, &error);
+  if (!ok) {
+    g_warning ("Error getting calls from oFono"
+               " VoiceCallManager `%s': %s",
+               self->name, error->message);
+    CALLS_ERROR (self, error);
+    return;
+  }
 
   {
     char *text = g_variant_print (calls_with_properties, TRUE);
@@ -453,10 +435,10 @@ get_calls_cb (GDBOVoiceCallManager *voice,
   g_variant_get (calls_with_properties, "a(oa{sv})", &iter);
   while (g_variant_iter_loop (iter, "(&o@a{sv})",
                               &path, &properties))
-    {
-      g_debug ("Got call object path `%s'", path);
-      call_added_cb (voice, path, properties, self);
-    }
+  {
+    g_debug ("Got call object path `%s'", path);
+    call_added_cb (voice, path, properties, self);
+  }
   g_variant_iter_free (iter);
 
   g_variant_unref (calls_with_properties);
@@ -470,15 +452,14 @@ voice_new_cb (GDBusConnection  *connection,
   g_autoptr (GError) error = NULL;
 
   self->voice = gdbo_voice_call_manager_proxy_new_finish
-    (res, &error);
-  if (!self->voice)
-    {
-      g_warning ("Error creating oFono"
-                 " VoiceCallManager `%s' proxy: %s",
-                 self->name, error->message);
-      CALLS_ERROR (self, error);
-      return;
-    }
+                  (res, &error);
+  if (!self->voice) {
+    g_warning ("Error creating oFono"
+               " VoiceCallManager `%s' proxy: %s",
+               self->name, error->message);
+    CALLS_ERROR (self, error);
+    return;
+  }
 
   g_signal_connect (self->voice, "call-added",
                     G_CALLBACK (call_added_cb), self);
@@ -487,9 +468,9 @@ voice_new_cb (GDBusConnection  *connection,
 
   gdbo_voice_call_manager_call_get_calls
     (self->voice,
-     NULL,
-     (GAsyncReadyCallback) get_calls_cb,
-     self);
+    NULL,
+    (GAsyncReadyCallback) get_calls_cb,
+    self);
 }
 
 
@@ -510,18 +491,16 @@ constructed (GObject *object)
   name = g_object_get_data (G_OBJECT (self->modem),
                             "calls-modem-name");
   if (name)
-    {
-      self->name = g_strdup (name);
-    }
+    self->name = g_strdup (name);
 
   gdbo_voice_call_manager_proxy_new
     (self->connection,
-     G_DBUS_PROXY_FLAGS_NONE,
-     g_dbus_proxy_get_name (modem_proxy),
-     g_dbus_proxy_get_object_path (modem_proxy),
-     NULL,
-     (GAsyncReadyCallback)voice_new_cb,
-     self);
+    G_DBUS_PROXY_FLAGS_NONE,
+    g_dbus_proxy_get_name (modem_proxy),
+    g_dbus_proxy_get_object_path (modem_proxy),
+    NULL,
+    (GAsyncReadyCallback) voice_new_cb,
+    self);
 
   G_OBJECT_CLASS (calls_ofono_origin_parent_class)->constructed (object);
 }
@@ -545,10 +524,9 @@ finalize (GObject *object)
 {
   CallsOfonoOrigin *self = CALLS_OFONO_ORIGIN (object);
 
-  if (self->tone_queue)
-    {
-      g_string_free (self->tone_queue, TRUE);
-    }
+  if (self->tone_queue) {
+    g_string_free (self->tone_queue, TRUE);
+  }
   g_free (self->name);
 
   G_OBJECT_CLASS (calls_ofono_origin_parent_class)->finalize (object);

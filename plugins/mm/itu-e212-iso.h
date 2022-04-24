@@ -16,10 +16,9 @@
 #include <glib.h>
 
 
-struct mcc_list
-{
+struct mcc_list {
   guint mcc;
-  char code[3];
+  char  code[3];
 };
 
 /*

@@ -34,26 +34,25 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsMMOrigin
-{
-  GObject parent_instance;
-  MMObject *mm_obj;
-  MMModemVoice *voice;
+struct _CallsMMOrigin {
+  GObject          parent_instance;
+  MMObject        *mm_obj;
+  MMModemVoice    *voice;
   MMModem3gppUssd *ussd;
-  MMSim *sim;
+  MMSim           *sim;
 
   /* XXX: These should be used only for pointer comparison,
    * The content should never be used as it might be
    * pointing to a freed location */
-  char *last_ussd_request;
-  char *last_ussd_response;
+  char            *last_ussd_request;
+  char            *last_ussd_response;
 
   gulong           ussd_handle_id;
 
-  char *id;
-  char *name;
-  GHashTable *calls;
-  char *country_code;
+  char            *id;
+  char            *name;
+  GHashTable      *calls;
+  char            *country_code;
 };
 
 static void calls_mm_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -85,8 +84,9 @@ ussd_initiate_cb (GObject      *object,
                   GAsyncResult *result,
                   gpointer      user_data)
 {
-  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
-  g_autoptr(GTask) task = user_data;
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *) object;
+
+  g_autoptr (GTask) task = user_data;
   CallsMMOrigin *self = user_data;
   char *response = NULL;
   GError *error = NULL;
@@ -110,8 +110,9 @@ ussd_reinitiate_cb (GObject      *object,
                     GAsyncResult *result,
                     gpointer      user_data)
 {
-  CallsUssd *ussd = (CallsUssd *)object;
-  g_autoptr(GTask) task = user_data;
+  CallsUssd *ussd = (CallsUssd *) object;
+
+  g_autoptr (GTask) task = user_data;
   CallsMMOrigin *self = user_data;
   GCancellable *cancellable;
   GError *error = NULL;
@@ -139,9 +140,10 @@ ussd_respond_cb (GObject      *object,
                  GAsyncResult *result,
                  gpointer      user_data)
 {
-  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *) object;
   CallsMMOrigin *self;
-  g_autoptr(GTask) task = user_data;
+
+  g_autoptr (GTask) task = user_data;
   char *response = NULL;
   GError *error = NULL;
 
@@ -164,9 +166,10 @@ ussd_cancel_cb (GObject      *object,
                 GAsyncResult *result,
                 gpointer      user_data)
 {
-  MMModem3gppUssd *ussd = (MMModem3gppUssd *)object;
+  MMModem3gppUssd *ussd = (MMModem3gppUssd *) object;
   CallsMMOrigin *self;
-  g_autoptr(GTask) task = user_data;
+
+  g_autoptr (GTask) task = user_data;
   GError *error = NULL;
   gboolean response;
 
@@ -196,33 +199,32 @@ calls_mm_ussd_get_state (CallsUssd *ussd)
 }
 
 static void
-calls_mm_ussd_initiate_async (CallsUssd           *ussd,
-                              const char          *command,
-                              GCancellable        *cancellable,
-                              GAsyncReadyCallback  callback,
-                              gpointer             user_data)
+calls_mm_ussd_initiate_async (CallsUssd          *ussd,
+                              const char         *command,
+                              GCancellable       *cancellable,
+                              GAsyncReadyCallback callback,
+                              gpointer            user_data)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
-  g_autoptr(GTask) task = NULL;
+
+  g_autoptr (GTask) task = NULL;
   CallsUssdState state;
 
   g_return_if_fail (CALLS_IS_USSD (ussd));
 
   task = g_task_new (self, cancellable, callback, user_data);
 
-  if (!self->ussd)
-    {
-      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_NOT_FOUND,
-                               "No USSD interface found");
-      return;
-    }
+  if (!self->ussd) {
+    g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_NOT_FOUND,
+                             "No USSD interface found");
+    return;
+  }
 
-  if (!command || !*command)
-    {
-      g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
-                               "USSD command empty");
-      return;
-    }
+  if (!command || !*command) {
+    g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
+                             "USSD command empty");
+    return;
+  }
 
   state = calls_ussd_get_state (CALLS_USSD (self));
   g_task_set_task_data (task, g_strdup (command), g_free);
@@ -237,9 +239,9 @@ calls_mm_ussd_initiate_async (CallsUssd           *ussd,
 }
 
 static char *
-calls_mm_ussd_initiate_finish (CallsUssd     *ussd,
-                               GAsyncResult  *result,
-                               GError       **error)
+calls_mm_ussd_initiate_finish (CallsUssd    *ussd,
+                               GAsyncResult *result,
+                               GError      **error)
 {
   g_return_val_if_fail (CALLS_IS_USSD (ussd), NULL);
   g_return_val_if_fail (G_IS_TASK (result), NULL);
@@ -249,11 +251,11 @@ calls_mm_ussd_initiate_finish (CallsUssd     *ussd,
 }
 
 static void
-calls_mm_ussd_respond_async (CallsUssd           *ussd,
-                             const char          *response,
-                             GCancellable        *cancellable,
-                             GAsyncReadyCallback  callback,
-                             gpointer             user_data)
+calls_mm_ussd_respond_async (CallsUssd          *ussd,
+                             const char         *response,
+                             GCancellable       *cancellable,
+                             GAsyncReadyCallback callback,
+                             gpointer            user_data)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
   GTask *task;
@@ -266,9 +268,9 @@ calls_mm_ussd_respond_async (CallsUssd           *ussd,
 }
 
 static char *
-calls_mm_ussd_respond_finish (CallsUssd     *ussd,
-                              GAsyncResult  *result,
-                              GError       **error)
+calls_mm_ussd_respond_finish (CallsUssd    *ussd,
+                              GAsyncResult *result,
+                              GError      **error)
 {
   g_return_val_if_fail (CALLS_IS_USSD (ussd), NULL);
   g_return_val_if_fail (G_IS_TASK (result), NULL);
@@ -278,10 +280,10 @@ calls_mm_ussd_respond_finish (CallsUssd     *ussd,
 }
 
 static void
-calls_mm_ussd_cancel_async (CallsUssd           *ussd,
-                            GCancellable        *cancellable,
-                            GAsyncReadyCallback  callback,
-                            gpointer             user_data)
+calls_mm_ussd_cancel_async (CallsUssd          *ussd,
+                            GCancellable       *cancellable,
+                            GAsyncReadyCallback callback,
+                            gpointer            user_data)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (ussd);
   GTask *task;
@@ -294,9 +296,9 @@ calls_mm_ussd_cancel_async (CallsUssd           *ussd,
 }
 
 static gboolean
-calls_mm_ussd_cancel_finish (CallsUssd     *ussd,
-                             GAsyncResult  *result,
-                             GError       **error)
+calls_mm_ussd_cancel_finish (CallsUssd    *ussd,
+                             GAsyncResult *result,
+                             GError      **error)
 {
   g_return_val_if_fail (CALLS_IS_USSD (ussd), FALSE);
   g_return_val_if_fail (G_IS_TASK (result), FALSE);
@@ -312,15 +314,15 @@ dial_cb (MMModemVoice  *voice,
          CallsMMOrigin *self)
 {
   MMCall *call;
+
   g_autoptr (GError) error = NULL;
 
   call = mm_modem_voice_create_call_finish (voice, res, &error);
-  if (!call)
-    {
-      g_warning ("Error dialing number on ModemManager modem `%s': %s",
-                 self->name, error->message);
-      CALLS_ERROR (self, error);
-    }
+  if (!call) {
+    g_warning ("Error dialing number on ModemManager modem `%s': %s",
+               self->name, error->message);
+    CALLS_ERROR (self, error);
+  }
 }
 
 
@@ -337,10 +339,10 @@ dial (CallsOrigin *origin, const gchar *number)
 
   mm_modem_voice_create_call
     (self->voice,
-     call_props,
-     NULL,
-     (GAsyncReadyCallback) dial_cb,
-     self);
+    call_props,
+    NULL,
+    (GAsyncReadyCallback) dial_cb,
+    self);
 
   g_object_unref (call_props);
 }
@@ -365,22 +367,20 @@ remove_calls (CallsMMOrigin *self, const gchar *reason)
 
   paths = g_hash_table_get_keys (self->calls);
 
-  for (node = paths; node != NULL; node = node->next)
-    {
-      g_hash_table_steal_extended (self->calls, node->data, NULL, &call);
-      g_signal_emit_by_name (self, "call-removed",
-                             CALLS_CALL(call), reason);
-      g_object_unref (call);
-    }
+  for (node = paths; node != NULL; node = node->next) {
+    g_hash_table_steal_extended (self->calls, node->data, NULL, &call);
+    g_signal_emit_by_name (self, "call-removed",
+                           CALLS_CALL (call), reason);
+    g_object_unref (call);
+  }
 
   g_list_free_full (paths, g_free);
 }
 
 
-struct CallsMMOriginDeleteCallData
-{
+struct CallsMMOriginDeleteCallData {
   CallsMMOrigin *self;
-  gchar *path;
+  gchar         *path;
 };
 
 
@@ -390,15 +390,15 @@ delete_call_cb (MMModemVoice                       *voice,
                 struct CallsMMOriginDeleteCallData *data)
 {
   gboolean ok;
+
   g_autoptr (GError) error = NULL;
 
   ok = mm_modem_voice_delete_call_finish (voice, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error deleting call `%s' on MMModemVoice `%s': %s",
-                 data->path, data->self->name, error->message);
-      CALLS_ERROR (data->self, error);
-    }
+  if (!ok) {
+    g_warning ("Error deleting call `%s' on MMModemVoice `%s': %s",
+               data->path, data->self->name, error->message);
+    CALLS_ERROR (data->self, error);
+  }
 
   g_free (data->path);
   g_free (data);
@@ -406,8 +406,8 @@ delete_call_cb (MMModemVoice                       *voice,
 
 
 static void
-delete_call (CallsMMOrigin  *self,
-             CallsMMCall    *call)
+delete_call (CallsMMOrigin *self,
+             CallsMMCall   *call)
 {
   const gchar *path;
   struct CallsMMOriginDeleteCallData *data;
@@ -420,10 +420,10 @@ delete_call (CallsMMOrigin  *self,
 
   mm_modem_voice_delete_call
     (self->voice,
-     path,
-     NULL,
-     (GAsyncReadyCallback)delete_call_cb,
-     data);
+    path,
+    NULL,
+    (GAsyncReadyCallback) delete_call_cb,
+    data);
 }
 
 static void
@@ -457,14 +457,13 @@ add_call (CallsMMOrigin *self,
   path = mm_call_dup_path (mm_call);
   g_hash_table_insert (self->calls, path, call);
 
-  g_signal_emit_by_name (CALLS_ORIGIN(self), "call-added",
-                         CALLS_CALL(call));
+  g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added",
+                         CALLS_CALL (call));
 
-  if (mm_call_get_state (mm_call) == MM_CALL_STATE_TERMINATED)
-    {
-      // Delete any remnant disconnected call
-      delete_call (self, call);
-    }
+  if (mm_call_get_state (mm_call) == MM_CALL_STATE_TERMINATED) {
+    /* Delete any remnant disconnected call */
+    delete_call (self, call);
+  }
 
   g_debug ("Call `%s' added", path);
 
@@ -476,10 +475,9 @@ add_call (CallsMMOrigin *self,
 }
 
 
-struct CallsMMOriginCallAddedData
-{
+struct CallsMMOriginCallAddedData {
   CallsMMOrigin *self;
-  gchar *path;
+  gchar         *path;
 };
 
 
@@ -488,52 +486,44 @@ call_added_list_calls_cb (MMModemVoice                      *voice,
                           GAsyncResult                      *res,
                           struct CallsMMOriginCallAddedData *data)
 {
-  GList *calls;
   g_autoptr (GError) error = NULL;
 
+  GList *calls;
+
   calls = mm_modem_voice_list_calls_finish (voice, res, &error);
-  if (!calls)
-    {
-      if (error)
-        {
-          g_warning ("Error listing calls on MMModemVoice `%s'"
-                     " after call-added signal: %s",
-                     data->self->name, error->message);
-          CALLS_ERROR (data->self, error);
-        }
-      else
-        {
-          g_warning ("No calls on MMModemVoice `%s'"
-                     " after call-added signal",
-                     data->self->name);
-        }
+  if (!calls) {
+    if (error) {
+      g_warning ("Error listing calls on MMModemVoice `%s'"
+                 " after call-added signal: %s",
+                 data->self->name, error->message);
+      CALLS_ERROR (data->self, error);
+    } else {
+      g_warning ("No calls on MMModemVoice `%s'"
+                 " after call-added signal",
+                 data->self->name);
     }
-  else
-    {
-      GList *node;
-      MMCall *call;
-      gboolean found = FALSE;
+  } else {
+    GList *node;
+    MMCall *call;
+    gboolean found = FALSE;
 
-      for (node = calls; node; node = node->next)
-        {
-          call = MM_CALL (node->data);
+    for (node = calls; node; node = node->next) {
+      call = MM_CALL (node->data);
 
-          if (g_strcmp0 (mm_call_get_path (call), data->path) == 0)
-            {
-              add_call (data->self, call);
-              found = TRUE;
-            }
-        }
-
-      if (!found)
-        {
-          g_warning ("Could not find new call `%s' in call list"
-                     " on MMModemVoice `%s' after call-added signal",
-                     data->path, data->self->name);
-        }
-
-      g_list_free_full (calls, g_object_unref);
+      if (g_strcmp0 (mm_call_get_path (call), data->path) == 0) {
+        add_call (data->self, call);
+        found = TRUE;
+      }
     }
+
+    if (!found) {
+      g_warning ("Could not find new call `%s' in call list"
+                 " on MMModemVoice `%s' after call-added signal",
+                 data->path, data->self->name);
+    }
+
+    g_list_free_full (calls, g_object_unref);
+  }
 
   g_free (data->path);
   g_free (data);
@@ -547,12 +537,11 @@ call_added_cb (MMModemVoice  *voice,
 {
   struct CallsMMOriginCallAddedData *data;
 
-  if (g_hash_table_contains (self->calls, path))
-    {
-      g_warning ("Received call-added signal for"
-                 " existing call object path `%s'", path);
-      return;
-    }
+  if (g_hash_table_contains (self->calls, path)) {
+    g_warning ("Received call-added signal for"
+               " existing call object path `%s'", path);
+    return;
+  }
 
   data = g_new0 (struct CallsMMOriginCallAddedData, 1);
   data->self = self;
@@ -560,9 +549,9 @@ call_added_cb (MMModemVoice  *voice,
 
   mm_modem_voice_list_calls
     (voice,
-     NULL,
-     (GAsyncReadyCallback) call_added_list_calls_cb,
-     data);
+    NULL,
+    (GAsyncReadyCallback) call_added_list_calls_cb,
+    data);
 }
 
 
@@ -582,19 +571,17 @@ call_deleted_cb (MMModemVoice  *voice,
 
   g_free (key);
 
-  if (!call)
-    {
-      g_warning ("Could not find removed call `%s'", path);
-      return;
-    }
+  if (!call) {
+    g_warning ("Could not find removed call `%s'", path);
+    return;
+  }
 
   reason = g_string_new ("Call removed");
 
   mm_reason = calls_mm_call_get_disconnect_reason (CALLS_MM_CALL (call));
-  if (mm_reason)
-    {
-      g_string_assign (reason, mm_reason);
-    }
+  if (mm_reason) {
+    g_string_assign (reason, mm_reason);
+  }
 
   g_signal_emit_by_name (self, "call-removed", call, reason);
 
@@ -611,24 +598,22 @@ list_calls_cb (MMModemVoice  *voice,
                CallsMMOrigin *self)
 {
   GList *calls, *node;
+
   g_autoptr (GError) error = NULL;
 
   calls = mm_modem_voice_list_calls_finish (voice, res, &error);
-  if (!calls)
-    {
-      if (error)
-        {
-          g_warning ("Error listing calls on MMModemVoice `%s': %s",
-                     self->name, error->message);
-          CALLS_ERROR (self, error);
-        }
-      return;
+  if (!calls) {
+    if (error) {
+      g_warning ("Error listing calls on MMModemVoice `%s': %s",
+                 self->name, error->message);
+      CALLS_ERROR (self, error);
     }
+    return;
+  }
 
-  for (node = calls; node; node = node->next)
-    {
-      add_call (self, MM_CALL (node->data));
-    }
+  for (node = calls; node; node = node->next) {
+    add_call (self, MM_CALL (node->data));
+  }
 
   g_list_free_full (calls, g_object_unref);
 }
@@ -648,7 +633,7 @@ set_property (GObject      *object,
     break;
 
   case PROP_MODEM:
-    g_set_object (&self->mm_obj, g_value_get_object(value));
+    g_set_object (&self->mm_obj, g_value_get_object (value));
     break;
 
   default:
@@ -659,10 +644,10 @@ set_property (GObject      *object,
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
@@ -676,7 +661,7 @@ get_property (GObject      *object,
     break;
 
   case PROP_CALLS:
-    g_value_set_pointer(value, g_hash_table_get_values (self->calls));
+    g_value_set_pointer (value, g_hash_table_get_values (self->calls));
     break;
 
   case PROP_COUNTRY_CODE:
@@ -741,30 +726,28 @@ ussd_properties_changed_cb (CallsMMOrigin *self,
   /* XXX: We check for user state only because the NetworkRequest
    * dbus property change isn't regularly emitted */
   if (state == CALLS_USSD_STATE_USER_RESPONSE ||
-      (value = g_variant_lookup_value (properties, "NetworkRequest", NULL)))
-    {
-      response = mm_modem_3gpp_ussd_get_network_request (self->ussd);
+      (value = g_variant_lookup_value (properties, "NetworkRequest", NULL))) {
+    response = mm_modem_3gpp_ussd_get_network_request (self->ussd);
 
-      if (response && *response && response != self->last_ussd_request)
-        g_signal_emit_by_name (self, "ussd-added", response);
+    if (response && *response && response != self->last_ussd_request)
+      g_signal_emit_by_name (self, "ussd-added", response);
 
-      if (response && *response)
-        self->last_ussd_request = (char *)response;
-      g_clear_pointer (&value, g_variant_unref);
-    }
+    if (response && *response)
+      self->last_ussd_request = (char *) response;
+    g_clear_pointer (&value, g_variant_unref);
+  }
 
   if (state != CALLS_USSD_STATE_USER_RESPONSE &&
-      (value = g_variant_lookup_value (properties, "NetworkNotification", NULL)))
-    {
-      response = mm_modem_3gpp_ussd_get_network_notification (self->ussd);
+      (value = g_variant_lookup_value (properties, "NetworkNotification", NULL))) {
+    response = mm_modem_3gpp_ussd_get_network_notification (self->ussd);
 
-      if (response && *response && response != self->last_ussd_response)
-        g_signal_emit_by_name (self, "ussd-added", response);
+    if (response && *response && response != self->last_ussd_response)
+      g_signal_emit_by_name (self, "ussd-added", response);
 
-      if (response && *response)
-        self->last_ussd_response = (char *)response;
-      g_clear_pointer (&value, g_variant_unref);
-    }
+    if (response && *response)
+      self->last_ussd_response = (char *) response;
+    g_clear_pointer (&value, g_variant_unref);
+  }
 }
 
 static void
@@ -838,9 +821,9 @@ constructed (GObject *object)
 
   mm_modem_voice_list_calls
     (self->voice,
-     NULL,
-     (GAsyncReadyCallback) list_calls_cb,
-     self);
+    NULL,
+    (GAsyncReadyCallback) list_calls_cb,
+    self);
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
 }
 
@@ -915,12 +898,12 @@ static void
 calls_mm_origin_ussd_interface_init (CallsUssdInterface *iface)
 {
   iface->get_state = calls_mm_ussd_get_state;
-  iface->initiate_async  = calls_mm_ussd_initiate_async;
+  iface->initiate_async = calls_mm_ussd_initiate_async;
   iface->initiate_finish = calls_mm_ussd_initiate_finish;
-  iface->respond_async   = calls_mm_ussd_respond_async;
-  iface->respond_finish  = calls_mm_ussd_respond_finish;
-  iface->cancel_async    = calls_mm_ussd_cancel_async;
-  iface->cancel_finish   = calls_mm_ussd_cancel_finish;
+  iface->respond_async = calls_mm_ussd_respond_async;
+  iface->respond_finish = calls_mm_ussd_respond_finish;
+  iface->cancel_async = calls_mm_ussd_cancel_async;
+  iface->cancel_finish = calls_mm_ussd_cancel_finish;
 }
 
 
@@ -962,4 +945,3 @@ calls_mm_origin_matches (CallsMMOrigin *self,
 
   return FALSE;
 }
-

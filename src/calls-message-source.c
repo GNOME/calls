@@ -40,7 +40,7 @@ enum {
   SIGNAL_MESSAGE,
   SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 
 static void
@@ -61,11 +61,11 @@ calls_message_source_default_init (CallsMessageSourceInterface *iface)
    */
   signals[SIGNAL_MESSAGE] =
     g_signal_newv ("message",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   2, arg_types);
+                   G_TYPE_FROM_INTERFACE (iface),
+                   G_SIGNAL_RUN_LAST,
+                   NULL, NULL, NULL, NULL,
+                   G_TYPE_NONE,
+                   2, arg_types);
 }
 
 /**

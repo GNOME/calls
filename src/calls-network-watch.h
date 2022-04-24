@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsNetworkWatch, calls_network_watch, CALLS, NETWORK_WATCH, GObject)
 
-CallsNetworkWatch      *calls_network_watch_get_default       (void);
-const char             *calls_network_watch_get_ipv4          (CallsNetworkWatch *self);
-const char             *calls_network_watch_get_ipv6          (CallsNetworkWatch *self);
+CallsNetworkWatch *calls_network_watch_get_default       (void);
+const char        *calls_network_watch_get_ipv4          (CallsNetworkWatch *self);
+const char        *calls_network_watch_get_ipv6          (CallsNetworkWatch *self);
 
 G_END_DECLS

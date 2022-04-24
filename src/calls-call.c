@@ -66,11 +66,11 @@ static GParamSpec *properties[N_PROPS];
 static guint signals[N_SIGNALS];
 
 typedef struct {
-  char *id;
-  char *name;
+  char          *id;
+  char          *name;
   CallsCallState state;
-  gboolean inbound;
-  CallsCallType call_type;
+  gboolean       inbound;
+  CallsCallType  call_type;
 } CallsCallPrivate;
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)

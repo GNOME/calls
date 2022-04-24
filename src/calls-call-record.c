@@ -27,20 +27,19 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsCallRecord
-{
+struct _CallsCallRecord {
   GomResource parent_instance;
-  guint id;
-  char *target;
-  gboolean inbound;
-  GDateTime *start;
-  GDateTime *answered;
-  GDateTime *end;
-  char *protocol;
-  gboolean complete;
+  guint       id;
+  char       *target;
+  gboolean    inbound;
+  GDateTime  *start;
+  GDateTime  *answered;
+  GDateTime  *end;
+  char       *protocol;
+  gboolean    complete;
 };
 
-G_DEFINE_TYPE(CallsCallRecord, calls_call_record, GOM_TYPE_RESOURCE)
+G_DEFINE_TYPE (CallsCallRecord, calls_call_record, GOM_TYPE_RESOURCE)
 
 
 enum {
@@ -57,17 +56,17 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 enum {
-      SIGNAL_CALL_DELETE,
-      SIGNAL_LAST_SIGNAL,
+  SIGNAL_CALL_DELETE,
+  SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsCallRecord *self = CALLS_CALL_RECORD (object);
 
@@ -109,17 +108,15 @@ get_property (GObject      *object,
 
 
 static void
-set_date_time (GDateTime    **stamp_ptr,
-               const GValue  *value)
+set_date_time (GDateTime   **stamp_ptr,
+               const GValue *value)
 {
   gpointer new_stamp = g_value_get_boxed (value);
 
   g_clear_pointer (stamp_ptr, g_date_time_unref);
 
   if (new_stamp)
-    {
-      *stamp_ptr = g_date_time_ref (new_stamp);
-    }
+    *stamp_ptr = g_date_time_ref (new_stamp);
 }
 
 

@@ -32,15 +32,14 @@
 #include <glib.h>
 
 
-struct _CallsCallSelectorItem
-{
-  GtkEventBox parent_instance;
+struct _CallsCallSelectorItem {
+  GtkEventBox     parent_instance;
 
   CuiCallDisplay *display;
 
-  GtkBox *main_box;
-  GtkLabel *name;
-  GtkLabel *status;
+  GtkBox         *main_box;
+  GtkLabel       *name;
+  GtkLabel       *status;
 };
 
 G_DEFINE_TYPE (CallsCallSelectorItem, calls_call_selector_item, GTK_TYPE_EVENT_BOX);
@@ -184,5 +183,3 @@ calls_call_selector_item_get_display (CallsCallSelectorItem *item)
   g_return_val_if_fail (CALLS_IS_CALL_SELECTOR_ITEM (item), NULL);
   return item->display;
 }
-
-

@@ -46,7 +46,8 @@ static MediaCodecInfo gst_codecs[] = {
  * Returns: %TRUE if codec is available on your system, %FALSE otherwise
  */
 gboolean
-media_codec_available_in_gst (MediaCodecInfo *codec) {
+media_codec_available_in_gst (MediaCodecInfo *codec)
+{
   gboolean available = FALSE;
   GstRegistry *registry = gst_registry_get ();
   GstPlugin *plugin = NULL;

@@ -47,7 +47,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsSettings {
-  GObject parent_instance;
+  GObject    parent_instance;
 
   GSettings *settings;
 };

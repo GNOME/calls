@@ -37,20 +37,20 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsSipCall, calls_sip_call, CALLS, SIP_CALL, CallsCall)
 
 CallsSipCall          *calls_sip_call_new                               (const char            *number,
-                                                                         gboolean               inbound,
+                                                                         gboolean inbound,
                                                                          const char            *own_ip,
                                                                          CallsSipMediaPipeline *pipeline,
                                                                          nua_handle_t *handle);
-void                   calls_sip_call_setup_remote_media_connection     (CallsSipCall *self,
-                                                                         const char   *remote,
-                                                                         guint         port_rtp,
-                                                                         guint         port_rtcp);
-void                   calls_sip_call_setup_local_media_connection      (CallsSipCall *self);
-void                   calls_sip_call_activate_media                    (CallsSipCall *self,
-                                                                         gboolean      enabled);
-void                   calls_sip_call_set_state                         (CallsSipCall  *self,
-                                                                         CallsCallState state);
-void                   calls_sip_call_set_codecs                        (CallsSipCall *self,
-                                                                         GList        *codecs);
+void calls_sip_call_setup_remote_media_connection     (CallsSipCall *self,
+                                                       const char   *remote,
+                                                       guint         port_rtp,
+                                                       guint         port_rtcp);
+void calls_sip_call_setup_local_media_connection      (CallsSipCall *self);
+void calls_sip_call_activate_media                    (CallsSipCall *self,
+                                                       gboolean      enabled);
+void calls_sip_call_set_state                         (CallsSipCall  *self,
+                                                       CallsCallState state);
+void calls_sip_call_set_codecs                        (CallsSipCall *self,
+                                                       GList        *codecs);
 
 G_END_DECLS

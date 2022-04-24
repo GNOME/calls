@@ -37,8 +37,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsCallRecordRow, calls_call_record_row,
                       CALLS, CALL_RECORD_ROW, GtkListBoxRow)
 
-CallsCallRecordRow *calls_call_record_row_new        (CallsCallRecord    *record);
-CallsCallRecord *   calls_call_record_row_get_record (CallsCallRecordRow *self);
+CallsCallRecordRow *calls_call_record_row_new        (CallsCallRecord *record);
+CallsCallRecord    *calls_call_record_row_get_record (CallsCallRecordRow *self);
 
 G_END_DECLS
 

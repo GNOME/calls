@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkStack);
 
-CallsHistoryBox * calls_history_box_new (GListModel      *model);
+CallsHistoryBox *calls_history_box_new (GListModel *model);
 
 G_END_DECLS
 

@@ -31,16 +31,15 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsBestMatch
-{
-  GObject parent_instance;
+struct _CallsBestMatch {
+  GObject          parent_instance;
 
-  FolksSearchView    *view;
-  FolksIndividual    *matched_individual;
-  char               *phone_number;
-  char               *country_code;
-  char               *name_sip;
-  gboolean            had_country_code_last_time;
+  FolksSearchView *view;
+  FolksIndividual *matched_individual;
+  char            *phone_number;
+  char            *country_code;
+  char            *name_sip;
+  gboolean         had_country_code_last_time;
 };
 
 G_DEFINE_TYPE (CallsBestMatch, calls_best_match, G_TYPE_OBJECT);
@@ -112,7 +111,7 @@ update_best_match (CallsBestMatch *self)
   g_return_if_fail (GEE_IS_COLLECTION (individuals));
 
   if (!gee_collection_get_is_empty (GEE_COLLECTION (individuals)))
-      matched_individual = gee_sorted_set_first (individuals);
+    matched_individual = gee_sorted_set_first (individuals);
 
   if (matched_individual == self->matched_individual)
     return;
@@ -174,10 +173,10 @@ set_property (GObject      *object,
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsBestMatch *self = CALLS_BEST_MATCH (object);
 
@@ -432,8 +431,8 @@ calls_best_match_get_primary_info (CallsBestMatch *self)
   if (self->phone_number)
     return self->phone_number;
 
-  anon:
-    return _("Anonymous caller");
+anon:
+  return _("Anonymous caller");
 }
 
 /**
@@ -461,6 +460,6 @@ calls_best_match_get_secondary_info (CallsBestMatch *self)
    *  https://gitlab.gnome.org/GNOME/calls/-/issues/358
    */
 
- anon:
+anon:
   return "";
 }

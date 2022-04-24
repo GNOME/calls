@@ -34,8 +34,8 @@
 typedef struct {
   guint payload_id;
   char *name;
-  gint clock_rate;
-  gint channels;
+  gint  clock_rate;
+  gint  channels;
   char *gst_payloader_name;
   char *gst_depayloader_name;
   char *gst_encoder_name;
@@ -44,8 +44,8 @@ typedef struct {
 } MediaCodecInfo;
 
 
-gboolean         media_codec_available_in_gst (MediaCodecInfo *codec);
-MediaCodecInfo*  media_codec_by_name (const char *name);
-MediaCodecInfo*  media_codec_by_payload_id (uint payload_id);
-gchar*           media_codec_get_gst_capabilities (MediaCodecInfo *codec);
-GList*           media_codecs_get_candidates (void);
+gboolean        media_codec_available_in_gst (MediaCodecInfo *codec);
+MediaCodecInfo *media_codec_by_name (const char *name);
+MediaCodecInfo *media_codec_by_payload_id (uint payload_id);
+gchar          *media_codec_get_gst_capabilities (MediaCodecInfo *codec);
+GList          *media_codecs_get_candidates (void);

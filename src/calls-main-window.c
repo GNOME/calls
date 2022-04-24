@@ -40,32 +40,31 @@
 #include <handy.h>
 
 
-struct _CallsMainWindow
-{
-  HdyApplicationWindow parent_instance;
+struct _CallsMainWindow {
+  HdyApplicationWindow    parent_instance;
 
-  GListModel *record_store;
+  GListModel             *record_store;
 
   CallsInAppNotification *in_app_notification;
 
-  HdyViewSwitcherTitle *title_switcher;
-  GtkStack *main_stack;
+  HdyViewSwitcherTitle   *title_switcher;
+  GtkStack               *main_stack;
 
-  GtkRevealer *permanent_error_revealer;
-  GtkLabel *permanent_error_label;
+  GtkRevealer            *permanent_error_revealer;
+  GtkLabel               *permanent_error_label;
 
-  CallsAccountOverview *account_overview;
-  CallsNewCallBox *new_call;
+  CallsAccountOverview   *account_overview;
+  CallsNewCallBox        *new_call;
 
-  GtkDialog  *ussd_dialog;
-  GtkStack   *ussd_stack;
-  GtkSpinner *ussd_spinner;
-  GtkBox     *ussd_content;
-  GtkLabel   *ussd_label;
-  GtkEntry   *ussd_entry;
-  GtkButton  *ussd_close_button;
-  GtkButton  *ussd_cancel_button;
-  GtkButton  *ussd_reply_button;
+  GtkDialog              *ussd_dialog;
+  GtkStack               *ussd_stack;
+  GtkSpinner             *ussd_spinner;
+  GtkBox                 *ussd_content;
+  GtkLabel               *ussd_label;
+  GtkEntry               *ussd_entry;
+  GtkButton              *ussd_close_button;
+  GtkButton              *ussd_cancel_button;
+  GtkButton              *ussd_reply_button;
 };
 
 G_DEFINE_TYPE (CallsMainWindow, calls_main_window, HDY_TYPE_APPLICATION_WINDOW);
@@ -106,8 +105,8 @@ about_action (GSimpleAction *action,
     NULL
   };
 
-  version = g_str_equal (VCS_TAG, "") ? PACKAGE_VERSION:
-                                        PACKAGE_VERSION "-" VCS_TAG;
+  version = g_str_equal (VCS_TAG, "") ?
+            PACKAGE_VERSION : PACKAGE_VERSION "-" VCS_TAG;
 
   /*
    * “program-name” defaults to g_get_application_name().
@@ -128,7 +127,7 @@ about_action (GSimpleAction *action,
 }
 
 
-static const GActionEntry window_entries [] =
+static const GActionEntry window_entries[] =
 {
   { "about", about_action },
 };
@@ -216,26 +215,24 @@ window_ussd_respond_cb (GObject      *object,
                         GAsyncResult *result,
                         gpointer      user_data)
 {
-  CallsMainWindow *self = user_data;
-  g_autofree char *response = NULL;
   g_autoptr (GError) error = NULL;
+  g_autofree char *response = NULL;
+  CallsMainWindow *self = user_data;
   CallsUssd *ussd;
 
   ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
   response = calls_ussd_respond_finish (ussd, result, &error);
 
-  if (error)
-    {
-      gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
-      g_warning ("USSD Error: %s", error->message);
-      return;
-    }
+  if (error) {
+    gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+    g_warning ("USSD Error: %s", error->message);
+    return;
+  }
 
-  if (response && *response)
-    {
-      window_update_ussd_state (self, ussd);
-      gtk_label_set_text (self->ussd_label, response);
-    }
+  if (response && *response) {
+    window_update_ussd_state (self, ussd);
+    gtk_label_set_text (self->ussd_label, response);
+  }
 
   gtk_spinner_stop (self->ussd_spinner);
   gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_content));
@@ -263,20 +260,19 @@ main_window_ussd_send_cb (GObject      *object,
                           GAsyncResult *result,
                           gpointer      user_data)
 {
-  CallsMainWindow *self = user_data;
-  g_autofree char *response = NULL;
   g_autoptr (GError) error = NULL;
+  g_autofree char *response = NULL;
+  CallsMainWindow *self = user_data;
   CallsUssd *ussd;
 
   response = calls_new_call_box_send_ussd_finish (self->new_call, result, &error);
   ussd = g_task_get_task_data (G_TASK (result));
 
-  if (error)
-    {
-      gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
-      g_warning ("USSD Error: %s", error->message);
-      return;
-    }
+  if (error) {
+    gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+    g_warning ("USSD Error: %s", error->message);
+    return;
+  }
 
   g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
                           g_object_ref (ussd), g_object_unref);
@@ -376,9 +372,9 @@ constructed (GObject *object)
                         "recent", _("Recent"));
   gtk_container_child_set
     (main_stack, widget,
-     "icon-name", "document-open-recent-symbolic",
-     "position", 0,
-     NULL);
+    "icon-name", "document-open-recent-symbolic",
+    "position", 0,
+    NULL);
   gtk_widget_set_visible (widget, TRUE);
   gtk_stack_set_visible_child_name (self->main_stack, "recent");
 
@@ -501,22 +497,19 @@ void
 calls_main_window_dial (CallsMainWindow *self,
                         const gchar     *target)
 {
-  if (calls_number_is_ussd (target))
-    {
-      gtk_widget_hide (GTK_WIDGET (self->ussd_cancel_button));
-      gtk_widget_hide (GTK_WIDGET (self->ussd_reply_button));
-      gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_spinner));
-      gtk_spinner_start (self->ussd_spinner);
+  if (calls_number_is_ussd (target)) {
+    gtk_widget_hide (GTK_WIDGET (self->ussd_cancel_button));
+    gtk_widget_hide (GTK_WIDGET (self->ussd_reply_button));
+    gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_spinner));
+    gtk_spinner_start (self->ussd_spinner);
 
-      calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
-                                          main_window_ussd_send_cb, self);
+    calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
+                                        main_window_ussd_send_cb, self);
 
-      gtk_window_present (GTK_WINDOW (self->ussd_dialog));
-    }
-  else
-    {
-      calls_new_call_box_dial (self->new_call, target);
-    }
+    gtk_window_present (GTK_WINDOW (self->ussd_dialog));
+  } else {
+    calls_new_call_box_dial (self->new_call, target);
+  }
 }
 
 void

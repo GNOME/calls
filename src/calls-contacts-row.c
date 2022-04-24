@@ -16,17 +16,16 @@
 #include "calls-contacts-row.h"
 #include "calls-contacts-provider.h"
 
-struct _CallsContactsRow
-{
-  GtkListBoxRow       parent_instance;
+struct _CallsContactsRow {
+  GtkListBoxRow    parent_instance;
 
-  GtkWidget          *avatar;
-  GtkWidget          *title;
-  GtkWidget          *grid;
+  GtkWidget       *avatar;
+  GtkWidget       *title;
+  GtkWidget       *grid;
 
-  gint                n_phonenumbers;
+  gint             n_phonenumbers;
 
-  FolksIndividual    *item;
+  FolksIndividual *item;
 };
 
 G_DEFINE_TYPE (CallsContactsRow, calls_contacts_row, GTK_TYPE_LIST_BOX_ROW)
@@ -63,6 +62,7 @@ static void
 phone_numbers_changed_cb (CallsContactsRow *self)
 {
   GeeIterator *phone_iter;
+
   g_autoptr (GeeSet) phone_numbers;
 
   while (gtk_grid_get_child_at (GTK_GRID (self->grid), 1, 1) != NULL) {
@@ -121,7 +121,7 @@ calls_contacts_row_dispose (GObject *object)
 static void
 calls_contacts_row_class_init (CallsContactsRowClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->dispose = calls_contacts_row_dispose;

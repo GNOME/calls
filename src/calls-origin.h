@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_ORIGIN_H__
-#define CALLS_ORIGIN_H__
+#pragma once
 
 #include "calls-call.h"
 #include "util.h"
@@ -35,31 +34,29 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_ORIGIN (calls_origin_get_type ())
 
-G_DECLARE_INTERFACE (CallsOrigin, calls_origin, CALLS, ORIGIN, GObject);
+G_DECLARE_INTERFACE (CallsOrigin, calls_origin, CALLS, ORIGIN, GObject)
 
 
-struct _CallsOriginInterface
-{
+struct _CallsOriginInterface {
   GTypeInterface parent_iface;
 
-  void               (*dial)                                (CallsOrigin *self,
-                                                             const char  *number);
-  gboolean           (*supports_protocol)                   (CallsOrigin *self,
-                                                             const char  *protocol);
+  void           (*dial)                                (CallsOrigin *self,
+                                                         const char  *number);
+  gboolean       (*supports_protocol)                   (CallsOrigin *self,
+                                                         const char  *protocol);
 };
 
 typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, CallsOrigin* origin);
 
-char *                 calls_origin_get_name                (CallsOrigin *self);
-char *                 calls_origin_get_id                  (CallsOrigin *self);
-GList *                calls_origin_get_calls               (CallsOrigin *self);
-void                   calls_origin_foreach_call            (CallsOrigin *self,
-                                                             CallsOriginForeachCallFunc callback,
-                                                             gpointer     param);
-void                   calls_origin_dial                    (CallsOrigin *self,
-                                                             const char  *number);
-gboolean               calls_origin_supports_protocol       (CallsOrigin *self,
-                                                             const char *protocol);
+char    *calls_origin_get_name                (CallsOrigin *self);
+char    *calls_origin_get_id                  (CallsOrigin *self);
+GList   *calls_origin_get_calls               (CallsOrigin *self);
+void     calls_origin_foreach_call            (CallsOrigin               *self,
+                                               CallsOriginForeachCallFunc callback,
+                                               gpointer                   param);
+void     calls_origin_dial                    (CallsOrigin *self,
+                                               const char  *number);
+gboolean calls_origin_supports_protocol       (CallsOrigin *self,
+                                               const char  *protocol);
 G_END_DECLS
 
-#endif /* CALLS_ORIGIN_H__ */

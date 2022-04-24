@@ -38,22 +38,22 @@ G_DECLARE_FINAL_TYPE (CallsSipMediaManager, calls_sip_media_manager, CALLS, SIP_
 
 
 CallsSipMediaManager*   calls_sip_media_manager_default                 (void);
-gchar*                  calls_sip_media_manager_get_capabilities        (CallsSipMediaManager *self,
-                                                                         const char           *own_ip,
-                                                                         gint                  rtp_port,
-                                                                         gint                  rtcp_port,
-                                                                         gboolean              use_srtp,
-                                                                         GList                *supported_codecs);
-gchar*                  calls_sip_media_manager_static_capabilities     (CallsSipMediaManager *self,
-                                                                         const char           *own_ip,
-                                                                         gint                  rtp_port,
-                                                                         gint                  rtcp_port,
-                                                                         gboolean              use_srtp);
-gboolean                calls_sip_media_manager_supports_media          (CallsSipMediaManager *self,
-                                                                         const char           *media_type);
-GList *                 calls_sip_media_manager_codec_candidates        (CallsSipMediaManager *self);
-GList *                 calls_sip_media_manager_get_codecs_from_sdp     (CallsSipMediaManager *self,
-                                                                         sdp_media_t          *sdp_media);
-CallsSipMediaPipeline  *calls_sip_media_manager_get_pipeline            (CallsSipMediaManager *self);
+gchar                 *calls_sip_media_manager_get_capabilities        (CallsSipMediaManager *self,
+                                                                        const char           *own_ip,
+                                                                        gint                  rtp_port,
+                                                                        gint                  rtcp_port,
+                                                                        gboolean              use_srtp,
+                                                                        GList                *supported_codecs);
+gchar                 *calls_sip_media_manager_static_capabilities     (CallsSipMediaManager *self,
+                                                                        const char           *own_ip,
+                                                                        gint                  rtp_port,
+                                                                        gint                  rtcp_port,
+                                                                        gboolean              use_srtp);
+gboolean               calls_sip_media_manager_supports_media          (CallsSipMediaManager *self,
+                                                                        const char           *media_type);
+GList                 *calls_sip_media_manager_codec_candidates        (CallsSipMediaManager *self);
+GList                 *calls_sip_media_manager_get_codecs_from_sdp     (CallsSipMediaManager *self,
+                                                                        sdp_media_t          *sdp_media);
+CallsSipMediaPipeline *calls_sip_media_manager_get_pipeline            (CallsSipMediaManager *self);
 
 G_END_DECLS

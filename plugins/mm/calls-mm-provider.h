@@ -37,7 +37,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsMMProvider, calls_mm_provider, CALLS, MM_PROVIDER, CallsProvider)
 
-void              peas_register_types                       (PeasObjectModule *module);
+void peas_register_types                       (PeasObjectModule *module);
 
 G_END_DECLS
 

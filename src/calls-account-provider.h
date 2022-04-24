@@ -35,14 +35,13 @@ G_BEGIN_DECLS
 
 G_DECLARE_INTERFACE (CallsAccountProvider, calls_account_provider, CALLS, ACCOUNT_PROVIDER, CallsProvider)
 
-struct _CallsAccountProviderInterface
-{
+struct _CallsAccountProviderInterface {
   GTypeInterface parent_iface;
 
-  GtkWidget   *(*get_account_widget)              (CallsAccountProvider *self);
-  void         (*add_new_account)                 (CallsAccountProvider *self);
-  void         (*edit_account)                    (CallsAccountProvider *self,
-                                                   CallsAccount         *account);
+  GtkWidget     *(*get_account_widget)              (CallsAccountProvider *self);
+  void           (*add_new_account)                 (CallsAccountProvider *self);
+  void           (*edit_account)                    (CallsAccountProvider *self,
+                                                     CallsAccount         *account);
 };
 
 GtkWidget *calls_account_provider_get_account_widget (CallsAccountProvider *self);

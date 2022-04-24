@@ -48,16 +48,14 @@
  */
 
 
-typedef struct
-{
-  GeeIterator           *iter;
-  IdleCallback           callback;
-  gpointer               user_data;
+typedef struct {
+  GeeIterator *iter;
+  IdleCallback callback;
+  gpointer     user_data;
 } IdleData;
 
 
-struct _CallsContactsProvider
-{
+struct _CallsContactsProvider {
   GObject                    parent_instance;
 
   FolksIndividualAggregator *folks_aggregator;
@@ -215,12 +213,13 @@ on_contacts_actions_updated (CallsContactsProvider *self)
 
 
 static void
-on_contacts_appeared (GDBusConnection    *connection,
-                      const char         *name,
-                      const char         *owner_name,
-                      gpointer            user_data)
+on_contacts_appeared (GDBusConnection *connection,
+                      const char      *name,
+                      const char      *owner_name,
+                      gpointer         user_data)
 {
   CallsContactsProvider *self;
+
   g_autoptr (GError) error = NULL;
 
   g_assert (CALLS_IS_CONTACTS_PROVIDER (user_data));
@@ -298,7 +297,7 @@ calls_contacts_provider_finalize (GObject *object)
 static void
 calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
 {
-  GObjectClass *object_class  = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->get_property = calls_contacts_provider_get_property;
   object_class->set_property = calls_contacts_provider_set_property;
@@ -313,14 +312,14 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
    * having been added.
    */
   signals[SIGNAL_ADDED] =
-   g_signal_new ("added",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_LAST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 1,
-                 FOLKS_TYPE_INDIVIDUAL);
+    g_signal_new ("added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  FOLKS_TYPE_INDIVIDUAL);
   /**
    * CallsContactsProvider::removed:
    * @self: The #CallsContactsProvider instance
@@ -330,14 +329,14 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
    * having been removed.
    */
   signals[SIGNAL_REMOVED] =
-   g_signal_new ("removed",
-                 G_TYPE_FROM_CLASS (klass),
-                 G_SIGNAL_RUN_LAST,
-                 0,
-                 NULL, NULL, NULL,
-                 G_TYPE_NONE,
-                 1,
-                 FOLKS_TYPE_INDIVIDUAL);
+    g_signal_new ("removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE,
+                  1,
+                  FOLKS_TYPE_INDIVIDUAL);
 
   /**
    * CallsContactsProvider::settings:
@@ -481,6 +480,7 @@ calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
                                               gpointer     user_data)
 {
   IdleData *data = g_new (IdleData, 1);
+
   data->iter = iter;
   data->user_data = user_data;
   data->callback = callback;

@@ -91,24 +91,23 @@ typedef enum {
 } CallsAccountStateReason;
 
 
-struct _CallsAccountInterface
-{
+struct _CallsAccountInterface {
   GTypeInterface parent_iface;
 
-  void               (*go_online)                           (CallsAccount *self,
-                                                             gboolean      online);
-  const char        *(*get_address)                         (CallsAccount *self);
+  void           (*go_online)                           (CallsAccount *self,
+                                                         gboolean      online);
+  const char    *(*get_address)                         (CallsAccount *self);
 };
 
 
-void                   calls_account_go_online                     (CallsAccount            *self,
-                                                                    gboolean                 online);
-const char            *calls_account_get_address                   (CallsAccount            *self);
-CallsAccountState      calls_account_get_state                     (CallsAccount            *self);
-const char            *calls_account_state_to_string               (CallsAccountState        state);
-const char            *calls_account_state_reason_to_string        (CallsAccountStateReason  reason);
-void                   calls_account_emit_message_for_state_change (CallsAccount            *account,
-                                                                    CallsAccountState        new_state,
-                                                                    CallsAccountStateReason  reason);
+void              calls_account_go_online                     (CallsAccount *self,
+                                                               gboolean      online);
+const char       *calls_account_get_address                   (CallsAccount *self);
+CallsAccountState calls_account_get_state                     (CallsAccount *self);
+const char       *calls_account_state_to_string               (CallsAccountState state);
+const char       *calls_account_state_reason_to_string        (CallsAccountStateReason reason);
+void              calls_account_emit_message_for_state_change (CallsAccount           *account,
+                                                               CallsAccountState       new_state,
+                                                               CallsAccountStateReason reason);
 
 G_END_DECLS

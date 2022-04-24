@@ -40,61 +40,60 @@ typedef enum
   CALLS_USSD_STATE_USER_RESPONSE
 } CallsUssdState;
 
-struct _CallsUssdInterface
-{
+struct _CallsUssdInterface {
   GTypeInterface parent_iface;
 
-  CallsUssdState  (*get_state)       (CallsUssd           *self);
-  void            (*initiate_async)  (CallsUssd           *self,
-                                      const char          *command,
-                                      GCancellable        *cancellable,
-                                      GAsyncReadyCallback  callback,
-                                      gpointer             user_data);
-  char           *(*initiate_finish) (CallsUssd            *self,
-                                      GAsyncResult         *result,
-                                      GError              **error);
-  void           (*respond_async)    (CallsUssd            *self,
-                                      const char          *response,
-                                      GCancellable        *cancellable,
-                                      GAsyncReadyCallback  callback,
-                                      gpointer             user_data);
-  char          *(*respond_finish)   (CallsUssd            *self,
-                                      GAsyncResult         *result,
-                                      GError              **error);
-  void           (*cancel_async)     (CallsUssd           *self,
-                                      GCancellable        *cancellable,
-                                      GAsyncReadyCallback  callback,
-                                      gpointer             user_data);
-  gboolean       (*cancel_finish)    (CallsUssd            *self,
-                                      GAsyncResult         *result,
-                                      GError              **error);
+  CallsUssdState (*get_state)       (CallsUssd *self);
+  void           (*initiate_async)  (CallsUssd          *self,
+                                     const char         *command,
+                                     GCancellable       *cancellable,
+                                     GAsyncReadyCallback callback,
+                                     gpointer            user_data);
+  char          *(*initiate_finish) (CallsUssd    *self,
+                                     GAsyncResult *result,
+                                     GError      **error);
+  void           (*respond_async)    (CallsUssd          *self,
+                                      const char         *response,
+                                      GCancellable       *cancellable,
+                                      GAsyncReadyCallback callback,
+                                      gpointer            user_data);
+  char          *(*respond_finish)   (CallsUssd    *self,
+                                      GAsyncResult *result,
+                                      GError      **error);
+  void           (*cancel_async)     (CallsUssd          *self,
+                                      GCancellable       *cancellable,
+                                      GAsyncReadyCallback callback,
+                                      gpointer            user_data);
+  gboolean       (*cancel_finish)    (CallsUssd    *self,
+                                      GAsyncResult *result,
+                                      GError      **error);
 };
 
 
-CallsUssdState  calls_ussd_get_state       (CallsUssd           *self);
-void            calls_ussd_initiate_async  (CallsUssd           *self,
-                                            const char          *command,
-                                            GCancellable        *cancellable,
-                                            GAsyncReadyCallback  callback,
-                                            gpointer             user_data);
-char           *calls_ussd_initiate_finish (CallsUssd           *self,
-                                            GAsyncResult        *result,
-                                            GError             **error);
-void            calls_ussd_respond_async   (CallsUssd           *self,
-                                            const char          *response,
-                                            GCancellable        *cancellable,
-                                            GAsyncReadyCallback  callback,
-                                            gpointer             user_data);
-char           *calls_ussd_respond_finish  (CallsUssd           *self,
-                                            GAsyncResult        *result,
-                                            GError             **error);
-void            calls_ussd_cancel_async    (CallsUssd           *self,
-                                            GCancellable        *cancellable,
-                                            GAsyncReadyCallback  callback,
-                                            gpointer             user_data);
-gboolean        calls_ussd_cancel_finish   (CallsUssd           *self,
-                                            GAsyncResult        *result,
-                                            GError             **error);
+CallsUssdState calls_ussd_get_state       (CallsUssd *self);
+void           calls_ussd_initiate_async  (CallsUssd          *self,
+                                           const char         *command,
+                                           GCancellable       *cancellable,
+                                           GAsyncReadyCallback callback,
+                                           gpointer            user_data);
+char          *calls_ussd_initiate_finish (CallsUssd    *self,
+                                           GAsyncResult *result,
+                                           GError      **error);
+void           calls_ussd_respond_async   (CallsUssd          *self,
+                                           const char         *response,
+                                           GCancellable       *cancellable,
+                                           GAsyncReadyCallback callback,
+                                           gpointer            user_data);
+char          *calls_ussd_respond_finish  (CallsUssd    *self,
+                                           GAsyncResult *result,
+                                           GError      **error);
+void           calls_ussd_cancel_async    (CallsUssd          *self,
+                                           GCancellable       *cancellable,
+                                           GAsyncReadyCallback callback,
+                                           gpointer            user_data);
+gboolean       calls_ussd_cancel_finish   (CallsUssd    *self,
+                                           GAsyncResult *result,
+                                           GError      **error);
 
 
 G_END_DECLS

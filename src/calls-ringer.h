@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_RINGER_H__
-#define CALLS_RINGER_H__
+#pragma once
 
 #include <glib-object.h>
 
@@ -31,13 +30,11 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_RINGER (calls_ringer_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject);
+G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject)
 
 
-CallsRinger     *calls_ringer_new                 (void);
-gboolean         calls_ringer_get_is_ringing      (CallsRinger *self);
-gboolean         calls_ringer_get_ring_is_quiet   (CallsRinger *self);
+CallsRinger *calls_ringer_new                 (void);
+gboolean     calls_ringer_get_is_ringing      (CallsRinger *self);
+gboolean     calls_ringer_get_ring_is_quiet   (CallsRinger *self);
 
 G_END_DECLS
-
-#endif /* CALLS_RINGER_H__ */

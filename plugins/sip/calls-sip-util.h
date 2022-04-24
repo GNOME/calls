@@ -28,17 +28,15 @@
 #include <sofia-sip/nua.h>
 #include <glib-object.h>
 
-typedef struct
-{
-  su_home_t             home[1];
-  su_root_t            *root;
+typedef struct {
+  su_home_t  home[1];
+  su_root_t *root;
 } CallsSipContext;
 
-typedef struct
-{
-  nua_handle_t        *register_handle;
-  nua_handle_t        *call_handle;
-  CallsSipContext     *context;
+typedef struct {
+  nua_handle_t    *register_handle;
+  nua_handle_t    *call_handle;
+  CallsSipContext *context;
 } CallsSipHandles;
 
 
@@ -49,16 +47,15 @@ typedef struct
  * @SIP_ENGINE_ERROR: Unrecoverable/Unhandled sofia-sip error
  * @SIP_ENGINE_READY: Ready for operation
  */
-typedef enum
-  {
-    SIP_ENGINE_NULL = 0,
-    SIP_ENGINE_INITIALIZING,
-    SIP_ENGINE_ERROR,
-    SIP_ENGINE_READY,
-  } SipEngineState;
+typedef enum {
+  SIP_ENGINE_NULL = 0,
+  SIP_ENGINE_INITIALIZING,
+  SIP_ENGINE_ERROR,
+  SIP_ENGINE_READY,
+} SipEngineState;
 
 
-gboolean              check_sips                         (const char *addr);
-gboolean              check_ipv6                         (const char *host);
-const char           *get_protocol_prefix                (const char *protocol);
-gboolean              protocol_is_valid                  (const char *protocol);
+gboolean    check_sips                         (const char *addr);
+gboolean    check_ipv6                         (const char *host);
+const char *get_protocol_prefix                (const char *protocol);
+gboolean    protocol_is_valid                  (const char *protocol);

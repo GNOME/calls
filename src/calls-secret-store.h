@@ -33,4 +33,3 @@
 const SecretSchema *calls_secret_get_schema (void) G_GNUC_CONST;
 
 #define CALLS_SECRET_SCHEMA calls_secret_get_schema ()
-

@@ -57,9 +57,8 @@
 
 #define DEFAULT_PROVIDER_PLUGIN "mm"
 
-struct _CallsApplication
-{
-  GtkApplication parent_instance;
+struct _CallsApplication {
+  GtkApplication    parent_instance;
 
   gboolean          daemon;
   CallsRinger      *ringer;
@@ -79,10 +78,10 @@ static gboolean start_proper (CallsApplication *self);
 
 
 static gboolean
-cmd_verbose_cb (const char  *option_name,
-                const char  *value,
-                gpointer     data,
-                GError     **error)
+cmd_verbose_cb (const char *option_name,
+                const char *value,
+                gpointer    data,
+                GError    **error)
 {
   calls_log_increase_verbosity ();
 
@@ -165,6 +164,7 @@ set_default_providers_action (GSimpleAction *action,
 {
   CallsManager *manager = calls_manager_get_default ();
   CallsSettings *settings = calls_manager_get_settings (manager);
+
   g_auto (GStrv) plugins = NULL;
   /**
    * Only add default providers when there are none added yet,
@@ -240,7 +240,7 @@ extract_dial_string (const char *number)
   }
 
   dial_string = g_regex_replace_literal
-    (replace_visual, number, -1, 0, "", 0, &error);
+                  (replace_visual, number, -1, 0, "", 0, &error);
 
   if (!dial_string) {
     g_warning ("Error replacing visual separators"
@@ -260,25 +260,25 @@ call_number (CallsApplication *self,
   g_autofree char *dial_string = NULL;
   gboolean number_ok;
 
- number_ok = check_dial_number (number);
- if (!number_ok) {
-   g_warning ("Dial number `%s' is not a valid dial string",
-              number);
-   return;
- }
+  number_ok = check_dial_number (number);
+  if (!number_ok) {
+    g_warning ("Dial number `%s' is not a valid dial string",
+               number);
+    return;
+  }
 
- dial_string = extract_dial_string (number);
- if (!dial_string) {
-   return;
- }
+  dial_string = extract_dial_string (number);
+  if (!dial_string) {
+    return;
+  }
 
- g_debug ("Dialing dial string `%s' extracted from number `%s'",
-          dial_string, number);
+  g_debug ("Dialing dial string `%s' extracted from number `%s'",
+           dial_string, number);
 
- start_proper (self);
+  start_proper (self);
 
- calls_main_window_dial (self->main_window,
-                         dial_string);
+  calls_main_window_dial (self->main_window,
+                          dial_string);
 
 }
 
@@ -368,6 +368,7 @@ show_accounts (GSimpleAction *action,
                gpointer       user_data)
 {
   CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
+
   calls_main_window_show_accounts_overview (app->main_window);
 }
 
@@ -377,7 +378,7 @@ manager_state_changed_cb (GApplication *application)
   GAction* dial_action = g_action_map_lookup_action (G_ACTION_MAP (application), "dial");
   CallsManagerFlags state_flags = calls_manager_get_state_flags (calls_manager_get_default ());
   gboolean enabled = (state_flags & CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM) ||
-    (state_flags & CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT);
+                     (state_flags & CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT);
 
   g_simple_action_set_enabled (G_SIMPLE_ACTION (dial_action), enabled);
 }
@@ -413,7 +414,7 @@ startup (GApplication *application)
 {
   g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
-#if HDY_CHECK_VERSION(1, 5, 0)
+#if HDY_CHECK_VERSION (1, 5, 0)
   HdyStyleManager *style_manager;
 #endif
 
@@ -421,7 +422,7 @@ startup (GApplication *application)
 
   hdy_init ();
 
-#if HDY_CHECK_VERSION(1, 5, 0)
+#if HDY_CHECK_VERSION (1, 5, 0)
   style_manager = hdy_style_manager_get_default ();
 
   hdy_style_manager_set_color_scheme (style_manager, HDY_COLOR_SCHEME_PREFER_LIGHT);
@@ -462,8 +463,9 @@ calls_application_command_line (GApplication            *application,
   CallsApplication *self = CALLS_APPLICATION (application);
   GVariantDict *options;
   const char *arg;
+
   g_autoptr (GVariant) providers = NULL;
-  g_auto(GStrv) arguments = NULL;
+  g_auto (GStrv) arguments = NULL;
   gint argc;
 
   options = g_application_command_line_get_options_dict (command_line);
@@ -514,8 +516,8 @@ app_shutdown (GApplication *application)
 
 
 static void
-notify_window_visible_cb (GtkWidget       *window,
-                          GParamSpec      *pspec,
+notify_window_visible_cb (GtkWidget        *window,
+                          GParamSpec       *pspec,
                           CallsApplication *application)
 {
   CallsManager *manager = calls_manager_get_default ();
@@ -530,7 +532,7 @@ notify_window_visible_cb (GtkWidget       *window,
 
 
 static gboolean
-start_proper (CallsApplication  *self)
+start_proper (CallsApplication *self)
 {
   GtkApplication *gtk_app;
 
@@ -550,8 +552,8 @@ start_proper (CallsApplication  *self)
   g_assert (CALLS_IS_NOTIFIER (self->notifier));
 
   self->main_window = calls_main_window_new
-    (gtk_app,
-     G_LIST_MODEL (self->record_store));
+                        (gtk_app,
+                        G_LIST_MODEL (self->record_store));
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new (gtk_app);
@@ -600,10 +602,10 @@ activate (GApplication *application)
 }
 
 static void
-app_open (GApplication  *application,
-          GFile        **files,
-          gint           n_files,
-          const char    *hint)
+app_open (GApplication *application,
+          GFile       **files,
+          gint          n_files,
+          const char   *hint)
 {
   CallsApplication *self = CALLS_APPLICATION (application);
 
@@ -642,7 +644,7 @@ app_open (GApplication  *application,
 static void
 finalize (GObject *object)
 {
-  CallsApplication *self = (CallsApplication *)object;
+  CallsApplication *self = (CallsApplication *) object;
 
   g_clear_object (&self->call_window);
   g_clear_object (&self->main_window);
@@ -669,8 +671,8 @@ calls_application_class_init (CallsApplicationClass *klass)
   application_class->shutdown = app_shutdown;
   application_class->activate = activate;
   application_class->open = app_open;
-  application_class->dbus_register  = calls_application_dbus_register;
-  application_class->dbus_unregister  = calls_application_dbus_unregister;
+  application_class->dbus_register = calls_application_dbus_register;
+  application_class->dbus_unregister = calls_application_dbus_unregister;
 
   g_type_ensure (CALLS_TYPE_HISTORY_BOX);
   g_type_ensure (CALLS_TYPE_NEW_CALL_BOX);

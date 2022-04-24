@@ -40,21 +40,20 @@
 #include <handy.h>
 
 
-struct _CallsCallWindow
-{
-  GtkApplicationWindow parent_instance;
+struct _CallsCallWindow {
+  GtkApplicationWindow    parent_instance;
 
-  GListStore *calls;
+  GListStore             *calls;
 
   CallsInAppNotification *in_app_notification;
 
-  GtkStack *main_stack;
-  GtkStack *header_bar_stack;
-  GtkButton *show_calls;
-  GtkStack *call_stack;
-  GtkFlowBox *call_selector;
+  GtkStack               *main_stack;
+  GtkStack               *header_bar_stack;
+  GtkButton              *show_calls;
+  GtkStack               *call_stack;
+  GtkFlowBox             *call_selector;
 
-  guint inhibit_cookie;
+  guint                   inhibit_cookie;
 };
 
 G_DEFINE_TYPE (CallsCallWindow, calls_call_window, GTK_TYPE_APPLICATION_WINDOW);
@@ -280,6 +279,7 @@ calls_call_window_init (CallsCallWindow *self)
 {
   g_autoptr (GList) calls = NULL;
   GList *c;
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
   self->calls = g_list_store_new (CALLS_TYPE_CALL_SELECTOR_ITEM);
@@ -350,4 +350,3 @@ calls_call_window_new (GtkApplication *application)
                        "application", application,
                        NULL);
 }
-

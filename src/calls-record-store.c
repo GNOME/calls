@@ -75,13 +75,12 @@ state_to_record_state (CuiCallState call_state)
 }
 
 
-struct _CallsRecordStore
-{
+struct _CallsRecordStore {
   GtkApplicationWindow parent_instance;
 
-  gchar *filename;
-  GomAdapter *adapter;
-  GomRepository *repository;
+  gchar               *filename;
+  GomAdapter          *adapter;
+  GomRepository       *repository;
 };
 
 G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_LIST_STORE);
@@ -124,8 +123,8 @@ delete_record_cb (GomResource      *resource,
 
 
 static void
-delete_call_cb (CallsCallRecord    *record,
-                CallsRecordStore   *self)
+delete_call_cb (CallsCallRecord  *record,
+                CallsRecordStore *self)
 {
   gom_resource_delete_async (GOM_RESOURCE (record),
                              (GAsyncReadyCallback) delete_record_cb,
@@ -138,8 +137,8 @@ load_calls_fetch_cb (GomResourceGroup *group,
                      GAsyncResult     *res,
                      CallsRecordStore *self)
 {
-  gboolean ok;
   g_autoptr (GError) error = NULL;
+  gboolean ok;
   guint count, i;
   gpointer *records;
 
@@ -191,8 +190,8 @@ load_calls_find_cb (GomRepository    *repository,
                     GAsyncResult     *res,
                     CallsRecordStore *self)
 {
-  GomResourceGroup *group;
   g_autoptr (GError) error = NULL;
+  GomResourceGroup *group;
   guint count;
 
   group = gom_repository_find_finish (repository,
@@ -214,12 +213,11 @@ load_calls_find_cb (GomRepository    *repository,
 
   g_debug ("Found %u call records in database `%s', fetching",
            count, self->filename);
-  gom_resource_group_fetch_async
-    (group,
-     0,
-     count,
-     (GAsyncReadyCallback)load_calls_fetch_cb,
-     self);
+  gom_resource_group_fetch_async (group,
+                                  0,
+                                  count,
+                                  (GAsyncReadyCallback) load_calls_fetch_cb,
+                                  self);
 }
 
 
@@ -230,7 +228,7 @@ load_calls (CallsRecordStore *self)
   GomSorting *sorting;
 
   filter = gom_filter_new_is_not_null
-    (CALLS_TYPE_CALL_RECORD, "start");
+             (CALLS_TYPE_CALL_RECORD, "start");
 
   sorting = gom_sorting_new (CALLS_TYPE_CALL_RECORD,
                              "start",
@@ -243,7 +241,7 @@ load_calls (CallsRecordStore *self)
                                     CALLS_TYPE_CALL_RECORD,
                                     filter,
                                     sorting,
-                                    (GAsyncReadyCallback)load_calls_find_cb,
+                                    (GAsyncReadyCallback) load_calls_find_cb,
                                     self);
 
   g_object_unref (G_OBJECT (filter));
@@ -251,8 +249,8 @@ load_calls (CallsRecordStore *self)
 
 
 static void
-set_up_repo_migrate_cb (GomRepository *repo,
-                        GAsyncResult *res,
+set_up_repo_migrate_cb (GomRepository    *repo,
+                        GAsyncResult     *res,
                         CallsRecordStore *self)
 {
   g_autoptr (GError) error = NULL;
@@ -260,17 +258,17 @@ set_up_repo_migrate_cb (GomRepository *repo,
 
   ok = gom_repository_automatic_migrate_finish (repo, res, &error);
   if (!ok) {
-      if (error)
-        g_warning ("Error migrating call record database `%s': %s",
-                   self->filename, error->message);
-      else
-        g_warning ("Unknown error migrating call record database `%s'",
-                   self->filename);
+    if (error)
+      g_warning ("Error migrating call record database `%s': %s",
+                 self->filename, error->message);
+    else
+      g_warning ("Unknown error migrating call record database `%s'",
+                 self->filename);
 
-      g_clear_object (&self->repository);
-      g_clear_object (&self->adapter);
+    g_clear_object (&self->repository);
+    g_clear_object (&self->adapter);
 
-    } else {
+  } else {
     g_debug ("Successfully migrated call record database `%s'",
              self->filename);
     load_calls (self);
@@ -296,13 +294,13 @@ set_up_repo (CallsRecordStore *self)
   g_debug ("Attempting migration of call"
            " record database `%s'",
            self->filename);
-  types = g_list_append (types, (gpointer)CALLS_TYPE_CALL_RECORD);
+  types = g_list_append (types, (gpointer) CALLS_TYPE_CALL_RECORD);
   gom_repository_automatic_migrate_async
     (repo,
-     RECORD_STORE_VERSION,
-     types,
-     (GAsyncReadyCallback)set_up_repo_migrate_cb,
-     self);
+    RECORD_STORE_VERSION,
+    types,
+    (GAsyncReadyCallback) set_up_repo_migrate_cb,
+    self);
 
   self->repository = repo;
 }
@@ -314,28 +312,27 @@ close_adapter (CallsRecordStore *self)
   g_autoptr (GError) error = NULL;
   gboolean ok;
 
-  if (!self->adapter)
-    {
-      return;
-    }
+  if (!self->adapter) {
+    return;
+  }
 
-  ok = gom_adapter_close_sync(self->adapter, &error);
+  ok = gom_adapter_close_sync (self->adapter, &error);
   if (!ok) {
-      if (error)
-        g_warning ("Error closing call record database `%s': %s",
-                   self->filename, error->message);
-      else
-        g_warning ("Unknown error closing call record database `%s'",
-                   self->filename);
-    }
+    if (error)
+      g_warning ("Error closing call record database `%s': %s",
+                 self->filename, error->message);
+    else
+      g_warning ("Unknown error closing call record database `%s'",
+                 self->filename);
+  }
 
   g_clear_object (&self->adapter);
 }
 
 
 static void
-open_repo_adapter_open_cb (GomAdapter *adapter,
-                           GAsyncResult *res,
+open_repo_adapter_open_cb (GomAdapter       *adapter,
+                           GAsyncResult     *res,
                            CallsRecordStore *self)
 {
   g_autoptr (GError) error = NULL;
@@ -384,18 +381,17 @@ open_repo (CallsRecordStore *self)
   self->adapter = gom_adapter_new ();
   gom_adapter_open_async
     (self->adapter,
-     uri,
-     (GAsyncReadyCallback)open_repo_adapter_open_cb,
-     self);
+    uri,
+    (GAsyncReadyCallback) open_repo_adapter_open_cb,
+    self);
 
   g_free (uri);
 }
 
 
-struct CallsRecordCallData
-{
+struct CallsRecordCallData {
   CallsRecordStore *self;
-  CallsUiCallData *call;
+  CallsUiCallData  *call;
 };
 
 
@@ -405,6 +401,7 @@ record_call_save_cb (GomResource                *resource,
                      struct CallsRecordCallData *data)
 {
   GObject * const call_obj = G_OBJECT (data->call);
+
   g_autoptr (GError) error = NULL;
   gboolean ok;
 
@@ -469,7 +466,7 @@ record_call (CallsRecordStore *self,
   data->call = call;
 
   gom_resource_save_async (GOM_RESOURCE (record),
-                           (GAsyncReadyCallback)record_call_save_cb,
+                           (GAsyncReadyCallback) record_call_save_cb,
                            data);
 }
 
@@ -497,8 +494,8 @@ update_cb (GomResource  *resource,
 
 
 static void
-stamp_call (CallsCallRecord  *record,
-            const gchar      *stamp_name)
+stamp_call (CallsCallRecord *record,
+            const gchar     *stamp_name)
 {
   GObject *record_obj = G_OBJECT (record);
   GDateTime *stamp = NULL;
@@ -519,7 +516,7 @@ stamp_call (CallsCallRecord  *record,
   g_date_time_unref (stamp);
 
   gom_resource_save_async (GOM_RESOURCE (record),
-                           (GAsyncReadyCallback)update_cb,
+                           (GAsyncReadyCallback) update_cb,
                            NULL);
 }
 
@@ -603,7 +600,7 @@ call_added_cb (CallsRecordStore *self,
   g_assert (g_object_get_data (call_obj, "calls-call-start") == NULL);
   start = g_date_time_new_now_utc ();
   g_object_set_data_full (call_obj, "calls-call-start",
-                          start, (GDestroyNotify)g_date_time_unref);
+                          start, (GDestroyNotify) g_date_time_unref);
 
   if (!self->repository) {
     open_repo (self);

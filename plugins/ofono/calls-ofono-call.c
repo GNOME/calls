@@ -31,11 +31,10 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsOfonoCall
-{
-  GObject parent_instance;
+struct _CallsOfonoCall {
+  GObject        parent_instance;
   GDBOVoiceCall *voice_call;
-  gchar *disconnect_reason;
+  gchar         *disconnect_reason;
 };
 
 static void calls_ofono_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -55,7 +54,7 @@ enum {
   SIGNAL_TONE,
   SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 static const char *
 calls_ofono_call_get_protocol (CallsCall *call)
@@ -63,11 +62,10 @@ calls_ofono_call_get_protocol (CallsCall *call)
   return "tel";
 }
 
-struct CallsCallOperationData
-{
-  const gchar *desc;
+struct CallsCallOperationData {
+  const gchar    *desc;
   CallsOfonoCall *self;
-  gboolean (*finish_func) (GDBOVoiceCall *, GAsyncResult *, GError **);
+  gboolean        (*finish_func) (GDBOVoiceCall *, GAsyncResult *, GError **);
 };
 
 
@@ -76,8 +74,9 @@ operation_cb (GDBOVoiceCall                 *voice_call,
               GAsyncResult                  *res,
               struct CallsCallOperationData *data)
 {
-  gboolean ok;
   g_autoptr (GError) error = NULL;
+
+  gboolean ok;
 
   ok = data->finish_func (voice_call, res, &error);
   if (!ok) {
@@ -106,8 +105,8 @@ calls_ofono_call_answer (CallsCall *call)
 
   gdbo_voice_call_call_answer
     (self->voice_call, NULL,
-     (GAsyncReadyCallback) operation_cb,
-     data);
+    (GAsyncReadyCallback) operation_cb,
+    data);
 }
 
 
@@ -124,8 +123,8 @@ calls_ofono_call_hang_up (CallsCall *call)
 
   gdbo_voice_call_call_hangup
     (self->voice_call, NULL,
-     (GAsyncReadyCallback) operation_cb,
-     data);
+    (GAsyncReadyCallback) operation_cb,
+    data);
 }
 
 
@@ -133,6 +132,7 @@ static void
 calls_ofono_call_send_dtmf_tone (CallsCall *call, gchar key)
 {
   CallsOfonoCall *self = CALLS_OFONO_CALL (call);
+
   if (calls_call_get_state (call) != CALLS_CALL_STATE_ACTIVE) {
     g_warning ("Tone start requested for non-active call to `%s'",
                calls_call_get_id (call));
@@ -200,7 +200,7 @@ property_changed_cb (CallsOfonoCall *self,
 
 static void
 disconnect_reason_cb (CallsOfonoCall *self,
-                      const gchar *reason)
+                      const gchar    *reason)
 {
   if (reason) {
     g_free (self->disconnect_reason);
@@ -276,11 +276,11 @@ calls_ofono_call_class_init (CallsOfonoCallClass *klass)
 
   signals[SIGNAL_TONE] =
     g_signal_newv ("tone",
-		   G_TYPE_FROM_CLASS (klass),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   1, &tone_arg_types);
+                   G_TYPE_FROM_CLASS (klass),
+                   G_SIGNAL_RUN_LAST,
+                   NULL, NULL, NULL, NULL,
+                   G_TYPE_NONE,
+                   1, &tone_arg_types);
 }
 
 

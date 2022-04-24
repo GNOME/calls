@@ -111,40 +111,39 @@ G_BEGIN_DECLS
 
 
 /** If the GObject object is non-NULL, unref it */
-void calls_object_unref (gpointer object);
+void        calls_object_unref (gpointer object);
 
 
 /** Find a particular pointer value in a GtkListStore */
 gboolean
-calls_list_store_find (GtkListStore *store,
-                       gpointer needle,
-                       gint needle_column,
-                       GtkTreeIter *iter);
+            calls_list_store_find (GtkListStore *store,
+                       gpointer                  needle,
+                       gint                      needle_column,
+                       GtkTreeIter              *iter);
 
 /** Append a single character to a GtkEntry's contents */
 void
-calls_entry_append (GtkEntry *entry,
-                    gchar     character);
+            calls_entry_append (GtkEntry *entry,
+                    gchar                 character);
 
 
-gboolean calls_date_time_is_same_day  (GDateTime *a,
-                                       GDateTime *b);
-gboolean calls_date_time_is_yesterday (GDateTime *now,
-                                       GDateTime *t);
-gboolean calls_date_time_is_same_year (GDateTime *a,
-                                       GDateTime *b);
-gboolean calls_number_is_ussd         (const char *number);
+gboolean    calls_date_time_is_same_day  (GDateTime  *a,
+                                           GDateTime *b);
+gboolean    calls_date_time_is_yesterday (GDateTime  *now,
+                                           GDateTime *t);
+gboolean    calls_date_time_is_same_year (GDateTime  *a,
+                                           GDateTime *b);
+gboolean    calls_number_is_ussd         (const char *number);
 
-gboolean calls_find_in_store (GListModel *list,
-                              gpointer    item,
-                              guint      *position);
+gboolean    calls_find_in_store (GListModel *list,
+                                  gpointer   item,
+                                  guint     *position);
 
-const char* get_protocol_from_address (const char *target);
-const char* get_protocol_from_address_with_fallback (const char *target);
+const char *get_protocol_from_address (const char *target);
+const char *get_protocol_from_address_with_fallback (const char *target);
 
-gboolean dtmf_tone_key_is_valid (char key);
-const char *get_call_icon_symbolic_name (gboolean inbound,
-                                         gboolean missed);
+gboolean    dtmf_tone_key_is_valid (char key);
+const char *get_call_icon_symbolic_name (gboolean  inbound,
+                                          gboolean missed);
 
 G_END_DECLS
-

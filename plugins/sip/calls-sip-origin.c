@@ -82,47 +82,46 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static gboolean set_contact_header = FALSE;
 
-struct _CallsSipOrigin
-{
-  GObject parent_instance;
+struct _CallsSipOrigin {
+  GObject               parent_instance;
 
-  CallsSipContext *ctx;
-  nua_t *nua;
-  CallsSipHandles *oper;
-  char *contact_header; /* Needed for sofia SIP >= 1.13 */
+  CallsSipContext      *ctx;
+  nua_t                *nua;
+  CallsSipHandles      *oper;
+  char                 *contact_header; /* Needed for sofia SIP >= 1.13 */
 
   /* Direct connection mode is useful for debugging purposes */
-  gboolean use_direct_connection;
+  gboolean              use_direct_connection;
 
   /* Needed to handle shutdown correctly. See sip_callback and dispose method */
-  gboolean is_nua_shutdown;
-  gboolean is_shutdown_success;
+  gboolean              is_nua_shutdown;
+  gboolean              is_shutdown_success;
 
-  CallsAccountState state;
+  CallsAccountState     state;
 
   CallsSipMediaManager *media_manager;
 
   /* Account information */
-  char *host;
-  char *user;
-  char *password;
-  char *display_name;
-  gint port;
-  char *transport_protocol;
-  gboolean auto_connect;
-  gboolean direct_mode;
-  gboolean can_tel;
+  char                 *host;
+  char                 *user;
+  char                 *password;
+  char                 *display_name;
+  gint                  port;
+  char                 *transport_protocol;
+  gboolean              auto_connect;
+  gboolean              direct_mode;
+  gboolean              can_tel;
 
-  char *own_ip;
-  gint local_port;
+  char                 *own_ip;
+  gint                  local_port;
 
-  const char *protocol_prefix;
-  char *address;
-  char *name;
-  char *id;
+  const char           *protocol_prefix;
+  char                 *address;
+  char                 *name;
+  char                 *id;
 
-  GList *calls;
-  GHashTable *call_handles;
+  GList                *calls;
+  GHashTable           *call_handles;
 };
 
 static void calls_sip_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -138,9 +137,9 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipOrigin, calls_sip_origin, G_TYPE_OBJECT,
                                                 calls_sip_origin_accounts_interface_init))
 
 static void
-change_state (CallsSipOrigin          *self,
-              CallsAccountState        new_state,
-              CallsAccountStateReason  reason)
+change_state (CallsSipOrigin         *self,
+              CallsAccountState       new_state,
+              CallsAccountStateReason reason)
 {
   CallsAccountState old_state;
 
@@ -160,7 +159,7 @@ change_state (CallsSipOrigin          *self,
 static void
 remove_call (CallsSipOrigin *self,
              CallsCall      *call,
-             const gchar    *reason)
+             const char     *reason)
 {
   CallsOrigin *origin;
   CallsSipCall *sip_call;
@@ -188,7 +187,7 @@ remove_call (CallsSipOrigin *self,
 
 static void
 remove_calls (CallsSipOrigin *self,
-              const gchar    *reason)
+              const char     *reason)
 {
   CallsCall *call;
   GList *next;
@@ -229,17 +228,18 @@ on_call_state_changed (CallsSipCall   *call,
 
 static void
 add_call (CallsSipOrigin *self,
-          const gchar    *address,
+          const char     *address,
           gboolean        inbound,
           nua_handle_t   *handle)
 {
   CallsSipCall *sip_call;
   CallsCall *call;
   CallsSipMediaPipeline *pipeline;
-  g_autofree gchar *local_sdp = NULL;
-  g_auto (GStrv)  address_split = NULL;
   const char *call_address = address;
   gint rtp_port, rtcp_port;
+
+  g_auto (GStrv) address_split = NULL;
+  g_autofree char *local_sdp = NULL;
 
   pipeline = calls_sip_media_manager_get_pipeline (self->media_manager);
   rtp_port = calls_sip_media_pipeline_get_rtp_port (pipeline);
@@ -299,7 +299,7 @@ add_call (CallsSipOrigin *self,
 
 static void
 dial (CallsOrigin *origin,
-      const gchar *address)
+      const char  *address)
 {
   CallsSipOrigin *self;
   nua_handle_t *nh;
@@ -354,7 +354,7 @@ dial (CallsOrigin *origin,
 
 static void
 create_inbound (CallsSipOrigin *self,
-                const gchar    *address,
+                const char     *address,
                 nua_handle_t   *handle)
 {
   g_assert (CALLS_IS_SIP_ORIGIN (self));
@@ -375,9 +375,9 @@ sip_authenticate (CallsSipOrigin *self,
                   nua_handle_t   *nh,
                   sip_t const    *sip)
 {
-  const gchar *scheme = NULL;
-  const gchar *realm = NULL;
-  g_autofree gchar *auth = NULL;
+  const char *scheme = NULL;
+  const char *realm = NULL;
+  g_autofree char *auth = NULL;
   sip_www_authenticate_t *www_auth = sip->sip_www_authenticate;
   sip_proxy_authenticate_t *proxy_auth = sip->sip_proxy_authenticate;
 
@@ -412,20 +412,20 @@ sip_r_invite (int              status,
               sip_t const     *sip,
               tagi_t           tags[])
 {
-    g_debug ("response to outgoing INVITE: %03d %s", status, phrase);
+  g_debug ("response to outgoing INVITE: %03d %s", status, phrase);
 
-    /* TODO call states (see i_state) */
-    if (status == 401 || status == 407) {
-      sip_authenticate (origin, nh, sip);
-    } else if (status == 403) {
-      g_warning ("Response to outgoing INVITE: 403 wrong credentials?");
-    } else if (status == 904) {
-      g_warning ("Response to outgoing INVITE: 904 unmatched challenge."
-                 "Possibly the challenge was already answered?");
-    } else if (status == 180) {
-    } else if (status == 100) {
-    } else if (status == 200) {
-    }
+  /* TODO call states (see i_state) */
+  if (status == 401 || status == 407) {
+    sip_authenticate (origin, nh, sip);
+  } else if (status == 403) {
+    g_warning ("Response to outgoing INVITE: 403 wrong credentials?");
+  } else if (status == 904) {
+    g_warning ("Response to outgoing INVITE: 904 unmatched challenge."
+               "Possibly the challenge was already answered?");
+  } else if (status == 180) {
+  } else if (status == 100) {
+  } else if (status == 200) {
+  }
 }
 
 
@@ -446,7 +446,7 @@ sip_r_register (int              status,
     change_state (origin,
                   CALLS_ACCOUNT_STATE_ONLINE,
                   CALLS_ACCOUNT_STATE_REASON_CONNECTED);
-    nua_get_params (nua, TAG_ANY (), TAG_END());
+    nua_get_params (nua, TAG_ANY (), TAG_END ());
 
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
       g_free (origin->own_ip);
@@ -591,7 +591,7 @@ sip_i_state (int              status,
       rtcp_port = rtp_port + 1;
 
     calls_sip_call_setup_remote_media_connection (call,
-                                                  media_ip ? : session_ip,
+                                                  media_ip ?: session_ip,
                                                   rtp_port,
                                                   rtcp_port);
   }
@@ -675,7 +675,7 @@ sip_callback (nua_event_t   event,
 {
   CallsSipOrigin *origin = CALLS_SIP_ORIGIN (magic);
   CallsSipHandles *op = origin->oper;
-  g_autofree gchar * from = NULL;
+  g_autofree char *from = NULL;
 
   switch (event) {
   case nua_i_invite:
@@ -807,14 +807,13 @@ sip_callback (nua_event_t   event,
     if (status == 200) {
       origin->is_nua_shutdown = TRUE;
       origin->is_shutdown_success = TRUE;
-    }
-    else if (status == 500) {
+    } else if (status == 500) {
       origin->is_nua_shutdown = TRUE;
       origin->is_shutdown_success = FALSE;
     }
     break;
 
-    /* Deprecated events */
+  /* Deprecated events */
   case nua_i_active:
     break;
   case nua_i_terminated:
@@ -827,7 +826,7 @@ sip_callback (nua_event_t   event,
                status,
                phrase);
     g_warning ("printing tags");
-    tl_print(stdout, "", tags);
+    tl_print (stdout, "", tags);
     break;
   }
 }
@@ -1168,6 +1167,7 @@ supports_protocol (CallsOrigin *origin,
                    const char  *protocol)
 {
   CallsSipOrigin *self;
+
   g_assert (protocol);
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
@@ -1276,10 +1276,10 @@ calls_sip_origin_set_property (GObject      *object,
 
 
 static void
-calls_sip_origin_get_property (GObject      *object,
-                               guint         property_id,
-                               GValue       *value,
-                               GParamSpec   *pspec)
+calls_sip_origin_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
   g_autofree char *name = NULL;
@@ -1360,6 +1360,7 @@ static void
 calls_sip_origin_constructed (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
+
   g_autoptr (GError) error = NULL;
   int major = 0;
   int minor = 0;
@@ -1501,7 +1502,7 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
   g_object_class_install_property (object_class, PROP_ACC_LOCAL_PORT, props[PROP_ACC_LOCAL_PORT]);
 
- props[PROP_SIP_CONTEXT] =
+  props[PROP_SIP_CONTEXT] =
     g_param_spec_pointer ("sip-context",
                           "SIP context",
                           "The SIP context (sofia) used for our sip handles",

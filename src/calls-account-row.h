@@ -38,9 +38,9 @@ G_DECLARE_FINAL_TYPE (CallsAccountRow, calls_account_row, CALLS, ACCOUNT_ROW, Hd
 
 CallsAccountRow      *calls_account_row_new              (CallsAccountProvider *provider,
                                                           CallsAccount         *account);
-gboolean              calls_account_row_get_online       (CallsAccountRow      *self);
-void                  calls_account_row_set_online       (CallsAccountRow      *self,
-                                                          gboolean              online);
-CallsAccount         *calls_account_row_get_account      (CallsAccountRow      *self);
+gboolean      calls_account_row_get_online       (CallsAccountRow *self);
+void          calls_account_row_set_online       (CallsAccountRow *self,
+                                                  gboolean         online);
+CallsAccount *calls_account_row_get_account      (CallsAccountRow *self);
 
 G_END_DECLS

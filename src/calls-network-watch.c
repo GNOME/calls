@@ -47,8 +47,8 @@
 
 typedef struct {
   struct nlmsghdr n;
-  struct rtmsg r;
-  char buf[1024];
+  struct rtmsg    r;
+  char            buf[1024];
 } RequestData;
 
 enum {
@@ -67,20 +67,20 @@ static guint signals[N_SIGNALS];
 
 
 typedef struct _CallsNetworkWatch {
-  GObject parent;
+  GObject      parent;
 
   RequestData *req;
-  int fd;
+  int          fd;
   unsigned int seq;
-  char buf[1024]; /* buffer for responses to rtnetlink requests */
+  char         buf[1024]; /* buffer for responses to rtnetlink requests */
 
-  guint timeout_id;
+  guint        timeout_id;
 
-  gboolean repeated_warning;
+  gboolean     repeated_warning;
 
-  char *ipv4;
-  char *ipv6;
-  char tmp_addr[INET6_ADDRSTRLEN];
+  char        *ipv4;
+  char        *ipv6;
+  char         tmp_addr[INET6_ADDRSTRLEN];
 } CallsNetworkWatch;
 
 
@@ -308,9 +308,9 @@ on_watch_network (CallsNetworkWatch *self)
 }
 
 static void
-calls_network_watch_get_property (GObject *object,
-                                  guint    property_id,
-                                  GValue  *value,
+calls_network_watch_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
                                   GParamSpec *pspec)
 {
   CallsNetworkWatch *self = CALLS_NETWORK_WATCH (object);

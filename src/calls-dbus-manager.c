@@ -102,12 +102,12 @@ on_handle_call_hangup (CallsDBusCallsCall    *skeleton,
 }
 
 static gboolean
-(avatar_loadable_icon_transform_to_image_path) (GBinding *binding,
-                                                const GValue *from_value,
-                                                GValue *to_value,
-                                                gpointer user_data)
+  (avatar_loadable_icon_transform_to_image_path) (GBinding *binding,
+                                                  const GValue *from_value,
+                                                  GValue *to_value,
+                                                  gpointer user_data)
 {
-  GLoadableIcon *icon = G_LOADABLE_ICON (g_value_get_object(from_value));
+  GLoadableIcon *icon = G_LOADABLE_ICON (g_value_get_object (from_value));
 
   if (icon == NULL) {
     g_value_set_string (to_value, NULL);
@@ -237,11 +237,11 @@ on_notify_update_hints (CallsUiCallData    *call,
 static void
 call_added_cb (CallsDBusManager *self, CuiCall *call)
 {
-  g_autofree char *path = NULL;
   g_autoptr (GError) error = NULL;
   g_autoptr (CallsDBusObjectSkeleton) object = NULL;
   g_autoptr (CallsDBusCallsCall) iface = NULL;
   g_autoptr (CallsBestMatch) match = NULL;
+  g_autofree char *path = NULL;
 
   path = get_obj_path (self, self->iface_num++);
   object = calls_dbus_object_skeleton_new (path);

@@ -35,11 +35,10 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
-struct _CallsNotifier
-{
-  GObject parent_instance;
+struct _CallsNotifier {
+  GObject     parent_instance;
 
-  GListStore    *unanswered;
+  GListStore *unanswered;
 };
 
 G_DEFINE_TYPE (CallsNotifier, calls_notifier, G_TYPE_OBJECT);
@@ -49,6 +48,7 @@ static void
 notify (CallsNotifier *self, CuiCall *call)
 {
   GApplication *app = g_application_get_default ();
+
   g_autoptr (GNotification) notification = g_notification_new (_("Missed call"));
   g_autofree gchar *msg = NULL;
   g_autofree gchar *ref = NULL;
@@ -58,13 +58,13 @@ notify (CallsNotifier *self, CuiCall *call)
   gboolean got_id;
   gboolean got_contact;
 
-#if GLIB_CHECK_VERSION(2,70,0)
+#if GLIB_CHECK_VERSION (2,70,0)
   g_notification_set_category (notification, "x-gnome.call.unanswered");
 #endif
   /* TODO: We need to update the notification when the contact name changes
      We would need to resend the notification in this case, as changing the properties
      after having called g_application_send_notification() will have no effect.
-  */
+   */
   name = cui_call_get_display_name (call);
   id = cui_call_get_id (call);
 
@@ -123,7 +123,7 @@ state_changed_cb (CallsNotifier *self,
 static void
 call_added_cb (CallsNotifier *self, CuiCall *call)
 {
-  g_list_store_append(self->unanswered, call);
+  g_list_store_append (self->unanswered, call);
 
   g_signal_connect_swapped (call,
                             "state-changed",

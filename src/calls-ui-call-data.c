@@ -55,23 +55,22 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 static guint signals[N_SIGNALS];
 
-struct _CallsUiCallData
-{
-  GObject parent_instance;
+struct _CallsUiCallData {
+  GObject         parent_instance;
 
-  CallsCall *call;
+  CallsCall      *call;
   CallsBestMatch *best_match;
 
-  GTimer       *timer;
-  gdouble       active_time;
-  guint         timer_id;
+  GTimer         *timer;
+  gdouble         active_time;
+  guint           timer_id;
 
-  CuiCallState state;
-  char *origin_id;
-  gboolean silenced;
+  CuiCallState    state;
+  char           *origin_id;
+  gboolean        silenced;
 
-  gboolean ui_active; /* whether a UI should be shown (or the ringer should ring) */
-  guint set_active_id;
+  gboolean        ui_active; /* whether a UI should be shown (or the ringer should ring) */
+  guint           set_active_id;
 };
 
 static void calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface);
@@ -282,6 +281,7 @@ static void
 on_notify_state (CallsUiCallData *self)
 {
   CallsCallState state;
+
   g_assert (CALLS_IS_UI_CALL_DATA (self));
 
   state = calls_call_get_state (self->call);
@@ -725,6 +725,7 @@ char *
 calls_ui_call_data_dup_origin_name (CallsUiCallData *self)
 {
   CallsOrigin *origin;
+
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
 
   origin = calls_manager_get_origin_by_id (calls_manager_get_default (),

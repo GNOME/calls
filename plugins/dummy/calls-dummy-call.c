@@ -29,8 +29,7 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsDummyCall
-{
+struct _CallsDummyCall {
   GObject parent_instance;
 };
 
@@ -83,7 +82,7 @@ outbound_timeout_cb (CallsDummyCall *self)
   case CALLS_CALL_STATE_DIALING:
     calls_call_set_state (call, CALLS_CALL_STATE_ALERTING);
     g_timeout_add_seconds
-      (3, (GSourceFunc)outbound_timeout_cb, self);
+      (3, (GSourceFunc) outbound_timeout_cb, self);
     break;
 
   case CALLS_CALL_STATE_ALERTING:
@@ -116,7 +115,7 @@ constructed (GObject *object)
   CallsDummyCall *self = CALLS_DUMMY_CALL (object);
 
   if (!calls_call_get_inbound (CALLS_CALL (object)))
-    g_timeout_add_seconds (1, (GSourceFunc)outbound_timeout_cb, self);
+    g_timeout_add_seconds (1, (GSourceFunc) outbound_timeout_cb, self);
 
   G_OBJECT_CLASS (calls_dummy_call_parent_class)->constructed (object);
 }

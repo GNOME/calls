@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsCallSelectorItem, calls_call_selector_item,
                       CALLS, CALL_SELECTOR_ITEM, GtkEventBox);
 
-CallsCallSelectorItem *calls_call_selector_item_new         (CuiCallDisplay        *display);
+CallsCallSelectorItem *calls_call_selector_item_new         (CuiCallDisplay *display);
 CuiCallDisplay        *calls_call_selector_item_get_display (CallsCallSelectorItem *item);
 
 G_END_DECLS

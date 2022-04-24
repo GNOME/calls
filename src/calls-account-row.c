@@ -140,10 +140,10 @@ calls_account_row_set_property (GObject      *object,
 
 
 static void
-calls_account_row_get_property (GObject      *object,
-                                guint         property_id,
-                                GValue       *value,
-                                GParamSpec   *pspec)
+calls_account_row_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
 {
   CallsAccountRow *self = CALLS_ACCOUNT_ROW (object);
 
@@ -213,8 +213,8 @@ calls_account_row_class_init (CallsAccountRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsAccountRow, online_switch);
   gtk_widget_class_bind_template_child (widget_class, CallsAccountRow, edit_btn);
 
- gtk_widget_class_bind_template_callback (widget_class, on_edit_clicked);
- gtk_widget_class_bind_template_callback (widget_class, on_online_switched);
+  gtk_widget_class_bind_template_callback (widget_class, on_edit_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_online_switched);
 }
 
 

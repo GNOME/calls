@@ -42,7 +42,7 @@ enum {
   N_SIGNALS
 };
 
-static guint signals [N_SIGNALS];
+static guint signals[N_SIGNALS];
 
 static void
 calls_ussd_default_init (CallsUssdInterface *iface)
@@ -107,11 +107,11 @@ calls_ussd_get_state (CallsUssd *self)
 }
 
 void
-calls_ussd_initiate_async (CallsUssd           *self,
-                           const char          *command,
-                           GCancellable        *cancellable,
-                           GAsyncReadyCallback  callback,
-                           gpointer             user_data)
+calls_ussd_initiate_async (CallsUssd          *self,
+                           const char         *command,
+                           GCancellable       *cancellable,
+                           GAsyncReadyCallback callback,
+                           gpointer            user_data)
 {
   CallsUssdInterface *iface;
 
@@ -126,9 +126,9 @@ calls_ussd_initiate_async (CallsUssd           *self,
 }
 
 char *
-calls_ussd_initiate_finish (CallsUssd     *self,
-                            GAsyncResult  *result,
-                            GError       **error)
+calls_ussd_initiate_finish (CallsUssd    *self,
+                            GAsyncResult *result,
+                            GError      **error)
 {
   CallsUssdInterface *iface;
 
@@ -143,11 +143,11 @@ calls_ussd_initiate_finish (CallsUssd     *self,
 }
 
 void
-calls_ussd_respond_async (CallsUssd           *self,
-                          const char          *response,
-                          GCancellable        *cancellable,
-                          GAsyncReadyCallback  callback,
-                          gpointer             user_data)
+calls_ussd_respond_async (CallsUssd          *self,
+                          const char         *response,
+                          GCancellable       *cancellable,
+                          GAsyncReadyCallback callback,
+                          gpointer            user_data)
 {
   CallsUssdInterface *iface;
 
@@ -162,9 +162,9 @@ calls_ussd_respond_async (CallsUssd           *self,
 }
 
 char *
-calls_ussd_respond_finish (CallsUssd     *self,
-                           GAsyncResult  *result,
-                           GError       **error)
+calls_ussd_respond_finish (CallsUssd    *self,
+                           GAsyncResult *result,
+                           GError      **error)
 {
   CallsUssdInterface *iface;
 
@@ -179,10 +179,10 @@ calls_ussd_respond_finish (CallsUssd     *self,
 }
 
 void
-calls_ussd_cancel_async (CallsUssd           *self,
-                         GCancellable        *cancellable,
-                         GAsyncReadyCallback  callback,
-                         gpointer             user_data)
+calls_ussd_cancel_async (CallsUssd          *self,
+                         GCancellable       *cancellable,
+                         GAsyncReadyCallback callback,
+                         gpointer            user_data)
 {
   CallsUssdInterface *iface;
 
@@ -196,9 +196,9 @@ calls_ussd_cancel_async (CallsUssd           *self,
 }
 
 gboolean
-calls_ussd_cancel_finish (CallsUssd     *self,
-                          GAsyncResult  *result,
-                          GError       **error)
+calls_ussd_cancel_finish (CallsUssd    *self,
+                          GAsyncResult *result,
+                          GError      **error)
 {
   CallsUssdInterface *iface;
 

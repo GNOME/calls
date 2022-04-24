@@ -48,16 +48,15 @@
  * #CallsSipMediaPipeline objects that are ready to be used.
  */
 
-typedef struct _CallsSipMediaManager
-{
-  GObject parent;
+typedef struct _CallsSipMediaManager {
+  GObject                 parent;
 
-  int            address_family;
+  int                     address_family;
   struct         addrinfo hints;
 
-  CallsSettings *settings;
-  GList         *preferred_codecs;
-  GListStore    *pipelines;
+  CallsSettings          *settings;
+  GList                  *preferred_codecs;
+  GListStore             *pipelines;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
@@ -95,6 +94,7 @@ static void
 on_notify_preferred_audio_codecs (CallsSipMediaManager *self)
 {
   GList *supported_codecs;
+
   g_auto (GStrv) settings_codec_preference = NULL;
 
   g_assert (CALLS_IS_SIP_MEDIA_MANAGER (self));
@@ -173,7 +173,7 @@ calls_sip_media_manager_class_init (CallsSipMediaManagerClass *klass)
 static void
 calls_sip_media_manager_init (CallsSipMediaManager *self)
 {
-  if (!gst_is_initialized())
+  if (!gst_is_initialized ())
     gst_init (NULL, NULL);
 
   self->settings = calls_settings_new ();
@@ -228,6 +228,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                                           GList                *supported_codecs)
 {
   char *payload_type = use_srtp ? "SAVP" : "AVP";
+
   g_autoptr (GString) media_line = NULL;
   g_autoptr (GString) attribute_lines = NULL;
   GList *node;
@@ -262,7 +263,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 
   g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", rtcp_port);
 
- done:
+done:
   if (own_ip && *own_ip)
     address_family_string = get_address_family_string (self, own_ip);
 

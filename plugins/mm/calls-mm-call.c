@@ -33,11 +33,10 @@
 #include <glib/gi18n.h>
 
 
-struct _CallsMMCall
-{
+struct _CallsMMCall {
   GObject parent_instance;
   MMCall *mm_call;
-  gchar *disconnect_reason;
+  gchar  *disconnect_reason;
 };
 
 static void calls_mm_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -61,10 +60,9 @@ notify_id_cb (CallsMMCall *self,
 }
 
 
-struct CallsMMCallStateReasonMap
-{
-  MMCallStateReason  value;
-  const gchar       *desc;
+struct CallsMMCallStateReasonMap {
+  MMCallStateReason value;
+  const gchar      *desc;
 };
 
 static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
@@ -89,39 +87,34 @@ static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
 };
 
 static void
-set_disconnect_reason (CallsMMCall       *self,
-                       MMCallStateReason  reason)
+set_disconnect_reason (CallsMMCall      *self,
+                       MMCallStateReason reason)
 {
   const struct CallsMMCallStateReasonMap *map_row;
 
   if (self->disconnect_reason)
-    {
-      g_free (self->disconnect_reason);
-    }
+    g_free (self->disconnect_reason);
 
-  for (map_row = STATE_REASON_MAP; map_row->desc; ++map_row)
-    {
-      if (map_row->value == reason)
-        {
-          self->disconnect_reason =
-            g_strdup (gettext (map_row->desc));
-          return;
-        }
+  for (map_row = STATE_REASON_MAP; map_row->desc; ++map_row) {
+    if (map_row->value == reason) {
+      self->disconnect_reason =
+        g_strdup (gettext (map_row->desc));
+      return;
     }
+  }
 
   self->disconnect_reason =
     g_strdup_printf (_("Call disconnected (unknown reason code %i)"),
-                     (int)reason);
+                     (int) reason);
 
   g_warning ("%s", self->disconnect_reason);
 }
 
 
-struct CallsMMCallStateMap
-{
-  MMCallState     mm;
-  CallsCallState  calls;
-  const gchar    *name;
+struct CallsMMCallStateMap {
+  MMCallState    mm;
+  CallsCallState calls;
+  const gchar   *name;
 };
 
 static const struct CallsMMCallStateMap STATE_MAP[] = {
@@ -144,28 +137,24 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
 };
 
 static void
-state_changed_cb (CallsMMCall       *self,
-                  MMCallState        old,
-                  MMCallState        mm_new,
-                  MMCallStateReason  reason)
+state_changed_cb (CallsMMCall      *self,
+                  MMCallState       old,
+                  MMCallState       mm_new,
+                  MMCallStateReason reason)
 {
   const struct CallsMMCallStateMap *map_row;
 
   if (mm_new == MM_CALL_STATE_TERMINATED)
-    {
-      set_disconnect_reason (self, reason);
-    }
+    set_disconnect_reason (self, reason);
 
-  for (map_row = STATE_MAP; map_row->mm != -1; ++map_row)
-    {
-      if (map_row->mm == mm_new)
-        {
-          g_debug ("MM call state changed to `%s'",
-                   map_row->name);
-          calls_call_set_state (CALLS_CALL (self), map_row->calls);
-          return;
-        }
+  for (map_row = STATE_MAP; map_row->mm != -1; ++map_row) {
+    if (map_row->mm == mm_new) {
+      g_debug ("MM call state changed to `%s'",
+               map_row->name);
+      calls_call_set_state (CALLS_CALL (self), map_row->calls);
+      return;
     }
+  }
 }
 
 
@@ -175,11 +164,10 @@ calls_mm_call_get_protocol (CallsCall *self)
   return "tel";
 }
 
-struct CallsMMOperationData
-{
+struct CallsMMOperationData {
   const gchar *desc;
   CallsMMCall *self;
-  gboolean (*finish_func) (MMCall *, GAsyncResult *, GError **);
+  gboolean     (*finish_func) (MMCall *, GAsyncResult *, GError **);
 };
 
 static void
@@ -188,17 +176,17 @@ operation_cb (MMCall                      *mm_call,
               struct CallsMMOperationData *data)
 {
   gboolean ok;
+
   g_autoptr (GError) error = NULL;
 
   ok = data->finish_func (mm_call, res, &error);
-  if (!ok)
-    {
-      g_warning ("Error %s ModemManager call to `%s': %s",
-                 data->desc,
-                 calls_call_get_id (CALLS_CALL (data->self)),
-                 error->message);
-      CALLS_ERROR (data->self, error);
-    }
+  if (!ok) {
+    g_warning ("Error %s ModemManager call to `%s': %s",
+               data->desc,
+               calls_call_get_id (CALLS_CALL (data->self)),
+               error->message);
+    CALLS_ERROR (data->self, error);
+  }
 
   g_free (data);
 }
@@ -222,9 +210,9 @@ operation_cb (MMCall                      *mm_call,
        data);                                           \
   }
 
-DEFINE_OPERATION(accept, calls_mm_call_answer, "accepting");
-DEFINE_OPERATION(hangup, calls_mm_call_hang_up, "hanging up");
-DEFINE_OPERATION(start, calls_mm_call_start_call, "starting outgoing call");
+DEFINE_OPERATION (accept, calls_mm_call_answer, "accepting");
+DEFINE_OPERATION (hangup, calls_mm_call_hang_up, "hanging up");
+DEFINE_OPERATION (start, calls_mm_call_start_call, "starting outgoing call");
 
 
 static void
@@ -241,10 +229,10 @@ calls_mm_call_send_dtmf_tone (CallsCall *call, gchar key)
 
   mm_call_send_dtmf
     (self->mm_call,
-     key_str,
-     NULL,
-     (GAsyncReadyCallback) operation_cb,
-     data);
+    key_str,
+    NULL,
+    (GAsyncReadyCallback) operation_cb,
+    data);
 }
 
 

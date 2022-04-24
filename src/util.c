@@ -28,19 +28,17 @@
 void
 calls_object_unref (gpointer object)
 {
-  if (object)
-    {
-      g_object_unref (object);
-    }
+  if (object) {
+    g_object_unref (object);
+  }
 }
 
 
-typedef struct
-{
-  gpointer needle;
-  guint needle_column;
+typedef struct {
+  gpointer     needle;
+  guint        needle_column;
   GtkTreeIter *iter;
-  gboolean found;
+  gboolean     found;
 } ListStoreFindData;
 
 static gboolean
@@ -55,20 +53,19 @@ list_store_find_foreach_cb (GtkTreeModel *model,
   gtk_tree_model_get (model, iter, find_data->needle_column,
                       &value, -1);
 
-  if (value == find_data->needle)
-    {
-      *find_data->iter = *iter;
-      return (find_data->found = TRUE);
-    }
+  if (value == find_data->needle) {
+    *find_data->iter = *iter;
+    return (find_data->found = TRUE);
+  }
 
   return FALSE;
 }
 
 gboolean
 calls_list_store_find (GtkListStore *store,
-                       gpointer needle,
-                       gint needle_column,
-                       GtkTreeIter *iter)
+                       gpointer      needle,
+                       gint          needle_column,
+                       GtkTreeIter  *iter)
 {
   ListStoreFindData find_data
     = { needle, needle_column, iter, FALSE };

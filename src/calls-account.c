@@ -44,7 +44,7 @@ enum {
   SIGNAL_STATE_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 
 static gboolean
@@ -92,7 +92,8 @@ calls_account_state_reason_is_error (CallsAccountStateReason reason)
 static void
 calls_account_default_init (CallsAccountInterface *iface)
 {
-  g_object_interface_install_property (iface,
+  g_object_interface_install_property (
+    iface,
     g_param_spec_enum ("account-state",
                        "Account state",
                        "The state of the account",
@@ -102,7 +103,8 @@ calls_account_default_init (CallsAccountInterface *iface)
                        G_PARAM_STATIC_STRINGS |
                        G_PARAM_EXPLICIT_NOTIFY));
 
-  g_object_interface_install_property (iface,
+  g_object_interface_install_property (
+    iface,
     g_param_spec_string ("address",
                          "Address",
                          "The address of this account",
@@ -312,8 +314,8 @@ calls_account_emit_message_for_state_change (CallsAccount           *account,
 
   if (reason_is_error || calls_log_get_verbosity () >= 3)
     message = g_strdup_printf ("%s: %s",
-                            calls_account_state_to_string (new_state),
-                            calls_account_state_reason_to_string (reason));
+                               calls_account_state_to_string (new_state),
+                               calls_account_state_reason_to_string (reason));
   else
     message = g_strdup (calls_account_state_to_string (new_state));
 

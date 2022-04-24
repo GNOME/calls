@@ -40,7 +40,7 @@ enum {
   SIGNAL_CALL_REMOVED,
   SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 static void
 calls_origin_default_init (CallsOriginInterface *iface)
@@ -80,19 +80,19 @@ calls_origin_default_init (CallsOriginInterface *iface)
 
   signals[SIGNAL_CALL_ADDED] =
     g_signal_newv ("call-added",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   1, arg_types);
+                   G_TYPE_FROM_INTERFACE (iface),
+                   G_SIGNAL_RUN_LAST,
+                   NULL, NULL, NULL, NULL,
+                   G_TYPE_NONE,
+                   1, arg_types);
 
   signals[SIGNAL_CALL_REMOVED] =
     g_signal_newv ("call-removed",
-		   G_TYPE_FROM_INTERFACE (iface),
-		   G_SIGNAL_RUN_LAST,
-		   NULL, NULL, NULL, NULL,
-		   G_TYPE_NONE,
-		   2, arg_types);
+                   G_TYPE_FROM_INTERFACE (iface),
+                   G_SIGNAL_RUN_LAST,
+                   NULL, NULL, NULL, NULL,
+                   G_TYPE_NONE,
+                   2, arg_types);
 }
 
 #define DEFINE_ORIGIN_GETTER(prop,rettype,errval) \
@@ -107,7 +107,7 @@ calls_origin_default_init (CallsOriginInterface *iface)
  * Returns (transfer full): A string containing the name.  The string must be freed by
  * the caller.
  */
-DEFINE_ORIGIN_GETTER(name, char *, NULL);
+DEFINE_ORIGIN_GETTER (name, char *, NULL);
 
 /**
  * calls_origin_get_id:
@@ -118,7 +118,7 @@ DEFINE_ORIGIN_GETTER(name, char *, NULL);
  * Returns (transfer full): A string containing the id.  The string must be freed by
  * the caller.
  */
-DEFINE_ORIGIN_GETTER(id, char *, NULL);
+DEFINE_ORIGIN_GETTER (id, char *, NULL);
 
 /**
  * calls_origin_get_calls:
@@ -129,7 +129,7 @@ DEFINE_ORIGIN_GETTER(id, char *, NULL);
  * Returns: (transfer container): A newly-allocated GList of objects implementing
  * #CallsCall or NULL if there was an error.
  */
-DEFINE_ORIGIN_GETTER(calls, GList *, NULL);
+DEFINE_ORIGIN_GETTER (calls, GList *, NULL);
 
 /**
  * calls_origin_foreach_call:
@@ -140,9 +140,9 @@ DEFINE_ORIGIN_GETTER(calls, GList *, NULL);
  * Iterate over all current calls from this origin
  **/
 void
-calls_origin_foreach_call(CallsOrigin *self,
-                          CallsOriginForeachCallFunc callback,
-                          gpointer param)
+calls_origin_foreach_call (CallsOrigin               *self,
+                           CallsOriginForeachCallFunc callback,
+                           gpointer                   param)
 {
   g_autoptr (GList) calls = NULL;
   GList *node;
@@ -164,8 +164,8 @@ calls_origin_foreach_call(CallsOrigin *self,
  * there is an error, an appropriate #message signal will be emitted.
  */
 void
-calls_origin_dial(CallsOrigin *self,
-                  const char  *number)
+calls_origin_dial (CallsOrigin *self,
+                   const char  *number)
 {
   CallsOriginInterface *iface;
 
@@ -175,7 +175,7 @@ calls_origin_dial(CallsOrigin *self,
   iface = CALLS_ORIGIN_GET_IFACE (self);
   g_return_if_fail (iface->dial != NULL);
 
-  return iface->dial(self, number);
+  return iface->dial (self, number);
 }
 
 /**

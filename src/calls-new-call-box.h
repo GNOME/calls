@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_NEW_CALL_BOX_H__
-#define CALLS_NEW_CALL_BOX_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -31,20 +30,18 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_NEW_CALL_BOX (calls_new_call_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox);
+G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox)
 
-CallsNewCallBox * calls_new_call_box_new  (void);
-void              calls_new_call_box_dial (CallsNewCallBox *self,
-                                           const gchar     *target);
-void              calls_new_call_box_send_ussd_async  (CallsNewCallBox     *self,
-                                                       const char          *target,
-                                                       GCancellable        *cancellable,
-                                                       GAsyncReadyCallback  callback,
-                                                       gpointer             user_data);
-char             *calls_new_call_box_send_ussd_finish (CallsNewCallBox     *self,
-                                                       GAsyncResult        *result,
-                                                       GError             **error);
+CallsNewCallBox *calls_new_call_box_new  (void);
+void             calls_new_call_box_dial (CallsNewCallBox *self,
+                                          const gchar     *target);
+void             calls_new_call_box_send_ussd_async  (CallsNewCallBox    *self,
+                                                      const char         *target,
+                                                      GCancellable       *cancellable,
+                                                      GAsyncReadyCallback callback,
+                                                      gpointer            user_data);
+char            *calls_new_call_box_send_ussd_finish (CallsNewCallBox *self,
+                                                      GAsyncResult    *result,
+                                                      GError         **error);
 
 G_END_DECLS
-
-#endif /* CALLS_NEW_CALL_BOX_H__ */

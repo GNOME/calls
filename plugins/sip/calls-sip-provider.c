@@ -65,17 +65,16 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-struct _CallsSipProvider
-{
-  CallsProvider parent_instance;
+struct _CallsSipProvider {
+  CallsProvider          parent_instance;
 
-  GListStore *origins;
+  GListStore            *origins;
   /* SIP */
-  CallsSipContext *ctx;
-  SipEngineState sip_state;
+  CallsSipContext       *ctx;
+  SipEngineState         sip_state;
 
-  gboolean use_memory_backend;
-  gchar *filename;
+  gboolean               use_memory_backend;
+  gchar                 *filename;
 
   CallsSipAccountWidget *account_widget;
 };
@@ -86,20 +85,20 @@ static void calls_sip_provider_account_provider_interface_init (CallsAccountProv
 #ifdef FOR_TESTING
 
 G_DEFINE_TYPE_WITH_CODE
-(CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER,
- G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                        calls_sip_provider_message_source_interface_init)
- G_IMPLEMENT_INTERFACE (CALLS_TYPE_ACCOUNT_PROVIDER,
-                        calls_sip_provider_account_provider_interface_init))
+  (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER,
+  G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                         calls_sip_provider_message_source_interface_init)
+  G_IMPLEMENT_INTERFACE (CALLS_TYPE_ACCOUNT_PROVIDER,
+                         calls_sip_provider_account_provider_interface_init))
 
 #else
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
-(CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_sip_provider_message_source_interface_init)
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
-                                calls_sip_provider_account_provider_interface_init))
+  (CallsSipProvider, calls_sip_provider, CALLS_TYPE_PROVIDER, 0,
+  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
+                                 calls_sip_provider_message_source_interface_init)
+  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_ACCOUNT_PROVIDER,
+                                 calls_sip_provider_account_provider_interface_init))
 
 #endif /* FOR_TESTING */
 
@@ -115,6 +114,7 @@ on_origin_pw_looked_up (GObject      *source,
                         gpointer      user_data)
 {
   SipOriginLoadData *data;
+
   g_autoptr (GError) error = NULL;
   g_autofree char *id = NULL;
   g_autofree char *name = NULL;
@@ -367,7 +367,7 @@ calls_sip_provider_get_origins (CallsProvider *provider)
   return G_LIST_MODEL (self->origins);
 }
 
-static const char * const *
+static const char *const *
 calls_sip_provider_get_protocols (CallsProvider *provider)
 {
   return supported_protocols;
@@ -397,7 +397,7 @@ calls_sip_provider_deinit_sip (CallsSipProvider *self)
   }
   g_clear_pointer (&self->ctx, g_free);
 
- bail:
+bail:
   self->sip_state = SIP_ENGINE_NULL;
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
 }
@@ -448,7 +448,7 @@ calls_sip_provider_init_sofia (CallsSipProvider *self,
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
   return TRUE;
 
- err:
+err:
   self->sip_state = SIP_ENGINE_ERROR;
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SIP_STATE]);
   return FALSE;
@@ -456,10 +456,10 @@ calls_sip_provider_init_sofia (CallsSipProvider *self,
 
 
 static void
-calls_sip_provider_get_property (GObject      *object,
-                                 guint         property_id,
-                                 GValue       *value,
-                                 GParamSpec   *pspec)
+calls_sip_provider_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
 
@@ -479,6 +479,7 @@ static void
 calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
+
   g_autoptr (GError) error = NULL;
   const gchar *env_sip_test;
 
@@ -500,7 +501,7 @@ calls_sip_provider_constructed (GObject *object)
     g_warning ("Could not initialize sofia stack: %s", error->message);
   }
 
- out:
+out:
 
   G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }

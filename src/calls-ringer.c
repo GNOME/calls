@@ -35,6 +35,7 @@
 #define LIBFEEDBACK_USE_UNSTABLE_API
 #include <libfeedback.h>
 
+
 enum {
   PROP_0,
   PROP_IS_RINGING,
@@ -53,18 +54,20 @@ typedef enum {
 
 
 struct _CallsRinger {
-  GObject parent_instance;
+  GObject        parent_instance;
 
-  GList *calls;
-  LfbEvent *event;
-  GCancellable *cancel_ring;
+  GList         *calls;
+  LfbEvent      *event;
+  GCancellable  *cancel_ring;
   CallsRingState state;
 
-  guint restart_id;
-  gboolean is_quiet;
+  guint          restart_id;
+  gboolean       is_quiet;
 };
 
-G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT);
+
+G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT)
+
 
 static const char *
 ring_state_to_string (CallsRingState state)
@@ -82,6 +85,7 @@ ring_state_to_string (CallsRingState state)
     return "unknown";
   }
 }
+
 
 static void
 change_ring_state (CallsRinger   *self,
@@ -114,21 +118,22 @@ on_event_triggered (LfbEvent     *event,
                     GAsyncResult *res,
                     CallsRinger  *self)
 {
-    g_autoptr (GError) err = NULL;
-    g_return_if_fail (LFB_IS_EVENT (event));
-    g_return_if_fail (CALLS_IS_RINGER (self));
+  g_autoptr (GError) err = NULL;
 
-    g_debug ("%s", __func__);
-    if (lfb_event_trigger_feedback_finish (event, res, &err)) {
-      change_ring_state (self, CALLS_RING_STATE_PLAYING);
-    } else {
-      if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-        g_warning ("Failed to trigger feedback for '%s': %s",
-                   lfb_event_get_event (event), err->message);
-      change_ring_state (self, CALLS_RING_STATE_INACTIVE);
-    }
+  g_return_if_fail (LFB_IS_EVENT (event));
+  g_return_if_fail (CALLS_IS_RINGER (self));
 
-    g_object_unref (self);
+  g_debug ("%s", __func__);
+  if (lfb_event_trigger_feedback_finish (event, res, &err)) {
+    change_ring_state (self, CALLS_RING_STATE_PLAYING);
+  } else {
+    if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+      g_warning ("Failed to trigger feedback for '%s': %s",
+                 lfb_event_get_event (event), err->message);
+    change_ring_state (self, CALLS_RING_STATE_INACTIVE);
+  }
+
+  g_object_unref (self);
 }
 
 
@@ -170,22 +175,22 @@ on_event_feedback_ended (LfbEvent     *event,
                          GAsyncResult *res,
                          CallsRinger  *self)
 {
-    g_autoptr (GError) err = NULL;
+  g_autoptr (GError) err = NULL;
 
-    g_return_if_fail (LFB_IS_EVENT (event));
-    g_return_if_fail (CALLS_IS_RINGER (self));
+  g_return_if_fail (LFB_IS_EVENT (event));
+  g_return_if_fail (CALLS_IS_RINGER (self));
 
-    g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
+  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
 
-    if (self->state == CALLS_RING_STATE_REQUEST_PLAY ||
-        self->state == CALLS_RING_STATE_PLAYING)
-      g_warning ("Feedback ended although it should be playing");
+  if (self->state == CALLS_RING_STATE_REQUEST_PLAY ||
+      self->state == CALLS_RING_STATE_PLAYING)
+    g_warning ("Feedback ended although it should be playing");
 
-    if (!lfb_event_end_feedback_finish (event, res, &err))
-      g_warning ("Failed to end feedback for '%s': %s",
-                 lfb_event_get_event (event), err->message);
+  if (!lfb_event_end_feedback_finish (event, res, &err))
+    g_warning ("Failed to end feedback for '%s': %s",
+               lfb_event_get_event (event), err->message);
 
-    change_ring_state (self, CALLS_RING_STATE_INACTIVE);
+  change_ring_state (self, CALLS_RING_STATE_INACTIVE);
 }
 
 
@@ -527,7 +532,7 @@ calls_ringer_get_is_ringing (CallsRinger *self)
   g_return_val_if_fail (CALLS_IS_RINGER (self), FALSE);
 
   return self->state == CALLS_RING_STATE_PLAYING ||
-    self->state == CALLS_RING_STATE_REQUEST_STOP;
+         self->state == CALLS_RING_STATE_REQUEST_STOP;
 }
 
 /**

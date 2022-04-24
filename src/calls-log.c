@@ -63,7 +63,7 @@ get_log_level_prefix (GLogLevelFlags log_level,
   log_level = log_level & ~CALLS_LOG_DETAILED;
 
   if (use_color) {
-    switch ((int)log_level) {       /* Same colors as used in GLib */
+    switch ((int) log_level) {       /* Same colors as used in GLib */
     case G_LOG_LEVEL_ERROR:       return "   \033[1;31mERROR\033[0m";
     case G_LOG_LEVEL_CRITICAL:    return "\033[1;35mCRITICAL\033[0m";
     case G_LOG_LEVEL_WARNING:     return " \033[1;33mWARNING\033[0m";
@@ -74,7 +74,7 @@ get_log_level_prefix (GLogLevelFlags log_level,
     default:                      return " UNKNOWN";
     }
   } else {
-    switch ((int)log_level) {
+    switch ((int) log_level) {
     case G_LOG_LEVEL_ERROR:      return "   ERROR";
     case G_LOG_LEVEL_CRITICAL:   return "CRITICAL";
     case G_LOG_LEVEL_WARNING:    return " WARNING";
@@ -95,7 +95,7 @@ calls_log_write (GLogLevelFlags   log_level,
                  gsize            n_fields,
                  gpointer         user_data)
 {
-  g_autoptr(GString) log_str = NULL;
+  g_autoptr (GString) log_str = NULL;
   FILE *stream;
   gboolean can_color;
 
@@ -123,7 +123,7 @@ calls_log_write (GLogLevelFlags   log_level,
     strftime (buffer, sizeof (buffer), "%H:%M:%S", &tm_now);
 
     g_string_append_printf (log_str, "%s.%04d ", buffer,
-                            (int)((now % G_USEC_PER_SEC) / 100));
+                            (int) ((now % G_USEC_PER_SEC) / 100));
   }
 
   can_color = g_log_writer_supports_color (fileno (stream));
@@ -173,7 +173,7 @@ calls_log_handler (GLogLevelFlags   log_level,
   const char *log_message = NULL;
 
   /* If domain is “all” show logs upto debug regardless of the verbosity */
-  switch ((int)log_level) {
+  switch ((int) log_level) {
   case G_LOG_LEVEL_MESSAGE:
     if (any_domain && domains)
       break;
@@ -235,7 +235,7 @@ calls_log_handler (GLogLevelFlags   log_level,
 
   if (any_domain || strcasestr (domains, log_domain))
     return calls_log_write (log_level, log_domain, log_message,
-                             fields, n_fields, user_data);
+                            fields, n_fields, user_data);
 
   return G_LOG_WRITER_HANDLED;
 }

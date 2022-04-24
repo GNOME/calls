@@ -113,44 +113,44 @@ static uint signals[N_SIGNALS];
 
 
 struct _CallsSipMediaPipeline {
-  GObject parent;
+  GObject                 parent;
 
-  MediaCodecInfo *codec;
-  gboolean debug;
+  MediaCodecInfo         *codec;
+  gboolean                debug;
 
   CallsMediaPipelineState state;
-  uint element_map_playing;
-  uint element_map_paused;
-  uint element_map_stopped;
-  gboolean emitted_sending_signal;
+  uint                    element_map_playing;
+  uint                    element_map_paused;
+  uint                    element_map_stopped;
+  gboolean                emitted_sending_signal;
 
   /* Connection details */
-  char *remote;
-  gint rport_rtp;
-  gint rport_rtcp;
+  char                   *remote;
+  gint                    rport_rtp;
+  gint                    rport_rtcp;
 
-  GstElement *pipeline;
-  GstElement *rtpbin;
+  GstElement             *pipeline;
+  GstElement             *rtpbin;
 
-  GstElement *rtp_src;
-  GstElement *rtp_sink;
-  GstElement *rtcp_sink;
-  GstElement *rtcp_src;
+  GstElement             *rtp_src;
+  GstElement             *rtp_sink;
+  GstElement             *rtcp_sink;
+  GstElement             *rtcp_src;
 
-  GstElement *audio_src;
-  GstElement *payloader;
-  GstElement *encoder;
+  GstElement             *audio_src;
+  GstElement             *payloader;
+  GstElement             *encoder;
 
-  GstElement *audio_sink;
-  GstElement *depayloader;
-  GstElement *decoder;
+  GstElement             *audio_sink;
+  GstElement             *depayloader;
+  GstElement             *decoder;
 
   /* Gstreamer busses */
-  GstBus *bus;
-  guint bus_watch_id;
+  GstBus                 *bus;
+  guint                   bus_watch_id;
 };
 
-#if GLIB_CHECK_VERSION(2, 70, 0)
+#if GLIB_CHECK_VERSION (2, 70, 0)
 G_DEFINE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
 #else
 G_DEFINE_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
@@ -254,24 +254,24 @@ on_bus_message (GstBus     *bus,
 
   switch (GST_MESSAGE_TYPE (message)) {
   case GST_MESSAGE_ERROR:
-    {
-      g_autoptr (GError) error = NULL;
-      g_autofree char *msg = NULL;
+  {
+    g_autoptr (GError) error = NULL;
+    g_autofree char *msg = NULL;
 
-      gst_message_parse_error (message, &error, &msg);
-      g_warning ("Error on the message bus: %s (%s)", error->message, msg);
-      break;
-    }
+    gst_message_parse_error (message, &error, &msg);
+    g_warning ("Error on the message bus: %s (%s)", error->message, msg);
+    break;
+  }
 
   case GST_MESSAGE_WARNING:
-    {
-      g_autoptr (GError) error = NULL;
-      g_autofree char *msg = NULL;
+  {
+    g_autoptr (GError) error = NULL;
+    g_autofree char *msg = NULL;
 
-      gst_message_parse_warning (message, &error, &msg);
-      g_warning ("Warning on the message bus: %s (%s)", error->message, msg);
-      break;
-    }
+    gst_message_parse_warning (message, &error, &msg);
+    g_warning ("Warning on the message bus: %s (%s)", error->message, msg);
+    break;
+  }
 
   case GST_MESSAGE_EOS:
     g_debug ("Received end of stream");
@@ -279,76 +279,76 @@ on_bus_message (GstBus     *bus,
     break;
 
   case GST_MESSAGE_STATE_CHANGED:
-    {
-      GstState oldstate;
-      GstState newstate;
-      uint element_id = 0;
-      uint unset_element_id;
+  {
+    GstState oldstate;
+    GstState newstate;
+    uint element_id = 0;
+    uint unset_element_id;
 
-      gst_message_parse_state_changed (message, &oldstate, &newstate, NULL);
+    gst_message_parse_state_changed (message, &oldstate, &newstate, NULL);
 
-      g_debug ("Element %s has changed state from %s to %s",
-               GST_OBJECT_NAME (message->src),
-               gst_element_state_get_name (oldstate),
-               gst_element_state_get_name (newstate));
+    g_debug ("Element %s has changed state from %s to %s",
+             GST_OBJECT_NAME (message->src),
+             gst_element_state_get_name (oldstate),
+             gst_element_state_get_name (newstate));
 
-      if (message->src == GST_OBJECT (self->pipeline))
-        element_id = EL_PIPELINE;
-      else if (message->src == GST_OBJECT (self->rtpbin))
-        element_id = EL_RTPBIN;
+    if (message->src == GST_OBJECT (self->pipeline))
+      element_id = EL_PIPELINE;
+    else if (message->src == GST_OBJECT (self->rtpbin))
+      element_id = EL_RTPBIN;
 
-      else if (message->src == GST_OBJECT (self->rtp_src))
-        element_id = EL_RTP_SRC;
-      else if (message->src == GST_OBJECT (self->rtp_sink))
-        element_id = EL_RTP_SINK;
+    else if (message->src == GST_OBJECT (self->rtp_src))
+      element_id = EL_RTP_SRC;
+    else if (message->src == GST_OBJECT (self->rtp_sink))
+      element_id = EL_RTP_SINK;
 
-      else if (message->src == GST_OBJECT (self->rtcp_src))
-        element_id = EL_RTCP_SRC;
-      else if (message->src == GST_OBJECT (self->rtcp_sink))
-        element_id = EL_RTCP_SINK;
+    else if (message->src == GST_OBJECT (self->rtcp_src))
+      element_id = EL_RTCP_SRC;
+    else if (message->src == GST_OBJECT (self->rtcp_sink))
+      element_id = EL_RTCP_SINK;
 
-      /* TODO srtp encryption
-      else if (message->src == GST_OBJECT (self->srtpenc))
-        element_id = EL_SRTP_ENCODER;
-      else if (message->src == GST_OBJECT (self->srtpdec))
-        element_id = EL_SRTP_DECODER;
-      */
+    /* TODO srtp encryption
+       else if (message->src == GST_OBJECT (self->srtpenc))
+       element_id = EL_SRTP_ENCODER;
+       else if (message->src == GST_OBJECT (self->srtpdec))
+       element_id = EL_SRTP_DECODER;
+     */
 
 
-      else if (message->src == GST_OBJECT (self->audio_src))
-        element_id = EL_AUDIO_SRC;
-      else if (message->src == GST_OBJECT (self->audio_sink))
-        element_id = EL_AUDIO_SINK;
+    else if (message->src == GST_OBJECT (self->audio_src))
+      element_id = EL_AUDIO_SRC;
+    else if (message->src == GST_OBJECT (self->audio_sink))
+      element_id = EL_AUDIO_SINK;
 
-      else if (message->src == GST_OBJECT (self->payloader))
-        element_id = EL_PAYLOADER;
-      else if (message->src == GST_OBJECT (self->depayloader))
-        element_id = EL_DEPAYLOADER;
+    else if (message->src == GST_OBJECT (self->payloader))
+      element_id = EL_PAYLOADER;
+    else if (message->src == GST_OBJECT (self->depayloader))
+      element_id = EL_DEPAYLOADER;
 
-      else if (message->src == GST_OBJECT (self->encoder))
-        element_id = EL_ENCODER;
-      else if (message->src == GST_OBJECT (self->decoder))
-        element_id = EL_DECODER;
+    else if (message->src == GST_OBJECT (self->encoder))
+      element_id = EL_ENCODER;
+    else if (message->src == GST_OBJECT (self->decoder))
+      element_id = EL_DECODER;
 
-      unset_element_id = G_MAXUINT ^ element_id;
+    unset_element_id = G_MAXUINT ^ element_id;
 
-      if (newstate == GST_STATE_PLAYING) {
-        self->element_map_playing |= element_id;
-        self->element_map_paused &= unset_element_id;
-        self->element_map_stopped &= unset_element_id;
-      } else if (newstate == GST_STATE_PAUSED) {
-        self->element_map_paused |= element_id;
-        self->element_map_playing &= unset_element_id;
-        self->element_map_stopped &= unset_element_id;
-      } else if (newstate == GST_STATE_NULL) {
-        self->element_map_stopped |= element_id;
-        self->element_map_playing &= unset_element_id;
-        self->element_map_paused &= unset_element_id;
-      }
-
-      check_element_maps (self);
-      break;
+    if (newstate == GST_STATE_PLAYING) {
+      self->element_map_playing |= element_id;
+      self->element_map_paused &= unset_element_id;
+      self->element_map_stopped &= unset_element_id;
+    } else if (newstate == GST_STATE_PAUSED) {
+      self->element_map_paused |= element_id;
+      self->element_map_playing &= unset_element_id;
+      self->element_map_stopped &= unset_element_id;
+    } else if (newstate == GST_STATE_NULL) {
+      self->element_map_stopped |= element_id;
+      self->element_map_playing &= unset_element_id;
+      self->element_map_paused &= unset_element_id;
     }
+
+    check_element_maps (self);
+    break;
+  }
 
   default:
     if (self->debug)
@@ -584,7 +584,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   gst_object_unref (sinkpad);
 
   srcpad = gst_element_get_static_pad (self->rtcp_src, "src");
-#if GST_CHECK_VERSION (1, 20 , 0)
+#if GST_CHECK_VERSION (1, 20, 0)
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtcp_sink_0");
 #else
   sinkpad = gst_element_get_request_pad (self->rtpbin, "recv_rtcp_sink_0");
@@ -596,21 +596,21 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
     return FALSE;
   }
 
-    gst_object_unref (srcpad);
-    gst_object_unref (sinkpad);
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
 
   #if GST_CHECK_VERSION (1, 20, 0)
-    srcpad = gst_element_request_pad_simple (self->rtpbin, "send_rtcp_src_0");
+  srcpad = gst_element_request_pad_simple (self->rtpbin, "send_rtcp_src_0");
   #else
-    srcpad = gst_element_get_request_pad (self->rtpbin, "send_rtcp_src_0");
+  srcpad = gst_element_get_request_pad (self->rtpbin, "send_rtcp_src_0");
   #endif
-    sinkpad = gst_element_get_static_pad (self->rtcp_sink, "sink");
-    if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-      if (error)
-        g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                     "Failed to link rtpbin to rtcpsink");
-      return FALSE;
-    }
+  sinkpad = gst_element_get_static_pad (self->rtcp_sink, "sink");
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
+    if (error)
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "Failed to link rtpbin to rtcpsink");
+    return FALSE;
+  }
 
   /* can only link to depayloader after RTP payload has been verified */
   g_signal_connect (self->rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
@@ -966,8 +966,7 @@ diagnose_ports_in_use (CallsSipMediaPipeline *self)
   if (same_socket) {
     g_debug ("Diagnosing bidirectional socket...");
     diagnose_used_ports_in_socket (socket_in);
-  }
-  else {
+  } else {
     g_debug ("Diagnosing server socket...");
     diagnose_used_ports_in_socket (socket_in);
     g_debug ("Diagnosing client socket...");

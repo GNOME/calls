@@ -40,23 +40,22 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-struct _CallsNewCallBox
-{
-  GtkBox parent_instance;
+struct _CallsNewCallBox {
+  GtkBox               parent_instance;
 
-  GtkListBox  *origin_list_box;
-  HdyComboRow *origin_list;
-  GtkButton *backspace;
-  HdyKeypad *keypad;
-  GtkButton *dial;
-  GtkEntry  *address_entry;
-  HdyActionRow *result;
-  GtkButton *dial_result;
+  GtkListBox          *origin_list_box;
+  HdyComboRow         *origin_list;
+  GtkButton           *backspace;
+  HdyKeypad           *keypad;
+  GtkButton           *dial;
+  GtkEntry            *address_entry;
+  HdyActionRow        *result;
+  GtkButton           *dial_result;
   GtkGestureLongPress *long_press_back_gesture;
 
-  GList *dial_queue;
+  GList               *dial_queue;
 
-  gboolean numeric_input_only;
+  gboolean             numeric_input_only;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
@@ -85,6 +84,7 @@ get_origin (CallsNewCallBox *self,
 {
   CallsManager *manager = calls_manager_get_default ();
   CallsSettings *settings = calls_manager_get_settings (manager);
+
   g_autoptr (CallsOrigin) origin = NULL;
   GListModel *model;
   gboolean auto_use_def_origin =
@@ -158,6 +158,7 @@ static void
 long_press_back_cb (CallsNewCallBox *self)
 {
   GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
+
   gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
 }
 
@@ -165,6 +166,7 @@ static void
 backspace_clicked_cb (CallsNewCallBox *self)
 {
   GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
+
   g_signal_emit_by_name (entry, "backspace", NULL);
 }
 
@@ -174,7 +176,8 @@ ussd_send_cb (GObject      *object,
               gpointer      user_data)
 {
   CallsNewCallBox *self;
-  CallsUssd *ussd = (CallsUssd *)object;
+  CallsUssd *ussd = (CallsUssd *) object;
+
   g_autoptr (GTask) task = user_data;
   GError *error = NULL;
   char *response;
@@ -232,6 +235,7 @@ dial_queued_cb (gchar           *target,
                 CallsNewCallBox *self)
 {
   CallsOrigin *origin = NULL;
+
   g_debug ("Try dialing queued target `%s'", target);
 
   origin = get_origin (self,
@@ -239,9 +243,9 @@ dial_queued_cb (gchar           *target,
   if (origin) {
     calls_origin_dial (origin, target);
     self->dial_queue = g_list_remove (self->dial_queue, target);
-  }
-  else
+  } else {
     g_debug ("No suitable origin found");
+  }
 }
 
 
@@ -414,11 +418,11 @@ calls_new_call_box_dial (CallsNewCallBox *self,
 }
 
 void
-calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
-                                    const char          *target,
-                                    GCancellable        *cancellable,
-                                    GAsyncReadyCallback  callback,
-                                    gpointer             user_data)
+calls_new_call_box_send_ussd_async (CallsNewCallBox    *self,
+                                    const char         *target,
+                                    GCancellable       *cancellable,
+                                    GAsyncReadyCallback callback,
+                                    gpointer            user_data)
 {
   g_autoptr (CallsOrigin) origin = NULL;
   g_autoptr (GTask) task = NULL;
@@ -454,7 +458,7 @@ calls_new_call_box_send_ussd_async (CallsNewCallBox     *self,
 char *
 calls_new_call_box_send_ussd_finish (CallsNewCallBox *self,
                                      GAsyncResult    *result,
-                                     GError          **error)
+                                     GError         **error)
 {
   g_return_val_if_fail (CALLS_IS_NEW_CALL_BOX (self), NULL);
   g_return_val_if_fail (G_IS_TASK (result), NULL);

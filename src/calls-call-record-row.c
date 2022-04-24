@@ -37,29 +37,28 @@
 #include <errno.h>
 
 
-struct _CallsCallRecordRow
-{
-  GtkListBoxRow parent_instance;
+struct _CallsCallRecordRow {
+  GtkListBoxRow    parent_instance;
 
-  GtkWidget *avatar;
-  GtkImage *type;
-  GtkLabel *target;
-  GtkLabel *time;
-  GtkButton *button;
-  GtkPopover *popover;
-  GtkGesture *gesture;
-  GtkEventBox *event_box;
+  GtkWidget       *avatar;
+  GtkImage        *type;
+  GtkLabel        *target;
+  GtkLabel        *time;
+  GtkButton       *button;
+  GtkPopover      *popover;
+  GtkGesture      *gesture;
+  GtkEventBox     *event_box;
 
-  GMenu *context_menu;
+  GMenu           *context_menu;
 
-  GActionMap *action_map;
+  GActionMap      *action_map;
 
   CallsCallRecord *record;
-  gulong answered_notify_handler_id;
-  gulong end_notify_handler_id;
-  guint date_change_timeout;
+  gulong           answered_notify_handler_id;
+  gulong           end_notify_handler_id;
+  guint            date_change_timeout;
 
-  CallsBestMatch *contact;
+  CallsBestMatch  *contact;
 };
 
 G_DEFINE_TYPE (CallsCallRecordRow, calls_call_record_row, GTK_TYPE_LIST_BOX_ROW)
@@ -75,10 +74,11 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static void
 nice_time (GDateTime *t,
-           gchar **nice,
-           gboolean *final)
+           gchar    **nice,
+           gboolean  *final)
 {
   GDateTime *now = g_date_time_new_now_local ();
+
   g_autoptr (GTimeZone) local_tz = g_time_zone_new_local ();
   g_autoptr (GDateTime) t_local_tz = g_date_time_to_timezone (t, local_tz);
   const gboolean today =
@@ -119,6 +119,7 @@ update_time_text (CallsCallRecordRow *self,
                   gboolean           *final)
 {
   gchar *nice;
+
   nice_time (end, &nice, final);
   gtk_label_set_text (self->time, nice);
   g_free (nice);
@@ -155,18 +156,17 @@ setup_date_change_timeout (CallsCallRecordRow *self)
   g_date_time_unref (gnextday);
 
   // Convert to a timeval
-  tomorrow.tv_sec  = g_date_time_to_unix (gtomorrow);
+  tomorrow.tv_sec = g_date_time_to_unix (gtomorrow);
   tomorrow.tv_usec = 0;
   g_date_time_unref (gtomorrow);
 
   // Get the precise time now
   err = gettimeofday (&now, NULL);
-  if (err == -1)
-    {
-      g_warning ("Error getting time to set date change timeout: %s",
-                 g_strerror (errno));
-      return;
-    }
+  if (err == -1) {
+    g_warning ("Error getting time to set date change timeout: %s",
+               g_strerror (errno));
+    return;
+  }
 
   // Find how long from now until the start of the next day
   timersub (&tomorrow, &now, &delta);
@@ -180,7 +180,7 @@ setup_date_change_timeout (CallsCallRecordRow *self)
   // Add the timeout
   self->date_change_timeout =
     g_timeout_add (interval,
-                   (GSourceFunc)date_change_cb,
+                   (GSourceFunc) date_change_cb,
                    self);
 }
 
@@ -294,7 +294,7 @@ on_notify_can_add_contacts (CallsCallRecordRow *self)
   if (!calls_contacts_provider_get_can_add_contacts (contacts_provider))
     return;
 
-  g_signal_handlers_disconnect_by_data(contacts_provider, self);
+  g_signal_handlers_disconnect_by_data (contacts_provider, self);
 
   /* The record has a NULL id */
   if (!self->contact)
@@ -379,7 +379,7 @@ context_menu (GtkWidget *widget,
     gtk_popover_bind_model (self->popover,
                             G_MENU_MODEL (self->context_menu),
                             "row-history");
-    }
+  }
 
   gtk_popover_popup (self->popover);
 }
@@ -483,10 +483,10 @@ constructed (GObject *object)
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
 
@@ -562,6 +562,7 @@ delete_call_activated (GSimpleAction *action,
                        gpointer       data)
 {
   GtkWidget *self = GTK_WIDGET (data);
+
   g_signal_emit_by_name (CALLS_CALL_RECORD_ROW (self)->record, "call-delete");
 }
 
@@ -603,9 +604,9 @@ new_contact_activated (GSimpleAction *action,
 
 static GActionEntry entries[] =
 {
- { "delete-call", delete_call_activated, NULL, NULL, NULL},
- { "copy-number", copy_number_activated, NULL, NULL, NULL},
- { "new-contact", new_contact_activated, NULL, NULL, NULL},
+  { "delete-call", delete_call_activated, NULL, NULL, NULL},
+  { "copy-number", copy_number_activated, NULL, NULL, NULL},
+  { "new-contact", new_contact_activated, NULL, NULL, NULL},
 };
 
 
@@ -613,6 +614,7 @@ static void
 calls_call_record_row_init (CallsCallRecordRow *self)
 {
   GAction *act;
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
   self->action_map = G_ACTION_MAP (g_simple_action_group_new ());

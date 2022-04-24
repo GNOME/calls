@@ -32,8 +32,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_INTERFACE (CallsMessageSource, calls_message_source, CALLS, MESSAGE_SOURCE, GObject)
 
-struct _CallsMessageSourceInterface
-{
+struct _CallsMessageSourceInterface {
   GTypeInterface parent_iface;
 };
 
@@ -69,8 +68,8 @@ struct _CallsMessageSourceInterface
 #define CALLS_ERROR(obj,error)                                  \
   CALLS_EMIT_MESSAGE (obj, error->message, GTK_MESSAGE_ERROR)
 
-void                   calls_message_source_emit_message (CallsMessageSource *self,
-                                                          const char         *message,
-                                                          GtkMessageType      message_type);
+void calls_message_source_emit_message (CallsMessageSource *self,
+                                        const char         *message,
+                                        GtkMessageType      message_type);
 
 G_END_DECLS

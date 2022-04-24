@@ -49,23 +49,23 @@ typedef enum {
 
 
 struct _CallsAccountOverview {
-  HdyWindow                  parent;
+  HdyWindow                 parent;
 
   /* UI widgets */
-  GtkStack                  *stack;
-  GtkWidget                 *intro;
-  GtkWidget                 *overview;
-  GtkWidget                 *add_btn;
-  GtkWidget                 *add_row;
+  GtkStack                 *stack;
+  GtkWidget                *intro;
+  GtkWidget                *overview;
+  GtkWidget                *add_btn;
+  GtkWidget                *add_row;
 
   /* The window where we add the account providers widget */
-  GtkWindow                 *account_window;
-  GtkWidget                 *current_account_widget;
+  GtkWindow                *account_window;
+  GtkWidget                *current_account_widget;
 
   /* misc */
-  CallsAccountOverviewState  state;
-  GList                     *providers;
-  CallsInAppNotification    *in_app_notification;
+  CallsAccountOverviewState state;
+  GList                    *providers;
+  CallsInAppNotification   *in_app_notification;
 };
 
 G_DEFINE_TYPE (CallsAccountOverview, calls_account_overview, HDY_TYPE_WINDOW)

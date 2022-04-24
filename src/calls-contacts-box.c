@@ -32,14 +32,13 @@
 #define HANDY_USE_UNSTABLE_API
 #include <handy.h>
 
-struct _CallsContactsBox
-{
-  GtkBin parent_instance;
+struct _CallsContactsBox {
+  GtkBin            parent_instance;
 
-  GtkWidget *search_entry;
-  GtkWidget *contacts_frame;
-  GtkWidget *contacts_listbox;
-  GtkWidget *placeholder_empty;
+  GtkWidget        *search_entry;
+  GtkWidget        *contacts_frame;
+  GtkWidget        *contacts_listbox;
+  GtkWidget        *placeholder_empty;
 
   FolksSimpleQuery *search_query;
 };
@@ -51,6 +50,7 @@ search_changed_cb (CallsContactsBox *self,
                    GtkEntry         *entry)
 {
   const gchar *search_text;
+
   search_text = gtk_entry_get_text (entry);
 
   folks_simple_query_set_query_string (self->search_query, search_text);
@@ -73,31 +73,27 @@ adjust_style (CallsContactsBox *self, GtkWidget *widget)
 {
   g_return_if_fail (CALLS_IS_CONTACTS_BOX (self));
 
-  if (gtk_widget_get_mapped (widget))
-    {
-      gtk_frame_set_shadow_type (GTK_FRAME (self->contacts_frame), GTK_SHADOW_NONE);
-      gtk_widget_set_vexpand (self->contacts_frame, TRUE);
-      gtk_style_context_add_class (gtk_widget_get_style_context (self->contacts_listbox),
-                                   "no-background");
-    }
-  else
-    {
-      gtk_frame_set_shadow_type (GTK_FRAME (self->contacts_frame), GTK_SHADOW_ETCHED_IN);
-      gtk_widget_set_vexpand (self->contacts_frame, FALSE);
-      gtk_style_context_remove_class (gtk_widget_get_style_context (self->contacts_listbox),
-                                   "no-background");
-    }
+  if (gtk_widget_get_mapped (widget)) {
+    gtk_frame_set_shadow_type (GTK_FRAME (self->contacts_frame), GTK_SHADOW_NONE);
+    gtk_widget_set_vexpand (self->contacts_frame, TRUE);
+    gtk_style_context_add_class (gtk_widget_get_style_context (self->contacts_listbox),
+                                 "no-background");
+  } else {
+    gtk_frame_set_shadow_type (GTK_FRAME (self->contacts_frame), GTK_SHADOW_ETCHED_IN);
+    gtk_widget_set_vexpand (self->contacts_frame, FALSE);
+    gtk_style_context_remove_class (gtk_widget_get_style_context (self->contacts_listbox),
+                                    "no-background");
+  }
 }
 
 static void
-header_cb (GtkListBoxRow   *row,
-           GtkListBoxRow   *before)
+header_cb (GtkListBoxRow *row,
+           GtkListBoxRow *before)
 {
-  if (!before)
-    {
-      gtk_list_box_row_set_header (row, NULL);
-      return;
-    }
+  if (!before) {
+    gtk_list_box_row_set_header (row, NULL);
+    return;
+  }
 
 
   if (!gtk_list_box_row_get_header (row))
@@ -109,6 +105,7 @@ contacts_provider_added (CallsContactsBox *self,
                          FolksIndividual  *individual)
 {
   GtkWidget *row;
+
   row = calls_contacts_row_new (individual);
 
   gtk_container_add (GTK_CONTAINER (self->contacts_listbox), row);
@@ -131,7 +128,7 @@ contacts_provider_removed (CallsContactsBox *self,
 static gint
 contacts_sort_func (CallsContactsRow *a,
                     CallsContactsRow *b,
-                    gpointer user_data)
+                    gpointer          user_data)
 {
   const gchar *name_a = folks_individual_get_display_name (calls_contacts_row_get_item (a));
   const gchar *name_b = folks_individual_get_display_name (calls_contacts_row_get_item (b));
@@ -157,6 +154,7 @@ static void
 calls_contacts_box_init (CallsContactsBox *self)
 {
   CallsContactsProvider *contacts_provider;
+
   g_autoptr (GeeCollection) individuals = NULL;
   gchar* query_fields[] = { "alias",
                             "full-name",

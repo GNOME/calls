@@ -26,14 +26,13 @@
 
 #define DEFAULT_TIMEOUT_SECONDS 3
 
-struct _CallsInAppNotification
-{
+struct _CallsInAppNotification {
   GtkRevealer parent_instance;
 
-  GtkLabel *label;
+  GtkLabel   *label;
 
-  guint timeout;
-  guint timeout_id;
+  guint       timeout;
+  guint       timeout_id;
 };
 
 G_DEFINE_TYPE (CallsInAppNotification, calls_in_app_notification, GTK_TYPE_REVEALER)
@@ -56,10 +55,10 @@ timeout_cb (CallsInAppNotification *self)
 
 
 static void
-calls_in_app_notification_get_property (GObject      *object,
-                                        guint         property_id,
-                                        GValue       *value,
-                                        GParamSpec   *pspec)
+calls_in_app_notification_get_property (GObject    *object,
+                                        guint       property_id,
+                                        GValue     *value,
+                                        GParamSpec *pspec)
 {
   CallsInAppNotification *self = CALLS_IN_APP_NOTIFICATION (object);
 
@@ -159,7 +158,7 @@ calls_in_app_notification_show (CallsInAppNotification *self, const gchar *messa
     g_source_remove (self->timeout_id);
 
   gtk_revealer_set_reveal_child (GTK_REVEALER (self), TRUE);
-  self->timeout_id = g_timeout_add_seconds (self->timeout, (GSourceFunc)timeout_cb, self);
+  self->timeout_id = g_timeout_add_seconds (self->timeout, (GSourceFunc) timeout_cb, self);
 }
 
 
@@ -170,5 +169,5 @@ calls_in_app_notification_hide (CallsInAppNotification *self)
 
   g_clear_handle_id (&self->timeout_id, g_source_remove);
 
-  gtk_revealer_set_reveal_child (GTK_REVEALER(self), FALSE);
+  gtk_revealer_set_reveal_child (GTK_REVEALER (self), FALSE);
 }

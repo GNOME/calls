@@ -37,9 +37,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsDummyProvider, calls_dummy_provider, CALLS, DUMMY_PROVIDER, CallsProvider)
 
 CallsDummyProvider *calls_dummy_provider_new        (void);
-void                calls_dummy_provider_add_origin (CallsDummyProvider *self,
-                                                     const gchar        *name);
-void                peas_register_types             (PeasObjectModule *module);
+void calls_dummy_provider_add_origin (CallsDummyProvider *self,
+                                      const gchar        *name);
+void peas_register_types             (PeasObjectModule *module);
 
 G_END_DECLS
 

@@ -35,8 +35,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsSipAccountWidget, calls_sip_account_widget, CALLS, SIP_ACCOUNT_WIDGET, GtkBox)
 
 CallsSipAccountWidget *calls_sip_account_widget_new           (CallsSipProvider      *provider);
-void                   calls_sip_account_widget_set_origin    (CallsSipAccountWidget *self,
-                                                               CallsSipOrigin        *origin);
-CallsSipOrigin        *calls_sip_account_widget_get_origin    (CallsSipAccountWidget *self);
+void            calls_sip_account_widget_set_origin    (CallsSipAccountWidget *self,
+                                                        CallsSipOrigin        *origin);
+CallsSipOrigin *calls_sip_account_widget_get_origin    (CallsSipAccountWidget *self);
 
 G_END_DECLS

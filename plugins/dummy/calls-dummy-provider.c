@@ -37,11 +37,10 @@ static const char * const supported_protocols[] = {
   NULL
 };
 
-struct _CallsDummyProvider
-{
+struct _CallsDummyProvider {
   CallsProvider parent_instance;
 
-  GListStore *origins;
+  GListStore   *origins;
 };
 
 static void calls_dummy_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -50,16 +49,16 @@ static void calls_dummy_provider_message_source_interface_init (CallsMessageSour
 #ifdef FOR_TESTING
 
 G_DEFINE_TYPE_WITH_CODE
-(CallsDummyProvider, calls_dummy_provider, CALLS_TYPE_PROVIDER,
- G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
-                        calls_dummy_provider_message_source_interface_init))
+  (CallsDummyProvider, calls_dummy_provider, CALLS_TYPE_PROVIDER,
+  G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
+                         calls_dummy_provider_message_source_interface_init))
 
 #else
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
-(CallsDummyProvider, calls_dummy_provider, CALLS_TYPE_PROVIDER, 0,
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_dummy_provider_message_source_interface_init))
+  (CallsDummyProvider, calls_dummy_provider, CALLS_TYPE_PROVIDER, 0,
+   G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
+                                  calls_dummy_provider_message_source_interface_init))
 
 #endif /* FOR_TESTING */
 
@@ -68,7 +67,8 @@ static gboolean
 usr1_handler (CallsDummyProvider *self)
 {
   GListModel *model;
-  g_autoptr(CallsDummyOrigin) origin = NULL;
+
+  g_autoptr (CallsDummyOrigin) origin = NULL;
 
   model = G_LIST_MODEL (self->origins);
   g_return_val_if_fail (g_list_model_get_n_items (model) > 0, FALSE);
@@ -85,8 +85,9 @@ usr1_handler (CallsDummyProvider *self)
 static gboolean
 usr2_handler (CallsDummyProvider *self)
 {
+  g_autoptr (CallsDummyOrigin) origin = NULL;
+
   GListModel *model;
-  g_autoptr(CallsDummyOrigin) origin = NULL;
 
   model = G_LIST_MODEL (self->origins);
   g_return_val_if_fail (g_list_model_get_n_items (model) > 0, FALSE);
@@ -120,7 +121,7 @@ calls_dummy_provider_get_origins (CallsProvider *provider)
   return G_LIST_MODEL (self->origins);
 }
 
-static const char * const *
+static const char *const *
 calls_dummy_provider_get_protocols (CallsProvider *provider)
 {
   return supported_protocols;
@@ -140,7 +141,7 @@ constructed (GObject *object)
   calls_dummy_provider_add_origin (self, "Dummy origin");
 
   g_unix_signal_add (SIGUSR1,
-                     (GSourceFunc)usr1_handler,
+                     (GSourceFunc) usr1_handler,
                      self);
   g_unix_signal_add (SIGUSR2,
                      (GSourceFunc) usr2_handler,

@@ -58,6 +58,6 @@ gboolean
 protocol_is_valid (const char *protocol)
 {
   return g_strcmp0 (protocol, "UDP") == 0 ||
-    g_strcmp0 (protocol, "TCP") == 0 ||
-    g_strcmp0 (protocol, "TLS") == 0;
+         g_strcmp0 (protocol, "TCP") == 0 ||
+         g_strcmp0 (protocol, "TLS") == 0;
 }

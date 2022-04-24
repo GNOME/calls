@@ -31,11 +31,10 @@
 #include <glib-object.h>
 
 
-struct _CallsDummyOrigin
-{
-  GObject parent_instance;
+struct _CallsDummyOrigin {
+  GObject  parent_instance;
   GString *name;
-  GList *calls;
+  GList   *calls;
 };
 
 static void calls_dummy_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -54,8 +53,8 @@ enum {
   /* Property for setting the origins name upon construction */
   PROP_DUMMY_NAME_CONSTRUCTOR,
 
-   /* The origins name. The implements the name property from CallsOrigin.
-    * Readonly property, can't be set directly. */
+  /* The origins name. The implements the name property from CallsOrigin.
+   * Readonly property, can't be set directly. */
   PROP_NAME,
 
   PROP_CALLS,
@@ -99,8 +98,7 @@ remove_calls (CallsDummyOrigin *self, const gchar *reason)
 }
 
 
-struct DisconnectedData
-{
+struct DisconnectedData {
   CallsDummyOrigin *self;
   CallsCall        *call;
 };
@@ -194,10 +192,10 @@ set_property (GObject      *object,
 
 
 static void
-get_property (GObject      *object,
-              guint         property_id,
-              GValue       *value,
-              GParamSpec   *pspec)
+get_property (GObject    *object,
+              guint       property_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
   CallsDummyOrigin *self = CALLS_DUMMY_ORIGIN (object);
 

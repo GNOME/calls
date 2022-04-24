@@ -39,11 +39,11 @@ G_DECLARE_FINAL_TYPE (CallsManager, calls_manager, CALLS, MANAGER, GObject)
 
 typedef enum /*< flags >*/
 {
-  CALLS_MANAGER_FLAGS_UNKNOWN = 0,
+  CALLS_MANAGER_FLAGS_UNKNOWN               = 0,
   CALLS_MANAGER_FLAGS_HAS_CELLULAR_PROVIDER = (1<<0),
-  CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM = (1<<1),
-  CALLS_MANAGER_FLAGS_HAS_VOIP_PROVIDER = (1<<2),
-  CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT = (1<<3),
+  CALLS_MANAGER_FLAGS_HAS_CELLULAR_MODEM    = (1<<1),
+  CALLS_MANAGER_FLAGS_HAS_VOIP_PROVIDER     = (1<<2),
+  CALLS_MANAGER_FLAGS_HAS_VOIP_ACCOUNT      = (1<<3),
 } CallsManagerFlags;
 
 
@@ -66,7 +66,7 @@ GListModel            *calls_manager_get_suitable_origins     (CallsManager *sel
                                                                const char   *target);
 CallsOrigin           *calls_manager_get_origin_by_id         (CallsManager *self,
                                                                const char   *origin_id);
-const gchar           *calls_manager_get_contact_name         (CallsCall    *call);
+const gchar           *calls_manager_get_contact_name         (CallsCall *call);
 gboolean               calls_manager_has_active_call          (CallsManager *self);
 void                   calls_manager_hang_up_all_calls        (CallsManager *self);
 gboolean               calls_manager_has_any_provider         (CallsManager *self);

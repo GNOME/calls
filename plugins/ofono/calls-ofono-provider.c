@@ -41,22 +41,21 @@ static const char * const supported_protocols[] = {
   NULL
 };
 
-struct _CallsOfonoProvider
-{
-  CallsProvider parent_instance;
+struct _CallsOfonoProvider {
+  CallsProvider    parent_instance;
 
   /* The status property */
-  gchar *status;
+  gchar           *status;
   /** ID for the D-Bus watch */
-  guint watch_id;
+  guint            watch_id;
   /** D-Bus connection */
   GDBusConnection *connection;
   /** D-Bus proxy for the oFono Manager object */
-  GDBOManager *manager;
+  GDBOManager     *manager;
   /** Map of D-Bus object paths to a struct CallsModemData */
-  GHashTable *modems;
+  GHashTable      *modems;
   /* A list of CallsOrigins */
-  GListStore *origins;
+  GListStore      *origins;
 };
 
 
@@ -64,19 +63,18 @@ static void calls_ofono_provider_message_source_interface_init (CallsMessageSour
 
 
 G_DEFINE_DYNAMIC_TYPE_EXTENDED
-(CallsOfonoProvider, calls_ofono_provider, CALLS_TYPE_PROVIDER, 0,
- G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
-                                calls_ofono_provider_message_source_interface_init))
+  (CallsOfonoProvider, calls_ofono_provider, CALLS_TYPE_PROVIDER, 0,
+  G_IMPLEMENT_INTERFACE_DYNAMIC (CALLS_TYPE_MESSAGE_SOURCE,
+                                 calls_ofono_provider_message_source_interface_init))
 
 
 static void
 set_status (CallsOfonoProvider *self,
             const gchar        *new_status)
 {
-  if (strcmp (self->status, new_status) == 0)
-    {
-      return;
-    }
+  if (strcmp (self->status, new_status) == 0) {
+    return;
+  }
 
   g_free (self->status);
   self->status = g_strdup (new_status);
@@ -92,18 +90,13 @@ update_status (CallsOfonoProvider *self)
 
   model = G_LIST_MODEL (self->origins);
 
-  if (!self->connection)
-    {
-      s = _("DBus unavailable");
-    }
-  else if (g_list_model_get_n_items (model) == 0)
-    {
-      s = _("No voice-capable modem available");
-    }
-  else
-    {
-      s = _("Normal");
-    }
+  if (!self->connection) {
+    s = _("DBus unavailable");
+  } else if (g_list_model_get_n_items (model) == 0) {
+    s = _("No voice-capable modem available");
+  } else {
+    s = _("Normal");
+  }
 
   set_status (self, s);
 }
@@ -122,22 +115,20 @@ ofono_find_origin_index (CallsOfonoProvider *self,
   model = G_LIST_MODEL (self->origins);
   n_items = g_list_model_get_n_items (model);
 
-  for (guint i = 0; i < n_items; i++)
-    {
-      g_autoptr(CallsOfonoOrigin) origin = NULL;
+  for (guint i = 0; i < n_items; i++) {
+    g_autoptr (CallsOfonoOrigin) origin = NULL;
 
-      origin = g_list_model_get_item (model, i);
+    origin = g_list_model_get_item (model, i);
 
-      if (calls_ofono_origin_matches (origin, path))
-        {
-          if (index)
-            *index = i;
+    if (calls_ofono_origin_matches (origin, path)) {
+      if (index)
+        *index = i;
 
-          update_status (self);
+      update_status (self);
 
-          return TRUE;
-        }
+      return TRUE;
     }
+  }
 
   return FALSE;
 }
@@ -148,14 +139,14 @@ object_array_includes (GVariantIter *iter,
 {
   const gchar *str;
   gboolean found = FALSE;
+
   while (g_variant_iter_loop (iter, "&s", &str))
-    {
-      if (g_strcmp0 (str, needle) == 0)
-        {
-          found = TRUE;
-          break;
-        }
+  {
+    if (g_strcmp0 (str, needle) == 0) {
+      found = TRUE;
+      break;
     }
+  }
   g_variant_iter_free (iter);
 
   return found;
@@ -164,9 +155,9 @@ object_array_includes (GVariantIter *iter,
 
 static void
 modem_check_ifaces (CallsOfonoProvider *self,
-                    GDBOModem *modem,
-                    const gchar *modem_name,
-                    GVariant *ifaces)
+                    GDBOModem          *modem,
+                    const gchar        *modem_name,
+                    GVariant           *ifaces)
 {
   gboolean voice;
   GVariantIter *iter = NULL;
@@ -176,32 +167,28 @@ modem_check_ifaces (CallsOfonoProvider *self,
 
   g_variant_get (ifaces, "as", &iter);
 
-  voice = object_array_includes
-    (iter, "org.ofono.VoiceCallManager");
+  voice = object_array_includes (iter, "org.ofono.VoiceCallManager");
 
   path = g_dbus_proxy_get_object_path (G_DBUS_PROXY (modem));
 
   has_origin = ofono_find_origin_index (self, path, &index);
-  if (voice && !has_origin)
-    {
-      g_autoptr(CallsOfonoOrigin) origin = NULL;
+  if (voice && !has_origin) {
+    g_autoptr (CallsOfonoOrigin) origin = NULL;
 
-      g_debug ("Adding oFono Origin with path `%s'", path);
+    g_debug ("Adding oFono Origin with path `%s'", path);
 
-      origin = calls_ofono_origin_new (modem);
-      g_list_store_append (self->origins, origin);
-    }
-  else if (!voice && has_origin)
-    {
-      g_list_store_remove (self->origins, index);
-    }
+    origin = calls_ofono_origin_new (modem);
+    g_list_store_append (self->origins, origin);
+  } else if (!voice && has_origin) {
+    g_list_store_remove (self->origins, index);
+  }
 }
 
 
 static void
-modem_property_changed_cb (GDBOModem *modem,
-                           const gchar *name,
-                           GVariant *value,
+modem_property_changed_cb (GDBOModem          *modem,
+                           const gchar        *name,
+                           GVariant           *value,
                            CallsOfonoProvider *self)
 {
   gchar *modem_name;
@@ -209,22 +196,19 @@ modem_property_changed_cb (GDBOModem *modem,
   g_debug ("Modem property `%s' changed", name);
 
   if (g_strcmp0 (name, "Interfaces") != 0)
-    {
-      return;
-    }
+    return;
 
   modem_name = g_object_get_data (G_OBJECT (modem),
                                   "calls-modem-name");
 
   /* PropertyChanged gives us a variant gvariant containing a string array,
-  but modem_check_ifaces expects the inner string array gvariant */
-  value = g_variant_get_variant(value);
+     but modem_check_ifaces expects the inner string array gvariant */
+  value = g_variant_get_variant (value);
   modem_check_ifaces (self, modem, modem_name, value);
 }
 
 
-struct CallsModemProxyNewData
-{
+struct CallsModemProxyNewData {
   CallsOfonoProvider *self;
   gchar              *name;
   GVariant           *ifaces;
@@ -232,8 +216,8 @@ struct CallsModemProxyNewData
 
 
 static void
-modem_proxy_new_cb (GDBusConnection *connection,
-                    GAsyncResult *res,
+modem_proxy_new_cb (GDBusConnection               *connection,
+                    GAsyncResult                  *res,
                     struct CallsModemProxyNewData *data)
 {
   GDBOModem *modem;
@@ -241,15 +225,14 @@ modem_proxy_new_cb (GDBusConnection *connection,
   const gchar *path;
 
   modem = gdbo_modem_proxy_new_finish (res, &error);
-  if (!modem)
-    {
-      g_variant_unref (data->ifaces);
-      g_free (data->name);
-      g_free (data);
-      g_error ("Error creating oFono Modem proxy: %s",
-               error->message);
-      return;
-    }
+  if (!modem) {
+    g_variant_unref (data->ifaces);
+    g_free (data->name);
+    g_free (data);
+    g_error ("Error creating oFono Modem proxy: %s",
+             error->message);
+    return;
+  }
 
   g_signal_connect (modem, "property-changed",
                     G_CALLBACK (modem_property_changed_cb),
@@ -263,15 +246,14 @@ modem_proxy_new_cb (GDBusConnection *connection,
 
   path = g_dbus_proxy_get_object_path (G_DBUS_PROXY (modem));
 
-  g_hash_table_insert (data->self->modems, g_strdup(path), modem);
+  g_hash_table_insert (data->self->modems, g_strdup (path), modem);
 
 
-  if (data->ifaces)
-    {
-      modem_check_ifaces (data->self, modem,
-                          data->name, data->ifaces);
-      g_variant_unref (data->ifaces);
-    }
+  if (data->ifaces) {
+    modem_check_ifaces (data->self, modem,
+                        data->name, data->ifaces);
+    g_variant_unref (data->ifaces);
+  }
 
   g_free (data);
 
@@ -302,7 +284,7 @@ modem_properties_get_name (GVariant *properties)
   return NULL;
 }
 
-static const char * const *
+static const char *const *
 calls_ofono_provider_get_protocols (CallsProvider *provider)
 {
   return supported_protocols;
@@ -324,31 +306,29 @@ modem_added_cb (GDBOManager        *manager,
 
   g_debug ("Adding modem `%s'", path);
 
-  if (g_hash_table_lookup (self->modems, path))
-    {
-      g_warning ("Modem `%s' already exists", path);
-      return;
-    }
+  if (g_hash_table_lookup (self->modems, path)) {
+    g_warning ("Modem `%s' already exists", path);
+    return;
+  }
 
   data = g_new0 (struct CallsModemProxyNewData, 1);
   data->self = self;
   data->name = modem_properties_get_name (properties);
 
   data->ifaces = g_variant_lookup_value
-    (properties, "Interfaces", G_VARIANT_TYPE_ARRAY);
-  if (data->ifaces)
-    {
-      g_variant_ref (data->ifaces);
-    }
+                   (properties, "Interfaces", G_VARIANT_TYPE_ARRAY);
+  if (data->ifaces) {
+    g_variant_ref (data->ifaces);
+  }
 
   gdbo_modem_proxy_new
     (self->connection,
-     G_DBUS_PROXY_FLAGS_NONE,
-     g_dbus_proxy_get_name (G_DBUS_PROXY (manager)),
-     path,
-     NULL,
-     (GAsyncReadyCallback) modem_proxy_new_cb,
-     data);
+    G_DBUS_PROXY_FLAGS_NONE,
+    g_dbus_proxy_get_name (G_DBUS_PROXY (manager)),
+    path,
+    NULL,
+    (GAsyncReadyCallback) modem_proxy_new_cb,
+    data);
 
   g_debug ("Modem `%s' addition in progress", path);
 }
@@ -373,26 +353,26 @@ modem_removed_cb (GDBOManager        *manager,
 
 
 static void
-get_modems_cb (GDBOManager *manager,
-               GAsyncResult *res,
+get_modems_cb (GDBOManager        *manager,
+               GAsyncResult       *res,
                CallsOfonoProvider *self)
 {
+  g_autoptr (GError) error = NULL;
+
   gboolean ok;
   GVariant *modems;
   GVariantIter *modems_iter = NULL;
-  g_autoptr (GError) error = NULL;
   const gchar *path;
   GVariant *properties;
 
   ok = gdbo_manager_call_get_modems_finish (manager, &modems,
                                             res, &error);
-  if (!ok)
-    {
-      g_warning ("Error getting modems from oFono Manager: %s",
-                 error->message);
-      CALLS_ERROR (self, error);
-      return;
-    }
+  if (!ok) {
+    g_warning ("Error getting modems from oFono Manager: %s",
+               error->message);
+    CALLS_ERROR (self, error);
+    return;
+  }
 
   {
     char *text = g_variant_print (modems, TRUE);
@@ -403,10 +383,10 @@ get_modems_cb (GDBOManager *manager,
   g_variant_get (modems, "a(oa{sv})", &modems_iter);
   while (g_variant_iter_loop (modems_iter, "(&o@a{sv})",
                               &path, &properties))
-    {
-      g_debug ("Got modem object path `%s'", path);
-      modem_added_cb (manager, path, properties, self);
-    }
+  {
+    g_debug ("Got modem object path `%s'", path);
+    modem_added_cb (manager, path, properties, self);
+  }
   g_variant_iter_free (modems_iter);
 
   g_variant_unref (modems);
@@ -435,31 +415,29 @@ calls_ofono_provider_get_origins (CallsProvider *provider)
 }
 
 static void
-ofono_appeared_cb (GDBusConnection *connection,
-                   const gchar *name,
-                   const gchar *name_owner,
+ofono_appeared_cb (GDBusConnection    *connection,
+                   const gchar        *name,
+                   const gchar        *name_owner,
                    CallsOfonoProvider *self)
 {
   g_autoptr (GError) error = NULL;
   self->connection = connection;
-  if (!self->connection)
-    {
-      g_error ("Error creating D-Bus connection: %s",
-               error->message);
-    }
+  if (!self->connection) {
+    g_error ("Error creating D-Bus connection: %s",
+             error->message);
+  }
 
   self->manager = gdbo_manager_proxy_new_sync
-    (self->connection,
-     G_DBUS_PROXY_FLAGS_NONE,
-     "org.ofono",
-     "/",
-     NULL,
-     &error);
-  if (!self->manager)
-    {
-      g_error ("Error creating ModemManager object manager proxy: %s",
-               error->message);
-    }
+                    (self->connection,
+                    G_DBUS_PROXY_FLAGS_NONE,
+                    "org.ofono",
+                    "/",
+                    NULL,
+                    &error);
+  if (!self->manager) {
+    g_error ("Error creating ModemManager object manager proxy: %s",
+             error->message);
+  }
 
   g_signal_connect (self->manager, "modem-added",
                     G_CALLBACK (modem_added_cb), self);
@@ -468,15 +446,15 @@ ofono_appeared_cb (GDBusConnection *connection,
 
   gdbo_manager_call_get_modems
     (self->manager,
-     NULL,
-     (GAsyncReadyCallback) get_modems_cb,
-     self);
+    NULL,
+    (GAsyncReadyCallback) get_modems_cb,
+    self);
 }
 
 
 static void
-ofono_vanished_cb (GDBusConnection *connection,
-                   const gchar *name,
+ofono_vanished_cb (GDBusConnection    *connection,
+                   const gchar        *name,
                    CallsOfonoProvider *self)
 {
   g_debug ("Ofono vanished from D-Bus");

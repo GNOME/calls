@@ -59,25 +59,24 @@ static const char * const protocols[] = {
   "sips"
 };
 
-struct _CallsManager
-{
-  GObject parent_instance;
+struct _CallsManager {
+  GObject                parent_instance;
 
-  GHashTable *providers;
+  GHashTable            *providers;
 
-  GListStore *origins;
+  GListStore            *origins;
   /* origins_by_protocol maps protocol names to GListStore's of suitable origins */
-  GHashTable *origins_by_protocol;
+  GHashTable            *origins_by_protocol;
   /* dial_actions_by_protocol maps protocol names to GSimpleActions */
-  GHashTable *dial_actions_by_protocol;
+  GHashTable            *dial_actions_by_protocol;
 
   /* map CallsCall to CallsUiCallData */
-  GHashTable *calls;
+  GHashTable            *calls;
 
   CallsContactsProvider *contacts_provider;
 
-  CallsManagerFlags state_flags;
-  CallsSettings *settings;
+  CallsManagerFlags      state_flags;
+  CallsSettings         *settings;
 };
 
 static void
@@ -106,7 +105,7 @@ enum {
   PROVIDERS_CHANGED,
   SIGNAL_LAST_SIGNAL,
 };
-static guint signals [SIGNAL_LAST_SIGNAL];
+static guint signals[SIGNAL_LAST_SIGNAL];
 
 
 static void
@@ -224,7 +223,7 @@ on_message (CallsMessageSource *source,
   }
 
   calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (self),
-                                     notification ? : message,
+                                     notification ?: message,
                                      message_type);
 }
 
@@ -247,8 +246,7 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
 }
 
 
-struct CallsRemoveData
-{
+struct CallsRemoveData {
   CallsManager *manager;
   CallsCall    *call;
 };
@@ -358,6 +356,7 @@ static void
 add_origin (CallsManager *self, CallsOrigin *origin)
 {
   g_autofree const char *name = NULL;
+
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (CALLS_IS_ORIGIN (origin));
 
@@ -379,12 +378,11 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
   g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
 
-  if (CALLS_IS_USSD (origin))
-    {
-      g_signal_connect_swapped (origin, "ussd-added", G_CALLBACK (ussd_added_cb), self);
-      g_signal_connect_swapped (origin, "ussd-cancelled", G_CALLBACK (ussd_cancelled_cb), self);
-      g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
-    }
+  if (CALLS_IS_USSD (origin)) {
+    g_signal_connect_swapped (origin, "ussd-added", G_CALLBACK (ussd_added_cb), self);
+    g_signal_connect_swapped (origin, "ussd-cancelled", G_CALLBACK (ussd_cancelled_cb), self);
+    g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
+  }
 
   calls_origin_foreach_call (origin, (CallsOriginForeachCallFunc) add_call, self);
 }
@@ -464,9 +462,10 @@ static void
 remove_provider (CallsManager *self,
                  const char   *name)
 {
+  g_autoptr (CallsProvider) provider = NULL;
+
   GListModel *origins;
   guint n_items;
-  g_autoptr (CallsProvider) provider = NULL;
 
   g_assert (CALLS_IS_MANAGER (self));
   g_assert (name);
@@ -488,7 +487,7 @@ remove_provider (CallsManager *self,
   n_items = g_list_model_get_n_items (origins);
 
   for (guint i = 0; i < n_items; i++) {
-    g_autoptr(CallsOrigin) origin = NULL;
+    g_autoptr (CallsOrigin) origin = NULL;
 
     origin = g_list_model_get_item (origins, i);
     remove_origin (self, origin);
@@ -568,7 +567,7 @@ origin_items_changed_cb (GListModel   *model,
     g_warning ("Managed origins are not in sync anymore!");
   }
 
- skip_remove:
+skip_remove:
   for (i = 0; i < added; i++) {
     g_debug ("before adding: %d",
              g_list_model_get_n_items (G_LIST_MODEL (self->origins)));
@@ -830,7 +829,7 @@ calls_manager_get_default (void)
 
   if (instance == NULL) {
     instance = calls_manager_new ();
-    g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *)&instance);
+    g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *) &instance);
   }
   return instance;
 }
@@ -980,12 +979,11 @@ calls_manager_has_active_call (CallsManager *self)
 
   calls = calls_manager_get_calls (self);
 
-  for (node = calls; node; node = node->next)
-    {
-      call = node->data;
-      if (calls_call_get_state (call) != CALLS_CALL_STATE_DISCONNECTED)
-        return TRUE;
-    }
+  for (node = calls; node; node = node->next) {
+    call = node->data;
+    if (calls_call_get_state (call) != CALLS_CALL_STATE_DISCONNECTED)
+      return TRUE;
+  }
 
   return FALSE;
 }

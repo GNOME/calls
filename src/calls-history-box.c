@@ -31,14 +31,13 @@
 #include <glib-object.h>
 
 
-struct _CallsHistoryBox
-{
-  GtkStack parent_instance;
+struct _CallsHistoryBox {
+  GtkStack    parent_instance;
 
   GtkListBox *history;
 
   GListModel *model;
-  gulong model_changed_handler_id;
+  gulong      model_changed_handler_id;
 
 };
 
@@ -74,8 +73,8 @@ update (CallsHistoryBox *self)
 
 
 static void
-delete_call_cb (CallsCallRecord    *record,
-                CallsHistoryBox    *self)
+delete_call_cb (CallsCallRecord *record,
+                CallsHistoryBox *self)
 {
   guint position;
   guint id;
@@ -84,8 +83,8 @@ delete_call_cb (CallsCallRecord    *record,
   g_return_if_fail (CALLS_IS_CALL_RECORD (record));
 
   ok = calls_find_in_store (self->model,
-                      record,
-                      &position);
+                            record,
+                            &position);
 
   g_object_get (G_OBJECT (record),
                 "id",
@@ -100,7 +99,7 @@ delete_call_cb (CallsCallRecord    *record,
 
   g_list_store_remove ((GListStore *) self->model, position);
 
-  update(self);
+  update (self);
 }
 
 
@@ -109,6 +108,7 @@ create_row_cb (CallsCallRecord *record,
                CallsHistoryBox *self)
 {
   GtkWidget *row_widget;
+
   row_widget = GTK_WIDGET (calls_call_record_row_new (record));
 
   g_signal_connect (record,
@@ -149,12 +149,12 @@ constructed (GObject *object)
 
   self->model_changed_handler_id =
     g_signal_connect_swapped
-    (self->model, "items-changed", G_CALLBACK (update), self);
+      (self->model, "items-changed", G_CALLBACK (update), self);
   g_assert (self->model_changed_handler_id != 0);
 
   gtk_list_box_bind_model (self->history,
                            self->model,
-                           (GtkListBoxCreateWidgetFunc)create_row_cb,
+                           (GtkListBoxCreateWidgetFunc) create_row_cb,
                            self,
                            NULL);
 
@@ -208,7 +208,7 @@ calls_history_box_init (CallsHistoryBox *self)
 
 
 CallsHistoryBox *
-calls_history_box_new (GListModel      *model)
+calls_history_box_new (GListModel *model)
 {
   return g_object_new (CALLS_TYPE_HISTORY_BOX,
                        "model", model,
