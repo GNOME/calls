@@ -1,4 +1,4 @@
-gnome-calls (43~alpha.0) UNRELEASED; urgency=medium
+gnome-calls (43~alpha.0) byzantium; urgency=medium
 
   [ Piotr Drąg ]
   * Update Polish translation
@@ -44,6 +44,18 @@ gnome-calls (43~alpha.0) UNRELEASED; urgency=medium
   * sip: media-pipeline: No need to undef locally declared macros
   * tests: media: Rename tests
   * sip: pipeline: Unify send and receive pipeline
+  * d/control: Add "bad" gstreamer plugins in order to test srtp elements
+  * ci: Use new debian image
+  * dir-locals: Add projectile commands
+  * sip: media-pipeline: Remove unused variables
+  * sip: origin: Debug print public IP as seen by the registrar
+  * sip: media-pipeline: Fix socket reuse
+  * Add uncrustify config
+  * Uncrustify sources
+  * sip: media: Allow specifying SRTP for GStreamer capabilities
+  * sip: media-pipeline: Debug pipeline graph on SIGUSR2
+  * sip: media-pipeline: Introduce SRTP elements
+  * sip: media-pipeline: Take srtp into account when determing pipeline state
 
   [ Danial Behzadi ]
   * Update Persian translation
@@ -51,7 +63,10 @@ gnome-calls (43~alpha.0) UNRELEASED; urgency=medium
   [ Eugenio Paolantonio (g7) ]
   * ofono: call: do not try to pass the "properties" property
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 12 Apr 2022 10:35:09 +0200
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 25 Apr 2022 18:02:02 +0200
 
 gnome-calls (42.0) byzantium; urgency=medium
 

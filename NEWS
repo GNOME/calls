@@ -1,4 +1,36 @@
+Calls 43.alpha.0
+----------------
+Released: 25 April 2022
+
+No major features
+
+Maybe noteworthy:
+=================
+
+* Preparations for allowing use of SRTP (not user-visible)
+* Added switch to display password in VoIP account management
+* Contributions by
+ - Andrey Skvortsov
+ - Eugenio Paolantonio
+ - Evangelos Ribeiro Tzaras
+
+Translation updates:
+====================
+ - Polish (Piotr Drąg)
+ - Italian (Vittorio Monti)
+ - Turkish (Emin Tufan Çetin)
+ - Slovenian (Martin Srebotnjak)
+ - Hebrew (Yosef Or Boczko)
+ - Spanish (Pablo Correa Gómez)
+ - Romanian (Daniel Șerbănescu)
+ - Persian (Danial Behzadi)
+ - Finnish (Jiri Grönroos)
+
+The detailed changes can be found in debian/changelog
+
+
 Calls 42.0
+----------
 Released: 19 March 2022
 
 Translation updates:
