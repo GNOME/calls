@@ -26,6 +26,7 @@
 
 #include "calls-media-pipeline-enums.h"
 #include "calls-sip-media-pipeline.h"
+#include "calls-srtp-utils.h"
 #include "util.h"
 
 #include <glib-unix.h>
@@ -148,6 +149,8 @@ struct _CallsSipMediaPipeline {
 
   /* SRTP */
   gboolean                use_srtp;
+  calls_srtp_crypto_attribute *crypto_own;
+  calls_srtp_crypto_attribute *crypto_theirs;
 
   GstElement             *srtpenc;
   GstElement             *srtpdec;
@@ -380,13 +383,109 @@ on_srtpdec_request_key (GstElement *srtpdec,
                         guint       ssrc,
                         gpointer    user_data)
 {
-  /* TODO get key */
-  return gst_caps_new_simple ("application/x-srtp",
-                              "srtp-cipher", G_TYPE_STRING, "null",
-                              "srtcp-cipher", G_TYPE_STRING, "null",
-                              "srtp-auth", G_TYPE_STRING, "null",
-                              "srtcp-auth", G_TYPE_STRING, "null",
+  CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (user_data);
+
+  GstCaps *caps;
+
+  const char *srtp_cipher = "null";
+  const char *srtcp_cipher = "null";
+  const char *srtp_auth = "null";
+  const char *srtcp_auth = "null";
+
+  gboolean need_mki;
+
+  if (!calls_srtp_crypto_get_srtpdec_params (self->crypto_theirs,
+                                             &srtp_cipher,
+                                             &srtp_auth,
+                                             &srtcp_cipher,
+                                             &srtcp_auth))
+    return NULL;
+
+  if (self->crypto_theirs->n_key_params == 0 ||
+      self->crypto_theirs->n_key_params > 16) {
+    g_warning ("Got %u key parameters, but can only handle between 1 and 16",
+               self->crypto_theirs->n_key_params);
+
+    return NULL;
+  }
+
+  need_mki = self->crypto_theirs->n_key_params > 1;
+
+  if (self->crypto_theirs->n_key_params == 1) {
+    /* g_autofree guchar *key_salt = NULL; */
+    guchar *key_salt = NULL;
+    gsize key_salt_length;
+    g_autoptr (GstBuffer) key_buffer = NULL;
+
+    key_salt = g_base64_decode (self->crypto_theirs->key_params[0].b64_keysalt,
+                                &key_salt_length);
+    key_buffer = gst_buffer_new_wrapped (key_salt, key_salt_length);
+
+    /* TODO Setting up MKI buffer not implemented yet */
+    if (self->crypto_theirs->key_params[0].mki) {
+      g_warning ("Using MKI is not implemented yet");
+      return NULL;
+    }
+
+    return gst_caps_new_simple ("application/x-srtp",
+                                "srtp-key", GST_TYPE_BUFFER, key_buffer,
+                                "srtp-cipher", G_TYPE_STRING, srtp_cipher,
+                                "srtcp-cipher", G_TYPE_STRING, srtcp_cipher,
+                                "srtp-auth", G_TYPE_STRING, srtp_auth,
+                                "srtcp-auth", G_TYPE_STRING, srtcp_auth,
+                                NULL);
+
+  }
+
+  /* TODO Setting up MKI buffer not implemented yet */
+  g_warning ("Using MKI is not implemented yet");
+  return NULL;
+
+  caps = gst_caps_new_simple ("application/x-srtp",
+                              "srtp-cipher", G_TYPE_STRING, srtp_cipher,
+                              "srtcp-cipher", G_TYPE_STRING, srtcp_cipher,
+                              "srtp-auth", G_TYPE_STRING, srtp_auth,
+                              "srtcp-auth", G_TYPE_STRING, srtcp_auth,
                               NULL);
+
+
+  for (guint i = 0; i < self->crypto_theirs->n_key_params; i++) {
+    GstStructure *structure;
+
+    g_autofree char *structure_name = g_strdup_printf ("key-%u", i);
+
+    guchar *key_salt = NULL;
+    gsize key_salt_length;
+    g_autoptr (GstBuffer) key_buffer = NULL;
+    g_autoptr (GstBuffer) mki_buffer = NULL;
+
+    key_salt = g_base64_decode (self->crypto_theirs->key_params[0].b64_keysalt,
+                                &key_salt_length);
+    key_buffer = gst_buffer_new_wrapped (key_salt, key_salt_length);
+
+
+    if (i == 0 && need_mki) {
+      structure = gst_structure_new (structure_name,
+                                     "srtp-key", GST_TYPE_BUFFER, key_buffer,
+                                     "mki", GST_TYPE_BUFFER, mki_buffer,
+                                     NULL);
+    } else if (i == 0 && !need_mki) {
+      structure = gst_structure_new (structure_name,
+                                     "srtp-key", GST_TYPE_BUFFER, key_buffer,
+                                     NULL);
+    } else {
+      g_autofree char *key_field_name = g_strdup_printf ("srtp-key%u", i+1);
+      g_autofree char *mki_field_name = g_strdup_printf ("mki%u", i+1);
+
+      structure = gst_structure_new (structure_name,
+                                     key_field_name, GST_TYPE_BUFFER, key_buffer,
+                                     mki_field_name, GST_TYPE_BUFFER, mki_buffer,
+                                     NULL);
+    }
+    gst_caps_append_structure (caps, structure);
+  }
+
+  return caps;
 }
 
 
@@ -543,8 +642,6 @@ pipeline_init (CallsSipMediaPipeline *self,
                     self);
 
   MAKE_ELEMENT (srtpenc, "srtpenc", "srtpenc");
-  g_object_set (self->srtpenc,
-                "rtp-cipher", 0, "rtp-auth", 0, "rtcp-cipher", 0, "rtcp-auth", 0, NULL);
 
 #if GST_CHECK_VERSION (1, 20, 0)
   tmppad = gst_element_request_pad_simple (self->srtpenc, "rtp_sink_0");
@@ -1057,6 +1154,60 @@ calls_sip_media_pipeline_set_codec (CallsSipMediaPipeline *self,
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CODEC]);
 
   set_state (self, CALLS_MEDIA_PIPELINE_STATE_READY);
+}
+
+
+void
+calls_sip_media_pipeline_set_crypto (CallsSipMediaPipeline       *self,
+                                     calls_srtp_crypto_attribute *crypto_own,
+                                     calls_srtp_crypto_attribute *crypto_theirs)
+{
+  guchar *key_salt = NULL;
+  gsize key_salt_length;
+  GstSrtpCipherType srtp_cipher;
+  GstSrtpAuthType srtp_auth;
+  GstSrtpCipherType srtcp_cipher;
+  GstSrtpAuthType srtcp_auth;
+
+  g_autoptr (GstBuffer) key_buffer = NULL;
+
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+  g_return_if_fail (crypto_own);
+  g_return_if_fail (crypto_theirs);
+  g_return_if_fail (crypto_own->crypto_suite == crypto_theirs->crypto_suite);
+  g_return_if_fail (crypto_own->tag == crypto_theirs->tag);
+
+  if (self->use_srtp)
+    return;
+
+  self->use_srtp = TRUE;
+  self->crypto_own = crypto_own;
+  self->crypto_theirs = crypto_theirs;
+
+  if (!calls_srtp_crypto_get_srtpenc_params (crypto_own,
+                                             &srtp_cipher,
+                                             &srtp_auth,
+                                             &srtcp_cipher,
+                                             &srtcp_auth)) {
+    g_autofree char *attr_str =
+      calls_srtp_print_sdp_crypto_attribute (crypto_own, NULL);
+    g_warning ("Could not get srtpenc parameters from attribute: %s", attr_str);
+    return;
+  }
+
+  /* TODO MKI stuff */
+
+  key_salt = g_base64_decode (crypto_own->key_params[0].b64_keysalt,
+                              &key_salt_length);
+  key_buffer = gst_buffer_new_wrapped (key_salt, key_salt_length);
+
+  g_object_set (self->srtpenc,
+                "key", key_buffer,
+                "rtp-cipher", srtp_cipher,
+                "rtp-auth", srtp_auth,
+                "rtcp-cipher", srtcp_cipher,
+                "rtcp-auth", srtcp_auth,
+                NULL);
 }
 
 

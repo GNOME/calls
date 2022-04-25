@@ -49,6 +49,23 @@ typedef enum {
 } calls_srtp_lifetime_type;
 
 
+/* from GStreamer */
+typedef enum {
+  GST_SRTP_CIPHER_NULL,
+  GST_SRTP_CIPHER_AES_128_ICM,
+  GST_SRTP_CIPHER_AES_256_ICM,
+  GST_SRTP_CIPHER_AES_128_GCM,
+  GST_SRTP_CIPHER_AES_256_GCM
+} GstSrtpCipherType;
+
+
+typedef enum {
+  GST_SRTP_AUTH_NULL,
+  GST_SRTP_AUTH_HMAC_SHA1_32,
+  GST_SRTP_AUTH_HMAC_SHA1_80
+} GstSrtpAuthType;
+
+
 typedef struct {
   char                    *b64_keysalt;
   calls_srtp_lifetime_type lifetime_type;
@@ -98,6 +115,16 @@ calls_srtp_crypto_attribute *calls_srtp_crypto_attribute_new           (guint n_
 gboolean                     calls_srtp_crypto_attribute_init_keys     (calls_srtp_crypto_attribute *attr);
 void                         calls_srtp_crypto_attribute_free          (calls_srtp_crypto_attribute *attr);
 char                        *calls_srtp_generate_crypto_for_offer      (void);
+gboolean                     calls_srtp_crypto_get_srtpdec_params      (calls_srtp_crypto_attribute *attr,
+                                                                        const char                 **srtp_cipher,
+                                                                        const char                 **srtp_auth,
+                                                                        const char                 **srtcp_cipher,
+                                                                        const char                 **srtcp_auth);
+gboolean                     calls_srtp_crypto_get_srtpenc_params      (calls_srtp_crypto_attribute *attr,
+                                                                        GstSrtpCipherType           *srtp_cipher,
+                                                                        GstSrtpAuthType             *srtp_auth,
+                                                                        GstSrtpCipherType           *srtcp_cipher,
+                                                                        GstSrtpAuthType             *srtcp_auth);
 
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (calls_srtp_crypto_attribute, calls_srtp_crypto_attribute_free)

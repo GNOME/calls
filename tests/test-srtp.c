@@ -223,6 +223,252 @@ test_parse (void)
 }
 
 
+static void
+test_srtp_params (void)
+{
+  calls_srtp_crypto_attribute *attr = calls_srtp_crypto_attribute_new (1);
+  const char *srtp_cipher;
+  const char *srtp_auth;
+  const char *srtcp_cipher;
+  const char *srtcp_auth;
+  GstSrtpCipherType srtp_cipher_enum;
+  GstSrtpAuthType srtp_auth_enum;
+  GstSrtpCipherType srtcp_cipher_enum;
+  GstSrtpAuthType srtcp_auth_enum;
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-32");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-32");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->unencrypted_srtp = TRUE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "null");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-32");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-32");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_NULL);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = TRUE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "null");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-32");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_NULL);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = TRUE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-32");
+  g_assert_cmpstr (srtcp_cipher, ==, "null");
+  g_assert_cmpstr (srtcp_auth, ==, "null");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_NULL);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_NULL);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-80");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-80");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->unencrypted_srtp = TRUE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "null");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-80");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-80");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_NULL);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = TRUE;
+  attr->unencrypted_srtcp = FALSE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "null");
+  g_assert_cmpstr (srtcp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtcp_auth, ==, "hmac-sha1-80");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_NULL);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->unencrypted_srtp = FALSE;
+  attr->unauthenticated_srtp = FALSE;
+  attr->unencrypted_srtcp = TRUE;
+
+  g_assert_true (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                       &srtp_cipher,
+                                                       &srtp_auth,
+                                                       &srtcp_cipher,
+                                                       &srtcp_auth));
+  g_assert_cmpstr (srtp_cipher, ==, "aes-128-icm");
+  g_assert_cmpstr (srtp_auth, ==, "hmac-sha1-80");
+  g_assert_cmpstr (srtcp_cipher, ==, "null");
+  g_assert_cmpstr (srtcp_auth, ==, "null");
+
+  g_assert_true (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                       &srtp_cipher_enum,
+                                                       &srtp_auth_enum,
+                                                       &srtcp_cipher_enum,
+                                                       &srtcp_auth_enum));
+
+  g_assert_cmpint (srtp_cipher_enum, ==, GST_SRTP_CIPHER_AES_128_ICM);
+  g_assert_cmpint (srtp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
+  g_assert_cmpint (srtcp_cipher_enum, ==, GST_SRTP_CIPHER_NULL);
+  g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_NULL);
+
+
+  attr->crypto_suite = CALLS_SRTP_SUITE_UNKNOWN;
+
+  g_assert_false (calls_srtp_crypto_get_srtpdec_params (attr,
+                                                        &srtp_cipher,
+                                                        &srtp_auth,
+                                                        &srtcp_cipher,
+                                                        &srtcp_auth));
+
+  g_assert_false (calls_srtp_crypto_get_srtpenc_params (attr,
+                                                        &srtp_cipher_enum,
+                                                        &srtp_auth_enum,
+                                                        &srtcp_cipher_enum,
+                                                        &srtcp_auth_enum));
+  calls_srtp_crypto_attribute_free (attr);
+}
+
+
 int
 main (int   argc,
       char *argv[])
@@ -231,6 +477,7 @@ main (int   argc,
 
   g_test_add_func ("/Calls/SRTP-SDP/crypto_attribute_validity", test_crypto_attribute_validity);
   g_test_add_func ("/Calls/SRTP-SDP/parse", test_parse);
+  g_test_add_func ("/Calls/SRTP/srtp_params", test_srtp_params);
 
   return g_test_run ();
 }

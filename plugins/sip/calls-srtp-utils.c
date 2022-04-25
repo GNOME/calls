@@ -691,3 +691,81 @@ calls_srtp_crypto_attribute_free (calls_srtp_crypto_attribute *attr)
   g_free (attr->b64_fec_key);
   g_free (attr);
 }
+
+/**
+ * calls_srtp_crypto_get_srtpdec_params:
+ * @attr: A #calls_srtp_crypto_attribute
+ * @srtp_cipher (out): SRTP cipher
+ * @srtp_auth (out): SRTP auth
+ * @srtcp_cipher (out): SRTCP cipher
+ * @srtcp_auth (out): SRTCP auth
+ *
+ * Sets the parameters suitable for #GstSrtpDec (as a #GstCaps).
+ */
+gboolean
+calls_srtp_crypto_get_srtpdec_params (calls_srtp_crypto_attribute *attr,
+                                      const char                 **srtp_cipher,
+                                      const char                 **srtp_auth,
+                                      const char                 **srtcp_cipher,
+                                      const char                 **srtcp_auth)
+{
+  g_return_val_if_fail (attr, FALSE);
+
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_32) {
+    *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-128-icm";
+    *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-32";
+    *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-128-icm";
+    *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-32";
+
+    return TRUE;
+  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_80) {
+    *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-128-icm";
+    *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-80";
+    *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-128-icm";
+    *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-80";
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+/**
+ * calls_srtp_crypto_get_srtpenc_params:
+ * @attr: A #calls_srtp_crypto_attribute
+ * @srtp_cipher (out): SRTP cipher
+ * @srtp_auth (out): SRTP auth
+ * @srtcp_cipher (out): SRTCP cipher
+ * @srtcp_auth (out): SRTCP auth
+ *
+ * Sets the parameters suitable for #GstSrtpDec (as a #GstCaps).
+ */
+gboolean
+calls_srtp_crypto_get_srtpenc_params (calls_srtp_crypto_attribute *attr,
+                                      GstSrtpCipherType           *srtp_cipher,
+                                      GstSrtpAuthType             *srtp_auth,
+                                      GstSrtpCipherType           *srtcp_cipher,
+                                      GstSrtpAuthType             *srtcp_auth)
+{
+  g_return_val_if_fail (attr, FALSE);
+
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_32) {
+    *srtp_cipher = attr->unencrypted_srtp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
+    *srtp_auth = attr->unauthenticated_srtp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_32;
+    *srtcp_cipher = attr->unencrypted_srtcp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
+    *srtcp_auth = attr->unencrypted_srtcp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_32;
+
+    return TRUE;
+  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_80) {
+
+    *srtp_cipher = attr->unencrypted_srtp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
+    *srtp_auth = attr->unauthenticated_srtp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_80;
+    *srtcp_cipher = attr->unencrypted_srtcp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
+    *srtcp_auth = attr->unencrypted_srtcp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_80;
+
+    return TRUE;
+  }
+
+  return FALSE;
+}

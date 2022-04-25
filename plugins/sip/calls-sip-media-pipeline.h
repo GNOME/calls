@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "calls-srtp-utils.h"
 #include "gst-rfc3551.h"
 
 #include <glib-object.h>
@@ -67,6 +68,9 @@ G_DECLARE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, CALLS, SI
 CallsSipMediaPipeline*  calls_sip_media_pipeline_new              (MediaCodecInfo *codec);
 void                    calls_sip_media_pipeline_set_codec        (CallsSipMediaPipeline *self,
                                                                    MediaCodecInfo        *info);
+void                    calls_sip_media_pipeline_set_crypto       (CallsSipMediaPipeline *self,
+                                                                   calls_srtp_crypto_attribute *crypto_own,
+                                                                   calls_srtp_crypto_attribute *crypto_theirs);
 void                    calls_sip_media_pipeline_start            (CallsSipMediaPipeline *self);
 void                    calls_sip_media_pipeline_stop             (CallsSipMediaPipeline *self);
 void                    calls_sip_media_pipeline_pause            (CallsSipMediaPipeline *self,
