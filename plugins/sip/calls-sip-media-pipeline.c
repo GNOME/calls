@@ -115,54 +115,54 @@ static uint signals[N_SIGNALS];
 
 
 struct _CallsSipMediaPipeline {
-  GObject                 parent;
+  GObject                      parent;
 
-  MediaCodecInfo         *codec;
-  gboolean                debug;
+  MediaCodecInfo              *codec;
+  gboolean                     debug;
 
-  CallsMediaPipelineState state;
-  uint                    element_map_playing;
-  uint                    element_map_paused;
-  uint                    element_map_stopped;
-  gboolean                emitted_sending_signal;
+  CallsMediaPipelineState      state;
+  uint                         element_map_playing;
+  uint                         element_map_paused;
+  uint                         element_map_stopped;
+  gboolean                     emitted_sending_signal;
 
   /* Connection details */
-  char                   *remote;
-  gint                    rport_rtp;
-  gint                    rport_rtcp;
+  char                        *remote;
+  gint                         rport_rtp;
+  gint                         rport_rtcp;
 
-  GstElement             *pipeline;
-  GstElement             *rtpbin;
+  GstElement                  *pipeline;
+  GstElement                  *rtpbin;
 
-  GstElement             *rtp_src;
-  GstElement             *rtp_sink;
-  GstElement             *rtcp_sink;
-  GstElement             *rtcp_src;
+  GstElement                  *rtp_src;
+  GstElement                  *rtp_sink;
+  GstElement                  *rtcp_sink;
+  GstElement                  *rtcp_src;
 
-  GstElement             *audio_src;
-  GstElement             *payloader;
-  GstElement             *encoder;
+  GstElement                  *audio_src;
+  GstElement                  *payloader;
+  GstElement                  *encoder;
 
-  GstElement             *audio_sink;
-  GstElement             *depayloader;
-  GstElement             *decoder;
+  GstElement                  *audio_sink;
+  GstElement                  *depayloader;
+  GstElement                  *decoder;
 
   /* SRTP */
-  gboolean                use_srtp;
+  gboolean                     use_srtp;
   calls_srtp_crypto_attribute *crypto_own;
   calls_srtp_crypto_attribute *crypto_theirs;
 
-  GstElement             *srtpenc;
-  GstElement             *srtpdec;
+  GstElement                  *srtpenc;
+  GstElement                  *srtpdec;
 
-  gulong                  request_rtpbin_rtp_decoder_id;
-  gulong                  request_rtpbin_rtp_encoder_id;
-  gulong                  request_rtpbin_rtcp_encoder_id;
-  gulong                  request_rtpbin_rtcp_decoder_id;
+  gulong                       request_rtpbin_rtp_decoder_id;
+  gulong                       request_rtpbin_rtp_encoder_id;
+  gulong                       request_rtpbin_rtcp_encoder_id;
+  gulong                       request_rtpbin_rtcp_decoder_id;
 
   /* Gstreamer busses */
-  GstBus                 *bus;
-  guint                   bus_watch_id;
+  GstBus                      *bus;
+  guint                        bus_watch_id;
 };
 
 #if GLIB_CHECK_VERSION (2, 70, 0)
