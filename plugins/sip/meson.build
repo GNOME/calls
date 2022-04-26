@@ -44,6 +44,7 @@ sip_deps = [
 
 sip_sources = files(
   [
+    'calls-sdp-crypto-context.c', 'calls-sdp-crypto-context.h',
     'calls-sip-call.c', 'calls-sip-call.h',
     'calls-sip-origin.c', 'calls-sip-origin.h',
     'calls-sip-provider.c', 'calls-sip-provider.h',
@@ -65,6 +66,7 @@ pipeline_enums = gnome.mkenums_simple('calls-media-pipeline-enums',
 sip_sources += pipeline_enums
 
 sip_enum_headers = [
+  'calls-sdp-crypto-context.h',
   'calls-sip-util.h',
 ]
 
