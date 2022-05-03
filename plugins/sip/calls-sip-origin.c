@@ -280,7 +280,7 @@ add_call (CallsSipOrigin *self,
                                                              self->own_ip,
                                                              rtp_port,
                                                              rtcp_port,
-                                                             FALSE);
+                                                             NULL);
 
     g_assert (local_sdp);
 

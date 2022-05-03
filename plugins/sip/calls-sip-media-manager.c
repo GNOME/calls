@@ -27,6 +27,7 @@
 #include "calls-settings.h"
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
+#include "calls-srtp-utils.h"
 #include "gst-rfc3551.h"
 #include "util.h"
 
@@ -212,7 +213,7 @@ calls_sip_media_manager_default (void)
  *
  * @self: A #CallsSipMediaManager
  * @port: Should eventually come from the ICE stack
- * @use_srtp: Whether to use srtp (not really handled)
+ * @crypto_attributes: A #GList of #calls_srtp_crypto_attribute
  * @supported_codecs: A #GList of #MediaCodecInfo
  *
  * Returns: (transfer full): string describing capabilities
@@ -223,10 +224,10 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                                           const char           *own_ip,
                                           gint                  rtp_port,
                                           gint                  rtcp_port,
-                                          gboolean              use_srtp,
+                                          GList                *crypto_attributes,
                                           GList                *supported_codecs)
 {
-  char *payload_type = use_srtp ? "SAVP" : "AVP";
+  char *payload_type = crypto_attributes ? "SAVP" : "AVP";
 
   g_autoptr (GString) media_line = NULL;
   g_autoptr (GString) attribute_lines = NULL;
@@ -260,6 +261,19 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                             "\r\n");
   }
 
+  for (node = crypto_attributes; node != NULL; node = node->next) {
+    calls_srtp_crypto_attribute *attr = node->data;
+    g_autoptr (GError) error = NULL;
+    g_autofree char *crypto_line =
+      calls_srtp_print_sdp_crypto_attribute(attr, &error);
+
+    if (!crypto_line) {
+      g_warning ("Could not print SDP crypto line for tag %d: %s", attr->tag, error->message);
+      continue;
+    }
+    g_string_append_printf (attribute_lines, "%s\r\n", crypto_line);
+  }
+
   g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", rtcp_port);
 
 done:
@@ -290,7 +304,7 @@ done:
  * @self: A #CallsSipMediaManager
  * @rtp_port: Port to use for RTP. Should eventually come from the ICE stack
  * @rtcp_port: Port to use for RTCP.Should eventually come from the ICE stack
- * @use_srtp: Whether to use srtp (not really handled)
+ * @crypto_attributes: A #GList of #calls_srtp_crypto_attribute
  *
  * Returns: (transfer full): string describing capabilities
  * to be used in the session description (SDP)
@@ -300,7 +314,7 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
                                              const char           *own_ip,
                                              gint                  rtp_port,
                                              gint                  rtcp_port,
-                                             gboolean              use_srtp)
+                                             GList                *crypto_attributes)
 {
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
@@ -308,7 +322,7 @@ calls_sip_media_manager_static_capabilities (CallsSipMediaManager *self,
                                                    own_ip,
                                                    rtp_port,
                                                    rtcp_port,
-                                                   use_srtp,
+                                                   crypto_attributes,
                                                    self->preferred_codecs);
 }
 

@@ -34,21 +34,21 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_SIP_MEDIA_MANAGER (calls_sip_media_manager_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsSipMediaManager, calls_sip_media_manager, CALLS, SIP_MEDIA_MANAGER, GObject)
+G_DECLARE_FINAL_TYPE (CallsSipMediaManager, calls_sip_media_manager, CALLS, SIP_MEDIA_MANAGER, GObject);
 
 
-CallsSipMediaManager*   calls_sip_media_manager_default                 (void);
+CallsSipMediaManager  *calls_sip_media_manager_default                 (void);
 gchar                 *calls_sip_media_manager_get_capabilities        (CallsSipMediaManager *self,
                                                                         const char           *own_ip,
                                                                         gint                  rtp_port,
                                                                         gint                  rtcp_port,
-                                                                        gboolean              use_srtp,
+                                                                        GList                *crypto_attributes,
                                                                         GList                *supported_codecs);
 gchar                 *calls_sip_media_manager_static_capabilities     (CallsSipMediaManager *self,
                                                                         const char           *own_ip,
                                                                         gint                  rtp_port,
                                                                         gint                  rtcp_port,
-                                                                        gboolean              use_srtp);
+                                                                        GList                *crypto_attributes);
 gboolean               calls_sip_media_manager_supports_media          (CallsSipMediaManager *self,
                                                                         const char           *media_type);
 GList                 *calls_sip_media_manager_codec_candidates        (CallsSipMediaManager *self);

@@ -104,7 +104,7 @@ calls_sip_call_answer (CallsCall *call)
                                                         self->ip,
                                                         rtp_port,
                                                         rtcp_port,
-                                                        FALSE,
+                                                        NULL,
                                                         self->codecs);
 
   g_assert (local_sdp);

@@ -8,6 +8,7 @@
 
 #include "calls-sip-call.h"
 #include "calls-sip-media-manager.h"
+#include "calls-srtp-utils.h"
 #include "gst-rfc3551.h"
 
 #include <gtk/gtk.h>
@@ -41,7 +42,15 @@ test_sip_media_manager_caps (void)
   CallsSipMediaManager *manager = calls_sip_media_manager_default ();
   char *sdp_message = NULL;
   GList *codecs = NULL;
+  GList *crypto_attributes;
+  calls_srtp_crypto_attribute *attr;
 
+  attr = calls_srtp_crypto_attribute_new (1);
+  attr->tag = 1;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  calls_srtp_crypto_attribute_init_keys (attr);
+
+  crypto_attributes = g_list_append (NULL, attr);
   /* Check single codecs */
   codecs = g_list_append (NULL, media_codec_by_name ("PCMA"));
 
@@ -49,7 +58,7 @@ test_sip_media_manager_caps (void)
 
   /* PCMA RTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 40002, 40003, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 40002, 40003, NULL, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -65,7 +74,7 @@ test_sip_media_manager_caps (void)
 
   /* PCMA SRTP */
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 42002, 42003, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42002, 42003, crypto_attributes, codecs);
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "m=audio 42002 RTP/SAVP 8"));
@@ -79,7 +88,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 42042, 55543, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 42042, 55543, NULL, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -100,7 +109,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 33340, 33341, FALSE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 33340, 33341, NULL, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -124,7 +133,7 @@ test_sip_media_manager_caps (void)
   codecs = g_list_append (codecs, media_codec_by_name ("PCMU"));
 
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 18098, 18099, TRUE, codecs);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 18098, 18099, crypto_attributes, codecs);
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -139,7 +148,7 @@ test_sip_media_manager_caps (void)
   g_test_expect_message ("CallsSipMediaManager", G_LOG_LEVEL_WARNING,
                          "No supported codecs found. Can't build meaningful SDP message");
   sdp_message =
-    calls_sip_media_manager_get_capabilities (manager, NULL, 25048, 25049, FALSE, NULL);
+    calls_sip_media_manager_get_capabilities (manager, NULL, 25048, 25049, NULL, NULL);
 
   g_test_assert_expected_messages ();
   g_assert_true (sdp_message);
@@ -149,6 +158,9 @@ test_sip_media_manager_caps (void)
   g_free (sdp_message);
 
   g_debug ("no codecs test OK");
+
+  g_list_free (crypto_attributes);
+  calls_srtp_crypto_attribute_free (attr);
 }
 
 
@@ -270,7 +282,7 @@ main (int   argc,
   g_test_add_func ("/Calls/media/pipeline/start_no_codec", test_media_pipeline_start_no_codec);
   g_test_add_func ("/Calls/media/pipeline/finalized_in_call", test_media_pipeline_finalized_in_call);
 
-  ret = g_test_run();
+  ret = g_test_run ();
 
   g_assert_finalize_object (manager);
 
