@@ -78,35 +78,6 @@ G_DEFINE_TYPE_WITH_CODE (CallsSipCall, calls_sip_call, CALLS_TYPE_CALL,
                          G_IMPLEMENT_INTERFACE (CALLS_TYPE_MESSAGE_SOURCE,
                                                 calls_sip_call_message_source_interface_init))
 
-static gboolean
-try_setting_up_media_pipeline (CallsSipCall *self)
-{
-  g_assert (CALLS_SIP_CALL (self));
-
-  if (!self->codecs)
-    return FALSE;
-
-  if (calls_sip_media_pipeline_get_state (self->pipeline) ==
-      CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC) {
-    MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
-
-    g_debug ("Setting codec '%s' for pipeline", codec->name);
-    calls_sip_media_pipeline_set_codec (self->pipeline, codec);
-  }
-
-  g_debug ("Setting remote ports: RTP/RTCP %u/%u",
-           self->rport_rtp, self->rport_rtcp);
-
-  g_object_set (self->pipeline,
-                "remote", self->remote,
-                "rport-rtp", self->rport_rtp,
-                "rport-rtcp", self->rport_rtcp,
-                NULL);
-
-  return TRUE;
-}
-
-
 static void
 calls_sip_call_answer (CallsCall *call)
 {
@@ -128,8 +99,6 @@ calls_sip_call_answer (CallsCall *call)
 
   rtp_port = calls_sip_media_pipeline_get_rtp_port (self->pipeline);
   rtcp_port = calls_sip_media_pipeline_get_rtcp_port (self->pipeline);
-
-  calls_sip_call_setup_local_media_connection (self);
 
   local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
                                                         self->ip,
@@ -302,18 +271,6 @@ calls_sip_call_init (CallsSipCall *self)
   self->manager = calls_sip_media_manager_default ();
 }
 
-/**
- * calls_sip_call_setup_local_media_connection:
- * @self: A #CallsSipCall
- */
-void
-calls_sip_call_setup_local_media_connection (CallsSipCall *self)
-{
-  g_return_if_fail (CALLS_IS_SIP_CALL (self));
-
-  /* XXX maybe we can get rid of this completely */
-  try_setting_up_media_pipeline (self);
-}
 
 /**
  * calls_sip_call_setup_remote_media_connection:
@@ -335,7 +292,14 @@ calls_sip_call_setup_remote_media_connection (CallsSipCall *self,
   self->rport_rtp = port_rtp;
   self->rport_rtcp = port_rtcp;
 
-  try_setting_up_media_pipeline (self);
+  g_debug ("Setting remote ports: RTP/RTCP %u/%u",
+           self->rport_rtp, self->rport_rtcp);
+
+  g_object_set (self->pipeline,
+                "remote", self->remote,
+                "rport-rtp", self->rport_rtp,
+                "rport-rtcp", self->rport_rtcp,
+                NULL);
 }
 
 /**
@@ -357,6 +321,14 @@ calls_sip_call_activate_media (CallsSipCall *self,
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
 
   if (enabled) {
+    if (calls_sip_media_pipeline_get_state (self->pipeline) ==
+        CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC) {
+      MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
+
+      g_debug ("Setting codec '%s' for pipeline", codec->name);
+      calls_sip_media_pipeline_set_codec (self->pipeline, codec);
+    }
+
     calls_sip_media_pipeline_start (self->pipeline);
   } else {
     calls_sip_media_pipeline_stop (self->pipeline);

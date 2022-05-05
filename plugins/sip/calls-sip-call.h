@@ -45,7 +45,6 @@ void                   calls_sip_call_setup_remote_media_connection     (CallsSi
                                                                          const char   *remote,
                                                                          guint         port_rtp,
                                                                          guint         port_rtcp);
-void                   calls_sip_call_setup_local_media_connection      (CallsSipCall *self);
 void                   calls_sip_call_activate_media                    (CallsSipCall *self,
                                                                          gboolean      enabled);
 void                   calls_sip_call_set_state                         (CallsSipCall  *self,

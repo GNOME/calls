@@ -272,8 +272,6 @@ add_call (CallsSipOrigin *self,
                     self);
 
   if (!inbound) {
-    calls_sip_call_setup_local_media_connection (sip_call);
-
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
                                                              self->own_ip,
                                                              rtp_port,
