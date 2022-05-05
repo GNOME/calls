@@ -1,15 +1,15 @@
 # Dutch translation for calls.
 # Copyright (C) 2021 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021.
-# Nathan Follens <nfollens@gnome.org>, 2021.
+# Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021-2022.
+# Nathan Follens <nfollens@gnome.org>, 2021-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-22 14:18+0000\n"
-"PO-Revision-Date: 2021-12-26 09:01+0100\n"
+"POT-Creation-Date: 2022-04-26 05:36+0000\n"
+"PO-Revision-Date: 2022-05-04 21:19+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Oproepen"
 
@@ -32,7 +32,7 @@ msgstr "Telefoon"
 msgid "A phone dialer and call handler"
 msgstr "Een telefoonkiezer en oproepafhandelaar"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
@@ -47,97 +47,192 @@ msgstr "Oproepen (daemon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Een telefoonkiezer en oproepafhandelaar (daemonmodus)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Account toevoegen"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Bellen en SIP-gesprekken voeren"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "Aanme_lden"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Oproepen is een eenvoudige, elegante telefoonkiezer en oproepverwerker voor "
+"GNOME. Oproepen kan gebruikt worden met een mobiele modem voor goede oude "
+"telefoongesprekken, evenals VoIP-oproepen met het SIP-protocol."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Account beheren"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Een oproep plaatsen"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Toevoegen"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "De oproepgeschiedenis"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "Verwij_deren"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Of oproepen automatisch de standaardoorsprong moeten gebruiken"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Server"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "De landcode zoals aangeleverd door de modem"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Weergavenaam"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "De landcode wordt gebruikt om contactnamen op te zoeken"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Optioneel"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "De plug-ins om automatisch te laden"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "Gebruikers-ID"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+"Deze plug-ins worden automatisch geladen bij het opstarten van de toepassing."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Wachtwoord"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Audiocodecs voor VoIP-oproepen in volgorde van voorkeur"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Poort"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"De audiocodecs voor VoIP-oproepen in volgorde van voorkeur (indien "
+"beschikbaar)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Transportprotocol"
+#: src/calls-account.c:205
+msgid "Default (uninitialized) state"
+msgstr "Standaardstatus (niet geïnitialiseerd)"
 
-#: src/calls-application.c:546
+#: src/calls-account.c:208
+msgid "Initializing account…"
+msgstr "Account initialiseren…"
+
+#: src/calls-account.c:211
+msgid "Uninitializing account…"
+msgstr "Account deïnitialiseren…"
+
+#: src/calls-account.c:214
+msgid "Connecting to server…"
+msgstr "Verbinden met de server…"
+
+#: src/calls-account.c:217
+msgid "Account is online"
+msgstr "Account is online"
+
+#: src/calls-account.c:220
+msgid "Disconnecting from server…"
+msgstr "Verbinding met server verbreken…"
+
+#: src/calls-account.c:223
+msgid "Account is offline"
+msgstr "Account is offline"
+
+#: src/calls-account.c:226
+msgid "Account encountered an error"
+msgstr "Account heeft een probleem ondervonden"
+
+#: src/calls-account.c:244
+msgid "No reason given"
+msgstr "Geen reden gegeven"
+
+#: src/calls-account.c:247
+msgid "Initialization started"
+msgstr "Initialisatie gestart"
+
+#: src/calls-account.c:250
+msgid "Initialization complete"
+msgstr "Initialisatie voltooid"
+
+#: src/calls-account.c:253
+msgid "Uninitialization started"
+msgstr "Deïnitialisatie gestart"
+
+#: src/calls-account.c:256
+msgid "Uninitialization complete"
+msgstr "Deïnitialisatie voltooid"
+
+#: src/calls-account.c:259
+msgid "No credentials set"
+msgstr "Geen aanmeldgegevens ingesteld"
+
+#: src/calls-account.c:262
+msgid "Starting to connect"
+msgstr "Beginnen met verbinden"
+
+#: src/calls-account.c:265
+msgid "Connection timed out"
+msgstr "Time-out bij verbinding"
+
+#: src/calls-account.c:268
+msgid "Domain name could not be resolved"
+msgstr "Domeinnaam kon niet gevonden worden"
+
+#: src/calls-account.c:271
+msgid "Server did not accept username or password"
+msgstr "Server heeft gebruikersnaam of wachtwoord niet aanvaard"
+
+#: src/calls-account.c:274
+msgid "Connecting complete"
+msgstr "Verbinding voltooid"
+
+#: src/calls-account.c:277
+msgid "Starting to disconnect"
+msgstr "Verbinding wordt verbroken"
+
+#: src/calls-account.c:280
+msgid "Disconnecting complete"
+msgstr "Verbinding verbroken"
+
+#: src/calls-account.c:283
+msgid "Internal error occurred"
+msgstr "Er is een interne fout opgetreden"
+
+#: src/calls-application.c:318
 #, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "Ongeldige tel-URI `%s' geprobeerd"
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Geprobeerd ongeldige tel-URI `%s' te kiezen"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:635
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Kan `%s' niet openen"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:689
 msgid "The name of the plugin to use as a call provider"
-msgstr "De naam van de plug-in die als oproepprovider moet worden gebruikt"
+msgstr "De naam van de plug-in die als oproepprovider gebruikt moet worden"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:690
 msgid "PLUGIN"
-msgstr "PLUGIN"
+msgstr "PLUG-IN"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:695
 msgid "Whether to present the main window on startup"
 msgstr "Of het hoofdvenster bij het opstarten moet worden weergegeven"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:701
 msgid "Dial a telephone number"
 msgstr "Bel een telefoonnummer"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:702
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:707
 msgid "Enable verbose debug messages"
 msgstr "Uitgebreide foutopsporingsberichten inschakelen"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:713
 msgid "Print current version"
 msgstr "Huidige versie weergeven"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Anonieme beller"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -146,7 +241,7 @@ msgstr ""
 "%s\n"
 "gisteren"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
 "Jan Jasper de Kroon <jajadekroon@gmail.com>\n"
@@ -154,56 +249,48 @@ msgstr ""
 "\n"
 "Meer info over Gnome-NL https://nl.gnome.org"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Kan geen oproepen plaatsen: geen modem met stemfuncties beschikbaar"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan geen oproepen plaatsen: geen modem of VoIP-account beschikbaar"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Kan geen oproepen plaatsen: geen back-enddienst"
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "Kan geen oproepen plaatsen: geen plug-in geladen"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Kan geen oproepen plaatsen: geen plug-in"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Contacten"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
 msgstr "Toetsenblok"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Recent"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Gemiste oproep"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Gemiste oproep van <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Gemiste oproep van %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Gemiste oproep van onbekende beller"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Terugbellen"
 
@@ -211,11 +298,11 @@ msgstr "Terugbellen"
 msgid "VoIP Accounts"
 msgstr "VoIP-accounts"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "VoIP-accounts toevoegen"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -226,23 +313,27 @@ msgstr ""
 "nieuw en nog niet afgewerkt (o.a. versleutelde media worden nog niet "
 "ondersteund)."
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
 msgid "_Add Account"
 msgstr "_Account toevoegen"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Oproep"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "Oproep verwij_deren"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "Nummer _kopiëren"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "Contact toevoegen"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
@@ -316,11 +407,128 @@ msgstr "Nieuwe oproep"
 msgid "Back"
 msgstr "Terug"
 
+#: plugins/mm/calls-mm-call.c:73
+msgid "Call disconnected (unknown reason)"
+msgstr "Oproep verbroken (onbekende reden)"
+
+#: plugins/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Uitgaande oproep gestart"
+
+#: plugins/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Nieuwe inkomende oproep"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Oproep aanvaard"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Oproep beëindigd"
+
+#: plugins/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Oproep verbroken (bezet of oproep geweigerd)"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Oproep verbroken (verkeerde id of netwerkprobleem)"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Oproep verbroken (fout bij instellen audiokanaal)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call transferred"
+msgstr "Oproep doorverbonden"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call deflected"
+msgstr "Oproep doorgeschakeld"
+
+#: plugins/mm/calls-mm-call.c:107
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Oproep verbroken (onbekende reden code %i)"
+
+#: plugins/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr "ModemManager niet beschikbaar"
+
+#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Geen modem met spraakondersteuning beschikbaar"
+
+#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Normaal"
+
+#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+msgid "Initialized"
+msgstr "Geïnitialiseerd"
+
+#: plugins/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus niet beschikbaar"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Account toevoegen"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "Aanme_lden"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Account beheren"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Toevoegen"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "Verwij_deren"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Weergavenaam"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Optioneel"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Gebruikers-ID"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: plugins/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Poort"
+
+#: plugins/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Transportprotocol"
+
+#: plugins/sip/sip-account-widget.ui:194
+msgid "Use for Phone Calls"
+msgstr "Gebruiken voor telefoongesprekken"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "Kan geen oproepen plaatsen: geen back-enddienst"
+
 #~ msgid "Calling…"
 #~ msgstr "Bellen…"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Inkomende oproep"
 
 #~ msgid "Mute"
 #~ msgstr "Dempen"
@@ -351,9 +559,6 @@ msgstr "Terug"
 
 #~ msgid "This call is not encrypted"
 #~ msgstr "Deze oproep is niet versleuteld"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "Deze oproep is versleuteld"
 
 #~ msgid "Recent Calls"
 #~ msgstr "Recente oproepen"
