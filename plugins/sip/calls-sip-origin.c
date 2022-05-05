@@ -76,6 +76,7 @@ enum {
   PROP_CALLS,
   PROP_COUNTRY_CODE,
   PROP_CAN_TEL,
+  PROP_MEDIA_ENCRYPTION,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -111,6 +112,7 @@ struct _CallsSipOrigin {
   gboolean              auto_connect;
   gboolean              direct_mode;
   gboolean              can_tel;
+  SipMediaEncryption    media_encryption;
 
   char                 *own_ip;
   gint                  local_port;
@@ -257,7 +259,12 @@ add_call (CallsSipOrigin *self,
       call_address = address_split[1];
   }
 
-  sip_call = calls_sip_call_new (call_address, inbound, self->own_ip, pipeline, handle);
+  sip_call = calls_sip_call_new (call_address,
+                                 inbound,
+                                 self->own_ip,
+                                 pipeline,
+                                 self->media_encryption,
+                                 handle);
   g_assert (sip_call != NULL);
 
   if (self->oper->call_handle)
@@ -276,11 +283,30 @@ add_call (CallsSipOrigin *self,
                     self);
 
   if (!inbound) {
+    g_autoptr (GList) crypto_attributes = NULL;
+    g_autoptr (CallsSdpCryptoContext) ctx =
+      calls_sip_call_get_sdp_crypto_context (sip_call);
+
+    if (self->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
+      if (!calls_sdp_crypto_context_generate_offer (ctx)) {
+        g_warning ("Media encryption must be used, but could not generate offer. Aborting");
+        calls_call_set_state (CALLS_CALL (sip_call), CALLS_CALL_STATE_DISCONNECTED);
+        return;
+      }
+    }
+
+    if (self->media_encryption == SIP_MEDIA_ENCRYPTION_PREFERRED) {
+      if (!calls_sdp_crypto_context_generate_offer (ctx))
+        g_debug ("Media encryption optional, but could not generate offer. Continuing unencrypted");
+    }
+
+    crypto_attributes = calls_sdp_crypto_context_get_crypto_candidates (ctx, FALSE);
+
     local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
                                                              self->own_ip,
                                                              rtp_port,
                                                              rtcp_port,
-                                                             NULL);
+                                                             crypto_attributes);
 
     g_assert (local_sdp);
 
@@ -567,6 +593,7 @@ sip_i_state (int              status,
     g_autoptr (GList) codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
+    g_autoptr (CallsSdpCryptoContext) ctx = NULL;
     const char *session_ip = NULL;
     const char *media_ip = NULL;
     int rtp_port;
@@ -578,6 +605,40 @@ sip_i_state (int              status,
       g_warning ("No common codecs in SDP. Hanging up. Remote SDP:\n%s", r_sdp_str);
       calls_call_hang_up (CALLS_CALL (call));
       return;
+    }
+
+    ctx = calls_sip_call_get_sdp_crypto_context (call);
+    if (origin->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
+
+      if (!calls_sdp_crypto_context_set_remote_media (ctx, r_sdp->sdp_media)) {
+        g_warning ("Media encryption is enforced, but remote didn't set crypto attributes.\n"
+                   "Remote SDP: %s", r_sdp_str);
+        calls_call_hang_up (CALLS_CALL (call));
+        return;
+      }
+    }
+
+    if (origin->media_encryption == SIP_MEDIA_ENCRYPTION_PREFERRED) {
+      if (!calls_sdp_crypto_context_set_remote_media (ctx, r_sdp->sdp_media))
+        g_debug ("Remote didn't set crypto attributes. Continuing unencrypted");
+    }
+
+    if (origin->media_encryption == SIP_MEDIA_ENCRYPTION_NONE) {
+      gboolean got_crypto = FALSE;
+
+      for (sdp_attribute_t *attr = r_sdp->sdp_media->m_attributes; attr; attr = attr->a_next) {
+        if (g_strcmp0 (attr->a_name, "crypto") == 0) {
+          got_crypto = TRUE;
+          break;
+        }
+      }
+
+      if (got_crypto) {
+        g_debug ("Remote peer %s wants to talk using encryption, but not allowed by local policy",
+                 calls_call_get_id (CALLS_CALL (call)));
+        calls_call_hang_up (CALLS_CALL (call));
+        return;
+      }
     }
 
     if (r_sdp->sdp_connection && r_sdp->sdp_connection->c_address)
@@ -1290,6 +1351,10 @@ calls_sip_origin_set_property (GObject      *object,
     self->can_tel = g_value_get_boolean (value);
     break;
 
+  case PROP_MEDIA_ENCRYPTION:
+    self->media_encryption = g_value_get_enum (value);
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -1368,6 +1433,10 @@ calls_sip_origin_get_property (GObject    *object,
 
   case PROP_CAN_TEL:
     g_value_set_boolean (value, self->can_tel);
+    break;
+
+  case PROP_MEDIA_ENCRYPTION:
+    g_value_set_enum (value, self->media_encryption);
     break;
 
   default:
@@ -1537,6 +1606,15 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           FALSE,
                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_CAN_TEL, props[PROP_CAN_TEL]);
+
+  props[PROP_MEDIA_ENCRYPTION] =
+    g_param_spec_enum ("media-encryption",
+                       "Media encryption",
+                       "The media encryption mode",
+                       SIP_TYPE_MEDIA_ENCRYPTION,
+                       SIP_MEDIA_ENCRYPTION_NONE,
+                       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_MEDIA_ENCRYPTION, props[PROP_MEDIA_ENCRYPTION]);
 
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \

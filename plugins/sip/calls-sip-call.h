@@ -25,7 +25,9 @@
 #pragma once
 
 #include "calls-call.h"
+#include "calls-sdp-crypto-context.h"
 #include "calls-sip-media-pipeline.h"
+#include "calls-sip-util.h"
 
 #include <glib-object.h>
 #include <sofia-sip/nua.h>
@@ -40,6 +42,7 @@ CallsSipCall          *calls_sip_call_new                               (const c
                                                                          gboolean               inbound,
                                                                          const char            *own_ip,
                                                                          CallsSipMediaPipeline *pipeline,
+                                                                         SipMediaEncryption     encryption,
                                                                          nua_handle_t          *handle);
 void                   calls_sip_call_setup_remote_media_connection     (CallsSipCall *self,
                                                                          const char   *remote,
@@ -51,5 +54,6 @@ void                   calls_sip_call_set_state                         (CallsSi
                                                                          CallsCallState state);
 void                   calls_sip_call_set_codecs                        (CallsSipCall *self,
                                                                          GList        *codecs);
+CallsSdpCryptoContext *calls_sip_call_get_sdp_crypto_context            (CallsSipCall *self);
 
 G_END_DECLS

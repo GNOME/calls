@@ -249,6 +249,7 @@ test_media_pipeline_finalized_in_call (void)
                                            TRUE,
                                            "127.0.0.1",
                                            pipeline,
+                                           SIP_MEDIA_ENCRYPTION_NONE,
                                            NULL);
 
   g_object_unref (call);
@@ -259,6 +260,7 @@ test_media_pipeline_finalized_in_call (void)
                              TRUE,
                              "127.0.0.1",
                              pipeline,
+                             SIP_MEDIA_ENCRYPTION_NONE,
                              NULL);
   g_object_unref (call);
   g_assert_finalize_object (pipeline);

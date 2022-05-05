@@ -54,6 +54,18 @@ typedef enum {
   SIP_ENGINE_READY,
 } SipEngineState;
 
+/**
+ * SipMediaEncryption:
+ * @SIP_MEDIA_ENCRYPTION_NONE: Don't encrypt media streams
+ * @SIP_MEDIA_ENCRYPTION_PREFERRED: Prefer using encryption, but also allow unencrypted media
+ * @SIP_MEDIA_ENCRYPTION_FORCED: Force using encryption, drop unencrypted calls
+ */
+typedef enum {
+  SIP_MEDIA_ENCRYPTION_NONE = 0,
+  SIP_MEDIA_ENCRYPTION_PREFERRED,
+  SIP_MEDIA_ENCRYPTION_FORCED,
+} SipMediaEncryption;
+
 
 gboolean    check_sips                         (const char *addr);
 gboolean    check_ipv6                         (const char *host);

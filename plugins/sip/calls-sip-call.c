@@ -27,7 +27,9 @@
 
 #include "calls-call.h"
 #include "calls-message-source.h"
+#include "calls-sdp-crypto-context.h"
 #include "calls-sip-call.h"
+#include "calls-sip-enums.h"
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
 #include "calls-sip-util.h"
@@ -52,6 +54,7 @@ enum {
   PROP_CALL_HANDLE,
   PROP_IP,
   PROP_PIPELINE,
+  PROP_MEDIA_ENCRYPTION,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -70,6 +73,9 @@ struct _CallsSipCall {
 
   nua_handle_t          *nh;
   GList                 *codecs;
+
+  CallsSdpCryptoContext *sdp_crypto_context;
+  SipMediaEncryption     media_encryption;
 };
 
 static void calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -84,6 +90,8 @@ calls_sip_call_answer (CallsCall *call)
   CallsSipCall *self;
   g_autofree gchar *local_sdp = NULL;
   guint rtp_port, rtcp_port;
+  g_autoptr (GList) local_crypto = NULL;
+  gboolean got_crypto_offer;
 
   g_assert (CALLS_IS_CALL (call));
   g_assert (CALLS_IS_SIP_CALL (call));
@@ -100,11 +108,39 @@ calls_sip_call_answer (CallsCall *call)
   rtp_port = calls_sip_media_pipeline_get_rtp_port (self->pipeline);
   rtcp_port = calls_sip_media_pipeline_get_rtcp_port (self->pipeline);
 
+  got_crypto_offer =
+    calls_sdp_crypto_context_get_state (self->sdp_crypto_context) ==
+    CALLS_CRYPTO_CONTEXT_STATE_OFFER_REMOTE;
+
+  if (got_crypto_offer) {
+    if (self->media_encryption == SIP_MEDIA_ENCRYPTION_NONE) {
+      g_warning ("Encryption disabled, but got offer. Call should have already been declined!");
+      return;
+    }
+
+    if (!calls_sdp_crypto_context_generate_answer (self->sdp_crypto_context)) {
+      g_warning ("Could not generate answer for crypto key exchange. Aborting!");
+      CALLS_EMIT_MESSAGE(self, _("Cryptographic key exchange unsucessful"), GTK_MESSAGE_WARNING);
+      /* XXX this should (probably) never be reached */
+      nua_respond (self->nh, 488, "Not acceptable here", TAG_END ());
+      return;
+    }
+
+    local_crypto = calls_sdp_crypto_context_get_crypto_candidates (self->sdp_crypto_context, FALSE);
+  } else {
+    if (self->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
+      g_warning ("Encryption forced, but got no offer. Call should have already been declined!");
+      return;
+    } else if (self->media_encryption == SIP_MEDIA_ENCRYPTION_PREFERRED) {
+      g_debug ("Encryption optional, got no offer. Continuing unencrypted");
+    }
+  }
+
   local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
                                                         self->ip,
                                                         rtp_port,
                                                         rtcp_port,
-                                                        NULL,
+                                                        local_crypto,
                                                         self->codecs);
 
   g_assert (local_sdp);
@@ -177,6 +213,10 @@ calls_sip_call_set_property (GObject      *object,
 
   case PROP_PIPELINE:
     self->pipeline = g_value_dup_object (value);
+    break;
+
+  case PROP_MEDIA_ENCRYPTION:
+    self->media_encryption = g_value_get_enum (value);
     break;
 
   default:
@@ -255,6 +295,14 @@ calls_sip_call_class_init (CallsSipCallClass *klass)
                          CALLS_TYPE_SIP_MEDIA_PIPELINE,
                          G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
 
+  props[PROP_MEDIA_ENCRYPTION] =
+    g_param_spec_enum ("media-encryption",
+                       "Media encryption",
+                       "The media encryption mode",
+                       SIP_TYPE_MEDIA_ENCRYPTION,
+                       SIP_MEDIA_ENCRYPTION_NONE,
+                       G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
@@ -269,6 +317,7 @@ static void
 calls_sip_call_init (CallsSipCall *self)
 {
   self->manager = calls_sip_media_manager_default ();
+  self->sdp_crypto_context = calls_sdp_crypto_context_new ();
 }
 
 
@@ -321,6 +370,24 @@ calls_sip_call_activate_media (CallsSipCall *self,
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self->pipeline));
 
   if (enabled) {
+    gboolean negotiated = calls_sdp_crypto_context_get_is_negotiated (self->sdp_crypto_context);
+
+    if (negotiated) {
+      calls_srtp_crypto_attribute *remote_crypto =
+        calls_sdp_crypto_context_get_remote_crypto (self->sdp_crypto_context);
+      calls_srtp_crypto_attribute *local_crypto =
+        calls_sdp_crypto_context_get_local_crypto (self->sdp_crypto_context);
+
+      calls_sip_media_pipeline_set_crypto (self->pipeline, local_crypto, remote_crypto);
+    } else {
+      if (self->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
+        g_warning ("Encryption is forced, but parameters were not negotiated! Aborting");
+        return;
+      } else if (self->media_encryption == SIP_MEDIA_ENCRYPTION_PREFERRED) {
+        g_debug ("No encryption parameters negotiated, continuing unencrypted");
+      }
+    }
+
     if (calls_sip_media_pipeline_get_state (self->pipeline) ==
         CALLS_MEDIA_PIPELINE_STATE_NEED_CODEC) {
       MediaCodecInfo *codec = (MediaCodecInfo *) self->codecs->data;
@@ -341,6 +408,7 @@ calls_sip_call_new (const gchar           *id,
                     gboolean               inbound,
                     const char            *own_ip,
                     CallsSipMediaPipeline *pipeline,
+                    SipMediaEncryption     media_encryption,
                     nua_handle_t          *handle)
 {
   g_return_val_if_fail (id, NULL);
@@ -350,6 +418,7 @@ calls_sip_call_new (const gchar           *id,
                        "inbound", inbound,
                        "own-ip", own_ip,
                        "pipeline", pipeline,
+                       "media-encryption", media_encryption,
                        "nua-handle", handle,
                        "call-type", CALLS_CALL_TYPE_SIP_VOICE,
                        NULL);
@@ -371,4 +440,18 @@ calls_sip_call_set_codecs (CallsSipCall *self,
 
   g_list_free (self->codecs);
   self->codecs = g_list_copy (codecs);
+}
+
+/**
+ * calls_sip_call_get_sdp_crypto_context:
+ * @self: A #CallsSipCall
+ *
+ * Returns: (transfer full): The #CallsSdpCryptoContext of this call
+ */
+CallsSdpCryptoContext *
+calls_sip_call_get_sdp_crypto_context (CallsSipCall *self)
+{
+  g_return_val_if_fail (CALLS_IS_CALL (self), NULL);
+
+  return g_object_ref (self->sdp_crypto_context);
 }
