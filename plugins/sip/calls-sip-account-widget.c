@@ -287,7 +287,7 @@ find_protocol (CallsSipAccountWidget *self,
     }
   }
 
-  g_debug ("Could not find protocol '%s'", protocol);
+  g_warning ("Could not find protocol '%s'", protocol);
   return FALSE;
 }
 
