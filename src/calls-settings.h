@@ -45,5 +45,8 @@ void           calls_settings_set_autoload_plugins           (CallsSettings     
 char         **calls_settings_get_preferred_audio_codecs     (CallsSettings *self);
 void           calls_settings_set_preferred_audio_codecs     (CallsSettings      *self,
                                                               const char * const *codecs);
+gboolean       calls_settings_get_always_allow_sdes          (CallsSettings *self);
+void           calls_settings_set_always_allow_sdes          (CallsSettings *self,
+                                                              gboolean       enabled);
 
 G_END_DECLS

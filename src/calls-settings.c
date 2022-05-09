@@ -42,6 +42,7 @@ enum {
   PROP_COUNTRY_CODE,
   PROP_AUTOLOAD_PLUGINS,
   PROP_PREFERRED_AUDIO_CODECS,
+  PROP_ALWAYS_ALLOW_SDES,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -53,6 +54,7 @@ struct _CallsSettings {
 
   GStrv      autoload_plugins;
   GStrv      preferred_audio_codecs;
+  gboolean   always_allow_sdes;
 };
 
 G_DEFINE_TYPE (CallsSettings, calls_settings, G_TYPE_OBJECT)
@@ -81,6 +83,10 @@ calls_settings_set_property (GObject      *object,
 
   case PROP_PREFERRED_AUDIO_CODECS:
     calls_settings_set_preferred_audio_codecs (self, g_value_get_boxed (value));
+    break;
+
+  case PROP_ALWAYS_ALLOW_SDES:
+    calls_settings_set_always_allow_sdes (self, g_value_get_boolean (value));
     break;
 
   default:
@@ -115,6 +121,10 @@ calls_settings_get_property (GObject    *object,
     g_value_take_boxed (value, calls_settings_get_preferred_audio_codecs (self));
     break;
 
+  case PROP_ALWAYS_ALLOW_SDES:
+    g_value_set_boolean (value, calls_settings_get_always_allow_sdes (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -141,6 +151,8 @@ calls_settings_constructed (GObject *object)
                    self, "autoload-plugins", G_SETTINGS_BIND_DEFAULT);
   g_settings_bind (self->settings, "preferred-audio-codecs",
                    self, "preferred-audio-codecs", G_SETTINGS_BIND_DEFAULT);
+  g_settings_bind (self->settings, "always-allow-sdes",
+                   self, "always-allow-sdes", G_SETTINGS_BIND_DEFAULT);
 }
 
 
@@ -171,6 +183,7 @@ calls_settings_class_init (CallsSettingsClass *klass)
                           "Automatically use default origins",
                           TRUE,
                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
   props[PROP_COUNTRY_CODE] =
     g_param_spec_string ("country-code",
                          "country code",
@@ -192,6 +205,13 @@ calls_settings_class_init (CallsSettingsClass *klass)
                         G_TYPE_STRV,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
+  props[PROP_ALWAYS_ALLOW_SDES] =
+    g_param_spec_boolean ("always-allow-sdes",
+                          "Always allow SDES",
+                          "Whether to always allow using key exchange (without TLS)",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 }
 
@@ -212,9 +232,9 @@ calls_settings_get_default (void)
   static CallsSettings *instance = NULL;
 
   if (!instance) {
-      instance = g_object_new (CALLS_TYPE_SETTINGS, NULL);
-      g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *)&instance);
-    }
+    instance = g_object_new (CALLS_TYPE_SETTINGS, NULL);
+    g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *) &instance);
+  }
 
   return instance;
 }
@@ -373,4 +393,28 @@ calls_settings_set_preferred_audio_codecs (CallsSettings      *self,
 
   if (!initial)
     g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PREFERRED_AUDIO_CODECS]);
+}
+
+
+gboolean
+calls_settings_get_always_allow_sdes (CallsSettings *self)
+{
+  g_return_val_if_fail (CALLS_IS_SETTINGS (self), FALSE);
+
+  return self->always_allow_sdes;
+}
+
+
+void
+calls_settings_set_always_allow_sdes (CallsSettings *self,
+                                      gboolean       allowed)
+{
+  g_return_if_fail (CALLS_IS_SETTINGS (self));
+
+  if (self->always_allow_sdes == allowed)
+    return;
+
+  self->always_allow_sdes = allowed;
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ALWAYS_ALLOW_SDES]);
 }
