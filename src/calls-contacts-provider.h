@@ -47,17 +47,17 @@ typedef void (*IdleCallback) (gpointer         user_data,
 
 #define CALLS_TYPE_CONTACTS_PROVIDER (calls_contacts_provider_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsContactsProvider, calls_contacts_provider, CALLS, CONTACTS_PROVIDER, GObject)
+G_DECLARE_FINAL_TYPE (CallsContactsProvider, calls_contacts_provider, CALLS, CONTACTS_PROVIDER, GObject);
 
-CallsContactsProvider  *calls_contacts_provider_new                  (CallsSettings         *settings);
-GeeCollection  *calls_contacts_provider_get_individuals      (CallsContactsProvider *self);
-CallsBestMatch *calls_contacts_provider_lookup_id            (CallsContactsProvider *self,
-                                                              const char            *id);
-void            calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
-                                                              IdleCallback callback,
-                                                              gpointer     user_data);
-gboolean        calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self);
-void            calls_contacts_provider_add_new_contact      (CallsContactsProvider *self,
-                                                              const char            *phone_number);
+CallsContactsProvider *calls_contacts_provider_new                  (CallsSettings *settings);
+GeeCollection         *calls_contacts_provider_get_individuals      (CallsContactsProvider *self);
+CallsBestMatch        *calls_contacts_provider_lookup_id            (CallsContactsProvider *self,
+                                                                     const char            *id);
+void                   calls_contacts_provider_consume_iter_on_idle (GeeIterator *iter,
+                                                                     IdleCallback callback,
+                                                                     gpointer     user_data);
+gboolean               calls_contacts_provider_get_can_add_contacts (CallsContactsProvider *self);
+void                   calls_contacts_provider_add_new_contact      (CallsContactsProvider *self,
+                                                                     const char            *phone_number);
 
 G_END_DECLS

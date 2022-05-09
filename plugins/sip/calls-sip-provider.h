@@ -34,31 +34,31 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_SIP_PROVIDER (calls_sip_provider_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER, CallsProvider)
+G_DECLARE_FINAL_TYPE (CallsSipProvider, calls_sip_provider, CALLS, SIP_PROVIDER, CallsProvider);
 
-CallsSipProvider *calls_sip_provider_new                    (void);
-CallsSipOrigin *calls_sip_provider_add_origin             (CallsSipProvider *self,
-                                                           const char       *id,
-                                                           const char       *host,
-                                                           const char       *user,
-                                                           const char       *password,
-                                                           const char       *display_name,
-                                                           const char       *transport_protocol,
-                                                           gint              port,
-                                                           gboolean          store_credentials);
-CallsSipOrigin *calls_sip_provider_add_origin_full        (CallsSipProvider *self,
-                                                           const char       *id,
-                                                           const char       *host,
-                                                           const char       *user,
-                                                           const char       *password,
-                                                           const char       *display_name,
-                                                           const char       *transport_protocol,
-                                                           gint              port,
-                                                           gboolean          auto_connect,
-                                                           gboolean          direct_mode,
-                                                           gint              local_port,
-                                                           gboolean          use_for_tel,
-                                                           gboolean          store_credentials);
+CallsSipProvider *calls_sip_provider_new           (void);
+CallsSipOrigin   *calls_sip_provider_add_origin    (CallsSipProvider *self,
+                                                    const char       *id,
+                                                    const char       *host,
+                                                    const char       *user,
+                                                    const char       *password,
+                                                    const char       *display_name,
+                                                    const char       *transport_protocol,
+                                                    gint              port,
+                                                    gboolean          store_credentials);
+CallsSipOrigin *calls_sip_provider_add_origin_full (CallsSipProvider *self,
+                                                    const char       *id,
+                                                    const char       *host,
+                                                    const char       *user,
+                                                    const char       *password,
+                                                    const char       *display_name,
+                                                    const char       *transport_protocol,
+                                                    gint              port,
+                                                    gboolean          auto_connect,
+                                                    gboolean          direct_mode,
+                                                    gint              local_port,
+                                                    gboolean          use_for_tel,
+                                                    gboolean          store_credentials);
 gboolean calls_sip_provider_remove_origin          (CallsSipProvider *self,
                                                     CallsSipOrigin   *origin);
 void     calls_sip_provider_load_accounts          (CallsSipProvider *self,
