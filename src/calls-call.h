@@ -68,6 +68,9 @@ void           calls_call_set_name               (CallsCall  *self,
 CallsCallState calls_call_get_state              (CallsCall *self);
 void           calls_call_set_state              (CallsCall     *self,
                                                   CallsCallState state);
+gboolean       calls_call_get_encrypted          (CallsCall *self);
+void           calls_call_set_encrypted          (CallsCall *self,
+                                                  gboolean   encrypted);
 CallsCallType  calls_call_get_call_type          (CallsCall *self);
 gboolean       calls_call_get_inbound            (CallsCall *self);
 const char    *calls_call_get_protocol           (CallsCall *self);

@@ -54,6 +54,7 @@ enum {
   PROP_STATE,
   PROP_PROTOCOL,
   PROP_CALL_TYPE,
+  PROP_ENCRYPTED,
   N_PROPS,
 };
 
@@ -70,6 +71,7 @@ typedef struct {
   char          *name;
   CallsCallState state;
   gboolean       inbound;
+  gboolean       encrypted;
   CallsCallType  call_type;
 } CallsCallPrivate;
 
@@ -133,6 +135,10 @@ calls_call_set_property (GObject      *object,
     priv->call_type = g_value_get_enum (value);
     break;
 
+  case PROP_ENCRYPTED:
+    calls_call_set_encrypted (self, g_value_get_boolean (value));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -170,6 +176,10 @@ calls_call_get_property (GObject    *object,
 
   case PROP_CALL_TYPE:
     g_value_set_enum (value, calls_call_get_call_type (self));
+    break;
+
+  case PROP_ENCRYPTED:
+    g_value_set_boolean (value, calls_call_get_encrypted (self));
     break;
 
   default:
@@ -287,6 +297,19 @@ calls_call_class_init (CallsCallClass *klass)
                        G_PARAM_READWRITE |
                        G_PARAM_CONSTRUCT_ONLY |
                        G_PARAM_STATIC_STRINGS);
+
+  /**
+   * CallsCall:encrypted:
+   *
+   * If the call is encrypted
+   */
+
+  properties[PROP_ENCRYPTED] =
+    g_param_spec_boolean ("encrypted",
+                          "encrypted",
+                          "If the call is encrypted",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, N_PROPS, properties);
 
@@ -585,4 +608,45 @@ calls_call_state_parse_nick (CallsCallState *state,
 
   g_type_class_unref (klass);
   return ret;
+}
+
+/**
+ * calls_call_get_encrypted:
+ * @self: A #CallsCall
+ *
+ * Returns: %TRUE if the call is encrypted, %FALSE otherwise.
+ */
+gboolean
+calls_call_get_encrypted (CallsCall *self)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
+
+  return priv->encrypted;
+}
+
+/**
+ * calls_call_set_encrypted:
+ * @self: A #CallsCall
+ * @encrypted: A boolean indicating if the call is encrypted
+ *
+ * Set whether the call is encrypted or not.
+ */
+void
+calls_call_set_encrypted (CallsCall *self,
+                          gboolean   encrypted)
+{
+  CallsCallPrivate *priv = calls_call_get_instance_private (self);
+
+  g_return_if_fail (CALLS_IS_CALL (self));
+
+  if (priv->encrypted == encrypted)
+    return;
+
+  g_debug ("Encryption %sabled", encrypted ? "en" : "dis");
+
+  priv->encrypted = encrypted;
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_ENCRYPTED]);
 }

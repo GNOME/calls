@@ -123,7 +123,7 @@ calls_ui_call_data_get_encrypted (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), FALSE);
   g_return_val_if_fail (!!self->call, FALSE);
 
-  return FALSE;
+  return calls_call_get_encrypted (self->call);
 }
 
 static gboolean
@@ -308,6 +308,15 @@ on_notify_avatar (CallsUiCallData *self)
 
 
 static void
+on_notify_encrypted (CallsUiCallData *self)
+{
+  g_assert (CALLS_IS_UI_CALL_DATA (self));
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ENCRYPTED]);
+}
+
+
+static void
 set_call_data (CallsUiCallData *self,
                CallsCall       *call)
 {
@@ -321,6 +330,12 @@ set_call_data (CallsUiCallData *self,
   g_signal_connect_object (self->call,
                            "notify::state",
                            G_CALLBACK (on_notify_state),
+                           self,
+                           G_CONNECT_SWAPPED);
+
+  g_signal_connect_object (self->call,
+                           "notify::encrypted",
+                           G_CALLBACK (on_notify_encrypted),
                            self,
                            G_CONNECT_SWAPPED);
 
