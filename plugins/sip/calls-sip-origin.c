@@ -1282,7 +1282,6 @@ calls_sip_origin_get_property (GObject    *object,
                                GParamSpec *pspec)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
-  g_autofree char *name = NULL;
 
   switch (property_id) {
   case PROP_NAME:
