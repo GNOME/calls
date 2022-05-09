@@ -646,7 +646,6 @@ calls_manager_finalize (GObject *object)
 
   g_clear_object (&self->origins);
   g_clear_object (&self->contacts_provider);
-  g_clear_object (&self->settings);
 
   g_clear_pointer (&self->providers, g_hash_table_unref);
   g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
@@ -795,9 +794,9 @@ calls_manager_init (CallsManager *self)
   /* This hash table only owns the value, not the key */
   self->calls = g_hash_table_new_full (NULL, NULL, NULL, g_object_unref);
 
-  self->settings = calls_settings_new ();
+  self->settings = calls_settings_get_default ();
   // Load the contacts provider
-  self->contacts_provider = calls_contacts_provider_new (self->settings);
+  self->contacts_provider = calls_contacts_provider_new ();
 
   peas = peas_engine_get_default ();
 

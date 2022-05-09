@@ -14,9 +14,8 @@
 static void
 test_contacts_null_contact (void)
 {
-  g_autoptr (CallsSettings) settings = calls_settings_new ();
   g_autoptr (CallsContactsProvider) contacts_provider =
-    calls_contacts_provider_new (settings);
+    calls_contacts_provider_new ();
   CallsBestMatch *best_match;
 
   best_match = calls_contacts_provider_lookup_id (contacts_provider, NULL);

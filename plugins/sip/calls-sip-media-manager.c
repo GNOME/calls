@@ -154,7 +154,6 @@ calls_sip_media_manager_finalize (GObject *object)
   CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
 
   g_list_free (self->preferred_codecs);
-  g_object_unref (self->settings);
   g_object_unref (self->pipelines);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
@@ -176,7 +175,7 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
   if (!gst_is_initialized ())
     gst_init (NULL, NULL);
 
-  self->settings = calls_settings_new ();
+  self->settings = calls_settings_get_default ();
   g_signal_connect_swapped (self->settings,
                             "notify::preferred-audio-codecs",
                             G_CALLBACK (on_notify_preferred_audio_codecs),

@@ -14,7 +14,7 @@
 #include <gtk/gtk.h>
 
 CallsContactsProvider *
-__wrap_calls_contacts_provider_new (CallsSettings *settings)
+__wrap_calls_contacts_provider_new (void)
 {
   return NULL;
 }

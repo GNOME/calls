@@ -29,6 +29,7 @@
 
 #include "calls-contacts-provider.h"
 #include "calls-best-match.h"
+#include "calls-settings.h"
 
 #include <gee-0.8/gee.h>
 #include <folks/folks.h>
@@ -72,7 +73,6 @@ G_DEFINE_TYPE (CallsContactsProvider, calls_contacts_provider, G_TYPE_OBJECT)
 
 enum {
   PROP_0,
-  PROP_SETTINGS,
   PROP_CAN_ADD_CONTACTS,
   PROP_LAST_PROP
 };
@@ -240,26 +240,6 @@ on_contacts_appeared (GDBusConnection *connection,
 
 
 static void
-calls_contacts_provider_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec)
-{
-  CallsContactsProvider *self = CALLS_CONTACTS_PROVIDER (object);
-
-  switch (property_id) {
-  case PROP_SETTINGS:
-    self->settings = g_value_dup_object (value);
-    break;
-
-  default:
-    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-    break;
-  }
-}
-
-
-static void
 calls_contacts_provider_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
@@ -287,7 +267,6 @@ calls_contacts_provider_finalize (GObject *object)
   g_clear_handle_id (&self->bus_watch_id, g_bus_unwatch_name);
   g_clear_object (&self->contacts_action_group);
   g_clear_object (&self->folks_aggregator);
-  g_clear_object (&self->settings);
   g_clear_pointer (&self->best_matches, g_hash_table_unref);
 
   G_OBJECT_CLASS (calls_contacts_provider_parent_class)->finalize (object);
@@ -300,7 +279,6 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->get_property = calls_contacts_provider_get_property;
-  object_class->set_property = calls_contacts_provider_set_property;
   object_class->finalize = calls_contacts_provider_finalize;
 
   /**
@@ -339,20 +317,6 @@ calls_contacts_provider_class_init (CallsContactsProviderClass *klass)
                   FOLKS_TYPE_INDIVIDUAL);
 
   /**
-   * CallsContactsProvider::settings:
-   *
-   * The settings are used to get the country code
-   * which is used for contact lookups.
-   */
-  props[PROP_SETTINGS] =
-    g_param_spec_object ("settings",
-                         "settings",
-                         "The settings object to use",
-                         CALLS_TYPE_SETTINGS,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY |
-                         G_PARAM_STATIC_STRINGS);
-
-  /**
    * CallsContactsProvider::can-add-contacts:
    *
    * Whether we can add contacts or not.
@@ -372,6 +336,8 @@ static void
 calls_contacts_provider_init (CallsContactsProvider *self)
 {
   g_autoptr (GeeCollection) individuals = NULL;
+
+  self->settings = calls_settings_get_default ();
   self->folks_aggregator = folks_individual_aggregator_dup ();
 
   individuals = calls_contacts_provider_get_individuals (self);
@@ -404,9 +370,9 @@ calls_contacts_provider_init (CallsContactsProvider *self)
 
 
 CallsContactsProvider *
-calls_contacts_provider_new (CallsSettings *settings)
+calls_contacts_provider_new (void)
 {
-  return g_object_new (CALLS_TYPE_CONTACTS_PROVIDER, "settings", settings, NULL);
+  return g_object_new (CALLS_TYPE_CONTACTS_PROVIDER, NULL);
 }
 
 

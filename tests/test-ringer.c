@@ -138,7 +138,7 @@ __wrap_lfb_event_end_feedback_finish (LfbEvent     *self,
 
 
 CallsContactsProvider *
-__wrap_calls_contacts_provider_new (CallsSettings *settings)
+__wrap_calls_contacts_provider_new (void)
 {
   return NULL;
 }

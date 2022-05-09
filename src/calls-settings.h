@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsSettings, calls_settings, CALLS, SETTINGS, GObject);
 
-CallsSettings *calls_settings_new                            (void);
+CallsSettings *calls_settings_get_default                    (void);
 gboolean       calls_settings_get_use_default_origins        (CallsSettings *self);
 void           calls_settings_set_use_default_origins        (CallsSettings *self,
                                                               gboolean       enable);

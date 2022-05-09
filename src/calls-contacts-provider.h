@@ -28,7 +28,6 @@
 #pragma once
 
 #include "calls-best-match.h"
-#include "calls-settings.h"
 
 #include <folks/folks.h>
 #include <glib-object.h>
@@ -49,7 +48,7 @@ typedef void (*IdleCallback) (gpointer         user_data,
 
 G_DECLARE_FINAL_TYPE (CallsContactsProvider, calls_contacts_provider, CALLS, CONTACTS_PROVIDER, GObject);
 
-CallsContactsProvider *calls_contacts_provider_new                  (CallsSettings *settings);
+CallsContactsProvider *calls_contacts_provider_new                  (void);
 GeeCollection         *calls_contacts_provider_get_individuals      (CallsContactsProvider *self);
 CallsBestMatch        *calls_contacts_provider_lookup_id            (CallsContactsProvider *self,
                                                                      const char            *id);

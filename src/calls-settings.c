@@ -195,14 +195,21 @@ calls_settings_init (CallsSettings *self)
 }
 
 /**
- * calls_settings_new:
+ * calls_settings_get_default:
  *
- * Returns: (transfer full): A #CallsSettings.
+ * Returns: (transfer none): A #CallsSettings.
  */
 CallsSettings *
-calls_settings_new (void)
+calls_settings_get_default (void)
 {
-  return g_object_new (CALLS_TYPE_SETTINGS, NULL);
+  static CallsSettings *instance = NULL;
+
+  if (!instance) {
+      instance = g_object_new (CALLS_TYPE_SETTINGS, NULL);
+      g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *)&instance);
+    }
+
+  return instance;
 }
 
 /**
