@@ -183,6 +183,13 @@
                 <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
               </object>
             </child>
+            <child>
+              <object class="HdyComboRow" id="media_encryption">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes">Media Encryption</property>
+                <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
+              </object>
+            </child>
           </object>
         </child>
         <child>
