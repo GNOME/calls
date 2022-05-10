@@ -1,16 +1,16 @@
 # Swedish messages for Calls.
-# Copyright © 2020, 2021 Purism
+# Copyright © 2020-2022 Purism
 # This file is distributed under the same license as the Calls package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2020.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021.
-# Luna Jernberg <droidbittin@gmail.com>, 2020, 2021.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022.
+# Luna Jernberg <droidbittin@gmail.com>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-10-19 09:08+0000\n"
-"PO-Revision-Date: 2021-10-21 08:45+0200\n"
+"POT-Creation-Date: 2022-04-19 13:44+0000\n"
+"PO-Revision-Date: 2022-05-10 17:02+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:372
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:372 src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Samtal"
 
@@ -33,7 +33,7 @@ msgstr "Telefon"
 msgid "A phone dialer and call handler"
 msgstr "En telefonuppringare och samtalshanterare"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telefon;Samtal;Lur;Ring;Uppringare;PSTN;"
@@ -46,10 +46,55 @@ msgstr "Samtal (demon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "En telefonuppringare och samtalshanterare (demonläge)"
 
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Ring telefon- och SIP-samtal"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Samtal är en enkel, elegant telefonuppringare och samtalshanterare för "
+"GNOME. Den kan användas med ett mobilmodem för vanliga telefonsamtal såväl "
+"som VoIP-samtal med SIP-protokollet."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Ringa ett samtal"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "Samtalshistoriken"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Huruvida samtal automatiskt ska använda standardursprunget"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Landskoden som den rapporteras av modemet"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Landskoden används för uppslagning av kontaktnamn"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Insticksmodulerna att läsa in automatiskt"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+"Dessa insticksmoduler kommer automatiskt läsas in vid programmets uppstart."
+
 #: src/calls-application.c:528
 #, c-format
 msgid "Tried invalid tel URI `%s'"
-msgstr "Försökte med ogiltigt tel-URI ”%s”"
+msgstr "Försökte med ogiltig tel-URI ”%s”"
 
 #: src/calls-application.c:605
 #, c-format
@@ -84,7 +129,7 @@ msgstr "Aktivera utförliga felsökningsmeddelanden"
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
-#: src/calls-best-match.c:365 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
 
@@ -164,13 +209,35 @@ msgstr "Missat samtal från okänd uppringare"
 msgid "Call back"
 msgstr "Ring tillbaka"
 
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP-konton"
+
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "Lägg till VoIP-konton"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Du kan lägga till ett VoIP-konto här. Det kommer låta dig ringa och ta emot "
+"VoIP-samtal med SIP-protokollet. Denna funktion är relativt ny och inte "
+"fullt funktionell ännu (d.v.s. inga krypterade media)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "_Lägg till konto"
+
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Inkommande telefonsamtal"
 
 #: src/ui/call-display.ui:135
 msgid "Mute"
-msgstr "Tyst"
+msgstr "Tysta"
 
 #: src/ui/call-display.ui:172
 msgid "Speaker"
@@ -182,7 +249,7 @@ msgstr "Lägg till samtal"
 
 #: src/ui/call-display.ui:253
 msgid "Hold"
-msgstr "Håll"
+msgstr "Pausa"
 
 #: src/ui/call-display.ui:345
 msgid "Hang up"
@@ -194,7 +261,7 @@ msgstr "Svara"
 
 #: src/ui/call-display.ui:458
 msgid "Hide the dial pad"
-msgstr "Göm knappsatsen"
+msgstr "Dölj knappsatsen"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
@@ -311,11 +378,194 @@ msgstr "Nytt samtal"
 msgid "Back"
 msgstr "Tillbaka"
 
-#~ msgid "+441234567890"
-#~ msgstr "+441234567890"
+#: plugins/mm/calls-mm-call.c:98
+msgid "Call disconnected (unknown reason)"
+msgstr "Samtal frånkopplat (okänd orsak)"
 
-#~ msgid "Backspace through number"
-#~ msgstr "Radera siffra från nummer"
+#: plugins/mm/calls-mm-call.c:99
+msgid "Outgoing call started"
+msgstr "Utgående samtal startat"
 
-#~ msgid "Call the party"
-#~ msgstr "Ring parten"
+#: plugins/mm/calls-mm-call.c:100
+msgid "New incoming call"
+msgstr "Nytt inkommande samtal"
+
+#: plugins/mm/calls-mm-call.c:101
+msgid "Call accepted"
+msgstr "Samtal accepterat"
+
+#: plugins/mm/calls-mm-call.c:102
+msgid "Call ended"
+msgstr "Samtal avslutat"
+
+#: plugins/mm/calls-mm-call.c:103
+msgid "Call disconnected (busy or call refused)"
+msgstr "Samtal frånkopplat (upptaget eller samtal vägrat)"
+
+#: plugins/mm/calls-mm-call.c:104
+msgid "Call disconnected (wrong number or network problem)"
+msgstr "Samtal frånkopplat (felaktigt nummer eller nätverksproblem)"
+
+#: plugins/mm/calls-mm-call.c:105
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Samtal frånkopplat (fel vid konfiguration av ljudkanal)"
+
+#: plugins/mm/calls-mm-call.c:106
+msgid "Call transferred"
+msgstr "Samtal överfört"
+
+#: plugins/mm/calls-mm-call.c:107
+msgid "Call deflected"
+msgstr "Samtal avvisat"
+
+#: plugins/mm/calls-mm-call.c:136
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Samtal frånkopplat (okänd orsakskod %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "ModemManager ej tillgängligt"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+msgid "No voice-capable modem available"
+msgstr "Inget röstkapabelt modem tillgängligt"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "Normal"
+
+#: plugins/mm/calls-mm-provider.c:456 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialised"
+msgstr "Initierad"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "DBus ej tillgängligt"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Lägg till konto"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Logga in"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Hantera konto"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Verkställ"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Ta bort"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Server"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Valfritt"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Användar-ID"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Lösenord"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Transport"
+
+#~ msgid "Audio codecs to use for VoIP calls in order of preference"
+#~ msgstr "Ljudkodekar att använda för VoIP-samtal i föredragen ordning"
+
+#~ msgid "The preferred audio codecs to use for VoIP calls (if available)"
+#~ msgstr ""
+#~ "Föredragna ljudkodekar att använda för VoIP-samtal (om tillgängliga)"
+
+#~ msgid "Default (uninitialized) state"
+#~ msgstr "Standardtillstånd (oinitierat)"
+
+#~ msgid "Initializing account…"
+#~ msgstr "Initierar konto…"
+
+#~ msgid "Uninitializing account…"
+#~ msgstr "Avinitierar konto…"
+
+#~ msgid "Connecting to server…"
+#~ msgstr "Ansluter till server…"
+
+#~ msgid "Account is online"
+#~ msgstr "Kontot är frånkopplat"
+
+#~ msgid "Disconnecting from server…"
+#~ msgstr "Kopplar ner från server…"
+
+#~ msgid "Account is offline"
+#~ msgstr "Kontot är frånkopplat"
+
+#~ msgid "Account encountered an error"
+#~ msgstr "Kontot stötte på ett fel"
+
+#~ msgid "No reason given"
+#~ msgstr "Ingen anledning angiven"
+
+#~ msgid "Initialization started"
+#~ msgstr "Initiering startad"
+
+#~ msgid "Initialization complete"
+#~ msgstr "Initiering slutförd"
+
+#~ msgid "Uninitialization started"
+#~ msgstr "Avinitiering startad"
+
+#~ msgid "Uninitialization complete"
+#~ msgstr "Avinitiering slutförd"
+
+#~ msgid "No credentials set"
+#~ msgstr "Inga autentiseringsuppgifter inställda"
+
+#~ msgid "Starting to connect"
+#~ msgstr "Börjar ansluta"
+
+#~ msgid "Connection timed out"
+#~ msgstr "Anslutningens tidsgräns överskreds"
+
+#~ msgid "Domain name could not be resolved"
+#~ msgstr "Domännamnet kunde inte slås upp"
+
+#~ msgid "Server did not accept username or password"
+#~ msgstr "Servern accepterade inte användarnamnet eller lösenordet"
+
+#~ msgid "Connecting complete"
+#~ msgstr "Anslutning slutförd"
+
+#~ msgid "Starting to disconnect"
+#~ msgstr "Börjar koppla från"
+
+#~ msgid "Disconnecting complete"
+#~ msgstr "Frånkoppling slutförd"
+
+#~ msgid "Internal error occurred"
+#~ msgstr "Ett internt fel inträffade"
+
+#~ msgid "_Add contact"
+#~ msgstr "_Lägg till kontakt"
+
+#~ msgid "Use for Phone Calls"
+#~ msgstr "Använd för telefonsamtal"
