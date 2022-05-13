@@ -237,10 +237,8 @@ on_notify_update_hints (CallsUiCallData    *call,
 static void
 call_added_cb (CallsDBusManager *self, CuiCall *call)
 {
-  g_autoptr (GError) error = NULL;
   g_autoptr (CallsDBusObjectSkeleton) object = NULL;
   g_autoptr (CallsDBusCallsCall) iface = NULL;
-  g_autoptr (CallsBestMatch) match = NULL;
   g_autofree char *path = NULL;
 
   path = get_obj_path (self, self->iface_num++);
