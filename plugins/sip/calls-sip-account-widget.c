@@ -126,6 +126,23 @@ get_selected_protocol (CallsSipAccountWidget *self)
 }
 
 
+static SipMediaEncryption
+get_selected_media_encryption (CallsSipAccountWidget *self)
+{
+  g_autoptr (HdyValueObject) obj = NULL;
+  SipMediaEncryption media_encryption = SIP_MEDIA_ENCRYPTION_NONE;
+  gint i;
+
+  if ((i = hdy_combo_row_get_selected_index (self->media_encryption)) != -1) {
+    obj = g_list_model_get_item (G_LIST_MODEL (self->media_encryption_store), i);
+    media_encryption = (SipMediaEncryption) GPOINTER_TO_INT (g_object_get_data (G_OBJECT (obj), "value"));
+  }
+
+
+  return media_encryption;
+}
+
+
 static void
 update_media_encryption (CallsSipAccountWidget *self)
 {
@@ -477,6 +494,7 @@ on_login_clicked (CallsSipAccountWidget *self)
                                           gtk_entry_get_text (GTK_ENTRY (self->display_name)),
                                           get_selected_protocol (self),
                                           get_port (self),
+                                          get_selected_media_encryption (self),
                                           TRUE);
 
   self->origin = origin;
@@ -510,6 +528,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     gtk_entry_get_text (self->display_name),
                                     get_selected_protocol (self),
                                     get_port (self),
+                                    get_selected_media_encryption (self),
                                     gtk_switch_get_state (self->tel_switch),
                                     gtk_switch_get_state (self->auto_connect_switch));
 

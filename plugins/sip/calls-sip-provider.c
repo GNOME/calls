@@ -128,6 +128,7 @@ on_origin_pw_looked_up (GObject      *source,
   gboolean auto_connect = TRUE;
   gboolean direct_mode = FALSE;
   gboolean can_tel = FALSE;
+  SipMediaEncryption media_encryption = SIP_MEDIA_ENCRYPTION_NONE;
 
   g_assert (user_data);
 
@@ -159,6 +160,10 @@ on_origin_pw_looked_up (GObject      *source,
     can_tel =
       g_key_file_get_boolean (data->key_file, data->name, "CanTel", NULL);
 
+  if (g_key_file_has_key (data->key_file, data->name, "MediaEncryption", NULL))
+    media_encryption =
+      (SipMediaEncryption) g_key_file_get_integer (data->key_file, data->name, "MediaEncryption", NULL);
+
   /* PW */
   password = secret_password_lookup_finish (result, &error);
   if (!direct_mode && error) {
@@ -185,6 +190,7 @@ on_origin_pw_looked_up (GObject      *source,
                                       display_name,
                                       protocol,
                                       port,
+                                      media_encryption,
                                       auto_connect,
                                       direct_mode,
                                       local_port,
@@ -292,6 +298,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   gboolean auto_connect;
   gboolean direct_mode;
   gboolean can_tel;
+  SipMediaEncryption media_encryption;
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
   g_assert (key_file);
@@ -308,6 +315,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
                 "direct-mode", &direct_mode,
                 "local-port", &local_port,
                 "can-tel", &can_tel,
+                "media-encryption", &media_encryption,
                 NULL);
 
   g_key_file_set_string (key_file, name, "Id", id);
@@ -320,6 +328,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_key_file_set_boolean (key_file, name, "DirectMode", direct_mode);
   g_key_file_set_integer (key_file, name, "LocalPort", local_port);
   g_key_file_set_boolean (key_file, name, "CanTel", can_tel);
+  g_key_file_set_integer (key_file, name, "MediaEncryption", media_encryption);
 
   label_secret = g_strdup_printf ("Calls Password for %s", id);
 
@@ -648,6 +657,8 @@ calls_sip_provider_init (CallsSipProvider *self)
  * @password: The password to use
  * @display_name: The display name
  * @transport_protocol: The transport protocol to use, can be one of "UDP", "TCP" or "TLS"
+ * @port: The port of the host
+ * @media_encryption: A #SipMediaEncryption specifying if media should be encrypted
  * @store_credentials: Whether to store credentials for this origin to disk
  *
  * Adds a new origin (SIP account)
@@ -655,15 +666,16 @@ calls_sip_provider_init (CallsSipProvider *self)
  * Return: (transfer none): A #CallsSipOrigin
  */
 CallsSipOrigin *
-calls_sip_provider_add_origin (CallsSipProvider *self,
-                               const char       *id,
-                               const char       *host,
-                               const char       *user,
-                               const char       *password,
-                               const char       *display_name,
-                               const char       *transport_protocol,
-                               gint              port,
-                               gboolean          store_credentials)
+calls_sip_provider_add_origin (CallsSipProvider  *self,
+                               const char        *id,
+                               const char        *host,
+                               const char        *user,
+                               const char        *password,
+                               const char        *display_name,
+                               const char        *transport_protocol,
+                               gint               port,
+                               SipMediaEncryption media_encryption,
+                               gboolean           store_credentials)
 {
   return calls_sip_provider_add_origin_full (self,
                                              id,
@@ -673,6 +685,7 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
                                              display_name,
                                              transport_protocol,
                                              port,
+                                             media_encryption,
                                              TRUE,
                                              FALSE,
                                              0,
@@ -689,6 +702,8 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
  * @password: The password to use
  * @display_name: The display name
  * @transport_protocol: The transport protocol to use, can be one of "UDP", "TCP" or "TLS"
+ * @port: The port of the host
+ * @media_encryption: A #SipMediaEncryption specifying if media should be encrypted
  * @auto_connect: Whether to automatically try going online
  * @direct_mode: Whether to use direct connection mode. Useful when you don't want to
  * connect to a SIP server. Mostly useful for testing and debugging.
@@ -701,19 +716,20 @@ calls_sip_provider_add_origin (CallsSipProvider *self,
  * Return: (transfer none): A #CallsSipOrigin
  */
 CallsSipOrigin *
-calls_sip_provider_add_origin_full (CallsSipProvider *self,
-                                    const char       *id,
-                                    const char       *host,
-                                    const char       *user,
-                                    const char       *password,
-                                    const char       *display_name,
-                                    const char       *transport_protocol,
-                                    gint              port,
-                                    gboolean          auto_connect,
-                                    gboolean          direct_mode,
-                                    gint              local_port,
-                                    gboolean          can_tel,
-                                    gboolean          store_credentials)
+calls_sip_provider_add_origin_full (CallsSipProvider  *self,
+                                    const char        *id,
+                                    const char        *host,
+                                    const char        *user,
+                                    const char        *password,
+                                    const char        *display_name,
+                                    const char        *transport_protocol,
+                                    gint               port,
+                                    SipMediaEncryption media_encryption,
+                                    gboolean           auto_connect,
+                                    gboolean           direct_mode,
+                                    gint               local_port,
+                                    gboolean           can_tel,
+                                    gboolean           store_credentials)
 {
   g_autoptr (CallsSipOrigin) origin = NULL;
   g_autofree char *protocol = NULL;
@@ -743,6 +759,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider *self,
                          "display-name", display_name,
                          "transport-protocol", protocol ?: "UDP",
                          "port", port,
+                         "media-encryption", media_encryption,
                          "auto-connect", auto_connect,
                          "direct-mode", direct_mode,
                          "local-port", local_port,

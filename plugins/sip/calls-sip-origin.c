@@ -1671,15 +1671,16 @@ calls_sip_origin_init (CallsSipOrigin *self)
 }
 
 void
-calls_sip_origin_set_credentials (CallsSipOrigin *self,
-                                  const char     *host,
-                                  const char     *user,
-                                  const char     *password,
-                                  const char     *display_name,
-                                  const char     *transport_protocol,
-                                  gint            port,
-                                  gboolean        can_tel,
-                                  gboolean        auto_connect)
+calls_sip_origin_set_credentials (CallsSipOrigin    *self,
+                                  const char        *host,
+                                  const char        *user,
+                                  const char        *password,
+                                  const char        *display_name,
+                                  const char        *transport_protocol,
+                                  gint               port,
+                                  SipMediaEncryption media_encryption,
+                                  gboolean           can_tel,
+                                  gboolean           auto_connect)
 {
   g_return_if_fail (CALLS_IS_SIP_ORIGIN (self));
 
@@ -1715,8 +1716,8 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
     self->transport_protocol = g_strdup ("UDP");
 
   self->port = port;
-
   self->can_tel = can_tel;
+  self->media_encryption = media_encryption;
 
   update_name (self);
 

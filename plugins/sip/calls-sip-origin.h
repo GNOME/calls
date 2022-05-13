@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include "calls-sip-util.h"
+
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -32,14 +34,15 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsSipOrigin, calls_sip_origin, CALLS, SIP_ORIGIN, GObject)
 
-void calls_sip_origin_set_credentials          (CallsSipOrigin *self,
-                                                const char     *host,
-                                                const char     *user,
-                                                const char     *password,
-                                                const char     *display_name,
-                                                const char     *transport_protocol,
-                                                gint            port,
-                                                gboolean        use_for_tel,
-                                                gboolean        auto_connect);
+void calls_sip_origin_set_credentials          (CallsSipOrigin    *self,
+                                                const char        *host,
+                                                const char        *user,
+                                                const char        *password,
+                                                const char        *display_name,
+                                                const char        *transport_protocol,
+                                                gint               port,
+                                                SipMediaEncryption media_encryption,
+                                                gboolean           use_for_tel,
+                                                gboolean           auto_connect);
 
 G_END_DECLS
