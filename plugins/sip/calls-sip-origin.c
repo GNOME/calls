@@ -151,6 +151,8 @@ change_state (CallsSipOrigin         *self,
   old_state = self->state;
   self->state = new_state;
 
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_STATE]);
+
   g_signal_emit_by_name (self, "account-state-changed", old_state, new_state, reason);
   calls_account_emit_message_for_state_change (CALLS_ACCOUNT (self), new_state, reason);
 }
