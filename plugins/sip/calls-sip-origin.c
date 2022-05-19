@@ -145,7 +145,9 @@ change_state (CallsSipOrigin         *self,
 
   g_assert (CALLS_SIP_ORIGIN (self));
 
-  if (self->state == new_state)
+  if (self->state == new_state &&
+      new_state != CALLS_ACCOUNT_STATE_ERROR &&
+      !calls_account_state_reason_is_for_ui (reason))
     return;
 
   old_state = self->state;

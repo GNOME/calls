@@ -47,48 +47,6 @@ enum {
 static guint signals[SIGNAL_LAST_SIGNAL];
 
 
-static gboolean
-calls_account_state_change_is_important (CallsAccountState new_state)
-{
-  if (calls_log_get_verbosity () >= 3)
-    return TRUE;
-
-  switch (new_state) {
-  case CALLS_ACCOUNT_STATE_UNKNOWN:
-  case CALLS_ACCOUNT_STATE_INITIALIZING:
-  case CALLS_ACCOUNT_STATE_DEINITIALIZING:
-  case CALLS_ACCOUNT_STATE_CONNECTING:
-  case CALLS_ACCOUNT_STATE_DISCONNECTING:
-    return FALSE;
-
-  case CALLS_ACCOUNT_STATE_ERROR:
-  case CALLS_ACCOUNT_STATE_OFFLINE:
-  case CALLS_ACCOUNT_STATE_ONLINE:
-    return TRUE;
-
-  default:
-    return FALSE;
-  }
-}
-
-
-static gboolean
-calls_account_state_reason_is_error (CallsAccountStateReason reason)
-{
-  switch (reason) {
-  case CALLS_ACCOUNT_STATE_REASON_NO_CREDENTIALS:
-  case CALLS_ACCOUNT_STATE_REASON_CONNECTION_TIMEOUT:
-  case CALLS_ACCOUNT_STATE_REASON_CONNECTION_DNS_ERROR:
-  case CALLS_ACCOUNT_STATE_REASON_AUTHENTICATION_FAILURE:
-  case CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR:
-    return TRUE;
-
-  default:
-    return FALSE;
-  }
-}
-
-
 static void
 calls_account_default_init (CallsAccountInterface *iface)
 {
@@ -301,18 +259,18 @@ calls_account_emit_message_for_state_change (CallsAccount           *account,
                                              CallsAccountStateReason reason)
 {
   g_autofree char *message = NULL;
-  gboolean state_is_important = FALSE;
-  gboolean reason_is_error = FALSE;
+  gboolean state_is_for_ui = FALSE;
+  gboolean reason_is_for_ui = FALSE;
 
   g_return_if_fail (CALLS_IS_ACCOUNT (account));
 
-  state_is_important = calls_account_state_change_is_important (new_state);
-  reason_is_error = calls_account_state_reason_is_error (reason);
+  state_is_for_ui = calls_account_state_is_for_ui (new_state);
+  reason_is_for_ui = calls_account_state_reason_is_for_ui (reason);
 
-  if (!state_is_important && !reason_is_error)
+  if (!state_is_for_ui && !reason_is_for_ui)
     return;
 
-  if (reason_is_error || calls_log_get_verbosity () >= 3)
+  if (reason_is_for_ui || calls_log_get_verbosity () >= 3)
     message = g_strdup_printf ("%s: %s",
                                calls_account_state_to_string (new_state),
                                calls_account_state_reason_to_string (reason));
@@ -321,5 +279,65 @@ calls_account_emit_message_for_state_change (CallsAccount           *account,
 
   calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (account),
                                      message,
-                                     reason_is_error ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
+                                     reason_is_for_ui ? GTK_MESSAGE_ERROR : GTK_MESSAGE_INFO);
+}
+
+
+/**
+ * calls_account_state_is_for_ui:
+ * @state: a #CallsAccountState
+ *
+ * Helper function to decide which account states are important.
+ * Is used f.e. to decide if message should be shown to the user.
+ *
+ * Returns: %TRUE if account state is considered important, %FALSE otherwise
+ */
+gboolean
+calls_account_state_is_for_ui (CallsAccountState state)
+{
+  if (calls_log_get_verbosity () >= 3)
+    return TRUE;
+
+  switch (state) {
+  case CALLS_ACCOUNT_STATE_UNKNOWN:
+  case CALLS_ACCOUNT_STATE_INITIALIZING:
+  case CALLS_ACCOUNT_STATE_DEINITIALIZING:
+  case CALLS_ACCOUNT_STATE_CONNECTING:
+  case CALLS_ACCOUNT_STATE_DISCONNECTING:
+    return FALSE;
+
+  case CALLS_ACCOUNT_STATE_ERROR:
+  case CALLS_ACCOUNT_STATE_OFFLINE:
+  case CALLS_ACCOUNT_STATE_ONLINE:
+    return TRUE;
+
+  default:
+    return FALSE;
+  }
+}
+
+
+/**
+ * calls_account_state_reason_is_for_ui:
+ * @reason: a #CallsAccountStateReason
+ *
+ * Helper function to decide which account states reasons are important.
+ * Is used f.e. to decide if message should be shown to the user.
+ *
+ * Returns: %TRUE if account state reason is considered important, %FALSE otherwise
+ */
+gboolean
+calls_account_state_reason_is_for_ui (CallsAccountStateReason reason)
+{
+  switch (reason) {
+  case CALLS_ACCOUNT_STATE_REASON_NO_CREDENTIALS:
+  case CALLS_ACCOUNT_STATE_REASON_CONNECTION_TIMEOUT:
+  case CALLS_ACCOUNT_STATE_REASON_CONNECTION_DNS_ERROR:
+  case CALLS_ACCOUNT_STATE_REASON_AUTHENTICATION_FAILURE:
+  case CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR:
+    return TRUE;
+
+  default:
+    return FALSE;
+  }
 }

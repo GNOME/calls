@@ -109,5 +109,7 @@ const char       *calls_account_state_reason_to_string        (CallsAccountState
 void              calls_account_emit_message_for_state_change (CallsAccount           *account,
                                                                CallsAccountState       new_state,
                                                                CallsAccountStateReason reason);
+gboolean          calls_account_state_is_for_ui               (CallsAccountState state);
+gboolean          calls_account_state_reason_is_for_ui        (CallsAccountStateReason reason);
 
 G_END_DECLS
