@@ -452,17 +452,24 @@ sip_r_register (int              status,
       g_debug ("Own IP as reported by the registrar: %s", origin->own_ip);
     }
 
+  } else if (status == 100) {
+    /* nothing to do; request authorized by cache */
   } else if (status == 401 || status == 407) {
     sip_authenticate (origin, nh, sip);
 
   } else if (status == 403) {
-    g_warning ("wrong credentials?");
+    g_debug ("REGISTER denied: Probably using wrong credentials");
     change_state (origin,
                   CALLS_ACCOUNT_STATE_OFFLINE,
                   CALLS_ACCOUNT_STATE_REASON_AUTHENTICATION_FAILURE);
 
   } else if (status == 904) {
-    g_warning ("unmatched challenge");
+    g_warning ("REGISTER: unmatched challenge");
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_ERROR,
+                  CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
+  } else {
+    g_warning ("REGISTER: %d %s", status, phrase);
     change_state (origin,
                   CALLS_ACCOUNT_STATE_ERROR,
                   CALLS_ACCOUNT_STATE_REASON_INTERNAL_ERROR);
@@ -487,6 +494,8 @@ sip_r_unregister (int              status,
     change_state (origin,
                   CALLS_ACCOUNT_STATE_OFFLINE,
                   CALLS_ACCOUNT_STATE_REASON_DISCONNECTED);
+  } else if (status == 100) {
+    /* nothing to do; request authorized by cache */
   } else {
     g_warning ("Unregisterung unsuccessful: %03d %s", status, phrase);
     change_state (origin,
@@ -818,13 +827,15 @@ sip_callback (nua_event_t   event,
     break;
 
   default:
-    /* unknown event -> print out error message */
-    g_warning ("unknown event %d: %03d %s",
-               event,
-               status,
-               phrase);
-    g_warning ("printing tags");
-    tl_print (stdout, "", tags);
+    /* unknown event */
+    g_debug ("unknown event %d: %03d %s",
+             event,
+             status,
+             phrase);
+    if (tags && tags[0].t_tag != NULL) {
+      g_debug ("printing tags");
+      tl_print (stdout, "", tags);
+    }
     break;
   }
 }
