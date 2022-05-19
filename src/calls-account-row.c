@@ -74,7 +74,12 @@ on_account_state_changed (CallsAccountRow *self)
 {
   CallsAccountState state = calls_account_get_state (self->account);
 
+  g_debug ("Account (%s) state changed: %s",
+           calls_origin_get_name (CALLS_ORIGIN (self->account)),
+           calls_account_state_to_string (state));
+
   gtk_switch_set_active (self->online_switch, state == CALLS_ACCOUNT_STATE_ONLINE);
+  gtk_switch_set_state (self->online_switch, state == CALLS_ACCOUNT_STATE_ONLINE);
 }
 
 static void
@@ -88,15 +93,24 @@ on_edit_clicked (CallsAccountRow *self)
 }
 
 
-static void
-on_online_switched (CallsAccountRow *self)
+static gboolean
+on_online_switched (GtkSwitch *widget,
+                    gboolean   online,
+                    gpointer   user_data)
 {
-  gboolean online;
+  CallsAccountRow *self;
 
-  g_assert (CALLS_IS_ACCOUNT_ROW (self));
+  g_assert (CALLS_IS_ACCOUNT_ROW (user_data));
 
-  online = gtk_switch_get_active (self->online_switch);
+  self = CALLS_ACCOUNT_ROW (user_data);
+
+  g_debug ("Trying to go %sline with account %s",
+           online ? "on" : "off",
+           calls_origin_get_name (CALLS_ORIGIN (self->account)));
+
   calls_account_go_online (self->account, online);
+
+  return TRUE;
 }
 
 

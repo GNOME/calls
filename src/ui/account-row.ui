@@ -21,7 +21,7 @@
         <property name="valign">center</property>
         <property name="visible">True</property>
         <property name="active">False</property>
-        <signal name="notify::active" handler="on_online_switched" swapped="yes"/>
+        <signal name="state-set" handler="on_online_switched" swapped="no"/>
       </object>
     </child>
 
