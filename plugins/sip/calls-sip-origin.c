@@ -466,7 +466,10 @@ sip_r_register (int              status,
     change_state (origin,
                   CALLS_ACCOUNT_STATE_OFFLINE,
                   CALLS_ACCOUNT_STATE_REASON_AUTHENTICATION_FAILURE);
-
+  } else if (status == 503) {
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_OFFLINE,
+                  CALLS_ACCOUNT_STATE_REASON_CONNECTION_DNS_ERROR);
   } else if (status == 904) {
     g_warning ("REGISTER: unmatched challenge");
     change_state (origin,
@@ -500,6 +503,10 @@ sip_r_unregister (int              status,
                   CALLS_ACCOUNT_STATE_REASON_DISCONNECTED);
   } else if (status == 100) {
     /* nothing to do; request authorized by cache */
+  } else if (status == 503) {
+    change_state (origin,
+                  CALLS_ACCOUNT_STATE_OFFLINE,
+                  CALLS_ACCOUNT_STATE_REASON_CONNECTION_DNS_ERROR);
   } else {
     g_warning ("Unregisterung unsuccessful: %03d %s", status, phrase);
     change_state (origin,
