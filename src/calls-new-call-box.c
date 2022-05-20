@@ -74,7 +74,7 @@ get_selected_origin (CallsNewCallBox *self)
   if (model && index >= 0)
     origin = g_list_model_get_item (model, index);
 
-  return origin;
+  return g_steal_pointer (&origin);
 }
 
 
@@ -97,8 +97,8 @@ get_origin (CallsNewCallBox *self,
       return NULL;
 
     origin = g_list_model_get_item (model, 0);
-    return origin;
 
+    return g_steal_pointer (&origin);
   } else {
     return get_selected_origin (self);
   }
@@ -400,7 +400,7 @@ void
 calls_new_call_box_dial (CallsNewCallBox *self,
                          const gchar     *target)
 {
-  CallsOrigin *origin;
+  g_autoptr (CallsOrigin) origin = NULL;
 
   g_return_if_fail (CALLS_IS_NEW_CALL_BOX (self));
   g_return_if_fail (target != NULL);
