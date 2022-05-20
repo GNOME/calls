@@ -24,11 +24,11 @@
 
 #define G_LOG_DOMAIN "CallsNewCallBox"
 
-#include "calls-new-call-box.h"
-#include "calls-ussd.h"
 #include "calls-main-window.h"
 #include "calls-manager.h"
+#include "calls-new-call-box.h"
 #include "calls-settings.h"
+#include "calls-ussd.h"
 
 #include <glib/gi18n.h>
 #include <handy.h>
