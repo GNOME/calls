@@ -1514,12 +1514,6 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_CAN_TEL, props[PROP_CAN_TEL]);
 
-  g_object_class_override_property (object_class, PROP_ACC_STATE, "account-state");
-  props[PROP_ACC_STATE] = g_object_class_find_property (object_class, "account-state");
-
-  g_object_class_override_property (object_class, PROP_ACC_ADDRESS, "address");
-  props[PROP_ACC_ADDRESS] = g_object_class_find_property (object_class, "address");
-
 #define IMPLEMENTS(ID, NAME) \
   g_object_class_override_property (object_class, ID, NAME);    \
   props[ID] = g_object_class_find_property(object_class, NAME);
@@ -1528,6 +1522,8 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
   IMPLEMENTS (PROP_NAME, "name");
   IMPLEMENTS (PROP_CALLS, "calls");
   IMPLEMENTS (PROP_COUNTRY_CODE, "country-code");
+  IMPLEMENTS (PROP_ACC_STATE, "account-state");
+  IMPLEMENTS (PROP_ACC_ADDRESS, "address");
 
 #undef IMPLEMENTS
 }
