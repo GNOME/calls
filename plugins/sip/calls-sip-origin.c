@@ -883,6 +883,8 @@ setup_nua (CallsSipOrigin *self)
   self->address = g_strconcat (self->user, "@", self->host, NULL);
   from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
 
+  g_object_notify_by_pspec(G_OBJECT (self), props[PROP_ACC_ADDRESS]);
+
   use_sips = check_sips (from_str);
   use_ipv6 = check_ipv6 (self->host);
 
@@ -1637,6 +1639,8 @@ calls_sip_origin_set_credentials (CallsSipOrigin *self,
   self->port = port;
 
   self->can_tel = can_tel;
+
+  update_name (self);
 
   recreate_sip (self);
 }
