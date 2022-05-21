@@ -63,7 +63,6 @@ struct _CallsAccountRow {
   /* UI elements */
   HdyAvatar            *avatar;
   GtkSwitch            *online_switch;
-  GtkButton            *edit_btn;
 };
 
 G_DEFINE_TYPE (CallsAccountRow, calls_account_row, HDY_TYPE_ACTION_ROW)
@@ -81,17 +80,6 @@ on_account_state_changed (CallsAccountRow *self)
   gtk_switch_set_active (self->online_switch, state == CALLS_ACCOUNT_STATE_ONLINE);
   gtk_switch_set_state (self->online_switch, state == CALLS_ACCOUNT_STATE_ONLINE);
 }
-
-static void
-on_edit_clicked (CallsAccountRow *self)
-{
-  /** CallsAccountOverview connects to this signal to show
-   *  the window containing the account providers widget.
-   *  See calls_account_provider_get_account_widget()
-   */
-  g_signal_emit (self, signals[EDIT_CLICKED], 0, self->provider, self->account);
-}
-
 
 static gboolean
 on_online_switched (GtkSwitch *widget,
@@ -225,9 +213,7 @@ calls_account_row_class_init (CallsAccountRowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/account-row.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsAccountRow, avatar);
   gtk_widget_class_bind_template_child (widget_class, CallsAccountRow, online_switch);
-  gtk_widget_class_bind_template_child (widget_class, CallsAccountRow, edit_btn);
 
-  gtk_widget_class_bind_template_callback (widget_class, on_edit_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_online_switched);
 }
 
