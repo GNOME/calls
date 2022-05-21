@@ -47,12 +47,6 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-enum {
-  EDIT_CLICKED,
-  N_SIGNALS
-};
-static guint signals[N_SIGNALS];
-
 struct _CallsAccountRow {
   HdyActionRow          parent;
 
@@ -158,6 +152,10 @@ calls_account_row_get_property (GObject    *object,
     g_value_set_boolean (value, calls_account_row_get_online (self));
     break;
 
+  case PROP_PROVIDER:
+    g_value_set_object (value, calls_account_row_get_account_provider (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -174,23 +172,12 @@ calls_account_row_class_init (CallsAccountRowClass *klass)
   object_class->set_property = calls_account_row_set_property;
   object_class->get_property = calls_account_row_get_property;
 
-  signals[EDIT_CLICKED] =
-    g_signal_new ("edit-clicked",
-                  CALLS_TYPE_ACCOUNT_ROW,
-                  G_SIGNAL_RUN_FIRST,
-                  0,
-                  NULL, NULL, NULL,
-                  G_TYPE_NONE,
-                  2,
-                  CALLS_TYPE_ACCOUNT_PROVIDER,
-                  CALLS_TYPE_ACCOUNT);
-
   props[PROP_PROVIDER] =
     g_param_spec_object ("provider",
                          "Provider",
                          "The provider of the account this row represents",
                          CALLS_TYPE_ACCOUNT_PROVIDER,
-                         G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY |
                          G_PARAM_STATIC_STRINGS);
 
   props[PROP_ACCOUNT] =
@@ -204,7 +191,7 @@ calls_account_row_class_init (CallsAccountRowClass *klass)
   props[PROP_ONLINE] =
     g_param_spec_boolean ("online",
                           "online",
-                          "The state of the online switch",
+                          "If the account is online",
                           FALSE,
                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
@@ -266,4 +253,13 @@ calls_account_row_get_account (CallsAccountRow *self)
   g_return_val_if_fail (CALLS_IS_ACCOUNT_ROW (self), NULL);
 
   return self->account;
+}
+
+
+CallsAccountProvider *
+calls_account_row_get_account_provider (CallsAccountRow *self)
+{
+  g_return_val_if_fail (CALLS_IS_ACCOUNT_ROW (self), NULL);
+
+  return self->provider;
 }

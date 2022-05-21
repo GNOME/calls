@@ -56,7 +56,7 @@ struct _CallsAccountOverview {
   GtkWidget                *intro;
   GtkWidget                *overview;
   GtkWidget                *add_btn;
-  GtkWidget                *add_row;
+  GtkListBoxRow            *add_row;
 
   /* The window where we add the account providers widget */
   GtkWindow                *account_window;
@@ -135,37 +135,51 @@ attach_account_widget (CallsAccountOverview *self,
 
 
 static void
-on_add_account_clicked (CallsAccountOverview *self)
+on_account_row_activated (GtkListBox           *box,
+                          GtkListBoxRow        *row,
+                          CallsAccountOverview *self)
 {
+  CallsAccount *account = NULL;
+  CallsAccountRow *acc_row;
   CallsAccountProvider *provider;
   GtkWidget *widget;
 
-  /* For now we only have a single AccountProvider */
-  provider = CALLS_ACCOUNT_PROVIDER (self->providers->data);
+  g_assert (GTK_IS_LIST_BOX_ROW (row) );
+  g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
 
-  widget = calls_account_provider_get_account_widget (provider);
+  if (row == self->add_row) {
+    /* TODO this needs changing if we ever have multiple account providers */
+    provider = CALLS_ACCOUNT_PROVIDER (self->providers->data);
+    widget = calls_account_provider_get_account_widget (provider);
+
+  } else if (CALLS_IS_ACCOUNT_ROW (row)) {
+    acc_row = CALLS_ACCOUNT_ROW (row);
+
+    provider = calls_account_row_get_account_provider (acc_row);
+    widget = calls_account_provider_get_account_widget (provider);
+    account = calls_account_row_get_account (acc_row);
+
+  } else {
+    g_warning ("Unknown type of row activated!");
+    g_assert_not_reached ();
+    return;
+  }
+
   attach_account_widget (self, widget);
 
-  calls_account_provider_add_new_account (provider);
+  if (account)
+    calls_account_provider_edit_account (provider, account);
+  else
+    calls_account_provider_add_new_account (provider);
 
   gtk_window_present (self->account_window);
 }
 
 
 static void
-on_edit_account_clicked (CallsAccountRow      *row,
-                         CallsAccountProvider *provider,
-                         CallsAccount         *account,
-                         CallsAccountOverview *self)
+on_add_account_clicked (CallsAccountOverview *self)
 {
-  GtkWidget *widget;
-
-  widget = calls_account_provider_get_account_widget (provider);
-  attach_account_widget (self, widget);
-
-  calls_account_provider_edit_account (provider, account);
-
-  gtk_window_present (self->account_window);
+  on_account_row_activated (NULL, self->add_row, self);
 }
 
 
@@ -220,10 +234,6 @@ update_account_list (CallsAccountOverview *self)
       g_signal_handlers_disconnect_by_data (account, self);
       g_signal_connect (account, "message",
                         G_CALLBACK (on_account_message),
-                        self);
-
-      g_signal_connect (account_row, "edit-clicked",
-                        G_CALLBACK (on_edit_account_clicked),
                         self);
 
       gtk_list_box_insert (GTK_LIST_BOX (self->overview),
@@ -286,6 +296,7 @@ calls_account_overview_class_init (CallsAccountOverviewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, in_app_notification);
 
   gtk_widget_class_bind_template_callback (widget_class, on_add_account_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_account_row_activated);
 }
 
 

@@ -42,5 +42,6 @@ gboolean              calls_account_row_get_online           (CallsAccountRow *s
 void                  calls_account_row_set_online           (CallsAccountRow *self,
                                                               gboolean         online);
 CallsAccount         *calls_account_row_get_account          (CallsAccountRow *self);
+CallsAccountProvider *calls_account_row_get_account_provider (CallsAccountRow *self);
 
 G_END_DECLS
