@@ -68,6 +68,7 @@ struct _CallsSipAccountWidget {
   HdyComboRow      *protocol;
   GListStore       *protocols_store; /* bound model for protocol HdyComboRow */
   GtkSwitch        *tel_switch;
+  GtkSwitch        *auto_connect_switch;
 
 
   /* properties */
@@ -303,6 +304,7 @@ clear_form (CallsSipAccountWidget *self)
   gtk_entry_set_text (self->port, "0");
   hdy_combo_row_set_selected_index (self->protocol, 0);
   gtk_switch_set_state (self->tel_switch, FALSE);
+  gtk_switch_set_state (self->auto_connect_switch, TRUE);
 
   self->origin = NULL;
 
@@ -326,6 +328,7 @@ edit_form (CallsSipAccountWidget *self,
   gint port;
   guint protocol_index;
   gboolean can_tel;
+  gboolean auto_connect;
 
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
@@ -346,6 +349,7 @@ edit_form (CallsSipAccountWidget *self,
                 "port", &port,
                 "transport-protocol", &protocol,
                 "can-tel", &can_tel,
+                "auto-connect", &auto_connect,
                 NULL);
 
   port_str = g_strdup_printf ("%d", port);
@@ -366,6 +370,7 @@ edit_form (CallsSipAccountWidget *self,
   gtk_entry_set_text (self->port, port_str);
   hdy_combo_row_set_selected_index (self->protocol, protocol_index);
   gtk_switch_set_state (self->tel_switch, can_tel);
+  gtk_switch_set_state (self->auto_connect_switch, auto_connect);
 
   gtk_widget_set_sensitive (self->apply_btn, FALSE);
 
@@ -441,7 +446,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     get_selected_protocol (self),
                                     get_port (self),
                                     gtk_switch_get_state (self->tel_switch),
-                                    TRUE);
+                                    gtk_switch_get_state (self->auto_connect_switch));
 
   update_header (self);
   calls_sip_provider_save_accounts_to_disk (self->provider);
@@ -546,6 +551,7 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, port);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, protocol);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, tel_switch);
+  gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, auto_connect_switch);
 
   gtk_widget_class_bind_template_callback (widget_class, on_login_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
