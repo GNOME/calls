@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-24 13:16+0000\n"
-"PO-Revision-Date: 2022-05-24 17:06+0300\n"
+"POT-Creation-Date: 2022-05-24 21:37+0000\n"
+"PO-Revision-Date: 2022-05-25 07:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -103,6 +103,16 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
 "Бажані звукові кодеки, якими слід скористатися для інтернет-викликів (якщо "
 "доступні)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+"Визначає, чи слід дозволяти використання SDES для SRTP без передавання даних"
+" каналом TLS"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "Встановіть, якщо хочете дозволити обмін ключами без шифрування."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -520,11 +530,15 @@ msgstr "Порт"
 msgid "Transport"
 msgstr "Спосіб передавання"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Шифрування мультимедіа"
+
+#: plugins/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Використовувати для дзвінків"
 
-#: plugins/sip/sip-account-widget.ui:207
+#: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "З'єднуватись автоматично"
 
