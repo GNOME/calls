@@ -1,3 +1,32 @@
+Calls 43.alpha.1
+----------------
+Released: 25 May 2022
+
+New features:
+=============
+* SIP plugin can now be used for SRTP (SDES key exchange).
+  By default it can only be used when using TLS transport.
+  If you want to use SRTP without TLS, you must set the newly added
+  "always-allow-sdes" gsetting
+
+
+Maybe noteworthy:
+=================
+* UI tweaks for SIP account settings
+* Fixed gsettings binding cycle
+
+Translation updates:
+====================
+ - Georgian (Zurab Kargareteli)
+ - Dutch (Nathan Follens)
+ - Portuguese (Hugo Carvalho)
+ - Spanish (Pablo Correa Gómez)
+ - Ukrainian (Yuri Chornoivan)
+ - Swedish (Anders Jonsson)
+
+The detailed changes can be found in debian/changelog
+
+
 Calls 43.alpha.0
 ----------------
 Released: 25 April 2022

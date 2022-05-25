@@ -1,8 +1,63 @@
 gnome-calls (43~alpha.1) UNRELEASED; urgency=medium
 
-  * UNRELEASED
+  [ Evangelos Ribeiro Tzaras ]
+  * dir-locals: Treat G_DEFINE_FINAL_* macros as including a semicolon
+  * uncrustify: Treat g_auto* as types
+  * sip: call: Fix header alignment
+  * sip: origin: Remove unused variable
+  * meson: Enable warning for unused variables
+  * sip: call: Defer setting up codecs for pipeline until activated
+  * Fix header alignment
+  * settings: Convert to the singleton pattern
+  * settings: Break settings binding cycle
+  * tests: Add testing for sideeffects of using CallsSettings
+  * Update libcall-ui to v0.0.3
+  * account-row: Fix header alignments
+  * sip-origin: Codestyle
+  * sip: origin: Tweak debugging
+  * sip: origin: Notify on state change
+  * account-row: Use delayed state changes for GtkSwitch
+  * sip: origin: Always notify state changes when relevant to the UI
+  * sip: origin: Don't treat DNS failures as errors
+  * account-widgets: Conform to style
+  * account-widgets: Make row activatable
+  * sip-origin: Notify on account property updates
+  * sip: account-widget: Include option for automatically connecting
+  * Add editorconfig
+  * sip: account-widget: Warn when trying to find unknown protocol
+  * dbus-manager: Remove unused variables
+  * sip: Add srtp-utilities
+  * sip: media-pipeline: Use cryptographic parameters
+  * sip: media-pipeline: Uncrustify struct members
+  * sip: Add SDP crypto context class
+  * sip: media-manager: Include crypto attributes for capabilities
+  * sip: Allow specifying if media encryption is desired
+  * call: Add "encrypted" property
+  * dbus-manager: Bind encrypted property
+  * schema: Add setting allowing to use SDES
+  * sip: account-widget: Add media encryption option
+  * sip: Store media encryption account preference to disk
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 26 Apr 2022 07:13:23 +0200
+  [ Zurab Kargareteli ]
+  * Add Georgian translation
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Pablo Correa Gómez ]
+  * Update Spanish translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+  * Update Ukrainian translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Wed, 25 May 2022 20:15:47 +0200
 
 gnome-calls (43~alpha.0) byzantium; urgency=medium
 
