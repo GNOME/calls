@@ -21,4 +21,6 @@ src/ui/new-call-header-bar.ui
 plugins/mm/calls-mm-call.c
 plugins/mm/calls-mm-provider.c
 plugins/ofono/calls-ofono-provider.c
+plugins/sip/calls-sip-account-widget.c
+plugins/sip/calls-sip-call.c
 plugins/sip/sip-account-widget.ui
