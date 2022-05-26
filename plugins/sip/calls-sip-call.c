@@ -120,7 +120,7 @@ calls_sip_call_answer (CallsCall *call)
 
     if (!calls_sdp_crypto_context_generate_answer (self->sdp_crypto_context)) {
       g_warning ("Could not generate answer for crypto key exchange. Aborting!");
-      CALLS_EMIT_MESSAGE(self, _("Cryptographic key exchange unsucessful"), GTK_MESSAGE_WARNING);
+      CALLS_EMIT_MESSAGE(self, _("Cryptographic key exchange unsuccessful"), GTK_MESSAGE_WARNING);
       /* XXX this should (probably) never be reached */
       nua_respond (self->nh, 488, "Not acceptable here", TAG_END ());
       return;
