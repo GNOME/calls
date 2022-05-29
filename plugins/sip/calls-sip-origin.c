@@ -590,9 +590,21 @@ sip_i_state (int              status,
   }
 
   if (r_sdp) {
-    g_autoptr (GList) codecs =
+    g_autoptr (GList) remote_codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
+    GList *preferred_codecs = calls_sip_media_manager_codec_candidates (origin->media_manager);
+    g_autoptr (GList) codecs = NULL;
+    GList *node;
+
+    for (node = remote_codecs; node != NULL; node = node->next) {
+      MediaCodecInfo *codec = node->data;
+      if (g_list_find (preferred_codecs, codec)) {
+        g_debug ("Found common codec: %s", codec->name);
+        codecs = g_list_append (codecs, codec);
+      }
+    }
+
     g_autoptr (CallsSdpCryptoContext) ctx = NULL;
     const char *session_ip = NULL;
     const char *media_ip = NULL;
