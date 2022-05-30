@@ -1,4 +1,20 @@
-gnome-calls (43~alpha.1) UNRELEASED; urgency=medium
+gnome-calls (43~beta.0) UNRELEASED; urgency=medium
+
+  [ Piotr Drąg ]
+  * Update POTFILES.in
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 30 May 2022 11:24:33 +0200
+
+gnome-calls (43~alpha.1) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]
   * dir-locals: Treat G_DEFINE_FINAL_* macros as including a semicolon
