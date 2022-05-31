@@ -44,3 +44,19 @@ gnome.gtkdoc('calls',
             install: true)
 
 endif
+
+rst2man = find_program('rst2man', 'rst2man.py', required: false)
+if get_option('manpages') and not rst2man.found()
+   error('No rst2man found, but man pages were explicitly enabled')
+endif
+
+if get_option('manpages') and rst2man.found()
+  custom_target('man-gnome-calls',
+    input: 'gnome-calls.rst',
+    output: 'gnome-calls.1',
+    command: [rst2man, '@INPUT@'],
+    capture: true,
+    install: true,
+    install_dir: get_option('mandir') / 'man1',
+  )
+endif

@@ -5,3 +5,7 @@ option('gtk_doc',
 option('tests',
        type: 'boolean', value: true,
        description: 'Whether to compile unit tests')
+
+option('manpages',
+       type: 'boolean', value: true,
+       description: 'Whether to generate man pages')
