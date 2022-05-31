@@ -29,6 +29,7 @@ Build-Depends:
  meson,
  modemmanager-dev,
  pkg-config,
+ python3-docutils,
  valac,
  xauth,
  xvfb,
