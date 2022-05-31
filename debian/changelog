@@ -1,9 +1,17 @@
-gnome-calls (43~beta.0) UNRELEASED; urgency=medium
+gnome-calls (43~alpha.2) UNRELEASED; urgency=medium
+
+  [Anders Jonsson]
+  * Update Swedish translation
+
+  [Yosef Or Boczko]
+  * Update Hebrew Translation
 
   [ Piotr Drąg ]
   * Update POTFILES.in
 
   [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+  * Fix minor typo
   * Update Ukrainian translation
 
   [ Vittorio Monti ]
@@ -12,7 +20,13 @@ gnome-calls (43~beta.0) UNRELEASED; urgency=medium
   [ Daniel Șerbănescu ]
   * Update Romanian translation
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 30 May 2022 11:24:33 +0200
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Post release bump
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 31 May 2022 16:46:09 +0200
 
 gnome-calls (43~alpha.1) byzantium; urgency=medium
 
