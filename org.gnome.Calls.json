@@ -312,6 +312,9 @@
             "name" : "calls",
             "builddir" : "true",
             "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dmanpages=false"
+            ],
             "sources" : [
                 {
                     "type" : "git",
