@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-24 13:16+0000\n"
-"PO-Revision-Date: 2022-05-24 15:30+0200\n"
+"POT-Creation-Date: 2022-05-31 08:11+0000\n"
+"PO-Revision-Date: 2022-05-31 20:37+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -98,6 +98,14 @@ msgstr "Ljudkodekar att använda för VoIP-samtal i föredragen ordning"
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "Föredragna ljudkodekar att använda för VoIP-samtal (om tillgängliga)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Huruvida SDES ska få användas för SRTP utan TLS som transport"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "Ställ in till true (sant) om du vill tillåta nyckelutbyte i klartext."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -470,6 +478,19 @@ msgstr "Initierad"
 msgid "DBus unavailable"
 msgstr "DBus ej tillgängligt"
 
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Ingen kryptering"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Tvinga kryptering"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Kryptografisk nyckelutväxling misslyckades"
+
 #: plugins/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "Lägg till konto"
@@ -518,11 +539,15 @@ msgstr "Port"
 msgid "Transport"
 msgstr "Transport"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Mediakryptering"
+
+#: plugins/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Använd för telefonsamtal"
 
-#: plugins/sip/sip-account-widget.ui:207
+#: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Anslut automatiskt"
 
