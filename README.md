@@ -42,15 +42,39 @@ run script which sets up the environment for you:
 
     _build/run
 
-## Debugging
+*Note:* Invoking the run script might terminate after a few seconds and
+instead only activates an already running instance of `gnome-calls`.
+In this case you want to `killall gnome-calls` until it says `process not found`
+(you have to kill more than once because the process might automatically get restarted)
+and only then use the run script.
 
-When trying to understand issues in applications debugging logs are invaluable
-tools. Enable debug logging by invoking Calls with `-vvv` arguments.
+### Debugging
 
-In the case of crashes you should provide a backtrace where possible.
+We want to encourage users to submit high quality bug reports.
+We understand that it can be daunting to make sense of a misbehaving application
+so following are some tips that can help to pin down the root of a problem.
+
+Enable verbose logging by invoking Calls with `-vvv` argument
+(i.e. `_build/run -vvv`).
+Observe the output and check for anything suspicious.
+
+If you have found something weird in the logs
+you can`grep` the sources to find where the warning is emitted
+and - if you're so inclined - start exploring from there:
+- check surrounding code
+- add debugging output
+- set breakpoints and inspect stack traces and local variables
+
+You can also easily run under `gdb` if you invoke like
+
+    CALLS_GDB=1 _build/run -vvv
+
+In the case of crashes you should provide a backtrace ideally with debugging symbols
+(for debian based distros you have to add a suitable debugging suite to your apt sources; see link below).
+
 If your system is using systemd you may find
 [this guide](https://developer.puri.sm/Librem5/Development_Environment/Boards/Troubleshooting/Debugging.html)
-useful.
+useful: With `coredumpctl` coredumps can easily be analyzed at a later date.
 
 For backend specific debugging, please see the sections below.
 
