@@ -590,12 +590,17 @@ sip_i_state (int              status,
   }
 
   if (r_sdp) {
+    g_autoptr (CallsSdpCryptoContext) ctx = NULL;
     g_autoptr (GList) remote_codecs =
       calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
                                                    r_sdp->sdp_media);
-    GList *preferred_codecs = calls_sip_media_manager_codec_candidates (origin->media_manager);
     g_autoptr (GList) codecs = NULL;
     GList *node;
+    GList *preferred_codecs = calls_sip_media_manager_codec_candidates (origin->media_manager);
+    const char *session_ip = NULL;
+    const char *media_ip = NULL;
+    int rtp_port;
+    int rtcp_port = 0;
 
     for (node = remote_codecs; node != NULL; node = node->next) {
       MediaCodecInfo *codec = node->data;
@@ -604,12 +609,6 @@ sip_i_state (int              status,
         codecs = g_list_append (codecs, codec);
       }
     }
-
-    g_autoptr (CallsSdpCryptoContext) ctx = NULL;
-    const char *session_ip = NULL;
-    const char *media_ip = NULL;
-    int rtp_port;
-    int rtcp_port = 0;
 
     g_debug ("Remote SDP was set to:\n%s", r_sdp_str);
 
