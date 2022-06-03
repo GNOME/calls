@@ -956,7 +956,7 @@ setup_nua (CallsSipOrigin *self)
   self->address = g_strconcat (self->user, "@", self->host, NULL);
   from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
 
-  g_object_notify_by_pspec(G_OBJECT (self), props[PROP_ACC_ADDRESS]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_ADDRESS]);
 
   use_sips = check_sips (from_str);
   use_ipv6 = check_ipv6 (self->host);
