@@ -309,10 +309,11 @@ open_tel_uri (CallsApplication *self,
               const char       *uri)
 {
   const char *number = NULL;
+  g_autofree char* uri_str = g_uri_unescape_string(uri, NULL);
 
   g_debug ("Opening tel URI `%s'", uri);
 
-  number = &uri[4]; // tel:NUMBER
+  number = &uri_str[4]; // tel:NUMBER
   if (!number || !*number) {
     g_autofree char *msg =
       g_strdup_printf (_("Tried dialing invalid tel URI `%s'"), uri);
