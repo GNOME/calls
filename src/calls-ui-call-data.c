@@ -402,7 +402,7 @@ on_delay_set_active (CallsUiCallData *self)
 }
 
 
-#define DELAY_UI_MS 15
+#define DELAY_UI_MS 100
 static void
 calls_ui_call_data_constructed (GObject *object)
 {
