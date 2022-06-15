@@ -15,3 +15,4 @@ Categories=Network;GNOME;GTK;Telephony;
 MimeType=x-scheme-handler/tel;x-scheme-handler/sip;x-scheme-handler/sips
 X-Purism-FormFactor=Workstation;Mobile;
 X-GNOME-UsesNotifications=true
+X-Phosh-UsesFeedback=true
