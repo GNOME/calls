@@ -532,6 +532,8 @@ state_changed_cb (CallsRecordStore *self,
     g_object_get_data (call_obj, "calls-call-record");
   CallsCallRecordState new_rec_state, old_rec_state;
 
+  g_debug ("Call state changed from %d to %d",
+           old_state, new_state);
 
   /* Check whether the call is recorded */
   if (!record) {
