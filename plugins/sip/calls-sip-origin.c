@@ -480,6 +480,9 @@ sip_r_register (int              status,
       nua_get_params (nua, TAG_ANY (), TAG_END ());
 
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
+      if (g_strcmp0 (origin->own_ip, sip->sip_contact->m_url->url_host) == 0)
+        return;
+
       g_free (origin->own_ip);
       origin->own_ip = g_strdup (sip->sip_contact->m_url->url_host);
       g_debug ("Own IP as reported by the registrar: %s", origin->own_ip);
