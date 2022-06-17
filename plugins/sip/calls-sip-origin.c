@@ -474,7 +474,10 @@ sip_r_register (int              status,
     change_state (origin,
                   CALLS_ACCOUNT_STATE_ONLINE,
                   CALLS_ACCOUNT_STATE_REASON_CONNECTED);
-    nua_get_params (nua, TAG_ANY (), TAG_END ());
+
+    /* Fix for https://github.com/freeswitch/sofia-sip/issues/25 */
+    if (!origin->contact_header)
+      nua_get_params (nua, TAG_ANY (), TAG_END ());
 
     if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
       g_free (origin->own_ip);
