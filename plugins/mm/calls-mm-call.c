@@ -70,7 +70,7 @@ static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
 #define row(ENUMVALUE,DESCRIPTION)              \
   { MM_CALL_STATE_REASON_##ENUMVALUE, DESCRIPTION }
 
-  row (UNKNOWN,              N_("Call disconnected (unknown reason)")),
+  row (UNKNOWN,              N_("Unknown reason")),
   row (OUTGOING_STARTED,     N_("Outgoing call started")),
   row (INCOMING_NEW,         N_("New incoming call")),
   row (ACCEPTED,             N_("Call accepted")),
@@ -114,7 +114,7 @@ set_disconnect_reason (CallsMMCall      *self,
 struct CallsMMCallStateMap {
   MMCallState    mm;
   CallsCallState calls;
-  const gchar   *name;
+  const gchar   *desc;
 };
 
 static const struct CallsMMCallStateMap STATE_MAP[] = {
@@ -138,23 +138,40 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
 
 static void
 state_changed_cb (CallsMMCall      *self,
-                  MMCallState       old,
-                  MMCallState       mm_new,
+                  MMCallState       old_state,
+                  MMCallState       new_state,
                   MMCallStateReason reason)
 {
-  const struct CallsMMCallStateMap *map_row;
+  const struct CallsMMCallStateMap *state_map_row;
+  const struct CallsMMCallStateReasonMap *reason_map_row;
+  const char *state_str = "state unmatched";
+  const char *reason_str = "reason unmatched";
 
-  if (mm_new == MM_CALL_STATE_TERMINATED)
+  if (new_state == MM_CALL_STATE_TERMINATED)
     set_disconnect_reason (self, reason);
 
-  for (map_row = STATE_MAP; map_row->mm != -1; ++map_row) {
-    if (map_row->mm == mm_new) {
-      g_debug ("MM call state changed to `%s'",
-               map_row->name);
-      calls_call_set_state (CALLS_CALL (self), map_row->calls);
-      return;
+
+  for (state_map_row = STATE_MAP; state_map_row->mm != -1; state_map_row++) {
+    if (state_map_row->mm == new_state) {
+      state_str = state_map_row->desc;
+      break;
     }
   }
+  g_assert_cmpint (state_map_row->mm, !=, -1);
+
+  for (reason_map_row = STATE_REASON_MAP; reason_map_row->value != -1; reason_map_row++) {
+    if (reason_map_row->value == reason) {
+      reason_str = gettext (reason_map_row->desc);
+      break;
+    }
+  }
+  g_assert_cmpint (reason_map_row->value, !=, -1);
+
+  g_debug ("MM call '%s' changed state to `%s': %s",
+           mm_call_get_path (self->mm_call),
+           state_str,
+           reason_str);
+  calls_call_set_state (CALLS_CALL (self), state_map_row->calls);
 }
 
 
@@ -181,10 +198,12 @@ operation_cb (MMCall                      *mm_call,
 
   ok = data->finish_func (mm_call, res, &error);
   if (!ok) {
-    g_warning ("Error %s ModemManager call to `%s': %s",
+    g_warning ("Error %s MM call '%s': %s (domain: %s [%d])",
                data->desc,
-               calls_call_get_id (CALLS_CALL (data->self)),
-               error->message);
+               mm_call_get_path (mm_call),
+               error->message,
+               g_quark_to_string (error->domain),
+               error->code);
     CALLS_ERROR (data->self, error);
   }
 
@@ -263,13 +282,18 @@ constructed (GObject *object)
   CallsMMCall *self = CALLS_MM_CALL (object);
   MmGdbusCall *gdbus_call = MM_GDBUS_CALL (self->mm_call);
   MMCallState state;
+  MMCallDirection direction;
+  const char *number;
+  const char *path;
+  gboolean outgoing;
 
   g_signal_connect_swapped (gdbus_call, "notify::number",
                             G_CALLBACK (notify_id_cb), self);
   g_signal_connect_swapped (gdbus_call, "state-changed",
                             G_CALLBACK (state_changed_cb), self);
 
-  notify_id_cb (self, mm_call_get_number (self->mm_call));
+  number = mm_call_get_number (self->mm_call);
+  notify_id_cb (self, number);
 
   state = mm_call_get_state (self->mm_call);
   state_changed_cb (self,
@@ -277,10 +301,25 @@ constructed (GObject *object)
                     state,
                     mm_call_get_state_reason (self->mm_call));
 
+  direction = mm_call_get_direction (self->mm_call);
+  outgoing = direction == MM_CALL_DIRECTION_OUTGOING;
+
   /* Start outgoing call */
-  if (state == MM_CALL_STATE_UNKNOWN
-      && mm_call_get_direction (self->mm_call) == MM_CALL_DIRECTION_OUTGOING)
+  if (state == MM_CALL_STATE_UNKNOWN &&
+      outgoing)
     calls_mm_call_start_call (CALLS_CALL (self));
+
+  path = mm_call_get_path (self->mm_call);
+
+  if (direction == MM_CALL_DIRECTION_UNKNOWN)
+    g_debug ("New call (%s) with '%s'",
+             path, number);
+  else
+    g_debug ("New %s call (%s) %s %s",
+             outgoing ? "outgoing" : "incoming",
+             path,
+             outgoing ? "to" : "from",
+             number);
 
   G_OBJECT_CLASS (calls_mm_call_parent_class)->constructed (object);
 }
