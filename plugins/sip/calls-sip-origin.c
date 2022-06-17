@@ -467,9 +467,10 @@ sip_r_register (int              status,
                 sip_t const     *sip,
                 tagi_t           tags[])
 {
-  g_debug ("response to REGISTER: %03d %s", status, phrase);
-
   if (status == 200) {
+    if (origin->state == CALLS_ACCOUNT_STATE_ONLINE)
+      return;
+
     g_debug ("REGISTER successful");
     change_state (origin,
                   CALLS_ACCOUNT_STATE_ONLINE,
