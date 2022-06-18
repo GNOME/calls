@@ -1,26 +1,25 @@
 # Russian translation for calls.
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Deissson <lebami009@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-01-18 12:11+0300\n"
+"POT-Creation-Date: 2022-05-31 08:11+0000\n"
+"PO-Revision-Date: 2022-06-16 21:44+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Вызовы"
 
@@ -32,7 +31,7 @@ msgstr "Телефон"
 msgid "A phone dialer and call handler"
 msgstr "Телефонный номеронабиратель и обработчик вызовов"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
@@ -44,104 +43,202 @@ msgstr "Вызовы (демон)"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Телефонный номеронабиратель и обработчик вызовов (режим демона)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Совершайте телефонные и SIP-вызовы"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
 msgstr ""
-"Устройство для набора номера телефона и обработчик вызовов (режим демона)"
+"Вызовы - это простой, элегантный телефонный номеронабиратель и обработчик "
+"вызовов для GNOME. Его можно использовать с сотовым модемом для обычных "
+"телефонных вызовов, а также для VoIP-вызовов по протоколу SIP."
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Добавить Учетную Запись"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Установка вызова"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_Войти"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "История вызовов"
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Управление Учетной Записью"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Должны ли вызовы автоматически использовать источник по умолчанию"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Применить"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Код страны, сообщаемый модемом"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "_Удалить"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Код страны используется для поиска имени контакта"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Сервер"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Плагины для автоматической загрузки"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Отображать имя"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Эти плагины будут автоматически загружены при запуске приложения."
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Опцианально"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Аудиокодеки для VoIP-вызовов в порядке предпочтения"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "ID Пользователя"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Предпочтительные аудиокодеки для VoIP-вызовов (если доступны)"
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Пароль"
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+"Разрешить ли использование SDES для SRTP без TLS в качестве транспорта"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Порт"
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Установите значение true, если вы хотите разрешить обмен ключами открытым "
+"текстом."
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Транспорт"
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Состояние по умолчанию (неинициализированное)"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "Использовать для Телефонных Вызовов"
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Инициализация учетной записи…"
 
-#: src/calls-application.c:548
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Деинициализация учетной записи…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Подключение к серверу…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Учетная запись в сети"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Отключение от сервера…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Учетная запись не в сети"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Учетная запись столкнулась с ошибкой"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Причина не указана"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Начата инициализация"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Инициализация завершена"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Начата деинициализация"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Деинициализация завершена"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Учетные данные не установлены"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Запуск подключения"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Время ожидания соединения истекло"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Доменное имя не может быть разрешено"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Сервер не принял имя пользователя или пароль"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Подключение завершено"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Запуск отключения"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Отключение завершено"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Произошла внутренняя ошибка"
+
+#: src/calls-application.c:318
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Попытка набрать недопустимый телефонный URI `%s'"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:635
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Неизвестно как открыть `%s'"
 
-#: src/calls-application.c:679
+#: src/calls-application.c:689
 msgid "The name of the plugin to use as a call provider"
 msgstr "Имя плагина для использования в качестве поставщика вызовов"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:690
 msgid "PLUGIN"
 msgstr "ПЛАГИН"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:695
 msgid "Whether to present the main window on startup"
 msgstr "Показывать ли главное окно при запуске"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:701
 msgid "Dial a telephone number"
 msgstr "Набрать телефонный номер"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:702
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:707
 msgid "Enable verbose debug messages"
 msgstr "Включить подробные отладочные сообщения"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:713
 msgid "Print current version"
 msgstr "Вывести текущую версию"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Анонимный абонент"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -150,64 +247,52 @@ msgstr ""
 "%s\n"
 "вчера"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:123
 msgid "translator-credits"
-msgstr ""
-"Deissson <lebami009@gmail.com>, 2022\n"
-"Aleksandr Melman <alexmelman88@gmail.com>, 2022"
+msgstr "Aleksandr Melman <alexmelman88@gmail.com>, 2022"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr ""
-"Невозможно совершать вызовы: Нет доступного модема с поддержкой голосовой "
-"связи"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Невозможно совершать вызовы: Нет модема или учетной записи VoIP"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Невозможно совершать вызовы: Нет внутреннего сервиса"
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "Невозможно совершать вызовы: Плагин не загружен"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Невозможно совершать вызовы: Нет плагина"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Контакты"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
-msgstr "Панель набора номера"
+msgstr "Панель набора"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Недавние"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Пропущенный вызов"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущенный вызов от <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущенный вызов от %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Пропущенный вызов от неизвестного абонента"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Перезвонить"
 
@@ -225,29 +310,29 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Вы можете добавить учетную запись VoIP здесь. Это позволит вам совершать и "
+"Здесь вы можете добавить учетную запись VoIP. Это позволит вам совершать и "
 "принимать VoIP-вызовы с использованием протокола SIP. Эта функция все еще "
 "относительно новая и еще не завершена (т.е. нет зашифрованных носителей)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
-msgstr "_Добавить Учетную Запись"
+msgstr "_Добавить учетную запись"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Позвонить"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
-msgstr "_Удалить Вызов"
+msgstr "_Удалить вызов"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
-msgstr "_Скопировать номер"
+msgstr "_Копировать номер"
 
-#: src/ui/call-record-row.ui:113
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Добавить контакт"
 
@@ -257,11 +342,11 @@ msgstr "На удержании"
 
 #: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
-msgstr "Контактов Не Найдено"
+msgstr "Контакты не найдены"
 
 #: src/ui/history-box.ui:10
 msgid "No Recent Calls"
-msgstr "Нет Недавних Вызовов"
+msgstr "Нет недавних вызовов"
 
 #: src/ui/main-window.ui:105
 msgid "USSD"
@@ -281,7 +366,7 @@ msgstr "_Отправить"
 
 #: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
-msgstr "_VoIP Учетные Записи"
+msgstr "Учетные записи _VoIP"
 
 #: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
@@ -289,7 +374,7 @@ msgstr "_Сочетания клавиш"
 
 #: src/ui/main-window.ui:233
 msgid "_Help"
-msgstr "_Помощь"
+msgstr "_Справка"
 
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
@@ -297,11 +382,11 @@ msgstr "_О Программе"
 
 #: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
-msgstr "Введите VoIP-адрес"
+msgstr "Ввести VoIP-адрес"
 
 #: src/ui/new-call-box.ui:58
 msgid "Enter a number"
-msgstr "Введите номер"
+msgstr "Ввести номер"
 
 #: src/ui/new-call-box.ui:97
 msgid "Dial"
@@ -322,3 +407,141 @@ msgstr "Новый вызов"
 #: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Назад"
+
+#: plugins/mm/calls-mm-call.c:73
+msgid "Call disconnected (unknown reason)"
+msgstr "Вызов отключен (причина неизвестна)"
+
+#: plugins/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Начался исходящий вызов"
+
+#: plugins/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Новый входящий вызов"
+
+#: plugins/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Вызов принят"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Вызов завершен"
+
+#: plugins/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Вызов отключен (занят или вызов отклонен)"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Вызов отключен (неправильный id или проблема с сетью)"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Вызов отключен (ошибка настройки аудиоканала)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call transferred"
+msgstr "Вызов перенесен"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call deflected"
+msgstr "Вызов отклонен"
+
+#: plugins/mm/calls-mm-call.c:107
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Вызов отключен (код неизвестной причины %i)"
+
+#: plugins/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr "ModemManager недоступен"
+
+#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Нет доступного модема с поддержкой голосовой связи"
+
+#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Нормальный"
+
+#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+msgid "Initialized"
+msgstr "Инициализированный"
+
+#: plugins/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus недоступен"
+
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Без шифрования"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Принудительное шифрование"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Неудачный обмен криптографическими ключами"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Добавить учетную запись"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Войти"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Управление учетной записью"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Применить"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Удалить"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Сервер"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Отображаемое имя"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Дополнительно"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID пользователя"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Пароль"
+
+#: plugins/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Порт"
+
+#: plugins/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Транспорт"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Шифрование информации"
+
+#: plugins/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "Использовать для телефонных вызовов"
+
+#: plugins/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Автоматическое подключение"
