@@ -273,7 +273,7 @@ constructed (GObject *object)
 
   state = mm_call_get_state (self->mm_call);
   state_changed_cb (self,
-                    MM_MODEM_STATE_UNKNOWN,
+                    MM_CALL_STATE_UNKNOWN,
                     state,
                     mm_call_get_state_reason (self->mm_call));
 
