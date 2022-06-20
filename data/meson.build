@@ -20,6 +20,19 @@ desktop_file = i18n.merge_file(
   install_dir : join_paths(sysconfdir, 'xdg/autostart')
 )
 
+# DBus service
+service_data = configuration_data()
+service_data.set('bindir', full_bindir)
+service_file = 'org.gnome.Calls.service'
+
+configure_file(
+  input : service_file + '.in',
+  output : service_file,
+  configuration : service_data,
+  install : true,
+  install_dir : full_servicedir,
+)
+
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   test('Validate desktop file', desktop_utils,
