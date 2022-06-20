@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-05-31 14:50+0300\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-20 18:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 20.12.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Дзвінки"
 
@@ -202,41 +202,41 @@ msgstr "Розірвання з'єднання завершено"
 msgid "Internal error occurred"
 msgstr "Сталася внутрішня помилка"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Спроба набору номера з некоректною адресою телефону «%s»"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назва додатка, який слід використовувати як надавача послуг дзвінка"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Набрати телефонний номер"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Увімкнути докладні діагностичні повідомлення"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
@@ -418,8 +418,8 @@ msgid "Back"
 msgstr "Назад"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Виклик від'єднано (невідома причина)"
+msgid "Unknown reason"
+msgstr "Невідома причина"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -492,7 +492,6 @@ msgid "Force encryption"
 msgstr "Примусове шифрування"
 
 #: plugins/sip/calls-sip-call.c:123
-#| msgid "Cryptographic key exchange unsucessful"
 msgid "Cryptographic key exchange unsuccessful"
 msgstr "Помилка під час обміну криптографічними ключами"
 
@@ -555,6 +554,9 @@ msgstr "Використовувати для дзвінків"
 #: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "З'єднуватись автоматично"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Виклик від'єднано (невідома причина)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Не вдалося розмістити дзвінки: немає служби обробки"
