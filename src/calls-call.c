@@ -430,7 +430,7 @@ calls_call_get_state (CallsCall *self)
 {
   CallsCallPrivate *priv = calls_call_get_instance_private (self);
 
-  g_return_val_if_fail (CALLS_IS_CALL (self), 0);
+  g_return_val_if_fail (CALLS_IS_CALL (self), CALLS_CALL_STATE_UNKNOWN);
 
   return priv->state;
 }
