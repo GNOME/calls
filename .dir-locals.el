@@ -19,4 +19,7 @@
                 "G_DEFINE_TYPE_WITH_CODE" "G_DEFINE_TYPE_WITH_PRIVATE"
                 "G_DEFINE_FINAL_TYPE"
                 "G_DEFINE_FINAL_TYPE_WITH_CODE" "G_DEFINE_FINAL_TYPE_WITH_PRIVATE"
-                 )))))
+                ))
+            (c-file-style . "linux")
+            (c-basic-offset . 2)
+            )))
