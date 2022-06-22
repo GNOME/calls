@@ -32,6 +32,16 @@ G_BEGIN_DECLS
 
 G_DECLARE_DERIVABLE_TYPE (CallsCall, calls_call, CALLS, CALL, GObject)
 
+/**
+ * CallsCallState:
+ * @CALLS_CALL_STATE_UNKNOWN: Call state unknown
+ * @CALLS_CALL_STATE_ACTIVE: Call is active
+ * @CALLS_CALL_STATE_HELD: Call is being held
+ * @CALLS_CALL_STATE_DIALING: Outgoing call being established
+ * @CALLS_CALL_STATE_ALERTING: Remote party is being alerted
+ * @CALLS_CALL_STATE_INCOMING: New incoming call
+ * @CALLS_CALL_STATE_DISCONNECTED: Call was successfully terminated
+ */
 typedef enum {
   CALLS_CALL_STATE_UNKNOWN = 0,
   CALLS_CALL_STATE_ACTIVE,
