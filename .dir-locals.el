@@ -1,6 +1,10 @@
 ((nil . ((indent-tabs-mode . nil)
          (projectile-project-compilation-cmd . "ninja -C _build")
-         (projectile-project-test-cmd . "ninja -C _build test")))
+         (projectile-project-test-cmd . "ninja -C _build test")
+         (projectile-project-configure-cmd . "meson . _build")
+         (projectile-project-compilation-dir . ".")
+         (projectile-project-run-cmd . "_build/run -vvv")
+         ))
  ;; thanks to Mohammed Sadiq, see https://source.puri.sm/Librem5/calls/-/merge_requests/332#note_159469
  (c-mode . ((c-macro-names-with-semicolon
              . ("G_BEGIN_DECLS" "G_END_DECLS" "G_DECLARE_FINAL_TYPE" "G_DEFINE_QUARK"
