@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the calls package.
 # Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021-2022.
 # Nathan Follens <nfollens@gnome.org>, 2021-2022.
+# Philip Goto, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-04-26 05:36+0000\n"
-"PO-Revision-Date: 2022-05-04 21:19+0200\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-24 13:11+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -17,10 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Oproepen"
 
@@ -102,129 +103,141 @@ msgstr ""
 "De audiocodecs voor VoIP-oproepen in volgorde van voorkeur (indien "
 "beschikbaar)"
 
-#: src/calls-account.c:205
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+"Of het gebruik van SDES voor SRTP zonder TLS als transport moet worden "
+"toegestaan"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Zet aan als u wilt toestaan dat sleutels als platte tekst worden "
+"uitgewisseld."
+
+#: src/calls-account.c:163
 msgid "Default (uninitialized) state"
 msgstr "Standaardstatus (niet geïnitialiseerd)"
 
-#: src/calls-account.c:208
+#: src/calls-account.c:166
 msgid "Initializing account…"
 msgstr "Account initialiseren…"
 
-#: src/calls-account.c:211
+#: src/calls-account.c:169
 msgid "Uninitializing account…"
 msgstr "Account deïnitialiseren…"
 
-#: src/calls-account.c:214
+#: src/calls-account.c:172
 msgid "Connecting to server…"
 msgstr "Verbinden met de server…"
 
-#: src/calls-account.c:217
+#: src/calls-account.c:175
 msgid "Account is online"
 msgstr "Account is online"
 
-#: src/calls-account.c:220
+#: src/calls-account.c:178
 msgid "Disconnecting from server…"
 msgstr "Verbinding met server verbreken…"
 
-#: src/calls-account.c:223
+#: src/calls-account.c:181
 msgid "Account is offline"
 msgstr "Account is offline"
 
-#: src/calls-account.c:226
+#: src/calls-account.c:184
 msgid "Account encountered an error"
 msgstr "Account heeft een probleem ondervonden"
 
-#: src/calls-account.c:244
+#: src/calls-account.c:202
 msgid "No reason given"
 msgstr "Geen reden gegeven"
 
-#: src/calls-account.c:247
+#: src/calls-account.c:205
 msgid "Initialization started"
 msgstr "Initialisatie gestart"
 
-#: src/calls-account.c:250
+#: src/calls-account.c:208
 msgid "Initialization complete"
 msgstr "Initialisatie voltooid"
 
-#: src/calls-account.c:253
+#: src/calls-account.c:211
 msgid "Uninitialization started"
 msgstr "Deïnitialisatie gestart"
 
-#: src/calls-account.c:256
+#: src/calls-account.c:214
 msgid "Uninitialization complete"
 msgstr "Deïnitialisatie voltooid"
 
-#: src/calls-account.c:259
+#: src/calls-account.c:217
 msgid "No credentials set"
 msgstr "Geen aanmeldgegevens ingesteld"
 
-#: src/calls-account.c:262
+#: src/calls-account.c:220
 msgid "Starting to connect"
 msgstr "Beginnen met verbinden"
 
-#: src/calls-account.c:265
+#: src/calls-account.c:223
 msgid "Connection timed out"
 msgstr "Time-out bij verbinding"
 
-#: src/calls-account.c:268
+#: src/calls-account.c:226
 msgid "Domain name could not be resolved"
 msgstr "Domeinnaam kon niet gevonden worden"
 
-#: src/calls-account.c:271
+#: src/calls-account.c:229
 msgid "Server did not accept username or password"
 msgstr "Server heeft gebruikersnaam of wachtwoord niet aanvaard"
 
-#: src/calls-account.c:274
+#: src/calls-account.c:232
 msgid "Connecting complete"
 msgstr "Verbinding voltooid"
 
-#: src/calls-account.c:277
+#: src/calls-account.c:235
 msgid "Starting to disconnect"
 msgstr "Verbinding wordt verbroken"
 
-#: src/calls-account.c:280
+#: src/calls-account.c:238
 msgid "Disconnecting complete"
 msgstr "Verbinding verbroken"
 
-#: src/calls-account.c:283
+#: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr "Er is een interne fout opgetreden"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Geprobeerd ongeldige tel-URI `%s' te kiezen"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Kan `%s' niet openen"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "De naam van de plug-in die als oproepprovider gebruikt moet worden"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "PLUG-IN"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Of het hoofdvenster bij het opstarten moet worden weergegeven"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Bel een telefoonnummer"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Uitgebreide foutopsporingsberichten inschakelen"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Huidige versie weergeven"
 
@@ -246,6 +259,7 @@ msgid "translator-credits"
 msgstr ""
 "Jan Jasper de Kroon <jajadekroon@gmail.com>\n"
 "Nathan Follens <nfollens@gnome.org>\n"
+"Philip Goto\n"
 "\n"
 "Meer info over Gnome-NL https://nl.gnome.org"
 
@@ -313,7 +327,7 @@ msgstr ""
 "nieuw en nog niet afgewerkt (o.a. versleutelde media worden nog niet "
 "ondersteund)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "_Account toevoegen"
 
@@ -408,8 +422,8 @@ msgid "Back"
 msgstr "Terug"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Oproep verbroken (onbekende reden)"
+msgid "Unknown reason"
+msgstr "Onbekende reden"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -472,6 +486,19 @@ msgstr "Geïnitialiseerd"
 msgid "DBus unavailable"
 msgstr "DBus niet beschikbaar"
 
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Geen versleuteling"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Altijd versleutelen"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Cryptografische sleuteluitwisseling mislukt"
+
 #: plugins/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "Account toevoegen"
@@ -520,9 +547,20 @@ msgstr "Poort"
 msgid "Transport"
 msgstr "Transportprotocol"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Mediaversleuteling"
+
+#: plugins/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Gebruiken voor telefoongesprekken"
+
+#: plugins/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Automatisch verbinden"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Oproep verbroken (onbekende reden)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Kan geen oproepen plaatsen: geen back-enddienst"
