@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-06-16 21:44+0300\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-20 17:17+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Вызовы"
 
@@ -99,8 +99,7 @@ msgstr "Предпочтительные аудиокодеки для VoIP-вы
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
-"Разрешить ли использование SDES для SRTP без TLS в качестве транспорта"
+msgstr "Разрешить ли использование SDES для SRTP без TLS в качестве транспорта"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
@@ -196,41 +195,41 @@ msgstr "Отключение завершено"
 msgid "Internal error occurred"
 msgstr "Произошла внутренняя ошибка"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Попытка набрать недопустимый телефонный URI `%s'"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Неизвестно как открыть `%s'"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Имя плагина для использования в качестве поставщика вызовов"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "ПЛАГИН"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Показывать ли главное окно при запуске"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Набрать телефонный номер"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Включить подробные отладочные сообщения"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Вывести текущую версию"
 
@@ -409,8 +408,8 @@ msgid "Back"
 msgstr "Назад"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Вызов отключен (причина неизвестна)"
+msgid "Unknown reason"
+msgstr "Неизвестная причина"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -545,3 +544,6 @@ msgstr "Использовать для телефонных вызовов"
 #: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Автоматическое подключение"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Вызов отключен (причина неизвестна)"
