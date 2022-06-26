@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-06-05 13:52+0200\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-26 14:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Rozmowy"
 
@@ -198,41 +198,41 @@ msgstr "Ukończono rozłączanie"
 msgid "Internal error occurred"
 msgstr "Wystąpił wewnętrzny błąd"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Próbowano zadzwonić na nieprawidłowy adres URI tel: „%s”"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nie wiadomo, jak otwierać „%s”"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Nazwa wtyczki używanej jako dostawca połączeń"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "WTYCZKA"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Czy wyświetlać główne okno po uruchomieniu"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Dzwoni na numer telefonu"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMER"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Włącza obszerne komunikaty debugowania"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Wyświetla obecną wersję"
 
@@ -413,8 +413,8 @@ msgid "Back"
 msgstr "Wstecz"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Połączenie został rozłączone (nieznany powód)"
+msgid "Unknown reason"
+msgstr "Nieznany powód"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
