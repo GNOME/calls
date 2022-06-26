@@ -1,4 +1,4 @@
-gnome-calls (43~alpha.2) UNRELEASED; urgency=medium
+gnome-calls (43~alpha.2) byzantium; urgency=medium
 
   [Anders Jonsson]
   * Update Swedish translation
@@ -8,10 +8,13 @@ gnome-calls (43~alpha.2) UNRELEASED; urgency=medium
 
   [ Piotr Drąg ]
   * Update POTFILES.in
+  * Update Polish translation
+  * Update Polish translation
 
   [ Yuri Chornoivan ]
   * Update Ukrainian translation
   * Fix minor typo
+  * Update Ukrainian translation
   * Update Ukrainian translation
 
   [ Vittorio Monti ]
@@ -19,14 +22,62 @@ gnome-calls (43~alpha.2) UNRELEASED; urgency=medium
 
   [ Daniel Șerbănescu ]
   * Update Romanian translation
+  * Update Romanian translation
 
   [ Danial Behzadi ]
   * Update Persian translation
 
   [ Evangelos Ribeiro Tzaras ]
   * Post release bump
+  * README: Update section on debugging
+  * doc: Add manpage as reStructuredText
+  * Add python3-docutils as build dependency
+  * ci: Update debian bookworm image for rst2man
+  * meson: Build manpage with rst2man
+  * flatpak: Don't build manpage
+  * debian: Install manpage
+  * sip: origin: Codestyle
+  * sip: origin: Don't mix code and declarations
+  * data: Add D-Bus service file
+  * mm: call: Use correct enum type
+  * mm: call: Better debugging
+  * sip: origin: Don't fetch the contact header repeatedly
+  * sip: origin: Only set own IP if it has changed
+  * sip: origin: Reduce logspam from REGISTER keep-alives
+  * record-store: Add debug statement for call state changes
+  * doc: Add call state diagram
+  * new-call-box: Order includes alphabetically
+  * new-call-box: Fix memory leak
+  * new-call-box: Don't auto select offline accounts
+  * dir-locals: Exhaustive projectile setup
+  * dir-locals: Use the linux coding style
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 31 May 2022 16:46:09 +0200
+  [ eladyn ]
+  * sip: origin: Honor preferred codecs for incoming calls
+
+  [ Chris Talbot ]
+  * calls-ui-call-data: change DELAY_UI_MS to 100 ms
+
+  [ Andrey Skvortsov ]
+  * application: fix 'tel:' URL handling with escaped symbols
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Aleksandr Melman ]
+  * Update Russian translation
+  * Update Russian translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Guido Günther ]
+  * data: Indicate that we're using feedbackd
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sun, 26 Jun 2022 15:45:45 +0200
 
 gnome-calls (43~alpha.1) byzantium; urgency=medium
 

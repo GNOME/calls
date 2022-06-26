@@ -1,3 +1,41 @@
+Calls 43.alpha.2
+----------------
+Released: 26 June 2022
+
+No major features
+
+Maybe noteworthy:
+=================
+* Calls is now DBus activatable
+* Made debug logs more meaningful
+* Added manpage using rst2man
+* Bumped delay until UI is shown to 100ms
+* Indicate we're using feedbackd in desktop file
+  which is useful for phosh-mobile-settings
+
+Code contributions:
+===================
+ - Andrey Skvortsov
+ - Chris Talbot
+ - eladyn
+ - Evangelos Ribeiro Tzaras
+ - Guido Günther
+
+Translation updates:
+====================
+ - Dutch (Nathan Follens)
+ - Swedish (Anders Jonsson)
+ - Russian (Aleksandr Melman)
+ - Finnish (Jiri Grönroos)
+ - Persian (Danial Behzadi)
+ - Romanian (Daniel Șerbănescu)
+ - Italian (Vittorio Monti)
+ - Ukrainian (Yuri Chornoivan)
+ - Polish (Piotr Drąg)
+ - Hebrew (Yosef Or Boczko)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.alpha.1
 ----------------
 Released: 25 May 2022
