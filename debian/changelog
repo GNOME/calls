@@ -1,3 +1,9 @@
+gnome-calls (43~beta.0) UNRELEASED; urgency=medium
+
+  * Post release bump
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 27 Jun 2022 04:31:31 +0200
+
 gnome-calls (43~alpha.2) byzantium; urgency=medium
 
   [Anders Jonsson]
