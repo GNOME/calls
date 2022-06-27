@@ -85,6 +85,7 @@ test_sip_media_manager_caps (void)
   g_debug ("PCMA SRTP test OK");
 
   /* G722 RTP */
+  /*
   codecs = g_list_append (NULL, media_codec_by_name ("G722"));
 
   sdp_message =
@@ -102,9 +103,10 @@ test_sip_media_manager_caps (void)
   g_free (sdp_message);
 
   g_debug ("G722 RTP test OK");
+  */
 
   /* G722 PCMU PCMA RTP (in this order) */
-  codecs = g_list_append (NULL, media_codec_by_name ("G722"));
+  /* codecs = g_list_append (NULL, media_codec_by_name ("G722")); */
   codecs = g_list_append (codecs, media_codec_by_name ("PCMU"));
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
 
@@ -113,9 +115,11 @@ test_sip_media_manager_caps (void)
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
-                                             "m=audio 33340 RTP/AVP 9 0 8"));
+                                             "m=audio 33340 RTP/AVP 0 8"));
+  /*
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "a=rtpmap:9 G722/8000"));
+  */
   g_assert_true (find_string_in_sdp_message (sdp_message,
                                              "a=rtpmap:0 PCMU/8000"));
   g_assert_true (find_string_in_sdp_message (sdp_message,
@@ -129,7 +133,9 @@ test_sip_media_manager_caps (void)
   /* GSM PCMA G722 PCMU SRTP (in this order) */
   codecs = g_list_append (NULL, media_codec_by_name ("GSM"));
   codecs = g_list_append (codecs, media_codec_by_name ("PCMA"));
+  /*
   codecs = g_list_append (codecs, media_codec_by_name ("G722"));
+  */
   codecs = g_list_append (codecs, media_codec_by_name ("PCMU"));
 
   sdp_message =
@@ -137,7 +143,7 @@ test_sip_media_manager_caps (void)
 
   g_assert_true (sdp_message);
   g_assert_true (find_string_in_sdp_message (sdp_message,
-                                             "m=audio 18098 RTP/SAVP 3 8 9 0"));
+                                             "m=audio 18098 RTP/SAVP 3 8 0"));
 
   g_clear_pointer (&codecs, g_list_free);
   g_free (sdp_message);
