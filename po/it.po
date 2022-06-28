@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-26 10:47+0000\n"
-"PO-Revision-Date: 2022-05-26 20:44+0200\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-27 14:05+0200\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Gtranslator 3.38.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chiamate"
 
@@ -199,41 +199,41 @@ msgstr "Disconnessione effettuata"
 msgid "Internal error occurred"
 msgstr "Si è verificato un errore interno"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Ho provato a comporre un URI telefonico non valido `%s'"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Il nome del plugin da usare come fornitore di chiamate"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Componi un numero di telefono"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Abilita i messaggi dettagliati di debug"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
@@ -415,8 +415,8 @@ msgid "Back"
 msgstr "Indietro"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Chiamata interrotta (motivo sconosciuto)"
+msgid "Unknown reason"
+msgstr "Motivo sconosciuto"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -489,7 +489,8 @@ msgid "Force encryption"
 msgstr "Forza la cifratura"
 
 #: plugins/sip/calls-sip-call.c:123
-msgid "Cryptographic key exchange unsucessful"
+#| msgid "Cryptographic key exchange unsucessful"
+msgid "Cryptographic key exchange unsuccessful"
 msgstr "Scambio di chiavi crittografiche non riuscito"
 
 #: plugins/sip/sip-account-widget.ui:11
