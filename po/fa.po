@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-05-31 17:58+0430\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-06-28 15:47+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "تماس‌ها"
 
@@ -193,41 +193,41 @@ msgstr "قطع کامل شد"
 msgid "Internal error occurred"
 msgstr "خزایی داخلی رخ داد"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "تلاش شد نشانی نامعتبر «%s» شماره‌گیری شود"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "نام افزایه برای استفاده به عنوان فراهم‌کنندهٔ تماس"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
@@ -406,8 +406,8 @@ msgid "Back"
 msgstr "بازگشت"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "تماس قطع شد (دلیل نامشخّص)"
+msgid "Unknown reason"
+msgstr "دلیل نامعلوم"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -542,6 +542,9 @@ msgstr "استفاده برای تماس‌های تلفنی"
 #: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "وصل شدن خودکار"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "تماس قطع شد (دلیل نامشخّص)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "نمی‌توان تماس برقرار کرد: بدون خدمت پشتانه"
