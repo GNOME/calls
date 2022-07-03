@@ -2,25 +2,26 @@
 # Copyright © 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Марко Костић <marko.m.kostic@gmail.com>, 2020.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2021–2022.
+# Мирослав Николић <miroslavnikolić@rocketmail.com>, 2021–2022.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-01-18 02:44+0000\n"
-"PO-Revision-Date: 2022-03-12 13:19+0200\n"
-"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian <(nothing)>\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-07-03 03:50+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolić@rocketmail.com>\n"
+"Language-Team: Serbian <српски <gnome-sr@googlegroups.org>>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
 "X-Project-Style: gnome\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:383
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Позиви"
 
@@ -32,7 +33,7 @@ msgstr "Телефон"
 msgid "A phone dialer and call handler"
 msgstr "Телефонски позивар и руковалац позивом"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "телефон;позив;веза;PSTN;"
@@ -45,106 +46,206 @@ msgstr "Позиви (позадинац)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Телефонски позивар и руковалац позивом (режим позадинца)"
 
-#: plugins/sip/sip-account-widget.ui:11
-#| msgid "_VoIP Accounts"
-msgid "Add Account"
-msgstr "Додај налог"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Вршите телефонске и СИП позиве"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_Пријави ме"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Позиви је једноставан,елегантан телефонски позивар и руковалац позива за "
+"Гном. Може се користити са целуларним модемом за обичне старе телефонске "
+"позиве као и за ВоИП позиве помоћу СИП протокола."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Управљајте налогом"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+#| msgid "Incoming phone call"
+msgid "Placing a call"
+msgstr "Позивам"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Примени"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+#| msgid "This call is encrypted"
+msgid "The call history"
+msgstr "Историјат позива"
 
-#: plugins/sip/sip-account-widget.ui:61
-#| msgid "_Delete Call"
-msgid "_Delete"
-msgstr "О_бриши"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Да ли позиви треба самостално да користе основно порекло"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Сервер"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Шифра земље као што пријављује модем"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Назив приказа"
+# Белешке:
+# Додај белешку
+#
+# Путање:
+# data/org.gnome.Calls.gschema.xml:14
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Шифра земље се користи за тражење назива контакта"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Изборно"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Прикључци за самостално учитавање"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "ИБ корисника"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Ови прикључци ће бити самостално учитани при покретању програма."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Лозинка"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Аудио кодеци за коришћење за ВоИП позиве у поретку поставки"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Прикључник"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Жељени аудио кодеци за коришћење за ВоИП позиве (ако су доступни)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Пренос"
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Да ли ће омогућити коришћење СДЕС-а за СРТП без ТЛС као пренос"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "Користи за позиве телефоном"
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Штиклирајте ово ако желите да дозволите са кључевима размењеним у обичном "
+"тексту."
 
-#: src/calls-application.c:548
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Основно (некоришћено) стање"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Покрећем налог…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Поништавам покретање налога…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Повезујем се на сервер…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Налог је на мрежи"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Прекидам везу са сервером…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Налог је ван мреже"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Налог је наишао на грешку"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Разлог није дат"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Покретање је почело"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Покретање је обављено"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Поништавање покретања је почело"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Поништавање покретања је обављено"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Креденцијали нису постављени"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Покрећем повезивање"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Веза је истекла"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Назив домена се не може решити"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Сервер не прихвата корисничко име или лозинку"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Повезивање је обављено"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Почињем прекидање везе"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Прекидање везе је обављено"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Дошло је до унутрашње грешке"
+
+#: src/calls-application.c:319
 #, c-format
-#| msgid "Tried dialing unparsable tel URI `%s'"
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Покушах да позовем неисправну телефонску путању „%s“"
 
-#: src/calls-application.c:625
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Не знам како да отворим „%s“"
 
-#: src/calls-application.c:679
-#| msgid "The name of the plugin to use for the call Provider"
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назив прикључка за коришћење као достављач позивања"
 
-#: src/calls-application.c:680
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "ПРИКЉУЧАК"
 
-#: src/calls-application.c:685
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Да ли треба приказати главни прозор при покретању"
 
-#: src/calls-application.c:691
-#| msgid "Dial a number"
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Окреће број телефона"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "БРОЈ"
 
-#: src/calls-application.c:697
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Укључује опширне поруке прочишћавања"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Исписује тренутно издање"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Безимени позивалац"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -153,73 +254,64 @@ msgstr ""
 "%s\n"
 "јуче"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
 "Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "\n"
 "https://гном.срб — превод Гнома на српски језик"
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Не могу позивати: нема модема који је способан за пренос гласа"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Не могу позивати: Нема доступног модема или „VoIP“ налога"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Не могу позивати: нема позадинца"
+#: src/calls-main-window.c:318
+#| msgid "Can't place calls: No plugin"
+msgid "Can't place calls: No plugin loaded"
+msgstr "Не могу позивати: Прикључак није учитан"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Не могу позивати: нема прикључка"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Контакти"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
 msgstr "Бројчаник"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Недавно"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Пропуштен позив"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропуштен позив од „<b>%s</b>“"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропуштени позив од „%s“"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Пропуштен позив од непознатог позиваоца"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Узврати позив"
 
 #: src/ui/account-overview.ui:16
-#| msgid "_VoIP Accounts"
 msgid "VoIP Accounts"
 msgstr "„VoIP“ налози"
 
 #: src/ui/account-overview.ui:49
-#| msgid "_VoIP Accounts"
 msgid "Add VoIP Accounts"
 msgstr "Додај „VoIP“ налоге"
 
@@ -233,28 +325,25 @@ msgstr ""
 "позиве користећи „SIP“ протокол. Ова функција је још увек релативно нова и "
 "још није функционално потпуна (тј. нема шифрованих медија)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
-#| msgid "_VoIP Accounts"
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "_Додај налог"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
-#| msgid "Calls"
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Позови"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "О_бриши позив"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_Умножи број"
 
-#: src/ui/call-record-row.ui:113
-#| msgid "Contacts"
+#: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "Додај _контакт"
 
@@ -263,7 +352,6 @@ msgid "On hold"
 msgstr "На чекању"
 
 #: src/ui/contacts-box.ui:60
-#| msgid "No contacts found"
 msgid "No Contacts Found"
 msgstr "Нисам нашао контакте"
 
@@ -308,7 +396,6 @@ msgid "Enter a VoIP address"
 msgstr "Унеси „VoIP“ адресу"
 
 #: src/ui/new-call-box.ui:58
-#| msgid "Dial a number"
 msgid "Enter a number"
 msgstr "Унесите број"
 
@@ -321,7 +408,6 @@ msgid "Delete character in front of cursor"
 msgstr "Обришите знак испред курзора"
 
 #: src/ui/new-call-box.ui:149
-#| msgid "_VoIP Accounts"
 msgid "SIP Account"
 msgstr "„SIP“ налози"
 
@@ -333,11 +419,152 @@ msgstr "Нови позив"
 msgid "Back"
 msgstr "Назад"
 
+#: plugins/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Непознат разлог"
+
+#: plugins/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Одлазни позив је покренут"
+
+#: plugins/mm/calls-mm-call.c:75
+#| msgid "Incoming phone call"
+msgid "New incoming call"
+msgstr "Нови долазни позив"
+
+#: plugins/mm/calls-mm-call.c:76
+#| msgid "Call back"
+msgid "Call accepted"
+msgstr "Позив је прихваћен"
+
+#: plugins/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Позив је завршен"
+
+#: plugins/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Прекинута је веза позива (заузет је или је позив одбијен)"
+
+#: plugins/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Прекинута је веза позива (погрешан ид или проблем са мрежом)"
+
+#: plugins/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Прекинута је веза позива (грешка постављања аудио канала)"
+
+#: plugins/mm/calls-mm-call.c:81
+msgid "Call transferred"
+msgstr "Позив је пребачен"
+
+#: plugins/mm/calls-mm-call.c:82
+msgid "Call deflected"
+msgstr "Позив је преусмерен"
+
+#: plugins/mm/calls-mm-call.c:107
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Прекинута је веза позива (непозната шифра разлога %i)"
+
+#: plugins/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr "Управник модема није доступан"
+
+#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+#| msgid "Can't place calls: No voice-capable modem available"
+msgid "No voice-capable modem available"
+msgstr "Нема модема који је способан за пренос гласа"
+
+#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Обичан"
+
+#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+msgid "Initialized"
+msgstr "Покренут"
+
+#: plugins/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "Д-сабирница није доступна"
+
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Нема шифровања"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Присили шифровање"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Размена криптографског кључа није успела"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Додај налог"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Пријави ме"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Управљајте налогом"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Примени"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "О_бриши"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Сервер"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Назив приказа"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Изборно"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ИБ корисника"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Лозинка"
+
+#: plugins/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Прикључник"
+
+#: plugins/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Пренос"
+
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Шифровање медија"
+
+#: plugins/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "Користи за позиве телефоном"
+
+#: plugins/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Повежи самостално"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "Не могу позивати: нема позадинца"
+
 #~ msgid "Calling…"
 #~ msgstr "Позивам…"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Долазни позив"
 
 #~ msgid "Mute"
 #~ msgstr "Утишај"
@@ -368,9 +595,6 @@ msgstr "Назад"
 
 #~ msgid "This call is not encrypted"
 #~ msgstr "Овај позив није шифрован"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "Овај позив је шифрован"
 
 #~ msgid "Recent Calls"
 #~ msgstr "Недавни позиви"
