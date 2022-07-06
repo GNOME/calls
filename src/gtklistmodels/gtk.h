@@ -1,0 +1,8 @@
+#include "gtksorter.h"
+#include "gtkcustomsorter.h"
+#include "gtkfilter.h"
+#include "gtkcustomfilter.h"
+#include "gtksortlistmodel.h"
+#include "gtkfilterlistmodel.h"
+#include "gtkflattenlistmodel.h"
+#include "gtkslicelistmodel.h"
