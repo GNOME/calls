@@ -7,7 +7,7 @@
 GType
 gtk_sorter_order_get_type (void)
 {
-  static volatile gsize g_define_type_id__volatile = 0;
+  static gsize g_define_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_define_type_id__volatile))
     {
@@ -27,7 +27,7 @@ gtk_sorter_order_get_type (void)
 GType
 gtk_sorter_change_get_type (void)
 {
-  static volatile gsize g_define_type_id__volatile = 0;
+  static gsize g_define_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_define_type_id__volatile))
     {
@@ -50,7 +50,7 @@ gtk_sorter_change_get_type (void)
 GType
 gtk_filter_match_get_type (void)
 {
-  static volatile gsize g_define_type_id__volatile = 0;
+  static gsize g_define_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_define_type_id__volatile))
     {
@@ -70,7 +70,7 @@ gtk_filter_match_get_type (void)
 GType
 gtk_filter_change_get_type (void)
 {
-  static volatile gsize g_define_type_id__volatile = 0;
+  static gsize g_define_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_define_type_id__volatile))
     {
