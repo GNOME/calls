@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018, 2019 Purism SPC
+ * Copyright (C) 2018, 2019, 2022 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -17,10 +17,12 @@
  * along with Calls.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Author: Adrien Plazas <adrien.plazas@puri.sm>
+ *         Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
  */
+#define G_LOG_DOMAIN "CallsHistoryBox"
 
 #include "calls-history-box.h"
 #include "calls-call-record.h"
@@ -31,16 +33,22 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
+#define CALLS_HISTORY_SIZE_INITIAL 75
+#define CALLS_HISTORY_SIZE_INCREMENTS 50
+#define CALLS_HISTORY_RESET_SIZE_POSITION_THRESHOLD 500
+#define CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD 2
 
 struct _CallsHistoryBox {
-  GtkStack    parent_instance;
+  GtkStack           parent_instance;
 
-  GtkListBox *history;
+  GtkListBox        *history;
+  GtkScrolledWindow *scrolled_window;
+  GtkAdjustment     *scroll_adjustment;
 
-  GListModel *model;
+  GListModel        *model;
   GtkSliceListModel *slice_model;
 
-  gulong      model_changed_handler_id;
+  gulong             model_changed_handler_id;
 
 };
 
@@ -123,6 +131,43 @@ create_row_cb (CallsCallRecord *record,
 
 
 static void
+on_adjustment_position_changed (GtkAdjustment   *adjustment,
+                                CallsHistoryBox *self)
+{
+  double position;
+  double upper_limit;
+  double page_size;
+  guint old_size;
+
+  g_assert (CALLS_IS_HISTORY_BOX (self));
+
+  position = gtk_adjustment_get_value (adjustment);
+  page_size = gtk_adjustment_get_page_size (adjustment);
+  old_size = gtk_slice_list_model_get_size (self->slice_model);
+
+  if (position < CALLS_HISTORY_RESET_SIZE_POSITION_THRESHOLD) {
+    if (old_size == CALLS_HISTORY_SIZE_INITIAL)
+      return;
+
+    g_debug ("Resetting to initial size: %u",
+             CALLS_HISTORY_SIZE_INITIAL);
+    gtk_slice_list_model_set_size (self->slice_model, CALLS_HISTORY_SIZE_INITIAL);
+    return;
+  }
+
+  upper_limit = gtk_adjustment_get_upper (adjustment);
+
+  if (position > upper_limit - CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD * page_size) {
+    guint new_size = old_size + CALLS_HISTORY_SIZE_INCREMENTS;
+
+    g_debug ("Increasing history slice from %u to %u",
+             old_size, new_size);
+    gtk_slice_list_model_set_size (self->slice_model, new_size);
+  }
+}
+
+
+static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -152,7 +197,9 @@ constructed (GObject *object)
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
 
-  self->slice_model = gtk_slice_list_model_new (self->model, 0, 75);
+  self->slice_model = gtk_slice_list_model_new (self->model,
+                                                0,
+                                                CALLS_HISTORY_SIZE_INITIAL);
 
   self->model_changed_handler_id =
     g_signal_connect_swapped
@@ -203,6 +250,7 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/history-box.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, history);
+  gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, scrolled_window);
 }
 
 
@@ -210,6 +258,13 @@ static void
 calls_history_box_init (CallsHistoryBox *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  self->scroll_adjustment = gtk_scrolled_window_get_vadjustment (self->scrolled_window);
+
+  g_signal_connect (self->scroll_adjustment,
+                    "value-changed",
+                    G_CALLBACK (on_adjustment_position_changed),
+                    self);
 }
 
 
