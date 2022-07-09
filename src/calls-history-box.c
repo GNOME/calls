@@ -25,6 +25,7 @@
 #include "calls-history-box.h"
 #include "calls-call-record.h"
 #include "calls-call-record-row.h"
+#include "gtklistmodels/gtkmodels.h"
 #include "util.h"
 
 #include <glib/gi18n.h>
@@ -37,6 +38,8 @@ struct _CallsHistoryBox {
   GtkListBox *history;
 
   GListModel *model;
+  GtkSliceListModel *slice_model;
+
   gulong      model_changed_handler_id;
 
 };
@@ -149,13 +152,15 @@ constructed (GObject *object)
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
 
+  self->slice_model = gtk_slice_list_model_new (self->model, 0, 75);
+
   self->model_changed_handler_id =
     g_signal_connect_swapped
       (self->model, "items-changed", G_CALLBACK (update), self);
   g_assert (self->model_changed_handler_id != 0);
 
   gtk_list_box_bind_model (self->history,
-                           self->model,
+                           G_LIST_MODEL (self->slice_model),
                            (GtkListBoxCreateWidgetFunc) create_row_cb,
                            self,
                            NULL);
@@ -169,6 +174,7 @@ dispose (GObject *object)
 {
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
+  g_clear_object (&self->slice_model);
   g_clear_object (&self->model);
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->dispose (object);
