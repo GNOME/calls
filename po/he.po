@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-06-01 12:49+0300\n"
+"POT-Creation-Date: 2022-06-20 13:37+0000\n"
+"PO-Revision-Date: 2022-07-14 14:18+0300\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: Hebrew <>\n"
 "Language: he\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 40.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "שיחות"
 
@@ -193,41 +193,41 @@ msgstr "התנתקות הושלמה"
 msgid "Internal error occurred"
 msgstr "אירעה שגיאה פנימית"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "לא יודע איך לפתוח את „%s”"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "The name of the plugin to use as a call provider"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Whether to present the main window on startup"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Print current version"
 
@@ -408,8 +408,8 @@ msgid "Back"
 msgstr "חזרה"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "שיחה התנתקה (סיבה לא ידועה)"
+msgid "Unknown reason"
+msgstr "סיבה לא ידועה"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -544,6 +544,9 @@ msgstr "שימוש עבור שיחות טלפון"
 #: plugins/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "התחברות אוטומטית"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "שיחה התנתקה (סיבה לא ידועה)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "לא נִתן לחייג: אין שירות צד־שרת"
