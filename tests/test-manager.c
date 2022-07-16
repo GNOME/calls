@@ -258,11 +258,14 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
+  g_autofree char *plugin_dir_provider = NULL;
+
   gtk_test_init (&argc, &argv, NULL);
 
   /* Add builddir as search path */
 #ifdef PLUGIN_BUILDDIR
-  peas_engine_add_search_path (peas_engine_get_default (), PLUGIN_BUILDDIR, NULL);
+  plugin_dir_provider = g_build_filename (PLUGIN_BUILDDIR, "provider", NULL);
+  peas_engine_add_search_path (peas_engine_get_default (), plugin_dir_provider, NULL);
 #endif
 
   g_test_add_func("/Calls/Manager/without_provider", test_calls_manager_without_provider);

@@ -18,9 +18,9 @@ src/ui/history-box.ui
 src/ui/main-window.ui
 src/ui/new-call-box.ui
 src/ui/new-call-header-bar.ui
-plugins/mm/calls-mm-call.c
-plugins/mm/calls-mm-provider.c
-plugins/ofono/calls-ofono-provider.c
-plugins/sip/calls-sip-account-widget.c
-plugins/sip/calls-sip-call.c
-plugins/sip/sip-account-widget.ui
+plugins/provider/mm/calls-mm-call.c
+plugins/provider/mm/calls-mm-provider.c
+plugins/provider/ofono/calls-ofono-provider.c
+plugins/provider/sip/calls-sip-account-widget.c
+plugins/provider/sip/calls-sip-call.c
+plugins/provider/sip/sip-account-widget.ui
