@@ -2,6 +2,7 @@
 Module=sip
 Name=SIP
 Description=SIP calls provider
-Authors=Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
-Copyright=Copyright (C) 2021 Purism SPC
+Authors=Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
+Copyright=Copyright (C) 2021-2022 Purism SPC
 Website=@PACKAGE_URL_RAW@
+Version=@PACKAGE_VERSION@

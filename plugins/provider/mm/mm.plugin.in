@@ -2,6 +2,7 @@
 Module=mm
 Name=ModemManager
 Description=ModemManager calls provider
-Authors=Bob Ham <rah@settrans.net>
-Copyright=Copyright (C) 2018 Purism SPC
+Authors=Bob Ham <rah@settrans.net>, Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
+Copyright=Copyright (C) 2018-2022 Purism SPC
 Website=@PACKAGE_URL_RAW@
+Version=@PACKAGE_VERSION@
