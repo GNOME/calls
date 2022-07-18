@@ -132,9 +132,9 @@ add_project_arguments(
 
 subdir('po')
 subdir('src')
+subdir('tests')
 subdir('plugins')
 subdir('doc')
 subdir('data')
-subdir('tests')
 
 meson.add_install_script('build-aux/meson/postinstall.py')

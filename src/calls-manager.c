@@ -742,6 +742,7 @@ calls_manager_init (CallsManager *self)
   GApplication *application;
   PeasEngine *peas;
   const gchar *dir;
+  g_autofree char *default_plugin_dir_provider = NULL;
 
   self->state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
   self->providers = g_hash_table_new_full (g_str_hash,
@@ -802,15 +803,19 @@ calls_manager_init (CallsManager *self)
 
   dir = g_getenv ("CALLS_PLUGIN_DIR");
   if (dir && dir[0] != '\0') {
+    g_autofree char *plugin_dir_provider = NULL;
     /** Add the directory to the search path. prepend_search_path() does not work
      * as expected. see https://gitlab.gnome.org/GNOME/libpeas/-/issues/19
      */
-    g_debug ("Adding %s to plugin search path", dir);
-    peas_engine_add_search_path (peas, dir, NULL);
+
+    plugin_dir_provider = g_build_filename (dir, "provider", NULL);
+    g_debug ("Adding %s to plugin search path", plugin_dir_provider);
+    peas_engine_add_search_path (peas, plugin_dir_provider, NULL);
   }
 
-  peas_engine_add_search_path (peas, PLUGIN_LIBDIR, NULL);
-  g_debug ("Scanning for plugins in `%s'", PLUGIN_LIBDIR);
+  default_plugin_dir_provider = g_build_filename(PLUGIN_LIBDIR, "provider", NULL);
+  peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
+  g_debug ("Scanning for plugins in `%s'", default_plugin_dir_provider);
 }
 
 

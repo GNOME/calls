@@ -23,7 +23,7 @@
 
 dummy_include = include_directories('.')
 
-dummy_install_dir = join_paths(full_calls_plugin_libdir, 'dummy')
+dummy_install_dir = join_paths(calls_provider_plugin_libdir, 'dummy')
 
 dummy_plugin = configure_file(
   input: 'dummy.plugin.in',

@@ -23,7 +23,7 @@
 
 subdir('libgdbofono')
 
-ofono_install_dir = join_paths(full_calls_plugin_libdir, 'ofono')
+ofono_install_dir = join_paths(calls_provider_plugin_libdir, 'ofono')
 
 ofono_plugin = configure_file(
   input: 'ofono.plugin.in',

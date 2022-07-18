@@ -8,9 +8,6 @@ test_env = [
   'PYTHONDONTWRITEBYTECODE=yes',
   'MALLOC_CHECK_=2',
   'NO_AT_BRIDGE=1',
-  'CALLS_SIP_TEST=1',
-  'CALLS_AUDIOSRC=audiotestsrc',
-  'CALLS_AUDIOSINK=fakesink',
   'GSETTINGS_SCHEMA_DIR=@0@/data'.format(meson.project_build_root()),
 ]
 
@@ -28,41 +25,6 @@ mock_link_args = [ test_link_args,
                    '-Wl,--wrap=calls_contacts_provider_new',
                  ]
 
-
-tests = [
-  [ 'provider', []                       ],
-  [ 'origin',   [ 'provider' ]           ],
-  [ 'call',     [ 'provider', 'origin' ] ],
-]
-
-foreach test : tests
-  name = test[0]
-
-  setup_bases = test[1]
-  setup_bases += name
-
-  test_sources = []
-  foreach base : setup_bases
-    test_sources += [ 'setup-' + base + '.c',
-                      'setup-' + base + '.h' ]
-  endforeach
-  test_sources += [ 'test-' + name + '.c',
-                    'common.h' ]
-
-  t = executable(name, test_sources,
-                 dummy_sources,
-                 c_args : test_cflags,
-                 link_args: test_link_args,
-                 pie: true,
-                 link_with : [calls_vala, libcalls],
-                 dependencies: calls_deps,
-                 include_directories : [
-                   calls_includes,
-                   dummy_include,
-                 ]
-                )
-  test(name, t, env: test_env)
-endforeach
 
 test_sources = [ 'test-manager.c' ]
 
@@ -92,66 +54,6 @@ t = executable('plugins', test_sources,
                  ]
                 )
 test('plugins', t, env: test_env)
-
-test_sources = [ 'test-media.c' ]
-test_sources += sip_sources
-t = executable('media', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
-test('media', t, env: test_env)
-
-test_sources = [ 'test-sip.c' ]
-test_sources += sip_sources
-t = executable('sip', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
-test('sip', t, env: test_env)
-
-test_sources = [ 'test-srtp.c' ]
-test_sources += sip_sources
-t = executable('srtp', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
-test('srtp', t, env: test_env)
-
-test_sources = [ 'test-sdp-crypto.c' ]
-test_sources += sip_sources
-t = executable('sdp-crypto', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
-test('sdp-crypto', t, env: test_env)
 
 test_sources = [ 'test-util.c' ]
 t = executable('util', test_sources,

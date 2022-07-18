@@ -21,7 +21,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-mm_install_dir = join_paths(full_calls_plugin_libdir, 'mm')
+mm_install_dir = join_paths(calls_provider_plugin_libdir, 'mm')
 
 mm_plugin = configure_file(
   input: 'mm.plugin.in',

@@ -23,7 +23,7 @@
 
 sip_include = include_directories('.')
 
-sip_install_dir = join_paths(full_calls_plugin_libdir, 'sip')
+sip_install_dir = join_paths(calls_provider_plugin_libdir, 'sip')
 
 sip_plugin = configure_file(
   input: 'sip.plugin.in',
