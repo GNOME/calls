@@ -444,7 +444,6 @@ constructed (GObject *object)
   gboolean inbound;
   GDateTime *answered;
   GDateTime *end;
-  g_autofree char *target_name = NULL;
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
   g_autofree char *target = NULL;
@@ -469,8 +468,6 @@ constructed (GObject *object)
   if (target && *target)
     gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
                                       "(ss)", target, "");
-  else
-    ;
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
