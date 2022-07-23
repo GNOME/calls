@@ -394,10 +394,10 @@ calls_call_record_row_popup_menu (GtkWidget *self)
 
 
 static void
-long_pressed (GtkGestureLongPress *gesture,
-              gdouble              x,
-              gdouble              y,
-              GtkWidget           *self)
+on_long_pressed (GtkGestureLongPress *gesture,
+                 gdouble              x,
+                 gdouble              y,
+                 GtkWidget           *self)
 {
   context_menu (self, NULL);
 }
@@ -628,7 +628,7 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
   self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (self->gesture), TRUE);
-  g_signal_connect (self->gesture, "pressed", G_CALLBACK (long_pressed), self);
+  g_signal_connect (self->gesture, "pressed", G_CALLBACK (on_long_pressed), self);
 }
 
 
