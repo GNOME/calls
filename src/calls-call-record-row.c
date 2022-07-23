@@ -448,6 +448,8 @@ constructed (GObject *object)
   g_autofree char *action_name = NULL;
   g_autofree char *target = NULL;
 
+  G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
+
   g_object_get (self->record,
                 "inbound", &inbound,
                 "answered", &answered,
@@ -474,8 +476,6 @@ constructed (GObject *object)
   calls_date_time_unref (end);
 
   setup_contact (self);
-
-  G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 }
 
 
