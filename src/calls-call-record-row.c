@@ -334,7 +334,7 @@ setup_contact (CallsCallRecordRow *self)
                 "target", &target,
                 NULL);
 
-  if (!target || target[0] == '\0') {
+  if (STR_IS_NULL_OR_EMPTY (target)) {
     gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
     g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), FALSE);
   } else {
@@ -467,7 +467,7 @@ constructed (GObject *object)
   gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), action_name);
 
   /* TODO add origin ID to action target */
-  if (target && *target)
+  if (!STR_IS_NULL_OR_EMPTY (target))
     gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
                                       "(ss)", target, "");
 
