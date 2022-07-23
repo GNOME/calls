@@ -434,9 +434,11 @@ constructed (GObject *object)
   gboolean inbound;
   GDateTime *answered;
   GDateTime *end;
+  GAction *sms_action;
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
   g_autofree char *target = NULL;
+  gboolean sms_enabled = FALSE;
 
   G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 
@@ -456,10 +458,20 @@ constructed (GObject *object)
 
   gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), action_name);
 
+  sms_action = g_action_map_lookup_action (self->action_map, "new-sms");
   /* TODO add origin ID to action target */
-  if (!STR_IS_NULL_OR_EMPTY (target))
+  if (!STR_IS_NULL_OR_EMPTY (target)) {
     gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
                                       "(ss)", target, "");
+    if (g_strcmp0 (protocol, "tel") == 0) {
+      g_autoptr (GAppInfo) app_info_sms =
+        g_app_info_get_default_for_uri_scheme ("sms");
+
+      sms_enabled = !!app_info_sms;
+    }
+  }
+
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (sms_action), sms_enabled);
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
@@ -589,11 +601,39 @@ new_contact_activated (GSimpleAction *action,
 }
 
 
+static void
+new_sms_activated (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       data)
+{
+  CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (data);
+  GdkDisplay *display;
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GdkAppLaunchContext) launch_context = NULL;
+  g_autofree char *target = NULL;
+  g_autofree char *uri = NULL;
+
+  g_object_get (self->record,
+                "target", &target,
+                NULL);
+  uri = g_strdup_printf ("sms:%s", target);
+
+  display = gdk_display_get_default ();
+  launch_context = gdk_display_get_app_launch_context (display);
+
+  if (!g_app_info_launch_default_for_uri (uri,
+                                          G_APP_LAUNCH_CONTEXT (launch_context),
+                                          &error))
+    g_warning ("Could not launch sms URI handler: %s", error->message);
+}
+
+
 static GActionEntry entries[] =
 {
   { "delete-call", delete_call_activated, NULL, NULL, NULL},
   { "copy-number", copy_number_activated, NULL, NULL, NULL},
   { "new-contact", new_contact_activated, NULL, NULL, NULL},
+  { "new-sms", new_sms_activated, NULL, NULL, NULL},
 };
 
 

@@ -113,6 +113,11 @@
         <attribute name="action">new-contact</attribute>
         <attribute name="hidden-when">action-disabled</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Send SMS</attribute>
+        <attribute name="action">new-sms</attribute>
+        <attribute name="hidden-when">action-disabled</attribute>
+      </item>
     </section>
   </menu>
 </interface>
