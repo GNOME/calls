@@ -291,19 +291,15 @@ on_notify_can_add_contacts (CallsCallRecordRow *self)
 
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
 
-  if (!calls_contacts_provider_get_can_add_contacts (contacts_provider))
-    return;
-
-  g_signal_handlers_disconnect_by_data (contacts_provider, self);
-
-  /* The record has a NULL id */
-  if (!self->contact)
-    return;
-
-  g_object_bind_property (self->contact, "has-individual",
-                          action_new_contact, "enabled",
-                          G_BINDING_SYNC_CREATE |
-                          G_BINDING_INVERT_BOOLEAN);
+  if (calls_contacts_provider_get_can_add_contacts (contacts_provider) &&
+      self->contact) {
+    g_object_bind_property (self->contact, "has-individual",
+                            action_new_contact, "enabled",
+                            G_BINDING_SYNC_CREATE |
+                            G_BINDING_INVERT_BOOLEAN);
+  } else {
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_new_contact), FALSE);
+  }
 }
 
 
@@ -311,23 +307,17 @@ static void
 setup_contact (CallsCallRecordRow *self)
 {
   GAction *action_copy = g_action_map_lookup_action (self->action_map, "copy-number");
-  GAction *action_new_contact = g_action_map_lookup_action (self->action_map, "new-contact");
   g_autofree gchar *target = NULL;
   CallsContactsProvider *contacts_provider;
 
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
 
-  if (calls_contacts_provider_get_can_add_contacts (contacts_provider)) {
-    on_notify_can_add_contacts (self);
-  } else {
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_new_contact), FALSE);
-    g_signal_connect_swapped (contacts_provider,
-                              "notify::can-add-contacts",
-                              G_CALLBACK (on_notify_can_add_contacts),
-                              self);
-  }
+  g_signal_connect_swapped (contacts_provider,
+                            "notify::can-add-contacts",
+                            G_CALLBACK (on_notify_can_add_contacts),
+                            self);
 
-
+  on_notify_can_add_contacts (self);
 
   // Get the target number
   g_object_get (G_OBJECT (self->record),
