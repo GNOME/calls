@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-04-26 05:36+0000\n"
-"PO-Revision-Date: 2022-04-28 19:58+0200\n"
+"POT-Creation-Date: 2022-07-14 11:20+0000\n"
+"PO-Revision-Date: 2022-07-25 18:52+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "ზარები"
 
@@ -86,7 +86,7 @@ msgstr "ავტომატურად ჩასატვირთი და�
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "ეს დამატებები აპლიკაციის გაშვებისას ავტომატურად ჩაიტვირთება"
+msgstr "ეს დამატებები აპლიკაციის გაშვებისას ავტომატურად ჩაიტვირთება."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -96,132 +96,139 @@ msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr ""
-"VoIP ზარების დროს გამოყენებული აუდიო კოდეკების სია (თუ ხელმისაწვდომია)"
+msgstr "VoIP ზარების დროს გამოყენებული აუდიო კოდეკების სია (თუ ხელმისაწვდომია)"
 
-#: src/calls-account.c:205
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "SRTP_სთვის SDES-ის TLS-ის გარეშე გამოყენების ნების დართვა"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "ჩართეთ, თუ გნებავთ გასაღებების ღია ტექსტით მიმოცვლა."
+
+#: src/calls-account.c:163
 msgid "Default (uninitialized) state"
 msgstr "ნაგულისხმები (არა ინიციალიზებული) მდგომარეობა"
 
-#: src/calls-account.c:208
+#: src/calls-account.c:166
 msgid "Initializing account…"
 msgstr "ანგარიშის ინიციალიზაცია…"
 
-#: src/calls-account.c:211
+#: src/calls-account.c:169
 msgid "Uninitializing account…"
 msgstr "ანგარიშის ინიციალიზაციის გაუქმება…"
 
-#: src/calls-account.c:214
+#: src/calls-account.c:172
 msgid "Connecting to server…"
 msgstr "სერვერთან დაკავშირება…"
 
-#: src/calls-account.c:217
+#: src/calls-account.c:175
 msgid "Account is online"
 msgstr "ანგარიში ონლაინაა"
 
-#: src/calls-account.c:220
+#: src/calls-account.c:178
 msgid "Disconnecting from server…"
 msgstr "სერვერიდან გათიშვა…"
 
-#: src/calls-account.c:223
+#: src/calls-account.c:181
 msgid "Account is offline"
 msgstr "ანგარიში ოფლაინაა"
 
-#: src/calls-account.c:226
+#: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr "ანგარიშის შეცდომა."
+msgstr "ანგარიშის შეცდომა"
 
-#: src/calls-account.c:244
+#: src/calls-account.c:202
 msgid "No reason given"
 msgstr "მიზეზების გარეშე"
 
-#: src/calls-account.c:247
+#: src/calls-account.c:205
 msgid "Initialization started"
 msgstr "ინიციალიზაციის დასაწყისი"
 
-#: src/calls-account.c:250
+#: src/calls-account.c:208
 msgid "Initialization complete"
 msgstr "ინიციალიზაცია დასრულდა"
 
-#: src/calls-account.c:253
+#: src/calls-account.c:211
 msgid "Uninitialization started"
 msgstr "ინიციალიზაციის გაუქმების დასაწყისი"
 
-#: src/calls-account.c:256
+#: src/calls-account.c:214
 msgid "Uninitialization complete"
 msgstr "ინიციალიზაციის გაუქება დასრულდა"
 
-#: src/calls-account.c:259
+#: src/calls-account.c:217
 msgid "No credentials set"
 msgstr "მომხმარებელი და პაროლი მითითებული არაა"
 
-#: src/calls-account.c:262
+#: src/calls-account.c:220
 msgid "Starting to connect"
 msgstr "დაკავშირების დასაწყისი"
 
-#: src/calls-account.c:265
+#: src/calls-account.c:223
 msgid "Connection timed out"
 msgstr "კავშირის ვადა გავიდა"
 
-#: src/calls-account.c:268
+#: src/calls-account.c:226
 msgid "Domain name could not be resolved"
 msgstr "დომენის სახელის გადაწყვეტის შეცდომა"
 
-#: src/calls-account.c:271
+#: src/calls-account.c:229
 msgid "Server did not accept username or password"
 msgstr "სერვერი არ დაეთანხმა მომხმარებლის სახელსა და პაროლს"
 
-#: src/calls-account.c:274
+#: src/calls-account.c:232
 msgid "Connecting complete"
 msgstr "დაკავშირება დასრულდა"
 
-#: src/calls-account.c:277
+#: src/calls-account.c:235
 msgid "Starting to disconnect"
 msgstr "გათიშვის დასაწყისი"
 
-#: src/calls-account.c:280
+#: src/calls-account.c:238
 msgid "Disconnecting complete"
 msgstr "გათიშვა დასრულდა"
 
-#: src/calls-account.c:283
+#: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr "შიდა შეცდომა"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ვცადე დამერეკა არასწორ ტელეფონის URL-ზე '%s'"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "არ ვიცი, როგორ გავხსნა '%s'"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "დამატების სახელი, რომელიც მოგცემთ დარეკვის საშუალებას"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "დამატება"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "გაშვებისას მთავარი ფანჯრის ჩვენება"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "ტელეფონის ნომერზე დარეკვა"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "ნომერი"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "გამართვის გაფართებული შეტყობინებების ჩართვა"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "მიმდინარე ვერსიის დაბეჭდვა"
 
@@ -307,7 +314,7 @@ msgstr ""
 "შედარებით ახალია და ბოლომდე არაა დამუშავებული (მაგ. არ აქვს დაშიფრვის "
 "მხარდაჭერა)"
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "_ანგარიშის დამატება"
 
@@ -402,8 +409,8 @@ msgid "Back"
 msgstr "უკან"
 
 #: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "ზარი გაითიშა (მიზეზი უცნობია)"
+msgid "Unknown reason"
+msgstr "უცნობი მიზეზი"
 
 #: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -466,6 +473,19 @@ msgstr "ინიციალიზაცია დასრულდა"
 msgid "DBus unavailable"
 msgstr "DBus-ი მიუწვდომელია"
 
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "დაშიფვრის გარეშე"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "ძალით დაშიფვრა"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "კრიპტოგრაფიული გასაღების მიმოცვლის შეცდომა"
+
 #: plugins/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "ანგარიშის დამატება"
@@ -514,9 +534,20 @@ msgstr "პორტი"
 msgid "Transport"
 msgstr "ტრანსპორტი"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "მედიის დაშიფვრა"
+
+#: plugins/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "ზარებისთვის გამოყენება"
+
+#: plugins/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "ავტომატური მიერთება"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "ზარი გაითიშა (მიზეზი უცნობია)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "ზარის განხორციელება შეუძლებელია. ფონური სერვისი არ არსებობს"
