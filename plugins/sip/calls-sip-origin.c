@@ -480,7 +480,7 @@ sip_r_register (int              status,
     if (!origin->contact_header)
       nua_get_params (nua, TAG_ANY (), TAG_END ());
 
-    if (sip->sip_contact && sip->sip_contact->m_url && sip->sip_contact->m_url->url_host) {
+    if (sip->sip_contact && sip->sip_contact->m_url->url_host) {
       if (g_strcmp0 (origin->own_ip, sip->sip_contact->m_url->url_host) == 0)
         return;
 
@@ -776,7 +776,7 @@ sip_callback (nua_event_t   event,
 
   switch (event) {
   case nua_i_invite:
-    if (sip->sip_from && sip->sip_from->a_url &&
+    if (sip->sip_from &&
         sip->sip_from->a_url->url_scheme &&
         sip->sip_from->a_url->url_user &&
         sip->sip_from->a_url->url_host)
