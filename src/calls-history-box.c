@@ -69,15 +69,10 @@ update (CallsHistoryBox *self)
   gchar *child_name;
 
   if (g_list_model_get_n_items (self->model) == 0) {
+ if (g_list_model_get_n_items (self->model) == 0)
     child_name = "empty";
-  } else {
+  else
     child_name = "history";
-
-    /* Transition should only ever be from empty to non-empty */
-    if (self->model_changed_handler_id != 0)
-      calls_clear_signal (self->model,
-                          &self->model_changed_handler_id);
-  }
 
   gtk_stack_set_visible_child_name (GTK_STACK (self), child_name);
 }
@@ -109,8 +104,6 @@ delete_call_cb (CallsCallRecord *record,
   }
 
   g_list_store_remove ((GListStore *) self->model, position);
-
-  update (self);
 }
 
 
@@ -223,6 +216,7 @@ dispose (GObject *object)
 
   g_clear_object (&self->slice_model);
   g_clear_object (&self->model);
+  g_clear_signal_handler (&self->model_changed_handler_id, self->model);
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->dispose (object);
 }
