@@ -48,6 +48,8 @@ struct _CallsHistoryBox {
   GListModel        *model;
   GtkSliceListModel *slice_model;
 
+  gsize              n_items;
+
   gulong             model_changed_handler_id;
 
 };
@@ -64,12 +66,16 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 static void
-update (CallsHistoryBox *self)
+on_model_changed (GListModel      *model,
+                  guint            position,
+                  guint            removed,
+                  guint            added,
+                  CallsHistoryBox *self)
 {
   gchar *child_name;
 
-  if (g_list_model_get_n_items (self->model) == 0) {
- if (g_list_model_get_n_items (self->model) == 0)
+  self->n_items = self->n_items + added - removed;
+  if (self->n_items == 0)
     child_name = "empty";
   else
     child_name = "history";
@@ -153,6 +159,11 @@ on_adjustment_position_changed (GtkAdjustment   *adjustment,
   if (position > upper_limit - CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD * page_size) {
     guint new_size = old_size + CALLS_HISTORY_SIZE_INCREMENTS;
 
+    new_size = MIN (new_size, self->n_items);
+
+    if (old_size == new_size)
+      return;
+
     g_debug ("Increasing history slice from %u to %u",
              old_size, new_size);
     gtk_slice_list_model_set_size (self->slice_model, new_size);
@@ -195,8 +206,10 @@ constructed (GObject *object)
                                                 CALLS_HISTORY_SIZE_INITIAL);
 
   self->model_changed_handler_id =
-    g_signal_connect_swapped
-      (self->model, "items-changed", G_CALLBACK (update), self);
+    g_signal_connect (self->model,
+                      "items-changed",
+                      G_CALLBACK (on_model_changed),
+                      self);
   g_assert (self->model_changed_handler_id != 0);
 
   gtk_list_box_bind_model (self->history,
@@ -205,7 +218,7 @@ constructed (GObject *object)
                            self,
                            NULL);
 
-  update (self);
+  on_model_changed (self->model, 0, 0, g_list_model_get_n_items (self->model), self);
 }
 
 
