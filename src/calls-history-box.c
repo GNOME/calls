@@ -147,6 +147,8 @@ constructed (GObject *object)
 
   g_assert (self->model != NULL);
 
+  G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
+
   self->model_changed_handler_id =
     g_signal_connect_swapped
       (self->model, "items-changed", G_CALLBACK (update), self);
@@ -159,8 +161,6 @@ constructed (GObject *object)
                            NULL);
 
   update (self);
-
-  G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
 }
 
 
