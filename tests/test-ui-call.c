@@ -33,8 +33,6 @@ test_cui_call_state_mapping (void)
                    ==, CUI_CALL_STATE_CALLING);
   g_assert_cmpint (calls_call_state_to_cui_call_state (CALLS_CALL_STATE_INCOMING),
                    ==, CUI_CALL_STATE_INCOMING);
-  g_assert_cmpint (calls_call_state_to_cui_call_state (CALLS_CALL_STATE_WAITING),
-                   ==, CUI_CALL_STATE_INCOMING);
   g_assert_cmpint (calls_call_state_to_cui_call_state (CALLS_CALL_STATE_DISCONNECTED),
                    ==, CUI_CALL_STATE_DISCONNECTED);
   g_assert_cmpint (calls_call_state_to_cui_call_state (42), ==, CUI_CALL_STATE_UNKNOWN);

@@ -770,7 +770,6 @@ calls_call_state_to_cui_call_state (CallsCallState state)
   case CALLS_CALL_STATE_ALERTING:
     return CUI_CALL_STATE_CALLING;
   case CALLS_CALL_STATE_INCOMING:
-  case CALLS_CALL_STATE_WAITING:
     return CUI_CALL_STATE_INCOMING;
   case CALLS_CALL_STATE_DISCONNECTED:
     return CUI_CALL_STATE_DISCONNECTED;
