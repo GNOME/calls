@@ -128,7 +128,6 @@ static const struct CallsMMCallStateMap STATE_MAP[] = {
   row (RINGING_IN,  INCOMING),
   row (ACTIVE,      ACTIVE),
   row (HELD,        HELD),
-  row (WAITING,     INCOMING),
   row (TERMINATED,  DISCONNECTED),
 
 #undef row
@@ -146,6 +145,7 @@ state_changed_cb (CallsMMCall      *self,
   const struct CallsMMCallStateReasonMap *reason_map_row;
   const char *state_str = "state unmatched";
   const char *reason_str = "reason unmatched";
+  CallsCallState call_state = CALLS_CALL_STATE_UNKNOWN;
 
   if (new_state == MM_CALL_STATE_TERMINATED)
     set_disconnect_reason (self, reason);
@@ -154,10 +154,20 @@ state_changed_cb (CallsMMCall      *self,
   for (state_map_row = STATE_MAP; state_map_row->mm != -1; state_map_row++) {
     if (state_map_row->mm == new_state) {
       state_str = state_map_row->desc;
+      call_state = state_map_row->calls;
       break;
     }
   }
-  g_assert_cmpint (state_map_row->mm, !=, -1);
+
+  if (state_map_row->mm == -1 &&
+      new_state == MM_CALL_STATE_WAITING) {
+  MMCallDirection direction = mm_call_get_direction(self->mm_call);
+  gboolean outgoing = direction == MM_CALL_DIRECTION_OUTGOING;
+
+  call_state = outgoing ? CALLS_CALL_STATE_ALERTING : CALLS_CALL_STATE_INCOMING;
+  }
+
+  g_assert_cmpint (call_state, !=, CALLS_CALL_STATE_UNKNOWN);
 
   for (reason_map_row = STATE_REASON_MAP; reason_map_row->value != -1; reason_map_row++) {
     if (reason_map_row->value == reason) {
@@ -171,7 +181,7 @@ state_changed_cb (CallsMMCall      *self,
            mm_call_get_path (self->mm_call),
            state_str,
            reason_str);
-  calls_call_set_state (CALLS_CALL (self), state_map_row->calls);
+  calls_call_set_state (CALLS_CALL (self), call_state);
 }
 
 
