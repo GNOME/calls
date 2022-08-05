@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-06-20 13:37+0000\n"
-"PO-Revision-Date: 2022-06-20 18:18+0300\n"
+"POT-Creation-Date: 2022-08-05 08:41+0000\n"
+"PO-Revision-Date: 2022-08-05 17:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -344,6 +344,11 @@ msgstr "_Копіювати номер"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Додати контакт"
+
+#: src/ui/call-record-row.ui:117
+#| msgid "_Send"
+msgid "_Send SMS"
+msgstr "_Надіслати SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
