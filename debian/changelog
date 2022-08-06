@@ -1,8 +1,56 @@
-gnome-calls (43~beta.0) UNRELEASED; urgency=medium
+gnome-calls (43~beta.0) byzantium; urgency=medium
 
+  [ Evangelos Ribeiro Tzaras ]
   * Post release bump
+  * d/gbp.conf: Adjust debian-tag-msg
+  * ci: Allow flatpak failures
+  * sip: origin: Drop comparison that always evaluates as true
+  * Add various gtk list models
+  * history-box: Chain up to constructed() early
+  * Drop use of volatile
+  * meson: Add gtk sources to build
+  * history-box: Switch to GtkSliceListModel
+  * history-box: Dynamically adjust slice list model size
+  * history-box: Allow transition from non-empty to empty history
+  * history-box: Cap size of slice at number of call records
+  * record-row: Remove unused code
+  * record-row: Rename callback to conform to on_* naming scheme
+  * record-row: Chain up early to constructed()
+  * record-row: Use STR_IS_NULL_OR_EMPTY macro
+  * record-row: Simplify add-action logic
+  * record-row: Add SMS action (Closes: #182)
+  * Update libcall-ui to v0.0.4
+  * Disable g722 to avoid test failure with ffmpeg 5.0/gst-libav
+  * ci: Update debian image
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 27 Jun 2022 04:31:31 +0200
+  [ Vittorio Monti ]
+  * Update Italian translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Мирослав Николић ]
+  * Update Serbian translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+
+  [ Zurab Kargareteli ]
+  * Update Georgian translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Piotr Drąg ]
+  * Update POTFILES.skip
+
+  [ Aleksandr Melman ]
+  * Update Russian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 06 Aug 2022 20:18:02 +0200
 
 gnome-calls (43~alpha.2) byzantium; urgency=medium
 

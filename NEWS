@@ -1,3 +1,34 @@
+Calls 43.beta.0
+---------------
+Released: 6 August 2022
+
+New features:
+=============
+* Improved startup times and scrolling performance with large call histories
+* Add "Send SMS" action in history popover
+
+Maybe noteworthy:
+=================
+* Disabled G722 codec because of
+  https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/1055
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+
+Translation updates:
+====================
+ - Italian (Vittorio Monti)
+ - Persian (Danial Behzadi)
+ - Serbian (Мирослав Николић)
+ - Romanian (Daniel Șerbănescu)
+ - Hebrew (Yosef Or Boczko)
+ - Georgian (Zurab Kargareteli)
+ - Ukrainian (Yuri Chornoivan)
+ - Russian (Aleksandr Melman)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.alpha.2
 ----------------
 Released: 26 June 2022
