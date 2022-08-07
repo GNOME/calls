@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-06-20 13:37+0000\n"
-"PO-Revision-Date: 2022-06-26 14:30+0200\n"
+"POT-Creation-Date: 2022-08-05 08:41+0000\n"
+"PO-Revision-Date: 2022-08-07 15:02+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -339,6 +339,10 @@ msgstr "S_kopiuj numer"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Dodaj kontakt"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Wyślij SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
