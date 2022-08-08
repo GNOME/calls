@@ -34,7 +34,7 @@ static MediaCodecInfo gst_codecs[] = {
   {8, "PCMA", 8000, 1, "rtppcmapay", "rtppcmadepay", "alawenc", "alawdec", "libgstalaw.so"},
   {0, "PCMU", 8000, 1, "rtppcmupay", "rtppcmudepay", "mulawenc", "mulawdec", "libgstmulaw.so"},
   {3, "GSM", 8000, 1, "rtpgsmpay", "rtpgsmdepay", "gsmenc", "gsmdec", "libgstgsm.so"},
-  /* {9, "G722", 8000, 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722", "libgstlibav.so"}, */
+  {9, "G722", 8000, 1, "rtpg722pay", "rtpg722depay", "avenc_g722", "avdec_g722", "libgstlibav.so"},
   {4, "G723", 8000, 1, "rtpg723pay", "rtpg723depay", "avenc_g723_1", "avdec_g723_1", "libgstlibav.so"}, // does not seem to work
 };
 
