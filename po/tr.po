@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-03-29 20:32+0000\n"
-"PO-Revision-Date: 2022-03-30 20:17+0300\n"
+"POT-Creation-Date: 2022-08-05 08:41+0000\n"
+"PO-Revision-Date: 2022-08-11 22:59+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Aramalar"
 
@@ -97,133 +97,143 @@ msgstr "VoIP aramalarında kullanılacak ses çözücülerin yeğ sırası"
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "VoIP aramalarında kullanım için yeğlenen ses çözücüler (eğer varsa)"
 
-#: src/calls-account.c:203
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Eğer anahtarların düz metinde değiş tokuşuna izin vermek istiyorsanız doğru "
+"(true) olarak belirleyin."
+
+#: src/calls-account.c:163
 msgid "Default (uninitialized) state"
 msgstr "Öntanımlı (kapalı) durum"
 
-#: src/calls-account.c:206
+#: src/calls-account.c:166
 msgid "Initializing account…"
 msgstr "Hesap çalıştırılıyor…"
 
-#: src/calls-account.c:209
+#: src/calls-account.c:169
 msgid "Uninitializing account…"
 msgstr "Hesap kapatılıyor…"
 
-#: src/calls-account.c:212
+#: src/calls-account.c:172
 msgid "Connecting to server…"
 msgstr "Sunucuya bağlanıyor…"
 
-#: src/calls-account.c:215
+#: src/calls-account.c:175
 msgid "Account is online"
 msgstr "Hesap çevrim içi"
 
-#: src/calls-account.c:218
+#: src/calls-account.c:178
 msgid "Disconnecting from server…"
 msgstr "Sunucudan bağlantı kesiliyor…"
 
-#: src/calls-account.c:221
+#: src/calls-account.c:181
 msgid "Account is offline"
 msgstr "Hesap çevrim dışı"
 
-#: src/calls-account.c:224
+#: src/calls-account.c:184
 msgid "Account encountered an error"
 msgstr "Hesap hatayla karşılaştı"
 
-#: src/calls-account.c:242
+#: src/calls-account.c:202
 msgid "No reason given"
 msgstr "Neden sunulmadı"
 
-#: src/calls-account.c:245
+#: src/calls-account.c:205
 msgid "Initialization started"
 msgstr "Çalışma başladı"
 
-#: src/calls-account.c:248
+#: src/calls-account.c:208
 msgid "Initialization complete"
 msgstr "Çalışma tamamlandı"
 
-#: src/calls-account.c:251
+#: src/calls-account.c:211
 msgid "Uninitialization started"
 msgstr "Kapatma başladı"
 
-#: src/calls-account.c:254
+#: src/calls-account.c:214
 msgid "Uninitialization complete"
 msgstr "Kapatma tamamlandı"
 
-#: src/calls-account.c:257
+#: src/calls-account.c:217
 msgid "No credentials set"
 msgstr "Kimlik belirlenmedi"
 
-#: src/calls-account.c:260
+#: src/calls-account.c:220
 msgid "Starting to connect"
 msgstr "Bağlama başladı"
 
-#: src/calls-account.c:263
+#: src/calls-account.c:223
 msgid "Connection timed out"
 msgstr "Bağlantı süre aşımı"
 
-#: src/calls-account.c:266
+#: src/calls-account.c:226
 msgid "Domain name could not be resolved"
 msgstr "Alan adı çözülemedi"
 
-#: src/calls-account.c:269
+#: src/calls-account.c:229
 msgid "Server did not accept username or password"
 msgstr "Sunucu, kullanıcı adı veya parolayı kabul etmedi"
 
-#: src/calls-account.c:272
+#: src/calls-account.c:232
 msgid "Connecting complete"
 msgstr "Bağlanma tamamlandı"
 
-#: src/calls-account.c:275
+#: src/calls-account.c:235
 msgid "Starting to disconnect"
 msgstr "Kesilme başladı"
 
-#: src/calls-account.c:278
+#: src/calls-account.c:238
 msgid "Disconnecting complete"
 msgstr "Kesilme tamamlandı"
 
-#: src/calls-account.c:281
+#: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr "İç hata oluştu"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "`%s' geçersiz tel URIʼsini arama denendi"
 
-#: src/calls-application.c:633
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s' nasıl açılır bilinmiyor"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Arama sağlayıcı olarak kullanılacak eklentinin adı"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "EKLENTİ"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Ana ekranın başlangıçta sunulup sunulmayacağı"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Telefon numarası çevir"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMARA"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Ayrıntılı hata ayıklama iletilerini etkinleştir"
 
-#: src/calls-application.c:711
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Geçerli sürümü yazdır"
 
-#: src/calls-best-match.c:436
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Anonim çağrı"
 
@@ -236,28 +246,28 @@ msgstr ""
 "%s\n"
 "dün"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/calls-main-window.c:320
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Aranamıyor: Modem veya uygun VoIP hesabı yok"
 
-#: src/calls-main-window.c:322
+#: src/calls-main-window.c:318
 msgid "Can't place calls: No plugin loaded"
 msgstr "Aranamıyor: Eklenti yüklenmedi"
 
-#: src/calls-main-window.c:357
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Kişiler"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
 msgstr "Tuş Takımı"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Son"
 
@@ -303,7 +313,7 @@ msgstr ""
 "VoIP aramaları yapmanız ve almanız sağlanacak. Bu özellik henüz yeni sayılır "
 "ve tümüyle tamamlanmamıştır (örn. şifrelenmiş ortam yoktur)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "Hesap _Ekle"
 
@@ -324,6 +334,10 @@ msgstr "Numarayı _kopyala"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "Kişi _ekle"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "SMS _Gönder"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
@@ -397,70 +411,83 @@ msgstr "Yeni Arama"
 msgid "Back"
 msgstr "Geri"
 
-#: plugins/mm/calls-mm-call.c:75
-msgid "Call disconnected (unknown reason)"
-msgstr "Arama kesildi (bilinmeyen neden)"
+#: plugins/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Bilinmeyen neden"
 
-#: plugins/mm/calls-mm-call.c:76
+#: plugins/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
 msgstr "Giden arama başladı"
 
-#: plugins/mm/calls-mm-call.c:77
+#: plugins/mm/calls-mm-call.c:75
 msgid "New incoming call"
 msgstr "Yeni gelen araması"
 
-#: plugins/mm/calls-mm-call.c:78
+#: plugins/mm/calls-mm-call.c:76
 msgid "Call accepted"
 msgstr "Arama kabul edildi"
 
-#: plugins/mm/calls-mm-call.c:79
+#: plugins/mm/calls-mm-call.c:77
 msgid "Call ended"
 msgstr "Arama bitti"
 
-#: plugins/mm/calls-mm-call.c:80
+#: plugins/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
 msgstr "Arama kesildi (meşgul veya arama geri çevrildi)"
 
-#: plugins/mm/calls-mm-call.c:81
+#: plugins/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
 msgstr "Arama kesildi (yanlış kimlik veya ağ sorunu)"
 
-#: plugins/mm/calls-mm-call.c:82
+#: plugins/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Arama kesildi (ses kanalı ayarlama hatası)"
 
-#: plugins/mm/calls-mm-call.c:83
+#: plugins/mm/calls-mm-call.c:81
 msgid "Call transferred"
 msgstr "Arama aktarıldı"
 
-#: plugins/mm/calls-mm-call.c:84
+#: plugins/mm/calls-mm-call.c:82
 msgid "Call deflected"
 msgstr "Arama yönü değiştirildi"
 
-#: plugins/mm/calls-mm-call.c:113
+#: plugins/mm/calls-mm-call.c:107
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Arama kesildi (bilinmeyen neden kodu %i)"
 
-#: plugins/mm/calls-mm-provider.c:86
+#: plugins/mm/calls-mm-provider.c:82
 msgid "ModemManager unavailable"
 msgstr "ModemManager uygun değil"
 
-#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Ses yetili modem yok"
 
-#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Olağan"
 
-#: plugins/mm/calls-mm-provider.c:461 plugins/ofono/calls-ofono-provider.c:565
+#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
 msgid "Initialized"
 msgstr "Çalıştı"
 
-#: plugins/ofono/calls-ofono-provider.c:97
+#: plugins/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
 msgstr "DBus uygun değil"
+
+#: plugins/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Şifreleme yok"
+
+#. TODO Optional encryption
+#: plugins/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Şifrelemeye zorla"
+
+#: plugins/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Kriptografik anahtar değiş tokuşu başarısız"
 
 #: plugins/sip/sip-account-widget.ui:11
 msgid "Add Account"
@@ -510,9 +537,20 @@ msgstr "Bağlantı Noktası"
 msgid "Transport"
 msgstr "Taşıma"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Ortam Şifreleme"
+
+#: plugins/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Telefon Aramalarında Kullan"
+
+#: plugins/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Kendiliğinden Bağlan"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Arama kesildi (bilinmeyen neden)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Aranamıyor: Arka yüz hizmeti yok"
