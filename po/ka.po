@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-07-14 11:20+0000\n"
-"PO-Revision-Date: 2022-07-25 18:52+0200\n"
+"POT-Creation-Date: 2022-08-11 20:00+0000\n"
+"PO-Revision-Date: 2022-08-12 07:42+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -335,6 +335,10 @@ msgstr "_ნომრის კოპირება"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_კონტაქტის დამატება"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "SMS-ის _გაგზავნა"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
