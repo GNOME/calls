@@ -10,7 +10,7 @@ stages:
 
 variables:
   L5_DOCKER_IMAGE: debian:bookworm
-  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20220805
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20220817
   GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
@@ -61,9 +61,6 @@ check-po:
   stage: test
   dependencies:
     - build:native
-  before_script:
-    - apt-get -y update
-    - apt-get -y install intltool
   script:
     # barf on untranslated C or UI files. Seems intltool
     # can't be told to exit with non-zero exit status
