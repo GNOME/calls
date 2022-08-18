@@ -309,7 +309,7 @@ open_tel_uri (CallsApplication *self,
               const char       *uri)
 {
   const char *number = NULL;
-  g_autofree char* uri_str = g_uri_unescape_string(uri, NULL);
+  g_autofree char* uri_str = g_uri_unescape_string (uri, NULL);
 
   g_debug ("Opening tel URI `%s'", uri);
 
@@ -349,6 +349,7 @@ dial_action (GSimpleAction *action,
     call_number (self, number);
 }
 
+
 static void
 copy_number (GSimpleAction *action,
              GVariant      *parameter,
@@ -362,6 +363,7 @@ copy_number (GSimpleAction *action,
 
   g_debug ("Copied `%s' to clipboard", number);
 }
+
 
 static void
 show_accounts (GSimpleAction *action,
@@ -390,9 +392,9 @@ static const GActionEntry actions[] =
   { "set-default-providers", set_default_providers_action, NULL },
   { "set-daemon", set_daemon_action, NULL },
   { "dial", dial_action, "s" },
-  { "copy-number", copy_number, "s"},
+  { "copy-number", copy_number, "s" },
   /* TODO About dialog { "about", show_about, NULL}, */
-  { "accounts", show_accounts, NULL},
+  { "accounts", show_accounts, NULL },
 };
 
 
