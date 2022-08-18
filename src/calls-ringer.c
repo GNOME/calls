@@ -463,15 +463,25 @@ dispose (GObject *object)
 {
   CallsRinger *self = CALLS_RINGER (object);
 
-  if (self->event) {
-    g_clear_object (&self->event);
-    lfb_uninit ();
-  }
   g_signal_handlers_disconnect_by_data (calls_manager_get_default (), self);
 
   g_clear_handle_id (&self->restart_id, g_source_remove);
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
+}
+
+
+static void
+finalize (GObject *object)
+{
+  CallsRinger *self = CALLS_RINGER (object);
+
+  if (self->event)
+    lfb_uninit ();
+
+  g_clear_object (&self->event);
+
+  G_OBJECT_CLASS (calls_ringer_parent_class)->finalize (object);
 }
 
 
@@ -482,6 +492,7 @@ calls_ringer_class_init (CallsRingerClass *klass)
 
   object_class->constructed = constructed;
   object_class->dispose = dispose;
+  object_class->finalize = finalize;
   object_class->get_property = get_property;
 
   props[PROP_IS_RINGING] =
