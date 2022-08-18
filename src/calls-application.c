@@ -370,7 +370,7 @@ show_accounts (GSimpleAction *action,
                GVariant      *parameter,
                gpointer       user_data)
 {
-  CallsApplication *app = CALLS_APPLICATION (g_application_get_default ());
+  CallsApplication *app = CALLS_APPLICATION (user_data);
 
   calls_main_window_show_accounts_overview (app->main_window);
 }
