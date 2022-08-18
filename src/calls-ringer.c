@@ -467,6 +467,9 @@ dispose (GObject *object)
 
   g_clear_handle_id (&self->restart_id, g_source_remove);
 
+  g_cancellable_cancel (self->cancel_ring);
+  g_clear_object (&self->cancel_ring);
+
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
 
