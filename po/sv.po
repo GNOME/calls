@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-06-20 13:37+0000\n"
-"PO-Revision-Date: 2022-06-20 17:52+0200\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2022-08-05 08:41+0000\n"
+"PO-Revision-Date: 2022-08-07 12:41+0200\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -340,6 +340,10 @@ msgstr "_Kopiera nummer"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Lägg till kontakt"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Skicka SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
