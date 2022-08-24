@@ -1,4 +1,4 @@
-calls_provider_plugin_libdir = join_paths(full_calls_plugin_libdir, 'providers')
+calls_provider_plugin_libdir = join_paths(full_calls_plugin_libdir, 'provider')
 subdir('provider/mm')
 subdir('provider/dummy')
 subdir('provider/ofono')
