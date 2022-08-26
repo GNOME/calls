@@ -319,7 +319,7 @@ open_tel_uri (CallsApplication *self,
       g_strdup_printf (_("Tried dialing invalid tel URI `%s'"), uri);
 
     calls_message_source_emit_message (CALLS_MESSAGE_SOURCE (calls_manager_get_default ()),
-                                       "msg",
+                                       msg,
                                        GTK_MESSAGE_WARNING);
     g_warning ("Ignoring invalid tel URI `%s'", uri);
     return;
