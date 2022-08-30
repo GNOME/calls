@@ -1736,6 +1736,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin    *self,
   self->port = port;
   self->can_tel = can_tel;
   self->media_encryption = media_encryption;
+  self->auto_connect = auto_connect;
 
   update_name (self);
 
