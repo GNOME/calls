@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-31 08:11+0000\n"
-"PO-Revision-Date: 2022-06-16 18:35+0300\n"
+"POT-Creation-Date: 2022-08-29 11:48+0000\n"
+"PO-Revision-Date: 2022-08-30 19:57+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Puhelut"
 
@@ -196,42 +196,42 @@ msgstr "Yhteyden katkaiseminen valmistui"
 msgid "Internal error occurred"
 msgstr "Tapahtui sisäinen virhe"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Yritettiin soittaa virheelliseen tel-URI:in `%s'"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ei tietoa miten avata`%s'"
 
 # Provider - muuttuja, ohjelma vai taho?
-#: src/calls-application.c:689
+#: src/calls-application.c:690
 msgid "The name of the plugin to use as a call provider"
 msgstr "Liitännäisen nimi käytettäväksi puhelun tarjoajalle"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "LIITÄNNÄINEN"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Näytetäänkö pääikkunaa käynnistyksen yhteydessä"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Soita puhelinnumeroon"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Käytä runsaita vianjäljitysviestejä"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Tulosta nykyinen versio"
 
@@ -343,6 +343,10 @@ msgstr "_Kopioi numero"
 msgid "_Add contact"
 msgstr "_Lisää yhteystieto"
 
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Lähetä tekstiviesti"
+
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Pidossa"
@@ -384,6 +388,7 @@ msgstr "_Pikanäppäimet"
 msgid "_Help"
 msgstr "_Ohje"
 
+#. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Tietoja - Puhelut"
@@ -417,143 +422,149 @@ msgstr "Uusi puhelu"
 msgid "Back"
 msgstr "Takaisin"
 
-#: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Puhelu päättyi (tuntematon syy)"
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Tuntematon syy"
 
-#: plugins/mm/calls-mm-call.c:74
+#: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
 msgstr "Lähtevä puhelu alkoi"
 
-#: plugins/mm/calls-mm-call.c:75
+#: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
 msgstr "Uusi saapuva puhelu"
 
-#: plugins/mm/calls-mm-call.c:76
+#: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
 msgstr "Puhelu hyväksytty"
 
-#: plugins/mm/calls-mm-call.c:77
+#: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
 msgstr "Puhelu päättyi"
 
-#: plugins/mm/calls-mm-call.c:78
+#: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
 msgstr "Puhelu päättyi (varattu tai kieltäydytty)"
 
-#: plugins/mm/calls-mm-call.c:79
+#: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
 msgstr "Puhelu päättyi (väärä id tai verkko-ongelma)"
 
-#: plugins/mm/calls-mm-call.c:80
+#: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Puhelu päättyi (virhe asettaessa äänikanavaa)"
 
-#: plugins/mm/calls-mm-call.c:81
+#: plugins/provider/mm/calls-mm-call.c:81
 msgid "Call transferred"
 msgstr "Puhelu siirretty"
 
-#: plugins/mm/calls-mm-call.c:82
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call deflected"
-msgstr ""
+msgstr "Puhelu taitettu"
 
-#: plugins/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:107
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Puhelu päättyi (tuntematon syykoodi %i)"
 
-#: plugins/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:82
 msgid "ModemManager unavailable"
 msgstr "ModemManager ei saatavilla"
 
-#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Ei puhetoiminnolla varustettua modeemia saatavilla"
 
-#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normaali"
 
-#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+#: plugins/provider/mm/calls-mm-provider.c:445
+#: plugins/provider/ofono/calls-ofono-provider.c:543
 msgid "Initialized"
 msgstr "Alustettu"
 
-#: plugins/ofono/calls-ofono-provider.c:94
+#: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
 msgstr "DBus ei saatavilla"
 
-#: plugins/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:668
 msgid "No encryption"
 msgstr "Ei salausta"
 
 #. TODO Optional encryption
-#: plugins/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:675
 msgid "Force encryption"
 msgstr "Pakota salaus"
 
-#: plugins/sip/calls-sip-call.c:123
+#: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
 msgstr "Salausavainten vaihto epäonnistui"
 
-#: plugins/sip/sip-account-widget.ui:11
+#: plugins/provider/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "Lisää tili"
 
-#: plugins/sip/sip-account-widget.ui:17
+#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Kirjaudu sisään"
 
-#: plugins/sip/sip-account-widget.ui:42
+#: plugins/provider/sip/sip-account-widget.ui:42
 msgid "Manage Account"
 msgstr "Hallitse tiliä"
 
-#: plugins/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:47
 msgid "_Apply"
 msgstr "_Toteuta"
 
-#: plugins/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:61
 msgid "_Delete"
 msgstr "_Poista"
 
-#: plugins/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:91
 msgid "Server"
 msgstr "Palvelin"
 
-#: plugins/sip/sip-account-widget.ui:109
+#: plugins/provider/sip/sip-account-widget.ui:109
 msgid "Display Name"
 msgstr "Näyttönimi"
 
-#: plugins/sip/sip-account-widget.ui:110
+#: plugins/provider/sip/sip-account-widget.ui:110
 msgid "Optional"
 msgstr "Valinnainen"
 
-#: plugins/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:128
 msgid "User ID"
 msgstr "Käyttäjätunniste"
 
-#: plugins/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:141
 msgid "Password"
 msgstr "Salasana"
 
-#: plugins/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Portti"
 
-#: plugins/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Liikenne"
 
-#: plugins/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:189
 msgid "Media Encryption"
 msgstr "Median salaus"
 
-#: plugins/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Käytä puheluihin"
 
-#: plugins/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Yhdistä automaattisesti"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Puhelu päättyi (tuntematon syy)"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Ei voi soittaa: ei taustapalvelua"
