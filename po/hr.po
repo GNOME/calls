@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-09-20 01:57+0000\n"
-"PO-Revision-Date: 2021-10-06 12:37+0200\n"
+"POT-Creation-Date: 2022-08-29 11:48+0000\n"
+"PO-Revision-Date: 2022-08-31 10:23+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.1.1\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:376
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Pozivi"
 
@@ -32,7 +32,7 @@ msgstr "Telefon"
 msgid "A phone dialer and call handler"
 msgstr "Telefonsko biranje i upravljanje pozivima"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telefon;Poziv;;Biranje;Birač;PSTN;"
@@ -46,53 +46,204 @@ msgid "A phone dialer and call handler (daemon mode)"
 msgstr ""
 "Telefonsko biranje i upravljanje pozivima (način rada pozadinskog programa)"
 
-#: src/calls-application.c:539
-#, c-format
-msgid "Tried invalid tel URI `%s'"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Pokrenite telefonske i SIP pozive"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Pozivi je jednostavno , eleganatno telefonsko biranje i upravljanje pozivima "
+"za GNOME. Može se koristiti s mobilnim modemom za klasične telefonske pozive "
+"kao i za VoIP pozive putem SIP protokola."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Upućivanje poziva"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "Povijest poziva"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Trebaju li pozivi automatski koristiti zadani izvor"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Pozivni broj zemlje prijavljen od strane modema"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Pozivni broj zemlje korišten za pretragu imena kontakta"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Automatski učitani priključci"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Ovi priključci će se automatski učitati pri pokretanju aplikacije."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr ""
+"Zvučni kôdeki koji se koriste za VoIP pozive prema željenom redoslijedu"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Željeni zvučni kôdeki koji se koriste za VoIP pozive (ako su dostupni)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Treba li dopustiti korištenje SDES za SRTP bez TLS kao prijenosa"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Postavite na istina ako želite dopustiti razmjenu ključeva s običnim tekstom."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Zadano (nepokrenuto) stanje"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Pokretanje računa…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Zaustavljanje računa…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Povezivanje s poslužiteljem…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Račun je na mreži"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Prekidanje povezivanja s poslužiteljem…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Račun nije na mreži"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Račun je naišao na grešku"
+
+#: src/calls-account.c:202
+#, fuzzy
+msgid "No reason given"
+msgstr "Nije dan razlog"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr ""
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr ""
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr ""
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr ""
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr ""
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr ""
+
+#: src/calls-account.c:223
+#, fuzzy
+msgid "Connection timed out"
+msgstr "Istek povezivanja"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr ""
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr ""
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr ""
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr ""
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr ""
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr ""
+
+#: src/calls-application.c:319
+#, fuzzy, c-format
+#| msgid "Tried invalid tel URI `%s'"
+msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Pokušan je nevaljani tel URI `%s'"
 
-#: src/calls-application.c:616
+#: src/calls-application.c:636
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ne znam kako otvoriti `%s'"
 
-#: src/calls-application.c:670
-msgid "The name of the plugin to use for the call Provider"
+#: src/calls-application.c:690
+#, fuzzy
+#| msgid "The name of the plugin to use for the call Provider"
+msgid "The name of the plugin to use as a call provider"
 msgstr "Naziv priključka koji se koristi za pružatelja usluga poziva"
 
-#: src/calls-application.c:671
+#: src/calls-application.c:691
 msgid "PLUGIN"
 msgstr "PRIKLJUČAK"
 
-#: src/calls-application.c:676
+#: src/calls-application.c:696
 msgid "Whether to present the main window on startup"
 msgstr "Treba li prikazati glavni prozor pri pokretanju"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:702
 msgid "Dial a telephone number"
 msgstr "Biraj telefonski broj"
 
-#: src/calls-application.c:683
+#: src/calls-application.c:703
 msgid "NUMBER"
 msgstr "BROJ"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:708
 msgid "Enable verbose debug messages"
 msgstr "Omogući otklanjanje grešaka poruka"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:714
 msgid "Print current version"
 msgstr "Prikaži inačicu i zatvori"
 
-#: src/calls-best-match.c:375 src/calls-call-record-row.c:40
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Anonimni pozivatelj"
 
-#: src/calls-call-display.c:278
-msgid "Calling…"
-msgstr "Pozivanje…"
-
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -101,211 +252,408 @@ msgstr ""
 "%s\n"
 "jučer"
 
-#: src/calls-main-window.c:125
+#: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  gogo https://launchpad.net/~trebelnik-stefina"
 
-#: src/calls-main-window.c:323
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Nemoguće spremanje poziva: Nema dostupnog glasovno sposobnog modula"
-
-#: src/calls-main-window.c:327
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nemoguće spremanje poziva: Nema dostupnog modema ili VoIP računa"
 
-#: src/calls-main-window.c:332
-msgid "Can't place calls: No backend service"
-msgstr "Nemoguće spremanje poziva: Nema pozadinske usluge"
-
-#: src/calls-main-window.c:336
-msgid "Can't place calls: No plugin"
+#: src/calls-main-window.c:318
+#, fuzzy
+#| msgid "Can't place calls: No plugin"
+msgid "Can't place calls: No plugin loaded"
 msgstr "Nemoguće spremanje poziva: Nema priključka"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Kontakti"
 
-#: src/calls-main-window.c:386 src/ui/call-display.ui:289
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
 msgstr "Biranje brojeva"
 
-#: src/calls-main-window.c:394
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Nedavno"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Propušteni poziv"
 
-#: src/calls-notifier.c:68
+#. %s is a name here
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Propušteni poziv od <b>%s</b>"
 
-#: src/calls-notifier.c:70
+#. %s is a id here
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Propušteni poziv od %s"
 
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Propušteni poziv od nepoznatog pozivatelja"
 
-#: src/calls-notifier.c:78
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Uzvrati poziv"
 
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "Dolazni telefonski poziv"
+#: src/ui/account-overview.ui:16
+#, fuzzy
+#| msgid "_VoIP Accounts"
+msgid "VoIP Accounts"
+msgstr "_VoIP računi"
 
-#: src/ui/call-display.ui:135
-msgid "Mute"
-msgstr "Utišaj"
+#: src/ui/account-overview.ui:49
+#, fuzzy
+#| msgid "_VoIP Accounts"
+msgid "Add VoIP Accounts"
+msgstr "_VoIP računi"
 
-#: src/ui/call-display.ui:172
-msgid "Speaker"
-msgstr "Zvučnik"
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
 
-#: src/ui/call-display.ui:208
-msgid "Add call"
-msgstr "Dodaj poziv"
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#, fuzzy
+#| msgid "SIP Account"
+msgid "_Add Account"
+msgstr "SIP račun"
 
-#: src/ui/call-display.ui:253
-msgid "Hold"
-msgstr "Čekanje"
-
-#: src/ui/call-display.ui:345
-msgid "Hang up"
-msgstr "Prekini"
-
-#: src/ui/call-display.ui:376
-msgid "Answer"
-msgstr "Odgovori"
-
-#: src/ui/call-display.ui:458
-msgid "Hide the dial pad"
-msgstr "Sakrij biranje brojeva"
-
-#: src/ui/call-record-row.ui:68
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Poziv"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "_Obriši poziv"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_Kopiraj broj"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
+#: src/ui/call-record-row.ui:112
+#, fuzzy
+#| msgid "Contacts"
+msgid "_Add contact"
+msgstr "Kontakti"
 
-#: src/ui/call-selector-item.ui:44
+#: src/ui/call-record-row.ui:117
+#, fuzzy
+#| msgid "_Send"
+msgid "_Send SMS"
+msgstr "_Pošalji"
+
+#: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Na čekanju"
 
-#: src/ui/contacts-box.ui:66
-msgid "No contacts found"
+#: src/ui/contacts-box.ui:60
+#, fuzzy
+#| msgid "No contacts found"
+msgid "No Contacts Found"
 msgstr "Nema pronađenih kontakta"
 
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "Ovaj poziv nije šrifriran"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "Ovaj poziv je šrifriran"
-
-#: src/ui/history-box.ui:23
+#: src/ui/history-box.ui:10
 msgid "No Recent Calls"
 msgstr "Nema nedavnih poziva"
 
-#: src/ui/history-header-bar.ui:7
-msgid "Recent Calls"
-msgstr "Nedavni pozivi"
-
-#: src/ui/history-header-bar.ui:20
-msgid "New call…"
-msgstr "Novi poziv…"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:39
-msgid "Menu"
-msgstr "Izbornik"
-
-#: src/ui/history-header-bar.ui:70
-msgid "About Calls"
-msgstr "O Pozivima"
-
-#: src/ui/main-window.ui:76
-msgid "No modem found"
-msgstr "Modem nije pronađen"
-
-#: src/ui/main-window.ui:118
+#: src/ui/main-window.ui:105
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:127
+#: src/ui/main-window.ui:114
 msgid "_Cancel"
 msgstr "_Odustani"
 
-#: src/ui/main-window.ui:144
+#: src/ui/main-window.ui:131
 msgid "_Close"
 msgstr "_Zatvori"
 
-#: src/ui/main-window.ui:154
+#: src/ui/main-window.ui:141
 msgid "_Send"
 msgstr "_Pošalji"
 
-#: src/ui/main-window.ui:228
+#: src/ui/main-window.ui:214
 msgid "_VoIP Accounts"
 msgstr "_VoIP računi"
 
-#: src/ui/main-window.ui:241
+#: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
 msgstr "_Prečaci tipkovnice"
 
-#: src/ui/main-window.ui:247
+#: src/ui/main-window.ui:233
 msgid "_Help"
 msgstr "_Priručnik"
 
-#: src/ui/main-window.ui:253
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_O Pozivima"
 
-#: src/ui/new-call-box.ui:33
+#: src/ui/new-call-box.ui:45
 msgid "Enter a VoIP address"
 msgstr "Upišite VoIP adresu"
 
-#: src/ui/new-call-box.ui:46
+#: src/ui/new-call-box.ui:58
 msgid "Enter a number"
 msgstr "Upišite broj"
 
-#: src/ui/new-call-box.ui:91
+#: src/ui/new-call-box.ui:97
 msgid "Dial"
 msgstr "Biraj"
 
-#: src/ui/new-call-box.ui:114
-msgid "Backspace through number"
-msgstr "Povrat po brojevima"
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr ""
 
-#: src/ui/new-call-box.ui:145
+#: src/ui/new-call-box.ui:149
 msgid "SIP Account"
 msgstr "SIP račun"
 
-#: src/ui/new-call-header-bar.ui:7
+#: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
 msgstr "Novi poziv"
 
-#: src/ui/new-call-header-bar.ui:20
+#: src/ui/new-call-header-bar.ui:19
 msgid "Back"
 msgstr "Natrag"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+#, fuzzy
+msgid "Unknown reason"
+msgstr "Nepoznat razlog"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:75
+#, fuzzy
+#| msgid "Incoming call"
+msgid "New incoming call"
+msgstr "Dolazni poziv"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+#, fuzzy
+#| msgid "Call back"
+msgid "Call accepted"
+msgstr "Uzvrati poziv"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+#, fuzzy
+#| msgid "Call holder"
+msgid "Call ended"
+msgstr "Poziv završio"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:81
+msgid "Call transferred"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call deflected"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:107
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+#, fuzzy
+#| msgid "Can't place calls: No voice-capable modem available"
+msgid "No voice-capable modem available"
+msgstr "Nemoguće spremanje poziva: Nema dostupnog glasovno sposobnog modula"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+#, fuzzy
+msgid "Normal"
+msgstr "Normalna"
+
+#: plugins/provider/mm/calls-mm-provider.c:445
+#: plugins/provider/ofono/calls-ofono-provider.c:543
+msgid "Initialized"
+msgstr ""
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr ""
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+#, fuzzy
+msgid "No encryption"
+msgstr "Bez šifriranja"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+#, fuzzy
+msgid "Force encryption"
+msgstr "Prisili šifriranje"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+#, fuzzy
+#| msgid "SIP Account"
+msgid "Add Account"
+msgstr "Dodaj račun"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+#, fuzzy
+msgid "_Log In"
+msgstr "_Prijava"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+#, fuzzy
+#| msgid "SIP Account"
+msgid "Manage Account"
+msgstr "Upravljanje računom"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+#, fuzzy
+msgid "_Apply"
+msgstr "_Primijeni"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+#, fuzzy
+#| msgid "_Delete Call"
+msgid "_Delete"
+msgstr "_Obriši"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+#, fuzzy
+msgid "Server"
+msgstr "Poslužitelj"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+#, fuzzy
+msgid "Display Name"
+msgstr "Naziv prikaza"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+#, fuzzy
+msgid "Optional"
+msgstr "Neobavezno"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+#, fuzzy
+msgid "User ID"
+msgstr "ID korisnika"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+#, fuzzy
+msgid "Password"
+msgstr "Lozinka"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+#, fuzzy
+msgid "Port"
+msgstr "Ulaz"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr ""
+
+#~ msgid "Calling…"
+#~ msgstr "Pozivanje…"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "Nemoguće spremanje poziva: Nema pozadinske usluge"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Dolazni telefonski poziv"
+
+#~ msgid "Mute"
+#~ msgstr "Utišaj"
+
+#~ msgid "Speaker"
+#~ msgstr "Zvučnik"
+
+#~ msgid "Add call"
+#~ msgstr "Dodaj poziv"
+
+#~ msgid "Hold"
+#~ msgstr "Čekanje"
+
+#~ msgid "Hang up"
+#~ msgstr "Prekini"
+
+#~ msgid "Answer"
+#~ msgstr "Odgovori"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Sakrij biranje brojeva"
+
+#~ msgid "+441234567890"
+#~ msgstr "+441234567890"
+
+#~ msgid "This call is not encrypted"
+#~ msgstr "Ovaj poziv nije šrifriran"
+
+#~ msgid "This call is encrypted"
+#~ msgstr "Ovaj poziv je šrifriran"
+
+#~ msgid "Recent Calls"
+#~ msgstr "Nedavni pozivi"
+
+#~ msgid "New call…"
+#~ msgstr "Novi poziv…"
+
+#~ msgid "Menu"
+#~ msgstr "Izbornik"
+
+#~ msgid "About Calls"
+#~ msgstr "O Pozivima"
+
+#~ msgid "No modem found"
+#~ msgstr "Modem nije pronađen"
+
+#~ msgid "Backspace through number"
+#~ msgstr "Povrat po brojevima"
 
 #~ msgid "View"
 #~ msgstr "Pogled"
@@ -353,9 +701,6 @@ msgstr "Natrag"
 #~ msgid "Data for the call this display will be associated with"
 #~ msgstr "Podaci za poziv ovog prikaza će biti pridruženi sa"
 
-#~ msgid "The call to hold"
-#~ msgstr "Poziv na čeknju"
-
 #~ msgid "ID"
 #~ msgstr "ID"
 
@@ -398,9 +743,6 @@ msgstr "Natrag"
 #~ msgid "Interface for libfolks"
 #~ msgstr "Sučelje za libfolks"
 
-#~ msgid "Call holder"
-#~ msgstr "Čekanje poziva"
-
 #~ msgid "The holder for this call"
 #~ msgstr "Čekanje za ovaj poziv"
 
@@ -430,9 +772,6 @@ msgstr "Natrag"
 
 #~ msgid "A text string describing the status for display to the user"
 #~ msgstr "Tekstni izraz koji opisuje stanje za prikaz korisniku"
-
-#~ msgid "Incoming call"
-#~ msgstr "Dolazni poziv"
 
 #~ msgid "Call the party"
 #~ msgstr "Nazovi ika"
