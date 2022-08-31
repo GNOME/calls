@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-08-29 11:48+0000\n"
-"PO-Revision-Date: 2022-08-31 10:23+0200\n"
+"POT-Creation-Date: 2022-08-31 08:36+0000\n"
+"PO-Revision-Date: 2022-08-31 12:19+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -141,68 +141,65 @@ msgid "Account encountered an error"
 msgstr "Račun je naišao na grešku"
 
 #: src/calls-account.c:202
-#, fuzzy
 msgid "No reason given"
 msgstr "Nije dan razlog"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
-msgstr ""
+msgstr "Pokretanje je započelo"
 
 #: src/calls-account.c:208
 msgid "Initialization complete"
-msgstr ""
+msgstr "Pokretanje je završeno"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr ""
+msgstr "Zaustavljanje je započelo"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
-msgstr ""
+msgstr "Zaustavljanje je završeno"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr ""
+msgstr "Nema postavljene vjerodajnice"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr ""
+msgstr "Pokretanje povezivanja"
 
 #: src/calls-account.c:223
-#, fuzzy
 msgid "Connection timed out"
 msgstr "Istek povezivanja"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
-msgstr ""
+msgstr "Naziv domene se nemože razrješiti"
 
 #: src/calls-account.c:229
 msgid "Server did not accept username or password"
-msgstr ""
+msgstr "Server ne prihvaća korisničko ime ili lozinku"
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
-msgstr ""
+msgstr "Povezivanje završeno"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr ""
+msgstr "Pokretanje prekidanja povezivanja"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr ""
+msgstr "Prekidanje povezivanja završeno"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
-msgstr ""
+msgstr "Dogodila se unutrašnja greška"
 
 #: src/calls-application.c:319
-#, fuzzy, c-format
-#| msgid "Tried invalid tel URI `%s'"
+#, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr "Pokušan je nevaljani tel URI `%s'"
+msgstr "Pokušaj pozivanja nevaljanog tel URI-a `%s'"
 
 #: src/calls-application.c:636
 #, c-format
@@ -210,8 +207,6 @@ msgid "Don't know how to open `%s'"
 msgstr "Ne znam kako otvoriti `%s'"
 
 #: src/calls-application.c:690
-#, fuzzy
-#| msgid "The name of the plugin to use for the call Provider"
 msgid "The name of the plugin to use as a call provider"
 msgstr "Naziv priključka koji se koristi za pružatelja usluga poziva"
 
@@ -263,10 +258,8 @@ msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nemoguće spremanje poziva: Nema dostupnog modema ili VoIP računa"
 
 #: src/calls-main-window.c:318
-#, fuzzy
-#| msgid "Can't place calls: No plugin"
 msgid "Can't place calls: No plugin loaded"
-msgstr "Nemoguće spremanje poziva: Nema priključka"
+msgstr "Nemoguće spremanje poziva: Nema učitanog priključka"
 
 #: src/calls-main-window.c:353
 msgid "Contacts"
@@ -306,16 +299,12 @@ msgid "Call back"
 msgstr "Uzvrati poziv"
 
 #: src/ui/account-overview.ui:16
-#, fuzzy
-#| msgid "_VoIP Accounts"
 msgid "VoIP Accounts"
-msgstr "_VoIP računi"
+msgstr "VoIP računi"
 
 #: src/ui/account-overview.ui:49
-#, fuzzy
-#| msgid "_VoIP Accounts"
 msgid "Add VoIP Accounts"
-msgstr "_VoIP računi"
+msgstr "Dodaj VoIP račune"
 
 #: src/ui/account-overview.ui:51
 msgid ""
@@ -323,12 +312,13 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
+"Možete dodati VoIP račun ovdje. Omogućuje vam upućivanje i primanje VoIP "
+"poziva koristeći SIP protokol. Ova značajka je još uvijek relativno nova i "
+"nije potpuno dovršena (npr. nema šifriranja medija)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
-#, fuzzy
-#| msgid "SIP Account"
 msgid "_Add Account"
-msgstr "SIP račun"
+msgstr "_Dodaj račun"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:62
@@ -345,24 +335,18 @@ msgid "_Copy number"
 msgstr "_Kopiraj broj"
 
 #: src/ui/call-record-row.ui:112
-#, fuzzy
-#| msgid "Contacts"
 msgid "_Add contact"
-msgstr "Kontakti"
+msgstr "_Dodaj kontakt"
 
 #: src/ui/call-record-row.ui:117
-#, fuzzy
-#| msgid "_Send"
 msgid "_Send SMS"
-msgstr "_Pošalji"
+msgstr "_Pošalji SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
 msgstr "Na čekanju"
 
 #: src/ui/contacts-box.ui:60
-#, fuzzy
-#| msgid "No contacts found"
 msgid "No Contacts Found"
 msgstr "Nema pronađenih kontakta"
 
@@ -417,7 +401,7 @@ msgstr "Biraj"
 
 #: src/ui/new-call-box.ui:120
 msgid "Delete character in front of cursor"
-msgstr ""
+msgstr "Obriši znak ispred pokazivača"
 
 #: src/ui/new-call-box.ui:149
 msgid "SIP Account"
@@ -432,171 +416,145 @@ msgid "Back"
 msgstr "Natrag"
 
 #: plugins/provider/mm/calls-mm-call.c:73
-#, fuzzy
 msgid "Unknown reason"
 msgstr "Nepoznat razlog"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
-msgstr ""
+msgstr "Odlazni poziv započeo"
 
 #: plugins/provider/mm/calls-mm-call.c:75
-#, fuzzy
-#| msgid "Incoming call"
 msgid "New incoming call"
-msgstr "Dolazni poziv"
+msgstr "Novi dolazni poziv"
 
 #: plugins/provider/mm/calls-mm-call.c:76
-#, fuzzy
-#| msgid "Call back"
 msgid "Call accepted"
-msgstr "Uzvrati poziv"
+msgstr "Poziv prihvaćen"
 
 #: plugins/provider/mm/calls-mm-call.c:77
-#, fuzzy
-#| msgid "Call holder"
 msgid "Call ended"
 msgstr "Poziv završio"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
-msgstr ""
+msgstr "Poziv je prekinut (zauzeto ili je poziv uskraćen)"
 
 #: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
-msgstr ""
+msgstr "Poziv je prekinut (pogrešan id ili mrežni problem)"
 
 #: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
-msgstr ""
+msgstr "Poziv je prekinut (greška postavljanja zvučnog kanala)"
 
 #: plugins/provider/mm/calls-mm-call.c:81
 msgid "Call transferred"
-msgstr ""
+msgstr "Poziv je prenesen"
 
 #: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call deflected"
-msgstr ""
+msgstr "Poziv je uskraćen"
 
 #: plugins/provider/mm/calls-mm-call.c:107
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
-msgstr ""
+msgstr "Poziv je prekinut (nepoznat kôd razloga %i)"
 
 #: plugins/provider/mm/calls-mm-provider.c:82
 msgid "ModemManager unavailable"
-msgstr ""
+msgstr "Upravitelj modema je nedostupan"
 
 #: plugins/provider/mm/calls-mm-provider.c:84
 #: plugins/provider/ofono/calls-ofono-provider.c:96
-#, fuzzy
-#| msgid "Can't place calls: No voice-capable modem available"
 msgid "No voice-capable modem available"
-msgstr "Nemoguće spremanje poziva: Nema dostupnog glasovno sposobnog modula"
+msgstr "Nema dostupnog glasovno sposobnog modema"
 
 #: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:98
-#, fuzzy
 msgid "Normal"
-msgstr "Normalna"
+msgstr "Normalno"
 
 #: plugins/provider/mm/calls-mm-provider.c:445
 #: plugins/provider/ofono/calls-ofono-provider.c:543
 msgid "Initialized"
-msgstr ""
+msgstr "Pokrenuto"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
-msgstr ""
+msgstr "DBus je nedostupan"
 
 #: plugins/provider/sip/calls-sip-account-widget.c:668
-#, fuzzy
 msgid "No encryption"
 msgstr "Bez šifriranja"
 
 #. TODO Optional encryption
 #: plugins/provider/sip/calls-sip-account-widget.c:675
-#, fuzzy
 msgid "Force encryption"
 msgstr "Prisili šifriranje"
 
 #: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
-msgstr ""
+msgstr "Kriptografska razmjena ključeva neuspješna"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-#, fuzzy
-#| msgid "SIP Account"
 msgid "Add Account"
 msgstr "Dodaj račun"
 
 #: plugins/provider/sip/sip-account-widget.ui:17
-#, fuzzy
 msgid "_Log In"
 msgstr "_Prijava"
 
 #: plugins/provider/sip/sip-account-widget.ui:42
-#, fuzzy
-#| msgid "SIP Account"
 msgid "Manage Account"
 msgstr "Upravljanje računom"
 
 #: plugins/provider/sip/sip-account-widget.ui:47
-#, fuzzy
 msgid "_Apply"
 msgstr "_Primijeni"
 
 #: plugins/provider/sip/sip-account-widget.ui:61
-#, fuzzy
-#| msgid "_Delete Call"
 msgid "_Delete"
 msgstr "_Obriši"
 
 #: plugins/provider/sip/sip-account-widget.ui:91
-#, fuzzy
 msgid "Server"
 msgstr "Poslužitelj"
 
 #: plugins/provider/sip/sip-account-widget.ui:109
-#, fuzzy
 msgid "Display Name"
 msgstr "Naziv prikaza"
 
 #: plugins/provider/sip/sip-account-widget.ui:110
-#, fuzzy
 msgid "Optional"
 msgstr "Neobavezno"
 
 #: plugins/provider/sip/sip-account-widget.ui:128
-#, fuzzy
 msgid "User ID"
 msgstr "ID korisnika"
 
 #: plugins/provider/sip/sip-account-widget.ui:141
-#, fuzzy
 msgid "Password"
 msgstr "Lozinka"
 
 #: plugins/provider/sip/sip-account-widget.ui:166
-#, fuzzy
 msgid "Port"
 msgstr "Ulaz"
 
 #: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
-msgstr ""
+msgstr "Prijenos"
 
 #: plugins/provider/sip/sip-account-widget.ui:189
 msgid "Media Encryption"
-msgstr ""
+msgstr "Šifriranje medija"
 
 #: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
-msgstr ""
+msgstr "Koristi za telefonske pozive"
 
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
-msgstr ""
+msgstr "Automatski poveži"
 
 #~ msgid "Calling…"
 #~ msgstr "Pozivanje…"
