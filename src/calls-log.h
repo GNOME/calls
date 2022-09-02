@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <glib.h>
+
 #ifndef CALLS_LOG_LEVEL_TRACE
 # define CALLS_LOG_LEVEL_TRACE ((GLogLevelFlags)(1 << G_LOG_LEVEL_USER_SHIFT))
 # define CALLS_LOG_DETAILED ((GLogLevelFlags)(8 << G_LOG_LEVEL_USER_SHIFT))
@@ -34,6 +36,6 @@
                              __FILE__, G_STRINGIFY (__LINE__),          \
                              G_STRFUNC, __VA_ARGS__)
 
-void calls_log_init               (void);
-void calls_log_increase_verbosity (void);
-int  calls_log_get_verbosity      (void);
+void  calls_log_init               (void);
+void  calls_log_increase_verbosity (void);
+guint calls_log_get_verbosity      (void);
