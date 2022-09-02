@@ -20,7 +20,7 @@
 #define DEFAULT_DOMAIN_PREFIX "Calls"
 
 static char *domains;
-static int verbosity;
+static guint verbosity;
 static gboolean any_domain;
 static gboolean stderr_is_journal;
 
@@ -273,7 +273,7 @@ calls_log_increase_verbosity (void)
   verbosity++;
 }
 
-int
+guint
 calls_log_get_verbosity (void)
 {
   return verbosity;
