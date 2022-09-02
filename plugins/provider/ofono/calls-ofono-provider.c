@@ -229,8 +229,8 @@ modem_proxy_new_cb (GDBusConnection               *connection,
     g_variant_unref (data->ifaces);
     g_free (data->name);
     g_free (data);
-    g_error ("Error creating oFono Modem proxy: %s",
-             error->message);
+    g_warning ("Error creating oFono Modem proxy: %s",
+               error->message);
     return;
   }
 
@@ -423,8 +423,9 @@ ofono_appeared_cb (GDBusConnection    *connection,
   g_autoptr (GError) error = NULL;
   self->connection = connection;
   if (!self->connection) {
-    g_error ("Error creating D-Bus connection: %s",
-             error->message);
+    g_warning ("Error creating D-Bus connection: %s",
+               error->message);
+    return;
   }
 
   /* TODO this should be async */
@@ -436,8 +437,9 @@ ofono_appeared_cb (GDBusConnection    *connection,
                     NULL,
                     &error);
   if (!self->manager) {
-    g_error ("Error creating ModemManager object manager proxy: %s",
-             error->message);
+    g_warning ("Error creating ModemManager object manager proxy: %s",
+               error->message);
+    return;
   }
 
   g_signal_connect (self->manager, "modem-added",
