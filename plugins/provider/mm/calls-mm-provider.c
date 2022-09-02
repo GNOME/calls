@@ -274,7 +274,7 @@ mm_manager_new_cb (GDBusConnection *connection,
                    GAsyncResult    *res,
                    CallsMMProvider *self)
 {
-  GError *error = NULL;
+  g_autoptr (GError) error = NULL;
 
   self->mm = mm_manager_new_finish (res, &error);
   if (!self->mm) {
