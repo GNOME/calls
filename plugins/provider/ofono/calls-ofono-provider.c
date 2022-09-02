@@ -427,6 +427,7 @@ ofono_appeared_cb (GDBusConnection    *connection,
              error->message);
   }
 
+  /* TODO this should be async */
   self->manager = gdbo_manager_proxy_new_sync
                     (self->connection,
                     G_DBUS_PROXY_FLAGS_NONE,
