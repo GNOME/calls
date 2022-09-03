@@ -50,6 +50,8 @@ struct _CallsMMProvider {
   MMManager    *mm;
   /* A list of CallsOrigins */
   GListStore   *origins;
+
+  GCancellable *cancellable;
 };
 
 static void calls_mm_provider_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -310,9 +312,13 @@ mm_appeared_cb (GDBusConnection *connection,
 {
   g_debug ("ModemManager appeared on D-Bus");
 
+  g_cancellable_cancel (self->cancellable);
+  g_clear_object (&self->cancellable);
+  self->cancellable = g_cancellable_new ();
+
   mm_manager_new (connection,
                   G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE,
-                  NULL,
+                  self->cancellable,
                   (GAsyncReadyCallback) mm_manager_new_cb,
                   self);
 }
@@ -389,6 +395,9 @@ static void
 dispose (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
+
+  g_cancellable_cancel (self->cancellable);
+  g_clear_object (&self->cancellable);
 
   g_clear_object (&self->mm);
 
