@@ -7,7 +7,7 @@ A phone dialer and call handler.
 Calls is licensed under the GPLv3+.
 
 ## Dependencies
-To build Calls you need to first install the build-deps defined by [the debian/control file](https://gitlab.gnome.org/GNOME/calls/blob/master/debian/control#L8)
+To build Calls you need to first install the build-deps defined by [the debian/control file](https://gitlab.gnome.org/GNOME/calls/blob/main/debian/control#L8)
 
 If you are running a Debian based distribution, you can easily install all those the dependencies making use of the following command
 
