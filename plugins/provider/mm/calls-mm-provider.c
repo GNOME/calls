@@ -324,6 +324,9 @@ mm_vanished_cb (GDBusConnection *connection,
                 CallsMMProvider *self)
 {
   g_debug ("ModemManager vanished from D-Bus");
+
+  g_clear_object (&self->mm);
+
   g_list_store_remove_all (self->origins);
   update_status (self);
 }
@@ -386,6 +389,8 @@ static void
 dispose (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
+
+  g_clear_object (&self->mm);
 
   g_clear_handle_id (&self->watch_id, g_bus_unwatch_name);
 
