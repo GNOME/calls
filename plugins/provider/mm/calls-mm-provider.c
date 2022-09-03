@@ -124,7 +124,6 @@ add_origin (CallsMMProvider *self,
   g_autoptr (CallsMMOrigin) origin = NULL;
   g_autoptr (MMModem3gpp) modem_3gpp = NULL;
   const gchar *path;
-  g_autofree char *imei = NULL;
 
   mm_obj = MM_OBJECT (object);
   path = g_dbus_object_get_object_path (object);
