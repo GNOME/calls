@@ -1,3 +1,80 @@
+gnome-calls (43~rc.0) unstable; urgency=medium
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Piotr Drąg ]
+  * Update Polish translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * manager: Drop unused get_contact_name() declaration
+  * manager: Remove unused has_active_call() function
+  * ci: Include intltool in Debian image
+  * ci: Update Debian image
+  * Move provider plugins into a dedicated directory
+  * Move plugin specific tests into dedicated directory
+  * plugins.in: Add package version and update copyright
+  * plugins: Fix install directory typo
+  * ci: Include flatpak_ci_initiative.yml and remove inline copy
+  * sip: origin: Actually set "auto-connect" property (Closes: #466)
+  * mm: call: Check call direction when mapping waiting state
+  * call: Remove waiting state
+  * Revert "new-call-box: Clear entry after dialing"
+  * application: Whitespaces style nitpicks
+  * application: Consistent use of user_data in action "activate" callbacks.
+  * application: Fix typo in message emission
+  * call: Prefer using enum values
+  * call: Document call states
+  * d/gbp.conf: Set default branch to 'main' (was 'master')
+  * ofono-provider: Add TODO about preferring async functions
+  * mm-provider: Don't leak error
+  * mm-provider: Avoid using g_error()
+  * ofono-provider: Don't g_error() without good reason (Closes: #4)
+  * ci: (Slightly) rename flatpak CI job
+  * ci: Publish pages for main branch (not master)
+  * readme: Update links to d/control
+  * hacking: Refresh links
+  * mm-provider: Remove unused variable
+  * mm-provider: Prefer g_clear_*() in dispose() and finalize()
+  * mm-provider: Don't leak MMManager
+  * Update libcall-ui to v0.0.5
+
+  [ Emin Tufan Çetin ]
+  * Update Turkish translation
+
+  [ Zurab Kargareteli ]
+  * Update Georgian translation
+
+  [ Марко Костић ]
+  * Update Serbian translation
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+
+  [ Luna Jernberg ]
+  * Update Swedish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Guido Günther ]
+  * main-window: Add translator comment to not translate the application name
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Goran Vidović ]
+  * Update Croatian translation
+  * Update Croatian translation
+
+  [ Éloi Rivard ]
+  * Update French translation
+
+  [ Matt Turner ]
+  * build: Use GNOME module post_install()
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 03 Sep 2022 20:41:59 +0200
+
 gnome-calls (43~beta.0) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

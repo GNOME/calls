@@ -1,3 +1,39 @@
+Calls 43.rc.0
+---------------
+Released: 3 September 2022
+
+New features:
+=============
+* Call display redesigned
+
+Maybe noteworthy:
+=================
+* Changed the default branch to "main"
+* Fix auto-connect VoIP setting not being honored
+* Fixed issue with outgoin waiting calls considered as incoming call
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Guido Günther
+ - Matt Turner
+
+Translation updates:
+====================
+ - Persian (Danial Behzadi)
+ - Polish (Piotr Drąg)
+ - Turkish (Emin Tufan Çetin)
+ - Georgian (Zurab Kargareteli)
+ - Serbian (Мирослав Николић)
+ - Hebrew (Yosef Or Boczko)
+ - Swedish (Luna Jernberg)
+ - Romanian (Daniel Șerbănescu)
+ - Finnish (Jiri Grönroos)
+ - Croatian (Goran Vidović)
+ - French (Éloi Rivard)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.beta.0
 ---------------
 Released: 6 August 2022
