@@ -125,5 +125,5 @@ individual C files should be structured as (top to bottom of file):
   
   Try to avoid forward declarations where possible.
 [1]: https://www.gnu.org/prep/standards/standards.html#Formatting
-[2]: https://source.puri.sm/Librem5/phosh/blob/master/HACKING.md#coding-style
-[3]: https://source.puri.sm/Librem5/libhandy/blob/master/HACKING.md#coding-style
+[2]: https://gitlab.gnome.org/World/Phosh/phosh/-/blob/main/HACKING.md#coding-style
+[3]: https://gitlab.gnome.org/GNOME/libhandy/-/blob/main/HACKING.md#coding-style
