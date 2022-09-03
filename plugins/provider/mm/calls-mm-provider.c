@@ -387,10 +387,7 @@ dispose (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
-  if (self->watch_id) {
-    g_bus_unwatch_name (self->watch_id);
-    self->watch_id = 0;
-  }
+  g_clear_handle_id (&self->watch_id, g_bus_unwatch_name);
 
   g_list_store_remove_all (self->origins);
 
@@ -403,8 +400,8 @@ finalize (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
-  g_object_unref (self->origins);
-  g_free (self->status);
+  g_clear_object (&self->origins);
+  g_clear_pointer (&self->status, g_free);
 
   G_OBJECT_CLASS (calls_mm_provider_parent_class)->finalize (object);
 }
