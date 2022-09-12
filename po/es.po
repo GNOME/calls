@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-05-19 09:31+0000\n"
-"PO-Revision-Date: 2022-05-24 10:21+0200\n"
+"POT-Creation-Date: 2022-09-11 14:09+0000\n"
+"PO-Revision-Date: 2022-09-12 12:37+0200\n"
 "Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:437 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:440 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Llamadase"
 
@@ -102,129 +102,138 @@ msgstr "Codecs de audio para usar en llamadas VoIP, en orden de preferencia"
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "Los codecs de audio para llamadas VoIP (cuando esté disponible)"
 
-#: src/calls-account.c:205
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Si permitir el uso de SDES y SRTP sin TLS como protocolo de transporte"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Activar en caso de querer permitir el intercambio de claves sin cifrar."
+
+#: src/calls-account.c:163
 msgid "Default (uninitialized) state"
 msgstr "Estado (desinicializado) predeterminado"
 
-#: src/calls-account.c:208
+#: src/calls-account.c:166
 msgid "Initializing account…"
 msgstr "Inicializando cuenta…"
 
-#: src/calls-account.c:211
+#: src/calls-account.c:169
 msgid "Uninitializing account…"
 msgstr "Desinicializando cuenta…"
 
-#: src/calls-account.c:214
+#: src/calls-account.c:172
 msgid "Connecting to server…"
 msgstr "Conectando al servidor…"
 
-#: src/calls-account.c:217
+#: src/calls-account.c:175
 msgid "Account is online"
 msgstr "Cuenta conectada"
 
-#: src/calls-account.c:220
+#: src/calls-account.c:178
 msgid "Disconnecting from server…"
 msgstr "Desconectando del servidor…"
 
-#: src/calls-account.c:223
+#: src/calls-account.c:181
 msgid "Account is offline"
 msgstr "Cuenta desconectada"
 
-#: src/calls-account.c:226
+#: src/calls-account.c:184
 msgid "Account encountered an error"
 msgstr "Error en la cuenta"
 
-#: src/calls-account.c:244
+#: src/calls-account.c:202
 msgid "No reason given"
 msgstr "Razón desconocida"
 
-#: src/calls-account.c:247
+#: src/calls-account.c:205
 msgid "Initialization started"
 msgstr "Inicialización iniciada"
 
-#: src/calls-account.c:250
+#: src/calls-account.c:208
 msgid "Initialization complete"
 msgstr "Inicialización completada"
 
-#: src/calls-account.c:253
+#: src/calls-account.c:211
 msgid "Uninitialization started"
 msgstr "Desinicialización iniciada"
 
-#: src/calls-account.c:256
+#: src/calls-account.c:214
 msgid "Uninitialization complete"
 msgstr "Desinicialización completada"
 
-#: src/calls-account.c:259
+#: src/calls-account.c:217
 msgid "No credentials set"
 msgstr "No existen credenciales"
 
-#: src/calls-account.c:262
+#: src/calls-account.c:220
 msgid "Starting to connect"
 msgstr "Conexión iniciada"
 
-#: src/calls-account.c:265
+#: src/calls-account.c:223
 msgid "Connection timed out"
 msgstr "La conexión agotó el tiempo de espera"
 
-#: src/calls-account.c:268
+#: src/calls-account.c:226
 msgid "Domain name could not be resolved"
 msgstr "No se pudo resolver el nombre del dominio"
 
-#: src/calls-account.c:271
+#: src/calls-account.c:229
 msgid "Server did not accept username or password"
 msgstr "El servidor no ha aceptado el usuario o contraseña"
 
-#: src/calls-account.c:274
+#: src/calls-account.c:232
 msgid "Connecting complete"
 msgstr "Conexión finalizada"
 
-#: src/calls-account.c:277
+#: src/calls-account.c:235
 msgid "Starting to disconnect"
 msgstr "Desconexión iniciada"
 
-#: src/calls-account.c:280
+#: src/calls-account.c:238
 msgid "Disconnecting complete"
 msgstr "Desconexión finalizada"
 
-#: src/calls-account.c:283
+#: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr "Error interno"
 
-#: src/calls-application.c:318
+#: src/calls-application.c:319
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Intento de marcado de URI de teléfono «%s» no válido"
 
-#: src/calls-application.c:635
+#: src/calls-application.c:638
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No se sabe cómo abrir «%s»"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:692
 msgid "The name of the plugin to use as a call provider"
 msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:693
 msgid "PLUGIN"
 msgstr "COMPLEMENTO"
 
-#: src/calls-application.c:695
+#: src/calls-application.c:698
 msgid "Whether to present the main window on startup"
 msgstr "Indica si se muestra la ventana principal al inicio"
 
-#: src/calls-application.c:701
+#: src/calls-application.c:704
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:705
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:707
+#: src/calls-application.c:710
 msgid "Enable verbose debug messages"
 msgstr "Activar mensajes de depuración detallados"
 
-#: src/calls-application.c:713
+#: src/calls-application.c:716
 msgid "Print current version"
 msgstr "Imprimir versión actual"
 
@@ -312,7 +321,7 @@ msgstr ""
 "VoIP usando el protocolo SIP. Esta función es relativamente nueva y faltan "
 "algunas características (por ejemplo, archivos cifrados)"
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:97
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "_Añadir cuenta"
 
@@ -333,6 +342,10 @@ msgstr "_Copiar número"
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
 msgstr "_Añadir contacto"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Enviar SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
@@ -374,6 +387,7 @@ msgstr "_Atajos de teclado"
 msgid "_Help"
 msgstr "_Ayuda"
 
+#. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Acerca de Llamadas"
@@ -406,122 +420,149 @@ msgstr "Llamada nueva"
 msgid "Back"
 msgstr "Atrás"
 
-#: plugins/mm/calls-mm-call.c:73
-msgid "Call disconnected (unknown reason)"
-msgstr "Llamada desconectada (razón desconocida)"
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Razón desconocida"
 
-#: plugins/mm/calls-mm-call.c:74
+#: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
 msgstr "Llamada saliente iniciada"
 
-#: plugins/mm/calls-mm-call.c:75
+#: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
 msgstr "Nueva llamada entrante"
 
-#: plugins/mm/calls-mm-call.c:76
+#: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
 msgstr "Llamada aceptada"
 
-#: plugins/mm/calls-mm-call.c:77
+#: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
 msgstr "Llamada finalizada"
 
-#: plugins/mm/calls-mm-call.c:78
+#: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
 msgstr "Llamada desconectada (número ocupado o llamada rechazada)"
 
-#: plugins/mm/calls-mm-call.c:79
+#: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
 msgstr "Llamada desconectada (id erróneo o error de red)"
 
-#: plugins/mm/calls-mm-call.c:80
+#: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Llamada desconectada (problema conectando el canal de audio)"
 
-#: plugins/mm/calls-mm-call.c:81
+#: plugins/provider/mm/calls-mm-call.c:81
 msgid "Call transferred"
 msgstr "Llamada desviada"
 
-#: plugins/mm/calls-mm-call.c:82
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call deflected"
 msgstr "Llamada rechazada"
 
-#: plugins/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:107
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Llamada desconectada (código de error desconocido «%i»)"
 
-#: plugins/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:82
 msgid "ModemManager unavailable"
 msgstr "ModemManager no disponible"
 
-#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "No hay disponible ningún módem con capacidad de voz"
 
-#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializada"
 
-#: plugins/ofono/calls-ofono-provider.c:94
+#: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
 msgstr "DBus no disponible"
 
-#: plugins/sip/sip-account-widget.ui:11
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Sin cifrado"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Forzar cifrado"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "El intercambio de claves de criptografía no ha tenido éxito"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "Añadir cuenta"
 
-#: plugins/sip/sip-account-widget.ui:17
+#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Iniciar sesión"
 
-#: plugins/sip/sip-account-widget.ui:42
+#: plugins/provider/sip/sip-account-widget.ui:42
 msgid "Manage Account"
 msgstr "Gestionar cuenta"
 
-#: plugins/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:47
 msgid "_Apply"
 msgstr "_Applicar"
 
-#: plugins/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:61
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: plugins/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:91
 msgid "Server"
 msgstr "Servidor"
 
-#: plugins/sip/sip-account-widget.ui:109
+#: plugins/provider/sip/sip-account-widget.ui:109
 msgid "Display Name"
 msgstr "Nombre"
 
-#: plugins/sip/sip-account-widget.ui:110
+#: plugins/provider/sip/sip-account-widget.ui:110
 msgid "Optional"
 msgstr "Opcional"
 
-#: plugins/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:128
 msgid "User ID"
 msgstr "ID de usuario"
 
-#: plugins/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:141
 msgid "Password"
 msgstr "Contraseña"
 
-#: plugins/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Puerto"
 
-#: plugins/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Transporte"
 
-#: plugins/sip/sip-account-widget.ui:194
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Cifrado de datos"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Utilizar para llamadas telefónicas"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Conectar automáticamente"
+
+#~ msgid "Call disconnected (unknown reason)"
+#~ msgstr "Llamada desconectada (razón desconocida)"
 
 #~ msgid "Calling…"
 #~ msgstr "Llamando…"
