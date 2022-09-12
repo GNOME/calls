@@ -53,12 +53,9 @@ typedef enum
 static CallsCallRecordState
 state_to_record_state (CuiCallState call_state)
 {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   switch (call_state) {
   case CUI_CALL_STATE_CALLING:
-  case CUI_CALL_STATE_ALERTING:
   case CUI_CALL_STATE_INCOMING:
-  case CUI_CALL_STATE_WAITING:
     return STARTED;
 
   case CUI_CALL_STATE_ACTIVE:
@@ -71,7 +68,6 @@ state_to_record_state (CuiCallState call_state)
   default:
     g_assert_not_reached ();
   }
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 }
 
 
