@@ -293,15 +293,7 @@ restart (CallsRinger *self,
 static inline gboolean
 is_ring_state (CuiCallState state)
 {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-  switch (state) {
-  case CUI_CALL_STATE_INCOMING:
-  case CUI_CALL_STATE_WAITING:
-    return TRUE;
-  default:
-    return FALSE;
-  }
+  return state == CUI_CALL_STATE_INCOMING;
 }
 
 
@@ -311,14 +303,12 @@ is_active_state (CuiCallState state)
   switch (state) {
   case CUI_CALL_STATE_ACTIVE:
   case CUI_CALL_STATE_CALLING:
-  case CUI_CALL_STATE_ALERTING:
   case CUI_CALL_STATE_HELD:
     return TRUE;
   default:
     return FALSE;
   }
 }
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
 
 
 static gboolean
