@@ -29,6 +29,8 @@
 #include "calls-ringer.h"
 #include "calls-ui-call-data.h"
 
+#include "enum-types.h"
+
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
@@ -38,78 +40,67 @@
 
 enum {
   PROP_0,
-  PROP_IS_RINGING,
-  PROP_RING_IS_QUIET,
+  PROP_RING_STATE,
   PROP_LAST_PROP
 };
 static GParamSpec *props[PROP_LAST_PROP];
-
-
-typedef enum {
-  CALLS_RING_STATE_INACTIVE,
-  CALLS_RING_STATE_REQUEST_PLAY,
-  CALLS_RING_STATE_PLAYING,
-  CALLS_RING_STATE_REQUEST_STOP
-} CallsRingState;
 
 
 struct _CallsRinger {
   GObject        parent_instance;
 
   GList         *calls;
-  LfbEvent      *event;
-  GCancellable  *cancel_ring;
-  CallsRingState state;
+  LfbEvent      *ringing_event;
+  LfbEvent      *ringing_soft_event;
 
-  guint          restart_id;
-  gboolean       is_quiet;
+  GCancellable  *cancel;
+
+  CallsRingState state;
+  CallsRingState target_state;
+
+  gboolean       freeze_state_notify;
 };
 
 
 G_DEFINE_TYPE (CallsRinger, calls_ringer, G_TYPE_OBJECT)
 
 
+static void target_state_step (CallsRinger *self);
+
+
 static const char *
 ring_state_to_string (CallsRingState state)
 {
-  switch (state) {
-  case CALLS_RING_STATE_INACTIVE:
-    return "inactive";
-  case CALLS_RING_STATE_REQUEST_PLAY:
-    return "request-play";
-  case CALLS_RING_STATE_PLAYING:
-    return "playing";
-  case CALLS_RING_STATE_REQUEST_STOP:
-    return "request-stop";
-  default:
-    return "unknown";
-  }
+  g_autoptr (GEnumClass) enum_class = NULL;
+  GEnumValue *enum_val;
+
+  enum_class = g_type_class_ref (CALLS_TYPE_RING_STATE);
+  enum_val = g_enum_get_value (enum_class, state);
+
+  return enum_val ? enum_val->value_nick : "invalid-state";
 }
 
 
 static void
-change_ring_state (CallsRinger   *self,
-                   CallsRingState state)
+set_ring_state (CallsRinger   *self,
+                CallsRingState state)
 {
-  g_debug ("%s: old: %s; new: %s",
-           __func__, ring_state_to_string (self->state), ring_state_to_string (state));
+  g_assert (CALLS_IS_RINGER (self));
+  g_assert (state >= CALLS_RING_STATE_INACTIVE && state <= CALLS_RING_STATE_ERROR);
+
   if (self->state == state)
     return;
 
+  g_debug ("Setting ring state to '%s'", ring_state_to_string (state));
   self->state = state;
 
-  /* Currently restarting, so don't notify */
-  if (self->restart_id)
-    return;
+  if (state == self->target_state)
+    self->freeze_state_notify = FALSE;
+  else
+    target_state_step (self);
 
-  /* Ringing has not yet started/stopped */
-  if (state == CALLS_RING_STATE_REQUEST_PLAY ||
-      state == CALLS_RING_STATE_REQUEST_STOP)
-    return;
-
-  g_debug ("%s: notify ring", __func__);
-
-  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_IS_RINGING]);
+  if (!self->freeze_state_notify)
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_RING_STATE]);
 }
 
 
@@ -119,54 +110,39 @@ on_event_triggered (LfbEvent     *event,
                     CallsRinger  *self)
 {
   g_autoptr (GError) err = NULL;
+  CallsRingState state;
+  gboolean ok;
 
   g_return_if_fail (LFB_IS_EVENT (event));
-  g_return_if_fail (CALLS_IS_RINGER (self));
 
-  g_debug ("%s", __func__);
-  if (lfb_event_trigger_feedback_finish (event, res, &err)) {
-    change_ring_state (self, CALLS_RING_STATE_PLAYING);
-  } else {
-    if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-      g_warning ("Failed to trigger feedback for '%s': %s",
-                 lfb_event_get_event (event), err->message);
-    change_ring_state (self, CALLS_RING_STATE_INACTIVE);
-  }
+  ok = lfb_event_trigger_feedback_finish (event, res, &err);
+  g_debug ("Feedback '%s' triggered %ssuccessfully",
+           lfb_event_get_event (event),
+           ok ? "" : "un");
 
-  g_object_unref (self);
-}
-
-
-static void restart (CallsRinger *self, gboolean quiet);
-
-static void
-start (CallsRinger *self,
-       gboolean     quiet)
-{
-  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
-  if (self->event)
-    lfb_event_set_feedback_profile (self->event, quiet ? "quiet" : NULL);
-
-  if (self->state == CALLS_RING_STATE_PLAYING ||
-      self->state == CALLS_RING_STATE_REQUEST_PLAY) {
-    if (self->is_quiet != quiet)
-      restart (self, quiet);
-
+  if (!CALLS_IS_RINGER (self)) {
+    g_warning ("Event feedback triggered, but ringer is gone");
     return;
   }
 
-  if (self->event) {
-    g_clear_object (&self->cancel_ring);
-    self->cancel_ring = g_cancellable_new ();
+  if (!ok) {
+    if (g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+      g_debug ("Feedback has been cancelled");
+    else
+      g_warning ("Failed to trigger feedback for '%s': %s",
+                 lfb_event_get_event (event), err->message);
 
-    self->is_quiet = quiet;
-    g_object_ref (self);
-    lfb_event_trigger_feedback_async (self->event,
-                                      self->cancel_ring,
-                                      (GAsyncReadyCallback) on_event_triggered,
-                                      self);
-    change_ring_state (self, CALLS_RING_STATE_REQUEST_PLAY);
+    set_ring_state (self, CALLS_RING_STATE_ERROR);
+    return;
   }
+
+
+  if (event == self->ringing_event)
+    state = CALLS_RING_STATE_RINGING;
+  else
+    state = CALLS_RING_STATE_RINGING_SOFT;
+
+  set_ring_state (self, state);
 }
 
 
@@ -176,21 +152,29 @@ on_event_feedback_ended (LfbEvent     *event,
                          CallsRinger  *self)
 {
   g_autoptr (GError) err = NULL;
+  gboolean ok;
 
-  g_return_if_fail (LFB_IS_EVENT (event));
-  g_return_if_fail (CALLS_IS_RINGER (self));
+  g_assert (LFB_IS_EVENT (event));
 
-  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
+  ok = lfb_event_end_feedback_finish (event, res, &err);
+  g_debug ("Ended feedback '%s' %ssucessfully",
+           lfb_event_get_event (event),
+           ok ? "" : "un");
 
-  if (self->state == CALLS_RING_STATE_REQUEST_PLAY ||
-      self->state == CALLS_RING_STATE_PLAYING)
-    g_warning ("Feedback ended although it should be playing");
+  if (!CALLS_IS_RINGER (self)) {
+    g_warning ("Event feedback ended, but ringer is gone");
+    return;
+  }
 
-  if (!lfb_event_end_feedback_finish (event, res, &err))
-    g_warning ("Failed to end feedback for '%s': %s",
-               lfb_event_get_event (event), err->message);
+  if (!ok) {
+    if (g_error_matches (err, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+      g_debug ("Ending feedback has been cancelled");
+    else
+      g_warning ("Failed to end feedback for '%s': %s",
+                 lfb_event_get_event (event), err->message);
 
-  change_ring_state (self, CALLS_RING_STATE_INACTIVE);
+    set_ring_state (self, CALLS_RING_STATE_ERROR);
+  }
 }
 
 
@@ -198,95 +182,87 @@ static void
 on_feedback_ended (LfbEvent    *event,
                    CallsRinger *self)
 {
+  g_assert (LFB_IS_EVENT (event));
+
   g_debug ("Feedback ended");
-  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
-  change_ring_state (self, CALLS_RING_STATE_INACTIVE);
+
+  if (!CALLS_IS_RINGER (self)) {
+    g_warning ("Feedback stopped, but ringer is gone");
+    return;
+  }
+
+  set_ring_state (self, CALLS_RING_STATE_INACTIVE);
+}
+
+
+static LfbEvent *
+get_event_for_state (CallsRinger   *self,
+                     CallsRingState state)
+{
+  switch (state) {
+  case CALLS_RING_STATE_RINGING:
+    return self->ringing_event;
+  case CALLS_RING_STATE_RINGING_SOFT:
+    return self->ringing_soft_event;
+  default:
+    g_assert_not_reached ();
+  }
 }
 
 
 static void
-stop (CallsRinger *self)
+target_state_step (CallsRinger *self)
 {
-  g_debug ("%s: state: %s", __func__, ring_state_to_string (self->state));
-  if (self->state == CALLS_RING_STATE_INACTIVE ||
-      self->state == CALLS_RING_STATE_REQUEST_STOP)
+  LfbEvent *event;
+
+  g_assert (CALLS_IS_RINGER (self));
+
+  if (self->state == self->target_state ||
+      self->state == CALLS_RING_STATE_ERROR)
     return;
 
-  g_debug ("Stopping ringtone");
-  if (self->state == CALLS_RING_STATE_PLAYING) {
-    g_debug ("ending event feedback");
-    lfb_event_end_feedback_async (self->event,
-                                  NULL,
+  g_clear_object (&self->cancel);
+  self->cancel = g_cancellable_new ();
+
+  if (self->state == CALLS_RING_STATE_INACTIVE) {
+    event = get_event_for_state (self, self->target_state);
+
+    lfb_event_trigger_feedback_async (event,
+                                      self->cancel,
+                                      (GAsyncReadyCallback) on_event_triggered,
+                                      self);
+  } else {
+    gboolean needs_restart =
+      self->target_state == CALLS_RING_STATE_RINGING ||
+      self->target_state == CALLS_RING_STATE_RINGING_SOFT;
+
+    if (needs_restart)
+      self->freeze_state_notify = TRUE;
+
+    event = get_event_for_state (self, self->state);
+
+    lfb_event_end_feedback_async (event,
+                                  self->cancel,
                                   (GAsyncReadyCallback) on_event_feedback_ended,
                                   self);
-    change_ring_state (self, CALLS_RING_STATE_REQUEST_STOP);
-  } else if (self->state == CALLS_RING_STATE_REQUEST_PLAY) {
-    g_debug ("cancelling event feedback");
-    g_cancellable_cancel (self->cancel_ring);
   }
-}
-
-
-typedef struct {
-  CallsRinger *ringer;
-  gboolean     quiet;
-} RestartRingerData;
-
-
-static gboolean
-on_ringer_restart (gpointer user_data)
-{
-  RestartRingerData *data = user_data;
-
-  if (data->ringer->state == CALLS_RING_STATE_PLAYING) {
-    stop (data->ringer);
-
-    return G_SOURCE_CONTINUE;
-  }
-
-  /* wait until requests have been fulfilled */
-  if (data->ringer->state == CALLS_RING_STATE_REQUEST_PLAY ||
-      data->ringer->state == CALLS_RING_STATE_REQUEST_STOP) {
-    return G_SOURCE_CONTINUE;
-  }
-
-  if (data->ringer->state == CALLS_RING_STATE_INACTIVE) {
-    start (data->ringer, data->quiet);
-
-    return G_SOURCE_REMOVE;
-  }
-
-  g_return_val_if_reached (G_SOURCE_CONTINUE);
 }
 
 
 static void
-clean_up_restart_data (gpointer user_data)
+set_target_state (CallsRinger   *self,
+                  CallsRingState state)
 {
-  RestartRingerData *data = user_data;
+  g_assert (CALLS_IS_RINGER (self));
+  g_assert (state >= CALLS_RING_STATE_INACTIVE &&
+            state <= CALLS_RING_STATE_RINGING_SOFT);
 
-  data->ringer->restart_id = 0;
+  if (self->target_state == state)
+    return;
 
-  g_free (data);
-}
+  self->target_state = state;
 
-
-static void
-restart (CallsRinger *self,
-         gboolean     quiet)
-{
-  RestartRingerData *data = g_new0 (RestartRingerData, 1);
-
-  data->ringer = self;
-  data->quiet = quiet;
-
-  if (self->restart_id)
-    g_source_remove (self->restart_id);
-
-  self->restart_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
-                                      G_SOURCE_FUNC (on_ringer_restart),
-                                      data,
-                                      clean_up_restart_data);
+  target_state_step (self);
 }
 
 
@@ -312,7 +288,7 @@ is_active_state (CuiCallState state)
 
 
 static gboolean
-has_active_call (CallsRinger *self)
+have_active_call (CallsRinger *self)
 {
   g_assert (CALLS_IS_RINGER (self));
 
@@ -327,7 +303,7 @@ has_active_call (CallsRinger *self)
 
 
 static gboolean
-has_incoming_call (CallsRinger *self)
+have_incoming_call (CallsRinger *self)
 {
   g_assert (CALLS_IS_RINGER (self));
 
@@ -346,17 +322,21 @@ has_incoming_call (CallsRinger *self)
 static void
 update_ring (CallsRinger *self)
 {
+  CallsRingState target_state;
+
   g_assert (CALLS_IS_RINGER (self));
 
-  if (!self->event) {
-    g_debug ("Can't ring because libfeedback is not initialized");
+  if (self->state == CALLS_RING_STATE_ERROR) {
+    g_debug ("Can't ring because we're in an error state");
     return;
   }
 
-  if (has_incoming_call (self))
-    start (self, has_active_call (self));
+  if (have_incoming_call (self))
+    target_state = !have_active_call (self) ? CALLS_RING_STATE_RINGING : CALLS_RING_STATE_RINGING_SOFT;
   else
-    stop (self);
+    target_state = CALLS_RING_STATE_INACTIVE;
+
+  set_target_state (self, target_state);
 }
 
 
@@ -397,15 +377,27 @@ calls_ringer_init (CallsRinger *self)
   g_autoptr (GError) err = NULL;
 
   if (lfb_init (APP_ID, &err)) {
-    self->event = lfb_event_new ("phone-incoming-call");
+    self->ringing_event = lfb_event_new ("phone-incoming-call");
     /* Let feedbackd do the loop */
-    lfb_event_set_timeout (self->event, 0);
-    g_signal_connect (self->event,
+    lfb_event_set_timeout (self->ringing_event, 0);
+    g_signal_connect (self->ringing_event,
+                      "feedback-ended",
+                      G_CALLBACK (on_feedback_ended),
+                      self);
+
+    /* FIXME change event once it's available in feedbackd,
+     * see https://source.puri.sm/Librem5/feedbackd/-/issues/37
+     */
+    self->ringing_soft_event = lfb_event_new ("phone-incoming-call");
+    lfb_event_set_timeout (self->ringing_soft_event, 15);
+    lfb_event_set_feedback_profile (self->ringing_soft_event, "quiet");
+    g_signal_connect (self->ringing_soft_event,
                       "feedback-ended",
                       G_CALLBACK (on_feedback_ended),
                       self);
   } else {
     g_warning ("Failed to init libfeedback: %s", err->message);
+    set_ring_state (self, CALLS_RING_STATE_ERROR);
   }
 }
 
@@ -417,12 +409,8 @@ get_property (GObject    *object,
               GParamSpec *pspec)
 {
   switch (property_id) {
-  case PROP_IS_RINGING:
-    g_value_set_boolean (value, calls_ringer_get_is_ringing (CALLS_RINGER (object)));
-    break;
-
-  case PROP_RING_IS_QUIET:
-    g_value_set_boolean (value, calls_ringer_get_ring_is_quiet (CALLS_RINGER (object)));
+  case PROP_RING_STATE:
+    g_value_set_enum (value, calls_ringer_get_state (CALLS_RINGER (object)));
     break;
 
   default:
@@ -465,10 +453,8 @@ dispose (GObject *object)
 
   g_signal_handlers_disconnect_by_data (calls_manager_get_default (), self);
 
-  g_clear_handle_id (&self->restart_id, g_source_remove);
-
-  g_cancellable_cancel (self->cancel_ring);
-  g_clear_object (&self->cancel_ring);
+  g_cancellable_cancel (self->cancel);
+  g_clear_object (&self->cancel);
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->dispose (object);
 }
@@ -479,10 +465,11 @@ finalize (GObject *object)
 {
   CallsRinger *self = CALLS_RINGER (object);
 
-  if (self->event)
+  if (lfb_is_initted ())
     lfb_uninit ();
 
-  g_clear_object (&self->event);
+  g_clear_object (&self->ringing_event);
+  g_clear_object (&self->ringing_soft_event);
 
   G_OBJECT_CLASS (calls_ringer_parent_class)->finalize (object);
 }
@@ -498,19 +485,13 @@ calls_ringer_class_init (CallsRingerClass *klass)
   object_class->finalize = finalize;
   object_class->get_property = get_property;
 
-  props[PROP_IS_RINGING] =
-    g_param_spec_boolean ("ringing",
-                          "Ringing",
-                          "Whether we're currently ringing",
-                          FALSE,
-                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-
-  props[PROP_RING_IS_QUIET] =
-    g_param_spec_boolean ("is-quiet",
-                          "is quiet",
-                          "Whether the ringing is of the quiet persuasion",
-                          FALSE,
-                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  props[PROP_RING_STATE] =
+    g_param_spec_enum ("state",
+                       "",
+                       "",
+                       CALLS_TYPE_RING_STATE,
+                       CALLS_RING_STATE_INACTIVE,
+                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class,
                                      PROP_LAST_PROP,
@@ -525,30 +506,15 @@ calls_ringer_new (void)
 
 
 /**
- * calls_ringer_get_ring_is_ringing:
+ * calls_ringer_get_state
  * @self: A #CallsRinger
  *
- * Returns: %TRUE if currently ringing, %FALSE otherwise.
+ * Returns: The #CallsRingerState
  */
-gboolean
-calls_ringer_get_is_ringing (CallsRinger *self)
+CallsRingState
+calls_ringer_get_state (CallsRinger *self)
 {
-  g_return_val_if_fail (CALLS_IS_RINGER (self), FALSE);
+  g_return_val_if_fail (CALLS_IS_RINGER (self), CALLS_RING_STATE_INACTIVE);
 
-  return self->state == CALLS_RING_STATE_PLAYING ||
-         self->state == CALLS_RING_STATE_REQUEST_STOP;
-}
-
-/**
- * calls_ringer_get_ring_is_quiet:
- * @self: A #CallsRinger
- *
- * Returns: %TRUE if currently ringing quietly, %FALSE otherwise.
- */
-gboolean
-calls_ringer_get_ring_is_quiet (CallsRinger *self)
-{
-  g_return_val_if_fail (CALLS_IS_RINGER (self), FALSE);
-
-  return calls_ringer_get_is_ringing (self) && self->is_quiet;
+  return self->state;
 }
