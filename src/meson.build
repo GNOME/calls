@@ -65,6 +65,7 @@ calls_enum_headers = files(['calls-call.h',
                             'calls-ussd.h',
                             'calls-manager.h',
                             'calls-account.h',
+                            'calls-ringer.h',
                             ])
 calls_enum_sources = gnome.mkenums_simple('enum-types',
                                           sources : calls_enum_headers)

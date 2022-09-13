@@ -28,13 +28,24 @@
 
 G_BEGIN_DECLS
 
+/* TODO docstring */
+typedef enum {
+  CALLS_RING_STATE_INACTIVE,
+  CALLS_RING_STATE_RINGING,
+  CALLS_RING_STATE_RINGING_SOFT,
+  CALLS_RING_STATE_ERROR
+} CallsRingState;
+
+
 #define CALLS_TYPE_RINGER (calls_ringer_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject)
 
 
 CallsRinger *calls_ringer_new                 (void);
-gboolean     calls_ringer_get_is_ringing      (CallsRinger *self);
-gboolean     calls_ringer_get_ring_is_quiet   (CallsRinger *self);
+CallsRingState calls_ringer_get_state         (CallsRinger *self);
+void         calls_ringer_start_ringing       (CallsRinger *self,
+                                               gboolean quiet);
+void         calls_ringer_stop_ringing        (CallsRinger *self);
 
 G_END_DECLS
