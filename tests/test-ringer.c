@@ -77,11 +77,11 @@ static void
 tear_down_ringer (RingerFixture *fixture,
                   gconstpointer  user_data)
 {
-  g_object_unref (fixture->call_one);
-  g_object_unref (fixture->ui_call_one);
-  g_object_unref (fixture->call_two);
-  g_object_unref (fixture->ui_call_two);
-  g_object_unref (fixture->ringer);
+  g_assert_finalize_object (fixture->ui_call_one);
+  g_assert_finalize_object (fixture->call_one);
+  g_assert_finalize_object (fixture->ui_call_two);
+  g_assert_finalize_object (fixture->call_two);
+  g_assert_finalize_object (fixture->ringer);
   g_main_loop_unref (fixture->loop);
 }
 
