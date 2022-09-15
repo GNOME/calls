@@ -45,13 +45,13 @@ sip_deps = [
 sip_sources = files(
   [
     'calls-sdp-crypto-context.c', 'calls-sdp-crypto-context.h',
+    'calls-sip-account-widget.c', 'calls-sip-account-widget.h',
     'calls-sip-call.c', 'calls-sip-call.h',
+    'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
+    'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
     'calls-sip-origin.c', 'calls-sip-origin.h',
     'calls-sip-provider.c', 'calls-sip-provider.h',
     'calls-sip-util.c', 'calls-sip-util.h',
-    'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
-    'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
-    'calls-sip-account-widget.c', 'calls-sip-account-widget.h',
     'calls-srtp-utils.c', 'calls-srtp-utils.h',
     'gst-rfc3551.c', 'gst-rfc3551.h',
   ]
