@@ -78,7 +78,9 @@ static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
   row (REFUSED_OR_BUSY,      N_("Call disconnected (busy or call refused)")),
   row (ERROR,                N_("Call disconnected (wrong id or network problem)")),
   row (AUDIO_SETUP_FAILED,   N_("Call disconnected (error setting up audio channel)")),
+  /* Translators: Transfer is for active or held calls */
   row (TRANSFERRED,          N_("Call transferred")),
+  /* Translators: Deflecting is for incoming or waiting calls */
   row (DEFLECTED,            N_("Call deflected")),
 
 #undef row
