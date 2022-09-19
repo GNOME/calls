@@ -1,5 +1,7 @@
 if get_option('tests')
 
+subdir('mock')
+
 test_env = [
   'G_TEST_SRCDIR=@0@'.format(meson.current_source_dir()),
   'G_TEST_BUILDDIR=@0@'.format(meson.current_build_dir()),
@@ -81,16 +83,10 @@ t = executable('ui-call', test_sources,
                )
 test('ui-call', t, env: test_env)
 
-mock_link_args = [ test_link_args,
-                   '-Wl,--wrap=lfb_init',
-                   '-Wl,--wrap=lfb_uninit',
-                   '-Wl,--wrap=lfb_event_set_feedback_profile',
-                   '-Wl,--wrap=lfb_event_trigger_feedback_async',
-                   '-Wl,--wrap=lfb_event_trigger_feedback_finish',
-                   '-Wl,--wrap=lfb_event_end_feedback_async',
-                   '-Wl,--wrap=lfb_event_end_feedback_finish',
-                   '-Wl,--wrap=calls_contacts_provider_new',
-                 ]
+test_env_ringer = [
+  'LD_PRELOAD=@0@/mock/lfb/libfeedback-0.so'.format(meson.current_build_dir()),
+] + test_env
+
 cmocka = dependency ('cmocka', required: false)
 
 if cmocka.found ()
@@ -109,7 +105,7 @@ if cmocka.found ()
                        calls_includes,
                      ]
                    )
-    test('ringer', t, env: test_env)
+    test('ringer', t, env: test_env_ringer)
 endif
 
 test_sources = [ 'test-contacts.c' ]

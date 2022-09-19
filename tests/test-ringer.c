@@ -18,125 +18,7 @@
 #include <setjmp.h>
 
 
-/* mock libfeedback functions */
-
-static gboolean
-on_mock_timeout (gpointer user_data)
-{
-  GTask *task;
-  GCancellable *cancellable;
-
-  if (!G_IS_TASK (user_data))
-    return G_SOURCE_REMOVE;
-
-  task = G_TASK (user_data);
-  cancellable = g_task_get_cancellable (task);
-
-  if (!g_cancellable_is_cancelled (cancellable))
-    g_task_return_boolean (task, TRUE);
-
-  return G_SOURCE_REMOVE;
-}
-
-static gboolean
-on_check_task_cancelled (gpointer user_data)
-{
-  GTask *task;
-
-  if (!G_IS_TASK (user_data))
-    return G_SOURCE_REMOVE;
-
-  task = G_TASK (user_data);
-
-  if (g_task_get_completed (task) || g_task_return_error_if_cancelled (task))
-    return G_SOURCE_REMOVE;
-
-  return G_SOURCE_CONTINUE;
-}
-
-
-gboolean
-__wrap_lfb_init (const char *app_id,
-                 GError    **error)
-{
-  return TRUE;
-}
-
-
-void
-__wrap_lfb_uninit (void)
-{
-  return;
-}
-
-
-void
-__wrap_lfb_event_set_feedback_profile (LfbEvent   *self,
-                                       const char *profile)
-{
-  return;
-}
-
-
-void
-__wrap_lfb_event_trigger_feedback_async (LfbEvent           *self,
-                                         GCancellable       *cancellable,
-                                         GAsyncReadyCallback callback,
-                                         gpointer            user_data)
-{
-  GTask *trigger_task = g_task_new (self, cancellable, callback, user_data);
-  int mock_time_ms = mock_type (int);
-
-  g_timeout_add (mock_time_ms, on_mock_timeout, trigger_task);
-  g_idle_add (G_SOURCE_FUNC (on_check_task_cancelled), trigger_task);
-}
-
-
-gboolean
-__wrap_lfb_event_trigger_feedback_finish (LfbEvent     *self,
-                                          GAsyncResult *res,
-                                          GError      **error)
-{
-  GTask *task = G_TASK (res);
-  gboolean ret;
-
-  ret = g_task_propagate_boolean (task, error);
-
-  g_object_unref (task);
-
-  return ret;
-}
-
-
-void
-__wrap_lfb_event_end_feedback_async (LfbEvent           *self,
-                                     GCancellable       *cancellable,
-                                     GAsyncReadyCallback callback,
-                                     gpointer            user_data)
-{
-  GTask *trigger_task = g_task_new (self, cancellable, callback, user_data);
-  int mock_time_ms = mock_type (int);
-
-  g_timeout_add (mock_time_ms, on_mock_timeout, trigger_task);
-}
-
-
-gboolean
-__wrap_lfb_event_end_feedback_finish (LfbEvent     *self,
-                                      GAsyncResult *res,
-                                      GError      **error)
-{
-  GTask *task = G_TASK (res);
-  gboolean ret;
-
-  ret = g_task_propagate_boolean (G_TASK (res), error);
-
-  g_object_unref (task);
-
-  return ret;
-}
-
-
+/* mock calls_contacts_provider_new() */
 CallsContactsProvider *
 __wrap_calls_contacts_provider_new (void)
 {
@@ -253,11 +135,6 @@ test_ringing_accept_call (void **state)
                     G_CALLBACK (t1_on_ringer_call_accepted),
                     data);
 
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return (__wrap_lfb_event_trigger_feedback_async, 10);
-  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
-  will_return (__wrap_lfb_event_end_feedback_async, 10);
-
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
 
@@ -303,11 +180,6 @@ test_ringing_hang_up_call (void **state)
                     "notify::ringing",
                     G_CALLBACK (t2_on_ringer_call_hang_up),
                     data);
-
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return (__wrap_lfb_event_trigger_feedback_async, 10);
-  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
-  will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
@@ -356,11 +228,6 @@ test_ringing_silence_call (void **state)
                     "notify::ringing",
                     G_CALLBACK (t4_on_ringer_call_silence),
                     data);
-
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return (__wrap_lfb_event_trigger_feedback_async, 10);
-  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
-  will_return (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
@@ -429,11 +296,6 @@ test_ringing_multiple_calls (void **state)
                     G_CALLBACK (t5_on_ringer_multiple_calls),
                     data);
 
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return (__wrap_lfb_event_trigger_feedback_async, 10);
-  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
-  will_return (__wrap_lfb_event_end_feedback_async, 10);
-
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
 
@@ -493,11 +355,6 @@ test_ringing_multiple_calls_with_restart (void **state)
                     "notify::ringing",
                     G_CALLBACK (t6_on_ringer_multiple_calls_with_restart),
                     data);
-
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return_always (__wrap_lfb_event_trigger_feedback_async, 10);
-  /* delay before completion of __wrap_lfb_event_end_feedback_async() */
-  will_return_always (__wrap_lfb_event_end_feedback_async, 10);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
   add_call (data->manager, data->ui_call_one);
