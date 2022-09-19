@@ -1,3 +1,28 @@
+gnome-calls (43~rc.1) UNRELEASED; urgency=medium
+
+  [ Emin Tufan Çetin ]
+  * Update Turkish translation
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Update libcall-ui to always reset audio profile (Closes: #452)
+  * i18n: mm-call: Clarify "transfer" and "deflect" (Closes: #499)
+  * tests: Remove unused code
+  * metainfo: Correct screenshot URLs
+
+  [ Daniel Mustieles ]
+  * Update Spanish translation
+
+  [ Martin ]
+  * Update Slovenian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 19 Sep 2022 20:17:54 +0200
+
 gnome-calls (43~rc.0) unstable; urgency=medium
 
   [ Danial Behzadi ]

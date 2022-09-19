@@ -1,5 +1,19 @@
+Calls 43.0
+----------
+Released: 19 September 2022
+
+Translation updates:
+====================
+ - Turkish (Emin Tufan Çetin)
+ - Italian (Vittorio Monti)
+ - Portuguese (Hugo Carvalho)
+ - Spanish (Daniel Mustieles García)
+ - Slovenian (Martin Srebotnjak)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.rc.0
----------------
+-------------
 Released: 3 September 2022
 
 New features:
