@@ -192,9 +192,9 @@ test_ringing_hang_up_call (void **state)
 }
 
 
-/* t4: test_ringing_silence_call */
+/* t3: test_ringing_silence_call */
 static void
-t4_on_ringer_call_silence (CallsRinger *ringer,
+t3_on_ringer_call_silence (CallsRinger *ringer,
                            GParamSpec  *pspec,
                            gpointer     user_data)
 {
@@ -226,7 +226,7 @@ test_ringing_silence_call (void **state)
 
   g_signal_connect (data->ringer,
                     "notify::ringing",
-                    G_CALLBACK (t4_on_ringer_call_silence),
+                    G_CALLBACK (t3_on_ringer_call_silence),
                     data);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
@@ -240,9 +240,9 @@ test_ringing_silence_call (void **state)
 }
 
 
-/* t5: test_ringing_multiple_call */
+/* t4: test_ringing_multiple_call */
 static gboolean
-t5_remove_calls (gpointer user_data)
+t4_remove_calls (gpointer user_data)
 {
   static guint test_phase = 0;
   TestData *data = user_data;
@@ -261,7 +261,7 @@ t5_remove_calls (gpointer user_data)
 
 
 static void
-t5_on_ringer_multiple_calls (CallsRinger *ringer,
+t4_on_ringer_multiple_calls (CallsRinger *ringer,
                              GParamSpec  *pspec,
                              gpointer     user_data)
 {
@@ -272,7 +272,7 @@ t5_on_ringer_multiple_calls (CallsRinger *ringer,
   case 0: /* add second call, and schedule call removal */
     assert_true (calls_ringer_get_is_ringing (ringer));
     add_call (data->manager, data->ui_call_two);
-    g_timeout_add (25, t5_remove_calls, data);
+    g_timeout_add (25, t4_remove_calls, data);
     break;
   case 1: /* both calls should be removed now */
     assert_false (calls_ringer_get_is_ringing (ringer));
@@ -293,7 +293,7 @@ test_ringing_multiple_calls (void **state)
 
   g_signal_connect (data->ringer,
                     "notify::ringing",
-                    G_CALLBACK (t5_on_ringer_multiple_calls),
+                    G_CALLBACK (t4_on_ringer_multiple_calls),
                     data);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
@@ -307,7 +307,7 @@ test_ringing_multiple_calls (void **state)
 
 
 static void
-t6_on_ringer_multiple_calls_with_restart (CallsRinger *ringer,
+t5_on_ringer_multiple_calls_with_restart (CallsRinger *ringer,
                                           GParamSpec  *pspec,
                                           gpointer     user_data)
 {
@@ -353,7 +353,7 @@ test_ringing_multiple_calls_with_restart (void **state)
 
   g_signal_connect (data->ringer,
                     "notify::ringing",
-                    G_CALLBACK (t6_on_ringer_multiple_calls_with_restart),
+                    G_CALLBACK (t5_on_ringer_multiple_calls_with_restart),
                     data);
 
   calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
