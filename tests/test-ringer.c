@@ -14,9 +14,6 @@
 #include "mock-libfeedback.h"
 #include "mock-contacts-provider.h"
 
-#include <cmocka.h>
-#include <setjmp.h>
-
 
 /* mock calls_contacts_provider_new() */
 CallsContactsProvider *
@@ -49,7 +46,7 @@ remove_call (CallsManager    *manager,
   g_signal_emit_by_name (manager, "ui-call-removed", call, NULL);
 }
 
-/* TestData setup and tear down */
+/* RingerFixture setup and tear down */
 typedef struct {
   CallsManager    *manager;
   CallsRinger     *ringer;
@@ -58,45 +55,34 @@ typedef struct {
   CallsMockCall   *call_two;
   CallsUiCallData *ui_call_two;
   GMainLoop       *loop;
-} TestData;
+} RingerFixture;
 
 
-static int
-setup_test_data (void **state)
+static void
+setup_ringer (RingerFixture *fixture,
+              gconstpointer  user_data)
 {
-  TestData *data = g_new0 (TestData, 1);
 
-  if (data == NULL)
-    return -1;
-
-  data->manager = calls_manager_get_default ();
-  data->ringer = calls_ringer_new ();
-  data->call_one = calls_mock_call_new ();
-  data->ui_call_one = calls_ui_call_data_new (CALLS_CALL (data->call_one), NULL);
-  data->call_two = calls_mock_call_new ();
-  data->ui_call_two = calls_ui_call_data_new (CALLS_CALL (data->call_two), NULL);
-  data->loop = g_main_loop_new (NULL, FALSE);
-
-  *state = data;
-
-  return 0;
+  fixture->manager = calls_manager_get_default ();
+  fixture->ringer = calls_ringer_new ();
+  fixture->call_one = calls_mock_call_new ();
+  fixture->ui_call_one = calls_ui_call_data_new (CALLS_CALL (fixture->call_one), NULL);
+  fixture->call_two = calls_mock_call_new ();
+  fixture->ui_call_two = calls_ui_call_data_new (CALLS_CALL (fixture->call_two), NULL);
+  fixture->loop = g_main_loop_new (NULL, FALSE);
 }
 
 
-static int
-tear_down_test_data (void **state)
+static void
+tear_down_ringer (RingerFixture *fixture,
+                  gconstpointer  user_data)
 {
-  TestData *data = *state;
-
-  g_object_unref (data->call_one);
-  g_object_unref (data->ui_call_one);
-  g_object_unref (data->call_two);
-  g_object_unref (data->ui_call_two);
-  g_object_unref (data->ringer);
-  g_main_loop_unref (data->loop);
-
-  g_free (data);
-  return 0;
+  g_object_unref (fixture->call_one);
+  g_object_unref (fixture->ui_call_one);
+  g_object_unref (fixture->call_two);
+  g_object_unref (fixture->ui_call_two);
+  g_object_unref (fixture->ringer);
+  g_main_loop_unref (fixture->loop);
 }
 
 /* t1: test_ringing_incoming_call */
@@ -106,16 +92,16 @@ t1_on_ringer_call_accepted (CallsRinger *ringer,
                             gpointer     user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   switch (test_phase++) {
   case 0: /* incoming call */
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    calls_call_answer (CALLS_CALL (data->call_one));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    calls_call_answer (CALLS_CALL (fixture->call_one));
     break;
   case 1: /* incoming call accepted */
-    assert_false (calls_ringer_get_is_ringing (ringer));
-    g_main_loop_quit ((GMainLoop *) data->loop);
+    g_assert_false (calls_ringer_get_is_ringing (ringer));
+    g_main_loop_quit ((GMainLoop *) fixture->loop);
     break;
   default:
     g_assert_not_reached (); /* did not find equivalent cmocka assertion */
@@ -124,25 +110,24 @@ t1_on_ringer_call_accepted (CallsRinger *ringer,
 
 
 static void
-test_ringing_accept_call (void **state)
+test_ringing_accept_call (RingerFixture *fixture,
+                          gconstpointer  user_data)
 {
-  TestData *data = *state;
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  g_signal_connect (data->ringer,
+  g_signal_connect (fixture->ringer,
                     "notify::ringing",
                     G_CALLBACK (t1_on_ringer_call_accepted),
-                    data);
+                    fixture);
 
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
+  calls_call_set_state (CALLS_CALL (fixture->call_one), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
-  g_main_loop_run (data->loop);
+  g_main_loop_run (fixture->loop);
 
-  remove_call (data->manager, data->ui_call_one);
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
+  remove_call (fixture->manager, fixture->ui_call_one);
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 }
 
 /* t2: test_ringing_hang_up_call */
@@ -152,16 +137,16 @@ t2_on_ringer_call_hang_up (CallsRinger *ringer,
                            gpointer     user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   switch (test_phase++) {
   case 0: /* incoming call */
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    calls_call_hang_up (CALLS_CALL (data->call_one));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    calls_call_hang_up (CALLS_CALL (fixture->call_one));
     break;
   case 1: /* incoming call hung up */
-    assert_false (calls_ringer_get_is_ringing (ringer));
-    g_main_loop_quit ((GMainLoop *) data->loop);
+    g_assert_false (calls_ringer_get_is_ringing (ringer));
+    g_main_loop_quit ((GMainLoop *) fixture->loop);
     break;
   default:
     g_assert_not_reached (); /* did not find equivalent cmocka assertion */
@@ -170,25 +155,24 @@ t2_on_ringer_call_hang_up (CallsRinger *ringer,
 
 
 static void
-test_ringing_hang_up_call (void **state)
+test_ringing_hang_up_call (RingerFixture *fixture,
+                           gconstpointer  user_data)
 {
-  TestData *data = *state;
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  g_signal_connect (data->ringer,
+  g_signal_connect (fixture->ringer,
                     "notify::ringing",
                     G_CALLBACK (t2_on_ringer_call_hang_up),
-                    data);
+                    fixture);
 
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
+  calls_call_set_state (CALLS_CALL (fixture->call_one), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
-  g_main_loop_run (data->loop);
+  g_main_loop_run (fixture->loop);
 
-  remove_call (data->manager, data->ui_call_one);
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
+  remove_call (fixture->manager, fixture->ui_call_one);
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 }
 
 
@@ -199,17 +183,17 @@ t3_on_ringer_call_silence (CallsRinger *ringer,
                            gpointer     user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   switch (test_phase++) {
   case 0: /* incoming call */
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    calls_ui_call_data_silence_ring (data->ui_call_one);
-    assert_true (calls_ui_call_data_get_silenced (data->ui_call_one));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    calls_ui_call_data_silence_ring (fixture->ui_call_one);
+    g_assert_true (calls_ui_call_data_get_silenced (fixture->ui_call_one));
     break;
   case 1: /* incoming call hung up */
-    assert_false (calls_ringer_get_is_ringing (ringer));
-    g_main_loop_quit ((GMainLoop *) data->loop);
+    g_assert_false (calls_ringer_get_is_ringing (ringer));
+    g_main_loop_quit ((GMainLoop *) fixture->loop);
     break;
   default:
     g_assert_not_reached (); /* did not find equivalent cmocka assertion */
@@ -218,25 +202,24 @@ t3_on_ringer_call_silence (CallsRinger *ringer,
 
 
 static void
-test_ringing_silence_call (void **state)
+test_ringing_silence_call (RingerFixture *fixture,
+                           gconstpointer  user_data)
 {
-  TestData *data = *state;
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  g_signal_connect (data->ringer,
+  g_signal_connect (fixture->ringer,
                     "notify::ringing",
                     G_CALLBACK (t3_on_ringer_call_silence),
-                    data);
+                    fixture);
 
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
+  calls_call_set_state (CALLS_CALL (fixture->call_one), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
-  g_main_loop_run (data->loop);
+  g_main_loop_run (fixture->loop);
 
-  remove_call (data->manager, data->ui_call_one);
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
+  remove_call (fixture->manager, fixture->ui_call_one);
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 }
 
 
@@ -245,16 +228,16 @@ static gboolean
 t4_remove_calls (gpointer user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   if (test_phase == 0) {
-    remove_call (data->manager, data->ui_call_one);
+    remove_call (fixture->manager, fixture->ui_call_one);
     test_phase++;
     return G_SOURCE_CONTINUE;
   }
 
-  assert_true (calls_ringer_get_is_ringing (data->ringer));
-  remove_call (data->manager, data->ui_call_two);
+  g_assert_true (calls_ringer_get_is_ringing (fixture->ringer));
+  remove_call (fixture->manager, fixture->ui_call_two);
 
   return G_SOURCE_REMOVE;
 }
@@ -266,17 +249,17 @@ t4_on_ringer_multiple_calls (CallsRinger *ringer,
                              gpointer     user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   switch (test_phase++) {
   case 0: /* add second call, and schedule call removal */
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    add_call (data->manager, data->ui_call_two);
-    g_timeout_add (25, t4_remove_calls, data);
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    add_call (fixture->manager, fixture->ui_call_two);
+    g_timeout_add (25, t4_remove_calls, fixture);
     break;
   case 1: /* both calls should be removed now */
-    assert_false (calls_ringer_get_is_ringing (ringer));
-    g_main_loop_quit ((GMainLoop *) data->loop);
+    g_assert_false (calls_ringer_get_is_ringing (ringer));
+    g_main_loop_quit ((GMainLoop *) fixture->loop);
     break;
   default:
     g_assert_not_reached (); /* did not find equivalent cmocka assertion */
@@ -285,24 +268,23 @@ t4_on_ringer_multiple_calls (CallsRinger *ringer,
 
 
 static void
-test_ringing_multiple_calls (void **state)
+test_ringing_multiple_calls (RingerFixture *fixture,
+                             gconstpointer  user_data)
 {
-  TestData *data = *state;
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  g_signal_connect (data->ringer,
+  g_signal_connect (fixture->ringer,
                     "notify::ringing",
                     G_CALLBACK (t4_on_ringer_multiple_calls),
-                    data);
+                    fixture);
 
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
+  calls_call_set_state (CALLS_CALL (fixture->call_one), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_one);
 
   /* main loop will quit in callback of notify::ring */
-  g_main_loop_run (data->loop);
+  g_main_loop_run (fixture->loop);
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 }
 
 
@@ -312,32 +294,32 @@ t5_on_ringer_multiple_calls_with_restart (CallsRinger *ringer,
                                           gpointer     user_data)
 {
   static guint test_phase = 0;
-  TestData *data = user_data;
+  RingerFixture *fixture = user_data;
 
   switch (test_phase++) {
   case 0:
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    g_assert_false (calls_ringer_get_ring_is_quiet (ringer));
 
-    calls_call_answer (CALLS_CALL (data->call_one));
+    calls_call_answer (CALLS_CALL (fixture->call_one));
     break;
   case 1:
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    assert_true (calls_ringer_get_ring_is_quiet (ringer));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    g_assert_true (calls_ringer_get_ring_is_quiet (ringer));
 
-    calls_call_hang_up (CALLS_CALL (data->call_one));
+    calls_call_hang_up (CALLS_CALL (fixture->call_one));
     break;
   case 2:
-    assert_true (calls_ringer_get_is_ringing (ringer));
-    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+    g_assert_true (calls_ringer_get_is_ringing (ringer));
+    g_assert_false (calls_ringer_get_ring_is_quiet (ringer));
 
-    calls_call_hang_up (CALLS_CALL (data->call_two));
+    calls_call_hang_up (CALLS_CALL (fixture->call_two));
     break;
   case 3:
-    assert_false (calls_ringer_get_is_ringing (ringer));
-    assert_false (calls_ringer_get_ring_is_quiet (ringer));
+    g_assert_false (calls_ringer_get_is_ringing (ringer));
+    g_assert_false (calls_ringer_get_ring_is_quiet (ringer));
 
-    g_main_loop_quit (data->loop);
+    g_main_loop_quit (fixture->loop);
     break;
   default:
     g_assert_not_reached (); /* did not find equivalent cmocka assertion */
@@ -345,50 +327,43 @@ t5_on_ringer_multiple_calls_with_restart (CallsRinger *ringer,
 }
 
 static void
-test_ringing_multiple_calls_with_restart (void **state)
+test_ringing_multiple_calls_with_restart (RingerFixture *fixture,
+                                          gconstpointer  user_data)
 {
-  TestData *data = *state;
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  g_signal_connect (data->ringer,
+  g_signal_connect (fixture->ringer,
                     "notify::ringing",
                     G_CALLBACK (t5_on_ringer_multiple_calls_with_restart),
-                    data);
+                    fixture);
 
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
-  calls_call_set_state (CALLS_CALL (data->call_two), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_two);
+  calls_call_set_state (CALLS_CALL (fixture->call_one), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_one);
+  calls_call_set_state (CALLS_CALL (fixture->call_two), CALLS_CALL_STATE_INCOMING);
+  add_call (fixture->manager, fixture->ui_call_two);
 
   /* main loop will quit in callback of notify::ring */
-  g_main_loop_run (data->loop);
+  g_main_loop_run (fixture->loop);
 
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
+  g_assert_false (calls_ringer_get_is_ringing (fixture->ringer));
 }
 
 int
 main (int   argc,
       char *argv[])
 {
-  const struct CMUnitTest tests[] = {
-    cmocka_unit_test_setup_teardown (test_ringing_accept_call,
-                                     setup_test_data,
-                                     tear_down_test_data),
-    cmocka_unit_test_setup_teardown (test_ringing_hang_up_call,
-                                     setup_test_data,
-                                     tear_down_test_data),
-    cmocka_unit_test_setup_teardown (test_ringing_silence_call,
-                                     setup_test_data,
-                                     tear_down_test_data),
-    cmocka_unit_test_setup_teardown (test_ringing_multiple_calls,
-                                     setup_test_data,
-                                     tear_down_test_data),
-    cmocka_unit_test_setup_teardown (test_ringing_multiple_calls_with_restart,
-                                     setup_test_data,
-                                     tear_down_test_data)
-  };
+  g_test_init (&argc, &argv, NULL);
 
-  return cmocka_run_group_tests (tests, NULL, NULL);
+  g_test_add ("/Calls/Ringer/accept_call", RingerFixture, NULL,
+              setup_ringer, test_ringing_accept_call, tear_down_ringer);
+  g_test_add ("/Calls/Ringer/hang_up_call", RingerFixture, NULL,
+              setup_ringer, test_ringing_hang_up_call, tear_down_ringer);
+  g_test_add ("/Calls/Ringer/silence_call", RingerFixture, NULL,
+              setup_ringer, test_ringing_silence_call, tear_down_ringer);
+  g_test_add ("/Calls/Ringer/multiple_call", RingerFixture, NULL,
+              setup_ringer, test_ringing_multiple_calls, tear_down_ringer);
+  g_test_add ("/Calls/Ringer/multiple_call_restart", RingerFixture, NULL,
+              setup_ringer, test_ringing_multiple_calls_with_restart, tear_down_ringer);
+
+  return g_test_run ();
 }
-
