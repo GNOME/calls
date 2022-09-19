@@ -87,26 +87,22 @@ test_env_ringer = [
   'LD_PRELOAD=@0@/mock/lfb/libfeedback-0.so'.format(meson.current_build_dir()),
 ] + test_env
 
-cmocka = dependency ('cmocka', required: false)
+test_sources = [
+               'mock-call.c', 'mock-call.h', 'mock-libfeedback.h',
+               'test-ringer.c'
+]
 
-if cmocka.found ()
-    test_sources = [
-                    'mock-call.c', 'mock-call.h', 'mock-libfeedback.h',
-                    'test-ringer.c'
-                   ]
-
-    t = executable('ringer', test_sources,
-                   c_args : test_cflags,
-                   link_args: mock_link_args,
-                   pie: true,
-                   link_with : [calls_vala, libcalls],
-                   dependencies: [calls_deps, cmocka],
-                   include_directories : [
-                       calls_includes,
-                     ]
-                   )
-    test('ringer', t, env: test_env_ringer)
-endif
+t = executable('ringer', test_sources,
+               c_args : test_cflags,
+               link_args: mock_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('ringer', t, env: test_env_ringer)
 
 test_sources = [ 'test-contacts.c' ]
 t = executable('contacts', test_sources,
