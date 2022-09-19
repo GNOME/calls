@@ -320,54 +320,6 @@ test_ringing_hang_up_call (void **state)
 }
 
 
-/* t3: test_ringing_hang_up_call_ringer_cancelled */
-static gboolean
-t3_on_ringer_timeout (gpointer user_data)
-{
-  TestData *data = user_data;
-  static guint test_phase = 0;
-
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-  if (test_phase == 0) {
-    calls_call_hang_up (CALLS_CALL (data->call_one));
-    test_phase++;
-    return G_SOURCE_CONTINUE;
-  }
-
-  g_main_loop_quit ((GMainLoop *) data->loop);
-
-  return G_SOURCE_REMOVE;
-}
-
-
-/** this test should use cancellable code path by hanging up before
- *  event triggering completes
- */
-static void
-test_ringing_hang_up_call_ringer_cancelled (void **state)
-{
-  TestData *data = *state;
-
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-
-  /* delay before completion of __wrap_lfb_event_trigger_feedback_async() */
-  will_return (__wrap_lfb_event_trigger_feedback_async, 50);
-
-  calls_call_set_state (CALLS_CALL (data->call_one), CALLS_CALL_STATE_INCOMING);
-  add_call (data->manager, data->ui_call_one);
-
-  /** this timeout needs to be longer than the delay for activating the UI/ringer,
-   * see DELAY_UI_MS in calls-ui-call-data.c
-   */
-  g_timeout_add (105, G_SOURCE_FUNC (t3_on_ringer_timeout), data);
-
-  /* main loop will quit in t3_on_ringer_timeout() */
-  g_main_loop_run (data->loop);
-
-  remove_call (data->manager, data->ui_call_one);
-  assert_false (calls_ringer_get_is_ringing (data->ringer));
-}
-
 /* t4: test_ringing_silence_call */
 static void
 t4_on_ringer_call_silence (CallsRinger *ringer,
@@ -567,9 +519,6 @@ main (int   argc,
                                      setup_test_data,
                                      tear_down_test_data),
     cmocka_unit_test_setup_teardown (test_ringing_hang_up_call,
-                                     setup_test_data,
-                                     tear_down_test_data),
-    cmocka_unit_test_setup_teardown (test_ringing_hang_up_call_ringer_cancelled,
                                      setup_test_data,
                                      tear_down_test_data),
     cmocka_unit_test_setup_teardown (test_ringing_silence_call,
