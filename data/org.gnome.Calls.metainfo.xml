@@ -24,12 +24,12 @@
       <screenshot type="default">
         <!-- Translators: A screenshot description. -->
         <caption>Placing a call</caption>
-        <image type="source" width="720" height="1296">https://gitlab.gnome.org/GNOME/calls/raw/master/data/screenshots/calling.png</image>
+        <image type="source" width="720" height="1296">https://gitlab.gnome.org/GNOME/calls/raw/main/data/screenshots/calling.png</image>
       </screenshot>
       <screenshot>
         <!-- Translators: A screenshot description. -->
         <caption>The call history</caption>
-        <image type="source" width="720" height="1296">https://gitlab.gnome.org/GNOME/calls/raw/master/data/screenshots/history.png</image>
+        <image type="source" width="720" height="1296">https://gitlab.gnome.org/GNOME/calls/raw/main/data/screenshots/history.png</image>
       </screenshot>
     </screenshots>
 
