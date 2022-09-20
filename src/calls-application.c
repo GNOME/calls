@@ -186,16 +186,12 @@ set_daemon_action (GSimpleAction *action,
                    gpointer       user_data)
 {
   CallsApplication *self = CALLS_APPLICATION (user_data);
+  gboolean daemon = g_variant_get_boolean (parameter);
 
-  if (self->main_window) {
-    g_warning ("Cannot set application as a daemon"
-               " because application is already started");
-    return;
-  }
+  self->daemon = daemon;
 
-  self->daemon = TRUE;
-
-  g_debug ("Application marked as daemon");
+  g_debug ("Application %smarked as daemon",
+    daemon ? "" : "not ");
 }
 
 
@@ -390,7 +386,7 @@ static const GActionEntry actions[] =
 {
   { "set-provider-names", set_provider_names_action, "as" },
   { "set-default-providers", set_default_providers_action, NULL },
-  { "set-daemon", set_daemon_action, NULL },
+  { "set-daemon", set_daemon_action, "b" },
   { "dial", dial_action, "s" },
   { "copy-number", copy_number, "s" },
   /* TODO About dialog { "about", show_about, NULL}, */
@@ -484,9 +480,9 @@ calls_application_command_line (GApplication            *application,
                                     NULL);
   }
 
-  if (g_variant_dict_contains (options, "daemon"))
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-daemon", NULL);
+  g_action_group_activate_action (G_ACTION_GROUP (application),
+                                  "set-daemon",
+                                  g_variant_new_boolean (g_variant_dict_contains (options, "daemon")));
 
   if (g_variant_dict_lookup (options, "dial", "&s", &arg))
     g_action_group_activate_action (G_ACTION_GROUP (application),
@@ -577,12 +573,8 @@ activate (GApplication *application)
 
   g_debug ("Activated");
 
-  if (self->main_window) {
-    present = TRUE;
-  } else {
-    start_proper (self);
-    present = !self->daemon;
-  }
+  start_proper (self);
+  present = !self->daemon;
 
   if (present || self->uri) {
     gtk_window_present (GTK_WINDOW (self->main_window));
