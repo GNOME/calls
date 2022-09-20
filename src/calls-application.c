@@ -74,7 +74,7 @@ struct _CallsApplication {
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
 
 
-static gboolean start_proper (CallsApplication *self);
+static void start_proper (CallsApplication *self);
 
 
 static gboolean
@@ -534,13 +534,13 @@ notify_window_visible_cb (GtkWidget        *window,
 }
 
 
-static gboolean
+static void
 start_proper (CallsApplication *self)
 {
   GtkApplication *gtk_app;
 
   if (self->main_window) {
-    return TRUE;
+    return;
   }
 
   gtk_app = GTK_APPLICATION (self);
@@ -566,9 +566,8 @@ start_proper (CallsApplication *self)
                     "notify::visible",
                     G_CALLBACK (notify_window_visible_cb),
                     self);
-
-  return TRUE;
 }
+
 
 static void
 activate (GApplication *application)
@@ -581,10 +580,7 @@ activate (GApplication *application)
   if (self->main_window) {
     present = TRUE;
   } else {
-    gboolean ok = start_proper (self);
-    if (!ok)
-      return;
-
+    start_proper (self);
     present = !self->daemon;
   }
 
@@ -603,6 +599,7 @@ activate (GApplication *application)
 
   g_clear_pointer (&self->uri, g_free);
 }
+
 
 static void
 app_open (GApplication *application,
