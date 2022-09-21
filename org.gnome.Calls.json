@@ -50,34 +50,6 @@
             ]
         },
         {
-            "name" : "gsound",
-            "buildsystem" : "meson",
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/gsound/1.0/gsound-1.0.3.tar.xz",
-                    "sha256" : "ca2d039e1ebd148647017a7f548862350bc9af01986d39f10cfdc8e95f07881a"
-                }
-            ],
-            "modules": [
-                {
-                    "name" : "libcanberra",
-                    "sources" : [
-                        {
-                            "type" : "archive",
-                            "url" : "http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz",
-                            "sha256" : "c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72"
-                        }
-                    ],
-                    "config-opts" : [
-                        "--disable-alsa",
-                        "--disable-null",
-                        "--disable-oss"
-                    ]
-                }
-            ]
-        },
-        {
             "name" : "libpeas",
             "buildsystem" : "meson",
             "sources" : [
@@ -212,6 +184,7 @@
             "buildsystem" : "cmake-ninja",
             "config-opts" : [
                 "-DENABLE_PHONENUMBER=ON",
+                "-DENABLE_OAUTH2=OFF",
                 "-DENABLE_DOT_LOCKING=OFF",
                 "-DENABLE_FILE_LOCKING=fcntl",
                 "-DENABLE_GOA=OFF",
@@ -227,6 +200,8 @@
                 "-DENABLE_EXAMPLES=OFF",
                 "-DENABLE_OAUTH2=OFF",
                 "-DWITH_PHONENUMBER:PATH=/"
+                "-DENABLE_CANBERRA=OFF",
+                "-DENABLE_DOT_LOCKING=OFF"
             ],
             "sources" : [
                 {
