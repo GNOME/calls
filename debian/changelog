@@ -1,3 +1,17 @@
+gnome-calls (44~alpha.0) UNRELEASED; urgency=medium
+
+  * meson: Post release bump
+  * manager: Remove unused include
+  * record-store: Removed deprecated CuiCallStates
+  * ringer: Remove deprecated CuiCallStates
+  * ringer: Move libfeedback related cleanup to finalize()
+  * ringer: Cancel any ongoing actions on shutdown
+  * application: Don't return value in start_proper()
+  * application: Don't show application window if started as daemon
+  * meson: Sort sources alphabetically
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Wed, 21 Sep 2022 12:44:00 +0200
+
 gnome-calls (43.0) unstable; urgency=medium
 
   [ Emin Tufan Çetin ]
