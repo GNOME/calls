@@ -292,8 +292,8 @@
             ],
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/calls.git"
+                    "type" : "dir",
+                    "path" : "./"
                 }
             ]
         }
