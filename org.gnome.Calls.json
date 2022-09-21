@@ -52,11 +52,18 @@
         {
             "name" : "libpeas",
             "buildsystem" : "meson",
+            "config-opts" : [
+                "-Ddemos=false",
+                "-Dwidgetry=false",
+                "-Dlua51=false",
+                "-Dglade_catalog=false",
+                "-Dintrospection=false"
+            ],
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/libpeas/1.30/libpeas-1.30.0.tar.xz",
-                    "sha256": "0bf5562e9bfc0382a9dcb81f64340787542568762a3a367d9d90f6185898b9a3"
+                    "url" : "https://download.gnome.org/sources/libpeas/1.34/libpeas-1.34.0.tar.xz",
+                    "sha256": "4305f715dab4b5ad3e8007daec316625e7065a94e63e25ef55eb1efb964a7bf0"
                 }
             ]
         },
