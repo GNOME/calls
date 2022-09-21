@@ -77,17 +77,34 @@ package:deb-pureos-byzantium:arm64:
     - aarch64
   extends: .l5-build-debian-package
 
-flatpak:main:
-  extends: .flatpak
-  stage: package
-  allow_failure: true
+.vars-devel:
   variables:
     MANIFEST_PATH: "org.gnome.Calls.json"
-    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     FLATPAK_MODULE: "calls"
-    MESON_ARGS: ""
     APP_ID: "org.gnome.Calls"
+    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     BUNDLE: "calls.flatpak"
+    CONFIG_OPTS: >-
+      -Dmanpages=false
+
+
+# Build Flatpak for x86_64
+flatpak@x86_64:
+  extends: ['.flatpak@x86_64', '.vars-devel']
+
+# Build Flatpak for aarch64
+flatpak@aarch64:
+  extends: ['.flatpak@aarch64', '.vars-devel']
+
+# Publish Flatpak for x86_64
+nightly@x86_64:
+  extends: '.publish_nightly'
+  needs: ['flatpak@x86_64']
+
+# Publish Flatpak for aarch64
+nightly@aarch64:
+  extends: '.publish_nightly'
+  needs: ['flatpak@aarch64']
 
 pages:
   stage: deploy
