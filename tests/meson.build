@@ -3,8 +3,6 @@ if get_option('tests')
 subdir('mock')
 
 test_env = [
-  'G_TEST_SRCDIR=@0@'.format(meson.current_source_dir()),
-  'G_TEST_BUILDDIR=@0@'.format(meson.current_build_dir()),
   'G_DEBUG=gc-friendly,fatal-warnings',
   'GSETTINGS_BACKEND=memory',
   'PYTHONDONTWRITEBYTECODE=yes',
