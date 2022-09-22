@@ -264,8 +264,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://github.com/freeswitch/sofia-sip/archive/v1.13.2.tar.gz",
-                    "sha256" : "b9eca9688ce4b28e062daf0933c3bf661fb607e7afafa71bda3e8f07eb88df44"
+                    "url" : "https://github.com/freeswitch/sofia-sip/archive/refs/tags/v1.13.9.tar.gz",
+                    "sha256" : "3e7bfe9345e7d196bb13cf2c6e758cec8d959f1b9dbbb3bd5459b004f6f65c6c"
                 }
             ]
         },
