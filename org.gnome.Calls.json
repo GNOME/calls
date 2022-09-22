@@ -68,73 +68,12 @@
             ]
         },
         {
-            "name" : "boost",
-            "buildsystem" : "simple",
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.bz2",
-                    "sha256" : "83bfc1507731a0906e387fc28b7ef5417d591429e51e788417fe9ff025e116b1"
-                }
-            ],
-            "build-commands" : [
-                "./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=date_time,thread,system",
-                "./b2 -j ${FLATPAK_BUILDER_N_JOBS} install"
-            ],
-            "cleanup" : [
-                "/share",
-                "/bin"
-            ]
-        },
-        {
-            "name" : "GTest",
-            "buildsystem" : "cmake-ninja",
-            "cleanup" : ["*"],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "http://archive.ubuntu.com/ubuntu/pool/universe/g/googletest/googletest_1.8.0.orig.tar.gz",
-                    "md5" : "16877098823401d1bf2ed7891d7dce36"
-                }
-            ]
-        },
-        {
-            "name" : "protobuf",
-            "cleanup" : [
-                "protoc",
-                "/bin",
-                "/doc",
-                "/lib/plugins"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://github.com/protocolbuffers/protobuf/releases/download/v3.12.4/protobuf-cpp-3.12.4.tar.gz",
-                    "sha256" : "ccfbaaba52f67e0e6536a05f3df3f6618620d255513cfca3a07f5935b624e26b"
-                }
-            ]
-        },
-        {
-            "name" : "abseil",
-            "buildsystem" : "cmake",
-            "config-opts" : [
-                "-DCMAKE_CXX_STANDARD=17",
-                "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://github.com/abseil/abseil-cpp/archive/refs/tags/20220623.1.tar.gz",
-                    "sha256" : "91ac87d30cc6d79f9ab974c51874a704de9c2647c40f6932597329a282217ba8"
-                }
-            ]
-        },
-        {
             "name" : "libphonenumber",
             "buildsystem" : "cmake",
             "config-opts" : [
                 "-DCMAKE_CXX_STANDARD=17",
-                "-DREGENERATE_METADATA=OFF"
+                "-DREGENERATE_METADATA=OFF",
+                "-DUSE_BOOST=OFF"
             ],
             "sources" : [
                 {
@@ -149,7 +88,53 @@
                     ]
                 }
             ],
-            "subdir" : "cpp"
+            "subdir" : "cpp",
+            "modules" : [
+		{
+		    "name" : "GTest",
+		    "buildsystem" : "cmake-ninja",
+		    "cleanup" : ["*"],
+		    "sources" : [
+		        {
+		            "type" : "archive",
+		            "url" : "http://archive.ubuntu.com/ubuntu/pool/universe/g/googletest/googletest_1.8.0.orig.tar.gz",
+		            "md5" : "16877098823401d1bf2ed7891d7dce36"
+		        }
+		    ]
+		},
+		{
+		    "name" : "protobuf",
+		    "cleanup" : [
+		        "protoc",
+		        "/bin",
+		        "/doc",
+		        "/lib/plugins"
+		    ],
+		    "sources" : [
+		        {
+		            "type" : "archive",
+		            "url" : "https://github.com/protocolbuffers/protobuf/releases/download/v3.12.4/protobuf-cpp-3.12.4.tar.gz",
+		            "sha256" : "ccfbaaba52f67e0e6536a05f3df3f6618620d255513cfca3a07f5935b624e26b"
+		        }
+		    ]
+		},
+		{
+		    "name" : "abseil",
+		    "buildsystem" : "cmake",
+		    "config-opts" : [
+		        "-DCMAKE_CXX_STANDARD=17",
+		        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+		    ],
+		    "sources" : [
+		        {
+		            "type" : "archive",
+		            "url" : "https://github.com/abseil/abseil-cpp/archive/refs/tags/20220623.1.tar.gz",
+		            "sha256" : "91ac87d30cc6d79f9ab974c51874a704de9c2647c40f6932597329a282217ba8"
+		        }
+		    ]
+		}
+	    ]
+
         },
         {
             "name" : "libical",
@@ -206,7 +191,8 @@
                 "-DENABLE_GTK_DOC=OFF",
                 "-DENABLE_EXAMPLES=OFF",
                 "-DENABLE_OAUTH2=OFF",
-                "-DWITH_PHONENUMBER:PATH=/"
+                "-DWITH_PHONENUMBER:PATH=/",
+                "-DPHONENUMBER_DEFINITIONS=",
                 "-DENABLE_CANBERRA=OFF",
                 "-DENABLE_DOT_LOCKING=OFF"
             ],
