@@ -97,8 +97,8 @@
 		    "sources" : [
 		        {
 		            "type" : "archive",
-		            "url" : "http://archive.ubuntu.com/ubuntu/pool/universe/g/googletest/googletest_1.8.0.orig.tar.gz",
-		            "md5" : "16877098823401d1bf2ed7891d7dce36"
+		            "url" : "https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz",
+		            "sha256" : "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2"
 		        }
 		    ]
 		},
@@ -113,8 +113,8 @@
 		    "sources" : [
 		        {
 		            "type" : "archive",
-		            "url" : "https://github.com/protocolbuffers/protobuf/releases/download/v3.12.4/protobuf-cpp-3.12.4.tar.gz",
-		            "sha256" : "ccfbaaba52f67e0e6536a05f3df3f6618620d255513cfca3a07f5935b624e26b"
+		            "url" : "https://github.com/protocolbuffers/protobuf/releases/download/v21.6/protobuf-cpp-3.21.6.tar.gz",
+		            "sha256" : "a3c4c104b98a21a577ce5ecc0d9b9f43a359b917d0bcf69467b70dc27416dfdc"
 		        }
 		    ]
 		},
