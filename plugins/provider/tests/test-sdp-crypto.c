@@ -46,10 +46,15 @@ test_crypto_manual (void)
                                 "%s",
                                 offer_crypto_attr);
 
-  sdp_parser_offer = sdp_parse (&home, offer_full, -1, sdp_f_config);
+  sdp_parser_offer = sdp_parse (&home, offer_full, strlen(offer_full), sdp_f_config);
 
   sdp_offer = sdp_session (sdp_parser_offer);
 
+  if (!sdp_offer) {
+    g_error("%s", sdp_parsing_error(sdp_parser_offer));
+  }
+
+  g_assert_true (sdp_offer != NULL);
 
   g_assert_true (calls_sdp_crypto_context_set_remote_media (ctx, sdp_offer->sdp_media));
 
@@ -63,7 +68,7 @@ test_crypto_manual (void)
                                  "%s",
                                  answer_crypto_attr);
 
-  sdp_parser_answer = sdp_parse (&home, answer_full, -1, sdp_f_config);
+  sdp_parser_answer = sdp_parse (&home, answer_full, strlen(answer_full), sdp_f_config);
   sdp_answer = sdp_session (sdp_parser_answer);
 
   g_assert_true (calls_sdp_crypto_context_set_local_media (ctx, sdp_answer->sdp_media));
@@ -128,7 +133,7 @@ test_crypto_offer_answer (void)
 
   media_line_offer = g_strdup_printf ("m=audio 42024 RTP/SAVP 0\r\n%s",
                                       attr_offer_str);
-  sdp_parser_offer = sdp_parse (&home, media_line_offer, -1, sdp_f_config);
+  sdp_parser_offer = sdp_parse (&home, media_line_offer, strlen(media_line_offer), sdp_f_config);
   sdp_session_offer = sdp_session (sdp_parser_offer);
 
   calls_sdp_crypto_context_set_remote_media (ctx_answer,
@@ -150,7 +155,7 @@ test_crypto_offer_answer (void)
 
   media_line_answer = g_strdup_printf ("m=audio 42124 RTP/SAVP 0\r\n%s",
                                        attr_answer_str);
-  sdp_parser_answer = sdp_parse (&home, media_line_answer, -1, sdp_f_config);
+  sdp_parser_answer = sdp_parse (&home, media_line_answer, strlen(media_line_answer), sdp_f_config);
   sdp_session_answer = sdp_session (sdp_parser_answer);
 
   calls_sdp_crypto_context_set_remote_media (ctx_offer,
