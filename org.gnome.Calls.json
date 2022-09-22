@@ -16,7 +16,9 @@
         "--talk-name=im.pidgin.purple.PurpleService",
         "--talk-name=org.gnome.evolution.dataserver.Subprocess.Backend.*",
         "--talk-name=org.mobian_project.CallAudio",
-        "--talk-name=org.sigxcpu.Feedback"
+        "--talk-name=org.sigxcpu.Feedback",
+        "--talk-name=org.gtk.vfs.*",
+        "--filesystem=xdg-run/gvfsd"
     ],
     "cleanup" : [
         "/include",
