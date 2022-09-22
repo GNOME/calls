@@ -805,8 +805,13 @@ calls_manager_init (CallsManager *self)
     g_autofree char *plugin_dir_provider = NULL;
 
     plugin_dir_provider = g_build_filename (dir, "provider", NULL);
-    g_debug ("Adding %s to plugin search path", plugin_dir_provider);
-    peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
+
+    if (g_file_test (plugin_dir_provider, G_FILE_TEST_EXISTS)) {
+      g_debug ("Adding %s to plugin search path", plugin_dir_provider);
+      peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
+    } else {
+      g_warning ("Not adding %s to plugin search path, because the directory doesn't exist. Check if env CALLS_PLUGIN_DIR is set correctly", plugin_dir_provider);
+    }
   }
 
   default_plugin_dir_provider = g_build_filename(PLUGIN_LIBDIR, "provider", NULL);
