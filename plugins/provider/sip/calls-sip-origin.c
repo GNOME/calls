@@ -361,10 +361,14 @@ dial (CallsOrigin *origin,
                    TAG_END ());
 
   /* Make sure @host is in the dial target */
-  if (g_strstr_len (address, -1, "@"))
+  if (g_strstr_len (address, -1, "@")) {
     dial_target = g_strdup (address);
-  else
-    dial_target = g_strconcat (address, "@", self->host, NULL);
+  } else {
+    if (self->port > 0)
+      dial_target = g_strconcat (address, "@", self->host, ":", self->port, NULL);
+    else
+      dial_target = g_strconcat (address, "@", self->host, NULL);
+  }
 
   g_debug ("Calling `%s' from origin '%s'", address, name);
 
