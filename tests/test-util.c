@@ -10,6 +10,9 @@
 
 #include <gtk/gtk.h>
 
+#include <sys/socket.h>
+
+
 static void
 test_protocol_prefix (void)
 {
@@ -69,6 +72,27 @@ test_null_empty_strings (void)
   g_assert_false (STR_IS_NULL_OR_EMPTY ("lorem ipsum"));
 }
 
+
+static void
+test_ip_address_family (void)
+{
+  g_assert_cmpint (get_address_family_for_ip ("10.42.0.1", FALSE), ==, AF_INET);
+  g_assert_cmpint (get_address_family_for_ip ("9.9.9.9", FALSE), ==, AF_INET);
+  g_assert_cmpint (get_address_family_for_ip ("127.0.0.1", FALSE), ==, AF_INET);
+  g_assert_cmpint (get_address_family_for_ip ("0.0.0.0", FALSE), ==, AF_INET);
+
+
+  g_assert_cmpint (get_address_family_for_ip ("FE80:0000:0000:0000:0202:C3DF:FE1E:8329", FALSE), ==, AF_INET6);
+  g_assert_cmpint (get_address_family_for_ip ("FE80::0202:C3DF:FE1E:8329", FALSE), ==, AF_INET6);
+  g_assert_cmpint (get_address_family_for_ip ("fe80::0202:c3df:fe1e:8329", FALSE), ==, AF_INET6);
+  g_assert_cmpint (get_address_family_for_ip ("::", FALSE), ==, AF_INET6);
+  g_assert_cmpint (get_address_family_for_ip ("::1", FALSE), ==, AF_INET6);
+
+  g_assert_cmpint (get_address_family_for_ip ("example.org", FALSE), ==, AF_UNSPEC);
+
+}
+
+
 int
 main (int   argc,
       char *argv[])
@@ -79,6 +103,7 @@ main (int   argc,
   g_test_add_func ("/Calls/util/dtmf_tones", (GTestFunc) test_dtmf_tone_validity);
   g_test_add_func ("/Calls/util/call_icon_names", (GTestFunc) test_call_icon_names);
   g_test_add_func ("/Calls/util/null-or-empty-strings", (GTestFunc) test_null_empty_strings);
+  g_test_add_func ("/Calls/util/ip_address_family", (GTestFunc) test_ip_address_family);
 
   g_test_run ();
 }
