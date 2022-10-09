@@ -24,6 +24,8 @@
 
 #include "util.h"
 
+#include <sys/socket.h>
+#include <netdb.h>
 
 
 gboolean
@@ -224,4 +226,53 @@ get_call_icon_symbolic_name (gboolean inbound,
   index = ((inbound) << 1) + missed;
 
   return type_icon_name[index];
+}
+
+/**
+ * get_address_family_for_ip:
+ * @ip: The IP address to check
+ * @only_configured_interfaces: Only consider address families of configured
+ * network interfaces
+ *
+ * Returns: #AF_INET for IPv4, #AF_INET6 for IPv6 and #AF_UNSPEC otherwise.
+ * If @only_configured_interfaces is #TRUE and the resulting address family of @ip
+ * is not configured on any network interface, it will also return #AF_UNSPEC
+ */
+int
+get_address_family_for_ip (const char *ip,
+                           gboolean    only_configured_interfaces)
+{
+  struct addrinfo hints = { 0 };
+  struct addrinfo *result;
+  int family = AF_UNSPEC;
+  int res_gai;
+
+  g_return_val_if_fail (!STR_IS_NULL_OR_EMPTY (ip), AF_UNSPEC);
+
+  hints.ai_flags = AI_V4MAPPED | AI_NUMERICHOST;
+  if (only_configured_interfaces)
+    hints.ai_flags |= AI_ADDRCONFIG;
+  hints.ai_family = AF_UNSPEC;
+
+
+  res_gai = getaddrinfo (ip, NULL, &hints, &result);
+  if (res_gai != 0) {
+    g_info ("Cannot get address information for host %s: %s",
+            ip,
+            gai_strerror (res_gai));
+
+    return AF_UNSPEC;
+  }
+
+  family = result->ai_family;
+
+  freeaddrinfo (result);
+
+  if (family != AF_INET && family != AF_INET6) {
+    g_warning ("Address information for host %s indicates non internet host", ip);
+
+    return AF_UNSPEC;
+  }
+
+  return family;
 }
