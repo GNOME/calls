@@ -220,8 +220,6 @@ on_contacts_appeared (GDBusConnection *connection,
 {
   CallsContactsProvider *self;
 
-  g_autoptr (GError) error = NULL;
-
   g_assert (CALLS_IS_CONTACTS_PROVIDER (user_data));
 
   self = user_data;
