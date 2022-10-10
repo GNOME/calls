@@ -34,9 +34,7 @@
 #include <gio/gio.h>
 #include <gst/gst.h>
 
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <netdb.h>
 
 
 /**
@@ -52,43 +50,12 @@
 typedef struct _CallsSipMediaManager {
   GObject                 parent;
 
-  int                     address_family;
-  struct         addrinfo hints;
-
   CallsSettings          *settings;
   GList                  *preferred_codecs;
   GListStore             *pipelines;
 } CallsSipMediaManager;
 
 G_DEFINE_TYPE (CallsSipMediaManager, calls_sip_media_manager, G_TYPE_OBJECT);
-
-
-static const char *
-get_address_family_string (CallsSipMediaManager *self,
-                           const char           *ip)
-{
-  struct addrinfo *result = NULL;
-  const char *family;
-
-  if (getaddrinfo (ip, NULL, &self->hints, &result) != 0) {
-    g_warning ("Cannot parse session IP %s", ip);
-    return NULL;
-  }
-
-  /* check if IP is IPv4 or IPv6. We need to specify this in the c= line of SDP */
-  self->address_family = result->ai_family;
-
-  if (result->ai_family == AF_INET)
-    family = "IP4";
-  else if (result->ai_family == AF_INET6)
-    family = "IP6";
-  else
-    family = NULL;
-
-  freeaddrinfo (result);
-
-  return family;
-}
 
 
 static void
@@ -183,10 +150,6 @@ calls_sip_media_manager_init (CallsSipMediaManager *self)
                             self);
   on_notify_preferred_audio_codecs (self);
 
-  /* Hints are used with getaddrinfo() when setting the session IP */
-  self->hints.ai_flags = AI_V4MAPPED | AI_ADDRCONFIG | AI_NUMERICHOST;
-  self->hints.ai_family = AF_UNSPEC;
-
   self->pipelines = g_list_store_new (CALLS_TYPE_SIP_MEDIA_PIPELINE);
 
   add_new_pipeline (self);
@@ -206,6 +169,28 @@ calls_sip_media_manager_default (void)
     g_object_add_weak_pointer (G_OBJECT (instance), (gpointer *) &instance);
   }
   return instance;
+}
+
+
+/* helper for calls_sip_media_manager_get_capabilities() */
+static char *
+get_connection_line (const char *ip)
+{
+  int af_family;
+
+  if (STR_IS_NULL_OR_EMPTY(ip))
+    goto invalid;
+
+  af_family = get_address_family_for_ip (ip, TRUE);
+  if (af_family == AF_UNSPEC)
+    goto invalid;
+
+  return g_strdup_printf ("c=IN %s %s\r\n",
+                          af_family == AF_INET ? "IP4" : "IP6",
+                          ip);
+
+  invalid:
+  return NULL;
 }
 
 
@@ -231,8 +216,8 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 
   g_autoptr (GString) media_line = NULL;
   g_autoptr (GString) attribute_lines = NULL;
+  g_autofree char *connection_line = NULL;
   GList *node;
-  const char *address_family_string;
 
   g_return_val_if_fail (CALLS_IS_SIP_MEDIA_MANAGER (self), NULL);
 
@@ -265,7 +250,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
     calls_srtp_crypto_attribute *attr = node->data;
     g_autoptr (GError) error = NULL;
     g_autofree char *crypto_line =
-      calls_srtp_print_sdp_crypto_attribute(attr, &error);
+      calls_srtp_print_sdp_crypto_attribute (attr, &error);
 
     if (!crypto_line) {
       g_warning ("Could not print SDP crypto line for tag %d: %s", attr->tag, error->message);
@@ -277,25 +262,15 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
   g_string_append_printf (attribute_lines, "a=rtcp:%d\r\n", rtcp_port);
 
 done:
-  if (own_ip && *own_ip)
-    address_family_string = get_address_family_string (self, own_ip);
+  connection_line = get_connection_line (own_ip);
 
-  if (own_ip && *own_ip && address_family_string)
-    return g_strdup_printf ("v=0\r\n"
-                            "c=IN %s %s\r\n"
-                            "%s\r\n"
-                            "%s\r\n",
-                            address_family_string,
-                            own_ip,
-                            media_line->str,
-                            attribute_lines->str);
-  else
-    return g_strdup_printf ("v=0\r\n"
-                            "%s\r\n"
-                            "%s\r\n",
-                            media_line->str,
-                            attribute_lines->str);
-
+  return g_strdup_printf ("v=0\r\n"
+                          "%s"
+                          "%s\r\n"
+                          "%s\r\n",
+                          connection_line ?: "",
+                          media_line->str,
+                          attribute_lines->str);
 }
 
 
