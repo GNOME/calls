@@ -518,7 +518,7 @@ origin_found_in_any_provider (CallsManager *self,
     CallsProvider *provider = CALLS_PROVIDER (value);
     GListModel *origins = calls_provider_get_origins (provider);
 
-    if (origins && calls_find_in_store (origins,
+    if (origins && calls_find_in_model (origins,
                                         origin,
                                         &position))
       return TRUE;

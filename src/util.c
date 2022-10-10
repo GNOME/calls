@@ -95,16 +95,15 @@ calls_number_is_ussd (const char *number)
 }
 
 /**
- * calls_find_in_store:
+ * calls_find_in_model:
  * @list: A #GListModel
  * @item: The #gpointer to find
  * @position: (out) (optional): The first position of @item, if it was found.
  *
- * Returns: Whether @list contains @item. This is mainly a convenience function
- * until we no longer support older glib versions.
+ * Returns: %TRUE if @list contains @item, %FALSE otherwise.
  */
 gboolean
-calls_find_in_store (GListModel *list,
+calls_find_in_model (GListModel *list,
                      gpointer    item,
                      guint      *position)
 {
