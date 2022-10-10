@@ -191,24 +191,38 @@ folks_prepare_cb (GObject      *obj,
 
 
 static void
+set_can_add_contacts (CallsContactsProvider *self,
+                      gboolean               can_add)
+{
+  g_assert (CALLS_IS_CONTACTS_PROVIDER (self));
+
+  g_info ("Can%s add contacts", can_add ? "" : "not");
+
+  if (self->can_add_contacts == can_add)
+    return;
+
+  self->can_add_contacts = can_add;
+  g_object_notify_by_pspec(G_OBJECT (self), props[PROP_CAN_ADD_CONTACTS]);
+}
+
+
+static void
 on_contacts_actions_updated (CallsContactsProvider *self)
 {
+  gboolean has_action;
+  gboolean action_enabled;
   const char *contact_action_name = "new-contact-data";
 
   g_assert (CALLS_IS_CONTACTS_PROVIDER (self));
 
-  if (self->can_add_contacts)
-    return;
+  has_action =
+    g_action_group_has_action (G_ACTION_GROUP (self->contacts_action_group),
+                               contact_action_name);
+  action_enabled =
+    g_action_group_get_action_enabled (G_ACTION_GROUP (self->contacts_action_group),
+                                       contact_action_name);
 
-  if (g_action_group_has_action (G_ACTION_GROUP (self->contacts_action_group),
-                                 contact_action_name) &&
-      g_action_group_get_action_enabled (G_ACTION_GROUP (self->contacts_action_group),
-                                         contact_action_name)) {
-    g_debug ("Can add contacts");
-
-    self->can_add_contacts = TRUE;
-    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CAN_ADD_CONTACTS]);
-  }
+  set_can_add_contacts (self, has_action && action_enabled);
 }
 
 
