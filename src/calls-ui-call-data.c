@@ -264,7 +264,12 @@ set_state (CallsUiCallData *self,
            cui_call_state_to_string (old_state),
            cui_call_state_to_string (new_state));
 
-  if (new_state == CUI_CALL_STATE_ACTIVE) {
+  /* Check for started timer, because state could have changed like this:
+   * ACTIVE -> HELD -> ACTIVE
+   * and we don't want to start the timer multiple times
+   */
+  if (new_state == CUI_CALL_STATE_ACTIVE && !self->timer) {
+
     self->timer = g_timer_new ();
     self->timer_id = g_timeout_add (500,
                                     G_SOURCE_FUNC (on_timer_ticked),
