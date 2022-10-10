@@ -110,22 +110,6 @@ G_BEGIN_DECLS
     }
 
 
-/** If the GObject object is non-NULL, unref it */
-void        calls_object_unref (gpointer object);
-
-
-/** Find a particular pointer value in a GtkListStore */
-gboolean
-            calls_list_store_find (GtkListStore *store,
-                       gpointer                  needle,
-                       gint                      needle_column,
-                       GtkTreeIter              *iter);
-
-/** Append a single character to a GtkEntry's contents */
-void
-            calls_entry_append (GtkEntry *entry,
-                    gchar                 character);
-
 
 gboolean    calls_date_time_is_same_day  (GDateTime  *a,
                                            GDateTime *b);
