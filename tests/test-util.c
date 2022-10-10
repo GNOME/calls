@@ -9,7 +9,6 @@
 #include "util.h"
 
 #include <gtk/gtk.h>
-#include <limits.h>
 
 static void
 test_protocol_prefix (void)
