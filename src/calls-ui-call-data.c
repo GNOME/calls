@@ -260,12 +260,21 @@ set_state (CallsUiCallData *self,
   old_state = self->state;
   self->state = new_state;
 
+  g_debug ("Setting UI call state from %s to %s",
+           cui_call_state_to_string (old_state),
+           cui_call_state_to_string (new_state));
+
   if (new_state == CUI_CALL_STATE_ACTIVE) {
     self->timer = g_timer_new ();
     self->timer_id = g_timeout_add (500,
                                     G_SOURCE_FUNC (on_timer_ticked),
                                     self);
+    g_source_set_name_by_id (self->timer_id, "ui-call: active_time_timer");
+
+    g_debug ("Start tracking active time; source id %u", self->timer_id);
   } else if (new_state == CUI_CALL_STATE_DISCONNECTED) {
+    g_debug ("Stop tracking active time; source id %u", self->timer_id);
+
     g_clear_handle_id (&self->timer_id, g_source_remove);
     g_clear_pointer (&self->timer, g_timer_destroy);
     g_clear_handle_id (&self->set_active_id, g_source_remove);
