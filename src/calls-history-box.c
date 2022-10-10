@@ -94,7 +94,7 @@ delete_call_cb (CallsCallRecord *record,
 
   g_return_if_fail (CALLS_IS_CALL_RECORD (record));
 
-  ok = calls_find_in_store (self->model,
+  ok = calls_find_in_model (self->model,
                             record,
                             &position);
 

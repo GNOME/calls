@@ -119,7 +119,7 @@ gboolean    calls_date_time_is_same_year (GDateTime  *a,
                                            GDateTime *b);
 gboolean    calls_number_is_ussd         (const char *number);
 
-gboolean    calls_find_in_store (GListModel *list,
+gboolean    calls_find_in_model (GListModel *list,
                                   gpointer   item,
                                   guint     *position);
 
