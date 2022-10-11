@@ -690,9 +690,9 @@ pipeline_init (CallsSipMediaPipeline *self,
   MAKE_ELEMENT (rtcp_sink, "udpsink", "rtcp-udp-sink");
 
   /* port 0 means letting the OS allocate */
-  g_object_set (self->rtp_src, "port", 0, NULL);
+  g_object_set (self->rtp_src, "port", 0, "address", "::", NULL);
 
-  g_object_set (self->rtcp_src, "port", 0, NULL);
+  g_object_set (self->rtcp_src, "port", 0, "address", "::", NULL);
 
   g_object_set (self->rtp_sink, "async", FALSE, "sync", FALSE, NULL);
   g_object_set (self->rtcp_sink, "async", FALSE, "sync", FALSE, NULL);
