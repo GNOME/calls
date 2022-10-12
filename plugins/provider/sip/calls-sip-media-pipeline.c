@@ -1064,9 +1064,108 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
 }
 
 
+static void
+on_dump_data_written  (GObject      *source_object,
+                       GAsyncResult *res,
+                       gpointer      userdata)
+{
+  g_autoptr (GError) error = NULL;
+  g_autofree char *dot_data = userdata;
+  GOutputStream *stream = G_OUTPUT_STREAM (source_object);
+  gsize n_expected = GPOINTER_TO_SIZE (dot_data);
+  gsize n_written;
+
+  n_written = g_output_stream_write_finish (stream, res, &error);
+  if (n_written != n_expected) {
+    /* this is not an error
+     * TODO write the rest
+     * note: maybe easier with GBytes because of keeping track of
+     * dot_data reference ? */
+    g_warning ("Expected to write %" G_GSIZE_FORMAT
+               " but only wrote %" G_GSIZE_FORMAT " bytes",
+               n_expected,
+               n_written);
+  }
+  if (error) {
+    g_warning ("Error while trying to dump dot graph to file: %s",
+               error->message);
+  }
+}
+
+
+static void
+on_dump_file_created (GObject      *source_object,
+                      GAsyncResult *res,
+                      gpointer      userdata)
+{
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GFileOutputStream) stream = NULL;
+  GFile *file = G_FILE (source_object);
+  char *dot_data = userdata;
+
+
+  stream = g_file_create_finish (G_FILE (source_object), res, &error);
+  if (!stream) {
+    g_autofree char *path = g_file_get_path (file);
+
+    if (error->code == G_IO_ERROR_EXISTS) {
+      /* we could potentially also g_file_replace() here,
+       * but no immediate need to bother right now */
+    }
+
+    g_warning ("Cannot create file %s: %s", path, error->message);
+
+    g_free (dot_data);
+    return;
+  }
+
+  g_output_stream_write_async (G_OUTPUT_STREAM (stream),
+                               dot_data,
+                               strlen (dot_data),
+                               G_PRIORITY_DEFAULT,
+                               NULL,
+                               on_dump_data_written,
+                               dot_data);
+}
+
+
+
+/* we need dump_pipeline_graph_to_path() because both
+ * GST_DEBUG_BIN_TO_DOT_FILE*() and  gst_debug_bin_to_dot_file*()
+ * require GStreamer being initialized with environment variable
+ * GST_DEBUG_DOT_DIR set.
+ */
+
+static void
+dump_pipeline_graph_to_path (GstBin     *bin,
+                             const char *full_path)
+{
+  g_autoptr (GFile) file = NULL;
+  char *dot_data;
+
+  g_print ("Dumping pipeline graph to '%s'", full_path);
+
+  dot_data = gst_debug_bin_to_dot_data (bin,
+                                        GST_DEBUG_GRAPH_SHOW_VERBOSE);
+
+  file = g_file_new_for_path (full_path);
+
+  /* try creating, and if it fails with IO_ERROR_EXISTS try replacing the file */
+  g_file_create_async (file,
+                       G_PRIORITY_DEFAULT,
+                       G_FILE_CREATE_PRIVATE,
+                       NULL,
+                       on_dump_file_created,
+                       dot_data);
+}
+
+
 static gboolean
 usr2_handler (CallsSipMediaPipeline *self)
 {
+  g_autofree char *tmp_dir = NULL;
+  g_autofree char *file_path = NULL;
+
   g_print ("playing: %d\n"
            "paused: %d\n"
            "stopped: %d\n"
@@ -1078,9 +1177,19 @@ usr2_handler (CallsSipMediaPipeline *self)
            self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
            self->state);
 
-  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->pipeline),
-                                     GST_DEBUG_GRAPH_SHOW_ALL,
-                                     "usr2-debug");
+  /* TODO once we require GLib >= 2.74
+   * we can open a temp file more easily with g_file_new_tmp_async/finish()
+
+     g_file_new_tmp_async ("calls-pipeline-XXXXXX",
+                        G_PRIORITY_DEFAULT,
+                        NULL,
+                        on_dump_file_created,
+                        dot_data);
+   */
+  tmp_dir = g_mkdtemp ("calls-pipeline-XXXXXX");
+  file_path = g_strconcat (tmp_dir, G_DIR_SEPARATOR_S, "usr2-debug.dot", NULL);
+
+  dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
 
   return G_SOURCE_CONTINUE;
 }
