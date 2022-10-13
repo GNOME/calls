@@ -398,11 +398,20 @@ static int
 calls_application_handle_local_options (GApplication *application,
                                         GVariantDict *options)
 {
+  guint verbosity = calls_log_get_verbosity ();
+
   if (g_variant_dict_contains (options, "version")) {
     g_print ("%s %s\n", APP_DATA_NAME, *VCS_TAG ? VCS_TAG : PACKAGE_VERSION);
 
     return 0;
   }
+
+  /* Propagate verbosity changes to the main instance */
+  if (verbosity > 0) {
+    g_variant_dict_insert_value (options, "verbosity", g_variant_new_uint32 (verbosity));
+    g_print ("Increasing verbosity to %u\n", verbosity);
+  }
+
 
   return -1;
 }
@@ -466,6 +475,7 @@ calls_application_command_line (GApplication            *application,
   g_autoptr (GVariant) providers = NULL;
   g_auto (GStrv) arguments = NULL;
   gint argc;
+  guint verbosity;
 
   options = g_application_command_line_get_options_dict (command_line);
 
@@ -487,6 +497,17 @@ calls_application_command_line (GApplication            *application,
   if (g_variant_dict_lookup (options, "dial", "&s", &arg))
     g_action_group_activate_action (G_ACTION_GROUP (application),
                                     "dial", g_variant_new_string (arg));
+
+  /* TODO make this a comma separated string of "CATEGORY:level" pairs */
+  if (g_variant_dict_lookup (options, "verbosity", "u", &verbosity)) {
+    gint delta = calls_log_set_verbosity (verbosity);
+    guint level = calls_log_get_verbosity ();
+    if (delta != 0)
+      g_print ("%s verbosity by %d to %u\n",
+               delta > 0 ? "Increased" : "Decreased",
+               delta,
+               level);
+  }
 
   arguments = g_application_command_line_get_arguments (command_line, &argc);
 
