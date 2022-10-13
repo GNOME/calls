@@ -39,3 +39,4 @@
 void  calls_log_init               (void);
 void  calls_log_increase_verbosity (void);
 guint calls_log_get_verbosity      (void);
+int   calls_log_set_verbosity      (guint new_verbosity);
