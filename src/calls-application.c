@@ -191,7 +191,7 @@ set_daemon_action (GSimpleAction *action,
   self->daemon = daemon;
 
   g_debug ("Application %smarked as daemon",
-    daemon ? "" : "not ");
+           daemon ? "" : "not ");
 }
 
 
