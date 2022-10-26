@@ -6,6 +6,8 @@
  * Author: Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  */
 
+#include "config.h"
+
 #include "calls-provider.h"
 
 #include <gtk/gtk.h>
@@ -47,14 +49,32 @@ main (gint   argc,
       gchar *argv[])
 {
   g_autofree char *plugin_dir_provider = NULL;
+  PeasEngine *peas;
+  const gchar *dir;
+  g_autofree char *default_plugin_dir_provider = NULL;
 
   gtk_test_init (&argc, &argv, NULL);
+
+  peas = peas_engine_get_default ();
 
   /* Add builddir as search path */
 #ifdef PLUGIN_BUILDDIR
   plugin_dir_provider = g_build_filename (PLUGIN_BUILDDIR, "provider", NULL);
   peas_engine_add_search_path (peas_engine_get_default (), plugin_dir_provider, NULL);
 #endif
+
+  dir = g_getenv ("CALLS_PLUGIN_DIR");
+  if (dir && dir[0] != '\0') {
+    g_autofree char *plugin_dir_provider = NULL;
+    plugin_dir_provider = g_build_filename (dir, "provider", NULL);
+    g_debug ("Adding %s to plugin search path", plugin_dir_provider);
+    peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
+  }
+
+  default_plugin_dir_provider = g_build_filename (PLUGIN_LIBDIR, "provider", NULL);
+  g_debug ("Adding %s to plugin search path", default_plugin_dir_provider);
+  peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
+  peas_engine_rescan_plugins (peas);
 
   g_test_add_func("/Calls/Plugins/load_plugins", test_calls_plugin_loading);
 

@@ -803,18 +803,17 @@ calls_manager_init (CallsManager *self)
   dir = g_getenv ("CALLS_PLUGIN_DIR");
   if (dir && dir[0] != '\0') {
     g_autofree char *plugin_dir_provider = NULL;
-    /** Add the directory to the search path. prepend_search_path() does not work
-     * as expected. see https://gitlab.gnome.org/GNOME/libpeas/-/issues/19
-     */
 
     plugin_dir_provider = g_build_filename (dir, "provider", NULL);
     g_debug ("Adding %s to plugin search path", plugin_dir_provider);
-    peas_engine_add_search_path (peas, plugin_dir_provider, NULL);
+    peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
   }
 
   default_plugin_dir_provider = g_build_filename(PLUGIN_LIBDIR, "provider", NULL);
   peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
   g_debug ("Scanning for plugins in `%s'", default_plugin_dir_provider);
+
+  peas_engine_rescan_plugins (peas);
 }
 
 
