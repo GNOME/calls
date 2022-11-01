@@ -1,88 +1,144 @@
 # Hungarian translation for calls.
-# Copyright (C) 2020 calls's COPYRIGHT HOLDER
+# Copyright (C) 2020, 2022 Free Software Foundation, Inc.
 # This file is distributed under the same license as the calls package.
-# Balázs Meskó <mesko.balazs@fsf.hu>, 2020.
 #
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2020.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2021-03-19 03:25+0000\n"
-"PO-Revision-Date: 2021-03-19 09:53+0100\n"
-"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
-"Language-Team: Hungarian <gnome-hu-list@gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-05-24 09:42+0000\n"
+"PO-Revision-Date: 2022-10-27 22:22+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Lokalize 19.12.3\n"
 
-#: data/sm.puri.Calls.desktop.in:3 src/calls-application.c:312
-#: src/ui/call-window.ui:10 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:372 src/ui/call-window.ui:10 src/ui/main-window.ui:8
 msgid "Calls"
 msgstr "Hívások"
 
-#: data/sm.puri.Calls.desktop.in:4 data/sm.puri.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
 msgstr "Telefon"
 
-#: data/sm.puri.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:5
 msgid "A phone dialer and call handler"
-msgstr "Tárcsázó és híváskezelő"
+msgstr "Telefontárcsázó és híváskezelő"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
-#: data/sm.puri.Calls.desktop.in:7 data/sm.puri.Calls-daemon.desktop.in:7
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telefon;Hívás;Tárcsázás;Tárcsázó;PSTN;"
 
-#: data/sm.puri.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
 msgstr "Hívások (démon)"
 
-#: data/sm.puri.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
-msgstr "Tárcsázó és híváskezelő (démon mód)"
+msgstr "Telefontárcsázó és híváskezelő (démon mód)"
 
-#: src/calls-application.c:401
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Telefon- és SIP-hívások lebonyolítása"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"A Hívások egy egyszerű, elegáns telefontárcsázó és híváskezelő a GNOME-hoz."
+" Használható mobilmodemmel egyszerű, régi telefonhívásokhoz, valamint a"
+" SIP-protokollt használó VoIP-hívásokhoz."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Hívás indítása"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "A hívás előzményei"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr ""
+"A hívásoknak az alapértelmezett eredetet kell-e automatikusan használniuk"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "A modem által jelentett országkód"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Az országkódot a partner névének kereséshez használják"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Az automatikusan betöltendő bővítmények"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+"Ezek a bővítmények automatikusan betöltésre kerülnek az alkalmazás"
+" indításakor."
+
+#: src/calls-application.c:528
 #, c-format
-msgid "Tried dialing unparsable tel URI `%s'"
-msgstr "Nem értelmezhető telefon-URI-t próbált meg tárcsázni: „%s”"
+msgid "Tried invalid tel URI `%s'"
+msgstr "Érvénytelen telefon-URI-t próbált: „%s”"
 
-#: src/calls-application.c:483
+#: src/calls-application.c:605
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr "Nem tudja, hogyan nyissa meg a következőt: „%s”"
+msgstr "Nem tudni, hogyan kell megnyitni a következőt: „%s”"
 
-#: src/calls-application.c:533
-msgid "The name of the plugin to use for the call Provider"
-msgstr "A hívásszolgáltatáshoz használandó bővítmény neve"
+#: src/calls-application.c:658
+msgid "The name of the plugin to use as a call provider"
+msgstr "A hívásszolgáltatóként használandó bővítmény neve"
 
-#: src/calls-application.c:534
+#: src/calls-application.c:659
 msgid "PLUGIN"
 msgstr "BŐVÍTMÉNY"
 
-#: src/calls-application.c:539
+#: src/calls-application.c:664
 msgid "Whether to present the main window on startup"
 msgstr "Megjelenjen-e a főablak indításkor"
 
-#: src/calls-application.c:545
-msgid "Dial a number"
-msgstr "Szám tárcsázása"
+#: src/calls-application.c:670
+msgid "Dial a telephone number"
+msgstr "Telefonszám tárcsázása"
 
-#: src/calls-application.c:546
+#: src/calls-application.c:671
 msgid "NUMBER"
 msgstr "SZÁM"
 
-#: src/calls-best-match.c:331 src/calls-call-record-row.c:40
-msgid "Anonymous caller"
-msgstr "Ismeretlen hívó"
+#: src/calls-application.c:676
+msgid "Enable verbose debug messages"
+msgstr "Részletes hibakeresési üzenetek engedélyezése"
 
-#: src/calls-call-display.c:292
+#: src/calls-application.c:682
+msgid "Print current version"
+msgstr "Jelenlegi verzió kiírása"
+
+#: src/calls-best-match.c:357 src/calls-call-record-row.c:40
+msgid "Anonymous caller"
+msgstr "Névtelen hívó"
+
+#: src/calls-call-display.c:278
 msgid "Calling…"
 msgstr "Hívás…"
 
-#: src/calls-call-record-row.c:113
+#: src/calls-call-record-row.c:115
 #, c-format
 msgid ""
 "%s\n"
@@ -91,87 +147,123 @@ msgstr ""
 "%s\n"
 "tegnap"
 
-#: src/calls-main-window.c:120
+#: src/calls-main-window.c:125
 msgid "translator-credits"
-msgstr "Meskó Balázs <mesko dot balazs at fsf dot hu>"
-
-#: src/calls-main-window.c:318
-msgid "Can't place calls: No voice-capable modem available"
-msgstr "Nem lehet hívást indítani: Nem érhető el hangképes modem"
+msgstr ""
+"Meskó Balázs <mesko dot balazs at fsf dot hu>\n"
+"Úr Balázs <ur dot balazs at fsf dot hu>"
 
 #: src/calls-main-window.c:323
-msgid "Can't place calls: No backend service"
-msgstr "Nem lehet hívást indítani: Nincs háttérszolgáltatás"
+msgid "Can't place calls: No voice-capable modem available"
+msgstr "Nem lehet hívásokat indítani: nem érhető el hangképes modem"
 
 #: src/calls-main-window.c:327
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Nem lehet hívásokat indítani: nincs elérhető modem vagy VoIP-fiók"
+
+#: src/calls-main-window.c:332
+msgid "Can't place calls: No backend service"
+msgstr "Nem lehet hívásokat indítani: nincs háttérprogram-szolgáltatás"
+
+#: src/calls-main-window.c:336
 msgid "Can't place calls: No plugin"
-msgstr "Nem lehet hívást indítani: Nincs bővítmény"
+msgstr "Nem lehet hívásokat indítani: nincs bővítmény"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:376
 msgid "Contacts"
-msgstr "Névjegyek"
+msgstr "Partnerek"
 
-#: src/calls-main-window.c:374 src/ui/call-display.ui:287
+#: src/calls-main-window.c:386 src/ui/call-display.ui:289
 msgid "Dial Pad"
 msgstr "Tárcsázó"
 
-#: src/calls-main-window.c:382
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:395
 msgid "Recent"
-msgstr "Előzmények"
+msgstr "Legutóbbi"
 
-#: src/calls-notifier.c:46
+#: src/calls-notifier.c:48
 msgid "Missed call"
 msgstr "Nem fogadott hívás"
 
-#: src/calls-notifier.c:58
+#. %s is a name here
+#: src/calls-notifier.c:69
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Nem fogadott hívás innen: <b>%s</b>"
 
-#: src/calls-notifier.c:60
+#. %s is a number here
+#: src/calls-notifier.c:72
 #, c-format
 msgid "Missed call from %s"
 msgstr "Nem fogadott hívás innen: %s"
 
-#: src/calls-notifier.c:66
+#: src/calls-notifier.c:74
+msgid "Missed call from unknown caller"
+msgstr "Nem fogadott hívás ismeretlen hívótól"
+
+#: src/calls-notifier.c:80
 msgid "Call back"
 msgstr "Visszahívás"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP-fiókok"
+
+#: src/ui/account-overview.ui:41
+msgid "Add VoIP Accounts"
+msgstr "VoIP-fiókok hozzáadása"
+
+#: src/ui/account-overview.ui:43
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Itt adhat hozzá VoIP-fiókot. Ez lehetővé teszi, hogy VoIP-hívásokat indítson"
+" és fogadjon a SIP-protokoll használatával. Ez a funkció még viszonylag új,"
+" és még nem teljesen kész (azaz nincs titkosított média)."
+
+#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+msgid "_Add Account"
+msgstr "Fiók _hozzáadása"
 
 #: src/ui/call-display.ui:33
 msgid "Incoming phone call"
 msgstr "Bejövő telefonhívás"
 
-#: src/ui/call-display.ui:133
+#: src/ui/call-display.ui:135
 msgid "Mute"
 msgstr "Némítás"
 
-#: src/ui/call-display.ui:170
+#: src/ui/call-display.ui:172
 msgid "Speaker"
 msgstr "Hangszóró"
 
-#: src/ui/call-display.ui:206
+#: src/ui/call-display.ui:208
 msgid "Add call"
 msgstr "Hívás hozzáadása"
 
-#: src/ui/call-display.ui:251
+#: src/ui/call-display.ui:253
 msgid "Hold"
 msgstr "Várakoztatás"
 
-#: src/ui/call-display.ui:343
+#: src/ui/call-display.ui:345
 msgid "Hang up"
-msgstr "Bontás"
+msgstr "Lerakás"
 
-#: src/ui/call-display.ui:374
+#: src/ui/call-display.ui:376
 msgid "Answer"
-msgstr "Felvétel"
+msgstr "Válasz"
 
-#: src/ui/call-display.ui:456
+#: src/ui/call-display.ui:458
 msgid "Hide the dial pad"
-msgstr "Tárcsázó elrejtése"
+msgstr "A tárcsázó elrejtése"
 
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:68
-msgid "Call the party"
-msgstr "Fél hívása"
+msgid "Call"
+msgstr "Hívás"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Delete Call"
@@ -182,33 +274,29 @@ msgstr "Hívás _törlése"
 msgid "_Copy number"
 msgstr "Szám _másolása"
 
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+36123456789"
-
 #: src/ui/call-selector-item.ui:44
 msgid "On hold"
 msgstr "Várakoztatva"
 
 #: src/ui/contacts-box.ui:66
 msgid "No contacts found"
-msgstr "Nem található névjegy"
+msgstr "Nem találhatók partnerek"
 
 #: src/ui/encryption-indicator.ui:23
 msgid "This call is not encrypted"
-msgstr "A hívás nem titkosított"
+msgstr "Ez a hívás nem titkosított"
 
 #: src/ui/encryption-indicator.ui:45
 msgid "This call is encrypted"
-msgstr "A hívás titkosított"
+msgstr "Ez a hívás titkosított"
 
 #: src/ui/history-box.ui:23
 msgid "No Recent Calls"
-msgstr "Nem volt hívás a közelmúltban"
+msgstr "Nincsenek legutóbbi hívások"
 
 #: src/ui/history-header-bar.ui:7
 msgid "Recent Calls"
-msgstr "Közelmúltbeli hívások"
+msgstr "Legutóbbi hívások"
 
 #: src/ui/history-header-bar.ui:20
 msgid "New call…"
@@ -221,35 +309,63 @@ msgstr "Menü"
 
 #: src/ui/history-header-bar.ui:70
 msgid "About Calls"
-msgstr "Hívások névjegye"
+msgstr "A Hívások névjegye"
 
-#: src/ui/main-window.ui:38
+#: src/ui/main-window.ui:76
 msgid "No modem found"
 msgstr "Nem található modem"
 
-#: src/ui/main-window.ui:95
+#: src/ui/main-window.ui:118
 msgid "USSD"
 msgstr "USSD"
 
-#: src/ui/main-window.ui:104
+#: src/ui/main-window.ui:127
 msgid "_Cancel"
-msgstr "Mé_gse"
+msgstr "_Mégse"
 
-#: src/ui/main-window.ui:121
+#: src/ui/main-window.ui:144
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:154
 msgid "_Send"
 msgstr "_Küldés"
 
-#: src/ui/new-call-box.ui:94
+#: src/ui/main-window.ui:228
+msgid "_VoIP Accounts"
+msgstr "_VoIP-fiókok"
+
+#: src/ui/main-window.ui:241
+msgid "_Keyboard shortcuts"
+msgstr "_Gyorsbillentyűk"
+
+#: src/ui/main-window.ui:247
+msgid "_Help"
+msgstr "_Súgó"
+
+#: src/ui/main-window.ui:253
+msgid "_About Calls"
+msgstr "A Hívások _névjegye"
+
+#: src/ui/new-call-box.ui:33
+msgid "Enter a VoIP address"
+msgstr "VoIP-cím megadása"
+
+#: src/ui/new-call-box.ui:46
+msgid "Enter a number"
+msgstr "Szám megadása"
+
+#: src/ui/new-call-box.ui:91
 msgid "Dial"
 msgstr "Tárcsázás"
 
-#: src/ui/new-call-box.ui:122
-msgid "Backspace through number"
-msgstr "Törléstől a számokig"
+#: src/ui/new-call-box.ui:114
+msgid "Delete character in front of cursor"
+msgstr "Karakter törlése a kurzor előtt"
+
+#: src/ui/new-call-box.ui:145
+msgid "SIP Account"
+msgstr "SIP-fiók"
 
 #: src/ui/new-call-header-bar.ui:7
 msgid "New Call"
@@ -259,5 +375,115 @@ msgstr "Új hívás"
 msgid "Back"
 msgstr "Vissza"
 
-#~ msgid "Can't place calls: No SIM card"
-#~ msgstr "Nem lehet hívást indítani: Nincs SIM-kártya"
+#: plugins/mm/calls-mm-call.c:98
+msgid "Call disconnected (unknown reason)"
+msgstr "Hívás szétkapcsolva (ismeretlen ok)"
+
+#: plugins/mm/calls-mm-call.c:99
+msgid "Outgoing call started"
+msgstr "Kimenő hívás elindítva"
+
+#: plugins/mm/calls-mm-call.c:100
+msgid "New incoming call"
+msgstr "Új bejövő hívás"
+
+#: plugins/mm/calls-mm-call.c:101
+msgid "Call accepted"
+msgstr "Hívás elfogadva"
+
+#: plugins/mm/calls-mm-call.c:102
+msgid "Call ended"
+msgstr "Hívás befejezve"
+
+#: plugins/mm/calls-mm-call.c:103
+msgid "Call disconnected (busy or call refused)"
+msgstr "Hívás szétkapcsolva (foglalt vagy hívás elutasítva)"
+
+#: plugins/mm/calls-mm-call.c:104
+msgid "Call disconnected (wrong number or network problem)"
+msgstr "Hívás szétkapcsolva (hibás szám vagy hálózati probléma)"
+
+#: plugins/mm/calls-mm-call.c:105
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Hívás szétkapcsolva (hiba a hangcsatorna beállításakor)"
+
+#: plugins/mm/calls-mm-call.c:106
+msgid "Call transferred"
+msgstr "Hívás átirányítva"
+
+#: plugins/mm/calls-mm-call.c:107
+msgid "Call deflected"
+msgstr "Hívás elutasítva"
+
+#: plugins/mm/calls-mm-call.c:136
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Hívás szétkapcsolva (ismeretlen okkód: %i)"
+
+#: plugins/mm/calls-mm-provider.c:86
+msgid "ModemManager unavailable"
+msgstr "A ModemManager nem érhető el"
+
+#: plugins/mm/calls-mm-provider.c:90 plugins/ofono/calls-ofono-provider.c:101
+msgid "No voice-capable modem available"
+msgstr "Nem érhető el hangképes modem"
+
+#: plugins/mm/calls-mm-provider.c:94 plugins/ofono/calls-ofono-provider.c:105
+msgid "Normal"
+msgstr "Normál"
+
+#: plugins/mm/calls-mm-provider.c:456 plugins/ofono/calls-ofono-provider.c:565
+msgid "Initialised"
+msgstr "Előkészítve"
+
+#: plugins/ofono/calls-ofono-provider.c:97
+msgid "DBus unavailable"
+msgstr "A D-Bus nem érhető el"
+
+#: plugins/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Fiók hozzáadása"
+
+#: plugins/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Bejelentkezés"
+
+#: plugins/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Fiók kezelése"
+
+#: plugins/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Alkalmaz"
+
+#: plugins/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Törlés"
+
+#: plugins/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Kiszolgáló"
+
+#: plugins/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Megjelenített név"
+
+#: plugins/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Elhagyható"
+
+#: plugins/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Felhasználóazonosító"
+
+#: plugins/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Jelszó"
+
+#: plugins/sip/sip-account-widget.ui:161
+msgid "Port"
+msgstr "Port"
+
+#: plugins/sip/sip-account-widget.ui:177
+msgid "Transport"
+msgstr "Átvitel"
