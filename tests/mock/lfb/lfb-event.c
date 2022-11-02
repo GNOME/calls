@@ -25,22 +25,22 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 enum {
-      SIGNAL_FEEDBACK_ENDED,
-      N_SIGNALS,
+  SIGNAL_FEEDBACK_ENDED,
+  N_SIGNALS,
 };
 static guint signals[N_SIGNALS];
 
 typedef struct _LfbEvent {
-  GObject        parent;
+  GObject       parent;
 
-  char          *event;
-  gint           timeout;
-  gchar         *profile;
+  char         *event;
+  gint          timeout;
+  gchar        *profile;
 
-  guint          id;
-  LfbEventState  state;
-  gint           end_reason;
-  gulong         handler_id;
+  guint         id;
+  LfbEventState state;
+  gint          end_reason;
+  gulong        handler_id;
 } LfbEvent;
 
 G_DEFINE_TYPE (LfbEvent, lfb_event, G_TYPE_OBJECT);
@@ -249,10 +249,10 @@ on_check_task_cancelled (gpointer user_data)
 }
 
 void
-lfb_event_trigger_feedback_async (LfbEvent            *self,
-                                  GCancellable        *cancellable,
-                                  GAsyncReadyCallback  callback,
-                                  gpointer             user_data)
+lfb_event_trigger_feedback_async (LfbEvent           *self,
+                                  GCancellable       *cancellable,
+                                  GAsyncReadyCallback callback,
+                                  gpointer            user_data)
 {
   GTask *task;
   g_return_if_fail (LFB_IS_EVENT (self));
@@ -265,9 +265,9 @@ lfb_event_trigger_feedback_async (LfbEvent            *self,
 }
 
 gboolean
-lfb_event_trigger_feedback_finish (LfbEvent      *self,
-                                   GAsyncResult  *res,
-                                   GError       **error)
+lfb_event_trigger_feedback_finish (LfbEvent     *self,
+                                   GAsyncResult *res,
+                                   GError      **error)
 {
   g_return_val_if_fail (g_task_is_valid (res, self), FALSE);
 
@@ -275,9 +275,9 @@ lfb_event_trigger_feedback_finish (LfbEvent      *self,
 }
 
 gboolean
-lfb_event_end_feedback_finish (LfbEvent      *self,
-                               GAsyncResult  *res,
-                               GError       **error)
+lfb_event_end_feedback_finish (LfbEvent     *self,
+                               GAsyncResult *res,
+                               GError      **error)
 {
   g_return_val_if_fail (g_task_is_valid (res, self), FALSE);
 
@@ -285,10 +285,10 @@ lfb_event_end_feedback_finish (LfbEvent      *self,
 }
 
 void
-lfb_event_end_feedback_async (LfbEvent            *self,
-                              GCancellable        *cancellable,
-                              GAsyncReadyCallback  callback,
-                              gpointer             user_data)
+lfb_event_end_feedback_async (LfbEvent           *self,
+                              GCancellable       *cancellable,
+                              GAsyncReadyCallback callback,
+                              gpointer            user_data)
 {
   GTask *task;
   g_return_if_fail (LFB_IS_EVENT (self));
