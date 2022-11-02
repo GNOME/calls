@@ -206,6 +206,16 @@ lfb_event_new (const char *event)
 /* mock libfeedback functions */
 
 static gboolean
+emit_ended (LfbEvent *self)
+{
+  g_assert (LFB_IS_EVENT (self));
+
+  g_signal_emit (self, signals[SIGNAL_FEEDBACK_ENDED], 0);
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
 on_mock_timeout (gpointer user_data)
 {
   GTask *task;
@@ -217,8 +227,15 @@ on_mock_timeout (gpointer user_data)
   task = G_TASK (user_data);
   cancellable = g_task_get_cancellable (task);
 
-  if (!g_cancellable_is_cancelled (cancellable))
+  if (!g_cancellable_is_cancelled (cancellable)) {
+    LfbEvent *event = g_task_get_source_object (task);
+    LfbEventState state = GPOINTER_TO_INT (g_task_get_task_data (task));
+
     g_task_return_boolean (task, TRUE);
+
+    if (state == LFB_EVENT_STATE_ENDED)
+      g_idle_add (G_SOURCE_FUNC (emit_ended), event);
+  }
 
   return G_SOURCE_REMOVE;
 }
@@ -280,6 +297,9 @@ lfb_event_end_feedback_finish (LfbEvent     *self,
                                GError      **error)
 {
   g_return_val_if_fail (g_task_is_valid (res, self), FALSE);
+
+  if (success)
+    g_idle_add (G_SOURCE_FUNC (emit_ended), self);
 
   return success;
 }
