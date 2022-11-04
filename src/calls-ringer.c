@@ -198,6 +198,12 @@ on_feedback_ended (LfbEvent    *event,
     return;
   }
 
+  /* When no feedback is available on the system (e.g. no vibration motor or LEDs)
+   * it will get ended immediately on triggering. Changing the target state will
+   * break loop that would otherwise occur. */
+  if (lfb_event_get_end_reason (event) == LFB_EVENT_END_REASON_NOT_FOUND)
+    self->target_state = CALLS_RING_STATE_INACTIVE;
+
   set_ring_state (self, CALLS_RING_STATE_INACTIVE);
 }
 
