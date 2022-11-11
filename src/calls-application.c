@@ -517,7 +517,7 @@ calls_application_command_line (GApplication            *application,
     if (delta != 0)
       g_print ("%s verbosity by %d to %u\n",
                delta > 0 ? "Increased" : "Decreased",
-               delta,
+               delta < 0 ? -1 * delta : delta,
                level);
   }
 
