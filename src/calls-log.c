@@ -283,7 +283,7 @@ calls_log_get_verbosity (void)
 int
 calls_log_set_verbosity (guint new_verbosity)
 {
-  int diff = verbosity - new_verbosity;
+  int diff = new_verbosity - verbosity;
 
   if (new_verbosity == verbosity)
     return 0;
