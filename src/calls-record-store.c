@@ -666,7 +666,6 @@ dispose (GObject *object)
   g_list_store_remove_all (G_LIST_STORE (self));
 
   g_clear_object (&self->repository);
-  close_adapter (self);
 
   G_OBJECT_CLASS (calls_record_store_parent_class)->dispose (object);
 }
@@ -678,6 +677,7 @@ finalize (GObject *object)
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
   g_free (self->filename);
+  close_adapter (self);
 
   G_OBJECT_CLASS (calls_record_store_parent_class)->finalize (object);
 }

@@ -45,6 +45,7 @@
 
 #include <call-ui.h>
 #include <glib/gi18n.h>
+#include <glib-unix.h>
 #include <handy.h>
 #include <libcallaudio.h>
 
@@ -69,6 +70,8 @@ struct _CallsApplication {
   CallsDBusManager *dbus_manager;
 
   char             *uri;
+  guint             id_sigterm;
+  guint             id_sigint;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
@@ -76,6 +79,15 @@ G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
 
 static void start_proper (CallsApplication *self);
 
+static gboolean
+on_int_or_term_signal (CallsApplication *self)
+{
+  g_debug ("Received SIGTERM/SIGINT, shutting down gracefully");
+
+  g_application_quit (G_APPLICATION (self));
+
+  return G_SOURCE_REMOVE;
+}
 
 static gboolean
 cmd_verbose_cb (const char *option_name,
@@ -659,6 +671,9 @@ finalize (GObject *object)
 {
   CallsApplication *self = (CallsApplication *) object;
 
+  g_clear_handle_id (&self->id_sigterm, g_source_remove);
+  g_clear_handle_id (&self->id_sigint, g_source_remove);
+
   g_clear_object (&self->call_window);
   g_clear_object (&self->main_window);
   g_clear_object (&self->record_store);
@@ -730,6 +745,12 @@ calls_application_init (CallsApplication *self)
       NULL
     }
   };
+
+  self->id_sigterm = g_unix_signal_add (SIGTERM, G_SOURCE_FUNC (on_int_or_term_signal), self);
+  g_source_set_name_by_id (self->id_sigterm, "signal: SIGTERM handler");
+
+  self->id_sigint = g_unix_signal_add (SIGINT, G_SOURCE_FUNC (on_int_or_term_signal), self);
+  g_source_set_name_by_id (self->id_sigint, "signal: SIGINT handler");
 
   g_application_add_main_option_entries (G_APPLICATION (self), options);
 }
