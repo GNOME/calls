@@ -63,6 +63,8 @@ struct _CallsAccountOverview {
   GtkWidget                *current_account_widget;
 
   /* misc */
+  GtkEventController       *key_controller;
+  GtkEventController       *key_controller_account;
   CallsAccountOverviewState state;
   GList                    *providers;
   CallsInAppNotification   *in_app_notification;
@@ -277,10 +279,40 @@ on_providers_changed (CallsAccountOverview *self)
   gtk_widget_set_sensitive (self->add_btn, !!self->providers);
 }
 
+
+static gboolean
+on_key_pressed (GtkEventControllerKey *controller,
+                guint                  keyval,
+                guint                  keycode,
+                GdkModifierType        modifiers,
+                GtkWidget             *widget)
+{
+  if (keyval == GDK_KEY_Escape) {
+    gtk_widget_hide (widget);
+    return GDK_EVENT_STOP;
+  }
+
+  return GDK_EVENT_PROPAGATE;
+}
+
+static void
+calls_account_overview_dispose (GObject *object)
+{
+  CallsAccountOverview *self = CALLS_ACCOUNT_OVERVIEW (object);
+
+  g_clear_object (&self->key_controller);
+  g_clear_object (&self->key_controller_account);
+
+  G_OBJECT_CLASS (calls_account_overview_parent_class)->dispose (object);
+}
+
 static void
 calls_account_overview_class_init (CallsAccountOverviewClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->dispose = calls_account_overview_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/account-overview.ui");
 
@@ -317,6 +349,18 @@ calls_account_overview_init (CallsAccountOverview *self)
   gtk_window_set_transient_for (self->account_window, GTK_WINDOW (self));
 
   update_state (self);
+
+  self->key_controller = gtk_event_controller_key_new (GTK_WIDGET (self));
+  g_signal_connect (self->key_controller,
+                    "key-pressed",
+                    G_CALLBACK (on_key_pressed),
+                    self);
+
+  self->key_controller_account = gtk_event_controller_key_new (GTK_WIDGET (self->account_window));
+  g_signal_connect (self->key_controller_account,
+                    "key-pressed",
+                    G_CALLBACK (on_key_pressed),
+                    self->account_window);
 }
 
 
