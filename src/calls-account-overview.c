@@ -24,12 +24,16 @@
 
 #define G_LOG_DOMAIN "CallsAccountOverview"
 
+#include "config.h"
+
 #include "calls-account.h"
 #include "calls-account-overview.h"
 #include "calls-account-row.h"
 #include "calls-account-provider.h"
 #include "calls-manager.h"
 #include "calls-in-app-notification.h"
+
+#include <glib/gi18n-lib.h>
 
 
 /**
@@ -169,10 +173,17 @@ on_account_row_activated (GtkListBox           *box,
 
   attach_account_widget (self, widget);
 
-  if (account)
+  if (account) {
+    g_autofree char *title = g_strdup_printf (_("Edit account: %s"),
+                                              calls_account_get_address (account));
+
     calls_account_provider_edit_account (provider, account);
-  else
+    gtk_window_set_title (self->account_window, title);
+  } else {
     calls_account_provider_add_new_account (provider);
+    gtk_window_set_title (self->account_window, _("Add new account"));
+
+  }
 
   gtk_window_present (self->account_window);
 }
@@ -361,6 +372,8 @@ calls_account_overview_init (CallsAccountOverview *self)
                     "key-pressed",
                     G_CALLBACK (on_key_pressed),
                     self->account_window);
+
+  gtk_window_set_title (GTK_WINDOW (self), _("Account overview"));
 }
 
 

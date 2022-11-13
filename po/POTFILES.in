@@ -4,6 +4,7 @@ data/org.gnome.Calls-daemon.desktop.in
 data/org.gnome.Calls.metainfo.xml
 data/org.gnome.Calls.gschema.xml
 src/calls-account.c
+src/calls-account-overview.c
 src/calls-application.c
 src/calls-best-match.c
 src/calls-call-record-row.c
