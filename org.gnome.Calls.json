@@ -274,8 +274,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.0+git20220208/feedbackd-v0.0.0+git20220208.tar.gz",
-                    "sha256" : "b4504aad1d061a41d1ca8cf4d09b43fecbd6b2286b6593d0b8a15169ab21398a"
+                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.1/feedbackd-v0.0.1.tar.gz",
+                    "sha256" : "95c0658698e1ba17dae89f64e03a5ba57d938b22ff9869e36f2ded07dc6ccc48"
                 }
             ]
         },
