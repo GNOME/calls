@@ -107,6 +107,7 @@ if [ $build == 1 ]; then
         ${CMD} build \
                 ${format} \
                 --volume "$(pwd)/..:/home/user/app" \
+                --no-cache \
                 --build-arg HOST_USER_ID="$UID" \
                 --tag "${TAG}" \
                 --file "${base}.Dockerfile" .
