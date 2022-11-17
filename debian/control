@@ -13,7 +13,7 @@ Build-Depends:
  gtk-doc-tools <!nodoc>,
  libcallaudio-dev (>= 0.0.5),
  libebook-contacts1.2-dev,
- libfeedback-dev,
+ libfeedback-dev (>= 0.0.1),
  libfolks-dev,
  libgom-1.0-dev,
  libgstreamer1.0-dev,
