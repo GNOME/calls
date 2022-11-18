@@ -365,7 +365,7 @@ dial (CallsOrigin *origin,
     dial_target = g_strdup (address);
   } else {
     if (self->port > 0)
-      dial_target = g_strconcat (address, "@", self->host, ":", self->port, NULL);
+      dial_target = g_strdup_printf ("%s@%s:%d", address, self->host, self->port);
     else
       dial_target = g_strconcat (address, "@", self->host, NULL);
   }
