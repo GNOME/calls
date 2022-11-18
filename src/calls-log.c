@@ -9,9 +9,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#define _GNU_SOURCE
+
 #include "calls-log.h"
 
-#define _GNU_SOURCE
 #include <string.h>
 #include <glib.h>
 #include <stdio.h>
