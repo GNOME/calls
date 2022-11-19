@@ -81,10 +81,6 @@ t = executable('ui-call', test_sources,
                )
 test('ui-call', t, env: test_env)
 
-test_env_ringer = [
-  'LD_PRELOAD=@0@/mock/lfb/libfeedback-0.so'.format(meson.current_build_dir()),
-] + test_env
-
 test_sources = [
                'mock-call.c', 'mock-call.h', 'mock-libfeedback.h',
                'test-ringer.c'
@@ -94,13 +90,13 @@ t = executable('ringer', test_sources,
                c_args : test_cflags,
                link_args: mock_link_args,
                pie: true,
-               link_with : [calls_vala, libcalls],
+               link_with : [calls_vala, libcalls, libfeedback],
                dependencies: calls_deps,
                include_directories : [
                    calls_includes,
                  ]
                )
-test('ringer', t, env: test_env_ringer)
+test('ringer', t, env: test_env)
 
 test_sources = [ 'test-contacts.c' ]
 t = executable('contacts', test_sources,
