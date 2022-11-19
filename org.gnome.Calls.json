@@ -273,7 +273,7 @@
         },
         {
             "name" : "calls",
-            "builddir" : "true",
+            "builddir" : true,
             "buildsystem" : "meson",
             "config-opts" : [
                 "-Dmanpages=false"
