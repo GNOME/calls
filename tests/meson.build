@@ -9,12 +9,12 @@ test_env = [
   'MALLOC_CHECK_=2',
   'NO_AT_BRIDGE=1',
   'GSETTINGS_SCHEMA_DIR=@0@/data'.format(meson.project_build_root()),
+  'CALLS_PLUGIN_DIR=@0@/plugins'.format(meson.project_build_root()),
 ]
 
 test_cflags = [
   '-DFOR_TESTING',
   '-Wno-error=deprecated-declarations',
-  '-DPLUGIN_BUILDDIR="@0@"'.format(full_calls_plugin_builddir),
 ]
 
 test_link_args = [
