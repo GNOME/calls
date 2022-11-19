@@ -429,10 +429,6 @@ main (int   argc,
   gtk_test_init (&argc, &argv, NULL);
 
   gst_init (NULL, NULL);
-
-#ifdef PLUGIN_BUILDDIR
-  peas_engine_add_search_path (peas_engine_get_default (), PLUGIN_BUILDDIR, NULL);
-#endif
   /* this is a workaround for an issue with sofia: https://github.com/freeswitch/sofia-sip/issues/58 */
   su_random64 ();
 

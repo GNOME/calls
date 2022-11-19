@@ -47,8 +47,6 @@ full_servicedir = join_paths(prefix, get_option('datadir'), 'dbus-1', 'services'
 localedir = get_option('localedir')
 full_localedir = join_paths(prefix, localedir)
 full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
-# Path to plugins inside the build dir, used for testing
-full_calls_plugin_builddir = join_paths(builddir, 'plugins')
 
 libcall_ui_dep = dependency('call-ui',
   fallback:  ['libcall-ui', 'libcall_ui_dep'],
