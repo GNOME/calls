@@ -144,7 +144,6 @@ on_origin_pw_looked_up (GObject      *source,
   display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
   protocol = g_key_file_get_string (data->key_file, data->name, "Protocol", NULL);
   port = g_key_file_get_integer (data->key_file, data->name, "Port", NULL);
-  display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
   local_port = g_key_file_get_integer (data->key_file, data->name, "LocalPort", NULL);
 
   if (g_key_file_has_key (data->key_file, data->name, "AutoConnect", NULL))
