@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-02 16:32+0000\n"
-"PO-Revision-Date: 2022-09-03 15:49+0200\n"
+"POT-Creation-Date: 2022-11-18 15:34+0000\n"
+"PO-Revision-Date: 2022-11-20 16:16+0100\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Gtranslator 3.38.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:440 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chiamate"
 
@@ -199,41 +199,56 @@ msgstr "Disconnessione effettuata"
 msgid "Internal error occurred"
 msgstr "Si è verificato un errore interno"
 
-#: src/calls-application.c:319
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Modifica account: %s"
+
+#: src/calls-account-overview.c:184
+#| msgid "Add Account"
+msgid "Add new account"
+msgstr "Nuovo account"
+
+#: src/calls-account-overview.c:376
+#| msgid "Account is online"
+msgid "Account overview"
+msgstr "Informazioni account"
+
+#: src/calls-application.c:327
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Ho provato a comporre un URI telefonico non valido `%s'"
 
-#: src/calls-application.c:638
+#: src/calls-application.c:660
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:717
 msgid "The name of the plugin to use as a call provider"
 msgstr "Il nome del plugin da usare come fornitore di chiamate"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:718
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:723
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:729
 msgid "Dial a telephone number"
 msgstr "Componi un numero di telefono"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:730
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:710
+#: src/calls-application.c:735
 msgid "Enable verbose debug messages"
 msgstr "Abilita i messaggi dettagliati di debug"
 
-#: src/calls-application.c:716
+#: src/calls-application.c:741
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
@@ -343,7 +358,6 @@ msgid "_Add contact"
 msgstr "_Aggiungi contatto"
 
 #: src/ui/call-record-row.ui:117
-#| msgid "_Send"
 msgid "_Send SMS"
 msgstr "_Invia SMS"
 
@@ -392,23 +406,11 @@ msgstr "_Guida"
 msgid "_About Calls"
 msgstr "Informazioni _su Chiamate"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Inserire un indirizzo VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Inserire un numero"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Componi"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Cancella il carattere davanti al cursore"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Account SIP"
 
@@ -452,35 +454,37 @@ msgstr "Chiamata interrotta (ID errato o problema di rete)"
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Chiamata interrotta (errore di impostazione del canale audio)"
 
-#: plugins/provider/mm/calls-mm-call.c:81
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call transferred"
 msgstr "Chiamata trasferita"
 
-#: plugins/provider/mm/calls-mm-call.c:82
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
 msgstr "Chiamata deviata"
 
-#: plugins/provider/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Chiamata interrotta (codice motivo sconosciuto %i)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager non disponibile"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Nessun modem vocale disponibile"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normale"
 
-#: plugins/provider/mm/calls-mm-provider.c:445
-#: plugins/provider/ofono/calls-ofono-provider.c:543
+#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inizializzato"
 
