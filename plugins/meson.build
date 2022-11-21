@@ -4,3 +4,5 @@ subdir('provider/dummy')
 subdir('provider/ofono')
 subdir('provider/sip')
 subdir('provider/tests')
+
+calls_plugins = [calls_mm, calls_dummy, calls_ofono, calls_sip]

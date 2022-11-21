@@ -38,7 +38,7 @@ t = executable('manager', test_sources,
                    calls_includes
                  ]
                 )
-test('manager', t, env: test_env)
+test('manager', t, env: test_env, depends: calls_plugins)
 
 test_sources = [ 'test-plugins.c' ]
 
@@ -53,7 +53,7 @@ t = executable('plugins', test_sources,
                    calls_includes
                  ]
                 )
-test('plugins', t, env: test_env)
+test('plugins', t, env: test_env, depends: calls_plugins)
 
 test_sources = [ 'test-util.c' ]
 t = executable('util', test_sources,
