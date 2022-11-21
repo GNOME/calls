@@ -130,8 +130,8 @@ add_project_arguments(
 
 subdir('po')
 subdir('src')
-subdir('tests')
 subdir('plugins')
+subdir('tests')
 subdir('doc')
 subdir('data')
 
