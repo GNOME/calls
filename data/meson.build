@@ -11,7 +11,7 @@ desktop_file = i18n.merge_file(
   install_dir : join_paths(datadir, 'applications')
 )
 
-desktop_file = i18n.merge_file(
+desktop_daemon_file = i18n.merge_file(
   input : 'org.gnome.Calls-daemon.desktop.in',
   output : 'org.gnome.Calls-daemon.desktop',
   type : 'desktop',
@@ -35,15 +35,26 @@ configure_file(
 
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
-  test('Validate desktop file', desktop_utils,
-       args: [join_paths(meson.current_build_dir(),
-                         'org.gnome.Calls.desktop')
-             ])
-  test('Validate daemon desktop file', desktop_utils,
-       args: [join_paths(meson.current_build_dir(),
-                         'org.gnome.Calls-daemon.desktop')
-             ])
+  test('Validate desktop file',
+    desktop_utils,
+    args: [
+      desktop_file.full_path()
+    ],
+    depends: [
+      desktop_file,
+    ],
+  )
+  test('Validate daemon desktop file',
+    desktop_utils,
+    args: [
+      desktop_daemon_file.full_path()
+    ],
+    depends: [
+      desktop_daemon_file,
+    ],
+  )
 endif
+
 
 # Metainfo file
 install_data('org.gnome.Calls.metainfo.xml',
