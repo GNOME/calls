@@ -1,3 +1,45 @@
+Calls 44.alpha.0
+----------------
+Released: 3 December 2022
+
+New features:
+=============
+None
+
+Maybe noteworthy:
+=================
+* Fixed rare endless ringing bug (requires feedbackd 0.0.1)
+* SIP: Honour remote port in INVITE
+* SIP: Reenable G722 codec
+* Shuts down gracefully on SIGTERM/SIGINT
+* Flatpak build improvements
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Julian Sparber
+ - Дилян Палаузов
+
+Translation updates:
+====================
+ - Czech (Daniel Rusek)
+ - Hungarian (Balázs Úr)
+ - Ukrainian (Yuri Chornoivan)
+ - Georgian (Zurab Kargareteli)
+ - Swedish (Anders Jonsson)
+ - Polish (Piotr Drąg)
+ - Romanian (Daniel Șerbănescu)
+ - Italian (Vittorio Monti)
+ - Hebrew (Yosef Or Boczko)
+ - Portuguese (Hugo Carvalho)
+ - Finnish (Jiri Grönroos)
+ - Russian (Aleksandr Melman)
+ - Indonesian (Kukuh Syafaat)
+ - Basque (asier Sarasua Garmendia)
+ - Chinese (Boyuan Yang)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.0
 ----------
 Released: 19 September 2022
