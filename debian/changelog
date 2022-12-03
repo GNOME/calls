@@ -1,3 +1,102 @@
+gnome-calls (43.2) byzantium; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * meson: Post release bump
+  * manager: Remove unused include
+  * record-store: Removed deprecated CuiCallStates
+  * ringer: Remove deprecated CuiCallStates
+  * application: Don't return value in start_proper()
+  * application: Don't show application window if started as daemon
+  * ringer: Move libfeedback related cleanup to finalize()
+  * ringer: Cancel any ongoing actions on shutdown
+  * meson: Sort sources alphabetically
+  * flatpak: Fix flatpak build
+  * test-ringer: Remove cancellable test
+  * tests: Mock libfeedback
+  * tests: Rename functions
+  * test-ringer: Use glib testing functions instead of mocka
+  * build: drop libmocka dependency
+  * d/copyright: Update
+  * media-pipeline: Bind to the unspecified IPv6 address
+  * Revert "Disable g722 to avoid test failure with ffmpeg 5.0/gst-libav"
+  * new-call-box: Switch to using CuiDialpad
+  * new-call-box: Reindent
+  * application: Fix indentation
+  * log: Use unsigned int for verbosity
+  * application: Propagate verbosity to main instance
+  * test-util: Remove unused include
+  * util: Remove unused code
+  * util: Rename function to calls_find_in_model() and adjust documentation
+  * util: Add API to check address family of IP address
+  * sip: media-manager: Simplify SDP generation
+  * media-pipeline: Dump dot graph without GST_DEBUG_DUMP_DOT_DIR set
+  * sip-origin: Honour set port when completing address
+  * ui-call-data: Add debugging for state changes
+  * ui-call-data: Prevent timer being started multiple times
+  * contacts-provider: Remove unused variable
+  * contact-provider: Allow can-add-contacts to be reset
+  * mm-provider: Cancel ongoing operations
+  * test-ringer: Assert object finalization
+  * mock-lfb-event: Uncrustify
+  * mock-lfb-event: Emit "feedback-ended" signal
+  * ringer: Never cancel async DBus calls and refactor (Closes: #470)
+  * ringer: Cancel async libfeedback calls on timeout
+  * ringer: Break loop if triggered event was ended immediately
+  * application: Shut down graceful on SIGTERM/SIGINT
+  * account-overview: Close windows when pressing Escape (Closes: #511)
+  * account-overview: Set window title
+  * gcovr: Exclude sip-provider.c and dummy-provider.c
+  * d/control: Bump required feedbackd version to 0.0.1
+  * flatpak: Bump required feedbackd version to 0.0.1
+  * run-docker: Don't cache container images
+  * ci: Update image
+  * log: Fix returned verbosity delta
+  * application: Print positive delta when changing verbosity
+  * log: Use feature test macro before any include
+  * Document and release 44~alpha.0
+
+  [ Daniel Rusek ]
+  * Update Czech translation
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+
+  [ Kukuh Syafaat ]
+  * Update Indonesian translation
+
+  [ Asier Sarasua Garmendia ]
+  * Add Basque translation
+  * Update Basque translation
+
+  [ Nart Tlisha ]
+  * Add Abkhazian translation
+
+  [ Дилян Палаузов ]
+  * SIP dial() convert the port from int to string
+  * provider/sip: on_origin_pw_looked_up() display_name is read twice
+
+  [ Julian Sparber ]
+  * flatpak: Drop libcanberra and gsound deps
+  * flatpak: Update libpeas and disable some features
+  * flatpak: Build local files
+  * flatpak: Don't use boost
+  * flatpak: Update protobuf and GTest
+  * flatpak: update sofia-sip
+  * flatpak: Add gvfs-access
+  * tests: Fix sdp-crypto test for flatpak
+  * tests: Ensure that desktop files are built before testing them
+  * meson: Don't set G_TEST_*
+  * plugins: Rescan for plugins after adding search paths
+  * tests: Use CALLS_PLUGIN_DIR to search for plugins in the build dir
+  * manager: Only set search path from CALLS_PLUGIN_DIR when path exists
+  * ci: Build and deploy nightly flatpaks for aarch64 and x86_64
+  * flatpak: Set build_dir properly
+  * tests: Make ringer test depend on mocked libfeedback
+  * tests: Ensure that plugins are build for tests that need them
+  * flatpak: Don't run calls:sip tests in CI
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 03 Dec 2022 21:01:30 +0100
+
 gnome-calls (43.0) unstable; urgency=medium
 
   [ Emin Tufan Çetin ]
