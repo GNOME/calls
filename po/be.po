@@ -1,15 +1,14 @@
 # Belarusian translation for calls.
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Yuras Shumovich <shumovichy@gmail.com>, 2022.
+# Vasil Pupkin <3abac@3a.by>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-43\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
 "POT-Creation-Date: 2022-12-02 10:59+0000\n"
-"PO-Revision-Date: 2022-12-09 03:10+0300\n"
+"PO-Revision-Date: 2022-12-09 19:19+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
