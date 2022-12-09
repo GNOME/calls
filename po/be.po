@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the calls package.
 # Yuras Shumovich <shumovichy@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-43\n"
