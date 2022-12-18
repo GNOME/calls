@@ -164,7 +164,7 @@ on_event_feedback_ended (LfbEvent     *event,
   g_assert (LFB_IS_EVENT (event));
 
   ok = lfb_event_end_feedback_finish (event, res, &err);
-  g_debug ("Ended feedback '%s' %ssucessfully",
+  g_debug ("Ended feedback '%s' %ssuccessfully",
            lfb_event_get_event (event),
            ok ? "" : "un");
 
