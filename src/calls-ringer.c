@@ -23,7 +23,7 @@
  */
 #define G_LOG_DOMAIN "CallsRinger"
 
-#include "config.h"
+#include "calls-config.h"
 
 #include "calls-manager.h"
 #include "calls-ringer.h"

@@ -27,7 +27,7 @@
 
 #include "calls-application.h"
 #include "calls-log.h"
-#include "config.h"
+#include "calls-config.h"
 
 int
 main (int    argc,

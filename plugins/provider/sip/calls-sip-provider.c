@@ -36,7 +36,7 @@
 #include "calls-sip-origin.h"
 #include "calls-sip-provider.h"
 #include "calls-sip-util.h"
-#include "config.h"
+#include "calls-config.h"
 
 #include <libpeas/peas.h>
 #include <sofia-sip/nua.h>

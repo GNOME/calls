@@ -124,7 +124,7 @@ calls_sources = files([
 calls_config_data = config_data
 
 config_h = configure_file(
-  output: 'config.h',
+  output: 'calls-config.h',
   configuration: calls_config_data
 )
 

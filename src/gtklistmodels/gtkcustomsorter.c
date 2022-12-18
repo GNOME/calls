@@ -17,7 +17,7 @@
  * Authors: Matthias Clasen <mclasen@redhat.com>
  */
 
-/* #include "config.h" */
+/* #include "calls-config.h" */
 
 #include "gtkcustomsorter.h"
 

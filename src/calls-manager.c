@@ -25,7 +25,7 @@
 
 #define G_LOG_DOMAIN "CallsManager"
 
-#include "config.h"
+#include "calls-config.h"
 
 #include "calls-account.h"
 #include "calls-contacts-provider.h"

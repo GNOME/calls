@@ -8,7 +8,7 @@
 
 #define G_LOG_DOMAIN "CallsDBusManager"
 
-#include "config.h"
+#include "calls-config.h"
 #include "calls-call.h"
 #include "calls-call-dbus.h"
 #include "calls-dbus-manager.h"

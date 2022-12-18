@@ -6,7 +6,7 @@
  * Author: Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  */
 
-#include "config.h"
+#include "calls-config.h"
 
 #include "calls-provider.h"
 
