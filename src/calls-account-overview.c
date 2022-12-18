@@ -24,7 +24,7 @@
 
 #define G_LOG_DOMAIN "CallsAccountOverview"
 
-#include "config.h"
+#include "calls-config.h"
 
 #include "calls-account.h"
 #include "calls-account-overview.h"

@@ -31,7 +31,7 @@
 #include "calls-history-box.h"
 #include "calls-in-app-notification.h"
 #include "calls-manager.h"
-#include "config.h"
+#include "calls-config.h"
 #include "util.h"
 #include "version.h"
 

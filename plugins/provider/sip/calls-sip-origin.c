@@ -34,7 +34,7 @@
 #include "calls-sip-util.h"
 #include "calls-sip-media-manager.h"
 #include "calls-network-watch.h"
-#include "config.h"
+#include "calls-config.h"
 #include "enum-types.h"
 
 #include <glib/gi18n.h>

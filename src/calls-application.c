@@ -27,7 +27,7 @@
 
 #define G_LOG_DOMAIN "CallsApplication"
 
-#include "config.h"
+#include "calls-config.h"
 
 #include "calls-application.h"
 #include "calls-call-window.h"
