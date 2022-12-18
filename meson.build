@@ -63,6 +63,10 @@ config_data.set_quoted('PACKAGE_URL', calls_homepage)
 config_data.set_quoted('PACKAGE_VERSION', calls_version)
 config_data.set('PACKAGE_URL_RAW', calls_homepage)
 
+gst_debug = get_option('gst_debug')
+config_data.set('CALLS_GST_DEBUG', gst_debug, description: 'Use GStreamer debugging API')
+
+
 run_data = configuration_data()
 run_data.set('ABS_BUILDDIR', meson.current_build_dir())
 run_data.set('ABS_SRCDIR', meson.current_source_dir())
