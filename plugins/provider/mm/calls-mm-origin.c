@@ -54,6 +54,7 @@ struct _CallsMMOrigin {
   char            *name;
   GHashTable      *calls;
   char            *country_code;
+  GStrv            emergency_numbers;
 };
 
 static void calls_mm_origin_message_source_interface_init (CallsOriginInterface *iface);
@@ -663,7 +664,7 @@ get_property (GObject    *object,
     break;
 
   case PROP_EMERGENCY_NUMBERS:
-    g_value_set_boxed (value, NULL);
+    g_value_set_boxed (value, self->emergency_numbers);
     break;
 
   default:
@@ -793,6 +794,10 @@ get_sim_ready_cb (MMModem      *modem,
     self->country_code = g_strdup (code);
     g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COUNTRY_CODE]);
   }
+
+  g_strfreev (self->emergency_numbers);
+  self->emergency_numbers = mm_sim_dup_emergency_numbers (self->sim);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_EMERGENCY_NUMBERS]);
 }
 
 
@@ -915,6 +920,7 @@ finalize (GObject *object)
 
   g_hash_table_unref (self->calls);
   g_free (self->name);
+  g_strfreev (self->emergency_numbers);
 
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->finalize (object);
 }
