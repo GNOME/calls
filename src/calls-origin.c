@@ -229,3 +229,24 @@ calls_origin_supports_protocol (CallsOrigin *self,
 
   return iface->supports_protocol (self, protocol);
 }
+
+/**
+ * calls_origin_get_country_code:
+ * @self: A #CallsOrigin
+ *
+ * Returns: (nullable): The iso country code
+ */
+const char *
+calls_origin_get_country_code (CallsOrigin *self)
+{
+  CallsOriginInterface *iface;
+
+  g_return_val_if_fail (CALLS_IS_ORIGIN (self), FALSE);
+
+  iface = CALLS_ORIGIN_GET_IFACE (self);
+  /* country code is optional */
+  if (iface->get_country_code == NULL)
+    return NULL;
+
+  return iface->get_country_code (self);
+}

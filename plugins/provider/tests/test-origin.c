@@ -23,8 +23,8 @@ test_dummy_origin_object (OriginFixture *fixture,
 
 
 static void
-test_dummy_origin_get_name (OriginFixture *fixture,
-                            gconstpointer user_data)
+test_dummy_origin_getters (OriginFixture *fixture,
+                           gconstpointer user_data)
 {
   CallsOrigin *origin;
   g_autofree char *name = NULL;
@@ -34,6 +34,7 @@ test_dummy_origin_get_name (OriginFixture *fixture,
   name = calls_origin_get_name (origin);
   g_assert_nonnull (name);
   g_assert_cmpstr (name, ==, TEST_ORIGIN_NAME);
+  g_assert_null (calls_origin_get_country_code (origin));
 }
 
 
@@ -84,7 +85,7 @@ main (gint   argc,
 #define add_test(name) add_calls_test(Origin, origin, name)
 
   add_test(object);
-  add_test(get_name);
+  add_test(getters);
   add_test(calls);
 
 #undef add_test

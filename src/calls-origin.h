@@ -43,6 +43,7 @@ struct _CallsOriginInterface {
                                                          const char  *number);
   gboolean       (*supports_protocol)                   (CallsOrigin *self,
                                                          const char  *protocol);
+  const char *   (*get_country_code)                    (CallsOrigin *self);
 };
 
 typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, CallsOrigin* origin);
@@ -58,6 +59,7 @@ void                   calls_origin_dial                    (CallsOrigin *self,
 gboolean               calls_origin_supports_protocol       (CallsOrigin *self,
                                                              const char *protocol);
 GStrv                  calls_origin_get_emergency_numbers   (CallsOrigin *self);
+const char *           calls_origin_get_country_code        (CallsOrigin *self);
 
 G_END_DECLS
 
