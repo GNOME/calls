@@ -3,6 +3,8 @@ if get_option('tests')
 test_env = [
   'G_DEBUG=gc-friendly,fatal-warnings',
   'GSETTINGS_BACKEND=memory',
+  'LANGUAGE=C',
+  'LC_ALL=C',
   'PYTHONDONTWRITEBYTECODE=yes',
   'MALLOC_CHECK_=2',
   'NO_AT_BRIDGE=1',
