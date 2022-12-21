@@ -38,6 +38,20 @@ test_includes = include_directories('.')
 subdir('mock')
 subdir('services')
 
+test_sources = [ 'test-emergency-call-types.c' ]
+t = executable('emergency-call-types', test_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('emergency-call-types', t, env: test_env)
+
+
 test_sources = [ 'test-manager.c' ]
 
 t = executable('manager', test_sources,

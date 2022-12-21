@@ -102,6 +102,7 @@ calls_sources = files([
   'calls-contacts-row.c', 'calls-contacts-row.h',
   'calls-dbus-manager.c', 'calls-dbus-manager.h',
   'calls-emergency-calls-manager.c', 'calls-emergency-calls-manager.h',
+  'calls-emergency-call-types.c', 'calls-emergency-call-types.h',
   'calls-history-box.c', 'calls-history-box.h',
   'calls-in-app-notification.c', 'calls-in-app-notification.h',
   'calls-log.c', 'calls-log.h',

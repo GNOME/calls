@@ -8,6 +8,7 @@ src/calls-account-overview.c
 src/calls-application.c
 src/calls-best-match.c
 src/calls-call-record-row.c
+src/calls-emergency-call-types.c
 src/calls-main-window.c
 src/calls-notifier.c
 src/ui/account-overview.ui

@@ -9,6 +9,7 @@
 #define G_LOG_DOMAIN "CallsEmergencyCallsManger"
 
 #include "calls-emergency-calls-manager.h"
+#include "calls-emergency-call-types.h"
 #include "calls-origin.h"
 #include "calls-manager.h"
 
@@ -29,7 +30,6 @@ typedef struct _CallsEmergencyCallsManager
 } CallsEmergencyCallsManger;
 
 static void calls_emergency_calls_iface_init (CallsDBusEmergencyCallsIface *iface);
-
 G_DEFINE_TYPE_WITH_CODE (CallsEmergencyCallsManager,
                          calls_emergency_calls_manager,
                          CALLS_DBUS_TYPE_EMERGENCY_CALLS_SKELETON,
@@ -90,18 +90,26 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
   for (int i = 0; i < g_list_model_get_n_items (self->origins); i++) {
     CallsOrigin *origin = g_list_model_get_item (self->origins, i);
     g_auto (GStrv) emergency_numbers = NULL;
+    const char *country_code;
 
     emergency_numbers = calls_origin_get_emergency_numbers (origin);
     if (!emergency_numbers)
       continue;
 
+    country_code = calls_origin_get_country_code (origin);
     for (int j = 0; j < g_strv_length (emergency_numbers); j++) {
+      g_autofree char *contact = NULL;
+
       g_variant_builder_open (&contacts_builder, G_VARIANT_TYPE (CONTACT_FORMAT));
       g_variant_builder_add (&contacts_builder, "s", emergency_numbers[j]);
-      /* For non-addressbook numbers we just use the number itself as contact */
-      g_variant_builder_add (&contacts_builder, "s", emergency_numbers[j]);
+
+      contact = calls_emergency_call_type_get_name (emergency_numbers[j], country_code);
+      if (contact == NULL)
+        contact = g_strdup (emergency_numbers[j]);
+      g_variant_builder_add (&contacts_builder, "s", contact);
       /* Currently unused */
-      g_variant_builder_add (&contacts_builder, "i", 0);
+      g_variant_builder_add (&contacts_builder, "i",
+                             CALLS_EMERGENCY_CONTACT_SOURCE_UNKNOWN);
       /* Currently no hints */
       g_variant_builder_add (&contacts_builder, "a{sv}", NULL);
       g_variant_builder_close (&contacts_builder);
