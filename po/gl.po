@@ -2,25 +2,30 @@
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Fran Dieguez <frandieguez@gnome.gl>, 2020.
+# Fran Dieguez <frandieguez@gnome.org>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2021-12-26 21:06+0000\n"
-"PO-Revision-Date: 2022-01-02 17:32+0100\n"
-"Last-Translator: Fran Dieguez <frandieguez@gnome.gl>\n"
-"Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
+"POT-Creation-Date: 2022-12-02 10:59+0000\n"
+"PO-Revision-Date: 2022-12-21 20:12+0100\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 42.0\n"
+"X-DL-Team: gl\n"
+"X-DL-Module: calls\n"
+"X-DL-Branch: gnome-43\n"
+"X-DL-Domain: po\n"
+"X-DL-State: None\n"
 
-#: data/org.gnome.Calls.desktop.in:3 src/calls-application.c:381
-#: src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
 
@@ -32,7 +37,7 @@ msgstr "Teléfono"
 msgid "A phone dialer and call handler"
 msgstr "Un marcador telefónico e xestor de chamadas"
 
-#. Translators: These are desktop search terms. Do not translate semicolons, end line with a semicolon.
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Teléfono;Chamada;Chamar;Marcador;PSTN;"
@@ -45,101 +50,202 @@ msgstr "Chamadas (daemon)"
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Un marcador telefónico e xestor de chamadas (modo daemon)"
 
-#: plugins/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Engadir conta"
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Faga chamadas de teléfono e SIP"
 
-#: plugins/sip/sip-account-widget.ui:17
-msgid "_Log In"
-msgstr "_Inicio de sesión"
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Chamadas é un marcador de teléfono e xestor de chamadas sinxelo e elegante "
+"para GNOME. Pode usarse con un módem móbil para chamadas de teléfono antigas "
+"así como chamadas VoIP usando o protocolo SIP."
 
-#: plugins/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Xestionar conta"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Realizando unha chamada"
 
-#: plugins/sip/sip-account-widget.ui:47
-msgid "_Apply"
-msgstr "_Aplicar"
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "O historial de chamadas"
 
-#: plugins/sip/sip-account-widget.ui:61
-msgid "_Delete"
-msgstr "_Eliminar"
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr ""
+"Indica se as chamadas deberían usar o orixe predeterminado automaticamente"
 
-#: plugins/sip/sip-account-widget.ui:91
-msgid "Server"
-msgstr "Servidor"
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "O código de país como informa o módem"
 
-#: plugins/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Nome en pantalla"
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "O código de país úsase para buscar o nome do contacto"
 
-#: plugins/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Opcional"
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Os engadidos a cargar automaticamente"
 
-#: plugins/sip/sip-account-widget.ui:128
-msgid "User ID"
-msgstr "ID de usuario"
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Estos engadidos cargaranse automaticametne ao iniciar a aplicación."
 
-#: plugins/sip/sip-account-widget.ui:141
-msgid "Password"
-msgstr "Contrasinal"
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Os códecs de son a usar para as chamadas VoIP en orde de preferencia"
 
-#: plugins/sip/sip-account-widget.ui:161
-msgid "Port"
-msgstr "Porto"
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"Os códecs de son preferidos para usar nas chamadas VoIP (se están "
+"dispoñíbeis)"
 
-#: plugins/sip/sip-account-widget.ui:177
-msgid "Transport"
-msgstr "Transporte"
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Indica se permitir usar SDES para SRTP sen TSL como trasnporte"
 
-#: plugins/sip/sip-account-widget.ui:189
-msgid "Use for Phone Calls"
-msgstr "Usar para as chamadas de teléfono"
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"Estabelecer a verdadeiro se quere permitir o intercambio de chaves en texto "
+"plano."
 
-#: src/calls-application.c:546
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Estado (non inicializado) predeterminado"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Iniciando conta…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Desiniciando conta…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Conectándose ao servidor…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Conta en liña"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Desconectándose do servidor…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Conta fóra de liña"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "A conta atopou un erro"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Non se forneceu ningunha razón"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Comezou a inicialización"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Inicialización completa"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Desinicialización comezada"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Desinicialización completa"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Non se estabeleceron credenciais"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Comezando a conexión"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Tempo de espera para a conexión superado "
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Non se puido resolver o nome de dominio"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "O servidor non acepta o nome de usuario ou contrasinal"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Conexión completa"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Comezando a desconexión"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Desconexión completada"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Produciuse un erro interno"
+
+#: src/calls-application.c:315
 #, c-format
-msgid "Tried invalid tel URI `%s'"
-msgstr "Tentouse una URI tel \"%s\" non válido"
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Tentouse chamar a un URI de tel «%s» non válido"
 
-#: src/calls-application.c:623
+#: src/calls-application.c:627
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non se sabe como abrir \"%s\""
 
-#: src/calls-application.c:676
+#: src/calls-application.c:681
 msgid "The name of the plugin to use as a call provider"
 msgstr "O nome do engadido a usar para o fornecedor de chamadas"
 
-#: src/calls-application.c:677
+#: src/calls-application.c:682
 msgid "PLUGIN"
 msgstr "ENGADIDO"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:687
 msgid "Whether to present the main window on startup"
 msgstr "Indica se mostrar a xanela principal ao arrinque"
 
-#: src/calls-application.c:688
+#: src/calls-application.c:693
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:689
+#: src/calls-application.c:694
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:699
 msgid "Enable verbose debug messages"
 msgstr "Activar as mensaxes de depuración detalladas"
 
-#: src/calls-application.c:700
+#: src/calls-application.c:705
 msgid "Print current version"
 msgstr "Mostrar a versión actual"
 
-#: src/calls-best-match.c:357
+#: src/calls-best-match.c:435
 msgid "Anonymous caller"
 msgstr "Chamada anónima"
 
-#: src/calls-call-record-row.c:110
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -148,64 +254,54 @@ msgstr ""
 "%s\n"
 "onte"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr "Fran Diéguez <frandieguez@gnome.org>, 2020, 2021."
 
-#: src/calls-main-window.c:322
-msgid "Can't place calls: No voice-capable modem available"
-msgstr ""
-"Non se poden realizar chamadas: Non está dispoñíbel un modem con "
-"capacidade de voz"
-
-#: src/calls-main-window.c:326
+#: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Non se poden realizar chamadas: Non está dispoñíbel un modem ou unha conta "
 "VoIP"
 
-#: src/calls-main-window.c:331
-msgid "Can't place calls: No backend service"
-msgstr "Non se poden realizar chamadas: Non hai servizo de infraestrutura"
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "Non se poden realizar chamadas: Non se cargou o engadido"
 
-#: src/calls-main-window.c:335
-msgid "Can't place calls: No plugin"
-msgstr "Non se poden realizar chamadas: Non hai engadido"
-
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:353
 msgid "Contacts"
 msgstr "Contactos"
 
-#: src/calls-main-window.c:385
+#: src/calls-main-window.c:363
 msgid "Dial Pad"
 msgstr "Teclado telefónico"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:394
+#: src/calls-main-window.c:372
 msgid "Recent"
 msgstr "Recentes"
 
-#: src/calls-notifier.c:48
+#: src/calls-notifier.c:52
 msgid "Missed call"
 msgstr "Chamada perdida"
 
 #. %s is a name here
-#: src/calls-notifier.c:69
+#: src/calls-notifier.c:76
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chamada perdida por <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:72
+#: src/calls-notifier.c:79
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chamada perdida de %s"
 
-#: src/calls-notifier.c:74
+#: src/calls-notifier.c:81
 msgid "Missed call from unknown caller"
 msgstr "Chamada perdida de número descoñecido"
 
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:87
 msgid "Call back"
 msgstr "Chamar de volta"
 
@@ -213,11 +309,11 @@ msgstr "Chamar de volta"
 msgid "VoIP Accounts"
 msgstr "Contas VoIP"
 
-#: src/ui/account-overview.ui:41
+#: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
 msgstr "Engadir contas VoIP"
 
-#: src/ui/account-overview.ui:43
+#: src/ui/account-overview.ui:51
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -225,26 +321,34 @@ msgid ""
 msgstr ""
 "Pode engadir unha conta VoIP aquí. Isto permitiralle facer e recibir "
 "chamadas VoIP usando o protocolo SIP. Esta característica é aínda "
-"relativamente nova e non conta con todas as funcionalidades (p.ex. non "
-"conta con multimedia cifrado)"
+"relativamente nova e non conta con todas as funcionalidades (p.ex. non conta "
+"con multimedia cifrado)"
 
-#: src/ui/account-overview.ui:50 src/ui/account-overview.ui:88
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
 msgstr "_Engadir conta"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:63
+#: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Chamar"
 
-#: src/ui/call-record-row.ui:103
+#: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
 msgstr "_Elminar chamada"
 
 #. Translators: This is a phone number
-#: src/ui/call-record-row.ui:108
+#: src/ui/call-record-row.ui:107
 msgid "_Copy number"
 msgstr "_Copiar número"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "_Engadir contacto"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Enviar SMS"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
@@ -286,6 +390,7 @@ msgstr "_Atallos de teclado"
 msgid "_Help"
 msgstr "_Axuda"
 
+#. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "_Sobre Chamadas"
@@ -318,14 +423,157 @@ msgstr "Nova chamada"
 msgid "Back"
 msgstr "Atrás"
 
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Sen razón"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Chamada saínte comezada"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Nova chamada entrante"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Chamada aceptada"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Chamada finalizada"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Chamada desconectada (ocupado ou chamada rexeitada)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Chamada desconectada (id incorrecto ou problema de rede)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Chamada desconectada (erro ao configurar a canle de son)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "Chamada transferida"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Chamada desviada"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Chamada desconectada (código %i de razón descoñecido)"
+
+#: plugins/provider/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr "ModemManager non dispoñíbel"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Non está dispoñíbel un módem con capacidade de voz"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Normal"
+
+#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "Inicializada"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus non dispoñíbel"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Sen cifrado"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Forzar cifrado"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Intercambio de chave criptográfica non exitosa"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Engadir conta"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Inicio de sesión"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Xestionar conta"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Aplicar"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Eliminar"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Servidor"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Nome en pantalla"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Opcional"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ID de usuario"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Contrasinal"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Porto"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Transporte"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Cifrado de medio"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "Usar para as chamadas de teléfono"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Conectar automaticamente"
+
+#~ msgid "Can't place calls: No backend service"
+#~ msgstr "Non se poden realizar chamadas: Non hai servizo de infraestrutura"
+
 #~ msgid "Calling…"
 #~ msgstr "Chamando…"
 
 #~ msgid "Can't place calls: No SIM card"
 #~ msgstr "Non se poden realizar chamadas: Non hai tarxeta SIM"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Chamada de teléfono entrante"
 
 #~ msgid "Mute"
 #~ msgstr "Silenciar"
@@ -350,9 +598,6 @@ msgstr "Atrás"
 
 #~ msgid "This call is not encrypted"
 #~ msgstr "Esta chamada non está cifrada"
-
-#~ msgid "This call is encrypted"
-#~ msgstr "Esta chamada está cifrada"
 
 #~ msgid "Recent Calls"
 #~ msgstr "Chamadas recentes"
