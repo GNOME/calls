@@ -377,6 +377,8 @@ constructed (GObject *object)
 {
   CallsMMProvider *self = CALLS_MM_PROVIDER (object);
 
+  G_OBJECT_CLASS (calls_mm_provider_parent_class)->constructed (object);
+
   self->watch_id =
     g_bus_watch_name (G_BUS_TYPE_SYSTEM,
                       MM_DBUS_SERVICE,
@@ -386,8 +388,6 @@ constructed (GObject *object)
                       self, NULL);
 
   g_debug ("Watching for ModemManager");
-
-  G_OBJECT_CLASS (calls_mm_provider_parent_class)->constructed (object);
 }
 
 
