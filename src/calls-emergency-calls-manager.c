@@ -38,9 +38,25 @@ G_DEFINE_TYPE_WITH_CODE (CallsEmergencyCallsManager,
                            calls_emergency_calls_iface_init));
 
 static void
-on_origins_changed (CallsEmergencyCallsManger *self)
+on_emergency_numbers_changed (CallsEmergencyCallsManger *self)
+{
+  g_signal_emit_by_name (self, "emergency-numbers-changed", 0);
+}
+
+
+static void
+on_origins_changed (CallsEmergencyCallsManger *self, guint position, guint added)
 {
   g_assert (CALLS_IS_EMERGENCY_CALLS_MANAGER (self));
+
+  for (int i = 0; i < added; i++) {
+    CallsOrigin *origin = g_list_model_get_item (self->origins, position + i);
+
+    g_signal_connect_object (origin, "notify::emergency-numbers",
+                             G_CALLBACK (on_emergency_numbers_changed),
+                             self,
+                             G_CONNECT_SWAPPED);
+  }
 
   g_signal_emit_by_name (self, "emergency-numbers-changed", 0);
 }
