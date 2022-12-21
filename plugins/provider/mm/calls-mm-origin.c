@@ -354,6 +354,17 @@ supports_protocol (CallsOrigin *origin,
 }
 
 
+static const char *
+get_country_code (CallsOrigin *origin)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (origin);
+
+  g_assert (CALLS_IS_MM_ORIGIN (origin));
+
+  return self->country_code;
+}
+
+
 static void
 remove_calls (CallsMMOrigin *self, const char *reason)
 {
@@ -984,6 +995,7 @@ calls_mm_origin_origin_interface_init (CallsOriginInterface *iface)
 {
   iface->dial = dial;
   iface->supports_protocol = supports_protocol;
+  iface->get_country_code = get_country_code;
 }
 
 
