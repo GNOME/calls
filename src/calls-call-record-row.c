@@ -284,10 +284,35 @@ setup_time (CallsCallRecordRow *self,
 
 
 static void
-on_notify_can_add_contacts (CallsCallRecordRow *self)
+setup_popover_actions (CallsCallRecordRow *self)
 {
   CallsContactsProvider *contacts_provider;
   GAction *action_new_contact = g_action_map_lookup_action (self->action_map, "new-contact");
+  GAction *action_copy = g_action_map_lookup_action (self->action_map, "copy-number");
+  GAction *action_sms = g_action_map_lookup_action (self->action_map, "new-sms");
+  g_autofree gchar *target = NULL;
+  g_autofree gchar *protocol = NULL;
+  gboolean enable_copy = FALSE;
+  gboolean enable_sms = FALSE;
+
+  g_object_get (self->record,
+                "target", &target,
+                "protocol", &protocol,
+                NULL);
+
+  if (!STR_IS_NULL_OR_EMPTY (target)) {
+    enable_copy = TRUE;
+
+    if (g_strcmp0 (protocol, "tel") == 0) {
+      g_autoptr (GAppInfo) app_info_sms =
+        g_app_info_get_default_for_uri_scheme ("sms");
+
+      enable_sms = !!app_info_sms;
+    }
+  }
+
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action_sms), enable_sms);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), enable_copy);
 
   contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
 
@@ -306,32 +331,17 @@ on_notify_can_add_contacts (CallsCallRecordRow *self)
 static void
 setup_contact (CallsCallRecordRow *self)
 {
-  GAction *action_copy = g_action_map_lookup_action (self->action_map, "copy-number");
   g_autofree gchar *target = NULL;
   CallsContactsProvider *contacts_provider;
 
-  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
-
-  g_signal_connect_swapped (contacts_provider,
-                            "notify::can-add-contacts",
-                            G_CALLBACK (on_notify_can_add_contacts),
-                            self);
-
-  on_notify_can_add_contacts (self);
 
   // Get the target number
   g_object_get (G_OBJECT (self->record),
                 "target", &target,
                 NULL);
 
-  if (STR_IS_NULL_OR_EMPTY (target)) {
-    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), FALSE);
-  } else {
-    g_simple_action_set_enabled (G_SIMPLE_ACTION (action_copy), TRUE);
-  }
-
   // Look up the best match object
+  contacts_provider = calls_manager_get_contacts_provider (calls_manager_get_default ());
   self->contact = calls_contacts_provider_lookup_id (contacts_provider, target);
 
   if (!self->contact) {
@@ -371,6 +381,7 @@ context_menu (GtkWidget *widget,
                             "row-history");
   }
 
+  setup_popover_actions (self);
   gtk_popover_popup (self->popover);
 }
 
@@ -434,11 +445,9 @@ constructed (GObject *object)
   gboolean inbound;
   GDateTime *answered;
   GDateTime *end;
-  GAction *sms_action;
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
   g_autofree char *target = NULL;
-  gboolean sms_enabled = FALSE;
 
   G_OBJECT_CLASS (calls_call_record_row_parent_class)->constructed (object);
 
@@ -458,20 +467,12 @@ constructed (GObject *object)
 
   gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), action_name);
 
-  sms_action = g_action_map_lookup_action (self->action_map, "new-sms");
-  /* TODO add origin ID to action target */
-  if (!STR_IS_NULL_OR_EMPTY (target)) {
+  if (STR_IS_NULL_OR_EMPTY (target))
+    gtk_actionable_set_action_name (GTK_ACTIONABLE (self->button), NULL);
+  else
+    /* TODO add origin ID to action target */
     gtk_actionable_set_action_target (GTK_ACTIONABLE (self->button),
                                       "(ss)", target, "");
-    if (g_strcmp0 (protocol, "tel") == 0) {
-      g_autoptr (GAppInfo) app_info_sms =
-        g_app_info_get_default_for_uri_scheme ("sms");
-
-      sms_enabled = !!app_info_sms;
-    }
-  }
-
-  g_simple_action_set_enabled (G_SIMPLE_ACTION (sms_action), sms_enabled);
 
   setup_time (self, inbound, answered, end);
   calls_date_time_unref (answered);
