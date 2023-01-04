@@ -38,10 +38,6 @@
 #include <libfeedback.h>
 
 
-/* cancel lfb operations after reaching the timeout */
-#define LFB_TIMEOUT_MS 1000
-
-
 enum {
   PROP_0,
   PROP_RING_STATE,
@@ -63,7 +59,6 @@ struct _CallsRinger {
   CallsRingState target_state;
 
   gboolean       freeze_state_notify;
-  guint          request_timeout_id;
 };
 
 
@@ -92,8 +87,6 @@ set_ring_state (CallsRinger   *self,
 {
   g_assert (CALLS_IS_RINGER (self));
   g_assert (state >= CALLS_RING_STATE_INACTIVE && state <= CALLS_RING_STATE_ERROR);
-
-  g_clear_handle_id (&self->request_timeout_id, g_source_remove);
 
   if (self->state == state)
     return;
@@ -208,23 +201,6 @@ on_feedback_ended (LfbEvent    *event,
 }
 
 
-static gboolean
-request_timed_out (CallsRinger *self)
-{
-  if (!CALLS_IS_RINGER (self))
-    return G_SOURCE_REMOVE;
-
-  g_debug ("Request '%s' timed out, cancelling..",
-           ring_state_to_string (self->target_state));
-
-  g_cancellable_cancel (self->cancel);
-
-  set_ring_state (self, CALLS_RING_STATE_ERROR);
-
-  return G_SOURCE_REMOVE;
-}
-
-
 static LfbEvent *
 get_event_for_state (CallsRinger   *self,
                      CallsRingState state)
@@ -277,8 +253,6 @@ target_state_step (CallsRinger *self)
                                   self);
   }
 
-  self->request_timeout_id =
-    g_timeout_add (LFB_TIMEOUT_MS, G_SOURCE_FUNC (request_timed_out), self);
 }
 
 
@@ -485,8 +459,6 @@ dispose (GObject *object)
   CallsRinger *self = CALLS_RINGER (object);
 
   g_signal_handlers_disconnect_by_data (calls_manager_get_default (), self);
-
-  g_clear_handle_id (&self->request_timeout_id, g_source_remove);
 
   g_cancellable_cancel (self->cancel);
   g_clear_object (&self->cancel);
