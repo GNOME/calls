@@ -39,7 +39,9 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeMap, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeSet, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeSortedSet, g_object_unref)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GeeCollection, g_object_unref)
+#if !EDS_CHECK_VERSION(3, 47, 1)
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (EPhoneNumber, e_phone_number_free)
+#endif
 
 typedef void (*IdleCallback) (gpointer         user_data,
                               FolksIndividual *individual);
