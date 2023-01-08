@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-02 10:59+0000\n"
-"PO-Revision-Date: 2022-12-08 01:31+0000\n"
+"POT-Creation-Date: 2023-01-06 17:14+0000\n"
+"PO-Revision-Date: 2023-01-08 13:03+0000\n"
 "Last-Translator: Fabio T. <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Editor: HaiPO 1.3 beta\n"
+"X-Editor: HaiPO 1.4 beta\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Clamadis"
 
@@ -199,41 +199,54 @@ msgstr "Disconession completade"
 msgid "Internal error occurred"
 msgstr "Al è vignût fûr un erôr interni"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Modifiche account: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Zonte gnûf account"
+
+#: src/calls-account-overview.c:376
+msgid "Account overview"
+msgstr "Panoramiche dal account"
+
+#: src/calls-application.c:327
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Provât a componi l'URI di telefon `%s' no valit"
 
-#: src/calls-application.c:627
+#: src/calls-application.c:660
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No sai cemût vierzi `%s'"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:717
 msgid "The name of the plugin to use as a call provider"
 msgstr "Il non dal plugin di doprâ tant che gjestôr di clamadis"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:718
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:723
 msgid "Whether to present the main window on startup"
 msgstr "Indiche se presentâ il barcon principâl al inviament"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:729
 msgid "Dial a telephone number"
 msgstr "Fâs un numar di telefon"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:730
 msgid "NUMBER"
 msgstr "NUMAR"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:735
 msgid "Enable verbose debug messages"
 msgstr "Abilite messaçs di debug prolìs"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:741
 msgid "Print current version"
 msgstr "Stampe la version curinte"
 
@@ -390,23 +403,11 @@ msgstr "_Jutori"
 msgid "_About Calls"
 msgstr "_Informazions su Clamadis"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Inserìs une direzion VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Inserìs un numar"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Compon"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Elimine il caratar denant dal cursôr"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Account SIP"
 
@@ -465,21 +466,21 @@ msgstr "Clamade deviade"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Clamade interote (codiç dal motîf %i no cognossût)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager no disponibil"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Nissun modem disponibil cun capacitâts vocâls"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normâl"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inizializât"
@@ -560,6 +561,15 @@ msgstr "Doprâ pes clamadis telefonichis"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Conet in automatic"
+
+#~ msgid "Enter a number"
+#~ msgstr "Inserìs un numar"
+
+#~ msgid "Dial"
+#~ msgstr "Compon"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Elimine il caratar denant dal cursôr"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Impussibil clamâ: nissune servizi di backend"
