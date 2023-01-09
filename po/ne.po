@@ -1,0 +1,568 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gnome Nepali Translation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-12-02 10:59+0000\n"
+"PO-Revision-Date: 2023-01-09 23:06+0545\n"
+"Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
+"Language-Team: Nepali Language Translation Team <chautari@gmail.com>\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "कलहरू"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "फोन"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr ""
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr ""
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "कलहरू (डेमन)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr ""
+
+#: data/org.gnome.Calls.metainfo.xml:7
+#, fuzzy
+msgid "Make phone and SIP calls"
+msgstr "फोन कलहरू"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+#, fuzzy
+msgid "Placing a call"
+msgstr "झण्डाको स्वचालित स्थापना सक्षम पार्नुहोस्"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "कल इतिहास"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:13
+#, fuzzy
+msgid "The country code as reported by the modem"
+msgstr "देश ISO कोड:"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:19
+#, fuzzy
+msgid "The plugins to load automatically"
+msgstr "प्लगइनहरू…"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+
+#: src/calls-account.c:163
+#, fuzzy
+msgid "Default (uninitialized) state"
+msgstr "थ्रेड विस्तार स्थितिका लागि पूर्वनिर्धारित मान"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "शुरुआत गर्दै…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr ""
+
+#: src/calls-account.c:172
+#, fuzzy
+msgid "Connecting to server…"
+msgstr "IMAP सर्भर जडानमा त्रुटि भयो"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "खाता अनलाइन छ"
+
+#: src/calls-account.c:178
+#, fuzzy
+msgid "Disconnecting from server…"
+msgstr "“%s” जडान हटाउदै"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "खाता अफलाइन छ"
+
+#: src/calls-account.c:184
+#, fuzzy
+msgid "Account encountered an error"
+msgstr "खाता मा लग इन गर्न त्रुटि"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "कुनै कारण दिनुहोस्"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "सुरुआत सुरु भयो"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "शुरुआत सम्पन्न भयो"
+
+#: src/calls-account.c:211
+#, fuzzy
+msgid "Uninitialization started"
+msgstr "सुरु गरिएको छैन"
+
+#: src/calls-account.c:214
+#, fuzzy
+msgid "Uninitialization complete"
+msgstr "% पूरा"
+
+#: src/calls-account.c:217
+#, fuzzy
+msgid "No credentials set"
+msgstr "सञ्जाल प्रमाणपत्र"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "जडान सुरु गर्द"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "जडान समय समाप्त भयो"
+
+#: src/calls-account.c:226
+#, fuzzy
+msgid "Domain name could not be resolved"
+msgstr "ईन्टरप्राईज डोमेन वा रियालम नाम"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "सर्भरले प्रयोगकर्ता नाम वा पासवर्ड स्वीकार गरेन"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "जडान पूरा भयो"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "विच्छेदन गर्दै"
+
+#: src/calls-account.c:238
+#, fuzzy
+msgid "Disconnecting complete"
+msgstr "जडान हटाउदै"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "आन्तरिक त्रुटि देखापर्यो"
+
+#: src/calls-application.c:315
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr ""
+
+#: src/calls-application.c:627
+#, fuzzy, c-format
+msgid "Don't know how to open `%s'"
+msgstr "%s त्रुटि:%s भित्र कसरी निर्यात गर्ने थाहा भएन\n"
+
+#: src/calls-application.c:681
+msgid "The name of the plugin to use as a call provider"
+msgstr ""
+
+#: src/calls-application.c:682
+msgid "PLUGIN"
+msgstr "प्लगइन"
+
+#: src/calls-application.c:687
+msgid "Whether to present the main window on startup"
+msgstr ""
+
+#: src/calls-application.c:693
+#, fuzzy
+msgid "Dial a telephone number"
+msgstr "टेलिफोन नम्बर"
+
+#: src/calls-application.c:694
+msgid "NUMBER"
+msgstr "नम्बर"
+
+#: src/calls-application.c:699
+#, fuzzy
+msgid "Enable verbose debug messages"
+msgstr "DEBUG सन्देश सक्षम पार्नुहोस्"
+
+#: src/calls-application.c:705
+msgid "Print current version"
+msgstr "हालको संस्करण मुद्रण गर्नुहोस्"
+
+#: src/calls-best-match.c:435
+msgid "Anonymous caller"
+msgstr "बेनामी कलर"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr "हिजो %s"
+
+#: src/calls-main-window.c:123
+msgid "translator-credits"
+msgstr "Pawan Chitrakar <chautari@gmail.com>"
+
+#: src/calls-main-window.c:316
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr ""
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr ""
+
+#: src/calls-main-window.c:353
+msgid "Contacts"
+msgstr "सम्पर्कहरू"
+
+#: src/calls-main-window.c:363
+#, fuzzy
+msgid "Dial Pad"
+msgstr "डायल"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:372
+msgid "Recent"
+msgstr "हालसालै"
+
+#: src/calls-notifier.c:52
+msgid "Missed call"
+msgstr "छुटेका कल"
+
+#. %s is a name here
+#: src/calls-notifier.c:76
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr ""
+
+#. %s is a id here
+#: src/calls-notifier.c:79
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s बाट छुटेको कल"
+
+#: src/calls-notifier.c:81
+msgid "Missed call from unknown caller"
+msgstr ""
+
+#: src/calls-notifier.c:87
+msgid "Call back"
+msgstr "कल फर्काउनुहोस्"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "भिओआईपी खाताहरू"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "भिओआईपी खाताहरू थप्नुहोस्"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "खाता थप्नुहोस्"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "कल"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "कल मेट्नुहोस्"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "नम्बर प्रतिलिपि गर्नुहोस्"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "सम्पर्क थप्नुहोस्"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "एसएमएस पठाउनुहोस्"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "होल्डमा"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "सम्पर्कहरू छैनन्"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "हाल कलहरू छैन"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "रद्द गर्नुहोस्"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "बन्द गर्नुहोस्"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "पठाउनुहोस्"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "भिओआईपी खाताहरू"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "कुञ्जीपाटी सर्टकट"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "सहयोग"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "कलहरू बारेमा"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "भिओआईपी ठेगाना प्रविष्टि गर्नुहोस्"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "सङ्ख्या प्रविष्ट गर्नुहोस्:"
+
+#: src/ui/new-call-box.ui:97
+msgid "Dial"
+msgstr "डायल"
+
+#: src/ui/new-call-box.ui:120
+#, fuzzy
+msgid "Delete character in front of cursor"
+msgstr "असम्बन्धित कर्सर मेटाउन अनुरोध गरियो"
+
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "सिप खाता"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "नया कल"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "पछाडि"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "अज्ञात कारण"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+#, fuzzy
+msgid "Outgoing call started"
+msgstr "बाह्यगमन ध्वनि कल"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "नया आगमन कल"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "कल स्वीकार गरियो"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "कल समाप्त"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr ""
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "कल स्थानान्तरण गरियो"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "कल विक्षेपण गरियो"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-provider.c:82
+#, fuzzy
+msgid "ModemManager unavailable"
+msgstr "अनुपलब्ध"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr ""
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "सामान्य"
+
+#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+#, fuzzy
+msgid "Initialized"
+msgstr "यदि 'सही' मा सेट गरेमा RDP ब्याकइन्ड सुरुआत हुनेछ ।"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+#, fuzzy
+msgid "DBus unavailable"
+msgstr "अनुपलब्ध"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "गुप्तीकरण होइन"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+#, fuzzy
+msgid "Force encryption"
+msgstr "बल"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "खाता थप्नुहोस्"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "लग इन गर्नुहोस्"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "खाता ब्यबस्थापन"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_लागू"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "मेट्नुहोस्"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "सर्भर"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "प्रदर्शन नाम"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "वैकल्पिक"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "प्रयोगकर्ता आईडी"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "पासवर्ड"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "पोर्ट"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "यातायात"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "मिडिया गुप्तीकरण गर्नुहोस्"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+#, fuzzy
+msgid "Use for Phone Calls"
+msgstr "फोन कलहरू"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "स्वतः जडान गर्नुहोस्"
