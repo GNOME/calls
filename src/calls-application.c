@@ -79,14 +79,24 @@ G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
 
 static void start_proper (CallsApplication *self);
 
+
+static void
+quit_calls (CallsApplication *self)
+{
+  gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->main_window));
+  gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->call_window));
+}
+
+
 static gboolean
 on_int_or_term_signal (CallsApplication *self)
 {
   g_debug ("Received SIGTERM/SIGINT, shutting down gracefully");
 
-  g_application_quit (G_APPLICATION (self));
   self->id_sigint = 0;
   self->id_sigterm = 0;
+
+  quit_calls (self);
 
   return G_SOURCE_REMOVE;
 }
@@ -676,8 +686,9 @@ finalize (GObject *object)
   g_clear_handle_id (&self->id_sigterm, g_source_remove);
   g_clear_handle_id (&self->id_sigint, g_source_remove);
 
-  g_clear_object (&self->call_window);
-  g_clear_object (&self->main_window);
+  gtk_widget_destroy (GTK_WIDGET (self->main_window));
+  gtk_widget_destroy (GTK_WIDGET (self->call_window));
+
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
