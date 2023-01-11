@@ -85,6 +85,8 @@ on_int_or_term_signal (CallsApplication *self)
   g_debug ("Received SIGTERM/SIGINT, shutting down gracefully");
 
   g_application_quit (G_APPLICATION (self));
+  self->id_sigint = 0;
+  self->id_sigterm = 0;
 
   return G_SOURCE_REMOVE;
 }
