@@ -227,9 +227,9 @@ dispose (GObject *object)
 {
   CallsHistoryBox *self = CALLS_HISTORY_BOX (object);
 
+  g_clear_signal_handler (&self->model_changed_handler_id, self->model);
   g_clear_object (&self->slice_model);
   g_clear_object (&self->model);
-  g_clear_signal_handler (&self->model_changed_handler_id, self->model);
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->dispose (object);
 }
