@@ -1,3 +1,37 @@
+Calls 44.alpha.1
+----------------
+Released: 12 January 2022
+
+New features:
+=============
+None
+
+Maybe noteworthy:
+=================
+* **Really** fix endless ringing bug
+* Fixed a crash
+* Database closed correctly on shutdown
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Chris Talbot
+ - Abderrahim Kitouni
+ - Дилян Палаузов
+
+Translation updates:
+====================
+ - Friulian (Fabio Tomat)
+ - Belarusian (Vasil Pupkin)
+ - Galician (Fran Dieguez)
+ - British English (Bruce Cowan)
+ - Greek, Modern (Efstathios Iosifidis)
+ - Chinese, Taiwan (Freddy Cheng)
+ - Turkish (Sabri Ünal)
+ - Brazilian Portuguese (Matheus Barbosa)
+
+The detailed changes can be found in debian/changelog
+
 Calls 44.alpha.0
 ----------------
 Released: 3 December 2022
