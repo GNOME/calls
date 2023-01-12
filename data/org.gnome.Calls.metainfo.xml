@@ -62,6 +62,20 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="43.3" date="2023-01-12">
+        <description>
+          <p>
+            Calls 43.3 fixes a couple of bugs and brings new and updated translations.
+          </p>
+          <ul>
+            <li>Fix endless ringing issue</li>
+            <li>Fixes a crash</li>
+            <li>Call database closes correctly on application shutdown</li>
+            <li>SIP: Remote port honoured in INVITE</li>
+            <li>SIP: Reenable G722 codec</li>
+          </ul>
+        </description>
+      </release>
       <release version="43.0" date="2022-09-19">
         <description>
           <p>

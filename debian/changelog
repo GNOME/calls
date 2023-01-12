@@ -1,3 +1,56 @@
+gnome-calls (43.3) byzantium; urgency=medium
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Fabio Tomat ]
+  * Update Friulian translation
+
+  [ Vasil Pupkin ]
+  * Add Belarusian translation
+  * Update Belarusian translation
+  * Update Belarusian translation
+  * Update Belarusian translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ Bruce Cowan ]
+  * Update British English translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+
+  [ Chao-Hsiung Liao ]
+  * Add Chinese (Taiwan) translation
+
+  [ Rafael Fontenelle ]
+  * Update Brazilian Portuguese translation
+
+  [ Nart Tlisha ]
+  * Update Abkhazian translation
+
+  [ Pawan Chitrakar ]
+  * Add Nepali translation
+
+  [ Chris Talbot ]
+  * meson: use version_compare to check meson version
+
+  [ Evangelos Ribeiro Tzaras ]
+  * build: Rename config.h to calls-config.h
+  * meson: Add option to use gstreamer debugging API
+  * sip-pipeline: Only use gstreamer debugging if option is set
+  * ringer: Remove explicit DBus timeout handling
+  * ci: Move flatpak jobs to packaging stage
+  * history-box: Fix clearing signal handler
+  * application: Set unix signal handler source ID to 0
+  * application: Remove and destroy application windows on shutdown
+
+  [ Abderrahim Kitouni ]
+  * Only define EPhoneNumber autocleanup for old versions
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 12 Jan 2023 11:02:58 +0100
+
 gnome-calls (43.2) byzantium; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]

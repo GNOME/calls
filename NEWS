@@ -1,3 +1,39 @@
+Calls 43.3
+----------------
+Released: 12 January 2023
+
+New features:
+=============
+None
+
+Maybe noteworthy:
+=================
+* **Really** fix endless ringing bug
+* Fixed a crash
+* Database closed correctly on shutdown
+* Allow building without GStreamer debugging API
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Chris Talbot
+ - Abderrahim Kitouni
+
+Translation updates:
+====================
+ - Finnish (Jiri Grönroos)
+ - Friulian (Fabio Tomat)
+ - Belarusian (Vasil Pupkin)
+ - Galician (Fran Dieguez)
+ - British English (Bruce Cowan)
+ - Greek, Modern (Efstathios Iosifidis)
+ - Chinese, Taiwan (Chao-Hsiung Liao)
+ - Brazilian Portuguese (Rafael Fontenelle)
+ - Abkhazian (Nart Tlisha)
+ - Nepali (Pawan Chitrakar)
+
+The detailed changes can be found in debian/changelog
+
 Calls 43.2
 ----------------
 Released: 3 December 2022
