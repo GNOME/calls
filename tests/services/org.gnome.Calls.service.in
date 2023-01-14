@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.Calls
+Exec=@CALLS_BUILD_DIR@/tests/services/calls-dbus-server

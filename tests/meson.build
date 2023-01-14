@@ -1,7 +1,5 @@
 if get_option('tests')
 
-subdir('mock')
-
 test_env = [
   'G_DEBUG=gc-friendly,fatal-warnings',
   'GSETTINGS_BACKEND=memory',
@@ -23,6 +21,19 @@ test_link_args = [
   '-fPIC',
 ]
 
+dbus_service_conf = configuration_data()
+dbus_service_conf.set('CALLS_BUILD_DIR', '@0@'.format(builddir))
+dbus_service_conf.set('CALLS_BUILD_DIR_STR', '"@0@"'.format(builddir))
+dbus_service_conf.set('CALLS_DBUS_NAME', '"org.gnome.Calls"')
+dbus_service_conf.set('CALLS_DBUS_OBJECT_PATH', '"/org/gnome/Calls"')
+
+dbus_config_h = configure_file(output        : 'calls-dbus-config.h',
+                               configuration : dbus_service_conf)
+
+test_includes = include_directories('.')
+
+subdir('mock')
+subdir('services')
 
 test_sources = [ 'test-manager.c' ]
 
