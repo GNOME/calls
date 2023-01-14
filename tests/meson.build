@@ -133,4 +133,17 @@ t = executable('settings', test_sources,
                )
 test('settings', t, env: test_env)
 
+test_sources = ['test-dbus.c']
+t = executable('dbus', test_sources, generated_dbus_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('dbus', t, env: test_env)
+
 endif
