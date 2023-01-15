@@ -86,7 +86,7 @@ calls_ui_call_data_get_display_name (CuiCall *call_data)
   g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), NULL);
   g_return_val_if_fail (!!self->call, NULL);
 
-  if (self->best_match)
+  if (calls_best_match_has_individual (self->best_match))
     return calls_best_match_get_name (self->best_match);
   else
     return calls_call_get_name (self->call);
