@@ -11,7 +11,6 @@
 #include "calls-ringer.h"
 #include "calls-ui-call-data.h"
 #include "mock-call.h"
-#include "mock-libfeedback.h"
 #include "mock-contacts-provider.h"
 
 

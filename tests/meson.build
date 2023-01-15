@@ -82,7 +82,7 @@ t = executable('ui-call', test_sources,
 test('ui-call', t, env: test_env)
 
 test_sources = [
-               'mock-call.c', 'mock-call.h', 'mock-libfeedback.h',
+               'mock-call.c', 'mock-call.h',
                'test-ringer.c'
 ]
 
