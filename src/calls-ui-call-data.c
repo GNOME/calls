@@ -145,10 +145,7 @@ calls_ui_call_data_get_avatar_icon (CuiCall *call_data)
 
   g_return_val_if_fail (CALLS_UI_CALL_DATA (self), NULL);
 
-  if (self->best_match)
-    return calls_best_match_get_avatar (self->best_match);
-  else
-    return NULL;
+  return calls_best_match_get_avatar (self->best_match);
 }
 
 
