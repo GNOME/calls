@@ -5,17 +5,10 @@
  */
 
 #include "calls-manager.h"
-#include "mock-contacts-provider.h"
 
 #include <cui-call.h>
 #include <gtk/gtk.h>
 #include <libpeas/peas.h>
-
-CallsContactsProvider *
-__wrap_calls_contacts_provider_new (void)
-{
-  return NULL;
-}
 
 struct TestData {
   GMainLoop *loop;

@@ -9,16 +9,8 @@
 
 #include "calls-ui-call-data.h"
 #include "mock-call.h"
-#include "mock-contacts-provider.h"
 
 #include <gtk/gtk.h>
-
-CallsContactsProvider *
-__wrap_calls_contacts_provider_new (void)
-{
-  return NULL;
-}
-
 
 static void
 test_cui_call_state_mapping (void)

@@ -11,15 +11,6 @@
 #include "calls-ringer.h"
 #include "calls-ui-call-data.h"
 #include "mock-call.h"
-#include "mock-contacts-provider.h"
-
-
-/* mock calls_contacts_provider_new() */
-CallsContactsProvider *
-__wrap_calls_contacts_provider_new (void)
-{
-  return NULL;
-}
 
 
 /* add or remove calls */
