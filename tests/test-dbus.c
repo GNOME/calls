@@ -9,6 +9,7 @@
 #include "calls-dbus-config.h"
 
 #include "calls-call-dbus.h"
+#include "cui-call.h"
 
 #include <gtk/gtk.h>
 
@@ -54,6 +55,9 @@ typedef struct {
   GDBusObjectManager *calls_manager;
   GMainLoop          *loop;
   guint32             pid_server;
+  int                 test_phase;
+  const char         *object_path;
+  CallsDBusCallsCall *call;
 } DBusTestFixture;
 
 
@@ -63,6 +67,8 @@ fixture_setup (DBusTestFixture *fixture, gconstpointer unused)
   g_autoptr (GError) error = NULL;
 
   g_setenv ("GSETTINGS_BACKEND", "memory", TRUE);
+
+  fixture->test_phase = 0;
 
   fixture->loop = g_main_loop_new (NULL, FALSE);
   fixture->dbus = g_test_dbus_new (G_TEST_DBUS_NONE);
@@ -98,6 +104,81 @@ fixture_teardown (DBusTestFixture *fixture, gconstpointer unused)
 
 
 static void
+on_call_state_changed (GObject    *object,
+                       GParamSpec *pspec,
+                       gpointer    user_data)
+{
+  g_autoptr (GError) error = NULL;
+  CallsDBusCallsCall *call = CALLS_DBUS_CALLS_CALL (object);
+  DBusTestFixture *fixture = user_data;
+  const char *object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+
+  g_assert_cmpstr (object_path, ==, fixture->object_path);
+
+  switch (fixture->test_phase) {
+  case 0:
+    g_assert_cmpint (calls_dbus_calls_call_get_state (call), ==, CUI_CALL_STATE_ACTIVE);
+    g_assert_true (calls_dbus_calls_call_call_hangup_sync (call, NULL, &error));
+    g_assert_no_error (error);
+    break;
+
+  case 1:
+    g_assert_cmpint (calls_dbus_calls_call_get_state (call), ==, CUI_CALL_STATE_DISCONNECTED);
+    break;
+
+  default:
+    g_assert_not_reached ();
+  }
+
+  fixture->test_phase++;
+}
+
+static void
+on_call_added (GDBusObjectManager *manager,
+               GDBusObject        *object,
+               gpointer            user_data)
+{
+  g_autoptr (GError) error = NULL;
+  CallsDBusCallsCall *call;
+  DBusTestFixture *fixture = user_data;
+
+  fixture->object_path = g_dbus_object_get_object_path (object);
+
+  call = calls_dbus_calls_call_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                                       G_DBUS_PROXY_FLAGS_NONE,
+                                                       CALLS_DBUS_NAME,
+                                                       fixture->object_path,
+                                                       NULL,
+                                                       &error);
+
+  g_assert_nonnull (call);
+  g_assert_no_error (error);
+
+  fixture->call = call;
+
+  g_assert_cmpint (calls_dbus_calls_call_get_state (call), ==, CUI_CALL_STATE_INCOMING);
+
+  g_signal_connect (call, "notify::state", G_CALLBACK (on_call_state_changed), user_data);
+
+  g_assert_true (calls_dbus_calls_call_call_accept_sync (call, NULL, &error));
+  g_assert_no_error (error);
+}
+
+
+static void
+on_call_removed (GDBusObjectManager *manager,
+                 GDBusObject        *object,
+                 gpointer            user_data)
+{
+  DBusTestFixture *fixture = user_data;
+
+  g_assert_cmpstr (g_dbus_object_get_object_path (object), ==, fixture->object_path);
+  g_clear_object (&fixture->call);
+
+  g_main_loop_quit (fixture->loop);
+}
+
+static void
 test_no_calls (DBusTestFixture *fixture, gconstpointer unused)
 {
   GList *objects;
@@ -111,6 +192,28 @@ test_no_calls (DBusTestFixture *fixture, gconstpointer unused)
 }
 
 
+static void
+test_interact_call (DBusTestFixture *fixture, gconstpointer unused)
+{
+  GList *objects;
+
+  g_assert_cmpint (fixture->pid_server, >, 0);
+
+  objects = g_dbus_object_manager_get_objects (fixture->calls_manager);
+
+  g_assert_cmpint (g_list_length (objects), ==, 0);
+  g_clear_list (&objects, g_object_unref);
+
+  g_signal_connect (fixture->calls_manager, "object-added", G_CALLBACK (on_call_added), fixture);
+  g_signal_connect (fixture->calls_manager, "object-added", G_CALLBACK (on_call_removed), fixture);
+
+  /* Sending USR1 will trigger an incoming call on the dummy provider running on the server*/
+  kill (fixture->pid_server, SIGUSR1);
+
+  g_main_loop_run (fixture->loop);
+}
+
+
 int
 main (int   argc,
       char *argv[])
@@ -119,6 +222,8 @@ main (int   argc,
 
   g_test_add ("/Calls/DBus/no_calls", DBusTestFixture, NULL,
               fixture_setup, test_no_calls, fixture_teardown);
+  g_test_add ("/Calls/DBus/call_interaction", DBusTestFixture, NULL,
+              fixture_setup, test_interact_call, fixture_teardown);
 
   g_test_run ();
 }
