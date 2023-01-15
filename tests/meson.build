@@ -10,6 +10,8 @@ test_env = [
   'NO_AT_BRIDGE=1',
   'GSETTINGS_SCHEMA_DIR=@0@/data'.format(meson.project_build_root()),
   'CALLS_PLUGIN_DIR=@0@/plugins'.format(meson.project_build_root()),
+  'FOLKS_BACKENDS_ALLOWED=key-file',
+  'FOLKS_PRIMARY_STORE=key-file',
 ]
 
 test_cflags = [
