@@ -245,9 +245,10 @@ update_account_list (CallsAccountOverview *self)
       CallsAccountRow *account_row = calls_account_row_new (provider, account);
 
       g_signal_handlers_disconnect_by_data (account, self);
-      g_signal_connect (account, "message",
-                        G_CALLBACK (on_account_message),
-                        self);
+      g_signal_connect_object (account, "message",
+                               G_CALLBACK (on_account_message),
+                               self,
+                               G_CONNECT_AFTER);
 
       gtk_list_box_insert (GTK_LIST_BOX (self->overview),
                            GTK_WIDGET (account_row),
