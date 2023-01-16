@@ -329,8 +329,11 @@ calls_new_call_box_init (CallsNewCallBox *self)
   hdy_combo_row_bind_name_model (self->origin_list, origins,
                                  get_origin_name, self, NULL);
 
-  g_signal_connect_swapped (origins, "items-changed",
-                            G_CALLBACK (origin_count_changed_cb), self);
+  g_signal_connect_object (origins,
+                           "items-changed",
+                           G_CALLBACK (origin_count_changed_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
   origin_count_changed_cb (self);
 }
 
