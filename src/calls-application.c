@@ -72,6 +72,7 @@ struct _CallsApplication {
   char             *uri;
   guint             id_sigterm;
   guint             id_sigint;
+  gboolean          shutdown;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
@@ -83,14 +84,22 @@ static void start_proper (CallsApplication *self);
 static void
 quit_calls (CallsApplication *self)
 {
+  g_assert (CALLS_IS_APPLICATION (self));
+
+  if (self->shutdown)
+    return;
+
   gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->main_window));
   gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->call_window));
-}
 
+  self->shutdown = TRUE;
+}
 
 static gboolean
 on_int_or_term_signal (CallsApplication *self)
 {
+  g_assert (CALLS_IS_APPLICATION (self));
+
   g_debug ("Received SIGTERM/SIGINT, shutting down gracefully");
 
   self->id_sigint = 0;
@@ -553,6 +562,8 @@ calls_application_command_line (GApplication            *application,
 static void
 app_shutdown (GApplication *application)
 {
+  quit_calls (CALLS_APPLICATION (application));
+
   cui_uninit ();
 
   G_APPLICATION_CLASS (calls_application_parent_class)->shutdown (application);
