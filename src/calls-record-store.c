@@ -159,6 +159,7 @@ load_calls_fetch_cb (GomResourceGroup *group,
   if (error) {
     g_debug ("Error fetching call records: %s",
              error->message);
+    goto exit;
     return;
   }
   g_assert (ok);
@@ -193,6 +194,8 @@ load_calls_fetch_cb (GomResourceGroup *group,
 
   g_free (records);
   g_object_unref (group);
+exit:
+  g_object_unref (self);
 }
 
 
@@ -211,7 +214,7 @@ load_calls_find_cb (GomRepository    *repository,
   if (error) {
     g_debug ("Error finding call records in database `%s': %s",
              self->filename, error->message);
-    return;
+    goto exit;
   }
   g_assert (group != NULL);
 
@@ -219,7 +222,7 @@ load_calls_find_cb (GomRepository    *repository,
   if (count == 0) {
     g_debug ("No call records found in database `%s'",
              self->filename);
-    return;
+    goto exit;
   }
 
   g_debug ("Found %u call records in database `%s', fetching",
@@ -228,7 +231,9 @@ load_calls_find_cb (GomRepository    *repository,
                                   0,
                                   count,
                                   (GAsyncReadyCallback) load_calls_fetch_cb,
-                                  self);
+                                  g_object_ref (self));
+exit:
+  g_object_unref (self);
 }
 
 
@@ -253,7 +258,7 @@ load_calls (CallsRecordStore *self)
                                     filter,
                                     sorting,
                                     (GAsyncReadyCallback) load_calls_find_cb,
-                                    self);
+                                    g_object_ref (self));
 
   g_object_unref (G_OBJECT (filter));
 }
@@ -283,6 +288,8 @@ set_up_repo_migrate_cb (GomRepository    *repo,
              self->filename);
     load_calls (self);
   }
+
+  g_object_unref (self);
 }
 
 
@@ -310,7 +317,7 @@ set_up_repo (CallsRecordStore *self)
     RECORD_STORE_VERSION,
     types,
     (GAsyncReadyCallback) set_up_repo_migrate_cb,
-    self);
+    g_object_ref (self));
 
   self->repository = repo;
 }
@@ -363,6 +370,8 @@ open_repo_adapter_open_cb (GomAdapter       *adapter,
              self->filename);
     set_up_repo (self);
   }
+
+  g_object_unref (self);
 }
 
 
@@ -392,7 +401,7 @@ open_repo (CallsRecordStore *self)
     (self->adapter,
     uri,
     (GAsyncReadyCallback) open_repo_adapter_open_cb,
-    self);
+    g_object_ref (self));
 
   g_free (uri);
 }
