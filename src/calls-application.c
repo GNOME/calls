@@ -485,10 +485,11 @@ startup (GApplication *application)
                                    G_N_ELEMENTS (actions),
                                    application);
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "notify::state",
-                            G_CALLBACK (manager_state_changed_cb),
-                            application);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "notify::state",
+                           G_CALLBACK (manager_state_changed_cb),
+                           application,
+                           G_CONNECT_SWAPPED);
 
   manager_state_changed_cb (application);
 
@@ -617,10 +618,11 @@ start_proper (CallsApplication *self)
   self->call_window = calls_call_window_new (gtk_app);
   g_assert (self->call_window != NULL);
 
-  g_signal_connect (self->call_window,
-                    "notify::visible",
-                    G_CALLBACK (notify_window_visible_cb),
-                    self);
+  g_signal_connect_object (self->call_window,
+                           "notify::visible",
+                           G_CALLBACK (notify_window_visible_cb),
+                           self,
+                           G_CONNECT_AFTER);
 }
 
 
