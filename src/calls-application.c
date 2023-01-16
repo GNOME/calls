@@ -474,8 +474,11 @@ startup (GApplication *application)
 
   cui_init (TRUE);
 
-  g_set_prgname (APP_ID);
-  g_set_application_name (_("Calls"));
+  if (!g_get_prgname ())
+    g_set_prgname (APP_ID);
+
+  if (!g_get_application_name ())
+    g_set_application_name (_("Calls"));
 
   g_action_map_add_action_entries (G_ACTION_MAP (application),
                                    actions,
