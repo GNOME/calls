@@ -332,19 +332,22 @@ constructed (GObject *object)
   CallsHistoryBox *history;
 
   // Show errors in in-app-notification
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "message",
-                            G_CALLBACK (calls_in_app_notification_show),
-                            self->in_app_notification);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "message",
+                           G_CALLBACK (calls_in_app_notification_show),
+                           self->in_app_notification,
+                           G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "ussd-added",
-                            G_CALLBACK (window_ussd_added_cb),
-                            self);
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "ussd-state-changed",
-                            G_CALLBACK (window_update_ussd_state),
-                            self);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "ussd-added",
+                           G_CALLBACK (window_ussd_added_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "ussd-state-changed",
+                           G_CALLBACK (window_update_ussd_state),
+                           self,
+                           G_CONNECT_SWAPPED);
   gtk_window_set_transient_for (GTK_WINDOW (self->ussd_dialog), GTK_WINDOW (self));
 
   // Add contacs box
@@ -390,10 +393,11 @@ constructed (GObject *object)
   g_object_unref (simple_action_group);
 
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "notify::state",
-                            G_CALLBACK (state_changed_cb),
-                            self);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "notify::state",
+                           G_CALLBACK (state_changed_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
 
   state_changed_cb (self, NULL, calls_manager_get_default ());
 
