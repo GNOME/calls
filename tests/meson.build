@@ -10,6 +10,8 @@ test_env = [
   'CALLS_PLUGIN_DIR=@0@/plugins'.format(meson.project_build_root()),
   'FOLKS_BACKENDS_ALLOWED=key-file',
   'FOLKS_PRIMARY_STORE=key-file',
+  'XDG_CONFIG_HOME=@0@'.format(meson.project_build_root()),
+  'CALLS_RECORD_DIR=@0@/tests/record-db'.format(meson.project_build_root()),
 ]
 
 test_cflags = [
