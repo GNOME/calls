@@ -44,18 +44,18 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsNewCallBox {
-  GtkBox               parent_instance;
+  GtkBox        parent_instance;
 
-  GtkListBox          *origin_list_box;
-  HdyComboRow         *origin_list;
-  CuiDialpad          *dialpad;
-  GtkEntry            *address_entry;
-  HdyActionRow        *result;
-  GtkButton           *dial_result;
+  GtkListBox   *origin_list_box;
+  HdyComboRow  *origin_list;
+  CuiDialpad   *dialpad;
+  GtkEntry     *address_entry;
+  HdyActionRow *result;
+  GtkButton    *dial_result;
 
-  GList               *dial_queue;
+  GList        *dial_queue;
 
-  gboolean             numeric_input_only;
+  gboolean      numeric_input_only;
 };
 
 G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
