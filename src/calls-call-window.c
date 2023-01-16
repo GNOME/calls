@@ -285,20 +285,23 @@ calls_call_window_init (CallsCallWindow *self)
   self->calls = g_list_store_new (CALLS_TYPE_CALL_SELECTOR_ITEM);
 
   // Show errors in in-app-notification
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "message",
-                            G_CALLBACK (calls_in_app_notification_show),
-                            self->in_app_notification);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "message",
+                           G_CALLBACK (calls_in_app_notification_show),
+                           self->in_app_notification,
+                           G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "ui-call-added",
-                            G_CALLBACK (add_call),
-                            self);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "ui-call-added",
+                           G_CALLBACK (add_call),
+                           self,
+                           G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "ui-call-removed",
-                            G_CALLBACK (remove_call),
-                            self);
+  g_signal_connect_object (calls_manager_get_default (),
+                           "ui-call-removed",
+                           G_CALLBACK (remove_call),
+                           self,
+                           G_CONNECT_SWAPPED);
 
   calls = calls_manager_get_calls (calls_manager_get_default ());
   for (c = calls; c != NULL; c = c->next) {
