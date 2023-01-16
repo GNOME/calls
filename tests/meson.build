@@ -148,4 +148,26 @@ t = executable('dbus', test_sources, generated_dbus_sources,
                )
 test('dbus', t, env: test_env)
 
+dbus_run_session = find_program('dbus-run-session')
+
+if dbus_run_session.found ()
+  test_sources = [ 'test-application.c' ]
+  t = executable('application', test_sources, calls_resources,
+                 c_args : test_cflags,
+                 link_args: test_link_args,
+                 pie: true,
+                 link_with : [calls_vala, libcalls],
+                 dependencies: calls_deps,
+                 include_directories : [
+                     calls_includes,
+                   ]
+                 )
+  test('application',
+      dbus_run_session,
+      args: t.full_path(),
+      env: test_env,
+      timeout : 300
+      )
+endif
+
 endif
