@@ -42,8 +42,7 @@
 #define RECORD_STORE_VERSION  2
 
 
-typedef enum
-{
+typedef enum {
   STARTED,
   ANSWERED,
   ENDED
@@ -279,7 +278,6 @@ set_up_repo_migrate_cb (GomRepository    *repo,
 
     g_clear_object (&self->repository);
     g_clear_object (&self->adapter);
-
   } else {
     g_debug ("Successfully migrated call record database `%s'",
              self->filename);
@@ -360,7 +358,6 @@ open_repo_adapter_open_cb (GomAdapter       *adapter,
                  self->filename);
 
     close_adapter (self);
-
   } else {
     g_debug ("Successfully opened call record database `%s'",
              self->filename);
@@ -720,14 +717,16 @@ calls_record_store_class_init (CallsRecordStoreClass *klass)
 static void
 calls_record_store_init (CallsRecordStore *self)
 {
-  gboolean exist_old, exist_new, new_is_dir;
-  g_autofree gchar *old_dir = g_build_filename (g_get_user_data_dir (),
-                                                "calls",
-                                                NULL);
-  g_autofree gchar *new_dir = g_build_filename (g_get_user_data_dir (),
-                                                APP_DATA_NAME,
-                                                NULL);
-  gchar *used_dir = NULL;
+  g_autofree char *old_dir = g_build_filename (g_get_user_data_dir (),
+                                               "calls",
+                                               NULL);
+  g_autofree char *new_dir = g_build_filename (g_get_user_data_dir (),
+                                               APP_DATA_NAME,
+                                               NULL);
+  char *used_dir = NULL;
+  gboolean exist_old;
+  gboolean exist_new;
+  gboolean new_is_dir;
 
   exist_old = g_file_test (old_dir, G_FILE_TEST_EXISTS);
   exist_new = g_file_test (new_dir, G_FILE_TEST_EXISTS);
@@ -743,10 +742,11 @@ calls_record_store_init (CallsRecordStore *self)
       g_debug ("Continuing to use old location");
       used_dir = old_dir;
     }
-  } else if (exist_new && new_is_dir)
+  } else if (exist_new && new_is_dir) {
     used_dir = new_dir;
-  else
+  } else {
     used_dir = old_dir;
+  }
 
   g_assert (used_dir);
 
