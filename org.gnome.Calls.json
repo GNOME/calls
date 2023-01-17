@@ -178,11 +178,11 @@
             "buildsystem" : "cmake-ninja",
             "config-opts" : [
                 "-DENABLE_PHONENUMBER=ON",
-                "-DENABLE_OAUTH2=OFF",
                 "-DENABLE_DOT_LOCKING=OFF",
                 "-DENABLE_FILE_LOCKING=fcntl",
                 "-DENABLE_GOA=OFF",
-                "-DENABLE_GTK=ON",
+                "-DENABLE_GTK4=ON",
+                "-DENABLE_OAUTH2_WEBKITGTK4=OFF",
                 "-DENABLE_GOOGLE=OFF",
                 "-DENABLE_VALA_BINDINGS=ON",
                 "-DENABLE_WEATHER=OFF",
@@ -192,7 +192,6 @@
                 "-DENABLE_INSTALLED_TESTS=OFF",
                 "-DENABLE_GTK_DOC=OFF",
                 "-DENABLE_EXAMPLES=OFF",
-                "-DENABLE_OAUTH2=OFF",
                 "-DWITH_PHONENUMBER:PATH=/",
                 "-DPHONENUMBER_DEFINITIONS=",
                 "-DENABLE_CANBERRA=OFF",
@@ -201,8 +200,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.43/evolution-data-server-3.43.2.tar.xz",
-                    "sha256" : "8e65781c640fa0d9b4f8010ff50e82a68d75553656ad50d93f1311275cbb441c"
+                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.47/evolution-data-server-3.47.1.tar.xz",
+                    "sha256" : "2c685f3a6ec4712ead8fc6c3a0f9cf54e3edbb20c1ee5833af7946301061cc31"
                 }
             ]
         },
