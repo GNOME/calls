@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_MM_CALL_H__
-#define CALLS_MM_CALL_H__
+#pragma once
 
 #include <libmm-glib.h>
 #include <glib-object.h>
@@ -37,9 +36,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (CallsMMCall, calls_mm_call, CALLS, MM_CALL, CallsCall)
 
 CallsMMCall *calls_mm_call_new                   (MMCall *mm_call);
-const gchar *calls_mm_call_get_object_path       (CallsMMCall *call);
-const gchar *calls_mm_call_get_disconnect_reason (CallsMMCall *call);
+const char  *calls_mm_call_get_object_path       (CallsMMCall *call);
+const char  *calls_mm_call_get_disconnect_reason (CallsMMCall *call);
 
 G_END_DECLS
 
-#endif /* CALLS_MM_CALL_H__ */

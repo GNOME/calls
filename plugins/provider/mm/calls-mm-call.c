@@ -36,7 +36,7 @@
 struct _CallsMMCall {
   GObject parent_instance;
   MMCall *mm_call;
-  gchar  *disconnect_reason;
+  char   *disconnect_reason;
 };
 
 static void calls_mm_call_message_source_interface_init (CallsMessageSourceInterface *iface);
@@ -54,7 +54,7 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 static void
 notify_id_cb (CallsMMCall *self,
-              const gchar *id)
+              const char  *id)
 {
   calls_call_set_id (CALLS_CALL (self), id);
 }
@@ -62,7 +62,7 @@ notify_id_cb (CallsMMCall *self,
 
 struct CallsMMCallStateReasonMap {
   MMCallStateReason value;
-  const gchar      *desc;
+  const char       *desc;
 };
 
 static const struct CallsMMCallStateReasonMap STATE_REASON_MAP[] = {
@@ -116,7 +116,7 @@ set_disconnect_reason (CallsMMCall      *self,
 struct CallsMMCallStateMap {
   MMCallState    mm;
   CallsCallState calls;
-  const gchar   *desc;
+  const char    *desc;
 };
 
 static const struct CallsMMCallStateMap STATE_MAP[] = {
@@ -163,10 +163,10 @@ state_changed_cb (CallsMMCall      *self,
 
   if (state_map_row->mm == -1 &&
       new_state == MM_CALL_STATE_WAITING) {
-  MMCallDirection direction = mm_call_get_direction(self->mm_call);
-  gboolean outgoing = direction == MM_CALL_DIRECTION_OUTGOING;
+    MMCallDirection direction = mm_call_get_direction (self->mm_call);
+    gboolean outgoing = direction == MM_CALL_DIRECTION_OUTGOING;
 
-  call_state = outgoing ? CALLS_CALL_STATE_ALERTING : CALLS_CALL_STATE_INCOMING;
+    call_state = outgoing ? CALLS_CALL_STATE_ALERTING : CALLS_CALL_STATE_INCOMING;
   }
 
   g_assert_cmpint (call_state, !=, CALLS_CALL_STATE_UNKNOWN);
@@ -194,7 +194,7 @@ calls_mm_call_get_protocol (CallsCall *self)
 }
 
 struct CallsMMOperationData {
-  const gchar *desc;
+  const char  *desc;
   CallsMMCall *self;
   gboolean     (*finish_func) (MMCall *, GAsyncResult *, GError **);
 };
@@ -247,7 +247,7 @@ DEFINE_OPERATION (start, calls_mm_call_start_call, "starting outgoing call");
 
 
 static void
-calls_mm_call_send_dtmf_tone (CallsCall *call, gchar key)
+calls_mm_call_send_dtmf_tone (CallsCall *call, char key)
 {
   CallsMMCall *self = CALLS_MM_CALL (call);
   struct CallsMMOperationData *data;
@@ -410,14 +410,14 @@ calls_mm_call_new (MMCall *mm_call)
 }
 
 
-const gchar *
+const char *
 calls_mm_call_get_object_path (CallsMMCall *call)
 {
   return mm_call_get_path (call->mm_call);
 }
 
 
-const gchar *
+const char *
 calls_mm_call_get_disconnect_reason (CallsMMCall *call)
 {
   return call->disconnect_reason;
