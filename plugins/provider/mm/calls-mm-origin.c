@@ -790,6 +790,8 @@ constructed (GObject *object)
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
   MmGdbusModemVoice *gdbus_voice;
 
+  G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
+
   self->name = modem_get_name (mm_object_get_modem (self->mm_obj));
 
   mm_modem_get_sim (mm_object_get_modem (self->mm_obj),
@@ -815,7 +817,6 @@ constructed (GObject *object)
                              NULL,
                              (GAsyncReadyCallback) list_calls_cb,
                              self);
-  G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
 }
 
 
