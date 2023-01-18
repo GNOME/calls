@@ -29,6 +29,7 @@
 #include "calls-ussd.h"
 #include "calls-mm-call.h"
 #include "calls-message-source.h"
+#include "calls-util.h"
 #include "itu-e212-iso.h"
 
 #include <glib/gi18n.h>
@@ -215,7 +216,7 @@ calls_mm_ussd_initiate_async (CallsUssd          *ussd,
     return;
   }
 
-  if (!command || !*command) {
+  if (STR_IS_NULL_OR_EMPTY (command)) {
     g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED,
                              "USSD command empty");
     return;
@@ -718,10 +719,10 @@ ussd_properties_changed_cb (CallsMMOrigin *self,
       (value = g_variant_lookup_value (properties, "NetworkRequest", NULL))) {
     response = mm_modem_3gpp_ussd_get_network_request (self->ussd);
 
-    if (response && *response && response != self->last_ussd_request)
+    if (!STR_IS_NULL_OR_EMPTY (response) && response != self->last_ussd_request)
       g_signal_emit_by_name (self, "ussd-added", response);
 
-    if (response && *response)
+    if (!STR_IS_NULL_OR_EMPTY (response))
       self->last_ussd_request = (char *) response;
     g_clear_pointer (&value, g_variant_unref);
   }
@@ -730,10 +731,10 @@ ussd_properties_changed_cb (CallsMMOrigin *self,
       (value = g_variant_lookup_value (properties, "NetworkNotification", NULL))) {
     response = mm_modem_3gpp_ussd_get_network_notification (self->ussd);
 
-    if (response && *response && response != self->last_ussd_response)
+    if (!STR_IS_NULL_OR_EMPTY (response) && response != self->last_ussd_response)
       g_signal_emit_by_name (self, "ussd-added", response);
 
-    if (response && *response)
+    if (!STR_IS_NULL_OR_EMPTY (response))
       self->last_ussd_response = (char *) response;
     g_clear_pointer (&value, g_variant_unref);
   }
