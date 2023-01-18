@@ -827,6 +827,7 @@ dispose (GObject *object)
   g_clear_object (&self->ussd);
   g_clear_object (&self->sim);
   g_clear_pointer (&self->country_code, g_free);
+  g_clear_pointer (&self->id, g_free);
 
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->dispose (object);
 }
