@@ -732,6 +732,7 @@ calls_record_store_init (CallsRecordStore *self)
   g_autofree char *new_dir = g_build_filename (g_get_user_data_dir (),
                                                APP_DATA_NAME,
                                                NULL);
+  const char *env_dir = g_getenv ("CALLS_RECORD_DIR");
   char *used_dir = NULL;
   gboolean exist_old;
   gboolean exist_new;
@@ -741,7 +742,9 @@ calls_record_store_init (CallsRecordStore *self)
   exist_new = g_file_test (new_dir, G_FILE_TEST_EXISTS);
   new_is_dir = g_file_test (new_dir, G_FILE_TEST_IS_DIR);
 
-  if (exist_old && !exist_new) {
+  if (env_dir) {
+    used_dir = (char *) env_dir;
+  } else if (exist_old && !exist_new) {
     g_debug ("Trying to move database from `%s' to `%s'", old_dir, new_dir);
 
     if (g_rename (old_dir, new_dir) == 0) {
