@@ -358,16 +358,10 @@ set_call_data (CallsUiCallData *self,
   manager = calls_manager_get_default ();
   contacts_provider = calls_manager_get_contacts_provider (manager);
 
-  /* the contacts provider should only be NULL when running the test suite */
-  if (!contacts_provider)
-    return;
-
   self->best_match =
     calls_contacts_provider_lookup_id (contacts_provider,
                                        calls_call_get_id (call));
-
-  if (!self->best_match)
-    return;
+  g_assert (self->best_match);
 
   g_signal_connect_object (self->best_match,
                            "notify::name",
