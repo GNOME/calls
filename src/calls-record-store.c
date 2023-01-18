@@ -71,6 +71,22 @@ state_to_record_state (CuiCallState call_state)
 }
 
 
+static const char *
+record_state_to_string (CallsCallRecordState state)
+{
+  switch (state) {
+  case STARTED:
+    return "started";
+  case ANSWERED:
+    return "answered";
+  case ENDED:
+    return "ended";
+  default:
+    return "unknown";
+  }
+}
+
+
 struct _CallsRecordStore {
   GtkApplicationWindow parent_instance;
 
@@ -528,8 +544,9 @@ state_changed_cb (CallsRecordStore *self,
     g_object_get_data (call_obj, "calls-call-record");
   CallsCallRecordState new_rec_state, old_rec_state;
 
-  g_debug ("Call state changed from %d to %d",
-           old_state, new_state);
+  g_debug ("Call state changed from %s (%d) to %s (%d)",
+           cui_call_state_to_string (old_state), old_state,
+           cui_call_state_to_string (new_state), new_state);
 
   /* Check whether the call is recorded */
   if (!record) {
@@ -561,8 +578,7 @@ state_changed_cb (CallsRecordStore *self,
 
     case STARTED:
     default:
-      g_assert_not_reached ();
-      break;
+      goto critical_exit;
     }
     break;
 
@@ -575,16 +591,23 @@ state_changed_cb (CallsRecordStore *self,
     case STARTED:
     case ANSWERED:
     default:
-      g_assert_not_reached ();
-      break;
+      goto critical_exit;
     }
     break;
 
   case ENDED:
   default:
-    g_assert_not_reached ();
-    break;
+    goto critical_exit;
   }
+
+  return;
+
+critical_exit:
+  /* XXX Modem's may be buggy; let's print as much information as possible */
+  g_critical ("Unexpected state change occurred!\n"
+              "From %s (%s) to %s (%s)",
+              cui_call_state_to_string (old_state), record_state_to_string (old_rec_state),
+              cui_call_state_to_string (new_state), record_state_to_string (new_rec_state));
 }
 
 
