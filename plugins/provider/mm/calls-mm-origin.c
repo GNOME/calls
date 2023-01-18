@@ -191,7 +191,7 @@ calls_mm_ussd_get_state (CallsUssd *ussd)
   if (!self->ussd)
     return CALLS_USSD_STATE_UNKNOWN;
 
-  return mm_modem_3gpp_ussd_get_state (self->ussd);
+  return (CallsUssdState) mm_modem_3gpp_ussd_get_state (self->ussd);
 }
 
 static void

@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_INTERFACE (CallsUssd, calls_ussd, CALLS, USSD, GObject)
 
+/* This is basically MMModem3gppUssdSessionState */
 typedef enum
 {
   CALLS_USSD_STATE_UNKNOWN,
