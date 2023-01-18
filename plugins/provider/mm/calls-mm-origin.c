@@ -783,7 +783,6 @@ constructed (GObject *object)
 {
   g_autoptr (MMModem) modem = NULL;
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
-  MmGdbusModemVoice *gdbus_voice;
 
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
 
@@ -803,10 +802,9 @@ constructed (GObject *object)
   self->voice = mm_object_get_modem_voice (self->mm_obj);
   g_assert (self->voice != NULL);
 
-  gdbus_voice = MM_GDBUS_MODEM_VOICE (self->voice);
-  g_signal_connect (gdbus_voice, "call-added",
+  g_signal_connect (self->voice, "call-added",
                     G_CALLBACK (call_added_cb), self);
-  g_signal_connect (gdbus_voice, "call-deleted",
+  g_signal_connect (self->voice, "call-deleted",
                     G_CALLBACK (call_deleted_cb), self);
 
   mm_modem_voice_list_calls (self->voice,
