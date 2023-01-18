@@ -551,7 +551,6 @@ call_deleted_cb (MMModemVoice  *voice,
 {
   gpointer call;
   gpointer key;
-  GString *reason;
   const char *mm_reason;
 
   g_debug ("Removing call `%s'", path);
@@ -565,17 +564,13 @@ call_deleted_cb (MMModemVoice  *voice,
     return;
   }
 
-  reason = g_string_new ("Call removed");
-
   mm_reason = calls_mm_call_get_disconnect_reason (CALLS_MM_CALL (call));
-  if (mm_reason) {
-    g_string_assign (reason, mm_reason);
-  }
-
-  g_signal_emit_by_name (self, "call-removed", call, reason);
+  g_signal_emit_by_name (self,
+                         "call-removed",
+                         call,
+                         mm_reason ?: "Call removed");
 
   g_object_unref (call);
-  g_string_free (reason, TRUE);
 
   g_debug ("Removed call `%s'", path);
 }
