@@ -781,14 +781,16 @@ get_sim_ready_cb (MMModem      *modem,
 static void
 constructed (GObject *object)
 {
+  g_autoptr (MMModem) modem = NULL;
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
   MmGdbusModemVoice *gdbus_voice;
 
   G_OBJECT_CLASS (calls_mm_origin_parent_class)->constructed (object);
 
-  self->name = modem_get_name (mm_object_get_modem (self->mm_obj));
+  modem = mm_object_get_modem (self->mm_obj);
+  self->name = modem_get_name (modem);
 
-  mm_modem_get_sim (mm_object_get_modem (self->mm_obj),
+  mm_modem_get_sim (modem,
                     NULL,
                     (GAsyncReadyCallback) get_sim_ready_cb,
                     self);
