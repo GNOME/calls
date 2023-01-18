@@ -413,6 +413,8 @@ calls_mm_call_new (MMCall *mm_call)
 const char *
 calls_mm_call_get_object_path (CallsMMCall *call)
 {
+  g_return_val_if_fail (CALLS_IS_MM_CALL (call), NULL);
+
   return mm_call_get_path (call->mm_call);
 }
 
@@ -420,5 +422,7 @@ calls_mm_call_get_object_path (CallsMMCall *call)
 const char *
 calls_mm_call_get_disconnect_reason (CallsMMCall *call)
 {
+  g_return_val_if_fail (CALLS_IS_MM_CALL (call), NULL);
+
   return call->disconnect_reason;
 }
