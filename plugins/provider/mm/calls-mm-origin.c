@@ -326,7 +326,7 @@ dial (CallsOrigin *origin,
       const char  *number)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (origin);
-  MMCallProperties *call_props;
+  g_autoptr (MMCallProperties) call_props = NULL;
 
   g_assert (self->voice != NULL);
 
@@ -338,8 +338,6 @@ dial (CallsOrigin *origin,
                               NULL,
                               (GAsyncReadyCallback) dial_cb,
                               self);
-
-  g_object_unref (call_props);
 }
 
 
