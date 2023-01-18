@@ -820,6 +820,7 @@ dispose (GObject *object)
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
   remove_calls (self, NULL);
+  g_clear_object (&self->voice);
   g_clear_object (&self->mm_obj);
   g_clear_object (&self->ussd);
   g_clear_object (&self->sim);
