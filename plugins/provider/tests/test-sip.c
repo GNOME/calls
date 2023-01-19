@@ -430,7 +430,7 @@ main (int   argc,
 
   gst_init (NULL, NULL);
   /* this is a workaround for an issue with sofia: https://github.com/freeswitch/sofia-sip/issues/58 */
-  su_random64 ();
+  su_random ();
 
   g_test_add ("/Calls/SIP/provider_object", SipFixture, NULL,
               setup_sip_provider, test_sip_provider_object, tear_down_sip_provider);
