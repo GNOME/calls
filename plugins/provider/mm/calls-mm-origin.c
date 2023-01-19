@@ -792,6 +792,60 @@ get_sim_ready_cb (MMModem      *modem,
 
 
 static void
+call_waiting_setup_cb (GObject      *obj,
+                       GAsyncResult *res,
+                       gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  g_autoptr (CallsMMOrigin) self = NULL;
+  MMModemVoice *voice = MM_MODEM_VOICE (obj);
+
+  g_assert (CALLS_IS_MM_ORIGIN (user_data));
+  self = CALLS_MM_ORIGIN (user_data);
+  g_assert (voice == self->voice);
+
+  if (!mm_modem_voice_call_waiting_setup_finish (voice, res, &error)) {
+    g_warning ("Could not disable call waiting: %s", error->message);
+    return;
+  }
+
+  g_info ("Disabled call waiting on modem '%s'", self->name);
+}
+
+
+static void
+call_waiting_query_cb (GObject      *obj,
+                       GAsyncResult *res,
+                       gpointer      user_data)
+{
+  g_autoptr (GError) error = NULL;
+  g_autoptr (CallsMMOrigin) self = NULL;
+  MMModemVoice *voice = MM_MODEM_VOICE (obj);
+  gboolean waiting;
+
+  g_assert (CALLS_IS_MM_ORIGIN (user_data));
+  self = CALLS_MM_ORIGIN (user_data);
+  g_assert (voice == self->voice);
+
+  if (!mm_modem_voice_call_waiting_query_finish (voice, res, &waiting, &error)) {
+    g_warning ("Could not query call waiting status: %s", error->message);
+    return;
+  }
+
+  g_debug ("Call waiting is %sabled", waiting ? "en" : "dis");
+  if (waiting) {
+    g_info ("Disabling call waiting: Not implemented");
+
+    mm_modem_voice_call_waiting_setup (voice,
+                                       FALSE,
+                                       NULL,
+                                       call_waiting_setup_cb,
+                                       g_steal_pointer (&self));
+  }
+}
+
+
+static void
 constructed (GObject *object)
 {
   g_autoptr (MMModem) modem = NULL;
@@ -814,6 +868,11 @@ constructed (GObject *object)
 
   self->voice = mm_object_get_modem_voice (self->mm_obj);
   g_assert (self->voice != NULL);
+
+  mm_modem_voice_call_waiting_query (self->voice,
+                                     NULL,
+                                     call_waiting_query_cb,
+                                     g_object_ref (self));
 
   g_signal_connect (self->voice, "call-added",
                     G_CALLBACK (call_added_cb), self);
