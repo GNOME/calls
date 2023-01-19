@@ -22,8 +22,7 @@
  *
  */
 
-#ifndef CALLS_MM_ORIGIN_H__
-#define CALLS_MM_ORIGIN_H__
+#pragma once
 
 #include <glib-object.h>
 #include <libmm-glib.h>
@@ -40,5 +39,3 @@ gboolean       calls_mm_origin_matches (CallsMMOrigin *self,
                                         MMObject      *modem);
 
 G_END_DECLS
-
-#endif /* CALLS_MM_ORIGIN_H__ */
