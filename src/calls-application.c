@@ -686,8 +686,10 @@ finalize (GObject *object)
   g_clear_handle_id (&self->id_sigterm, g_source_remove);
   g_clear_handle_id (&self->id_sigint, g_source_remove);
 
-  gtk_widget_destroy (GTK_WIDGET (self->main_window));
-  gtk_widget_destroy (GTK_WIDGET (self->call_window));
+  if (self->main_window)
+    gtk_widget_destroy (GTK_WIDGET (self->main_window));
+  if (self->call_window)
+    gtk_widget_destroy (GTK_WIDGET (self->call_window));
 
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
