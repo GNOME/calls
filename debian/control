@@ -22,6 +22,7 @@ Build-Depends:
  libhandy-1-dev (>= 1.1.90),
  libmm-glib-dev (>= 1.12.0),
  libpeas-dev,
+ librsvg2-common,
  libsecret-1-dev,
  libsofia-sip-ua-glib-dev,
  libxml2-utils,
