@@ -101,6 +101,14 @@ header_cb (GtkListBoxRow *row,
 }
 
 static void
+on_favourite_changed (CallsContactsBox *self)
+{
+  g_assert (CALLS_IS_CONTACTS_BOX (self));
+
+  gtk_list_box_invalidate_sort (GTK_LIST_BOX (self->contacts_listbox));
+}
+
+static void
 contacts_provider_added (CallsContactsBox *self,
                          FolksIndividual  *individual)
 {
@@ -109,6 +117,12 @@ contacts_provider_added (CallsContactsBox *self,
   row = calls_contacts_row_new (individual);
 
   gtk_container_add (GTK_CONTAINER (self->contacts_listbox), row);
+
+  g_signal_connect_object (individual,
+                           "notify::is-favourite",
+                           G_CALLBACK (on_favourite_changed),
+                           self,
+                           G_CONNECT_SWAPPED);
 }
 
 static void
@@ -128,12 +142,22 @@ contacts_provider_removed (CallsContactsBox *self,
 static gint
 contacts_sort_func (CallsContactsRow *a,
                     CallsContactsRow *b,
-                    gpointer          user_data)
+                    gpointer          unused)
 {
-  const gchar *name_a = folks_individual_get_display_name (calls_contacts_row_get_item (a));
-  const gchar *name_b = folks_individual_get_display_name (calls_contacts_row_get_item (b));
+  FolksIndividual *individual_a = calls_contacts_row_get_item (a);
+  FolksIndividual *individual_b = calls_contacts_row_get_item (b);
+  const char *name_a = folks_individual_get_display_name (individual_a);
+  const char *name_b = folks_individual_get_display_name (individual_b);
+  gboolean fav_a;
+  gboolean fav_b;
 
-  return g_strcmp0 (name_a, name_b);
+  g_object_get (G_OBJECT (individual_a), "is-favourite", &fav_a, NULL);
+  g_object_get (G_OBJECT (individual_b), "is-favourite", &fav_b, NULL);
+
+  if (fav_a == fav_b)
+    return g_strcmp0 (name_a, name_b);
+
+  return fav_a ? -1 : 1;
 }
 
 
