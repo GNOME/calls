@@ -35,6 +35,7 @@ G_DECLARE_FINAL_TYPE (CallsBestMatch, calls_best_match, CALLS, BEST_MATCH, GObje
 
 CallsBestMatch *calls_best_match_new                (const char *phone_number);
 gboolean        calls_best_match_has_individual     (CallsBestMatch *self);
+gboolean        calls_best_match_is_favourite       (CallsBestMatch *self);
 const char     *calls_best_match_get_phone_number   (CallsBestMatch *self);
 void            calls_best_match_set_phone_number   (CallsBestMatch *self,
                                                      const char     *phone_number);
