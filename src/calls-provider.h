@@ -28,7 +28,6 @@
 #include "calls-message-source.h"
 #include "calls-origin.h"
 #include "calls-call.h"
-#include "util.h"
 
 #include <glib-object.h>
 
