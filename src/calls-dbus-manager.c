@@ -14,7 +14,7 @@
 #include "calls-dbus-manager.h"
 #include "calls-manager.h"
 #include "calls-ui-call-data.h"
-#include "util.h"
+#include "calls-util.h"
 
 /**
  * SECTION:calls-dbus-manager

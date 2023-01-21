@@ -28,7 +28,7 @@
 #include "calls-origin.h"
 #include "calls-message-source.h"
 #include "calls-config.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>

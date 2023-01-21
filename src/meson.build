@@ -118,7 +118,7 @@ calls_sources = files([
   'calls-settings.c', 'calls-settings.h',
   'calls-ui-call-data.c', 'calls-ui-call-data.h',
   'calls-ussd.c', 'calls-ussd.h',
-  'util.c', 'util.h',
+  'calls-util.c', 'calls-util.h',
 ]) + calls_generated_sources + gtklistmodel_sources
 
 calls_config_data = config_data

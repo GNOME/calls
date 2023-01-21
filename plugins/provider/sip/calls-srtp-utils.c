@@ -23,7 +23,7 @@
  */
 
 #include "calls-srtp-utils.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <gio/gio.h>
 #include <sys/random.h>

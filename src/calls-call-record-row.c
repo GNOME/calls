@@ -26,7 +26,7 @@
 #include "calls-best-match.h"
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>

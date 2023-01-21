@@ -29,7 +29,7 @@
 #include "calls-media-pipeline-enums.h"
 #include "calls-sip-media-pipeline.h"
 #include "calls-srtp-utils.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib-unix.h>
 #include <gst/gst.h>

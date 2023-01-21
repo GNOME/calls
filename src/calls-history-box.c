@@ -28,7 +28,7 @@
 #include "calls-call-record.h"
 #include "calls-call-record-row.h"
 #include "gtklistmodels/gtkmodels.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 #include <glib-object.h>

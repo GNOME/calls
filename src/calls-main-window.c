@@ -32,7 +32,7 @@
 #include "calls-in-app-notification.h"
 #include "calls-manager.h"
 #include "calls-config.h"
-#include "util.h"
+#include "calls-util.h"
 #include "version.h"
 
 #include <glib/gi18n.h>

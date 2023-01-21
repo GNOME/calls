@@ -29,7 +29,7 @@
 #include "calls-manager.h"
 #include "calls-notifier.h"
 #include "calls-ui-call-data.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <cui-call.h>
 

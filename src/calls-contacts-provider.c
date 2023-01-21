@@ -30,7 +30,7 @@
 #include "calls-contacts-provider.h"
 #include "calls-best-match.h"
 #include "calls-settings.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <gee-0.8/gee.h>
 #include <folks/folks.h>

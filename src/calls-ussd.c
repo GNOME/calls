@@ -24,7 +24,7 @@
 
 #include "calls-ussd.h"
 #include "enum-types.h"
-#include "util.h"
+#include "calls-util.h"
 
 /**
  * SECTION:calls-ussd

@@ -25,7 +25,7 @@
 #include "calls-call.h"
 #include "calls-message-source.h"
 #include "enum-types.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 

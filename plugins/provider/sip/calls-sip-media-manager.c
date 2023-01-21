@@ -29,7 +29,7 @@
 #include "calls-sip-media-pipeline.h"
 #include "calls-srtp-utils.h"
 #include "gst-rfc3551.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <gio/gio.h>
 #include <gst/gst.h>

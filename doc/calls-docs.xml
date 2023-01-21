@@ -62,7 +62,7 @@
     <chapter id="utils">
       <title>Utilities</title>
       <xi:include href="xml/calls-log.xml"/>
-      <xi:include href="xml/util.xml"/>
+      <xi:include href="xml/calls-util.xml"/>
     </chapter>
 
     <chapter id="provider-abstraction">

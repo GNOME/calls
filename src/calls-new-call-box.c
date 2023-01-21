@@ -30,7 +30,7 @@
 #include "calls-new-call-box.h"
 #include "calls-settings.h"
 #include "calls-ussd.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <call-ui.h>
 #include <glib/gi18n.h>

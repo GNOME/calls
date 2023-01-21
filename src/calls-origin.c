@@ -24,7 +24,7 @@
 
 #include "calls-origin.h"
 #include "calls-message-source.h"
-#include "util.h"
+#include "calls-util.h"
 
 /**
  * SECTION:calls-origin

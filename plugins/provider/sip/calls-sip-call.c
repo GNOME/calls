@@ -33,7 +33,7 @@
 #include "calls-sip-media-manager.h"
 #include "calls-sip-media-pipeline.h"
 #include "calls-sip-util.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 

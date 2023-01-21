@@ -27,7 +27,7 @@
 #include "calls-mm-call.h"
 #include "calls-call.h"
 #include "calls-message-source.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <libmm-glib/libmm-glib.h>
 #include <glib/gi18n.h>

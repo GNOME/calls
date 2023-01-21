@@ -6,7 +6,7 @@
  * Author: Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>
  */
 
-#include "util.h"
+#include "calls-util.h"
 
 #include <gtk/gtk.h>
 

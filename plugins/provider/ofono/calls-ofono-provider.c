@@ -28,7 +28,7 @@
 #include "calls-provider.h"
 #include "calls-ofono-origin.h"
 #include "calls-message-source.h"
-#include "util.h"
+#include "calls-util.h"
 
 #include <libgdbofono/gdbo-manager.h>
 #include <libgdbofono/gdbo-modem.h>
