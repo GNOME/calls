@@ -35,6 +35,7 @@
 #include "calls-settings.h"
 #include "calls-ui-call-data.h"
 #include "calls-ussd.h"
+#include "util.h"
 
 #include "enum-types.h"
 
