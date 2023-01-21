@@ -74,8 +74,7 @@ phone_numbers_changed_cb (CallsContactsRow *self)
   phone_iter = gee_iterable_iterator (GEE_ITERABLE (phone_numbers));
 
   while (gee_iterator_next (phone_iter)) {
-    // FIXME: We can't use g_autoptr because it's not implemented in the folks version in debian
-    FolksAbstractFieldDetails *detail = gee_iterator_get (phone_iter);
+    g_autoptr (FolksAbstractFieldDetails) detail = gee_iterator_get (phone_iter);
 
     if (FOLKS_IS_PHONE_FIELD_DETAILS (detail)) {
       FolksPhoneFieldDetails *phone = FOLKS_PHONE_FIELD_DETAILS (detail);
@@ -84,7 +83,6 @@ phone_numbers_changed_cb (CallsContactsRow *self)
       if (number)
         insert_phonenumber (self, number);
     }
-    g_object_unref (detail);
   }
 }
 
