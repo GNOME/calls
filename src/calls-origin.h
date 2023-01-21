@@ -25,7 +25,6 @@
 #pragma once
 
 #include "calls-call.h"
-#include "util.h"
 
 #include <glib-object.h>
 
