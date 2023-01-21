@@ -30,6 +30,7 @@
 #include "calls-contacts-provider.h"
 #include "calls-best-match.h"
 #include "calls-settings.h"
+#include "util.h"
 
 #include <gee-0.8/gee.h>
 #include <folks/folks.h>
@@ -420,7 +421,7 @@ calls_contacts_provider_lookup_id (CallsContactsProvider *self,
 
   g_return_val_if_fail (CALLS_IS_CONTACTS_PROVIDER (self), NULL);
 
-  if (!id || !*id)
+  if (STR_IS_NULL_OR_EMPTY (id))
     return NULL;
 
   best_match = g_hash_table_lookup (self->best_matches, id);
