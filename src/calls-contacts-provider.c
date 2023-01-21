@@ -143,6 +143,7 @@ folks_add_contact (CallsContactsProvider *self,
   g_signal_emit (self, signals[SIGNAL_ADDED], 0, individual);
 }
 
+
 static void
 folks_remove_contact (CallsContactsProvider *self,
                       FolksIndividual       *individual)
@@ -202,7 +203,7 @@ set_can_add_contacts (CallsContactsProvider *self,
     return;
 
   self->can_add_contacts = can_add;
-  g_object_notify_by_pspec(G_OBJECT (self), props[PROP_CAN_ADD_CONTACTS]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CAN_ADD_CONTACTS]);
 }
 
 
