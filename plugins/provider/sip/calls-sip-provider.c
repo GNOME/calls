@@ -27,6 +27,8 @@
 #define SIP_ACCOUNT_FILE "sip-account.cfg"
 #define CALLS_PROTOCOL_SIP_STR "sip"
 
+#include "calls-config.h"
+
 #include "calls-account-provider.h"
 #include "calls-message-source.h"
 #include "calls-provider.h"
@@ -36,7 +38,6 @@
 #include "calls-sip-origin.h"
 #include "calls-sip-provider.h"
 #include "calls-sip-util.h"
-#include "calls-config.h"
 
 #include <libpeas/peas.h>
 #include <sofia-sip/nua.h>
