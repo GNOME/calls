@@ -38,6 +38,7 @@
 #include "calls-sip-origin.h"
 #include "calls-sip-provider.h"
 #include "calls-sip-util.h"
+#include "calls-util.h"
 
 #include <libpeas/peas.h>
 #include <sofia-sip/nua.h>
@@ -171,16 +172,14 @@ on_origin_pw_looked_up (GObject      *source,
     return;
   }
 
-#define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
   if (!direct_mode &&
-      (IS_NULL_OR_EMPTY (host) ||
-       IS_NULL_OR_EMPTY (user) ||
-       IS_NULL_OR_EMPTY (password))) {
+      (STR_IS_NULL_OR_EMPTY (host) ||
+       STR_IS_NULL_OR_EMPTY (user) ||
+       STR_IS_NULL_OR_EMPTY (password))) {
     g_warning ("Host, user and password must not be empty");
 
     return;
   }
-#undef IS_NULL_OR_EMPTY
 
   calls_sip_provider_add_origin_full (data->provider,
                                       id,
