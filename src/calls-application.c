@@ -595,9 +595,9 @@ start_proper (CallsApplication *self)
   self->notifier = calls_notifier_new ();
   g_assert (CALLS_IS_NOTIFIER (self->notifier));
 
-  self->main_window = calls_main_window_new
-                        (gtk_app,
-                        G_LIST_MODEL (self->record_store));
+  self->main_window =
+    calls_main_window_new (gtk_app,
+                           G_LIST_MODEL (self->record_store));
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new (gtk_app);
