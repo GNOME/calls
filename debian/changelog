@@ -1,3 +1,25 @@
+gnome-calls (44~beta.0) UNRELEASED; urgency=medium
+
+  [ Hemish ]
+  * Add Hindi translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * tests: ui-call: Prefer type specific assertions
+  * tests: Remove unused mock-libfeedback.h
+  * tests: Use key-file folks backend
+  * tests: Don't mock calls_contacts_provider_new()
+  * ui-call-data: Use the name of the best match if individual was found
+  * ui-call-data: Assert best_match is set
+  * ui-call-data: Always use calls_best_match_get_avatar() to retrieve avatars
+  * tests: Add DBus server binary
+  * tests: Add skeleton DBus API client test suite
+  * test-dbus: Test basic call interaction
+
+  [ Dark Dragon ]
+  * flatpak: Update evolution-data-server to 3.47.1
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sun, 22 Jan 2023 07:34:33 +0100
+
 gnome-calls (44~alpha.1) byzantium; urgency=medium
 
   [ Fabio Tomat ]
