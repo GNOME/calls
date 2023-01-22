@@ -31,8 +31,8 @@ which itself is mostly using [libhandy's Coding Style][3].
 These are the differences:
 
 - We're not picky about GTK+ style function argument indentation, that is
-  having multiple arguments on one line is also o.k.
-- For callbacks we additionally allow for the `on_<action>` pattern e.g.
+  having multiple arguments on one line is also o.k when there are only two arguments.
+- For callbacks we prefer the `on_<action>` pattern e.g.
   `on_feedback_ended ()` since this helps to keep the namespace
   clean.
 - Since we're not a library we usually use `G_DEFINE_TYPE` instead of
@@ -61,11 +61,13 @@ individual C files should be structured as (top to bottom of file):
     ```
     Usually just the GObject.
   - `#include`s:
-    Calls ones go first, then glib/gtk, then generic C headers. These blocks
+    Calls configuration (if needed) goes first, then Calls includes, then glib/gtk, then generic C headers. These blocks
     are separated by newline and each sorted alphabetically:
 
     ```
     #define G_LOG_DOMAIN "CallsThing"
+
+    #include "calls-config.h"
 
     #include "calls-things.h"
     #include "calls-other-things.h"
