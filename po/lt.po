@@ -1,0 +1,556 @@
+# Lithuanian translation for calls.
+# Copyright (C) 2023 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Aurimas Černius <aurisc4@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls gnome-43\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2022-12-02 10:59+0000\n"
+"PO-Revision-Date: 2023-01-22 22:14+0200\n"
+"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 42.0\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "Skambučiai"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefonas"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Telefono skambučiai"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefonas;Skambutis;Skambinti;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Skambučiai (tarnyba)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Telefono skambučiai (tarnybos veiksena)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "Skambinkite telefonu ir internetu"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Skambučiai yra paprasta telefono programa GNOME aplinkai. Ją galima naudoti "
+"įprastiniu ryšiu telefoniniams skambučiams bei internetiniams VoIP "
+"skambučiamas SIP protokolu."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Skambinimas"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "Skambučių istorija"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Ar skambučiai turėti automatiškai naudoti numatytąjį šaltinį"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Modemo nurodytas šalies kodas"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Šalies kodas naudojamas kontaktų paieškai"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Automatiškai įkeliame įskiepiai"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Šie įskiepiai bus automatiškai įkelti paleidžiant programą."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Garso kodekai VoIP skambučiams pageidavimo tvarka"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Pageidaujami garso kodekai VoIP skambučiams (jei yra)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "Ar leisti naudoti SDES SRTP be TLS transporto"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "Nustatykite teigiamą, jei norite leisti keistis raktais atviru tekstu."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Numatyta (neinicializuota) būsena"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Inicializuojama paskyra…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Išjungiama paskyra…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Jungiamasi prie serverio…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Paskyra yra prisijungusi"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Atsijungiama nuo serverio…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Paskyra yra atsijungusi"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Paskyroje kilo klaida"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Nenurodyta priežastis"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Pradėta inicializacija"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Inicializacija užbaigta"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Pradėtas atsijungimas"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Atsijungimas užbaigtas"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Nenustatyti įgaliojimai"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Pradedama jungtis"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Baigėsi prisijungimo laikas"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Nepavyko rasti domeno vardo"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Serveris nepriėmė naudotojo vardo arba slaptažodžio"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Prisijungimas užbaigtas"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Pradedamas atsijungimas"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Atsijungimas užbaigtas"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Kilo vidinė klaida"
+
+#: src/calls-application.c:315
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Bandyta skambinti netinkamu telefono URI „%s“"
+
+#: src/calls-application.c:627
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Nežinoma, kaip atverti „%s“"
+
+#: src/calls-application.c:681
+msgid "The name of the plugin to use as a call provider"
+msgstr "Skambučiams naudojamo įskiepio pavadinimas"
+
+#: src/calls-application.c:682
+msgid "PLUGIN"
+msgstr "ĮSKIEPIS"
+
+#: src/calls-application.c:687
+msgid "Whether to present the main window on startup"
+msgstr "Ar rodyti pagrindinį langą paleidžiant"
+
+#: src/calls-application.c:693
+msgid "Dial a telephone number"
+msgstr "Skambinti telefono numeriu"
+
+#: src/calls-application.c:694
+msgid "NUMBER"
+msgstr "NUMERIS"
+
+#: src/calls-application.c:699
+msgid "Enable verbose debug messages"
+msgstr "Įjungti išsamų derinimą"
+
+#: src/calls-application.c:705
+msgid "Print current version"
+msgstr "Atspausdinti dabartinę versiją"
+
+#: src/calls-best-match.c:435
+msgid "Anonymous caller"
+msgstr "Anoniminis skambutis"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"vakar"
+
+#: src/calls-main-window.c:123
+msgid "translator-credits"
+msgstr ""
+"Išvertė:\n"
+"Aurimas Černius <aurisc4@gmail.com>"
+
+#: src/calls-main-window.c:316
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Negalima skambinti: nėra modemo ar VoIP paskyros"
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "Negalima skambinti: nėra įkelto įskiepio"
+
+#: src/calls-main-window.c:353
+msgid "Contacts"
+msgstr "Kontaktai"
+
+#: src/calls-main-window.c:363
+msgid "Dial Pad"
+msgstr "Skambinimo skydelis"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:372
+msgid "Recent"
+msgstr "Neseni"
+
+#: src/calls-notifier.c:52
+msgid "Missed call"
+msgstr "Praleistas skambutis"
+
+#. %s is a name here
+#: src/calls-notifier.c:76
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Praleistas skambutis nuo <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:79
+#, c-format
+msgid "Missed call from %s"
+msgstr "Praleistas skambutis nuo %s"
+
+#: src/calls-notifier.c:81
+msgid "Missed call from unknown caller"
+msgstr "Praleistas nežinomo skambintojo skambutis"
+
+#: src/calls-notifier.c:87
+msgid "Call back"
+msgstr "Perskambinti"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP paskyros"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "Pridėti VoIP paskyras"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Čia galite pridėti VoIP paskyrą. Ji leis skambinti bei gauti VoIP skambučius "
+"naudojant SIP protokolą. Ši galimybė yra nauja ir dar nepilna (pvz. nėra "
+"šifravimo)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "Pridėti p_askyrą"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "Skambinti"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "_Trinti skambutį"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "_Kopijuoti numerį"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "Pridėti kont_aktą"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Siųsti SMS"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "Užimta"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "Nerasta kontaktų"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "Nėra nesenų skambučių"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Atsisakyti"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_Užverti"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Siųsti"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_VoIP paskyros"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_Klaviatūros trumpiniai"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_Žinynas"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_Apie skambučius"
+
+#: src/ui/new-call-box.ui:45
+msgid "Enter a VoIP address"
+msgstr "Įveskite VoIP adresą"
+
+#: src/ui/new-call-box.ui:58
+msgid "Enter a number"
+msgstr "Įveskite numerį"
+
+#: src/ui/new-call-box.ui:97
+msgid "Dial"
+msgstr "Skambinti"
+
+#: src/ui/new-call-box.ui:120
+msgid "Delete character in front of cursor"
+msgstr "Trinti simbolį priešais žymiklį"
+
+#: src/ui/new-call-box.ui:149
+msgid "SIP Account"
+msgstr "SIP paskyra"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "Naujas skambutis"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "Grįžti"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Nežinoma priežastis"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Pradėtas išeinantis skambutis"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Naujas įeinantis skambutis"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Atsiliepta"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Skambutis baigtas"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Skambutis nutrauktas (užimta arba atmesta)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Skambutis nutrauktas (blogas id arba tinklo problema)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Skambutis nutrauktas (klaida nustatant gardo kanalą)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "Skambutis peradresuotas"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Automatiškai atsakytas"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Skambutis atsijungė (nežinomas priežasties kodas %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:82
+msgid "ModemManager unavailable"
+msgstr "Nėra ModemManager"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Nėra prieinamo modemo su garso galimybe"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Įprastinis"
+
+#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "Inicializuota"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "Neprieinama DBus"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Nėra šifravimo"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Priverstinis šifravimas"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Kriptografinis apsikeitimas raktais nesėkmingas"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Pridėti paskyrą"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "Prisi_jungti"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Tvarkyti paskyrą"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_Pritaikyti"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Trinti"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Serveris"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Rodomas vardas"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Neprivalomas"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Naudotojo ID"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Slaptažodis"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Prievadas"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Transportas"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Medijos šifravimas"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "Naudoti telefonų skambučiams"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Prisijungti automatiškai"
