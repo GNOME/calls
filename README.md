@@ -27,7 +27,7 @@ use `--prefix=~/install`.
 
 ### Build the documentation
 If you want to build the documentation you have to configure the meson project
-with `-Ggtk_doc=true`
+with `-Dgtk_doc=true`
 
     meson . _build -Dgtk_doc=true
     ninja -C _build
