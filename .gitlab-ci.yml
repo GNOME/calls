@@ -109,11 +109,17 @@ package:deb-pureos-byzantium:arm64:
 flatpak@x86_64:
   stage: package
   extends: ['.flatpak@x86_64', '.vars-devel']
+  except:
+    variables:
+      - $PKG_ONLY == "1"
 
 # Build Flatpak for aarch64
 flatpak@aarch64:
   stage: package
   extends: ['.flatpak@aarch64', '.vars-devel']
+  except:
+    variables:
+      - $PKG_ONLY == "1"
 
 # Publish Flatpak for x86_64
 nightly@x86_64:
