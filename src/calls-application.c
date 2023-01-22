@@ -73,6 +73,7 @@ struct _CallsApplication {
   guint             id_sigterm;
   guint             id_sigint;
   gboolean          shutdown;
+  gboolean          db_done;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
@@ -566,7 +567,18 @@ calls_application_command_line (GApplication            *application,
 static void
 app_shutdown (GApplication *application)
 {
-  quit_calls (CALLS_APPLICATION (application));
+  g_autoptr (GTimer) timer = g_timer_new ();
+  CallsApplication *self = CALLS_APPLICATION (application);
+  GMainContext *context = g_main_context_default ();
+
+  quit_calls (self);
+
+  while (self->record_store && !self->db_done) {
+    if (g_timer_elapsed (timer, NULL) > 10)
+      break;
+
+    g_main_context_iteration (context, TRUE);
+  }
 
   cui_uninit ();
 
@@ -591,6 +603,22 @@ notify_window_visible_cb (GtkWidget        *window,
 
 
 static void
+on_db_done (CallsRecordStore *store,
+            gboolean          success,
+            CallsApplication *self)
+{
+  g_assert (CALLS_IS_APPLICATION (self));
+
+  self->db_done = TRUE;
+  g_debug ("Database opened %ssuccesfully",
+           success ? "" : "un");
+
+  if (!success)
+    g_warning ("Database did not get opened");
+}
+
+
+static void
 start_proper (CallsApplication *self)
 {
   GtkApplication *gtk_app;
@@ -606,6 +634,10 @@ start_proper (CallsApplication *self)
 
   self->record_store = calls_record_store_new ();
   g_assert (self->record_store != NULL);
+
+  g_signal_connect (self->record_store, "db-done",
+                    G_CALLBACK (on_db_done),
+                    self);
 
   self->notifier = calls_notifier_new ();
   g_assert (CALLS_IS_NOTIFIER (self->notifier));
