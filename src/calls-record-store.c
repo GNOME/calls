@@ -41,6 +41,11 @@
 #define RECORD_STORE_FILENAME "records.db"
 #define RECORD_STORE_VERSION  2
 
+enum {
+  SIGNAL_DB_DONE,
+  N_SIGNALS
+};
+static guint signals[N_SIGNALS];
 
 typedef enum {
   STARTED,
@@ -289,6 +294,7 @@ set_up_repo_migrate_cb (GomRepository    *repo,
     load_calls (self);
   }
 
+  g_signal_emit (self, signals[SIGNAL_DB_DONE], 0, ok);
   g_object_unref (self);
 }
 
@@ -365,6 +371,7 @@ open_repo_adapter_open_cb (GomAdapter       *adapter,
                  self->filename);
 
     close_adapter (self);
+    g_signal_emit (self, signals[SIGNAL_DB_DONE], 0, FALSE);
   } else {
     g_debug ("Successfully opened call record database `%s'",
              self->filename);
@@ -720,6 +727,14 @@ calls_record_store_class_init (CallsRecordStoreClass *klass)
   object_class->constructed = constructed;
   object_class->dispose = dispose;
   object_class->finalize = finalize;
+
+  signals[SIGNAL_DB_DONE] = g_signal_new ("db-done",
+                                          G_TYPE_FROM_CLASS (klass),
+                                          G_SIGNAL_RUN_LAST, 0, NULL, NULL,
+                                          NULL,
+                                          G_TYPE_NONE,
+                                          1,
+                                          G_TYPE_BOOLEAN);
 }
 
 
