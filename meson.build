@@ -47,6 +47,7 @@ full_servicedir = join_paths(prefix, get_option('datadir'), 'dbus-1', 'services'
 localedir = get_option('localedir')
 full_localedir = join_paths(prefix, localedir)
 full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
+po_dir = join_paths(meson.project_source_root(), 'po')
 
 libcall_ui_dep = dependency('call-ui',
   fallback:  ['libcall-ui', 'libcall_ui_dep'],

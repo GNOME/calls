@@ -6,7 +6,7 @@ desktop_file = i18n.merge_file(
   input : 'org.gnome.Calls.desktop.in',
   output : 'org.gnome.Calls.desktop',
   type : 'desktop',
-  po_dir : '../po',
+  po_dir : po_dir,
   install : true,
   install_dir : join_paths(datadir, 'applications')
 )
@@ -15,7 +15,7 @@ desktop_daemon_file = i18n.merge_file(
   input : 'org.gnome.Calls-daemon.desktop.in',
   output : 'org.gnome.Calls-daemon.desktop',
   type : 'desktop',
-  po_dir : '../po',
+  po_dir : po_dir,
   install : true,
   install_dir : join_paths(sysconfdir, 'xdg/autostart')
 )
