@@ -24,11 +24,20 @@
 mm_install_dir = join_paths(calls_provider_plugin_libdir, 'mm')
 
 mm_plugin = configure_file(
-  input: 'mm.plugin.in',
-  output: 'mm.plugin',
+  input: 'mm.plugin.in.in',
+  output: 'mm.plugin.in',
   configuration: config_data,
-  install_dir: mm_install_dir
 )
+
+i18n_plugin = i18n.merge_file(
+  input: mm_plugin,
+  output: 'mm.plugin',
+  po_dir: po_dir,
+  type: 'desktop',
+  build_by_default: true,
+  install_dir: mm_install_dir,
+)
+
 
 mm_deps = [
   dependency('gobject-2.0'),

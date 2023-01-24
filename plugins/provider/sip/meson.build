@@ -26,11 +26,20 @@ sip_include = include_directories('.')
 sip_install_dir = join_paths(calls_provider_plugin_libdir, 'sip')
 
 sip_plugin = configure_file(
-  input: 'sip.plugin.in',
-  output: 'sip.plugin',
+  input: 'sip.plugin.in.in',
+  output: 'sip.plugin.in',
   configuration: config_data,
-  install_dir: sip_install_dir
 )
+
+i18n_plugin = i18n.merge_file(
+  input: sip_plugin,
+  output: 'sip.plugin',
+  po_dir: po_dir,
+  type: 'desktop',
+  build_by_default: true,
+  install_dir: sip_install_dir,
+)
+
 
 sip_deps = [
   dependency('gobject-2.0'),

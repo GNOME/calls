@@ -26,11 +26,20 @@ dummy_include = include_directories('.')
 dummy_install_dir = join_paths(calls_provider_plugin_libdir, 'dummy')
 
 dummy_plugin = configure_file(
-  input: 'dummy.plugin.in',
-  output: 'dummy.plugin',
+  input: 'dummy.plugin.in.in',
+  output: 'dummy.plugin.in',
   configuration: config_data,
-  install_dir: dummy_install_dir
 )
+
+i18n_plugin = i18n.merge_file(
+  input: dummy_plugin,
+  output: 'dummy.plugin',
+  po_dir: po_dir,
+  type: 'desktop',
+  build_by_default: true,
+  install_dir: dummy_install_dir,
+)
+
 
 dummy_deps = [
   dependency('gobject-2.0'),

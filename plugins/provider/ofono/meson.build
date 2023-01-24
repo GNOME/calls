@@ -26,10 +26,18 @@ subdir('libgdbofono')
 ofono_install_dir = join_paths(calls_provider_plugin_libdir, 'ofono')
 
 ofono_plugin = configure_file(
-  input: 'ofono.plugin.in',
-  output: 'ofono.plugin',
+  input: 'ofono.plugin.in.in',
+  output: 'ofono.plugin.in',
   configuration: config_data,
-  install_dir: ofono_install_dir
+)
+
+i18n_plugin = i18n.merge_file(
+  input: ofono_plugin,
+  output: 'ofono.plugin',
+  po_dir: po_dir,
+  type: 'desktop',
+  build_by_default: true,
+  install_dir: ofono_install_dir,
 )
 
 ofono_deps = [

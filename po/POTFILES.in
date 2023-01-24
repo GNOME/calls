@@ -20,9 +20,13 @@ src/ui/history-box.ui
 src/ui/main-window.ui
 src/ui/new-call-box.ui
 src/ui/new-call-header-bar.ui
+plugins/provider/dummy/dummy.plugin.in.in
+plugins/provider/mm/mm.plugin.in.in
 plugins/provider/mm/calls-mm-call.c
 plugins/provider/mm/calls-mm-provider.c
+plugins/provider/ofono/ofono.plugin.in.in
 plugins/provider/ofono/calls-ofono-provider.c
+plugins/provider/sip/sip.plugin.in.in
 plugins/provider/sip/calls-sip-account-widget.c
 plugins/provider/sip/calls-sip-call.c
 plugins/provider/sip/sip-account-widget.ui
