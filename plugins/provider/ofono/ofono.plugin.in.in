@@ -1,7 +1,7 @@
 [Plugin]
 Module=ofono
 Name=oFono
-Description=oFono calls provider
+Description=Call provider for voice-capable cellular modems using oFono (deprecated)
 Authors=Bob Ham <rah@settrans.net>
 Copyright=Copyright (C) 2018 Purism SPC
 Website=@PACKAGE_URL_RAW@
