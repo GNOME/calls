@@ -1,8 +1,8 @@
 [Plugin]
 Module=mm
 Name=ModemManager
-Description=ModemManager calls provider
+Description=Call provider for voice-capable cellular modems using ModemManager
 Authors=Bob Ham <rah@settrans.net>, Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
-Copyright=Copyright (C) 2018-2022 Purism SPC
+Copyright=Copyright (C) 2018-2023 Purism SPC
 Website=@PACKAGE_URL_RAW@
 Version=@PACKAGE_VERSION@
