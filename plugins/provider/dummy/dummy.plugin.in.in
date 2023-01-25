@@ -1,7 +1,7 @@
 [Plugin]
 Module=dummy
 Name=Dummy
-Description=Dummy calls provider
+Description=Dummy call provider
 Authors=Bob Ham <rah@settrans.net>, Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
 Copyright=Copyright (C) 2018-2022 Purism SPC
 Website=@PACKAGE_URL_RAW@
