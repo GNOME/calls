@@ -56,8 +56,6 @@
  * @include: "calls-application.h"
  */
 
-#define DEFAULT_PROVIDER_PLUGIN "mm"
-
 struct _CallsApplication {
   GtkApplication    parent_instance;
 
