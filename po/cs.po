@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-21 05:54+0000\n"
-"PO-Revision-Date: 2022-09-19 00:34+0200\n"
+"POT-Creation-Date: 2022-12-30 23:45+0000\n"
+"PO-Revision-Date: 2023-01-02 18:14+0100\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Volání"
 
@@ -194,41 +194,55 @@ msgstr "Odpojení dokončeno"
 msgid "Internal error occurred"
 msgstr "Došlo k vnitřní chybě"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Upravit účet: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Přidat nový účet"
+
+#: src/calls-account-overview.c:376
+#| msgid "Account is online"
+msgid "Account overview"
+msgstr "Přehled účtu"
+
+#: src/calls-application.c:327
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Pokusilo se vytočit neplatné tel URI `%s'"
 
-#: src/calls-application.c:627
+#: src/calls-application.c:660
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Neví se, jak otevřít `%s'"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:717
 msgid "The name of the plugin to use as a call provider"
 msgstr "Název pluginu, který se má použít jako poskytovatel hovorů"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:718
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:723
 msgid "Whether to present the main window on startup"
 msgstr "Zda-li zobrazit hlavní okno při spuštění"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:729
 msgid "Dial a telephone number"
 msgstr "Vytočit telefonní číslo"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:730
 msgid "NUMBER"
 msgstr "ČÍSLO"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:735
 msgid "Enable verbose debug messages"
 msgstr "Povolit detailnější ladicí zprávy"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:741
 msgid "Print current version"
 msgstr "Vypsat aktuální verzi"
 
@@ -248,7 +262,7 @@ msgstr ""
 #: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
-"Jaroslav Svoboda <multi.flexi@sezman.cz>\n"
+"Jaroslav Svoboda <multi.flexi@seznam.cz>\n"
 "Daniel Rusek <mail@asciiwolf.com>"
 
 #: src/calls-main-window.c:316
@@ -385,23 +399,11 @@ msgstr "_Nápověda"
 msgid "_About Calls"
 msgstr "O _aplikaci Volání"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Zadejte adresu VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Zadejte číslo"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Vytočit"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Odstranit znak před kurzorem"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Účet SIP"
 
@@ -460,21 +462,21 @@ msgstr "Hovor odkloněn"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Hovor odpojen (neznámý kód příčiny %i)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager nedostupný"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Žádný modem s podporou hlasu není dostupný"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normální"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializováno"
@@ -555,6 +557,15 @@ msgstr "Použít pro telefonní hovory"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Připojit automaticky"
+
+#~ msgid "Enter a number"
+#~ msgstr "Zadejte číslo"
+
+#~ msgid "Dial"
+#~ msgstr "Vytočit"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Odstranit znak před kurzorem"
 
 #~ msgid "Calling..."
 #~ msgstr "Volání..."
