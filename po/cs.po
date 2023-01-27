@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-21 10:45+0000\n"
-"PO-Revision-Date: 2022-09-19 00:34+0200\n"
+"POT-Creation-Date: 2022-12-02 10:59+0000\n"
+"PO-Revision-Date: 2023-01-09 16:14+0100\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -248,7 +248,7 @@ msgstr ""
 #: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
-"Jaroslav Svoboda <multi.flexi@sezman.cz>\n"
+"Jaroslav Svoboda <multi.flexi@seznam.cz>\n"
 "Daniel Rusek <mail@asciiwolf.com>"
 
 #: src/calls-main-window.c:316
