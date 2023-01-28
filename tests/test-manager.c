@@ -8,7 +8,6 @@
 
 #include <cui-call.h>
 #include <gtk/gtk.h>
-#include <libpeas/peas.h>
 
 struct TestData {
   GMainLoop *loop;
