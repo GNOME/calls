@@ -251,8 +251,6 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  g_autofree char *plugin_dir_provider = NULL;
-
   gtk_test_init (&argc, &argv, NULL);
 
   g_test_add_func("/Calls/Manager/without_provider", test_calls_manager_without_provider);
