@@ -117,6 +117,7 @@ calls_sources = files([
   'calls-notifier.c', 'calls-notifier.h',
   'calls-origin.c', 'calls-origin.h',
   'calls-plugin.c', 'calls-plugin.h',
+  'calls-plugin-manager.c', 'calls-plugin-manager.h',
   'calls-provider.c', 'calls-provider.h',
   'calls-record-store.c', 'calls-record-store.h',
   'calls-ringer.c', 'calls-ringer.h',
