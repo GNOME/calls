@@ -516,6 +516,17 @@ calls_application_command_line (GApplication            *application,
 
   options = g_application_command_line_get_options_dict (command_line);
 
+  /* TODO make this a comma separated string of "CATEGORY:level" pairs */
+  if (g_variant_dict_lookup (options, "verbosity", "u", &verbosity)) {
+    gint delta = calls_log_set_verbosity (verbosity);
+    guint level = calls_log_get_verbosity ();
+    if (delta != 0)
+      g_print ("%s verbosity by %d to %u\n",
+               delta > 0 ? "Increased" : "Decreased",
+               delta < 0 ? -1 * delta : delta,
+               level);
+  }
+
   providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
   if (providers) {
     g_action_group_activate_action (G_ACTION_GROUP (application),
@@ -534,18 +545,6 @@ calls_application_command_line (GApplication            *application,
   if (g_variant_dict_lookup (options, "dial", "&s", &arg))
     g_action_group_activate_action (G_ACTION_GROUP (application),
                                     "dial", g_variant_new_string (arg));
-
-  /* TODO make this a comma separated string of "CATEGORY:level" pairs */
-  if (g_variant_dict_lookup (options, "verbosity", "u", &verbosity)) {
-    gint delta = calls_log_set_verbosity (verbosity);
-    guint level = calls_log_get_verbosity ();
-    if (delta != 0)
-      g_print ("%s verbosity by %d to %u\n",
-               delta > 0 ? "Increased" : "Decreased",
-               delta < 0 ? -1 * delta : delta,
-               level);
-  }
-
   arguments = g_application_command_line_get_arguments (command_line, &argc);
 
   /* Keep only the first URI, if there are many */
