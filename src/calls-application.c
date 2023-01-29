@@ -66,6 +66,7 @@ struct _CallsApplication {
   CallsMainWindow  *main_window;
   CallsCallWindow  *call_window;
   CallsDBusManager *dbus_manager;
+  CallsManager     *manager;
 
   char             *uri;
   guint             id_sigterm;
@@ -627,6 +628,9 @@ start_proper (CallsApplication *self)
 
   gtk_app = GTK_APPLICATION (self);
 
+  self->manager = calls_manager_get_default ();
+  g_assert (self->manager);
+
   self->ringer = calls_ringer_new ();
   g_assert (self->ringer != NULL);
 
@@ -740,6 +744,8 @@ finalize (GObject *object)
   g_clear_object (&self->record_store);
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
+  g_clear_object (&self->manager);
+
   g_free (self->uri);
 
   G_OBJECT_CLASS (calls_application_parent_class)->finalize (object);
