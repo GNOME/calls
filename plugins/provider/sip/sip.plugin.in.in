@@ -1,8 +1,8 @@
 [Plugin]
 Module=sip
 Name=SIP
-Description=SIP calls provider
+Description=Call provider for Voice over IP (VoIP) using the SIP protocol
 Authors=Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>
-Copyright=Copyright (C) 2021-2022 Purism SPC
+Copyright=Copyright (C) 2021-2023 Purism SPC
 Website=@PACKAGE_URL_RAW@
 Version=@PACKAGE_VERSION@
