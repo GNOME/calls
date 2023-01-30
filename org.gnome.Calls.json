@@ -81,7 +81,7 @@
                 {
                     "type" : "archive",
                     "url" : "https://github.com/google/libphonenumber/archive/refs/tags/v8.12.54.tar.gz",
-                    "sha256" : "cf3d531a6b097cad508c475888bcf042ff15fabc6be05e3f817224ae8512ce63"
+                    "sha256" : "46fac5102fddc0cff89fe17cb41ef094f399649f4fc36695a75a048a67a75841"
                 },
                 {
                     "type" : "shell",
