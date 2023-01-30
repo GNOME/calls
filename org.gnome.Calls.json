@@ -266,7 +266,7 @@
                 {
                     "type" : "archive",
                     "url" : "https://github.com/freeswitch/sofia-sip/archive/refs/tags/v1.13.9.tar.gz",
-                    "sha256" : "3e7bfe9345e7d196bb13cf2c6e758cec8d959f1b9dbbb3bd5459b004f6f65c6c"
+                    "sha256" : "f6e6c2b6872d2e81deff3748abe13497a254b41656e778eead7b4b52cccbc25b"
                 }
             ]
         },
