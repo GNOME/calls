@@ -9,6 +9,7 @@
 #include "calls-dbus-config.h"
 
 #include "calls-call-dbus.h"
+#include "calls-emergency-call-dbus.h"
 #include "cui-call.h"
 
 #include <gtk/gtk.h>
@@ -53,6 +54,7 @@ find_pid_by_bus_name (const char *name)
 typedef struct {
   GTestDBus          *dbus;
   GDBusObjectManager *calls_manager;
+  CallsDBusEmergencyCalls *ec_manager;
   GMainLoop          *loop;
   guint32             pid_server;
   int                 test_phase;
@@ -87,6 +89,15 @@ fixture_setup (DBusTestFixture *fixture, gconstpointer unused)
   if (fixture->calls_manager == NULL)
     g_error ("Error getting object manager client: %s", error->message);
 
+  fixture->ec_manager =
+    calls_dbus_emergency_calls_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+						       G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE,
+						       CALLS_DBUS_NAME,
+						       CALLS_DBUS_OBJECT_PATH,
+						       NULL,
+						       &error);
+  g_assert_no_error (error);
+
   fixture->pid_server = find_pid_by_bus_name (CALLS_DBUS_NAME);
 }
 
@@ -95,6 +106,7 @@ static void
 fixture_teardown (DBusTestFixture *fixture, gconstpointer unused)
 {
   g_assert_finalize_object (fixture->calls_manager);
+  g_assert_finalize_object (fixture->ec_manager);
 
   g_test_dbus_down (fixture->dbus);
   g_clear_object (&fixture->dbus);
@@ -214,6 +226,43 @@ test_interact_call (DBusTestFixture *fixture, gconstpointer unused)
 }
 
 
+static void
+test_emergency_calls_numbers (DBusTestFixture *fixture, gconstpointer unused)
+{
+  gboolean success;
+  gsize count;
+  GVariantIter iter;
+  const char *id = NULL;
+  const char *name = NULL;
+  gint32 source;
+  g_autoptr (GError) error = NULL;
+  g_autoptr (GVariant) contacts = NULL;
+
+  success =
+    calls_dbus_emergency_calls_call_get_emergency_contacts_sync (fixture->ec_manager,
+								 &contacts,
+								 NULL,
+								 &error);
+  g_assert_no_error (error);
+  g_assert_true (success);
+
+  count = g_variant_n_children (contacts);
+  g_assert_cmpint (count, ==, 2);
+
+#define CONTACT_FORMAT "(&s&si@a{sv})"
+  g_variant_iter_init (&iter, contacts);
+
+  g_variant_iter_next (&iter, CONTACT_FORMAT, &id, &name, &source, NULL);
+  g_assert_cmpstr (id, ==, "123");
+  g_assert_cmpstr (name, ==, "123");
+  g_assert_cmpint (source, ==, 0);
+  g_variant_iter_next (&iter, CONTACT_FORMAT, &id, &name, &source, NULL);
+  g_assert_cmpstr (id, ==, "456");
+  g_assert_cmpstr (name, ==, "456");
+  g_assert_cmpint (source, ==, 0);
+}
+
+
 int
 main (int   argc,
       char *argv[])
@@ -224,6 +273,8 @@ main (int   argc,
               fixture_setup, test_no_calls, fixture_teardown);
   g_test_add ("/Calls/DBus/call_interaction", DBusTestFixture, NULL,
               fixture_setup, test_interact_call, fixture_teardown);
+  g_test_add ("/Calls/DBus/emergency-calls/numbers", DBusTestFixture, NULL,
+              fixture_setup, test_emergency_calls_numbers, fixture_teardown);
 
   g_test_run ();
 }
