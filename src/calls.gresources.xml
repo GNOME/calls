@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gnome/Calls/ui">
-    <file preprocess="xml-stripblanks">main-window.ui</file>
-    <file preprocess="xml-stripblanks">call-selector-item.ui</file>
-    <file preprocess="xml-stripblanks">call-window.ui</file>
-    <file preprocess="xml-stripblanks">history-box.ui</file>
-    <file preprocess="xml-stripblanks">new-call-box.ui</file>
-    <file preprocess="xml-stripblanks">new-call-header-bar.ui</file>
-    <file preprocess="xml-stripblanks">call-record-row.ui</file>
-    <file preprocess="xml-stripblanks">in-app-notification.ui</file>
-    <file preprocess="xml-stripblanks">contacts-row.ui</file>
-    <file preprocess="xml-stripblanks">contacts-box.ui</file>
     <file preprocess="xml-stripblanks">account-overview.ui</file>
     <file preprocess="xml-stripblanks">account-row.ui</file>
+    <file preprocess="xml-stripblanks">call-record-row.ui</file>
+    <file preprocess="xml-stripblanks">call-selector-item.ui</file>
+    <file preprocess="xml-stripblanks">call-window.ui</file>
+    <file preprocess="xml-stripblanks">contacts-box.ui</file>
+    <file preprocess="xml-stripblanks">contacts-row.ui</file>
+    <file preprocess="xml-stripblanks">history-box.ui</file>
+    <file preprocess="xml-stripblanks">in-app-notification.ui</file>
+    <file preprocess="xml-stripblanks">main-window.ui</file>
+    <file preprocess="xml-stripblanks">new-call-box.ui</file>
+    <file preprocess="xml-stripblanks">new-call-header-bar.ui</file>
   </gresource>
   <gresource prefix="/org/gnome/Calls/">
     <file>style.css</file>
   </gresource>
   <gresource prefix="/org/gnome/Calls/icons/">
-    <file>new-call-symbolic.svg</file>
     <file>call-arrow-incoming-symbolic.svg</file>
     <file>call-arrow-incoming-missed-symbolic.svg</file>
     <file>call-arrow-outgoing-symbolic.svg</file>
     <file>call-arrow-outgoing-missed-symbolic.svg</file>
+    <file>new-call-symbolic.svg</file>
   </gresource>
 </gresources>
