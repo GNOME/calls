@@ -218,7 +218,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add ("/Calls/DBus/no_calls", DBusTestFixture, NULL,
               fixture_setup, test_no_calls, fixture_teardown);
