@@ -31,8 +31,8 @@ find_pid_by_bus_name (const char *name)
   g_autoptr (GVariant) ret = NULL;
   guint32 pid;
 
-  g_assert_nonnull (proxy);
   g_assert_no_error (error);
+  g_assert_nonnull (proxy);
 
   ret = g_dbus_proxy_call_sync (proxy,
                                 "GetConnectionUnixProcessID",
