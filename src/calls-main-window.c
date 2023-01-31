@@ -522,7 +522,7 @@ calls_main_window_show_accounts_overview (CallsMainWindow *self)
 {
   g_return_if_fail (CALLS_IS_MAIN_WINDOW (self));
 
-  if (self->account_overview == NULL) {
+  if (!self->account_overview) {
     self->account_overview = calls_account_overview_new ();
     gtk_window_set_transient_for (GTK_WINDOW (self->account_overview),
                                   GTK_WINDOW (self));
