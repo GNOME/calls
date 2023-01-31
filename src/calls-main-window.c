@@ -22,16 +22,17 @@
  *
  */
 
-#include "calls-main-window.h"
+#include "calls-config.h"
+
 #include "calls-account-overview.h"
+#include "calls-contacts-box.h"
+#include "calls-in-app-notification.h"
+#include "calls-history-box.h"
+#include "calls-main-window.h"
+#include "calls-manager.h"
+#include "calls-new-call-box.h"
 #include "calls-origin.h"
 #include "calls-ussd.h"
-#include "calls-new-call-box.h"
-#include "calls-contacts-box.h"
-#include "calls-history-box.h"
-#include "calls-in-app-notification.h"
-#include "calls-manager.h"
-#include "calls-config.h"
 #include "calls-util.h"
 #include "version.h"
 
