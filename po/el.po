@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-19 19:47+0000\n"
-"PO-Revision-Date: 2022-12-25 19:12+0200\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
+"PO-Revision-Date: 2023-02-04 18:22+0200\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek <gnome-el-list@gnome.org>\n"
 "Language: el\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:440 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Κλήσεις"
 
@@ -46,7 +46,7 @@ msgstr ""
 
 #: data/org.gnome.Calls.metainfo.xml:7
 msgid "Make phone and SIP calls"
-msgstr ""
+msgstr "Πραγματοποίηση κλήσεων τηλεφώνου και SIP"
 
 #: data/org.gnome.Calls.metainfo.xml:10
 msgid ""
@@ -57,10 +57,8 @@ msgstr ""
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
-#, fuzzy
-#| msgid "Incoming phone call"
 msgid "Placing a call"
-msgstr "Εισερχόμενη κλήση"
+msgstr "Πραγματοποίηση κλήσης"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:31
@@ -81,7 +79,7 @@ msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
-msgstr ""
+msgstr "Τα πρόσθετα φορτώνονται αυτόματα"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
@@ -109,7 +107,7 @@ msgstr ""
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr "Αρχικοποίηση λογαριασμού..."
+msgstr "Αρχικοποίηση λογαριασμού…"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
@@ -121,15 +119,15 @@ msgstr "Σύνδεση με τον διακομιστή…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
-msgstr ""
+msgstr "Ο λογαριασμός είναι σε σύνδεση"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr ""
+msgstr "Γίνεται αποσύνδεση από τον διακομιστή…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr ""
+msgstr "Ο λογαριασμός είναι εκτός σύνδεσης"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
@@ -137,15 +135,15 @@ msgstr ""
 
 #: src/calls-account.c:202
 msgid "No reason given"
-msgstr ""
+msgstr "Δεν δόθηκε αιτία"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
-msgstr ""
+msgstr "Η αρχικοποίηση ξεκίνησε"
 
 #: src/calls-account.c:208
 msgid "Initialization complete"
-msgstr ""
+msgstr "Η αρχικοποίηση ολοκληρώθηκε"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
@@ -157,15 +155,15 @@ msgstr ""
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr ""
+msgstr "Δεν έχουν οριστεί διαπιστευτήρια"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr ""
+msgstr "Έναρξη σύνδεσης"
 
 #: src/calls-account.c:223
 msgid "Connection timed out"
-msgstr ""
+msgstr "Η σύνδεση έληξε"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
@@ -177,59 +175,70 @@ msgstr ""
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
-msgstr ""
+msgstr "Η σύνδεση ολοκληρώθηκε"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr ""
+msgstr "Γίνεται έναρξη της αποσύνδεσης"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr ""
+msgstr "Η αποσύνδεση ολοκληρώθηκε"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
-msgstr ""
+msgstr "Παρουσιάστηκε εσωτερικό σφάλμα"
 
-#: src/calls-application.c:319
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Επεξεργασία λογαριασμού: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Προσθήκη νέου λογαριασμού"
+
+#: src/calls-account-overview.c:376
+msgid "Account overview"
+msgstr "Επισκόπηση λογαριασμού"
+
+#: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr ""
 
-#: src/calls-application.c:638
+#: src/calls-application.c:672
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr ""
 
-#: src/calls-application.c:692
-#, fuzzy
-#| msgid "The name of the plugin to use for the call Provider"
+#: src/calls-application.c:730
 msgid "The name of the plugin to use as a call provider"
 msgstr ""
-"Το όνομα του προσθέτου  που θα χρησιμοποιηθεί για την υπηρεσία παροχής "
+"Το όνομα του προσθέτου που θα χρησιμοποιηθεί για την υπηρεσία παροχής "
 "κλήσεων"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:731
 msgid "PLUGIN"
 msgstr "ΠΡΟΣΘΕΤΟ"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:736
 msgid "Whether to present the main window on startup"
 msgstr "Εάν θα παρουσιάζεται το κύριο παράθυρο κατά την εκκίνηση"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:742
 msgid "Dial a telephone number"
 msgstr "Πληκτρολογήστε έναν τηλεφωνικό αριθμό"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:743
 msgid "NUMBER"
 msgstr "ΑΡΙΘΜΟΣ"
 
-#: src/calls-application.c:710
+#: src/calls-application.c:748
 msgid "Enable verbose debug messages"
 msgstr ""
 
-#: src/calls-application.c:716
+#: src/calls-application.c:754
 msgid "Print current version"
 msgstr "Εμφάνιση τρέχουσας έκδοσης"
 
@@ -256,14 +265,12 @@ msgstr ""
 "http://gnome.gr/"
 
 #: src/calls-main-window.c:316
-#, fuzzy
-#| msgid "Can't place calls: No backend service"
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει υπηρεσία υποστήριξης"
+msgstr ""
+"Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει μόντεμ ή διαθέσιμος "
+"λογαριασμός VoIP"
 
 #: src/calls-main-window.c:318
-#, fuzzy
-#| msgid "Can't place calls: No plugin"
 msgid "Can't place calls: No plugin loaded"
 msgstr "Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει πρόσθετο"
 
@@ -280,27 +287,27 @@ msgstr "Πληκτρολόγιο κλήσης"
 msgid "Recent"
 msgstr "Πρόσφατα"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Αναπάντητη κλήση"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Αναπάντητη κλήση από τον <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Αναπάντητη κλήση από %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Αναπάντητη κλήση από άγνωστο αριθμό"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Επανάκληση"
 
@@ -390,23 +397,11 @@ msgstr "_Βοήθεια"
 msgid "_About Calls"
 msgstr "_Περί Κλήσεις"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
-msgstr ""
+msgstr "Εισαγωγή διεύθυνσης VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Εισαγωγή ενός αριθμού"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Πραγματοπολιηση κλήσης"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr ""
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Λογαριασμός SIP"
 
@@ -424,17 +419,15 @@ msgstr "Άγνωστη αιτία"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
-msgstr ""
+msgstr "Ξεκίνησε η εξερχόμενη κλήση"
 
 #: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
 msgstr "Νέα εισερχόμενη κλήση"
 
 #: plugins/provider/mm/calls-mm-call.c:76
-#, fuzzy
-#| msgid "Call back"
 msgid "Call accepted"
-msgstr "Επανάκληση"
+msgstr "Η κλήση έγινε αποδεκτή"
 
 #: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
@@ -467,26 +460,26 @@ msgstr ""
 msgid "Call disconnected (unknown reason code %i)"
 msgstr ""
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr ""
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 #, fuzzy
 #| msgid "Can't place calls: No backend service"
 msgid "No voice-capable modem available"
 msgstr "Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει υπηρεσία υποστήριξης"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Κανονικό"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
-msgstr ""
+msgstr "Αρχικοποιήθηκε"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
@@ -531,7 +524,7 @@ msgstr "Διακομιστής"
 
 #: plugins/provider/sip/sip-account-widget.ui:109
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση ονόματος"
 
 #: plugins/provider/sip/sip-account-widget.ui:110
 msgid "Optional"
@@ -564,6 +557,12 @@ msgstr "Χρήση για τηλεφωνικές κλήσεις"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Αυτόματη σύνδεση"
+
+#~ msgid "Enter a number"
+#~ msgstr "Εισαγωγή ενός αριθμού"
+
+#~ msgid "Dial"
+#~ msgstr "Πραγματοπολιηση κλήσης"
 
 #~ msgid "Calling…"
 #~ msgstr "Γίνεται κλήση…"
