@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
 "POT-Creation-Date: 2023-01-25 15:58+0000\n"
-"PO-Revision-Date: 2023-02-05 13:15+0200\n"
+"PO-Revision-Date: 2023-02-05 13:19+0200\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek <gnome-el-list@gnome.org>\n"
 "Language: el\n"
@@ -34,7 +34,7 @@ msgstr "Ένα πρόγραμμα τηλεφωνικών κλήσεων και �
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
+msgstr "Τηλέφωνο;Κλήση;Τηλέφωνο;Κλήση;Dialer;PSTN;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
@@ -79,7 +79,7 @@ msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
-msgstr ""
+msgstr "Ο κωδικός χώρας όπως αναφέρεται από το modem"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
@@ -217,7 +217,7 @@ msgstr "Επισκόπηση λογαριασμού"
 #: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr ""
+msgstr "Δοκίμασε να καλέσει μη έγκυρο URI \"%s\""
 
 #: src/calls-application.c:672
 #, c-format
