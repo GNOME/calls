@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-02 10:59+0000\n"
-"PO-Revision-Date: 2022-12-21 20:12+0100\n"
+"POT-Creation-Date: 2023-01-25 15:58+0000\n"
+"PO-Revision-Date: 2023-02-05 22:25+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-DL-Team: gl\n"
 "X-DL-Module: calls\n"
 "X-DL-Branch: gnome-43\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-DL-State: None\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
 
@@ -177,7 +177,7 @@ msgstr "Comezando a conexión"
 
 #: src/calls-account.c:223
 msgid "Connection timed out"
-msgstr "Tempo de espera para a conexión superado "
+msgstr "Tempo de espera para a conexión superado"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
@@ -203,41 +203,54 @@ msgstr "Desconexión completada"
 msgid "Internal error occurred"
 msgstr "Produciuse un erro interno"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Editar conta: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Engadir nova conta"
+
+#: src/calls-account-overview.c:376
+msgid "Account overview"
+msgstr "Vista previa de conta"
+
+#: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tentouse chamar a un URI de tel «%s» non válido"
 
-#: src/calls-application.c:627
+#: src/calls-application.c:672
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non se sabe como abrir \"%s\""
 
-#: src/calls-application.c:681
+#: src/calls-application.c:730
 msgid "The name of the plugin to use as a call provider"
 msgstr "O nome do engadido a usar para o fornecedor de chamadas"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:731
 msgid "PLUGIN"
 msgstr "ENGADIDO"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:736
 msgid "Whether to present the main window on startup"
 msgstr "Indica se mostrar a xanela principal ao arrinque"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:742
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:743
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:748
 msgid "Enable verbose debug messages"
 msgstr "Activar as mensaxes de depuración detalladas"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:754
 msgid "Print current version"
 msgstr "Mostrar a versión actual"
 
@@ -256,7 +269,7 @@ msgstr ""
 
 #: src/calls-main-window.c:123
 msgid "translator-credits"
-msgstr "Fran Diéguez <frandieguez@gnome.org>, 2020, 2021."
+msgstr "Fran Diéguez <frandieguez@gnome.org>, 2020-2023."
 
 #: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
@@ -281,27 +294,27 @@ msgstr "Teclado telefónico"
 msgid "Recent"
 msgstr "Recentes"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Chamada perdida"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chamada perdida por <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chamada perdida de %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Chamada perdida de número descoñecido"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Chamar de volta"
 
@@ -395,23 +408,11 @@ msgstr "_Axuda"
 msgid "_About Calls"
 msgstr "_Sobre Chamadas"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Escriba un enderezo VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Escriba un número"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Chamar"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Eliminar carácter en fronte do cursor"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Conta SIP"
 
@@ -470,21 +471,21 @@ msgstr "Chamada desviada"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Chamada desconectada (código %i de razón descoñecido)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager non dispoñíbel"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Non está dispoñíbel un módem con capacidade de voz"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializada"
@@ -565,6 +566,15 @@ msgstr "Usar para as chamadas de teléfono"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Conectar automaticamente"
+
+#~ msgid "Enter a number"
+#~ msgstr "Escriba un número"
+
+#~ msgid "Dial"
+#~ msgstr "Chamar"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Eliminar carácter en fronte do cursor"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Non se poden realizar chamadas: Non hai servizo de infraestrutura"
