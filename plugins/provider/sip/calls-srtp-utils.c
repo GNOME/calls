@@ -51,16 +51,6 @@
 /* The default used in libsrtp (and GstSrtpEnc/GstSrtpDec) */
 #define SRTP_DEFAULT_WINDOW_SIZE 128
 
-const char * srtp_crypto_suites[] = {
-  "AES_CM_128_HMAC_SHA1_32", /* RFC 4568 */
-  "AES_CM_128_HMAC_SHA1_80", /* RFC 4568 */
-  "F8_128_HMAC_SHA1_32", /* RFC 4568 but not supported by GstSrtpEnc/GstSrtpDec */
-  "AEAD_AES_128_GCM", /* RFC 7714 TODO support in the future */
-  "AEAD_AES_256_GCM", /* RFC 7714 TODO support in the future */
-  NULL
-};
-
-
 static gsize
 get_key_size_for_suite (calls_srtp_crypto_suite suite)
 {
