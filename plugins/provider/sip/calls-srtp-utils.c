@@ -584,8 +584,19 @@ calls_srtp_print_sdp_crypto_attribute (calls_srtp_crypto_attribute *attr,
   /* key parameters */
   for (guint i = 0; i < attr->n_key_params; i++) {
     calls_srtp_crypto_key_param *key_param = &attr->key_params[i];
+    int keylen = strlen (key_param->b64_keysalt);
 
-    g_string_append_printf (attr_str, "inline:%s", key_param->b64_keysalt);
+    /* https://www.rfc-editor.org/rfc/rfc4568.html#section-6.1 says:
+      When base64 decoding the key and salt, padding characters (i.e.,
+      one or two "=" at the end of the base64-encoded data) are discarded
+      (see [RFC3548] for details).
+    */
+    if (key_param->b64_keysalt[keylen - 2] == '=')
+      g_string_append_printf (attr_str, "inline:%.*s", keylen - 2, key_param->b64_keysalt);
+    else if (key_param->b64_keysalt[keylen - 1] == '=')
+      g_string_append_printf (attr_str, "inline:%.*s", keylen - 1, key_param->b64_keysalt);
+    else
+      g_string_append_printf (attr_str, "inline:%s", key_param->b64_keysalt);
     if (key_param->lifetime_type == CALLS_SRTP_LIFETIME_AS_DECIMAL_NUMBER)
       g_string_append_printf (attr_str, "|%" G_GINT64_FORMAT, key_param->lifetime);
     if (key_param->lifetime_type == CALLS_SRTP_LIFETIME_AS_POWER_OF_TWO)
