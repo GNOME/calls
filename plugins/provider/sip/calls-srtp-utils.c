@@ -405,7 +405,20 @@ calls_srtp_parse_sdp_crypto_attribute (const char *attribute,
 
     n_key_infos = g_strv_length (key_info_fields);
 
-    key_param->b64_keysalt = g_strdup (key_info_fields[0]);
+    switch (strlen (key_info_fields[0]) % 4) {
+    case 3:
+      key_param->b64_keysalt = g_strconcat (key_info_fields[0], "=", NULL);
+      break;
+    case 2:
+      key_param->b64_keysalt = g_strconcat (key_info_fields[0], "==", NULL);
+      break;
+    case 1:
+      g_assert_not_reached (); /* impossible with base64 */
+      break;
+    case 0:
+    default:
+      key_param->b64_keysalt = g_strdup (key_info_fields[0]);
+    }
 
     if (n_key_infos == 1) {
       key_info_lifetime_index = 0;
