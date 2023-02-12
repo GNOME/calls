@@ -32,8 +32,13 @@ typedef enum {
   CALLS_SRTP_SUITE_UNKNOWN = 0,
   CALLS_SRTP_SUITE_AES_CM_128_SHA1_32, /* RFC 4568 */
   CALLS_SRTP_SUITE_AES_CM_128_SHA1_80, /* RFC 4568 */
+  CALLS_SRTP_SUITE_AES_192_CM_SHA1_32, /* RFC 6188 not supperted by Gst */
+  CALLS_SRTP_SUITE_AES_192_CM_SHA1_80, /* RFC 6188 not supperted by Gst */
   CALLS_SRTP_SUITE_AES_256_CM_SHA1_32, /* RFC 6188 */
   CALLS_SRTP_SUITE_AES_256_CM_SHA1_80, /* RFC 6188 */
+  CALLS_SRTP_SUITE_F8_128_HMAC_SHA1_32, /* RFC 4568 but not supported by GstSrtpEnc/GstSrtpDec */
+  CALLS_SRTP_SUITE_AEAD_AES_128_GCM, /* RFC 7714 TODO support in the future */
+  CALLS_SRTP_SUITE_AEAD_AES_256_GCM  /* RFC 7714 TODO support in the future */
 } calls_srtp_crypto_suite;
 
 

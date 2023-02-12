@@ -58,9 +58,16 @@ get_key_size_for_suite (calls_srtp_crypto_suite suite)
   case CALLS_SRTP_SUITE_AES_CM_128_SHA1_32:
   case CALLS_SRTP_SUITE_AES_CM_128_SHA1_80:
     return 30;
+  case CALLS_SRTP_SUITE_AES_192_CM_SHA1_32:
+  case CALLS_SRTP_SUITE_AES_192_CM_SHA1_80:
+    return 38;
   case CALLS_SRTP_SUITE_AES_256_CM_SHA1_32:
   case CALLS_SRTP_SUITE_AES_256_CM_SHA1_80:
     return 46;
+  case CALLS_SRTP_SUITE_AEAD_AES_128_GCM:
+    return 28;
+  case CALLS_SRTP_SUITE_AEAD_AES_256_GCM:
+    return 44;
 
   case CALLS_SRTP_SUITE_UNKNOWN:
   default:
@@ -586,10 +593,20 @@ calls_srtp_print_sdp_crypto_attribute (calls_srtp_crypto_attribute *attr,
     crypto_suite = "AES_CM_128_HMAC_SHA1_32";
   else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_80)
     crypto_suite = "AES_CM_128_HMAC_SHA1_80";
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_192_CM_SHA1_32)
+    crypto_suite = "AES_196_CM_HMAC_SHA1_32";
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_192_CM_SHA1_80)
+    crypto_suite = "AES_196_CM_HMAC_SHA1_80";
   else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_256_CM_SHA1_32)
     crypto_suite = "AES_256_CM_HMAC_SHA1_32";
   else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_256_CM_SHA1_80)
     crypto_suite = "AES_256_CM_HMAC_SHA1_80";
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_F8_128_HMAC_SHA1_32)
+    crypto_suite = "F8_128_HMAC_SHA1_80";
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AEAD_AES_128_GCM)
+    crypto_suite = "AEAD_AES_128_GCM";
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AEAD_AES_256_GCM)
+    crypto_suite = "AEAD_AES_256_GCM";
   else
     return NULL;
 
@@ -744,6 +761,24 @@ calls_srtp_crypto_get_srtpdec_params (calls_srtp_crypto_attribute *attr,
 
     return TRUE;
   }
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_192_CM_SHA1_32) {
+    /* NOT OFFERED BY GSTREAMER
+    *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-192-icm";
+    *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-32";
+    *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-192-icm";
+    *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-32";
+    */
+    return FALSE;
+  }
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_192_CM_SHA1_80) {
+    /* NOT OFFERED BY GSTREAMER
+    *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-192-icm";
+    *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-80";
+    *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-192-icm";
+    *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-80";
+    */
+    return FALSE;
+  }
   if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_256_CM_SHA1_32) {
     *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-256-icm";
     *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-32";
@@ -759,6 +794,18 @@ calls_srtp_crypto_get_srtpdec_params (calls_srtp_crypto_attribute *attr,
     *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-80";
 
     return TRUE;
+  }
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_F8_128_HMAC_SHA1_32) {
+    // F8 IS NOT OFFERED BY GSTREAMER
+    return FALSE;
+  }
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AEAD_AES_128_GCM) {
+
+    return FALSE;
+  }
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AEAD_AES_256_GCM) {
+
+    return FALSE;
   }
 
   return FALSE;
