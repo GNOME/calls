@@ -89,14 +89,8 @@ validate_crypto_attribute (calls_srtp_crypto_attribute *attr,
     return FALSE;
   }
 
-  switch (attr->crypto_suite) {
-  case CALLS_SRTP_SUITE_AES_128_SHA1_32:
-  case CALLS_SRTP_SUITE_AES_128_SHA1_80:
-    expected_key_salt_length = 30; /* 16 byte key + 14 byte salt */
-    break;
-
-  case CALLS_SRTP_SUITE_UNKNOWN:
-  default:
+  expected_key_salt_length = get_key_size_for_suite (attr->crypto_suite);
+  if (expected_key_salt_length == 0) {
     g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                  "Crypto suite unknown");
     return FALSE;
