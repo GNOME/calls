@@ -55,8 +55,8 @@ static gsize
 get_key_size_for_suite (calls_srtp_crypto_suite suite)
 {
   switch (suite) {
-  case CALLS_SRTP_SUITE_AES_128_SHA1_32:
-  case CALLS_SRTP_SUITE_AES_128_SHA1_80:
+  case CALLS_SRTP_SUITE_AES_CM_128_SHA1_32:
+  case CALLS_SRTP_SUITE_AES_CM_128_SHA1_80:
     return 30;
 
   case CALLS_SRTP_SUITE_UNKNOWN:
@@ -353,11 +353,10 @@ calls_srtp_parse_sdp_crypto_attribute (const char *attribute,
     return NULL;
   }
 
-  /* f.e. attr_fields[1] = "AES_CM_128_HMAC_SHA1_32" */
   if (g_strcmp0 (attr_fields[1], "AES_CM_128_HMAC_SHA1_32") == 0)
-    crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+    crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   else if (g_strcmp0 (attr_fields[1], "AES_CM_128_HMAC_SHA1_80") == 0)
-    crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+    crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   else
     crypto_suite = CALLS_SRTP_SUITE_UNKNOWN; /* error */
 
@@ -576,9 +575,9 @@ calls_srtp_print_sdp_crypto_attribute (calls_srtp_crypto_attribute *attr,
   if (!validate_crypto_attribute (attr, error))
     return NULL;
 
-  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_32)
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_32)
     crypto_suite = "AES_CM_128_HMAC_SHA1_32";
-  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_80)
+  else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_80)
     crypto_suite = "AES_CM_128_HMAC_SHA1_80";
   else
     return NULL;
@@ -719,14 +718,14 @@ calls_srtp_crypto_get_srtpdec_params (calls_srtp_crypto_attribute *attr,
 {
   g_return_val_if_fail (attr, FALSE);
 
-  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_32) {
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_32) {
     *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-128-icm";
     *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-32";
     *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-128-icm";
     *srtcp_auth = attr->unencrypted_srtcp ? "null" : "hmac-sha1-32";
 
     return TRUE;
-  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_80) {
+  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_80) {
     *srtp_cipher = attr->unencrypted_srtp ? "null" : "aes-128-icm";
     *srtp_auth = attr->unauthenticated_srtp ? "null" : "hmac-sha1-80";
     *srtcp_cipher = attr->unencrypted_srtcp ? "null" : "aes-128-icm";
@@ -758,14 +757,14 @@ calls_srtp_crypto_get_srtpenc_params (calls_srtp_crypto_attribute *attr,
 {
   g_return_val_if_fail (attr, FALSE);
 
-  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_32) {
+  if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_32) {
     *srtp_cipher = attr->unencrypted_srtp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
     *srtp_auth = attr->unauthenticated_srtp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_32;
     *srtcp_cipher = attr->unencrypted_srtcp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
     *srtcp_auth = attr->unencrypted_srtcp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_32;
 
     return TRUE;
-  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_128_SHA1_80) {
+  } else if (attr->crypto_suite == CALLS_SRTP_SUITE_AES_CM_128_SHA1_80) {
 
     *srtp_cipher = attr->unencrypted_srtp ? GST_SRTP_CIPHER_NULL : GST_SRTP_CIPHER_AES_128_ICM;
     *srtp_auth = attr->unauthenticated_srtp ? GST_SRTP_AUTH_NULL : GST_SRTP_AUTH_HMAC_SHA1_80;

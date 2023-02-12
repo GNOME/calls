@@ -55,7 +55,7 @@ test_crypto_attribute_validity (void)
 
   g_assert_null (calls_srtp_print_sdp_crypto_attribute (attr, NULL));
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   key_salt = calls_srtp_generate_key_salt (30);
   attr->key_params[0].b64_keysalt = g_base64_encode (key_salt, 30);
   g_free (key_salt);
@@ -122,7 +122,7 @@ test_crypto_attribute_validity (void)
 
   attr = calls_srtp_crypto_attribute_new (4);
   attr->tag = 12;
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
 
   calls_srtp_crypto_attribute_init_keys (attr);
   attr->key_params[0].lifetime = 31;
@@ -182,7 +182,7 @@ test_parse (void)
   attr_simple = calls_srtp_crypto_attribute_new (1);
   key_salt = calls_srtp_generate_key_salt (30);
   attr_simple->tag = 1;
-  attr_simple->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr_simple->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   attr_simple->key_params[0].b64_keysalt = g_base64_encode (key_salt, 30);
 
   attr_simple_str = calls_srtp_print_sdp_crypto_attribute (attr_simple, NULL);
@@ -200,7 +200,7 @@ test_parse (void)
 
   attr_multi = calls_srtp_crypto_attribute_new (2);
   attr_multi->tag = 42;
-  attr_multi->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr_multi->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   calls_srtp_crypto_attribute_init_keys (attr_multi);
 
   attr_multi_str = calls_srtp_print_sdp_crypto_attribute (attr_multi, NULL);
@@ -236,7 +236,7 @@ test_srtp_params (void)
   GstSrtpCipherType srtcp_cipher_enum;
   GstSrtpAuthType srtcp_auth_enum;
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = FALSE;
@@ -263,7 +263,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   attr->unencrypted_srtp = TRUE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = FALSE;
@@ -290,7 +290,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = TRUE;
   attr->unencrypted_srtcp = FALSE;
@@ -317,7 +317,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_32);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_32;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = TRUE;
@@ -344,7 +344,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_NULL);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = FALSE;
@@ -371,7 +371,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   attr->unencrypted_srtp = TRUE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = FALSE;
@@ -398,7 +398,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = TRUE;
   attr->unencrypted_srtcp = FALSE;
@@ -425,7 +425,7 @@ test_srtp_params (void)
   g_assert_cmpint (srtcp_auth_enum, ==, GST_SRTP_AUTH_HMAC_SHA1_80);
 
 
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
   attr->unencrypted_srtp = FALSE;
   attr->unauthenticated_srtp = FALSE;
   attr->unencrypted_srtcp = TRUE;
