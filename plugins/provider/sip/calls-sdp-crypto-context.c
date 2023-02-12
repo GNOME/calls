@@ -472,6 +472,7 @@ calls_sdp_crypto_context_generate_answer (CallsSdpCryptoContext *self)
       attr->crypto_suite = attr_offer->crypto_suite;
       attr->tag = attr_offer->tag;
       calls_srtp_crypto_attribute_init_keys (attr);
+      break;
     }
   }
 
