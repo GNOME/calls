@@ -435,13 +435,27 @@ calls_sdp_crypto_context_generate_offer (CallsSdpCryptoContext *self)
 
   attr = calls_srtp_crypto_attribute_new (1);
   attr->tag = 1;
-  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_256_CM_SHA1_80;
   calls_srtp_crypto_attribute_init_keys (attr);
 
   self->local_crypto_attributes = g_list_append (NULL, attr);
 
   attr = calls_srtp_crypto_attribute_new (1);
   attr->tag = 2;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_256_CM_SHA1_32;
+  calls_srtp_crypto_attribute_init_keys (attr);
+
+  self->local_crypto_attributes = g_list_append (self->local_crypto_attributes, attr);
+
+  attr = calls_srtp_crypto_attribute_new (1);
+  attr->tag = 3;
+  attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_80;
+  calls_srtp_crypto_attribute_init_keys (attr);
+
+  self->local_crypto_attributes = g_list_append (self->local_crypto_attributes, attr);
+
+  attr = calls_srtp_crypto_attribute_new (1);
+  attr->tag = 4;
   attr->crypto_suite = CALLS_SRTP_SUITE_AES_CM_128_SHA1_32;
   calls_srtp_crypto_attribute_init_keys (attr);
 
