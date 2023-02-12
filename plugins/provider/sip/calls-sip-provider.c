@@ -627,7 +627,7 @@ calls_sip_provider_init (CallsSipProvider *self)
 
   self->origins = g_list_store_new (CALLS_TYPE_ORIGIN);
 
-  if (filename_env && filename_env[0] != '\0')
+  if (!STR_IS_NULL_OR_EMPTY (filename_env))
     self->filename = g_strdup (filename_env);
   else
     self->filename = g_build_filename (g_get_user_config_dir (),
@@ -635,7 +635,7 @@ calls_sip_provider_init (CallsSipProvider *self)
                                        SIP_ACCOUNT_FILE,
                                        NULL);
 
-  if (!sip_test_env || sip_test_env[0] == '\0') {
+  if (STR_IS_NULL_OR_EMPTY (sip_test_env)) {
     directory = g_path_get_dirname (self->filename);
     if (g_mkdir_with_parents (directory, 0750) == -1) {
       int err_save = errno;
