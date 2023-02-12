@@ -489,12 +489,6 @@ calls_sip_provider_constructed (GObject *object)
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
 
   g_autoptr (GError) error = NULL;
-  const gchar *env_sip_test;
-
-  env_sip_test = g_getenv ("CALLS_SIP_TEST");
-  if (env_sip_test && env_sip_test[0] != '\0')
-    self->use_memory_backend = TRUE;
-
   if (calls_sip_provider_init_sofia (self, &error)) {
     if (!self->use_memory_backend) {
       g_autoptr (GKeyFile) key_file = g_key_file_new ();
@@ -643,6 +637,8 @@ calls_sip_provider_init (CallsSipProvider *self)
                  "Can not store credentials persistently!",
                  directory, err_save);
     }
+  } else {
+    self->use_memory_backend = TRUE;
   }
 
 }
