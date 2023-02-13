@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-43\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-02 10:59+0000\n"
-"PO-Revision-Date: 2023-01-22 22:14+0200\n"
+"POT-Creation-Date: 2023-01-25 15:56+0000\n"
+"PO-Revision-Date: 2023-02-13 22:38+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 42.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Skambučiai"
 
@@ -193,41 +193,54 @@ msgstr "Atsijungimas užbaigtas"
 msgid "Internal error occurred"
 msgstr "Kilo vidinė klaida"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Redaguoti paskyrą: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Pridėti naują paskyrą"
+
+#: src/calls-account-overview.c:376
+msgid "Account overview"
+msgstr "Paskyros peržiūra"
+
+#: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Bandyta skambinti netinkamu telefono URI „%s“"
 
-#: src/calls-application.c:627
+#: src/calls-application.c:672
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nežinoma, kaip atverti „%s“"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:730
 msgid "The name of the plugin to use as a call provider"
 msgstr "Skambučiams naudojamo įskiepio pavadinimas"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:731
 msgid "PLUGIN"
 msgstr "ĮSKIEPIS"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:736
 msgid "Whether to present the main window on startup"
 msgstr "Ar rodyti pagrindinį langą paleidžiant"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:742
 msgid "Dial a telephone number"
 msgstr "Skambinti telefono numeriu"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:743
 msgid "NUMBER"
 msgstr "NUMERIS"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:748
 msgid "Enable verbose debug messages"
 msgstr "Įjungti išsamų derinimą"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:754
 msgid "Print current version"
 msgstr "Atspausdinti dabartinę versiją"
 
@@ -384,23 +397,11 @@ msgstr "_Žinynas"
 msgid "_About Calls"
 msgstr "_Apie skambučius"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Įveskite VoIP adresą"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Įveskite numerį"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Skambinti"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Trinti simbolį priešais žymiklį"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "SIP paskyra"
 
@@ -459,21 +460,21 @@ msgstr "Automatiškai atsakytas"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Skambutis atsijungė (nežinomas priežasties kodas %i)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "Nėra ModemManager"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Nėra prieinamo modemo su garso galimybe"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Įprastinis"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializuota"
@@ -554,3 +555,12 @@ msgstr "Naudoti telefonų skambučiams"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Prisijungti automatiškai"
+
+#~ msgid "Enter a number"
+#~ msgstr "Įveskite numerį"
+
+#~ msgid "Dial"
+#~ msgstr "Skambinti"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Trinti simbolį priešais žymiklį"
