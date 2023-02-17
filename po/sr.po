@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-08-12 05:43+0000\n"
-"PO-Revision-Date: 2022-08-17 06:34+0200\n"
+"POT-Creation-Date: 2023-02-12 12:06+0000\n"
+"PO-Revision-Date: 2023-02-17 07:28+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <српски <gnome-sr@googlegroups.org>>\n"
 "Language: sr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Generator: Poedit 3.1.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:438 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Позиви"
 
@@ -202,45 +202,58 @@ msgstr "Прекидање везе је обављено"
 msgid "Internal error occurred"
 msgstr "Дошло је до унутрашње грешке"
 
-#: src/calls-application.c:319
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Уреди налог: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Додај нови налог"
+
+#: src/calls-account-overview.c:377
+msgid "Account overview"
+msgstr "Преглед налога"
+
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Покушах да позовем неисправну телефонску путању „%s“"
 
-#: src/calls-application.c:636
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Не знам како да отворим „%s“"
 
-#: src/calls-application.c:690
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "Назив прикључка за коришћење као достављач позивања"
 
-#: src/calls-application.c:691
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "ПРИКЉУЧАК"
 
-#: src/calls-application.c:696
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Да ли треба приказати главни прозор при покретању"
 
-#: src/calls-application.c:702
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Окреће број телефона"
 
-#: src/calls-application.c:703
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "БРОЈ"
 
-#: src/calls-application.c:708
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Укључује опширне поруке прочишћавања"
 
-#: src/calls-application.c:714
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Исписује тренутно издање"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Безимени позивалац"
 
@@ -268,40 +281,40 @@ msgstr "Не могу позивати: Нема доступног модема
 msgid "Can't place calls: No plugin loaded"
 msgstr "Не могу позивати: Прикључак није учитан"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Контакти"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Бројчаник"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Недавно"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Пропуштен позив"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропуштен позив од „<b>%s</b>“"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропуштени позив од „%s“"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Пропуштен позив од непознатог позиваоца"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Узврати позив"
 
@@ -389,27 +402,16 @@ msgstr "_Пречице тастатуре"
 msgid "_Help"
 msgstr "По_моћ"
 
+#. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
 msgstr "О _Позивима"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Унеси „VoIP“ адресу"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Унесите број"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Позови"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Обришите знак испред курзора"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "„SIP“ налози"
 
@@ -421,143 +423,157 @@ msgstr "Нови позив"
 msgid "Back"
 msgstr "Назад"
 
-#: plugins/mm/calls-mm-call.c:73
+#: plugins/provider/mm/calls-mm-call.c:73
 msgid "Unknown reason"
 msgstr "Непознат разлог"
 
-#: plugins/mm/calls-mm-call.c:74
+#: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
 msgstr "Одлазни позив је покренут"
 
-#: plugins/mm/calls-mm-call.c:75
+#: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
 msgstr "Нови долазни позив"
 
-#: plugins/mm/calls-mm-call.c:76
+#: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
 msgstr "Позив је прихваћен"
 
-#: plugins/mm/calls-mm-call.c:77
+#: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
 msgstr "Позив је завршен"
 
-#: plugins/mm/calls-mm-call.c:78
+#: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
 msgstr "Прекинута је веза позива (заузет је или је позив одбијен)"
 
-#: plugins/mm/calls-mm-call.c:79
+#: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
 msgstr "Прекинута је веза позива (погрешан ид или проблем са мрежом)"
 
-#: plugins/mm/calls-mm-call.c:80
+#: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Прекинута је веза позива (грешка постављања аудио канала)"
 
-#: plugins/mm/calls-mm-call.c:81
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call transferred"
 msgstr "Позив је пребачен"
 
-#: plugins/mm/calls-mm-call.c:82
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
 msgstr "Позив је преусмерен"
 
-#: plugins/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Прекинута је веза позива (непозната шифра разлога %i)"
 
-#: plugins/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "Управник модема није доступан"
 
-#: plugins/mm/calls-mm-provider.c:84 plugins/ofono/calls-ofono-provider.c:96
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Нема модема који је способан за пренос гласа"
 
-#: plugins/mm/calls-mm-provider.c:86 plugins/ofono/calls-ofono-provider.c:98
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Обичан"
 
-#: plugins/mm/calls-mm-provider.c:445 plugins/ofono/calls-ofono-provider.c:543
+#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Покренут"
 
-#: plugins/ofono/calls-ofono-provider.c:94
+#: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
 msgstr "Д-сабирница није доступна"
 
-#: plugins/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:668
 msgid "No encryption"
 msgstr "Нема шифровања"
 
 #. TODO Optional encryption
-#: plugins/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:675
 msgid "Force encryption"
 msgstr "Присили шифровање"
 
-#: plugins/sip/calls-sip-call.c:123
+#: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
 msgstr "Размена криптографског кључа није успела"
 
-#: plugins/sip/sip-account-widget.ui:11
+#: plugins/provider/sip/sip-account-widget.ui:11
 msgid "Add Account"
 msgstr "Додај налог"
 
-#: plugins/sip/sip-account-widget.ui:17
+#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Пријави ме"
 
-#: plugins/sip/sip-account-widget.ui:42
+#: plugins/provider/sip/sip-account-widget.ui:42
 msgid "Manage Account"
 msgstr "Управљајте налогом"
 
-#: plugins/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:47
 msgid "_Apply"
 msgstr "_Примени"
 
-#: plugins/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:61
 msgid "_Delete"
 msgstr "О_бриши"
 
-#: plugins/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:91
 msgid "Server"
 msgstr "Сервер"
 
-#: plugins/sip/sip-account-widget.ui:109
+#: plugins/provider/sip/sip-account-widget.ui:109
 msgid "Display Name"
 msgstr "Назив приказа"
 
-#: plugins/sip/sip-account-widget.ui:110
+#: plugins/provider/sip/sip-account-widget.ui:110
 msgid "Optional"
 msgstr "Изборно"
 
-#: plugins/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:128
 msgid "User ID"
 msgstr "ИБ корисника"
 
-#: plugins/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:141
 msgid "Password"
 msgstr "Лозинка"
 
-#: plugins/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:166
 msgid "Port"
 msgstr "Прикључник"
 
-#: plugins/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
 msgstr "Пренос"
 
-#: plugins/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:189
 msgid "Media Encryption"
 msgstr "Шифровање медија"
 
-#: plugins/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
 msgstr "Користи за позиве телефоном"
 
-#: plugins/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Повежи самостално"
+
+#~ msgid "Enter a number"
+#~ msgstr "Унесите број"
+
+#~ msgid "Dial"
+#~ msgstr "Позови"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Обришите знак испред курзора"
 
 #~ msgid "Can't place calls: No backend service"
 #~ msgstr "Не могу позивати: нема позадинца"
