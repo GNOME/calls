@@ -1,15 +1,15 @@
 # Hungarian translation for calls.
-# Copyright (C) 2020, 2022 Free Software Foundation, Inc.
+# Copyright (C) 2020, 2022, 2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the calls package.
 #
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2020.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-10-17 13:43+0000\n"
-"PO-Revision-Date: 2022-10-27 22:17+0200\n"
+"POT-Creation-Date: 2023-02-13 20:40+0000\n"
+"PO-Revision-Date: 2023-02-20 23:39+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 22.08.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Hívások"
 
@@ -55,9 +55,9 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"A Hívások egy egyszerű, elegáns telefontárcsázó és híváskezelő a GNOME-hoz."
-" Használható mobilmodemmel egyszerű, régi telefonhívásokhoz, valamint a"
-" SIP-protokollt használó VoIP-hívásokhoz."
+"A Hívások egy egyszerű, elegáns telefontárcsázó és híváskezelő a GNOME-hoz. "
+"Használható mobilmodemmel egyszerű, régi telefonhívásokhoz, valamint a SIP-"
+"protokollt használó VoIP-hívásokhoz."
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
@@ -89,8 +89,8 @@ msgstr "Az automatikusan betöltendő bővítmények"
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
 msgstr ""
-"Ezek a bővítmények automatikusan betöltésre kerülnek az alkalmazás"
-" indításakor."
+"Ezek a bővítmények automatikusan betöltésre kerülnek az alkalmazás "
+"indításakor."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -199,41 +199,56 @@ msgstr "A leválasztás befejezve"
 msgid "Internal error occurred"
 msgstr "Belső hiba történt"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Fiók szerkesztése: %s"
+
+#: src/calls-account-overview.c:184
+#| msgid "Add Account"
+msgid "Add new account"
+msgstr "Új fiók hozzáadása"
+
+#: src/calls-account-overview.c:376
+#| msgid "Account is online"
+msgid "Account overview"
+msgstr "Fiók áttekintése"
+
+#: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Érvénytelen telefon-URI-t próbált meg tárcsázni: „%s”"
 
-#: src/calls-application.c:627
+#: src/calls-application.c:672
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nem tudni, hogyan kell megnyitni a következőt: „%s”"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:730
 msgid "The name of the plugin to use as a call provider"
 msgstr "A hívásszolgáltatóként használandó bővítmény neve"
 
-#: src/calls-application.c:682
+#: src/calls-application.c:731
 msgid "PLUGIN"
 msgstr "BŐVÍTMÉNY"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:736
 msgid "Whether to present the main window on startup"
 msgstr "Megjelenjen-e a főablak indításkor"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:742
 msgid "Dial a telephone number"
 msgstr "Telefonszám tárcsázása"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:743
 msgid "NUMBER"
 msgstr "SZÁM"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:748
 msgid "Enable verbose debug messages"
 msgstr "Részletes hibakeresési üzenetek engedélyezése"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:754
 msgid "Print current version"
 msgstr "Jelenlegi verzió kiírása"
 
@@ -315,9 +330,9 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Itt adhat hozzá VoIP-fiókot. Ez lehetővé teszi, hogy VoIP-hívásokat indítson"
-" és fogadjon a SIP-protokoll használatával. Ez a funkció még viszonylag új,"
-" és még nem teljesen kész (azaz nincs titkosított média)."
+"Itt adhat hozzá VoIP-fiókot. Ez lehetővé teszi, hogy VoIP-hívásokat indítson "
+"és fogadjon a SIP-protokoll használatával. Ez a funkció még viszonylag új, "
+"és még nem teljesen kész (azaz nincs titkosított média)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -390,23 +405,11 @@ msgstr "_Súgó"
 msgid "_About Calls"
 msgstr "A Hívások _névjegye"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "VoIP-cím megadása"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Szám megadása"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Tárcsázás"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Karakter törlése a kurzor előtt"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "SIP-fiók"
 
@@ -465,21 +468,21 @@ msgstr "Hívás elutasítva"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Hívás szétkapcsolva (ismeretlen okkód: %i)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "A ModemManager nem érhető el"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Nem érhető el hangképes modem"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normál"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Előkészítve"
