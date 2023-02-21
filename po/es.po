@@ -2,18 +2,17 @@
 # Copyright (C) Purism
 # This file is distributed under the same license as the Calls package.
 # Amos Batto <amosbatto@yahoo.com>, 2020.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2020.
 # PerikiyoXD <perikiyoxd@gmail.com>, 2021.
 # Pablo Correa Gómez <ablocorrea@hotmail.com>, 2022.
-# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2021-2022.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2021-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-11 14:09+0000\n"
-"PO-Revision-Date: 2022-09-12 12:37+0200\n"
-"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2023-02-17 06:29+0000\n"
+"PO-Revision-Date: 2023-02-21 11:39+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:440 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Llamadas"
 
@@ -199,45 +198,58 @@ msgstr "Desconexión finalizada"
 msgid "Internal error occurred"
 msgstr "Error interno"
 
-#: src/calls-application.c:319
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Editar cuenta: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Añadir cuenta nueva"
+
+#: src/calls-account-overview.c:377
+msgid "Account overview"
+msgstr "Vista general de la cuenta"
+
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Intento de marcado de URI de teléfono «%s» no válido"
 
-#: src/calls-application.c:638
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No se sabe cómo abrir «%s»"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "COMPLEMENTO"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Indica si se muestra la ventana principal al inicio"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:710
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Activar mensajes de depuración detallados"
 
-#: src/calls-application.c:716
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Imprimir versión actual"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Llamada anónima"
 
@@ -266,40 +278,40 @@ msgstr ""
 msgid "Can't place calls: No plugin loaded"
 msgstr "No se pueden realizar llamadas: no hay ningún complemento cargado"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Contactos"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Teclado de marcado"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Recientes"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Llamada perdida"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Llamada perdida de <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Llamada perdida de %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Llamada perdida de desconocido"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Volver a llamar"
 
@@ -392,23 +404,11 @@ msgstr "_Ayuda"
 msgid "_About Calls"
 msgstr "_Acerca de Llamadas"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Introduzca una dirección VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Introduzca un número"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Marcar"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Eliminar caracter delante del cursor"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Cuenta SIP"
 
@@ -452,34 +452,36 @@ msgstr "Llamada desconectada (id erróneo o error de red)"
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Llamada desconectada (problema conectando el canal de audio)"
 
-#: plugins/provider/mm/calls-mm-call.c:81
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call transferred"
 msgstr "Llamada desviada"
 
-#: plugins/provider/mm/calls-mm-call.c:82
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
 msgstr "Llamada rechazada"
 
-#: plugins/provider/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Llamada desconectada (código de error desconocido «%i»)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager no disponible"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "No hay disponible ningún módem con capacidad de voz"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializada"
@@ -560,6 +562,15 @@ msgstr "Utilizar para llamadas telefónicas"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Conectar automáticamente"
+
+#~ msgid "Enter a number"
+#~ msgstr "Introduzca un número"
+
+#~ msgid "Dial"
+#~ msgstr "Marcar"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Eliminar caracter delante del cursor"
 
 #~ msgid "Call disconnected (unknown reason)"
 #~ msgstr "Llamada desconectada (razón desconocida)"
