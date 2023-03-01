@@ -1,0 +1,560 @@
+# Vietnamese translation for calls.
+# Copyright (C) 2023 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Nguyễn Đức Quang <nguyenducquang@protonmail.com>, 2023.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2023-02-12 12:06+0000\n"
+"PO-Revision-Date: 2023-02-11 17:31+0300\n"
+"Last-Translator: Nguyễn Đức Quang <nguyenducquang@protonmail.com>\n"
+"Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 22.12.2\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "Calls"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Gọi điện và quản lý cuộc gọi"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Điện thoại;Gọi;Gọi điện;Gọi điện thoại;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Calls (daemon)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Gọi điện và quản lý cuộc gọi (chế độ daemon)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr ""
+"Thực hiện các cuộc gọi điện thoại và các cuộc gọi qua giao thức SIP (Giao "
+"thức Khởi tạo Phiên)"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Calls là một bộ gọi và quản lý cuộc gọi đơn giản và hiệu quả dành cho GNOME. "
+"Có thể dùng Calls qua một mô-đem tế bào để thực hiện các cuộc gọi điện thoại "
+"truyền thống hoặc sử dụng giao thức SIP để thực hiện các cuộc gọi VoIP. "
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "Đang thực hiện cuộc gọi"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "Lịch sử cuộc gọi"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Các cuộc gọi có nên tự động sử dụng nguồn gốc mặc định hay không"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Mã quốc gia, do mô-đem thông báo"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Mã quốc gia được dùng để tra tên liên lạc"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Tự động tải các trình cắm (plugin)"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Các trình cắm này sẽ được tự động tải khi ứng dụng khởi động."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Các bộ codec âm thanh dùng để gọi VoIP, theo thứ tự ưu tiên"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Các bộ codec âm thanh được ưu tiên dùng để gọi VoIP (nếu có)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+"Có cho phép sử dụng SDES cho SRTP mà không giao vận bằng  giao thức TLS hay "
+"không"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "Chọn có nếu bạn cho phép trao đổi khóa không được mã hóa."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Trạng thái mặc định (chưa được khởi tạo)"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Đang khởi tạo tài khoản..."
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Đang xóa khởi tạo tài khoản..."
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Đang kết nối với máy chủ..."
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Tài khoản trực tuyến"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Đang ngắt kết nối với máy chủ... "
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Tài khoản ngoại tuyến"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Tài khoản gặp lỗi"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Không có nguyên do nào được đưa ra"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Khởi tạo đã bắt đầu"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Khởi tạo hoàn thành"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Xóa khởi tạo đã bắt đầu"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Xóa khởi tạo hoàn thành"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Chưa có thông tin định danh nào được thiết lập"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Đang bắt đầu kết nối"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Kết nối hết thời gian"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Không thể phân giải tên miền"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Máy chủ không chấp nhận tên người dùng hoặc mật khẩu"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Kết nối hoàn thành"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Đang bắt đầu ngắt kết nối"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Ngắt kết nối hoàn thành"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Đã xảy ra lỗi nội bộ"
+
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Chỉnh sửa tài khoản: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Thêm tài khoản mới"
+
+#: src/calls-account-overview.c:377
+msgid "Account overview"
+msgstr "Tổng quan tài khoản"
+
+#: src/calls-application.c:349
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "URI điện thoại `%s' không hợp lệ"
+
+#: src/calls-application.c:720
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Không biết cách mở `%s'"
+
+#: src/calls-application.c:780
+msgid "The name of the plugin to use as a call provider"
+msgstr "Tên trình cắm được dùng để làm nhà cung cấp cuộc gọi"
+
+#: src/calls-application.c:781
+msgid "PLUGIN"
+msgstr "TRÌNH CẮM"
+
+#: src/calls-application.c:786
+msgid "Whether to present the main window on startup"
+msgstr "Có hiển thị cửa sổ chính khi khởi động ứng dụng hay không"
+
+#: src/calls-application.c:792
+msgid "Dial a telephone number"
+msgstr "Gọi số điện thoại"
+
+#: src/calls-application.c:793
+msgid "NUMBER"
+msgstr "SỐ"
+
+#: src/calls-application.c:798
+msgid "Enable verbose debug messages"
+msgstr "Bật chế độ thông báo sửa lỗi chi tiết"
+
+#: src/calls-application.c:804
+msgid "Print current version"
+msgstr "In phiên bản hiện tại"
+
+#: src/calls-best-match.c:458
+msgid "Anonymous caller"
+msgstr "Người gọi nặc danh"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"hôm qua"
+
+#: src/calls-main-window.c:123
+msgid "translator-credits"
+msgstr "Nhóm dịch GNOME <gnome-vi-list@gnome.org>"
+
+#: src/calls-main-window.c:316
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Không thể thực hiện cuộc gọi: Không có mô-đem hay tài khoản VoIP"
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "Không thể thực hiện cuộc gọi: Chưa tải trình cắm"
+
+#: src/calls-main-window.c:356
+msgid "Contacts"
+msgstr "Danh bạ"
+
+#: src/calls-main-window.c:366
+msgid "Dial Pad"
+msgstr "Bàn Phím Nhập Số"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:375
+msgid "Recent"
+msgstr "Gần đây"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "Cuộc gọi nhỡ"
+
+#. %s is a name here
+#: src/calls-notifier.c:77
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Cuộc gọi nhỡ từ <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:80
+#, c-format
+msgid "Missed call from %s"
+msgstr "Cuộc gọi nhỡ từ %s"
+
+#: src/calls-notifier.c:82
+msgid "Missed call from unknown caller"
+msgstr "Cuộc gọi nhỡ từ số lạ"
+
+#: src/calls-notifier.c:88
+msgid "Call back"
+msgstr "Gọi lại"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "Tài khoản VoIP"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "Thêm Tài khoản VoIP"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Bạn có thể thêm tài khoản VoIP tại đây. Tài khoản VoIP cho phép bạn thực "
+"hiện và nhận các cuộc gọi VoIP sử dụng giao thức SIP. Tính năng này vẫn còn "
+"tương đối mới và chưa hoàn thiện (ví dụ, các nội dung đa phương tiện vẫn "
+"chưa được mã hóa)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "_Thêm Tài Khoản"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "Gọi"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "_Xóa Cuộc Gọi"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "_Sao chép số"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "_Thêm vào danh bạ"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_Gửi tin nhắn SMS"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "Đang chờ máy"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "Không Tìm Thấy Địa Chỉ Liên Lạc"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "Không Có Cuộc Gọi Nào Gần Đây"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_Hủy"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "Đó_ng"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_Gửi"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_Tài khoản VoIP"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_Phím tắt bàn phím"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_Trợ giúp"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_Giới thiệu Calls"
+
+#: src/ui/new-call-box.ui:38
+msgid "Enter a VoIP address"
+msgstr "Nhập địa chỉ VoIP"
+
+#: src/ui/new-call-box.ui:62
+msgid "SIP Account"
+msgstr "Tài khoản SIP"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "Cuộc Gọi Mới"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "Quay Lại"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Không rõ nguyên do"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Cuộc gọi đi đã bắt đầu"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Cuộc gọi đến mới"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Cuộc gọi được chấp thuận"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Cuộc gọi kết thúc"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Cuộc gọi bị ngắt (máy bận hoặc cuộc gọi bị từ chối)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Cuộc gọi bị ngắt (sai định danh hoặc lỗi mạng)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Cuộc gọi bị ngắt (lỗi thiết lập kênh âm thanh)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "Cuộc gọi được chuyển tiếp"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Cuộc gọi được đổi hướng"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Cuộc gọi bị ngắt (mã không rõ nguyên do %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "Không có chương trình ModemManager"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Không có mô-đem có khả năng xử lý ghi âm giọng nói (voice-capable)"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Bình thường"
+
+#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "Đã được khởi tạo"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "Không có DBus"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "Không mã hóa"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "Bắt buộc phải Mã hóa"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Trao đổi khóa mật mã không thành công"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "Thêm Tài Khoản"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_Đăng Nhập"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "Quản lý Tài khoản"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "Á_p dụng"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_Xóa"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "Máy Chủ"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "Hiển Thị Tên"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "Tùy Chọn"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "Định danh người dùng"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "Cổng"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "Vận chuyển"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "Mã Hóa Nội Dung Đa Phương Tiện"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "Dùng Cho Các Cuộc Gọi Điện Thoại"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "Tự Động Kết Nối"
