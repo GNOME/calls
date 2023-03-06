@@ -1,0 +1,564 @@
+# Korean translation for calls.
+# Copyright (C) 2023 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Changwoo Ryu <cwryu@debian.org>, 2023.
+#
+# 용어
+# - VoIP - 인터넷 전화
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2023-03-01 02:20+0000\n"
+"PO-Revision-Date: 2023-03-05 13:47+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
+"Language-Team: Korean <gnome-kr@googlegroups.com>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "통화"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "전화"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "전화 걸기 및 통화 처리 앱"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;전화;Call;통화;Phone;Dial;다이얼;Dialer;걸기;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "통화 (데몬)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "전화 걸기 및 통화 처리 앱 (데몬 모드)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "전화 및 SIP 통화를 합니다"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr "통화 앱은 그놈 데스크톱의 간단하면서 세련된 전화 걸기 및 통화 처리 앱입니다. 휴대전화 모뎀과 같이 사용해서 구식으로 전화 통화를 하는데 사용할 수도 있고, SIP 프로토콜을 사용해 인터넷 전화를 쓸 수도 있습니다."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:26
+msgid "Placing a call"
+msgstr "전화 걸기"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:31
+msgid "The call history"
+msgstr "통화 기록"
+
+# 발신 번호 정보 등
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "통화에서 기본 출처 정보를 자동으로 사용할지 여부"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "모뎀에서 보고한 국가 코드"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "연락처 이름 찾기에 사용할 국가 코드"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "자동으로 읽어들일 플러그인"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "앱 시작할 때 다음 플러그인을 자동으로 읽어들입니다."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "인터넷 전화 통화에 사용할 오디오 코덱, 우선하는 순서"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "인터넷 전화 통화에 우선적으로 사용할 오디오 코덱 (인터넷 전화를 사용한다면)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "전송 수단으로 TLS 없이 SRTP에 대한 SDES 사용을 허용할지 여부"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "참이면 암호화되지 않은 형식으로 키를 교환합니다."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "기본 (초기화되지 않은) 상태"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "계정 초기화하는 중…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "계정 초기화 해제하는 중…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "서버에 연결하는 중…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "계정이 연결되어 있습니다"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "서버에서 연결 해제하는 중…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "계정 연결이 끊겼습니다"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "계정에서 오류가 발생했습니다"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "이유가 주어지지 않았습니다"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "초기화를 시작했습니다"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "초기화를 마쳤습니다"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "초기화 해제를 시작했습니다"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "초기화 해제를 마쳤습니다"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "신원 정보를 설정하지 않았습니다"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "연결 시작"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "연결 제한 시간 초과"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "도메인 이름을 찾을 수 없습니다"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "서버에서 사용자 이름 또는 암호를 받아들이지 않았습니다"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "연결 마침"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "연결 해제 시작"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "연결 해제 마침"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "내부 오류가 발생했습니다"
+
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "계정 편집: %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "새 계정 추가"
+
+#: src/calls-account-overview.c:377
+msgid "Account overview"
+msgstr "계정 개요"
+
+#: src/calls-application.c:349
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "잘못된 tel URI '%s'에 전화 걸기 시도"
+
+# 알 수 없는 VoIP URL 등
+#: src/calls-application.c:720
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "`%s'을(를) 여는 방법을 알지 못합니다"
+
+#: src/calls-application.c:780
+msgid "The name of the plugin to use as a call provider"
+msgstr "통화 제공자로 사용할 플러그인의 이름"
+
+# command line
+#: src/calls-application.c:781
+msgid "PLUGIN"
+msgstr "<플러그인>"
+
+# command line
+#: src/calls-application.c:786
+msgid "Whether to present the main window on startup"
+msgstr "시작할 때 메인 창을 표시할지 여부"
+
+# command line
+#: src/calls-application.c:792
+msgid "Dial a telephone number"
+msgstr "전화 번호에 전화를 겁니다"
+
+# command line
+#: src/calls-application.c:793
+msgid "NUMBER"
+msgstr "<번호>"
+
+# command line
+#: src/calls-application.c:798
+msgid "Enable verbose debug messages"
+msgstr "더 많은 디버깅 메시지를 사용합니다"
+
+# command line
+#: src/calls-application.c:804
+msgid "Print current version"
+msgstr "현재 버전을 표시합니다"
+
+# command line
+#: src/calls-best-match.c:458
+msgid "Anonymous caller"
+msgstr "익명 발신자"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"어제"
+
+#: src/calls-main-window.c:123
+msgid "translator-credits"
+msgstr "류창우 <cwryu@debian.org>"
+
+#: src/calls-main-window.c:316
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "전화를 걸 수 없습니다: 모뎀이나 인터넷 전화 계정이 없습니다"
+
+#: src/calls-main-window.c:318
+msgid "Can't place calls: No plugin loaded"
+msgstr "전화를 걸 수 없습니다: 플러그인을 로그인하지 않았습니다"
+
+#: src/calls-main-window.c:356
+msgid "Contacts"
+msgstr "연락처"
+
+#: src/calls-main-window.c:366
+msgid "Dial Pad"
+msgstr "키패드"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:375
+msgid "Recent"
+msgstr "최근"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "부재중 통화"
+
+# 통화 기록 목록에 표시되므로 "부재중 통화"를 앞에 쓴다
+#. %s is a name here
+#: src/calls-notifier.c:77
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "부재중 통화, <b>%s</b>에서"
+
+# 통화 기록 목록에 표시되므로 "부재중 통화"를 앞에 쓴다
+#. %s is a id here
+#: src/calls-notifier.c:80
+#, c-format
+msgid "Missed call from %s"
+msgstr "부재중 전화, %s에서"
+
+# 통화 기록 목록에 표시되므로 "부재중 통화"를 앞에 쓴다
+#: src/calls-notifier.c:82
+msgid "Missed call from unknown caller"
+msgstr "부재중 전화, 발신자 알 수 없음"
+
+#: src/calls-notifier.c:88
+msgid "Call back"
+msgstr "회신 전화 걸기"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "인터넷 전화 계정"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "인터넷 전화 계정 추가"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr "인터넷 전화 계정을 여기에 추가할 수 없습니다. 이 계정에서 SIP 프로토콜을 사용해 인터넷 전화 통화를 걸거나 받을 수 있습니다. 이 기능은 상대적으로 새로운 기능이므로 아직 모든 기능이 완전하지 않습니다 (암호화되지 않은 미디어 처리 등)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "계정 추가(_A)"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "전화 걸기"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "통화 삭제(_D)"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "번호 복사(_C)"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "연락처 추가(_A)"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "SMS 보내기(_S)"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "대기 중"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "연락처가 없습니다"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "최근 통화가 없습니다"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "취소(_C)"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "닫기(_C)"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "보내기(_S)"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "인터넷 전화 계정(_V)"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "키보드 바로 가기(_K)"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "도움말(_H)"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "통화 앱 정보(_A)"
+
+#: src/ui/new-call-box.ui:38
+msgid "Enter a VoIP address"
+msgstr "인터넷 전화 주소 입력"
+
+#: src/ui/new-call-box.ui:62
+msgid "SIP Account"
+msgstr "SIP 계정"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "새 통화"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "뒤로"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "알 수 없는 이유"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "전화 발신을 시작했습니다"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "새 전화 수신"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "통화를 수락했습니다"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "통화가 끝났습니다"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "통화 연결이 끊겼습니다 (통화 중 또는 통화 거절)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "통화 연결이 끊겼습니다 (잘못된 아이디 또는 네트워크 문제)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "통화 연결이 끊겼습니다 (오디오 채널 준비에 오류)"
+
+# 수신 후 다른 이에게 돌려주기
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "통화를 돌려주었습니다"
+
+# 착신 전환
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "통화가 전환되었습니다"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "통화가 끊겼습니다 (알 수 없는 이유 코드 %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager를 사용할 수 없습니다"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "음성 사용 가능한 모뎀이 없습니다"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "일반"
+
+#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "초기화 마침"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "D버스를 사용할 수 없습니다"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "암호화 없음"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "암호화 강제 사용"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "암호 키 교환이 성공하지 못했습니다"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "계정 추가"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "로그인(_L)"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "계정 관리"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "적용(_A)"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "삭제(_D)"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "서버"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "표시 이름"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "옵션"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "사용자 아이디"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "암호"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "포트"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "전송 수단"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "미디어 암호화"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "전화 통화에 사용"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "자동으로 연결"
