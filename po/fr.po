@@ -10,18 +10,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-09-01 16:57+0000\n"
-"PO-Revision-Date: 2022-09-03 10:07+0200\n"
-"Last-Translator: Éloi Rivard <eloi.rivard@nubla.fr>\n"
+"POT-Creation-Date: 2023-03-01 02:20+0000\n"
+"PO-Revision-Date: 2023-03-06 13:06+0100\n"
+"Last-Translator: Alan Paris <Alan90000@yahoo.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:440 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Appels"
 
@@ -198,45 +199,58 @@ msgstr "Déconnexion terminée"
 msgid "Internal error occurred"
 msgstr "Une erreur interne est survenue"
 
-#: src/calls-application.c:319
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr "Modifier le compte : %s"
+
+#: src/calls-account-overview.c:184
+msgid "Add new account"
+msgstr "Ajouter un nouveau compte"
+
+#: src/calls-account-overview.c:377
+msgid "Account overview"
+msgstr "Aperçu du compte"
+
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tentative de composition de l’URI téléphonique non valable « %s »"
 
-#: src/calls-application.c:638
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ne sait pas comment ouvrir « %s »"
 
-#: src/calls-application.c:692
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "Le nom du greffon à utiliser comme fournisseur d’appel"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "GREFFON"
 
-#: src/calls-application.c:698
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Indique si la fenêtre principale doit être affichée au démarrage"
 
-#: src/calls-application.c:704
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Composer un numéro téléphonique"
 
-#: src/calls-application.c:705
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "NUMÉRO"
 
-#: src/calls-application.c:710
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Activer les messages de débogage verbeux"
 
-#: src/calls-application.c:716
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Afficher la version actuelle"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Appelant anonyme"
 
@@ -265,40 +279,40 @@ msgstr "Impossible d’appeler : pas de modem ou de compte VoIP disponible"
 msgid "Can't place calls: No plugin loaded"
 msgstr "Impossible d’appeler : aucun greffon chargé"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Contacts"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Pavé numérique"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Récents"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Appel manqué"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Appel manqué de <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Appel manqué de %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Appel manqué d’un appelant anonyme"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Rappeler"
 
@@ -392,23 +406,11 @@ msgstr "Aid_e"
 msgid "_About Calls"
 msgstr "À propos d’_Appels"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr "Entrer une adresse VoIP"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Composer un numéro"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "Composer"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Supprime le caractère devant le curseur"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Compte SIP"
 
@@ -452,35 +454,37 @@ msgstr "Raccrochage (mauvais identifiant ou problème réseau)"
 msgid "Call disconnected (error setting up audio channel)"
 msgstr "Raccrochage (erreur lors de l’établissement du canal audio)"
 
-#: plugins/provider/mm/calls-mm-call.c:81
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call transferred"
 msgstr "Appel transféré"
 
-#: plugins/provider/mm/calls-mm-call.c:82
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
 msgstr "Appel dévié"
 
-#: plugins/provider/mm/calls-mm-call.c:107
+#: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Raccrochage (raison inconnue, code %i)"
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager non disponible"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "Aucun modem vocal disponible"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:445
-#: plugins/provider/ofono/calls-ofono-provider.c:543
+#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Initialisé"
 
@@ -560,6 +564,15 @@ msgstr "Utiliser pour les appels téléphoniques"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Connecter automatiquement"
+
+#~ msgid "Enter a number"
+#~ msgstr "Composer un numéro"
+
+#~ msgid "Dial"
+#~ msgstr "Composer"
+
+#~ msgid "Delete character in front of cursor"
+#~ msgstr "Supprime le caractère devant le curseur"
 
 #~ msgid "Calling…"
 #~ msgstr "Appel…"
