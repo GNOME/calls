@@ -74,7 +74,7 @@ get_selected_origin (CallsNewCallBox *self)
   if (model && index >= 0)
     origin = g_list_model_get_item (model, index);
 
-  return g_steal_pointer (&origin);
+  return origin;
 }
 
 
