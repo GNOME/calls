@@ -1531,6 +1531,7 @@ calls_sip_origin_dispose (GObject *object)
   g_clear_pointer (&self->host, g_free);
   g_clear_pointer (&self->user, g_free);
   g_clear_pointer (&self->password, g_free);
+  g_clear_pointer (&self->address, g_free);
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->dispose (object);
 }
