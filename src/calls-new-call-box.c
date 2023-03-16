@@ -127,7 +127,7 @@ address_activate_cb (CallsNewCallBox *self)
   CallsOrigin *origin = get_selected_origin (self);
   const char *address = gtk_entry_get_text (self->address_entry);
 
-  if (origin && address && *address != '\0')
+  if (origin && !STR_IS_NULL_OR_EMPTY (address))
     calls_origin_dial (origin, address);
 }
 
@@ -138,7 +138,7 @@ address_changed_cb (CallsNewCallBox *self)
   const char *address = gtk_entry_get_text (self->address_entry);
 
   gtk_widget_set_visible (GTK_WIDGET (self->result),
-                          address && *address != '\0');
+                          !STR_IS_NULL_OR_EMPTY (address));
 }
 
 
