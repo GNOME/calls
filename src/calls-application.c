@@ -527,6 +527,8 @@ calls_application_command_line (GApplication            *application,
                level);
   }
 
+  start_proper (self);
+
   providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
   if (providers) {
     g_action_group_activate_action (G_ACTION_GROUP (application),
