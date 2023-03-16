@@ -413,7 +413,10 @@ dispose (GObject *object)
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
 
   g_clear_object (&self->record_store);
-  g_clear_object (&self->account_overview);
+  if (self->account_overview) {
+    gtk_widget_destroy (GTK_WIDGET (self->account_overview));
+    self->account_overview = NULL;
+  }
 
   G_OBJECT_CLASS (calls_main_window_parent_class)->dispose (object);
 }
