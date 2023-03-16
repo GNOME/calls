@@ -365,10 +365,11 @@ add_origin (CallsManager *self, CallsOrigin *origin)
 
   g_list_store_append (self->origins, origin);
 
-  g_signal_connect (origin,
-                    "message",
-                    G_CALLBACK (on_message),
-                    self);
+  g_signal_connect_object (origin,
+                           "message",
+                           G_CALLBACK (on_message),
+                           self,
+                           G_CONNECT_AFTER);
 
   g_signal_connect_object (origin,
                            "notify::country-code",
