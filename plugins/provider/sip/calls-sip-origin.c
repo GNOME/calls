@@ -1233,7 +1233,7 @@ deinit_sip_account (CallsSipOrigin *self)
   remove_calls (self, NULL);
 
   if (self->nua) {
-    g_debug ("Clearing any handles");
+    g_debug ("Clearing any handles for account '%s'", self->address);
     g_clear_pointer (&self->oper->register_handle, nua_handle_destroy);
     g_debug ("Requesting nua_shutdown ()");
     self->is_nua_shutdown = FALSE;
