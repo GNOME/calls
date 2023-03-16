@@ -273,12 +273,16 @@ on_providers_changed (CallsAccountOverview *self)
 
     if (CALLS_IS_ACCOUNT_PROVIDER (provider)) {
       self->providers = g_list_append (self->providers, provider);
-      g_signal_connect_swapped (calls_provider_get_origins (provider),
-                                "items-changed",
-                                G_CALLBACK (update_account_list),
-                                self);
-      g_signal_connect_swapped (provider, "widget-edit-done",
-                                G_CALLBACK (gtk_widget_hide), self->account_window);
+      g_signal_connect_object (calls_provider_get_origins (provider),
+                               "items-changed",
+                               G_CALLBACK (update_account_list),
+                               self,
+                               G_CONNECT_SWAPPED);
+      g_signal_connect_object (provider,
+                               "widget-edit-done",
+                               G_CALLBACK (gtk_widget_hide),
+                               self->account_window,
+                               G_CONNECT_SWAPPED);
     }
   }
 
