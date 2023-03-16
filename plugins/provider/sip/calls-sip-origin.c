@@ -22,6 +22,9 @@
  *
  */
 
+#define WAIT_FOR_OFFLINE_MS 100
+#define WAIT_FOR_OFFLINE_RETRIES 5
+
 #define G_LOG_DOMAIN "CallsSipOrigin"
 
 
@@ -1505,6 +1508,21 @@ static void
 calls_sip_origin_dispose (GObject *object)
 {
   CallsSipOrigin *self = CALLS_SIP_ORIGIN (object);
+  gboolean su_step_timeout = FALSE;
+  guint i = 0;
+
+  if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_STATE_ONLINE) {
+    go_online (CALLS_ACCOUNT (self), FALSE);
+
+    while (self->state != CALLS_ACCOUNT_STATE_OFFLINE && !su_step_timeout) {
+      su_root_step (self->ctx->root, WAIT_FOR_OFFLINE_MS);
+
+      if (i++ > WAIT_FOR_OFFLINE_RETRIES)
+        su_step_timeout = TRUE;
+    }
+  }
+
+  deinit_sip_account (self);
 
   g_clear_pointer (&self->id, g_free);
   g_clear_pointer (&self->own_ip, g_free);
@@ -1513,11 +1531,6 @@ calls_sip_origin_dispose (GObject *object)
   g_clear_pointer (&self->host, g_free);
   g_clear_pointer (&self->user, g_free);
   g_clear_pointer (&self->password, g_free);
-
-  if (!self->use_direct_connection && self->state == CALLS_ACCOUNT_STATE_ONLINE)
-    go_online (CALLS_ACCOUNT (self), FALSE);
-
-  deinit_sip_account (self);
 
   G_OBJECT_CLASS (calls_sip_origin_parent_class)->dispose (object);
 }
