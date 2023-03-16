@@ -1248,8 +1248,7 @@ deinit_sip_account (CallsSipOrigin *self)
       return FALSE;
     }
     g_debug ("nua_shutdown() complete. Destroying nua handle");
-    nua_destroy (self->nua);
-    self->nua = NULL;
+    g_clear_pointer (&self->nua, nua_destroy);
   }
 
   g_clear_pointer (&self->own_ip, g_free);
