@@ -13,6 +13,7 @@ test_env = [
   'FOLKS_BACKENDS_ALLOWED=key-file',
   'FOLKS_PRIMARY_STORE=key-file',
   'CALLS_RECORD_DIR=@0@/tests/record-db'.format(meson.project_build_root()),
+  'CALLS_SIP_ACCOUNT_FILE=@0@/tests/sip-account.cfg'.format(meson.project_build_root()),
 ]
 
 test_cflags = [
