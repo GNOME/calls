@@ -1,6 +1,49 @@
+Calls 44.0
+---------------
+Released: 17 March 2023
+
+New features:
+=============
+* Sort favourite contacts at the top
+* Support for emergency calls in "dummy" provider
+
+Maybe noteworthy:
+=================
+* Fixed a couple of memory leaks
+* Higher code coverage
+* Disable call waiting
+
+Code contributions:
+===================
+ - Dark Dragon
+ - Evangelos Ribeiro Tzaras
+ - Guido Günther
+ - Дилян Палаузов
+
+Translation updates:
+====================
+ - Hindi (Hemish)
+ - Lithuanian (Aurimas Černius)
+ - Slovenian (Martin)
+ - Czech (Daniel Rusek)
+ - German (Jürgen Benvenuti)
+ - Greek, Modern (Efstathios Iosifidis)
+ - Galician (Fran Dieguez)
+ - Serbian (Марко Костић)
+ - Persian (Danial Behzadi)
+ - Occitan (Quentin PAGÈS)
+ - Spanish (Daniel)
+ - Vietnamese (Ngọc Quân Trần)
+ - Korean (Changwoo Ryu)
+ - French (Alan Paris)
+ - Danish (Alan Mortensen)
+ - Bulgarian (Alexander Shopov)
+
+The detailed changes can be found in debian/changelog
+
 Calls 44.alpha.1
 ----------------
-Released: 12 January 2022
+Released: 12 January 2023
 
 New features:
 =============
@@ -465,7 +508,7 @@ Released: 14. August 2021
   - Placing and receiving VoIP calls is now possible from the dial pad
 
 Known Issues/Limitations:
- - If you have multiple active network interfaces funkyness may ensue and 
+ - If you have multiple active network interfaces funkyness may ensue and
    you SIP messages are being sucked into a black hole of sorts
  - If things go wrong with a VoIP call for example because your network is down
    more funkyness may ensue

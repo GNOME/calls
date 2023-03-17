@@ -5,7 +5,7 @@
     <project_license>GPL-3.0-or-later</project_license>
     <name>Calls</name>
     <summary>Make phone and SIP calls</summary>
-    
+
     <description>
       <p>Calls is a simple, elegant phone dialer and call handler for GNOME.
       It can be used with a cellular modem for plain old telephone
@@ -15,7 +15,7 @@
     <url type="homepage">https://gitlab.gnome.org/GNOME/calls</url>
     <url type="bugtracker">https://gitlab.gnome.org/GNOME/calls/issues</url>
     <url type="translate">https://l10n.gnome.org/module/calls/</url>
-    
+
     <project_group>GNOME</project_group>
     <launchable type="desktop-id">org.gnome.Calls.desktop</launchable>
     <translation type="gettext">calls</translation>
@@ -62,6 +62,22 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="44.0" date="2023-03-17">
+        <description>
+          <p>
+            The Calls 44.0 release does not bring any new major features,
+            but instead fixes a number of papercuts and comes with the
+            usual round of translation updates
+          </p>
+          <ul>
+            <li>Call waiting is disabled for cellular modems as it is not implemented yet and can lead to audio breaking for ongoing calls</li>
+            <li>Fixed choosing weakest cipher instead of strongest in SRTP</li>
+            <li>Favourite contacts are now sorted at the top of the contact list</li>
+            <li>Emergency calls in the "dummy" provider</li>
+            <li>Updated translations</li>
+          </ul>
+        </description>
+      </release>
       <release version="43.0" date="2022-09-19">
         <description>
           <p>

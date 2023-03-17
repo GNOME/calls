@@ -1,4 +1,4 @@
-gnome-calls (44~beta.0) UNRELEASED; urgency=medium
+gnome-calls (44.0) byzantium; urgency=medium
 
   [ Hemish ]
   * Add Hindi translation
@@ -14,11 +14,131 @@ gnome-calls (44~beta.0) UNRELEASED; urgency=medium
   * tests: Add DBus server binary
   * tests: Add skeleton DBus API client test suite
   * test-dbus: Test basic call interaction
+  * contacts-provider: Codestyle
+  * contacts-provider: Use STR_IS_NULL_OR_EMPTY macro
+  * contacts-row: Use g_autoptr
+  * notifier: Add explicit include
+  * manager: Add explicit include
+  * dbus-manager: Add explicit include
+  * new-call-box: Add explicit include
+  * provider: Remove unused include
+  * origin: Remove unused include
+  * build: Rename util.{c,h} to calls-util.{c,h}
+  * gcovr: Exclude src/gtklistmodels
+  * README: Fix typo
+  * HACKING: Update and clarify
+  * sip-provider: Sort includes
+  * sip-provider: Use STR_IS_NULL_OR_EMPTY macro
+  * best-match: Add API to query if individual is a favourite
+  * contacts-box: Show favourites at the top (Closes: #493)
+  * record-store: Don't crash on unexpected call state changes (Closes: #547)
+  * flatpak: Adjust to libphonenumber tarball magically changing
+  * flatpak: Adjust to sofia-sip tarball magically changing
+  * Revert "flatpak: Adjust to libphonenumber tarball magically changing"
+  * Revert "flatpak: Adjust to sofia-sip tarball magically changing"
+  * mm-call: Codestyle
+  * mm-call: Guard public API
+  * mm-origin: Codestyle
+  * mm-origin: Chain up to to parent's constructed() early
+  * mm-origin: Explicitly cast ussd state
+  * mm-origin: Prefer STR_IS_NULL_OR_EMPTY macro to explicit checks
+  * mm-origin: Prefer g_autoptr instead of explicit reference counting
+  * mm-origin: Avoid unnecessary allocation
+  * mm-origin: Don't leak MMModemVoice
+  * mm-origin: Don't leak MMModem
+  * mm-origin: Don't leak ID
+  * mm-origin: Remove unnecessary cast
+  * mm-origin: Ensure objects stay alive during async operations
+  * mm-origin: Disable call waiting
+  * new-call-box: Uncrustify
+  * record-store: Fix coding style
+  * application: Coding style
+  * application: Only destroy previously created widgets
+  * application: Shut down cleanly when application quits
+  * application: Guard against setting application name twice
+  * record-store: Ensure store stays alive during async tasks
+  * new-call-box: Respect object lifecycle for signals
+  * main-window: Respect object lifecycle for signals
+  * call-window: Respect object lifecycle for signals
+  * application: Respect object lifecycle for signals
+  * account-overview: Respect object lifecycle for signals
+  * d/control: Add svg pixbufloader
+  * debian: Ran wrap-and-sort -ast
+  * ci: Update debian image
+  * record-store: Allow overriding database location
+  * tests: Prevent tests from accessing user home
+  * record-store: Emit signal once DB is migrated
+  * application: Delay shutting down until database is done
+  * tests: Add application shutdown tests
+  * sip-provider: Use STR_IS_NULL_OR_EMPTY macro
+  * sip-provider: Remove duplicated check
+  * tests: Don't override XDG_CONFIG_HOME
 
   [ Dark Dragon ]
   * flatpak: Update evolution-data-server to 3.47.1
 
- -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sun, 22 Jan 2023 07:34:33 +0100
+  [ Aurimas Černius ]
+  * Added Lithuanian translation
+
+  [ Martin ]
+  * Update Slovenian translation
+
+  [ Daniel Rusek ]
+  * Update Czech translation
+
+  [ Jürgen Benvenuti ]
+  * Update German translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ Guido Günther ]
+  * tests/dbus: Switch to g_test_init
+  * dbus: Add initial interface for emergency calls
+  * Add emergency-call manager to interface with DBus
+  * dbus-manager: Use emergency-call manager
+  * origin: Add interface to get emergency numbers
+  * dummy: Support getting emergency call numbers
+  * emergency-calls-manager: Query origins for numbers
+  * sip: Implement empty emegency call property
+  * mm: Implement empty emegency call property
+  * tests/dbus: Check for error early
+  * tests: Add emergency call DBus test
+
+  [ Дилян Палаузов ]
+  * SIP:calls_sdp_crypto_context_generate_answer() accept the first supporetd a=crypto: line
+
+  [ Марко Костић ]
+  * Update Serbian translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Quentin PAGÈS ]
+  * Update Occitan translation
+
+  [ Daniel ]
+  * Updated Spanish translation
+
+  [ Ngọc Quân Trần ]
+  * Add Vietnamese translation
+
+  [ Changwoo Ryu ]
+  * Add Korean translation
+
+  [ Alan Paris ]
+  * Update French translation
+
+  [ Alan Mortensen ]
+  * Update Danish translation
+
+  [ Alexander Shopov ]
+  * Add Bulgarian translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Fri, 17 Mar 2023 09:49:46 +0100
 
 gnome-calls (44~alpha.1) byzantium; urgency=medium
 
