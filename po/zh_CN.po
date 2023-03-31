@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-29 18:19+0000\n"
-"PO-Revision-Date: 2022-11-29 16:41-0500\n"
+"POT-Creation-Date: 2023-03-17 17:48+0000\n"
+"PO-Revision-Date: 2023-03-31 12:30+0800\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "通话"
 
@@ -48,18 +48,23 @@ msgid "Make phone and SIP calls"
 msgstr "拨打电话和 SIP 通话"
 
 #: data/org.gnome.Calls.metainfo.xml:10
-msgid "Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used with a cellular modem for plain old telephone calls as well as VoIP calls using the SIP protocol."
-msgstr "通话是 GNOME 的一款简单而优雅的电话拨号器和通话管理软件。它可与蜂窝网络调制解调器一起使用以进行传统的拨号通话，或使用 SIP 协议进行 VoIP 通话。"
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"通话是 GNOME 的一款简单而优雅的电话拨号器和通话管理软件。它可与蜂窝网络调制"
+"解调器一起使用以进行传统的拨号通话，或使用 SIP 协议进行 VoIP 通话。"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
 msgid "Placing a call"
-msgstr "进行通话"
+msgstr "拨打电话"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:31
 msgid "The call history"
-msgstr "通话历史"
+msgstr "通话记录"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
@@ -67,35 +72,35 @@ msgstr "通话是否应自动使用默认来源"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
-msgstr "调制解调器报告的国家地区代码"
+msgstr "调制解调器报告的国家/地区代码"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr ""
+msgstr "国家/地区代码用于联系人姓名查找"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
-msgstr ""
+msgstr "自动加载的插件"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr ""
+msgstr "这些插件将在应用程序启动时自动加载。"
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr ""
+msgstr "用于 VoIP 呼叫的音频编解码器（按首选项顺序排列）"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr ""
+msgstr "用于 VoIP 呼叫的首选音频编解码器（如果可用）"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
+msgstr "是否允许在没有 TLS 作为传输的情况下对 SRTP 使用 SDES"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr ""
+msgstr "如果要允许以明文形式交换密钥，请设置为 true。"
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -103,195 +108,198 @@ msgstr "默认（未初始化）状态"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr "正在初始化帐号……"
+msgstr "正在初始化帐号…"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
-msgstr ""
+msgstr "正在取消初始化帐号…"
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr "正在连接到服务器……"
+msgstr "正在连接到服务器…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
-msgstr "帐号在线"
+msgstr "帐号已在线"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr ""
+msgstr "正在断开与服务器的连接…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr ""
+msgstr "帐号已离线"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr ""
+msgstr "帐号遇到错误"
 
 #: src/calls-account.c:202
 msgid "No reason given"
-msgstr ""
+msgstr "没有给出原因"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
-msgstr ""
+msgstr "开始初始化"
 
 #: src/calls-account.c:208
 msgid "Initialization complete"
-msgstr ""
+msgstr "已初始化"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr ""
+msgstr "开始取消初始化"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
-msgstr ""
+msgstr "已取消初始化"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr ""
+msgstr "未设置凭据"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr ""
+msgstr "开始连接"
 
 #: src/calls-account.c:223
 msgid "Connection timed out"
-msgstr ""
+msgstr "连接超时"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
-msgstr ""
+msgstr "无法解析域名"
 
 #: src/calls-account.c:229
 msgid "Server did not accept username or password"
-msgstr ""
+msgstr "服务器不接受用户名或密码"
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
-msgstr ""
+msgstr "已连接"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr ""
+msgstr "开始断开连接"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr ""
+msgstr "已断开连接"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
-msgstr ""
+msgstr "发生内部错误"
 
 #: src/calls-account-overview.c:177
 #, c-format
 msgid "Edit account: %s"
-msgstr ""
+msgstr "编辑帐号：%s"
 
 #: src/calls-account-overview.c:184
 msgid "Add new account"
-msgstr ""
+msgstr "添加新帐号"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:377
 msgid "Account overview"
-msgstr ""
+msgstr "账号概览"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr ""
+msgstr "已尝试拨打无效的电话 URI “%s”"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr ""
+msgstr "不知道如何打开 “%s”"
 
-#: src/calls-application.c:717
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
-msgstr ""
+msgstr "用于提供通话功能的插件的名称"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "插件"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
-msgstr ""
+msgstr "是否在启动时显示主窗口"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
-msgstr ""
+msgstr "拨打电话号码"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "号码"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "启用详细调试信息"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "输出当前版本"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
-msgstr ""
+msgstr "匿名呼叫者"
 
 #: src/calls-call-record-row.c:97
 #, c-format
-msgid "%s\n"
+msgid ""
+"%s\n"
 "yesterday"
 msgstr ""
+"%s\n"
+"昨天"
 
 #: src/calls-main-window.c:123
 msgid "translator-credits"
-msgstr ""
+msgstr "Victor_Trista <ljlzjzm@hotmail.com>"
 
 #: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr ""
+msgstr "无法拨打电话：没有可用的调制解调器或 VoIP 帐号"
 
 #: src/calls-main-window.c:318
 msgid "Can't place calls: No plugin loaded"
-msgstr ""
+msgstr "无法拨打电话：未加载插件"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "联系人"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "拨号盘"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
-msgstr ""
+msgstr "最近"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
-msgstr ""
+msgstr "未接来电"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
-msgstr ""
+msgstr "来自 <b>%s</b> 的未接来电"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
-msgstr ""
+msgstr "来自 %s 的未接来电"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
-msgstr ""
+msgstr "来自未知来电者的未接来电"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "回拨"
 
@@ -304,8 +312,13 @@ msgid "Add VoIP Accounts"
 msgstr "添加 VoIP 帐号"
 
 #: src/ui/account-overview.ui:51
-msgid "You can add VoIP account here. It will allow you to place and receive VoIP calls using the SIP protocol. This feature is still relatively new and not yet feature complete (i.e. no encrypted media)."
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
 msgstr ""
+"您可以在此处添加 VoIP 帐号。它将允许您使用 SIP 协议拨打和接收 VoIP 呼叫。此"
+"功能较新，尚不完善（没有加密媒体）。"
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -314,7 +327,7 @@ msgstr "添加账号(_A)"
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:62
 msgid "Call"
-msgstr ""
+msgstr "通话"
 
 #: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
@@ -331,23 +344,23 @@ msgstr "添加联系人(_A)"
 
 #: src/ui/call-record-row.ui:117
 msgid "_Send SMS"
-msgstr ""
+msgstr "发送短信(_S)"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
-msgstr ""
+msgstr "等待中"
 
 #: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
-msgstr ""
+msgstr "未找到联系人"
 
 #: src/ui/history-box.ui:10
 msgid "No Recent Calls"
-msgstr ""
+msgstr "无最近通话"
 
 #: src/ui/main-window.ui:105
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: src/ui/main-window.ui:114
 msgid "_Cancel"
@@ -380,15 +393,15 @@ msgstr "关于通话(_A)"
 
 #: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
-msgstr ""
+msgstr "输入 VoIP 地址"
 
 #: src/ui/new-call-box.ui:62
 msgid "SIP Account"
-msgstr ""
+msgstr "SIP 账号"
 
 #: src/ui/new-call-header-bar.ui:6
 msgid "New Call"
-msgstr ""
+msgstr "新呼叫"
 
 #: src/ui/new-call-header-bar.ui:19
 msgid "Back"
@@ -400,46 +413,46 @@ msgstr "未知原因"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
-msgstr ""
+msgstr "拨出呼叫已开始"
 
 #: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
-msgstr ""
+msgstr "新来电"
 
 #: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
-msgstr ""
+msgstr "通话已接通"
 
 #: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
-msgstr ""
+msgstr "通话已结束"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
-msgstr ""
+msgstr "呼叫已断开连接（忙或呼叫被拒绝）"
 
 #: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
-msgstr ""
+msgstr "呼叫已断开连接（ID 错误或网络问题）"
 
 #: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
-msgstr ""
+msgstr "呼叫已断开连接（设置音频通道时出错）"
 
 #. Translators: Transfer is for active or held calls
 #: plugins/provider/mm/calls-mm-call.c:82
 msgid "Call transferred"
-msgstr ""
+msgstr "呼叫已转移"
 
 #. Translators: Deflecting is for incoming or waiting calls
 #: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
-msgstr ""
+msgstr "呼叫已转移"
 
 #: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
-msgstr ""
+msgstr "呼叫已断开连接（未知原因代码 %i）"
 
 #: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
@@ -448,17 +461,17 @@ msgstr "ModemManager 不可用"
 #: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
-msgstr ""
+msgstr "没有支持语音的调制解调器可用"
 
 #: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
-msgstr ""
+msgstr "常规"
 
 #: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
-msgstr ""
+msgstr "已初始化"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
@@ -511,7 +524,7 @@ msgstr "可选"
 
 #: plugins/provider/sip/sip-account-widget.ui:128
 msgid "User ID"
-msgstr "用户标识"
+msgstr "用户 ID"
 
 #: plugins/provider/sip/sip-account-widget.ui:141
 msgid "Password"
@@ -523,17 +536,16 @@ msgstr "端口"
 
 #: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
-msgstr ""
+msgstr "传输"
 
 #: plugins/provider/sip/sip-account-widget.ui:189
 msgid "Media Encryption"
-msgstr ""
+msgstr "媒体加密"
 
 #: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
-msgstr ""
+msgstr "用于拨打电话"
 
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "自动连接"
-
