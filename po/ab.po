@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-02 10:59+0000\n"
+"POT-Creation-Date: 2023-03-13 12:41+0000\n"
 "Last-Translator: Нанба Наала <naala-nanba@rambler.ru>\n"
 "Language-Team: Abkhazian <daniel.abzakh@gmail.com>\n"
 "Language: ab\n"
@@ -9,37 +9,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-DamnedLies-Scope: partial\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:436 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
-msgstr ""
+msgstr "Асрақәа"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
-msgstr ""
+msgstr "Аҭел"
 
 #: data/org.gnome.Calls.desktop.in:5
 msgid "A phone dialer and call handler"
-msgstr ""
+msgstr "Аҭелтә аномерлхыга насгьы  асрақәа аус  русдулага"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Аҭел;Асрақәа;Алхра;Аномер;Асра;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
-msgstr ""
+msgstr "Асрақәа (ақаҷаа)"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
-msgstr ""
+msgstr "Аҭелтә аномерлхыга насгьы  асрақәа аус  русдулага (ақаҷаа арежим)"
 
 #: data/org.gnome.Calls.metainfo.xml:7
 msgid "Make phone and SIP calls"
-msgstr ""
+msgstr "Инашәыгӡала аҭелтә иара убас SIP-асрақәа"
 
 #: data/org.gnome.Calls.metainfo.xml:10
 msgid ""
@@ -47,44 +46,47 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
+"Асрақәа- ари имариоу, иелеганту аҭелтә  номерлхыгоуп, иара убас, аGNOME  азы "
+"срақәа аус рыдулагоуп .Иара шәхы иашәырхәар шәылшоит  аҭел асрақәа раан, "
+"насгьы VoIP-асрақәа раан, аԥкаанҵа SIP ала."
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
 msgid "Placing a call"
-msgstr ""
+msgstr "Асра ашьақәыргылара"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:31
 msgid "The call history"
-msgstr ""
+msgstr "Асрақәа рҭоурых"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
-msgstr ""
+msgstr "Асрақәа автоматла рхы иадырхәалароума ахыҵхырҭа ишыҟоу еиԥш."
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
-msgstr ""
+msgstr "Амодем иаанацҳауа аҳәынҭқарра акод, "
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr ""
+msgstr "Аҳәынҭқарра акод ахархәара аиуоит аконтакт ахьӡ аԥшааразы"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
-msgstr ""
+msgstr "Аплагинқәа автоматла аҭагаларазы"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr ""
+msgstr "Аԥшьы аус арураан арҭ аплагинқәа автоматла иҭагалахоит ."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr ""
+msgstr " VoIP -асрақәа рзы адиокодекқәа аиӷьашьара аишьҭагыларала"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr ""
+msgstr "Иеиӷьу аудиокодекқәа VoIP-асрақәа рзы (анеира ауазар)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
@@ -96,35 +98,35 @@ msgstr ""
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
-msgstr ""
+msgstr "Аҭагылазаашьа ишыҟоу еиԥш (аинициалҟаҵаны)"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr ""
+msgstr "Аҳасабырбатә нҵамҭа аинициалҟаҵара...."
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
-msgstr ""
+msgstr "Аҳасабырбатә нҵамҭа аинициалҟаҵара аԥыхра...."
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr ""
+msgstr "Асервер аҽаҿакра…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
-msgstr ""
+msgstr "Аҳасабырбатә нҵамҭа аҳаҟны"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr ""
+msgstr "асервер аҟынтә аҿыхра…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr ""
+msgstr "Аҳасабырбатә нҵамҭа аҳаҟны иҟаӡам"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr ""
+msgstr "Аҳасабырбатә нҵамҭа агха иаҿаҳаит"
 
 #: src/calls-account.c:202
 msgid "No reason given"
@@ -140,11 +142,11 @@ msgstr "Аҭагылазаашьа арбара хырқәшоуп"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr ""
+msgstr "Деинициалҟаҵара иалагеит"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
-msgstr ""
+msgstr "Деинициалҟаҵара хырқәшоуп"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
@@ -176,53 +178,68 @@ msgstr "Аҿыхра аус арура"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr ""
+msgstr "Аҿыхра хырқәшоуп"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr "Аҩныҵаҟатәи агха ҟалеит"
 
-#: src/calls-application.c:315
+#: src/calls-account-overview.c:177
+#, c-format
+msgid "Edit account: %s"
+msgstr ""
+
+#: src/calls-account-overview.c:184
+#, fuzzy
+#| msgid "Add Account"
+msgid "Add new account"
+msgstr "Аҳасабырбатә нҵамҭа ацҵара"
+
+#: src/calls-account-overview.c:376
+msgid "Account overview"
+msgstr ""
+
+#: src/calls-application.c:339
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr ""
 
-#: src/calls-application.c:627
+#: src/calls-application.c:672
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr ""
+msgstr "`%s' шаарттәу еилкааӡам"
 
-#: src/calls-application.c:681
+#: src/calls-application.c:730
 msgid "The name of the plugin to use as a call provider"
 msgstr ""
 
-#: src/calls-application.c:682
+#: src/calls-application.c:731
 msgid "PLUGIN"
-msgstr ""
+msgstr "АПЛАГИН"
 
-#: src/calls-application.c:687
+#: src/calls-application.c:736
 msgid "Whether to present the main window on startup"
-msgstr ""
+msgstr "Аус арураан иаҭахума ихадоу аԥенџьыр арбара"
 
-#: src/calls-application.c:693
+#: src/calls-application.c:742
 msgid "Dial a telephone number"
-msgstr ""
+msgstr "Аҭел аномер алхра"
 
-#: src/calls-application.c:694
+#: src/calls-application.c:743
 msgid "NUMBER"
 msgstr "Ахыԥхьаӡара"
 
-#: src/calls-application.c:699
+#: src/calls-application.c:748
 msgid "Enable verbose debug messages"
 msgstr ""
 
-#: src/calls-application.c:705
+#: src/calls-application.c:754
 msgid "Print current version"
-msgstr ""
+msgstr "Иҟоу аверсиа ацәыргара"
 
 #: src/calls-best-match.c:435
 msgid "Anonymous caller"
-msgstr ""
+msgstr "Ихьӡыдоу абонент"
 
 #: src/calls-call-record-row.c:97
 #, c-format
@@ -237,11 +254,11 @@ msgstr "Нанба Наала <naala-nanba@rambler.ru>, 2022"
 
 #: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr ""
+msgstr "Асра аҟаҵара ҟалаӡом: Амодем ыҟаӡам мамзар аҳасабырбатә нҵамҭа  VoIP"
 
 #: src/calls-main-window.c:318
 msgid "Can't place calls: No plugin loaded"
-msgstr ""
+msgstr "Асра аҟаҵара ҟалаӡом: Аплагин ҭагалаӡам"
 
 #: src/calls-main-window.c:353
 msgid "Contacts"
@@ -249,7 +266,7 @@ msgstr "Аимадарақәа"
 
 #: src/calls-main-window.c:363
 msgid "Dial Pad"
-msgstr ""
+msgstr "Анҵара апанель"
 
 #. Recent as in "Recent calls" (the call history)
 #: src/calls-main-window.c:372
@@ -294,6 +311,10 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
+"Араҟа шәара ишәылшоит аҳасабырбатә нҵамҭа VoIP ацышәҵар. Уи ишәнаҭоит алшара "
+"VoIP-асрақәа рыдкылареи рыҟаҵареи апротокол SIP шәхы иархәаны.  Ари афункциа "
+"макьаана  иҿыцуп, насгьы макьааназы ихырқәшаӡам  (ишифрку аныҟәгагақәа "
+"ыҟаӡам)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -366,23 +387,11 @@ msgstr "_Аилыркаа"
 msgid "_About Calls"
 msgstr "_Апрограмма иазкны"
 
-#: src/ui/new-call-box.ui:45
+#: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
 msgstr " VoIP-аҭыӡҭыԥ аҭаҩра"
 
-#: src/ui/new-call-box.ui:58
-msgid "Enter a number"
-msgstr "Аномер аҭаҩра"
-
-#: src/ui/new-call-box.ui:97
-msgid "Dial"
-msgstr "алхра"
-
-#: src/ui/new-call-box.ui:120
-msgid "Delete character in front of cursor"
-msgstr "Ахырхага аԥхьа иҟоу асимвол аныхра"
-
-#: src/ui/new-call-box.ui:149
+#: src/ui/new-call-box.ui:62
 msgid "SIP Account"
 msgstr "Аҳасабырбатә нҵамҭа  SIP"
 
@@ -441,24 +450,24 @@ msgstr "Абжьы зхоу аиҽцәажәара мап ацәкуп"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Абжьы зхоу аиҽцәажәара "
 
-#: plugins/provider/mm/calls-mm-provider.c:82
+#: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager анеира алшом"
 
-#: plugins/provider/mm/calls-mm-provider.c:84
+#: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
-msgstr ""
+msgstr "Абыжьтәы еимадара здызкыло иманшәалоу амодем ыҟаӡам"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "Инормоу"
 
-#: plugins/provider/mm/calls-mm-provider.c:447
+#: plugins/provider/mm/calls-mm-provider.c:456
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
-msgstr ""
+msgstr "Зынициалҟаҵоу "
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
@@ -536,25 +545,6 @@ msgstr "Аҭел абжьы зхоу аиҽцәажәара рзы ахархә�
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Автоматикла аҽаҿакра"
-
-msgid "  Search for the Contact  or double-click here to create a new Contact."
-msgstr "  Ишәыԥшаа аимадара,  мамзар абраҟа шәақәыӷәӷәа аҿыц аԥҵаразы."
-
-msgid "  Search for the Contact."
-msgstr "  Аимадара аԥшаара."
-
-msgid "  Searching for the Contacts…"
-msgstr "  Аимадарақәа рыԥшаара…"
-
-msgid "  There are no items to show in this view."
-msgstr "  Иҟаӡам аелементқәа ари аԥенџьыр аҟны иаарԥшразы."
-
-msgid ""
-"  There are no items to show in this view.  Double-click here to create a "
-"new Contact."
-msgstr ""
-"  Иҟаӡам аелементқәа ари аԥенџьыр аҟны иаарԥшразы.  Ҩынтә абраҟа шәақәыӷәӷәа "
-"аимадара ҿыц аԥҵаразы"
 
 msgid "--%s is not supported for this dialog "
 msgstr "--%s ари аиҿцәажәара  иаднакылаӡом"
@@ -647,712 +637,65 @@ msgid ""
 "\t@%\"Projects@%s"
 msgstr "_Апроектқәа рныхра"
 
-msgid "%1$s   <small>%2$s</small>"
-msgstr "%1$s   <small>%2$s</small>"
-
-msgid "%1$s and one more task msgid_plural: %1$s and %2$d other tasks"
-msgstr ""
-"msgstr[0]: %1$s даҽа %2$d ҳасабтәки msgstr[1]: %1$s  даҽа %2$d  ҳасабтәқәеи "
-"msgstr[2]: %1$sегьырҭ  %2$d  ҳасабтәқәеи"
-
-msgid ""
-"%1$u day and %2$u hour before msgid_plural: %1$u day and %2$u hours before"
-msgstr ""
-"msgstr[0]: %1$u ҽнаки и %2$u сааҭки ҟалаанӡа msgstr[1]: %1$u ҽнаки %2$u "
-"сааҭки ҟалаанӡа msgstr[2]: %1$u ҽнаки %2$u сааҭки ҟалаанӡа"
-
-msgid ""
-"%1$u day and %2$u minute before msgid_plural: %1$u day and %2$u minutes "
-"before"
-msgstr ""
-"msgstr[0]: %1$u ҽнаки %2$u минуҭки ҟалаанӡа msgstr[1]: %1$u ҽнаки %2$u "
-"минуҭки ҟалаанӡа msgstr[2]: %1$u ҽнаки %2$u минуҭки ҟалаанӡа\n"
-"\t%1$u day before msgid_plural: %1$u days before\tmsgstr[0]: %1$u ҽнак шагоу "
-"msgstr[1]: %1$u мшы шагоу msgstr[2]: %1$u мшы шагоу\n"
-"\t%1$u day, %2$u hour, and %3$u minute before msgid_plural: %1$u day, %2$u "
-"hour, and %3$u minutes before\tmsgstr[0]: %1$u ҽнаки, %2$u сааҭки %3$u "
-"минуҭки ҟалаанӡа msgstr[1]: %1$u ҽнаки, %2$u сааҭки %3$u минуҭки  ҟалаанӡа "
-"msgstr[2]: %1$u ҽнаки, %2$u сааҭки %3$u минуҭки ҟалаанӡа\n"
-"\t%1$u day, %2$u hours, and %3$u minute before msgid_plural: %1$u day, %2$u "
-"hours, and %3$u minutes before\tmsgstr[0]: %1$u ҽнаки, %2$u сааҭки %3$u "
-"минуҭ ки ҟалаанӡа msgstr[1]: %1$u ҽнаки, %2$u сааҭки %3$u минуҭки  ҟалаанӡа "
-"msgstr[2]: %1$u ҽнаки, %2$u сааҭки %3$u минуҭки ҟалаанӡа\n"
-"\t%1$u days and %2$u hour before msgid_plural: %1$u days and %2$u hours "
-"before\tmsgstr[0]: %1$u мши %2$u сааҭки ҟалаанӡа msgstr[1]: %1$u мши %2$u "
-"сааҭки ҟалаанӡа msgstr[2]: %1$u мши %2$u сааҭки ҟалаанӡа\n"
-"\t%1$u days and %2$u minute before msgid_plural: %1$u days and %2$u minutes "
-"before\tmsgstr[0]: %1$u мши и %2$u минуҭки ҟалаанӡа msgstr[1]: %1$u мши и "
-"%2$u минуҭки ҟалаанӡа msgstr[2]: %1$u мши и %2$u минуҭки ҟалаанӡа\n"
-"\t%1$u days, %2$u hour, and %3$u minute before msgid_plural: %1$u days, %2$u "
-"hour, and %3$u minutes before\tmsgstr[0]: %1$u мши, %2$u сааҭки, и %3$u "
-"минуҭки ҟалаанӡа msgstr[1]: %1$u мши, %2$u сааҭки, и %3$u минуҭки ҟалаанӡа "
-"msgstr[2]: %1$u мши, %2$u сааҭки, и %3$u минуҭки ҟалаанӡа\n"
-"\t%1$u days, %2$u hours, and %3$u minute before msgid_plural: %1$u days, "
-"%2$u hours, and %3$u minutes before\tmsgstr[0]: %1$u мши, %2$u сааҭки, и "
-"%3$u минуҭки ҟалаанӡа msgstr[1]: %1$u мши, %2$u сааҭки, и %3$u минуҭки "
-"ҟалаанӡа msgstr[2]: %1$u мши, %2$u сааҭки, и %3$u минуҭки ҟалаанӡа\n"
-"\t%1$u hour before msgid_plural: %1$u hours before\tmsgstr[0]: %1$u сааҭк "
-"иҟалаанӡа msgstr[1]: %1$u сааҭк иҟалаанӡа msgstr[2]: %1$u сааҭк иҟалаанӡа\n"
-"\t%1$u minute before msgid_plural: %1$u minutes before\tmsgstr[0]: %1$u "
-"минуҭк ҟалаанӡа msgstr[1]: %1$u минуҭк ҟалаанӡа msgstr[2]: %1$u минуҭк "
-"ҟалаанӡа\n"
-"\t%2$s. You have %1$u try left msgid_plural: %2$s. You have %1$u tries "
-"left\tmsgstr[0]: %2$s. ишәзаанхеит %1$u ҽазышәарак msgstr[1]: %2$s. "
-"ишәзаанхеит %1$u ҽазышәарак msgstr[2]: %2$s. ишәзаанхеит %1$u ҽазышәарак\n"
-"\t%A\t%A\n"
-"\t%a\t%a\n"
-"\t%A %B %-d\t%A, %-d %B\n"
-"\t%a %b %-e_%l:%M %p\t%a, %-e %B_%l∶%M %p\n"
-"\t%a %b %-e_%l:%M:%S %p\t%a, %-e %B,_%l∶%M∶%S %p\n"
-"\t%a %b %-e_%R\t%a, %-e %B_%R\n"
-"\t%a %b %-e_%R:%S\t%a, %-e %B_%R:%S\n"
-"\t%a %b %e %H:%M:%S %Y\t%a, %-d %b %Y, %H∶%M∶%S\n"
-"\t%A %B %e %Y\t%A, %-d %B %Y\n"
-"\t%a %d %b\t%a, %d %b\n"
-"\t%A %d %B\t%A, %d %b\n"
-"\t%A %d %b %Y\t%A, %d %b. %Y\n"
-"\t%a %d %b %Y\t%a, %d %b. %Y\n"
-"\t%A %H:%M\t%A %H:%M\n"
-"\t%a %H:%M\t%a %H:%M\n"
-"\t%A %H:%M:%S\t%A %H:%M:%S\n"
-"\t%a %H∶%M\t%a, %H:%M\n"
-"\t%a %I∶%M %p\t%a, %I∶%M %p\n"
-"\t%a %l:%M %p\t%a %l:%M %p\n"
-"\t%A %l:%M %p\t%A %l:%M %p\n"
-"\t%a %l:%M:%S %p\t%a, %l∶%M∶%S %p\n"
-"\t%A %l:%M:%S %p\t%A %l:%M:%S %p\n"
-"\t%a %l∶%M %p\t%a %H:%M\n"
-"\t%a %m/%d/%Y %H:%M:%S\t%a, %d.%m.%Y %H:%M:%S\n"
-"\t%a %m/%d/%Y %I:%M:%S %p\t%a, %d.%m.%Y %I:%M:%S %p\n"
-"\t%a %R\t%a, %R\n"
-"\t%a %R:%S\t%a, %R:%S\n"
-"\t%a, %b %d / %H∶%M\t%a, %d %b. / %H∶%M\n"
-"\t%A, %B %e\t%A, %e %b\n"
-"\t%A, %B %e %H:%M\t%A, %e %b. %H:%M\n"
-"\t%A, %B %e %H:%M:%S\t%A, %e %b. %H:%M:%S\n"
-"\t%A, %B %e %l:%M %p\t%A, %e %b. %I:%M:%p\n"
-"\t%A, %B %e %l:%M:%S %p\t%A, %e %b. %I:%M:%S %p\n"
-"\t%A, %B %e, %Y\t%A, %e %b. %Y\n"
-"\t%A, %B %e, %Y %H:%M\t%A, %e %b. %Y %H:%M\n"
-"\t%A, %B %e, %Y %H:%M:%S\t%A, %e %b. %Y %H:%M:%S\n"
-"\t%A, %B %e, %Y %l:%M %p\t%A, %e %b. %Y %I:%M %p\n"
-"\t%A, %B %e, %Y %l:%M:%S %p\t%A, %e %b. %Y %I:%M:%S %p\n"
-"\t%a, %d %B %Y\t%A, %d %b. %Y\n"
-"\t%a, %d %B %Y  %X\t%A, %d %b. %Y  %X\n"
-"\t%a, %d %B %Y %X\t%A, %d %b. %Y %X\n"
-"\t%A, %H∶%M\t%A, %H∶%M\n"
-"\t%A, %l∶%M %p\t%A, %-l∶%M %p\n"
-"\t%B\t%B\n"
-"\t%B %-d\t%-d %B %Y\n"
-"\t%B %-d %Y\t%-d %B %Y\n"
-"\t%B %-d %Y, %H∶%M\t%-d %B %Y, %H∶%M\n"
-"\t%B %-d %Y, %l∶%M %p\t%-d %B %Y, %l∶%M %p\n"
-"\t%B %-d, %H∶%M\t%-d %B, %H∶%M\n"
-"\t%B %-d, %l∶%M %p\t%-d %B, %l∶%M %p\n"
-"\t%b %-e_%l:%M %p\t%a, %-e %B_%l∶%M %p\n"
-"\t%b %-e_%l:%M:%S %p\t%a, %-e %B_%l∶%M∶%S %p\n"
-"\t%b %-e_%R\t%a, %-e %B_%R\n"
-"\t%b %-e_%R:%S\t%a, %-e %B_%R:%S\n"
-"\t%b %d %H∶%M\t%e %b., %H:%M\n"
-"\t%b %d %I∶%M %p\t%e %b., %I∶%M %p\n"
-"\t%b %d %l:%M %p\t%b. %d %l:%M %p\n"
-"\t%b %d %l∶%M %p\t%-d %B %H:%M\n"
-"\t%b %d %Y\t%e %b. %Y\n"
-"\t%b %e\t%b %e\n"
-"\t%b %e %H:%M\t%e %b., %H:%M\n"
-"\t%b %e %H:%M:%S\t%e %b., %H:%M:%S\n"
-"\t%b %e %l:%M %p\t%e %b., %l:%M %p\n"
-"\t%b %e %l:%M:%S %p\t%e %b., %l:%M:%S %p\n"
-"\t%b %e %Y %H:%M\t%e %b. %Y, %H:%M\n"
-"\t%b %e %Y %H:%M:%S\t%e %b. %Y, %H:%M:%S\n"
-"\t%b %e %Y %l:%M %p\t%e %b. %Y, %l:%M %p\n"
-"\t%b %e %Y %l:%M:%S %p\t%e %b. %Y, %l:%M:%S %p\n"
-"\t%b %e %Y, %H∶%M\t%b %e %Y, %H∶%M\n"
-"\t%b %e %Y, %I∶%M %p\t%b %e %Y, %I∶%M %p\n"
-"\t%B %e %Y, %I∶%M∶%S %p\t%e %B %Y, %H:%M:%S\n"
-"\t%b %e, %H∶%M\t%b %e, %H∶%M\n"
-"\t%b %e, %I∶%M %p\t%b %e, %I∶%M %p\n"
-"\t%b %e, %Y\t%-d %b %Y\n"
-"\t%B %Y\t%B %Y\n"
-"\t%c\t%c\n"
-"\t%d\t%d\n"
-"\t%d / %d\t%d / %d\n"
-"\t%d %%\t%d %%\n"
-"\t%d %%\t%d %%\n"
-"\t%d %%\t%d %%\n"
-"\t%d %b\t%d %b\n"
-"\t%d %B\t%d %B\n"
-"\t%d %b %Y\t%d %b. %Y\n"
-"\t%d %B %Y\t%d %b. %Y\n"
-"\t%d %B %Y, %H:%M\t%-d %B %Y, %H∶%M\n"
-"\t%d °C\t%d °C\n"
-"\t%d °C\t%d °C\n"
-"\t%d °F\t%d °F\n"
-"\t%d °F\t%d °F\n"
-"\t%d × %d\t%d × %d\n"
-"\t%d × %d, %d mine msgid_plural: %d × %d, %d mines\tmsgstr[0]: %d × %d, %d "
-"амина msgstr[1]: %d × %d, %d минак msgstr[2]: %d × %d, %d минак\n"
-"\t%d Address msgid_plural: %d Addresses\tmsgstr[0]: %d ҭыӡҭыԥк msgstr[1]: %d "
-"ҭыӡҭыԥк msgstr[2]: %d ҭыӡҭыԥк\n"
-"\t%d attached message msgid_plural: %d attached messages\tmsgstr[0]: %d "
-"иагәылҵоу ацҳамҭақәа msgstr[1]: %d иагәылаҵоу ацҳамҭақәа msgstr[2]: %d "
-"иагәылаҵоу ацҳамҭақәа\n"
-"\t%d B/s\t%d Б/с\n"
-"\t%d byte msgid_plural: %d bytes\tmsgstr[0]: %d баитк msgstr[1]: %d баитк "
-"msgstr[2]: %d баитк\n"
-"\t%d dpi\t%d dpi\n"
-"\t%d ft\t%d фт\n"
-"\t%d ft\t%d фт\n"
-"\t%d K\t%d K\n"
-"\t%d K\t%d K\n"
-"\t%d km\t%d км\n"
-"\t%d km\t%d км\n"
-"\t%d m\t%d м\n"
-"\t%d m\t%d м\n"
-"\t%d Mb/s\t%d Мб/с\n"
-"\t%d Mb/s (%1.1f GHz)\t%d Мб/с (%1.1f ГГц)\n"
-"\t%d mi\t%d ми\n"
-"\t%d mi\t%d ми\n"
-"\t%d of %d\t%d аҟынтә %d\n"
-"\t%d of %u\t%d аҟынтәи %u\n"
-"\t%d-%b-%Y\t%d-%b.-%Y\n"
-"\t%d-bit msgid_plural: %d-bit\tmsgstr[0]: %d-абит msgstr[1]: %d-битк "
-"msgstr[2]: %d-битк\n"
-"\t%d:%02d\t%d:%02d\n"
-"\t%d:%02d:%02d\t%d:%02d:%02d\n"
-"\t%d:%02d:%02d.%03d\t%d:%02d:%02d.%03d\n"
-"\t%d:%02d.%03d\t%d:%02d.%03d\n"
-"\t%d. %s\t%d. %s\n"
-"\t%d%%\t%d%%\n"
-"\t%d×%d\t%d×%d\n"
-"\t%d×%d (%s)\t%d×%d (%s)\n"
-"\t%e %B %Y\t%e %b. %Y\n"
-"\t%e %B %Y, %l:%M %p\t%-d %B %Y, %l∶%M %p\n"
-"\t%e %B %Y, %R\t%-d %B %Y, %R\n"
-"\t%F %T\t%F %T\n"
-"\t%FT%T\t%FT%T\n"
-"\t%g%t%m%t%f\t%d%t%g%t%m%t%f\n"
-"\t%H hours and %M minutes\t%H сааҭи %M минуҭи\n"
-"\t%H hours, %M minutes and %S seconds\t%H сааҭ, %M минуҭ и %S секунд\n"
-"\t%H:%M\t%H:%M\n"
-"\t%H:%M:%S\t%H:%M:%S\n"
-"\t%H∶%M\t%H∶%M\n"
-"\t%i %s %i %s\t%i %s %i %s\n"
-"\t%i × %i pixel msgid_plural: %i × %i pixels\tmsgstr[0]: %i × %i пиксельк "
-"msgstr[1]: %i × %i пиксельк msgstr[2]: %i × %i пиксельк\n"
-"\t%i × %i pixel  %s    %i%% msgid_plural: %i × %i pixels  %s    %i%%"
-"\tmsgstr[0]: %i × %i пиксельк  %s    %i%% msgstr[1]: %i × %i пиксельк  %s    "
-"%i%% msgstr[2]: %i × %i пиксельк  %s    %i%%\n"
-"\t%i × %i pixels\t%i × %i пиксельк\n"
-"\t%I:%M:%S %p\t%I∶%M∶%S %p\n"
-"\t%k:%M\t%k:%M\n"
-"\t%l:%M %p\t%l:%M %p\n"
-"\t%l:%M:%S %p\t%l∶%M∶%S %p\n"
-"\t%l∶%M %p\t%l∶%M %p\n"
-"\t%ld × %ld pixel msgid_plural: %ld × %ld pixels\tmsgstr[0]: %ld × %ld "
-"пиксельк msgstr[1]: %ld × %ld пиксельк msgstr[2]: %ld × %ld пиксельк\n"
-"\t%m/%d\t%d/%m\n"
-"\t%m/%d/%y\t%d.%m.%y\n"
-"\t%OB\t%OB\n"
-"\t%OB %Y\t%OB %Y\n"
-"\t%p (%s)\t%p (%s)\n"
-"\t%R\t%R\n"
-"\t%R:%S\t%R:%S\n"
-"\t%s\t%s\n"
-"\t%s Run '%s --help' to see a full list of available command line options. "
-"\t%s  Аус ашәыруы  «%s --help» анеиразин ахьшәымоу адҵатә ҵәаҳәа  "
-"ахышәарақәа рыхҩылаақәа зегьы рыхәаԥшразы.\n"
-"\t%s – %s\t%s – %s\n"
-"\t%s — %s\t%s — %s\n"
-"\t%s — Account Activity\t%s- аҳасабрбатә нҵамҭа активра\n"
-"\t%s — Evolution\t%s — Evolution\n"
-"\t%s (*.%s)\t%s (*.%s)\n"
-"\t%s (%.1f%%)\t%s (%.1f%%)\n"
-"\t%s (%d bit)\t%s (%d бит)\n"
-"\t%s (%d)\t%s (%d)\n"
-"\t%s (%s, for account %s)\t%s (%s, аҳасабрбатә нҵамҭа %s азы)\n"
-"\t%s (%s)\t%s (%s)\n"
-"\t%s (%u%s)\t%s (%u%s)\n"
-"\t%s (Administrator)\t%s(Анаԥхгаҩы)\n"
-"\t%s (application)\t%s (аԥшьы)\n"
-"\t%s (CMake)\t%s (CMake)\n"
-"\t%s (GStreamer plugin)\t%s (амодуль GStreamer)\n"
-"\t%s (library)\t%s (абиблиотека)\n"
-"\t%s (Meson)\t%s (Meson)\n"
-"\t%s (PID %u)\t%s (PID %u)\n"
-"\t%s (SSID: %s)\t%s (SSID: %s)\n"
-"\t%s (this calendar is read-only)\t%s (ари амзар «аԥхьара мацара» арежим "
-"икәгылоуп)\n"
-"\t%s (You)\t%s (%s)\n"
-"\t%s [OPTION…] COMMAND  Execute COMMAND while inhibiting some session "
-"functionality.    -h, --help        Show this help   --version         Show "
-"program version   --app-id ID       The application id to "
-"use                     when inhibiting (optional)   --reason REASON   The "
-"reason for inhibiting (optional)   --inhibit ARG     Things to inhibit, "
-"colon-separated list of:                     logout, switch-user, suspend, "
-"idle, automount   --inhibit-only    Do not launch COMMAND and wait forever "
-"instead   -l, --list        List the existing inhibitions, and exit  If no --"
-"inhibit option is specified, idle is assumed. \t%s [АЛШАРА…] АДҴА  Асеанс "
-"афункциақәак аанкыланы адҵа COMMAND анагӡара.    -h, --help        Аилыркаа "
-"арбара   --version         Апрограмма ахкы арбара   --app-id ID       Аԥшьы "
-"аидентификациа азура   ахархәаразы                      "
-"аанкылараан(ихымԥадатәиым)  --reason REASON   Азин амҭара мзыс иамоу "
-"(ихымԥадатәиым)   --inhibit ARG     Азин зымхтәу, ахьӡынҵа,аҩҟәаԥ ала "
-"еиҩшоу:                     logout, switch-user, suspend, idle, automount   "
-"--inhibit-only    Иаҿашәымкын COMMAND,уи ацымхәрас наунагӡа шәазыԥшыз    -l, "
-"--list        Ақәиҭымтәрақәа рыхьӡынҵа , насгьы урҭ рыриааишьа  Алшара --"
-"inhibit арбамзар, азыԥшра арежим аҿакхоит . \n"
-"\t%s [OPTION…] COMMAND  Execute COMMAND while inhibiting some session "
-"functionality.  -h, --help Show this help --version Show program version --"
-"app-id ID The application id to use when inhibiting (optional) --reason "
-"REASON The reason for inhibiting (optional) --inhibit ARG Things to inhibit, "
-"colon-separated list of: logout, switch-user, suspend, idle, automount --"
-"inhibit-only Do not launch COMMAND and wait forever instead -l, --list List "
-"the existing inhibitions, and exit  If no --inhibit option is specified, "
-"idle is assumed.\t%s [АЛШАРА…] АДҴА  Асеанс афункциақәак аанкыланы адҵа "
-"COMMAND анагӡара.  -h, --help Аилыркаа арбара --version Апрограмма ахкы "
-"арбара --app-id ID Аԥшьы аидентификациа азура  ахархәаразы  "
-"аанкылараан(ихымԥадатәиым) --reason REASON Азин амҭара мзыс иамоу "
-"(ихымԥадатәиым) --inhibit ARG Азин зымхтәу, ахьӡынҵа,аҩҟәаԥ ала еиҩшоу: "
-"logout, switch-user, suspend, idle, automount --inhibit-only Иаҿашәымкын "
-"COMMAND,уи ацымхәрас наунагӡа шәазыԥшыз  -l, --list Ақәиҭымтәрақәа "
-"рыхьӡынҵа , насгьы урҭ рыриааишьа  Алшара --inhibit арбамзар, азыԥшра арежим "
-"аҿакхоит .\n"
-"\t%s / %s\t%s / %s\n"
-"\t%s %g — %g, default %g\t%s %g — %g, ишдыру еиԥш %g\n"
-"\t%s %g — %g, default %g\t%s %g — %g, ишдыру еиԥш %g\n"
-"\t%s %s\tThis is a monitor vendor name followed by product/model name where "
-"size in inches could not be calculated, e.g. Dell U2414H\n"
-"\t%s %s\t%s %s\n"
-"\t%s %s %s\t%s %s %s\n"
-"\t%s %s after the end\t%s %s ианхыркәшахалак ашьҭахь\n"
-"\t%s %s after the start\t%s %s ианалагалак ашьҭахь\n"
-"\t%s %s before the end\t%s %s ихыркәшахаанӡа\n"
-"\t%s %s before the start\t%s %s иалагаанӡа\n"
-"\t%s %s is no longer supported.\t%s %s уаҳа иаднакылом\n"
-"\t%s • %s\t%s • %s\n"
-"\t%s ˚C\t%s ˚C\n"
-"\t%s ˚F\t%s ˚F\n"
-"\t%s ˚R\t%s ˚R\n"
-"\t%s <b>%s</b>\t%s <b>%s</b>\n"
-"\t%s <b>%s</b> <span fgalpha='36044'>%s</span>\t%s <b>%s</b> <span "
-"fgalpha='36044'>%s</span>\n"
-"\t%s <i>(default)</i>\t%s <i>(ишыҟоу еиԥш)</i>\n"
-"\t%s acres\t%s акрқәа\n"
-"\t%s at %s\t%s аҟны %s\n"
-"\t%s at the end\t%s анҵәамҭаҿы\n"
-"\t%s at the start\t%s аҿакраан\n"
-"\t%s attachment\tагәылаҵа %s\n"
-"\t%s au\t%s а. е.\n"
-"\t%s Available\t%s анеира ахьауа\n"
-"\t%s B\t%s Б\n"
-"\t%s b\t%s абит\n"
-"\t%s bit msgid_plural: %s bits\tmsgstr[0]: %s абит msgstr[1]: %s битк "
-"msgstr[2]: %s абит\n"
-"\t%s byte msgid_plural: %s bytes\tmsgstr[0]: %s баитк msgstr[1]: %s баитк "
-"msgstr[2]: %s баитк\n"
-"\t%s centuries\t%s ашәышықәсақәа\n"
-"\t%s days\t%s мшы\n"
-"\t%s degrees\t%s аградусқәа\n"
-"\t%s Dictionary\tАжәар %s\n"
-"\t%s for %s %p\t%s %p рзы %s \n"
-"\t%s gradians\t%s аградқәа\n"
-"\t%s h\t%s h\n"
-"\t%s has been updated.\t%s рҿыцын.\n"
-"\t%s has sent back the following assigned task response:\t%s ирхынҳәит "
-"анеҩстәи аҭак иарбоу адҵа ахь:\n"
-"\t%s has sent back the following meeting response:\t%s ирхынҳәит анеҩстәи "
-"аҭак аизара ахь:\n"
-"\t%s Hotspot\tАнеирҭа аҭыԥ %s аҿакуп\n"
-"\t%s Hotspot Active\tАнеирҭа аҭыԥ  %s аҿакуп \n"
-"\t%s hours\t%s сааҭ\n"
-"\t%s Hz\t%s Hz\n"
-"\t%s in %s\t%s в %s\n"
-"\t%s is not included in %s\t%s арбаӡам %s аҟны\n"
-"\t%s is safe\t«%s» ишәарҭам\n"
-"\t%s K\t%s K\n"
-"\t%s kb\t%s кбит\n"
-"\t%s kB\t%s кБ\n"
-"\t%s Kib\t%s Kибит\n"
-"\t%s KiB\t%s KиБ\n"
-"\t%s ly\t%s св. г.\n"
-"\t%s minutes\t%s минуҭ\n"
-"\t%s months\t%s мзы\n"
-"\t%s ms\t%s мс\n"
-"\t%s nibble\t%s абаитбжа\n"
-"\t%s on chooser\t%s алхраҟны\n"
-"\t%s pc\t%s пк\n"
-"\t%s Properties\tАҟазшьаҷыдақәа   %s\n"
-"\t%s radians\t%s радиан\n"
-"\t%s requires an argument\t%s иаҭахуп ашьаҭаркыга\n"
-"\t%s requires an argument \t%s иаҭахуп ашьаҭаркыга \n"
-"\t%s s\t%s с\n"
-"\t%s Sidebar Row\t%s Аварахьтәи аҵҟьа ацәаҳәа\n"
-"\t%s Total\t%s зегьы\n"
-"\t%s Used\t%s ахархәара роуит\n"
-"\t%s weeks\t%s мчыбжьы\n"
-"\t%s with type %s\t%s измоу хкыс %s\n"
-"\t%s with value @% \"%s@%s"
-
-msgid "%s: %s: error closing: %s "
-msgstr " %s: %s: аркра залымшеит: %s "
-
-msgid "%s: %s: error opening file: %s "
-msgstr "%s: %s: иазаамыртӡеит афаил : %s "
-
-msgid "%s: %s: error parsing file: %s "
-msgstr "%s: %s: иазеилмаргаӡеит афаил : %s "
-
-msgid "%s%s Encoding: %s %s"
-msgstr "%s%s Акодркра: %s %s"
-
-msgid "%s%s Encoding: %s %s Substituting with <b>%s</b> (%s)"
-msgstr "%s%s Акодркра: %s %s иԥсахуа  <b>%s</b> аҟынтә %s "
-
-msgid "%u box has been deleted msgid_plural: %u boxes have been deleted"
-msgstr ""
-"msgstr[0]: %u авиртуалтә машьына аныхын msgstr[1]: %u авиртуалтә машьынақк "
-"аныхын msgstr[2]: %u выируалтә машьынак аныхын"
-
-msgid "%u byte msgid_plural: %u bytes"
-msgstr "msgstr[0]: %u баитк msgstr[1]: %u баитк msgstr[2]: %u баитк"
-
-msgid "%u Input msgid_plural: %u Inputs"
-msgstr ""
-"msgstr[0]: %u аҭалара msgstr[1]: %u  аҭаларақәа msgstr[2]: %u  аҭаларақәа"
-
-msgid "%u Output msgid_plural: %u Outputs"
-msgstr "msgstr[0]: %u ҭыҵрак msgstr[1]: %u ҭыҵрак msgstr[2]: %u ҭыҵрак"
-
-msgid "© 2011 Red Hat, Inc. © 2011-2020 The Contacts Developers"
-msgstr "© 2011 Red Hat, Inc. © 2011-2020 Аимадарақәа рыҟаҵаҩцәа"
-
-msgid ""
-"© 2018-2020 Juan Pablo Ugarte, et al. © 2004-2018 Tristan Van Berkom, Juan "
-"Pablo Ugarte, et al. © 2001-2006 Joaquin Cuenca Abela, Paolo Borelli, et al. "
-"© 2001-2006 Ximian, Inc."
-msgstr ""
-"© 2018-2020 Хуан Пабло Угарте (Juan Pablo Ugarte) уб.егь. © 2004-2018 "
-"Тристан Ван Берком (Tristan Van Berkom), Хуан Пабло Угарте (Juan Pablo "
-"Ugarte) уб.егь. © 2001-2006 Joaquin Cuenca Abela, Paolo Borelli, уб.егь. © "
-"2001-2006 Ximian, Inc."
-
-msgid ""
-"<b>%d key is selected for synchronizing</b> msgid_plural: <b>%d keys are "
-"selected for synchronizing</b>"
-msgstr ""
-"msgstr[0]: <b>%d ацыԥха алхуп </b> асин- хронтәразы msgstr[1]: <b>%d ацыԥха "
-"алхуп </b> асин- хронтәразы msgstr[2]: <b>%d ацыԥха алхуп  </b> асин- "
-"хронтәразы"
-
-msgid "<b>%d</b> mine msgid_plural: <b>%d</b> mines"
-msgstr ""
-"msgstr[0]: <b>%d</b> минак msgstr[1]: <b>%d</b> минак msgstr[2]: <b>%d</b> "
-"минак"
-
-msgid "<b>%s</b>: %s <b>%s</b>: %d×%d <b>%s</b>: %s"
-msgstr "<b>%s</b>: %s <b>%s</b>: %d×%d <b>%s</b>: %s"
-
-msgid ""
-"<big><b>The photo is too large</b></big> The recommended size for a photo on "
-"your key is %d × %d pixels."
-msgstr ""
-"<big><b>Аԥшранҵа амцхә идууп</b></big> Адгаларатә рышәага аԥшранҵақәа "
-"ацаԥхаҟны — %d × %d акәаԥқәа."
-
-msgid ""
-"<big><b>Tips:</b></big>   * Right-click over the treeview to add items.   * "
-"Press Delete to remove the selected item.   * Drag &amp; Drop to reorder.   "
-"* Type column is editable."
-msgstr ""
-"<big><b>Аҵаҳәарақәа:</b></big>   * Аҵлаҟны  аелемент ацҵаразы , аҵла аҵаҟа "
-"аҳәынапԥ арыӷьаратәи пытҟәыр шәақәыӷәӷәа.   * Иалкаау аелементқәа рныхразы "
-"шәақәыӷәӷәа Delete.   * Аелеменқәа реишьҭагылашьа аԥсахразы еиҭажәга урҭ "
-"аҳәынаԥ ала.   * Ахкы аиҵагыла ариашара ҟалоит."
-
-msgid ""
-"<small>In memory of an extraordinary person and professor R.I.P Guido "
-"Macchi</small>"
-msgstr ""
-"<small> Зеиԥш дҟамлац ауаҩԥси апрофессори игәаларшәара иазкны R.I.P. Гвидо "
-"Маки</small>"
-
-msgid "3 × 3 1 minute"
-msgstr "3 × 3        1 минуҭк"
-
-msgid "4 × 4 3 minutes"
-msgstr "4 × 4        3 минуҭк"
-
-msgid "4 × 4 5 minutes"
-msgstr "4 × 4        5 минуҭк"
-
-msgid "5 × 5 15 minutes"
-msgstr "5 × 5        15 минуҭ"
-
-msgid "5 × 5 5 minutes"
-msgstr "5 × 5        5 минуҭк"
-
-msgid ""
-"A problem has occurred and the system can’t recover. Please log out and try "
-"again."
-msgstr ""
-"Иҟалаз агха иахҟьаны асистема зеиҭашьақәмыргылахеит. Асеанс хырқәшаны "
-"шәеиҭаҭал."
-
-msgid ""
-"An automatically saved version of `%s' is more recent.  Would you like to "
-"load the autosave version instead?"
-msgstr ""
-"Автоматикла еиқәырхоу аверсиа \"%s\"  еиҳа иҿыцуп. Ишәҭахума шәара иара "
-"ацынхәрас автоматикла аиқәырхара змоу аверсиа ҭажәгалар. "
-
-msgid "Arguments: "
-msgstr "Аҵаҵӷәқәа:"
-
-msgid "Attachment msgid_plural: Attachments"
-msgstr "msgstr[0]:Агәылаҵа msgstr[1]:Агәылаҵақәа msgstr[2]:Агәылаҵақәа"
-
-msgid "attributes: "
-msgstr "Аҟазшьарбагақәа:"
-
-msgid ""
-"Automatically save the project to an alternate file whenever the project is "
-"modified and the specified timeout elapses"
-msgstr ""
-"Автоматикла апроект даҽа фаилк ахь лассы-лассы аиқәырхара  , апроект "
-"аԥсахраангьы. "
-
-msgid "bit msgid_plural: bits"
-msgstr "msgstr[0]: абит msgstr[1]: битк msgstr[2]: абит"
-
-msgid "Bookmarks will be added here"
-msgstr "Агәылаҵақәа ацҵахоит араҟа"
-
-msgid "byte msgid_plural: bytes"
-msgstr "msgstr[0]: баитк msgstr[1]: баитк msgstr[2]: баитк"
-
-msgid "BytesSourceSeqTimeUnits "
-msgstr "Абаитқәа       Ахықәкы        Азҵаалара        Аамҭа        Ашәара ак"
-
-msgid ""
-"Cannot create a regex for all the transitions, the syntax highlighting "
-"process will be slower than usual. The error was: %s"
-msgstr ""
-"Изалымшахеит аиҭеиҭакрақәа зегьы рзы еиԥырҟьам аҿаԥшылара аԥҵара , "
-"асинтаксис арлашара нагӡахалоит  имырццаыкӡакәа. Агха: %s"
-
-msgid "Clear as many blocks as you can. Fewer clicks means more points."
-msgstr ""
-"Шаҟа шәылшо аблокқәа анышәх. Шаҟа имаҷны шәақәыӷәӷәо аҟара ирацәаны "
-"акәаталақәа шәырҳауоит."
-
-msgid "Command line options could not be parsed: %s "
-msgstr "Адҵатә цәаҳәа ахышәарақәа реилкаара залымшахеит : %s "
-
-msgid ""
-"Congratulations, You Have Defeated the Robots!!  But Can You do it Again?"
-msgstr ""
-"Ишәыдаҳныҳәалоит, шәара ароботқәа шәыриааит!! Ишәылшару еиҭа уи аҟаҵара"
-
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc. Copyright © 2008-2013 David Zeuthen "
-"Copyright © 2009-2017 The GNOME Project"
-msgstr ""
-"Аԥҵаҩы изин © 2008-2013 Red Hat, Inc. Аԥҵаҩы изин © 2008-2013 David Zeuthen "
-"Аԥҵаҩы изин © 2009-2017 The GNOME Project"
-
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc. Copyright © 2008-2013 David Zeuthen "
-"Copyright © 2009-2017 The GNOME Project "
-msgstr ""
-"Аԥҵаҩы изин © 2008-2013 Red Hat, Inc. Аԥҵаҩы изин © 2008-2013 David Zeuthen "
-"Аԥҵаҩы изин © 2009-2017 The GNOME Project "
-
-msgid ""
-"Copyright © 2012 – 2021 Red Hat, Inc. Copyright © 2015 – 2018 Umang Jain"
-msgstr ""
-"Аԥҵаҩы изин © 2012 – 2021 Red Hat, Inc. Аԥҵаҩы изин © 2015 – 2018 Umang Jain"
-
-msgid ""
-"Default arguments are “-i -f %F -- %R”, where    %F — stands for the From "
-"address    %R — stands for the recipient addresses"
-msgstr ""
-"Аҵаҵӷәқәа ишыҟоу еиԥш: «-i -f %F -- %R», уаҟа    %F — ашьҭҩы иҭыӡҭыԥ    %R — "
-"аиуаа рҭыӡҭыԥ"
-
-msgid ""
-"Default arguments are “-i -f %F -- %R”, where %F — stands for the From "
-"address %R — stands for the recipient addresses"
-msgstr ""
-"Аҵаҵӷәқәа ишыҟоу еиԥш: «-i -f %F -- %R», уаҟа %F — ашьҭҩы иҭыӡҭыԥ %R — аиуаа "
-"рҭыӡҭыԥ"
-
-msgid "Error parsing commandline options: %s "
-msgstr "Адҵатә цәаҳәа ахышәарақәа реилыргара залымшахеит : %s "
-
-msgid "Failed to execute %s "
-msgstr "%s аҿакра залымшахеит "
-
-msgid "gnome-disk-utility %s UDisks %s (built against %d.%d.%d)"
-msgstr "gnome-disk-utility %s UDisks %s (аизга %d.%d.%d аҟынтә)"
-
-msgid "GNU General Public License version 3 or later"
-msgstr "GNU General Public License аверсиа 3 мамзар еиҳа иҿыцу "
-
-msgid "Hardware address:%s "
-msgstr "Аппараттә ҭыӡҭыԥ:        %s"
-
-msgid ""
-"I want to play that game! You know, they all light-up and you click on them "
-"and they vanish!"
-msgstr ""
-"Сара исҭахуп абри ахәмарра сыхәмарырц! Урҭ зегьы лашоит нас иӡоит "
-"шәанрыцәхасуа."
-
-msgid "Leaving %d blockquote. msgid_plural: Leaving %d blockquotes."
-msgstr ""
-"msgstr[0]: Аҭыҵра  %d ацитатаагара аидкыла аҟынтә. msgstr[1]: Аҭыҵра  %d "
-"ацитатаагара аидкыла аҟынтә. msgstr[2]: Аҭыҵра  %d ацитатаагара аидкыла "
-"аҟынтә."
-
-msgid "Leaving %d list. msgid_plural: Leaving %d lists."
-msgstr ""
-"msgstr[0]: Ахьӡынҵақәа %d рҟынтә аҭыҵра. msgstr[1]: Ахьӡынҵақәа %d рҟынтә "
-"аҭыҵра. msgstr[2]: Ахьӡынҵақәа %d рҟынтә аҭыҵра."
-
-msgid "Level: %d Score: %d"
-msgstr "Аҩаӡара: %d  Аԥхьаӡара: %d"
-
-msgid "Maximum value must be greater than minimum value. "
-msgstr "Имаксималу аҵакы иминималу аасҭа еиҳазароуп"
-
-msgid "MTU:%s "
-msgstr "MTU:%s "
-
-msgid "Multicast:%s "
-msgstr "Multicast:%s "
-
-msgid ""
-"nested math table with %d row msgid_plural: nested math table with %d rows"
-msgstr ""
-"msgstr[0]:Иагәылаҵоу аматиматикатә ҭаӡҩыра %d ацәаҳәа змоу msgstr[1]: "
-"Иагәылаҵоу аматиматикатә ҭаӡҩыра %d ацәаҳәақәа змоу msgstr[2]:Иагәылаҵоу "
-"аматиматикатә ҭаӡҩыра %d ацәаҳәақәа змоу"
-
-msgid "No column titles specified for List dialog. "
-msgstr "Ахьӡынҵа аиҿцәажәаразы иарбаӡам аиҵагылақәа рыхқәа   "
-
-msgid ""
-"output %s does not have the same parameters as another cloned output: "
-"existing mode = %d, new mode = %d existing coordinates = (%d, %d), new "
-"coordinates = (%d, %d) existing rotation = %d, new rotation = %d"
-msgstr ""
-"аҭыҵра %s ахышәарақәа  егьи  ахаҭаԥсаҭа  аҭыҵра ахышәарақәа иреиԥшӡам:Иҟоу "
-"арежим = %d, иҿыцу арежим = %d иҟоу акоординатқәа = (%d, %d),  акоординатқәа "
-"ҿыцқәа = (%d, %d) иҟоу агьежьра = %d,  агьежьра ҿыц = %d\""
-
-msgid ""
-"Refusing new client connection because the session is currently being shut "
-"down "
-msgstr ""
-"Иҿыцу аҿакрақәа аклиентцәа рҟынтә мап рыцәкхоит ,избан акәзар асеанс "
-"хырқәшахоит "
-
-msgid "Run “%s --help” to see a full list of available command line options. "
-msgstr ""
-"Инашәыгӡа адҵа «%s --help», ишәзыманшәалоу  адҵатә цәаҳәа алшарақәа "
-"резыкхьӡынҵа нарҭбааны ишәбарц азы. "
-
-msgid "Search for the Contact  or double-click here to create a new Contact."
-msgstr "Ишәыԥшаа аимадара,  мамзар абраҟа шәақәыӷәӷәа аҿыц аԥҵаразы."
-
-msgid ""
-"Secure boot prevents malicious software from being loaded when the device "
-"starts.  For more information, contact the hardware manufacturer or IT "
-"support."
-msgstr ""
-"Ишәарҭадароу аҭагалара аԥхасҭа ҟазҵо апрограмматә еиқәыршәарақәа рҭагалара "
-"ԥнарҟәҟәоит аиҿартәыраадәықәҵараан.  Иацҵаны аинформациа шәоурц азы амаруга "
-"аԥҵаҩы ,мамзар ИТ -ацхыраара амаҵзура шәрыдҵаала."
-
-msgid ""
-"Sign in to authorize access in a web browser. Then fill in the obtained "
-"verification code here in the next step."
-msgstr ""
-"Шәҭала асистема веб-браузер ахь аҭалара хаҭара шьақәыргыларазы.Анаҩс, ишәоуз "
-"агәаҭаратә код абраҟа иҭажәыҩ."
-
-msgid ""
-"The “%s” plugin depends on the “%s” plugin. If you disable “%s”, “%s” will "
-"also be disabled."
-msgstr "Амодуль «%s» ахьԥшоит амодуль «%s». «%s» аҿыхзар, «%s» гьы аҿыххоит"
-
-msgid "The following recipient was not recognized as a valid mail address: {0}"
-msgstr "Анаҩстәи адкылаҩ иԥошьҭа аиашашьа еилкаамхазеит: {0}"
-
-msgid ""
-"The following recipients were not recognized as valid mail addresses: {0}"
-msgstr "Анаҩстәи адкылаҩцәа рԥошьҭақәа риашашьа еилкаамхазеит: {0}"
-
-msgid "The popular Japanese logic puzzle  Puzzles generated by QQwing %s"
-msgstr ""
-"Еицырдыруа аиапониатә алогикатә хыҧҽыга  Ахыҧҽыгақәа аҧҵахоит QQwing %s "
-
-msgid ""
-"There are no items to show in this view.  Double-click here to create a new "
-"Contact."
-msgstr ""
-"Иҟаӡам аелементқәа ари аԥенџьыр аҟны иаарԥшразы.  Ҩынтә абраҟа шәақәыӷәӷәа "
-"аимадара ҿыц аԥҵаразы"
-
-msgid ""
-"There had been added %d attachment. Make sure it does not contain any "
-"sensitive information before sending the message. msgid_plural: There had "
-"been added %d attachments. Make sure they do not contain any sensitive "
-"information before sending the message."
-msgstr ""
-"msgstr[0]: Иацҵан %d аҭаҵа. Ацҳамҭа шәышьҭаанӡа агәра шәга уи ишагәылам "
-"имаӡоу аинформациа.msgstr[1]: Иацҵан %d аҭаҵа. Ацҳамҭа шәышьҭаанӡа агәра "
-"шәга уи ишагәылам имаӡоу аинформациа.msgstr[2]: Иацҵан %d аҭаҵа. Ацҳамҭа "
-"шәышьҭаанӡа агәра шәга уи ишагәылам имаӡоу аинформациа"
-
-msgid ""
-"This might be for a legitimate reason, but the application has not provided "
-"one.  Note that forcing an application to quit might cause data loss."
-msgstr ""
-"Уи ҟалар алшон анажьратә мзызқәа рыбзоурала ,аха аԥшьы иаҳнамҭеитone.  "
-"Шәазхьаԥш, аԥшьы мчыла ахырқәшара иахҟьаны адыррақәа ыӡыр шрылшо."
-
-msgid ""
-"This option is not available. Please see --help for all possible usages. "
-msgstr ""
-"Ари ахышәара ахь анеира азин ыҟаӡам.Шәхы иашәырхәа   --help зеиуахкы шәҭаху "
-"ахышәарақәа рыхәаҧшразы"
-
-msgid "Two or more dialog options specified "
-msgstr "Ҩба, мамзар инеиҳаны ахышәарақәа аиҿцәажәара азы иарбоуп"
-
-msgid "uri: %s "
-msgstr "uri: %s "
-
-msgid "Value out of range. "
-msgstr "Аҵакыра анҭыҵ аҵакы зеиԥшроу"
-
-msgid ""
-"You have received %d new message. msgid_plural: You have received %d new "
-"messages."
-msgstr ""
-"msgstr[0]: Шәара ишәоуит  %d цҳамҭа ҿыцк. msgstr[1]: Шәара ишәоуит %d цҳамҭа "
-"ҿыцк. msgstr[2]: Шәара ишәоуит %d цҳамҭа ҿыцк."
-
-msgid "You may need to select different mail options.  Detailed error: {0}"
-msgstr "Шәара аԥошьҭа егьырҭ ахышәарақәа азалшәхыр акәхоит.  Амзыз: {0}"
-
-msgid ""
-"You must specify at least one folder as a source. Either by selecting the "
-"folders individually, and/or by selecting all local folders, all remote "
-"folders, or both."
-msgstr "Иаҭахуп ҭаӡк еиҳамзаргьы  хыҵхырҭас иашәырбарц."
-
-msgid "You should use only one List dialog type. "
-msgstr "Аиҿцәажәара ахкы заҵәык ауп зхархәара ҟало \"Ахьӡынца\""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#, fuzzy
