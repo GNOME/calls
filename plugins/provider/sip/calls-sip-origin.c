@@ -22,6 +22,7 @@
  *
  */
 
+#define WAIT_FOR_SHUTDOWN_MS 100
 #define WAIT_FOR_OFFLINE_MS 100
 #define WAIT_FOR_OFFLINE_RETRIES 5
 
@@ -1241,7 +1242,7 @@ deinit_sip_account (CallsSipOrigin *self)
     nua_shutdown (self->nua);
     // need to wait for nua_r_shutdown event before calling nua_destroy ()
     while (!self->is_nua_shutdown)
-      su_root_step (self->ctx->root, 100);
+      su_root_step (self->ctx->root, WAIT_FOR_SHUTDOWN_MS);
 
     if (!self->is_shutdown_success) {
       g_warning ("nua_shutdown() timed out. Cannot proceed");
