@@ -1,16 +1,16 @@
 # Swedish messages for Calls.
-# Copyright © 2020-2022 Purism
+# Copyright © 2020-2023 Purism
 # This file is distributed under the same license as the Calls package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2020.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022, 2023.
 # Luna Jernberg <droidbittin@gmail.com>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-18 18:46+0100\n"
+"POT-Creation-Date: 2023-04-06 23:03+0000\n"
+"PO-Revision-Date: 2023-04-07 05:42+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Samtal"
 
@@ -51,8 +51,14 @@ msgid "Make phone and SIP calls"
 msgstr "Ring telefon- och SIP-samtal"
 
 #: data/org.gnome.Calls.metainfo.xml:10
-msgid "Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used with a cellular modem for plain old telephone calls as well as VoIP calls using the SIP protocol."
-msgstr "Samtal är en enkel, elegant telefonuppringare och samtalshanterare för GNOME. Den kan användas med ett mobilmodem för vanliga telefonsamtal såväl som VoIP-samtal med SIP-protokollet."
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Samtal är en enkel, elegant telefonuppringare och samtalshanterare för "
+"GNOME. Den kan användas med ett mobilmodem för vanliga telefonsamtal såväl "
+"som VoIP-samtal med SIP-protokollet."
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
@@ -82,7 +88,8 @@ msgstr "Insticksmodulerna att läsa in automatiskt"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "Dessa insticksmoduler kommer automatiskt läsas in vid programmets uppstart."
+msgstr ""
+"Dessa insticksmoduler kommer automatiskt läsas in vid programmets uppstart."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -197,62 +204,81 @@ msgstr "Redigera konto: %s"
 msgid "Add new account"
 msgstr "Lägg till nytt konto"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:377
 msgid "Account overview"
 msgstr "Kontoöversikt"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Försökte ringa ogiltig tel-URI ”%s”"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Vet inte hur ”%s” ska öppnas"
 
-#: src/calls-application.c:717
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "Namnet på insticket som ska användas som samtalsleverantör"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "INSTICK"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Huruvida huvudfönstret ska visas vid uppstart"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Slå ett telefonnummer"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Aktivera utförliga felsökningsmeddelanden"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Skriv ut aktuell version"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Anonym uppringare"
 
 #: src/calls-call-record-row.c:97
 #, c-format
-msgid "%s\n"
+msgid ""
+"%s\n"
 "yesterday"
-msgstr "%s\n"
+msgstr ""
+"%s\n"
 "i går"
+
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Polis"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulans"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Brandkår"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Fjällräddning"
 
 #: src/calls-main-window.c:123
 msgid "translator-credits"
-msgstr "Sebastian Rasmussen <sebras@gmail.com>\n"
+msgstr ""
+"Sebastian Rasmussen <sebras@gmail.com>\n"
 "Luna Jernberg <droidbittin@gmail.com>\n"
 "Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "\n"
@@ -267,40 +293,40 @@ msgstr "Kan inte ringa: Inget modem eller VoIP-konto tillgängligt"
 msgid "Can't place calls: No plugin loaded"
 msgstr "Kan inte ringa: Inget instick inläst"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Knappsats"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Senaste"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Missat samtal"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Missat samtal från <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Missat samtal från %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Missat samtal från okänd uppringare"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Ring tillbaka"
 
@@ -313,8 +339,14 @@ msgid "Add VoIP Accounts"
 msgstr "Lägg till VoIP-konton"
 
 #: src/ui/account-overview.ui:51
-msgid "You can add VoIP account here. It will allow you to place and receive VoIP calls using the SIP protocol. This feature is still relatively new and not yet feature complete (i.e. no encrypted media)."
-msgstr "Du kan lägga till ett VoIP-konto här. Det kommer låta dig ringa och ta emot VoIP-samtal med SIP-protokollet. Denna funktion är relativt ny och inte fullt funktionell ännu (d.v.s. inga krypterade media)."
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Du kan lägga till ett VoIP-konto här. Det kommer låta dig ringa och ta emot "
+"VoIP-samtal med SIP-protokollet. Denna funktion är relativt ny och inte "
+"fullt funktionell ännu (d.v.s. inga krypterade media)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -545,18 +577,3 @@ msgstr "Använd för telefonsamtal"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Anslut automatiskt"
-
-#~ msgid "Enter a number"
-#~ msgstr "Ange ett nummer"
-
-#~ msgid "Dial"
-#~ msgstr "Ring"
-
-#~ msgid "Delete character in front of cursor"
-#~ msgstr "Radera tecken framför markören"
-
-#~ msgid "Call disconnected (unknown reason)"
-#~ msgstr "Samtal frånkopplat (okänd orsak)"
-
-#~ msgid "Can't place calls: No backend service"
-#~ msgstr "Kan inte ringa: Ingen bakändestjänst"
