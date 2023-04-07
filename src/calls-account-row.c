@@ -217,6 +217,7 @@ calls_account_row_new (CallsAccountProvider *provider,
                        CallsAccount         *account)
 {
   g_return_val_if_fail (CALLS_IS_ACCOUNT (account), NULL);
+  g_return_val_if_fail (CALLS_IS_ACCOUNT_PROVIDER (provider), NULL);
 
   return g_object_new (CALLS_TYPE_ACCOUNT_ROW,
                        "provider", provider,
