@@ -376,13 +376,13 @@ add_origin (CallsManager *self, CallsOrigin *origin)
                            G_CALLBACK (update_country_code_cb),
                            self,
                            G_CONNECT_AFTER);
-  g_signal_connect_swapped (origin, "call-added", G_CALLBACK (add_call), self);
-  g_signal_connect_swapped (origin, "call-removed", G_CALLBACK (remove_call), self);
+  g_signal_connect_object (origin, "call-added", G_CALLBACK (add_call), self, G_CONNECT_SWAPPED);
+  g_signal_connect_object (origin, "call-removed", G_CALLBACK (remove_call), self, G_CONNECT_SWAPPED);
 
   if (CALLS_IS_USSD (origin)) {
-    g_signal_connect_swapped (origin, "ussd-added", G_CALLBACK (ussd_added_cb), self);
-    g_signal_connect_swapped (origin, "ussd-cancelled", G_CALLBACK (ussd_cancelled_cb), self);
-    g_signal_connect_swapped (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self);
+    g_signal_connect_object (origin, "ussd-added", G_CALLBACK (ussd_added_cb), self, G_CONNECT_SWAPPED);
+    g_signal_connect_object (origin, "ussd-cancelled", G_CALLBACK (ussd_cancelled_cb), self, G_CONNECT_SWAPPED);
+    g_signal_connect_object (origin, "ussd-state-changed", G_CALLBACK (ussd_state_changed_cb), self, G_CONNECT_SWAPPED);
   }
 
   calls_origin_foreach_call (origin, (CallsOriginForeachCallFunc) add_call, self);
