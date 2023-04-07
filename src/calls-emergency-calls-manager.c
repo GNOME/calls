@@ -88,7 +88,7 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
   g_variant_builder_init (&contacts_builder, G_VARIANT_TYPE (CONTACTS_FORMAT));
 
   for (int i = 0; i < g_list_model_get_n_items (self->origins); i++) {
-    CallsOrigin *origin = g_list_model_get_item (self->origins, i);
+    g_autoptr (CallsOrigin) origin = g_list_model_get_item (self->origins, i);
     g_auto (GStrv) emergency_numbers = NULL;
     const char *country_code;
 
