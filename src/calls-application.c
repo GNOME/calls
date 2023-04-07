@@ -58,24 +58,24 @@
  */
 
 struct _CallsApplication {
-  GtkApplication    parent_instance;
+  GtkApplication      parent_instance;
 
-  gboolean          daemon;
-  CallsRinger      *ringer;
-  CallsNotifier    *notifier;
-  CallsRecordStore *record_store;
-  CallsMainWindow  *main_window;
-  CallsCallWindow  *call_window;
-  CallsDBusManager *dbus_manager;
-  CallsManager     *manager;
-
-  char             *uri;
-  guint             id_sigterm;
-  guint             id_sigint;
-  gboolean          shutdown;
-  gboolean          db_done;
+  gboolean            daemon;
+  CallsRinger        *ringer;
+  CallsNotifier      *notifier;
+  CallsRecordStore   *record_store;
+  CallsMainWindow    *main_window;
+  CallsCallWindow    *call_window;
+  CallsDBusManager   *dbus_manager;
+  CallsManager       *manager;
   CallsPluginManager *plugin_manager;
   CallsSettings      *settings;
+
+  char               *uri;
+  guint               id_sigterm;
+  guint               id_sigint;
+  gboolean            shutdown;
+  gboolean            db_done;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
