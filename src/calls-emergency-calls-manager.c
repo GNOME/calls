@@ -64,12 +64,37 @@ on_origins_changed (CallsEmergencyCallsManger *self, guint position, guint added
 
 static gboolean
 handle_call_emergency_contact (CallsDBusEmergencyCalls *object,
-                               GDBusMethodInvocation *invocation,
-                               const gchar *arg_id)
+                               GDBusMethodInvocation   *invocation,
+                               const gchar             *arg_id)
 {
-  g_debug ("Calling %s", arg_id);
+  CallsEmergencyCallsManger *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
+  g_debug ("Looking for emergency number %s", arg_id);
 
-  calls_dbus_emergency_calls_complete_call_emergency_contact (object, invocation);
+  g_return_val_if_fail (CALLS_IS_EMERGENCY_CALLS_MANAGER (self), FALSE);
+
+  /* Pick the first origin that supports the given emergency number */
+  for (int i = 0; i < g_list_model_get_n_items (self->origins); i++) {
+    g_autoptr (CallsOrigin) origin = g_list_model_get_item (self->origins, i);
+    g_auto (GStrv) emergency_numbers = NULL;
+
+    emergency_numbers = calls_origin_get_emergency_numbers (origin);
+    if (!emergency_numbers)
+      continue;
+
+    for (int j = 0; j < g_strv_length (emergency_numbers); j++) {
+      if (g_strcmp0 (arg_id, emergency_numbers[j]) == 0) {
+        g_debug ("Dialing %s via %s", arg_id, calls_origin_get_name (origin));
+        calls_origin_dial (origin, arg_id);
+        calls_dbus_emergency_calls_complete_call_emergency_contact (object, invocation);
+        goto done;
+      }
+    }
+  }
+
+  g_dbus_method_invocation_return_error (invocation, G_DBUS_ERROR,
+                                         G_DBUS_ERROR_NOT_SUPPORTED,
+                                         "%s not a known emergency number", arg_id);
+ done:
   return TRUE;
 }
 
