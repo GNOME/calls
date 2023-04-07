@@ -1,5 +1,5 @@
 # Bulgarian translation for calls po-file.
-# Copyright (C) 2022 Alexander Shopov.
+# Copyright (C) 2023 Alexander Shopov.
 # This file is distributed under the same license as the calls package.
 # Alexander Shopov <ash@kambanaria.org>, 2023.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-03-01 02:20+0000\n"
-"PO-Revision-Date: 2023-03-12 17:12+0200\n"
+"POT-Creation-Date: 2023-04-07 10:09+0000\n"
+"PO-Revision-Date: 2023-04-07 19:50+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -258,6 +258,22 @@ msgstr ""
 "%s\n"
 "вчера"
 
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Полиция"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Бърза помощ"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Пожарна"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Планинска служба"
+
 #: src/calls-main-window.c:123
 msgid "translator-credits"
 msgstr ""
@@ -268,7 +284,7 @@ msgstr ""
 "Научете повече за нас на <a href='https://fsa-bg.org/project/gtp'>уеб сайта</"
 "a> ни.\n"
 "Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
-"newticket'>съответния раздел</a>.<"
+"newticket'>съответния раздел</a>."
 
 #: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
