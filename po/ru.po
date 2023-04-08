@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-19 00:29+0300\n"
+"POT-Creation-Date: 2023-04-06 23:03+0000\n"
+"PO-Revision-Date: 2023-04-07 10:47+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Вызовы"
 
@@ -204,49 +204,49 @@ msgstr "Редактировать учетную запись: %s"
 msgid "Add new account"
 msgstr "Добавить новую учетную запись"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:377
 msgid "Account overview"
 msgstr "Обзор учетной записи"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Попытка набрать недопустимый телефонный URI `%s'"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Неизвестно как открыть `%s'"
 
-#: src/calls-application.c:717
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "Имя плагина для использования в качестве поставщика вызовов"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "ПЛАГИН"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Показывать ли главное окно при запуске"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Набрать телефонный номер"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Включить подробные отладочные сообщения"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Вывести текущую версию"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Анонимный абонент"
 
@@ -259,9 +259,25 @@ msgstr ""
 "%s\n"
 "вчера"
 
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Полиция"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Скорая помощь"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Пожарная бригада"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Горноспасательная служба"
+
 #: src/calls-main-window.c:123
 msgid "translator-credits"
-msgstr "Aleksandr Melman <alexmelman88@gmail.com>, 2022"
+msgstr "Aleksandr Melman <alexmelman88@gmail.com>, 2022-2023"
 
 #: src/calls-main-window.c:316
 msgid "Can't place calls: No modem or VoIP account available"
@@ -271,40 +287,40 @@ msgstr "Невозможно совершать вызовы: Нет модем�
 msgid "Can't place calls: No plugin loaded"
 msgstr "Невозможно совершать вызовы: Плагин не загружен"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Контакты"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Панель набора"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Недавние"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Пропущенный вызов"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущенный вызов от <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущенный вызов от %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Пропущенный вызов от неизвестного абонента"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Перезвонить"
 
@@ -370,7 +386,7 @@ msgstr "USSD"
 
 #: src/ui/main-window.ui:114
 msgid "_Cancel"
-msgstr "_Отмена"
+msgstr "_Отменить"
 
 #: src/ui/main-window.ui:131
 msgid "_Close"
@@ -386,7 +402,7 @@ msgstr "Учетные записи _VoIP"
 
 #: src/ui/main-window.ui:227
 msgid "_Keyboard shortcuts"
-msgstr "_Сочетания клавиш"
+msgstr "_Комбинации клавиш"
 
 #: src/ui/main-window.ui:233
 msgid "_Help"
@@ -395,7 +411,7 @@ msgstr "_Справка"
 #. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
-msgstr "_О Программе"
+msgstr "_О приложении"
 
 #: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
