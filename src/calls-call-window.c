@@ -108,18 +108,6 @@ calls_create_widget_cb (CallsCallSelectorItem *item,
 
 
 static void
-new_call_submitted_cb (CallsCallWindow *self,
-                       CallsOrigin     *origin,
-                       const gchar     *id,
-                       CallsNewCallBox *new_call_box)
-{
-  g_assert (CALLS_IS_CALL_WINDOW (self));
-
-  calls_origin_dial (origin, id);
-}
-
-
-static void
 set_focus (CallsCallWindow *self,
            CuiCallDisplay  *display)
 {
@@ -342,7 +330,6 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, call_selector);
   gtk_widget_class_bind_template_callback (widget_class, call_selector_child_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, show_calls_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, new_call_submitted_cb);
 }
 
 
