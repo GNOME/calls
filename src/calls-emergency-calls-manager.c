@@ -44,7 +44,10 @@ on_emergency_numbers_changed (CallsEmergencyCallsManger *self)
 
 
 static void
-on_origins_changed (CallsEmergencyCallsManger *self, guint position, guint added)
+on_origins_changed (CallsEmergencyCallsManger *self,
+                    guint                      position,
+                    guint                      removed,
+                    guint                      added)
 {
   g_assert (CALLS_IS_EMERGENCY_CALLS_MANAGER (self));
 
