@@ -52,7 +52,7 @@ on_origins_changed (CallsEmergencyCallsManger *self,
   g_assert (CALLS_IS_EMERGENCY_CALLS_MANAGER (self));
 
   for (int i = 0; i < added; i++) {
-    CallsOrigin *origin = g_list_model_get_item (self->origins, position + i);
+    g_autoptr (CallsOrigin) origin = g_list_model_get_item (self->origins, position - i);
 
     g_signal_connect_object (origin, "notify::emergency-numbers",
                              G_CALLBACK (on_emergency_numbers_changed),
