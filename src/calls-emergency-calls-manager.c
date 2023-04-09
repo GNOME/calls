@@ -22,11 +22,10 @@
  * and makes them available for initiating emergency calls.
  */
 
-typedef struct _CallsEmergencyCallsManager
-{
+typedef struct _CallsEmergencyCallsManager {
   CallsDBusEmergencyCallsSkeleton parent;
 
-  GListModel *origins;
+  GListModel                     *origins;
 } CallsEmergencyCallsManger;
 
 static void calls_emergency_calls_iface_init (CallsDBusEmergencyCallsIface *iface);
