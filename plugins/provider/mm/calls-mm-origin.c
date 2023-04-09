@@ -796,10 +796,7 @@ get_sim_ready_cb (MMModem      *modem,
   self->sim = mm_modem_get_sim_finish (modem, res, NULL);
 
   code = get_country_iso_for_mcc (mm_sim_get_imsi (self->sim));
-  if (code) {
-    if (g_strcmp0 (self->country_code, code) == 0)
-      return;
-
+  if (code && g_strcmp0 (self->country_code, code)) {
     g_debug ("Setting the country code to `%s'", code);
 
     self->country_code = g_strdup (code);
