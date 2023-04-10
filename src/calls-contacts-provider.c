@@ -422,9 +422,9 @@ calls_contacts_provider_lookup_id (CallsContactsProvider *self,
   g_return_val_if_fail (CALLS_IS_CONTACTS_PROVIDER (self), NULL);
 
   if (STR_IS_NULL_OR_EMPTY (id))
-    return NULL;
-
-  best_match = g_hash_table_lookup (self->best_matches, id);
+    best_match = g_hash_table_lookup (self->best_matches, "");
+  else
+    best_match = g_hash_table_lookup (self->best_matches, id);
 
   if (best_match)
     return g_object_ref (best_match);
@@ -435,7 +435,7 @@ calls_contacts_provider_lookup_id (CallsContactsProvider *self,
                           best_match, "country-code",
                           G_BINDING_SYNC_CREATE);
 
-  g_hash_table_insert (self->best_matches, g_strdup (id), best_match);
+  g_hash_table_insert (self->best_matches, g_strdup (id ?: ""), best_match);
 
   return g_object_ref (best_match);
 }
