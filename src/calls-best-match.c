@@ -365,12 +365,11 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   g_autoptr (CallsPhoneNumberQuery) query = NULL;
 
   g_return_if_fail (CALLS_IS_BEST_MATCH (self));
-  g_return_if_fail (phone_number);
 
   g_clear_pointer (&self->phone_number, g_free);
 
   // Consider empty string phone numbers as NULL
-  if (phone_number[0] != '\0')
+  if (!STR_IS_NULL_OR_EMPTY (phone_number))
     self->phone_number = g_strdup (phone_number);
 
   if (self->view)
