@@ -308,7 +308,12 @@ calls_best_match_init (CallsBestMatch *self)
 {
 }
 
-
+/**
+ * calls_best_match_new:
+ * @number: The number to use for contact matching
+ *
+ * Returns: (transfer full): A new #CallsBestMatch
+ */
 CallsBestMatch *
 calls_best_match_new (const char *number)
 {
@@ -317,6 +322,12 @@ calls_best_match_new (const char *number)
                        NULL);
 }
 
+/**
+ * calls_best_match_has_individual:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: %TRUE if a contact was matched, %FALSE otherwise
+ */
 gboolean
 calls_best_match_has_individual (CallsBestMatch *self)
 {
@@ -324,7 +335,6 @@ calls_best_match_has_individual (CallsBestMatch *self)
 
   return !!self->matched_individual;
 }
-
 
 /**
  * calls_best_match_is_favourite:
@@ -348,7 +358,12 @@ calls_best_match_is_favourite (CallsBestMatch *self)
   return fav;
 }
 
-
+/**
+ * calls_best_match_get_phone_number:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: (nullable): The phone number of @self, or %NULL if unknown.
+ */
 const char *
 calls_best_match_get_phone_number (CallsBestMatch *self)
 {
@@ -357,7 +372,13 @@ calls_best_match_get_phone_number (CallsBestMatch *self)
   return self->phone_number;
 }
 
-
+/**
+ * calls_best_match_set_phone_number:
+ * @self: A #CallsBestMatch
+ * @phone_number: (nullable): The phone number
+ *
+ * Set the @phone_number to use for matching.
+ */
 void
 calls_best_match_set_phone_number (CallsBestMatch *self,
                                    const char     *phone_number)
@@ -404,6 +425,14 @@ calls_best_match_set_phone_number (CallsBestMatch *self,
   notify_display_info (self);
 }
 
+/**
+ * calls_best_match_get_name:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: (nullable): The name of a matched individual,
+ * the display name or user portion of a SIP address,
+ * or %NULL otherwise.
+ */
 const char *
 calls_best_match_get_name (CallsBestMatch *self)
 {
@@ -417,7 +446,12 @@ calls_best_match_get_name (CallsBestMatch *self)
   return NULL;
 }
 
-
+/**
+ * calls_best_match_get_avatar:
+ * @self: A #CallsBestMatch
+ *
+ * Returns: (nullable): The avatar of a matched contact or %NULL when there's no match.
+ */
 GLoadableIcon *
 calls_best_match_get_avatar (CallsBestMatch *self)
 {
