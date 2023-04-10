@@ -475,9 +475,6 @@ calls_best_match_get_primary_info (CallsBestMatch *self)
 {
   const char *name;
 
-  if (!self)
-    goto anon;
-
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
   name = calls_best_match_get_name (self);
@@ -487,7 +484,6 @@ calls_best_match_get_primary_info (CallsBestMatch *self)
   if (self->phone_number)
     return self->phone_number;
 
-anon:
   return _("Anonymous caller");
 }
 
@@ -501,9 +497,6 @@ anon:
 const char *
 calls_best_match_get_secondary_info (CallsBestMatch *self)
 {
-  if (!self)
-    goto anon;
-
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
   if (self->matched_individual)
@@ -516,6 +509,5 @@ calls_best_match_get_secondary_info (CallsBestMatch *self)
    *  https://gitlab.gnome.org/GNOME/calls/-/issues/358
    */
 
-anon:
   return "";
 }
