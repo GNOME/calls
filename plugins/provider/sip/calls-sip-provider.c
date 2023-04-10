@@ -487,8 +487,10 @@ static void
 calls_sip_provider_constructed (GObject *object)
 {
   CallsSipProvider *self = CALLS_SIP_PROVIDER (object);
-
   g_autoptr (GError) error = NULL;
+
+  G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
+
   if (calls_sip_provider_init_sofia (self, &error)) {
     if (!self->use_memory_backend) {
       g_autoptr (GKeyFile) key_file = g_key_file_new ();
@@ -500,7 +502,7 @@ calls_sip_provider_constructed (GObject *object)
         else
           g_warning ("Error loading keyfile '%s': %s", self->filename, error->message);
 
-        goto out;
+        return;
       }
 
       calls_sip_provider_load_accounts (self, key_file);
@@ -509,9 +511,6 @@ calls_sip_provider_constructed (GObject *object)
     g_warning ("Could not initialize sofia stack: %s", error->message);
   }
 
-out:
-
-  G_OBJECT_CLASS (calls_sip_provider_parent_class)->constructed (object);
 }
 
 
