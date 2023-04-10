@@ -16,10 +16,10 @@ test_contacts_null_contact (void)
 {
   g_autoptr (CallsContactsProvider) contacts_provider =
     calls_contacts_provider_new ();
-  CallsBestMatch *best_match;
+  g_autoptr (CallsBestMatch) best_match = NULL;
 
   best_match = calls_contacts_provider_lookup_id (contacts_provider, NULL);
-  g_assert_null (best_match);
+  g_assert_nonnull (best_match);
 
   g_assert_cmpstr (calls_best_match_get_primary_info (best_match), ==, "Anonymous caller");
   g_assert_cmpstr (calls_best_match_get_secondary_info (best_match), ==, "");
