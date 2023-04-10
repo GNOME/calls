@@ -164,6 +164,8 @@ on_origin_pw_looked_up (GObject      *source,
     media_encryption =
       (SipMediaEncryption) g_key_file_get_integer (data->key_file, data->name, "MediaEncryption", NULL);
 
+  g_key_file_unref (data->key_file);
+
   /* PW */
   password = secret_password_lookup_finish (result, &error);
   if (!direct_mode && error) {
@@ -218,8 +220,7 @@ new_origin_from_keyfile_secret (CallsSipProvider *self,
 
   data = g_new0 (SipOriginLoadData, 1);
   data->provider = self;
-  g_key_file_ref (key_file);
-  data->key_file = key_file;
+  data->key_file = g_key_file_ref (key_file);
   data->name = g_strdup (name);
 
   secret_password_lookup (calls_secret_get_schema (), NULL,
