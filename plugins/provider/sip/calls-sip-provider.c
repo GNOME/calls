@@ -494,9 +494,15 @@ calls_sip_provider_constructed (GObject *object)
       g_autoptr (GKeyFile) key_file = g_key_file_new ();
 
       if (!g_key_file_load_from_file (key_file, self->filename, G_KEY_FILE_NONE, &error)) {
-        g_debug ("Error loading key file: %s", error->message);
+        if (error->domain == G_FILE_ERROR &&
+            error->code == G_FILE_ERROR_NOENT)
+          g_debug ("Not loading SIP accounts: No such file '%s'", self->filename);
+        else
+          g_warning ("Error loading keyfile '%s': %s", self->filename, error->message);
+
         goto out;
       }
+
       calls_sip_provider_load_accounts (self, key_file);
     }
   } else {
@@ -811,6 +817,10 @@ calls_sip_provider_load_accounts (CallsSipProvider *self,
   g_return_if_fail (key_file);
 
   groups = g_key_file_get_groups (key_file, NULL);
+
+  g_debug ("Found %u accounts in keyfile '%s'",
+           g_strv_length (groups),
+           self->filename);
 
   for (gsize i = 0; groups[i] != NULL; i++) {
     new_origin_from_keyfile_secret (self, key_file, groups[i]);
