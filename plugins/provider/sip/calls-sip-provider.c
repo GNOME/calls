@@ -119,7 +119,6 @@ on_origin_pw_looked_up (GObject      *source,
 
   g_autoptr (GError) error = NULL;
   g_autofree char *id = NULL;
-  g_autofree char *name = NULL;
   g_autofree char *host = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
@@ -805,7 +804,6 @@ void
 calls_sip_provider_load_accounts (CallsSipProvider *self,
                                   GKeyFile         *key_file)
 {
-  g_autoptr (GError) error = NULL;
   g_auto (GStrv) groups = NULL;
 
   g_return_if_fail (CALLS_IS_SIP_PROVIDER (self));
