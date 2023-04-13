@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calls package.
 #
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2020.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2022.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-23 00:46+0100\n"
+"POT-Creation-Date: 2023-04-08 15:45+0000\n"
+"PO-Revision-Date: 2023-04-13 23:29+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 22.08.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Hívások"
 
@@ -205,54 +205,52 @@ msgid "Edit account: %s"
 msgstr "Fiók szerkesztése: %s"
 
 #: src/calls-account-overview.c:184
-#| msgid "Add Account"
 msgid "Add new account"
 msgstr "Új fiók hozzáadása"
 
-#: src/calls-account-overview.c:376
-#| msgid "Account is online"
+#: src/calls-account-overview.c:377
 msgid "Account overview"
 msgstr "Fiók áttekintése"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Érvénytelen telefon-URI-t próbált meg tárcsázni: „%s”"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nem tudni, hogyan kell megnyitni a következőt: „%s”"
 
-#: src/calls-application.c:717
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "A hívásszolgáltatóként használandó bővítmény neve"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "BŐVÍTMÉNY"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Megjelenjen-e a főablak indításkor"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Telefonszám tárcsázása"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "SZÁM"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Részletes hibakeresési üzenetek engedélyezése"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Jelenlegi verzió kiírása"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "Névtelen hívó"
 
@@ -264,6 +262,22 @@ msgid ""
 msgstr ""
 "%s\n"
 "tegnap"
+
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Rendőrség"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Mentőszolgálat"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Tűzoltóság"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Hegyi mentőszolgálat"
 
 #: src/calls-main-window.c:123
 msgid "translator-credits"
@@ -279,40 +293,40 @@ msgstr "Nem lehet hívásokat indítani: nincs elérhető modem vagy VoIP-fiók"
 msgid "Can't place calls: No plugin loaded"
 msgstr "Nem lehet hívásokat indítani: nincs betöltött bővítmény"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "Partnerek"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "Tárcsázó"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "Legutóbbi"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Nem fogadott hívás"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Nem fogadott hívás innen: <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Nem fogadott hívás innen: %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Nem fogadott hívás ismeretlen hívótól"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Visszahívás"
 
