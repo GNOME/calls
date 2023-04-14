@@ -10,12 +10,12 @@
 #include <glib.h>
 
 struct TestData {
-  GMainLoop *loop;
-  CallsManager *manager;
-  GListModel *origins;
-  GListModel *origins_tel;
-  CallsOrigin *origin;
-  CuiCall *call;
+  GMainLoop          *loop;
+  CallsManager       *manager;
+  GListModel         *origins;
+  GListModel         *origins_tel;
+  CallsOrigin        *origin;
+  CuiCall            *call;
 };
 
 static void
