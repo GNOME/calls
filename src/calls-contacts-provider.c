@@ -278,6 +278,9 @@ calls_contacts_provider_finalize (GObject *object)
 {
   CallsContactsProvider *self = CALLS_CONTACTS_PROVIDER (object);
 
+  if (self->contacts_action_group)
+    g_signal_handlers_disconnect_by_data (self->contacts_action_group, self);
+
   g_clear_handle_id (&self->bus_watch_id, g_bus_unwatch_name);
   g_clear_object (&self->contacts_action_group);
   g_clear_object (&self->folks_aggregator);
