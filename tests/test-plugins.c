@@ -9,38 +9,106 @@
 #include "calls-config.h"
 
 #include "calls-provider.h"
+#include "calls-plugin-manager.h"
 
 #include <glib.h>
-#include <libpeas/peas.h>
+
+static void
+on_providers_changed (GListModel *model,
+                      guint       position,
+                      guint       removed,
+                      guint       added,
+                      gpointer    unused)
+{
+  g_autoptr (CallsProvider) provider = NULL;
+  static guint phase = 0;
+
+  switch (phase) {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+    g_assert_cmpint (added, ==, 1);
+    provider = g_list_model_get_item (model, position);
+    g_assert_true (CALLS_IS_PROVIDER (provider));
+    break;
+
+  case 4:
+  case 5:
+  case 6:
+  case 7:
+    g_assert_cmpint (removed, ==, 1);
+    break;
+
+  default:
+    g_assert_not_reached ();
+  }
+
+  phase++;
+}
 
 static void
 test_calls_plugin_loading (void)
 {
-  g_autoptr (CallsProvider) dummy_provider = NULL;
-  g_autoptr (CallsProvider) mm_provider = NULL;
-  g_autoptr (CallsProvider) ofono_provider = NULL;
-  g_autoptr (CallsProvider) sip_provider = NULL;
-  g_autoptr (CallsProvider) not_a_provider = NULL;
+  CallsPluginManager *manager = calls_plugin_manager_get_default ();
+  g_autoptr (GError) error = NULL;
 
-  dummy_provider = calls_provider_load_plugin ("dummy");
-  g_assert_nonnull (dummy_provider);
+  g_assert_false (calls_plugin_manager_has_any_plugins (manager));
 
-  mm_provider = calls_provider_load_plugin ("mm");
-  g_assert_nonnull (mm_provider);
+  g_signal_connect (calls_plugin_manager_get_providers (manager),
+                    "items-changed",
+                    G_CALLBACK (on_providers_changed),
+                    NULL);
 
-  ofono_provider = calls_provider_load_plugin ("ofono");
-  g_assert_nonnull (ofono_provider);
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "dummy", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "dummy"));
 
-  sip_provider = calls_provider_load_plugin ("sip");
-  g_assert_nonnull (sip_provider);
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "mm", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "mm"));
 
-  not_a_provider = calls_provider_load_plugin ("not-a-valid-provider-plugin");
-  g_assert_null (not_a_provider);
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "sip", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "sip"));
 
-  calls_provider_unload_plugin ("dummy");
-  calls_provider_unload_plugin ("mm");
-  calls_provider_unload_plugin ("ofono");
-  calls_provider_unload_plugin ("sip");
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "ofono", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "ofono"));
+
+  g_assert_false (calls_plugin_manager_load_plugin (manager, "not-a-plugin", &error));
+  g_assert_nonnull (error);
+  g_clear_error (&error);
+
+
+  g_assert_true (calls_plugin_manager_unload_plugin (manager, "dummy", &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "dummy"));
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_true (calls_plugin_manager_unload_plugin (manager, "mm", &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "mm"));
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_true (calls_plugin_manager_unload_plugin (manager, "sip", &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "sip"));
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_true (calls_plugin_manager_unload_plugin (manager, "ofono", &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "ofono"));
+  g_assert_false (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_cmpint (g_list_model_get_n_items (calls_plugin_manager_get_providers (manager)),
+                   ==, 0);
+
+  g_assert_finalize_object (manager);
 }
 
 
@@ -48,45 +116,9 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  PeasEngine *peas;
-  const gchar *dir;
-  g_autofree char *default_plugin_dir_provider = NULL;
-
   g_test_init (&argc, &argv, NULL);
 
-  peas = peas_engine_get_default ();
+  g_test_add_func ("/Calls/Plugins/load_plugins", test_calls_plugin_loading);
 
-  dir = g_getenv ("CALLS_PLUGIN_DIR");
-  if (dir && dir[0] != '\0') {
-    g_autofree char *plugin_dir_provider = NULL;
-    plugin_dir_provider = g_build_filename (dir, "provider", NULL);
-    if (g_file_test (plugin_dir_provider, G_FILE_TEST_EXISTS)) {
-      g_debug ("Adding %s to plugin search path", plugin_dir_provider);
-      peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
-    } else {
-      g_warning ("Not adding %s to plugin search path, because the directory doesn't exist. Check if env CALLS_PLUGIN_DIR is set correctly", plugin_dir_provider);
-    }
-  }
-
-  default_plugin_dir_provider = g_build_filename (PLUGIN_LIBDIR, "provider", NULL);
-  g_debug ("Adding %s to plugin search path", default_plugin_dir_provider);
-  peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
-  peas_engine_rescan_plugins (peas);
-
-  dir = g_getenv ("CALLS_PLUGIN_DIR");
-  if (dir && dir[0] != '\0') {
-    g_autofree char *plugin_dir_provider = NULL;
-    plugin_dir_provider = g_build_filename (dir, "provider", NULL);
-    g_debug ("Adding %s to plugin search path", plugin_dir_provider);
-    peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
-  }
-
-  default_plugin_dir_provider = g_build_filename (PLUGIN_LIBDIR, "provider", NULL);
-  g_debug ("Adding %s to plugin search path", default_plugin_dir_provider);
-  peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
-  peas_engine_rescan_plugins (peas);
-
-  g_test_add_func("/Calls/Plugins/load_plugins", test_calls_plugin_loading);
-
-  return g_test_run();
+  return g_test_run ();
 }
