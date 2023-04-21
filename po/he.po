@@ -1,16 +1,16 @@
 # Hebrew translation for calls.
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Yosef Or Boczko <yoseforb@gmail.com>, 2022.
+# Yosef Or Boczko <yoseforb@gmail.com>, 2022-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-24 11:05+0200\n"
+"POT-Creation-Date: 2023-04-08 15:45+0000\n"
+"PO-Revision-Date: 2023-04-21 12:28+0300\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
-"Language-Team: Hebrew <>\n"
+"Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 42.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "שיחות"
 
@@ -202,49 +202,49 @@ msgstr "ערכית חשבון: %s"
 msgid "Add new account"
 msgstr "הוספת חשבון חדש"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:377
 msgid "Account overview"
 msgstr "סקירת חשבון"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:349
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:720
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "לא יודע איך לפתוח את „%s”"
 
-#: src/calls-application.c:717
+#: src/calls-application.c:780
 msgid "The name of the plugin to use as a call provider"
 msgstr "The name of the plugin to use as a call provider"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:781
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:786
 msgid "Whether to present the main window on startup"
 msgstr "Whether to present the main window on startup"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:792
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:793
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:798
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:804
 msgid "Print current version"
 msgstr "Print current version"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:458
 msgid "Anonymous caller"
 msgstr "חסוי"
 
@@ -256,6 +256,22 @@ msgid ""
 msgstr ""
 "%s\n"
 "אתמול"
+
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "משטרה"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "אמבולנס"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "מכבי אש"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "חילוץ הרים"
 
 #: src/calls-main-window.c:123
 msgid "translator-credits"
@@ -272,40 +288,40 @@ msgstr "לא נִתן לחייג: אין מודם או חשבון VoIP זמין"
 msgid "Can't place calls: No plugin loaded"
 msgstr "לא נִתן לחייג: אין תוסף טעון"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:356
 msgid "Contacts"
 msgstr "אנשי קשר"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:366
 msgid "Dial Pad"
 msgstr "לוח חיוג"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:375
 msgid "Recent"
 msgstr "אחרונים"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "שיחה שלא נענתה"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "שיחה שלא נענתה מאת <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "שיחה שלא נענתה מאת %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "שיחה שלא נענתה ממספר לא מזוהה"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "להתקשר חזרה"
 
