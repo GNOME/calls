@@ -1,5 +1,21 @@
+Calls 44.1
+----------
+Released: April 2023
+
+Changes:
+=========
+* Don't crash on empty/NULL call id
+* Properly unregister SIP account on shutdown
+* A couple of memory leaks
+* Updated libcall-ui to bring in latest fixes and translation updates
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Guido Günther
+
 Calls 44.0
----------------
+----------
 Released: 17 March 2023
 
 New features:
