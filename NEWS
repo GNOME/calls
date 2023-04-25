@@ -1,5 +1,38 @@
+Calls 45.alpha.0
+----------
+Released: April 2023
+
+New features:
+=============
+* Emergency call numbers provided through ModemManager
+* Resolve emergency number types using hardcoded table
+
+Changes:
+=========
+* Don't crash on empty/NULL call id
+* Properly unregister SIP account on shutdown
+* A couple of memory leaks
+* Updated libcall-ui to bring in latest fixes and translation updates
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Guido Günther
+
+Translation updates:
+====================
+ - Dutch (Nathan Follens)
+ - Chinese (Boyuan Yang)
+ - Portuguese (Hugo Carvalho)
+ - Swedish (Anders Jonsson)
+ - Russian (Aleksandr Melman)
+ - Hungarian (Balázs Úr)
+ - Turkish (Sabri Ünal)
+ - Hebrew (Yosef Or Boczko)
+
+
 Calls 44.0
----------------
+----------
 Released: 17 March 2023
 
 New features:

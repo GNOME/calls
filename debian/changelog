@@ -1,3 +1,91 @@
+gnome-calls (45~alpha.0) experimental; urgency=medium
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Boyuan Yang ]
+  * Update Chinese (China) translation
+
+  [ Guido Günther ]
+  * mm-provider: Initialize parent class first
+  * origin: Allow to fetch country code
+  * emergency-calls: Notify on DBus when emergency numbers change
+  * mm-provider: Fetch emergency numbers from sim
+  * mm-provider: Implement get_country_code
+  * build: Run tests under C locale
+  * Resolve emergency number types
+  * emergency-calls-manager: Don't leak origin
+  * emergency-calls-manager: Add support for dialing emergency numbers
+  * mm-provider: Don't exit early when country code matches
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Alexander Shopov ]
+  * Update Bulgarian translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Aleksandr Melman ]
+  * Update Russian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * Update libcall-ui to v0.1.0
+  * emergency-calls-manager: Fix indentation
+  * emergency-calls-manager: Add missing argument for on_origins_changed handler
+  * emergency-calls-manager: Don't leak origin
+  * tests: Add CALLS_SIP_ACCOUNT_FILE to environment
+  * sip-provider: Remove unused variables
+  * sip-provider: Don't leak keyfile
+  * sip-provider: Improve debugging of account loading
+  * sip-provider: Chain up to constructed early
+  * best-match: Allow both NULL and empty strings as phone number
+  * best-match: Add gtk-doc annotations to the public API
+  * contacts-provider: Simplify refcounting in lookup_id()
+  * contacts-provider: Handle NULL and empty strings graceful in lookup
+    (Closes: #567)
+  * best-match: Don't special case NULL best match
+  * test-contacts: Add more test cases
+  * build: Sort enum headers
+  * resources: Sort alphabetically
+  * main-window: Sort includes
+  * main-window: Codestyle
+  * test-manager: Remove unused variable
+  * test-manager: Remove unused include
+  * application: Remove unused macro
+  * call-window: Remove dead code
+  * manager: Use STR_IS_NULL_OR_EMPTY macro
+  * new-call-box: Use STR_IS_NULL_OR_EMPTY macro
+  * new-call-box: Don't leak CallsOrigin
+  * application: Don't leak CallsManager
+  * application: Handle setting verbosity first
+  * application: Initialize objects before parsing options
+  * manager: Respect object life cycle for signal handlers
+  * account-overview: Respect object life cycle for signal handlers
+  * main-window: Use gtk_widget_destroy() for windows
+  * manager: Clear providers after origins
+  * sip-origin: Use g_clear_pointer() instead of emulating it
+  * sip-origin: Keep sofia running to allow unregistering on dispose
+    (Closes: #554)
+  * sip-origin: Include SIP address in debugging
+  * sip-origin: Don't leak address
+  * sip-origin: Prefer named constant over magic numbers
+  * account-row: Guard calls_account_row_new() against invalid provider
+  * contacts-provider: Disconnect signals on finalize
+  * manager: Respect object life cycle for signal handlers
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+
+  [ Sabri Ünal ]
+  * Update Turkish translation
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Tue, 25 Apr 2023 11:03:35 +0200
+
 gnome-calls (44.0) byzantium; urgency=medium
 
   [ Hemish ]
