@@ -8,7 +8,7 @@
 
 #include "calls-srtp-utils.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 
 static void
@@ -473,7 +473,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/SRTP-SDP/crypto_attribute_validity", test_crypto_attribute_validity);
   g_test_add_func ("/Calls/SRTP-SDP/parse", test_parse);

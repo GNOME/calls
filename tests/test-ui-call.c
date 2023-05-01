@@ -10,7 +10,7 @@
 #include "calls-ui-call-data.h"
 #include "mock-call.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 static void
 test_cui_call_state_mapping (void)
@@ -80,7 +80,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/UI/state_mapping", (GTestFunc) test_cui_call_state_mapping);
   g_test_add_func ("/Calls/UI/call_properties", (GTestFunc) test_cui_call_properties);

@@ -8,7 +8,7 @@
 
 #include "calls-sdp-crypto-context.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 
 static void
@@ -173,7 +173,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/SDP_crypto/manual", test_crypto_manual);
   g_test_add_func ("/Calls/SDP_crypto/offer_answer", test_crypto_offer_answer);

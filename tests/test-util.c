@@ -8,7 +8,7 @@
 
 #include "calls-util.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include <sys/socket.h>
 
@@ -97,7 +97,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/util/protocol_prefix", (GTestFunc) test_protocol_prefix);
   g_test_add_func ("/Calls/util/dtmf_tones", (GTestFunc) test_dtmf_tone_validity);

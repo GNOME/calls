@@ -11,7 +11,7 @@
 #include "calls-srtp-utils.h"
 #include "gst-rfc3551.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include <gst/gst.h>
 
@@ -274,7 +274,7 @@ main (int   argc,
   CallsSipMediaManager *manager = calls_sip_media_manager_default ();
   int ret;
 
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   gst_init (NULL, NULL);
 

@@ -9,7 +9,8 @@
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
 
-#include <gtk/gtk.h>
+#include <glib.h>
+#include <gio/gio.h>
 
 static void
 test_default (void)
@@ -32,7 +33,7 @@ int
 main (gint   argc,
       gchar *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/Settings/default", test_default);
 

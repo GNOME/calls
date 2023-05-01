@@ -7,7 +7,7 @@
 #include "calls-manager.h"
 
 #include <cui-call.h>
-#include <gtk/gtk.h>
+#include <glib.h>
 
 struct TestData {
   GMainLoop *loop;
@@ -250,12 +250,12 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
-  g_test_add_func("/Calls/Manager/without_provider", test_calls_manager_without_provider);
-  g_test_add_func("/Calls/Manager/dummy_provider", test_calls_manager_dummy_provider);
-  g_test_add_func("/Calls/Manager/mm_provider", test_calls_manager_mm_provider);
-  g_test_add_func("/Calls/Manager/multiple_provider_mm_sip", test_calls_manager_multiple_providers_mm_sip);
+  g_test_add_func ("/Calls/Manager/without_provider", test_calls_manager_without_provider);
+  g_test_add_func ("/Calls/Manager/dummy_provider", test_calls_manager_dummy_provider);
+  g_test_add_func ("/Calls/Manager/mm_provider", test_calls_manager_mm_provider);
+  g_test_add_func ("/Calls/Manager/multiple_provider_mm_sip", test_calls_manager_multiple_providers_mm_sip);
 
-  return g_test_run();
+  return g_test_run ();
 }

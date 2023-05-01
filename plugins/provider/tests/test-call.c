@@ -10,7 +10,7 @@
 #include "calls-origin.h"
 #include "common.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <string.h>
 
 static void
@@ -65,8 +65,7 @@ gint
 main (gint   argc,
       gchar *argv[])
 {
-  gtk_test_init (&argc, &argv, NULL);
-
+  g_test_init (&argc, &argv, NULL);
 
 #define add_test(name) add_calls_test(Call, call, name)
 
@@ -76,7 +75,6 @@ main (gint   argc,
   add_test(hang_up);
 
 #undef add_test
-
 
   return g_test_run();
 }

@@ -10,7 +10,7 @@
 
 #include "calls-provider.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <libpeas/peas.h>
 
 static void
@@ -52,7 +52,7 @@ main (gint   argc,
   const gchar *dir;
   g_autofree char *default_plugin_dir_provider = NULL;
 
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   peas = peas_engine_get_default ();
 

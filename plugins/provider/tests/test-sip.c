@@ -14,10 +14,8 @@
 #include "calls-account.h"
 #include "gst-rfc3551.h"
 
-#include <gtk/gtk.h>
-
+#include <glib.h>
 #include <gst/gst.h>
-
 #include <sofia-sip/su_uniqueid.h>
 #include <libpeas/peas.h>
 
@@ -426,7 +424,7 @@ main (int   argc,
 {
   int ret;
 
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   gst_init (NULL, NULL);
   /* this is a workaround for an issue with sofia: https://github.com/freeswitch/sofia-sip/issues/58 */
@@ -447,7 +445,7 @@ main (int   argc,
   g_test_add ("/Calls/SIP/calls_direct_call", SipFixture, NULL,
               setup_sip_origins, test_sip_call_direct_calls, tear_down_sip_origins);
 
-  ret = g_test_run();
+  ret = g_test_run ();
 
   gst_deinit ();
 

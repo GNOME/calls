@@ -9,7 +9,7 @@
 #include "calls-application.h"
 
 #include <glib/gstdio.h>
-#include <gtk/gtk.h>
+#include <glib.h>
 
 static gboolean
 on_idle_quit (gpointer user_data)
@@ -131,7 +131,7 @@ main (int   argc,
   g_print ("Setting 'CALLS_RECORD_DIR' to '%s'\n", rec_dir);
   g_setenv ("CALLS_RECORD_DIR", rec_dir, TRUE);
 
-  gtk_test_init (&argc, &argv, NULL);
+  g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/application/shutdown_daemon", (GTestFunc) test_application_shutdown_daemon);
   g_test_add_func ("/Calls/application/shutdown_no_daemon", (GTestFunc) test_application_shutdown_no_daemon);
