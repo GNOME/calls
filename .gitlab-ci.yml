@@ -33,6 +33,19 @@ build:native:
     - meson ${BUILD_OPTS} . _build
     - ninja -C _build
 
+build:tarball:
+  stage: build
+  image: "${DEBIAN_IMAGE}"
+  tags: []
+  artifacts:
+    paths:
+      - _build/meson-dist
+  script:
+    - meson setup . _build
+    - xvfb-run -s -noreset meson dist -C _build
+  only:
+    - tags
+
 test:native:
   extends: build:native
   stage: test
