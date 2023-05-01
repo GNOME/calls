@@ -279,8 +279,10 @@ mm_manager_new_cb (GDBusConnection *connection,
 
   self->mm = mm_manager_new_finish (res, &error);
   if (!self->mm) {
-    g_warning ("Error creating ModemManager Manager: %s",
-               error->message);
+    if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+      g_warning ("Error creating ModemManager Manager: %s",
+                 error->message);
+
     update_status (self);
     return;
   }
