@@ -119,7 +119,7 @@ validate_crypto_attribute (calls_srtp_crypto_attribute *attr,
         expected_mki_length > 128) {
       g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                    "MKI length must be between 1 and 128, got %u",
-                   expected_key_salt_length);
+                   attr->key_params[0].mki_length);
       return FALSE;
     }
   }
