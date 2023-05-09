@@ -26,12 +26,12 @@ static void
 test_application_shutdown_daemon (void)
 {
   CallsApplication *app = calls_application_new ();
-  char *argv[] = { "test", "--daemon", NULL };
+  char *argv[] = { "test", "--daemon", "-p", "dummy", NULL };
   int status;
 
   g_idle_add (on_idle_quit, app);
 
-  status = g_application_run (G_APPLICATION (app), 3, argv);
+  status = g_application_run (G_APPLICATION (app), G_N_ELEMENTS (argv), argv);
   g_assert_cmpint (status, ==, 0);
 
   g_assert_finalize_object (app);
@@ -42,11 +42,12 @@ static void
 test_application_shutdown_no_daemon (void)
 {
   CallsApplication *app = calls_application_new ();
+  char *argv[] = { "test", "-p", "dummy", NULL };
   int status;
 
   g_idle_add (on_idle_quit, app);
 
-  status = g_application_run (G_APPLICATION (app), 0, NULL);
+  status = g_application_run (G_APPLICATION (app), G_N_ELEMENTS (argv), argv);
   g_assert_cmpint (status, ==, 0);
 
   g_assert_finalize_object (app);
@@ -57,11 +58,12 @@ static void
 test_application_shutdown_delayed (void)
 {
   CallsApplication *app = calls_application_new ();
+  char *argv[] = { "test", "-p", "dummy", NULL };
   int status;
 
   g_timeout_add_seconds (5, on_idle_quit, app);
 
-  status = g_application_run (G_APPLICATION (app), 0, NULL);
+  status = g_application_run (G_APPLICATION (app), G_N_ELEMENTS (argv), argv);
   g_assert_cmpint (status, ==, 0);
 
   g_assert_finalize_object (app);
