@@ -564,7 +564,7 @@ call_deleted_cb (MMModemVoice *voice,
                  const char   *path,
                  gpointer      user_data)
 {
-  g_autoptr (CallsMMOrigin) self = NULL;
+  CallsMMOrigin *self;
   gpointer call;
   gpointer key;
   const char *mm_reason;
