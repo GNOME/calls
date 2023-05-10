@@ -124,11 +124,13 @@ flatpak@aarch64:
 # Publish Flatpak for x86_64
 nightly@x86_64:
   extends: '.publish_nightly'
+  allow_failure: true
   needs: ['flatpak@x86_64']
 
 # Publish Flatpak for aarch64
 nightly@aarch64:
   extends: '.publish_nightly'
+  allow_failure: true
   needs: ['flatpak@aarch64']
 
 pages:
