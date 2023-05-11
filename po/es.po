@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-02-17 06:29+0000\n"
-"PO-Revision-Date: 2023-02-21 11:39+0100\n"
+"POT-Creation-Date: 2023-05-08 19:18+0200\n"
+"PO-Revision-Date: 2023-05-08 19:29+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:481 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Llamadas"
 
@@ -207,49 +207,49 @@ msgstr "Editar cuenta: %s"
 msgid "Add new account"
 msgstr "Añadir cuenta nueva"
 
-#: src/calls-account-overview.c:377
+#: src/calls-account-overview.c:381
 msgid "Account overview"
 msgstr "Vista general de la cuenta"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:348
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Intento de marcado de URI de teléfono «%s» no válido"
 
-#: src/calls-application.c:720
+#: src/calls-application.c:723
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No se sabe cómo abrir «%s»"
 
-#: src/calls-application.c:780
+#: src/calls-application.c:785
 msgid "The name of the plugin to use as a call provider"
 msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
 
-#: src/calls-application.c:781
+#: src/calls-application.c:786
 msgid "PLUGIN"
 msgstr "COMPLEMENTO"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:791
 msgid "Whether to present the main window on startup"
 msgstr "Indica si se muestra la ventana principal al inicio"
 
-#: src/calls-application.c:792
+#: src/calls-application.c:797
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:793
+#: src/calls-application.c:798
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:803
 msgid "Enable verbose debug messages"
 msgstr "Activar mensajes de depuración detallados"
 
-#: src/calls-application.c:804
+#: src/calls-application.c:809
 msgid "Print current version"
 msgstr "Imprimir versión actual"
 
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Llamada anónima"
 
@@ -262,32 +262,49 @@ msgstr ""
 "%s\n"
 "ayer"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Policía"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulancia"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Bomberos"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Rescate en montaña"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Pedro Luis Valadés Viera <perikiyoxd@gmail.com>\n"
 "Amos Batto <amosbatto@yahoo.com>\n"
-"Daniel Mustieles <daniel.mustieles@gmail.com>"
+"Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Pablo Correa Gómez <ablocorrea@hotmail.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "No se pueden realizar llamadas: no hay ningún módem ni cuenta VoIP disponible"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "No se pueden realizar llamadas: no hay ningún complemento cargado"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contactos"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Teclado de marcado"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recientes"
 
@@ -481,7 +498,7 @@ msgstr "No hay disponible ningún módem con capacidad de voz"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializada"
