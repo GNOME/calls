@@ -140,6 +140,8 @@ on_origin_pw_looked_up (GObject      *source,
   else
     id = g_strdup (data->name);
 
+  g_debug ("Password looked up for %s", id);
+
   host = g_key_file_get_string (data->key_file, data->name, "Host", NULL);
   user = g_key_file_get_string (data->key_file, data->name, "User", NULL);
   display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
@@ -197,6 +199,8 @@ on_origin_pw_looked_up (GObject      *source,
                                       can_tel,
                                       FALSE);
 }
+
+
 static void
 new_origin_from_keyfile_secret (CallsSipProvider *self,
                                 GKeyFile         *key_file,
@@ -223,6 +227,7 @@ new_origin_from_keyfile_secret (CallsSipProvider *self,
   data->key_file = g_key_file_ref (key_file);
   data->name = g_strdup (name);
 
+  g_debug ("Looking up password for account '%s'", name);
   secret_password_lookup (calls_secret_get_schema (), NULL,
                           on_origin_pw_looked_up, data,
                           CALLS_SERVER_ATTRIBUTE, host,
