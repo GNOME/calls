@@ -51,14 +51,6 @@ CallsManager          *calls_manager_new                      (void);
 CallsManager          *calls_manager_get_default              (void);
 CallsContactsProvider *calls_manager_get_contacts_provider    (CallsManager *self);
 CallsSettings         *calls_manager_get_settings             (CallsManager *self);
-void                   calls_manager_add_provider             (CallsManager *self,
-                                                               const char   *name);
-void                   calls_manager_remove_provider          (CallsManager *self,
-                                                               const char   *name);
-gboolean               calls_manager_has_provider             (CallsManager *self,
-                                                               const char   *name);
-gboolean               calls_manager_is_modem_provider        (CallsManager *self,
-                                                               const char   *name);
 CallsManagerFlags      calls_manager_get_state_flags          (CallsManager *self);
 GListModel            *calls_manager_get_origins              (CallsManager *self);
 GList                 *calls_manager_get_calls                (CallsManager *self);
@@ -67,9 +59,5 @@ GListModel            *calls_manager_get_suitable_origins     (CallsManager *sel
 CallsOrigin           *calls_manager_get_origin_by_id         (CallsManager *self,
                                                                const char   *origin_id);
 void                   calls_manager_hang_up_all_calls        (CallsManager *self);
-gboolean               calls_manager_has_any_provider         (CallsManager *self);
-const char           **calls_manager_get_provider_names       (CallsManager *self,
-                                                               guint        *length);
-GList                 *calls_manager_get_providers            (CallsManager *self);
 
 G_END_DECLS

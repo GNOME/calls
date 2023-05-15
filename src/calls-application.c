@@ -39,6 +39,7 @@
 #include "calls-message-source.h"
 #include "calls-new-call-box.h"
 #include "calls-notifier.h"
+#include "calls-plugin-manager.h"
 #include "calls-record-store.h"
 #include "calls-ringer.h"
 #include "version.h"
@@ -73,6 +74,8 @@ struct _CallsApplication {
   guint             id_sigint;
   gboolean          shutdown;
   gboolean          db_done;
+  CallsPluginManager *plugin_manager;
+  CallsSettings      *settings;
 };
 
 G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
@@ -155,60 +158,76 @@ calls_application_dbus_unregister (GApplication    *application,
 
 
 static void
-set_provider_names_action (GSimpleAction *action,
-                           GVariant      *parameter,
-                           gpointer       user_data)
+set_plugin_names_action (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       user_data)
 {
-  CallsManager *manager;
   g_autofree const char **names = NULL;
   g_autofree const char **loaded = NULL;
+  CallsApplication *self = user_data;
   gsize length;
   guint length_loaded;
+
+  g_assert (CALLS_IS_APPLICATION (self));
 
   names = g_variant_get_strv (parameter, &length);
   g_return_if_fail (names && *names);
 
-  manager = calls_manager_get_default ();
-  loaded = calls_manager_get_provider_names (manager, &length_loaded);
+  loaded = calls_plugin_manager_get_plugin_names (self->plugin_manager, &length_loaded);
 
-  /* remove unwanted providers */
+  /* remove unwanted plugins */
   for (guint i = 0; i < length_loaded; i++) {
-    g_autofree char *provider = g_strdup (loaded[i]);
-    if (!g_strv_contains (names, provider))
-      calls_manager_remove_provider (manager, provider);
+    g_autofree char *plugin = g_strdup (loaded[i]);
+
+    if (!g_strv_contains (names, plugin)) {
+      g_autoptr (GError) error = NULL;
+      gboolean ok = calls_plugin_manager_unload_plugin (self->plugin_manager, plugin, &error);
+
+      g_debug ("Unloading plugin `%s' %ssuccessful", plugin, ok ? "" : "un");
+      if (!ok)
+        g_warning ("Plugin '%s' not unloaded: %s", plugin, error->message);
+    }
   }
 
   for (guint i = 0; i < length; i++) {
+    g_autoptr (GError) error = NULL;
     const char *name = names[i];
+    gboolean ok;
 
-    if (calls_manager_has_provider (manager, name))
+    if (calls_plugin_manager_has_plugin (self->plugin_manager, name))
       continue;
 
-    g_debug ("Loading provider `%s'", name);
-    calls_manager_add_provider (manager, name);
+    ok = calls_plugin_manager_load_plugin (self->plugin_manager, name, &error);
+    g_debug ("Loading plugin `%s' %ssuccessful", name, ok ? "" : "un");
+    if (!ok)
+      g_warning ("Plugin '%s' not loaded: %s", name, error->message);
   }
 }
 
 
 static void
-set_default_providers_action (GSimpleAction *action,
-                              GVariant      *parameter,
-                              gpointer       user_data)
+set_default_plugins_action (GSimpleAction *action,
+                            GVariant      *parameter,
+                            gpointer       user_data)
 {
-  CallsManager *manager = calls_manager_get_default ();
-  CallsSettings *settings = calls_manager_get_settings (manager);
+  CallsApplication *self = CALLS_APPLICATION (user_data);
 
   g_auto (GStrv) plugins = NULL;
   /**
    * Only add default providers when there are none added yet,
    * This makes sure we're not resetting explicitly set providers
    */
-  if (calls_manager_has_any_provider (manager))
+  if (calls_plugin_manager_has_any_plugins (self->plugin_manager))
     return;
 
-  plugins = calls_settings_get_autoload_plugins (settings);
+  plugins = calls_settings_get_autoload_plugins (self->settings);
   for (guint i = 0; plugins[i] != NULL; i++) {
-    calls_manager_add_provider (manager, plugins[i]);
+    g_autoptr (GError) error = NULL;
+
+    g_debug ("Loading default provider %s", plugins[i]);
+
+    if (!calls_plugin_manager_load_plugin (self->plugin_manager, plugins[i], &error))
+      g_warning ("Could not load plugin '%s': %s", plugins[i], error->message);
   }
 }
 
@@ -417,8 +436,8 @@ manager_state_changed_cb (GApplication *application)
 
 static const GActionEntry actions[] =
 {
-  { "set-provider-names", set_provider_names_action, "as" },
-  { "set-default-providers", set_default_providers_action, NULL },
+  { "set-plugin-names", set_plugin_names_action, "as" },
+  { "set-default-plugins", set_default_plugins_action, NULL },
   { "set-daemon", set_daemon_action, "b" },
   { "dial", dial_action, "s" },
   { "copy-number", copy_number, "s" },
@@ -509,7 +528,7 @@ calls_application_command_line (GApplication            *application,
   GVariantDict *options;
   const char *arg;
 
-  g_autoptr (GVariant) providers = NULL;
+  g_autoptr (GVariant) plugins = NULL;
   g_auto (GStrv) arguments = NULL;
   gint argc;
   guint verbosity;
@@ -529,14 +548,14 @@ calls_application_command_line (GApplication            *application,
 
   start_proper (self);
 
-  providers = g_variant_dict_lookup_value (options, "provider", G_VARIANT_TYPE_STRING_ARRAY);
-  if (providers) {
+  plugins = g_variant_dict_lookup_value (options, "plugins", G_VARIANT_TYPE_STRING_ARRAY);
+  if (plugins) {
     g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-provider-names",
-                                    providers);
+                                    "set-plugin-names",
+                                    plugins);
   } else {
     g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-default-providers",
+                                    "set-default-plugins",
                                     NULL);
   }
 
@@ -628,6 +647,12 @@ start_proper (CallsApplication *self)
   }
 
   gtk_app = GTK_APPLICATION (self);
+
+  self->settings = calls_settings_get_default ();
+  g_assert (self->settings);
+
+  self->plugin_manager = calls_plugin_manager_get_default ();
+  g_assert (self->plugin_manager);
 
   self->manager = calls_manager_get_default ();
   g_assert (self->manager);
@@ -746,6 +771,8 @@ finalize (GObject *object)
   g_clear_object (&self->ringer);
   g_clear_object (&self->notifier);
   g_clear_object (&self->manager);
+  g_clear_object (&self->plugin_manager);
+  g_clear_object (&self->settings);
 
   g_free (self->uri);
 
@@ -780,9 +807,9 @@ calls_application_init (CallsApplication *self)
 {
   const GOptionEntry options[] = {
     {
-      "provider", 'p', G_OPTION_FLAG_NONE,
+      "plugins", 'p', G_OPTION_FLAG_NONE,
       G_OPTION_ARG_STRING_ARRAY, NULL,
-      _("The name of the plugin to use as a call provider"),
+      _("The name of the plugins to load"),
       _("PLUGIN")
     },
     {

@@ -32,6 +32,11 @@
 #include "calls-account-provider.h"
 #include "calls-manager.h"
 #include "calls-in-app-notification.h"
+#include "calls-plugin-manager.h"
+#include "calls-util.h"
+
+#include "gtkcustomfilter.h"
+#include "gtkfilterlistmodel.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -66,11 +71,16 @@ struct _CallsAccountOverview {
   GtkWindow                *account_window;
   GtkWidget                *current_account_widget;
 
+  /* models */
+  GtkFilter                *account_provider_filter;
+  GtkFilter                *account_filter;
+  GListModel               *providers;
+  GListModel               *accounts;
+
   /* misc */
   GtkEventController       *key_controller;
   GtkEventController       *key_controller_account;
   CallsAccountOverviewState state;
-  GList                    *providers;
   CallsInAppNotification   *in_app_notification;
 };
 
@@ -101,20 +111,33 @@ static void
 update_state (CallsAccountOverview *self)
 {
   guint n_origins = 0;
+  guint n_providers;
 
   g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
 
-  for (GList *node = self->providers; node != NULL; node = node->next) {
-    CallsProvider *provider = CALLS_PROVIDER (node->data);
-    GListModel *model = calls_provider_get_origins (provider);
+  n_providers = g_list_model_get_n_items (self->providers);
 
-    n_origins += g_list_model_get_n_items (model);
+  for (guint i = 0; i < n_providers; i++) {
+    g_autoptr (CallsProvider) provider = g_list_model_get_item (self->providers, i);
+    GListModel *origins;
+
+    /* we might be in the middle of the lists being updated! */
+    if (!provider) {
+      n_providers--;
+      break;
+    }
+
+    origins = calls_provider_get_origins (provider);
+
+    n_origins += g_list_model_get_n_items (origins);
   }
 
   if (n_origins > 0)
     self->state = SHOW_OVERVIEW;
   else
     self->state = SHOW_INTRO;
+
+  gtk_widget_set_sensitive (self->add_btn, n_providers > 0);
 
   update_visibility (self);
 }
@@ -145,18 +168,20 @@ on_account_row_activated (GtkListBox           *box,
                           GtkListBoxRow        *row,
                           CallsAccountOverview *self)
 {
+  CallsAccountProvider *provider;
   CallsAccount *account = NULL;
   CallsAccountRow *acc_row;
-  CallsAccountProvider *provider;
   GtkWidget *widget;
 
   g_assert (GTK_IS_LIST_BOX_ROW (row) );
   g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
+  g_assert (g_list_model_get_n_items (self->providers) > 0);
 
   if (row == self->add_row) {
     /* TODO this needs changing if we ever have multiple account providers */
-    provider = CALLS_ACCOUNT_PROVIDER (self->providers->data);
+    provider = g_list_model_get_item (self->providers, 0);
     widget = calls_account_provider_get_account_widget (provider);
+    g_object_unref (provider);
 
   } else if (CALLS_IS_ACCOUNT_ROW (row)) {
     acc_row = CALLS_ACCOUNT_ROW (row);
@@ -215,84 +240,72 @@ on_account_message (CallsAccount         *account,
 
 
 static void
-update_account_list (CallsAccountOverview *self)
+on_accounts_changed (GListModel           *accounts,
+                     guint                 position,
+                     guint                 removed,
+                     guint                 added,
+                     CallsAccountOverview *self)
 {
-  gboolean removed_all = FALSE;
+  guint n_providers = g_list_model_get_n_items (self->providers);
 
-  g_assert (CALLS_IS_ACCOUNT_OVERVIEW (self));
+  for (guint i = removed; i > 0; i--) {
+    GtkListBoxRow *row =
+      gtk_list_box_get_row_at_index (GTK_LIST_BOX (self->overview), position + i - 1);
 
-  /* TODO rework with GTK4 FlattenListModel (to flatten a GListModel of GListModels)
-   * in particular we could then connect to the items-changed signal of the flattened list.
-   * Always rebuilding the account list is not particularly efficient, but since
-   * we're not constantly doing this it's fine for now.
-   */
-  while (!removed_all) {
-    GtkListBoxRow *row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (self->overview), 0);
-
-    if (row == NULL || row == GTK_LIST_BOX_ROW (self->add_row))
-      removed_all = TRUE;
-    else
-      gtk_container_remove (GTK_CONTAINER (self->overview), GTK_WIDGET (row));
+    gtk_container_remove (GTK_CONTAINER (self->overview), GTK_WIDGET (row));
   }
 
-  for (GList *node = self->providers; node != NULL; node = node->next) {
-    CallsAccountProvider *provider = CALLS_ACCOUNT_PROVIDER (node->data);
-    GListModel *model = calls_provider_get_origins (CALLS_PROVIDER (provider));
-    guint n_origins = g_list_model_get_n_items (model);
+  for (guint i = 0; i < added; i++) {
+    g_autoptr (CallsAccount) account =
+      CALLS_ACCOUNT (g_list_model_get_item (accounts, position + i));
+    CallsAccountProvider *provider = NULL;
+    CallsAccountRow *account_row;
 
-    for (guint i = 0; i < n_origins; i++) {
-      g_autoptr (CallsAccount) account = CALLS_ACCOUNT (g_list_model_get_item (model, i));
-      CallsAccountRow *account_row = calls_account_row_new (provider, account);
+    /* which provider does this account belong to? */
+    for (guint j = 0; j < n_providers; j++) {
+      g_autoptr (CallsProvider) candidate = g_list_model_get_item (self->providers, j);
 
-      g_signal_handlers_disconnect_by_data (account, self);
-      g_signal_connect_object (account, "message",
-                               G_CALLBACK (on_account_message),
-                               self,
-                               G_CONNECT_AFTER);
-
-      gtk_list_box_insert (GTK_LIST_BOX (self->overview),
-                           GTK_WIDGET (account_row),
-                           0);
+      if (calls_find_in_model (calls_provider_get_origins (candidate), account, NULL)) {
+        provider = CALLS_ACCOUNT_PROVIDER (candidate);
+        break;
+      }
     }
+
+    g_assert (CALLS_IS_ACCOUNT_PROVIDER (provider));
+
+    account_row = calls_account_row_new (provider, account);
+
+    g_signal_connect_object (account, "message",
+                             G_CALLBACK (on_account_message),
+                             self,
+                             0);
+    gtk_list_box_insert (GTK_LIST_BOX (self->overview),
+                         GTK_WIDGET (account_row),
+                         position + i);
   }
+
   update_state (self);
 }
 
 
-
 static void
-on_providers_changed (CallsAccountOverview *self)
+on_providers_changed (GListModel           *providers,
+                      guint                 position,
+                      guint                 removed,
+                      guint                 added,
+                      CallsAccountOverview *self)
 {
-  GList *providers;
+  for (guint i = 0; i < added; i++) {
+    g_autoptr (CallsProvider) provider =
+      g_list_model_get_item (providers, position + i);
 
-  g_clear_pointer (&self->providers, g_list_free);
-  providers = calls_manager_get_providers (calls_manager_get_default ());
-
-  for (GList *node = providers; node != NULL; node = node->next) {
-    CallsProvider *provider = node->data;
-
-    if (CALLS_IS_ACCOUNT_PROVIDER (provider)) {
-      self->providers = g_list_append (self->providers, provider);
-      g_signal_connect_object (calls_provider_get_origins (provider),
-                               "items-changed",
-                               G_CALLBACK (update_account_list),
-                               self,
-                               G_CONNECT_SWAPPED);
-      g_signal_connect_object (provider,
-                               "widget-edit-done",
-                               G_CALLBACK (gtk_widget_hide),
-                               self->account_window,
-                               G_CONNECT_SWAPPED);
-    }
+    g_signal_connect_swapped (provider, "widget-edit-done",
+                              G_CALLBACK (gtk_widget_hide), self->account_window);
   }
 
   /* Clear any acccount widgets, because they might've gone stale */
   attach_account_widget (self, NULL);
   gtk_widget_hide (GTK_WIDGET (self->account_window));
-
-  update_account_list (self);
-
-  gtk_widget_set_sensitive (self->add_btn, !!self->providers);
 }
 
 
@@ -315,6 +328,12 @@ static void
 calls_account_overview_dispose (GObject *object)
 {
   CallsAccountOverview *self = CALLS_ACCOUNT_OVERVIEW (object);
+
+  g_clear_object (&self->providers);
+  g_clear_object (&self->account_provider_filter);
+
+  g_clear_object (&self->accounts);
+  g_clear_object (&self->account_filter);
 
   g_clear_object (&self->key_controller);
   g_clear_object (&self->key_controller_account);
@@ -348,23 +367,64 @@ calls_account_overview_class_init (CallsAccountOverviewClass *klass)
 }
 
 
+static gboolean
+match_account_provider (gpointer item,
+                        gpointer unused)
+{
+  g_assert (CALLS_IS_PROVIDER (item));
+
+  return CALLS_IS_ACCOUNT_PROVIDER (item);
+}
+
+
+static gboolean
+match_account (gpointer item,
+               gpointer unused)
+{
+  g_assert (CALLS_IS_ORIGIN (item));
+
+  return CALLS_IS_ACCOUNT (item);
+}
+
+
 static void
 calls_account_overview_init (CallsAccountOverview *self)
 {
+  GListModel *all_providers =
+    calls_plugin_manager_get_providers (calls_plugin_manager_get_default ());
+  GListModel *all_origins =
+    calls_manager_get_origins (calls_manager_get_default ());
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  g_signal_connect_swapped (calls_manager_get_default (),
-                            "providers-changed",
-                            G_CALLBACK (on_providers_changed),
-                            self);
-  on_providers_changed (self);
+  self->account_provider_filter = gtk_custom_filter_new (match_account_provider, NULL, NULL);
+  self->providers =
+    G_LIST_MODEL (gtk_filter_list_model_new (all_providers,
+                                             self->account_provider_filter));
+
+  g_signal_connect (self->providers,
+                    "items-changed",
+                    G_CALLBACK (on_providers_changed),
+                    self);
+  on_providers_changed (self->providers,
+                        0, 0, g_list_model_get_n_items (self->providers),
+                        self);
+
+  self->account_filter = gtk_custom_filter_new (match_account, NULL, NULL);
+  self->accounts =
+    G_LIST_MODEL (gtk_filter_list_model_new (all_origins,
+                                             self->account_filter));
+  g_signal_connect_object (self->accounts,
+                           "items-changed",
+                           G_CALLBACK (on_accounts_changed),
+                           self,
+                           G_CONNECT_AFTER);
+  on_accounts_changed (self->accounts, 0, 0, g_list_model_get_n_items (self->accounts), self);
 
   gtk_list_box_insert (GTK_LIST_BOX (self->overview),
                        GTK_WIDGET (self->add_row),
                        -1);
   gtk_window_set_transient_for (self->account_window, GTK_WINDOW (self));
-
-  update_state (self);
 
   self->key_controller = gtk_event_controller_key_new (GTK_WIDGET (self));
   g_signal_connect (self->key_controller,

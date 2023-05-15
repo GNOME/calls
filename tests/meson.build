@@ -52,7 +52,6 @@ t = executable('emergency-call-types', test_sources,
                )
 test('emergency-call-types', t, env: test_env)
 
-
 test_sources = [ 'test-manager.c' ]
 
 t = executable('manager', test_sources,

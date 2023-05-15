@@ -11,6 +11,7 @@
 
 #include "calls-manager.h"
 #include "calls-dbus-manager.h"
+#include "calls-plugin-manager.h"
 
 #include <glib-unix.h>
 
@@ -51,8 +52,10 @@ int
 main (int argc, char *argv[])
 {
   g_autoptr (CallsManager) manager = NULL;
-  CallsDBusManager *dbus_manager = NULL;
+  g_autoptr (CallsPluginManager) plugin_manager = NULL;
   g_autoptr (GMainLoop) loop = g_main_loop_new (NULL, FALSE);
+  g_autoptr (GError) error = NULL;
+  CallsDBusManager *dbus_manager = NULL;
   guint bus_id;
 
   /* Setup environment */
@@ -62,9 +65,11 @@ main (int argc, char *argv[])
 
   g_print ("Starting up DBus service\n");
 
+  plugin_manager = calls_plugin_manager_get_default ();
   manager = calls_manager_get_default ();
   dbus_manager = calls_dbus_manager_new ();
-  calls_manager_add_provider (manager, "dummy");
+  g_assert_true (calls_plugin_manager_load_plugin (plugin_manager, "dummy", &error));
+  g_assert_no_error (error);
 
   bus_id = g_bus_own_name (G_BUS_TYPE_SESSION,
                            CALLS_DBUS_NAME,
@@ -79,7 +84,8 @@ main (int argc, char *argv[])
 
   g_print ("Shutting down DBus service\n");
 
-  calls_manager_remove_provider (manager, "dummy");
+  g_assert_true (calls_plugin_manager_unload_plugin (plugin_manager, "dummy", &error));
+  g_assert_no_error (error);
 
   /* The DBus manager unexports any objects it may still have.
    * Do this before releasing the DBus name ownership */

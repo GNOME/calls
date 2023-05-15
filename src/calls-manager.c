@@ -31,6 +31,7 @@
 #include "calls-contacts-provider.h"
 #include "calls-manager.h"
 #include "calls-message-source.h"
+#include "calls-plugin-manager.h"
 #include "calls-provider.h"
 #include "calls-settings.h"
 #include "calls-ui-call-data.h"
@@ -38,6 +39,10 @@
 #include "calls-util.h"
 
 #include "enum-types.h"
+
+#include "gtkcustomfilter.h"
+#include "gtkfilterlistmodel.h"
+#include "gtkflattenlistmodel.h"
 
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
@@ -59,12 +64,23 @@ static const char * const protocols[] = {
   "sips"
 };
 
+
+static gboolean
+match_origin_supports_protocol (gpointer item,
+                                gpointer protocol)
+{
+  g_assert (CALLS_IS_ORIGIN (item));
+
+  return calls_origin_supports_protocol (CALLS_ORIGIN (item), (char *) protocol);
+}
+
+
 struct _CallsManager {
   GObject                parent_instance;
 
-  GHashTable            *providers;
-
   GListStore            *origins;
+  GtkFlattenListModel   *origins_flat;
+
   /* origins_by_protocol maps protocol names to GListStore's of suitable origins */
   GHashTable            *origins_by_protocol;
   /* dial_actions_by_protocol maps protocol names to GSimpleActions */
@@ -123,16 +139,17 @@ set_state_flags (CallsManager *self, CallsManagerFlags state_flags)
 static void
 update_state_flags (CallsManager *self)
 {
-  GHashTableIter iter;
-  gpointer value;
   CallsManagerFlags state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
+  GListModel *providers;
+  guint n_providers;
 
   g_assert (CALLS_IS_MANAGER (self));
 
-  g_hash_table_iter_init (&iter, self->providers);
+  providers = calls_plugin_manager_get_providers (calls_plugin_manager_get_default ());
 
-  while (g_hash_table_iter_next (&iter, NULL, &value)) {
-    CallsProvider *provider = CALLS_PROVIDER (value);
+  n_providers = g_list_model_get_n_items (providers);
+  for (guint i = 0; i < n_providers; i++) {
+    g_autoptr (CallsProvider) provider = g_list_model_get_item (providers, i);
 
     if (calls_provider_is_modem (provider)) {
       state_flags |= CALLS_MANAGER_FLAGS_HAS_CELLULAR_PROVIDER;
@@ -241,6 +258,8 @@ add_call (CallsManager *self, CallsCall *call, CallsOrigin *origin)
   origin_id = calls_origin_get_id (origin);
   call_data = calls_ui_call_data_new (call, origin_id);
   g_hash_table_insert (self->calls, call, call_data);
+
+  g_object_set_data (G_OBJECT (call), "call-origin", origin);
 
   g_signal_emit (self, signals[UI_CALL_ADDDED], 0, call_data);
 }
@@ -363,8 +382,6 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   name = calls_origin_get_name (origin);
   g_debug ("Adding origin %s (%p)", name, origin);
 
-  g_list_store_append (self->origins, origin);
-
   g_signal_connect_object (origin,
                            "message",
                            G_CALLBACK (on_message),
@@ -388,235 +405,24 @@ add_origin (CallsManager *self, CallsOrigin *origin)
   calls_origin_foreach_call (origin, (CallsOriginForeachCallFunc) add_call, self);
 }
 
-
 static void
-remove_call_cb (gpointer self, CallsCall *call, CallsOrigin *origin)
+on_origins_changed (GListModel   *model,
+                    guint         position,
+                    guint         removed,
+                    guint         added,
+                    CallsManager *self)
 {
-  remove_call (self, call, NULL, origin);
-}
-
-
-static void
-remove_origin (CallsManager *self, CallsOrigin *origin)
-{
-  g_autofree const char *name = NULL;
-  guint position;
-
   g_assert (CALLS_IS_MANAGER (self));
-  g_assert (CALLS_IS_ORIGIN (origin));
+  g_assert (model == G_LIST_MODEL (self->origins_flat));
 
-  name = calls_origin_get_name (origin);
-  g_debug ("Removing origin %s (%p)", name, origin);
+  for (guint i = 0; i < added; i++) {
+    g_autoptr (CallsOrigin) origin = g_list_model_get_item (model, position + i);
 
-  g_signal_handlers_disconnect_by_data (origin, self);
-
-  calls_origin_foreach_call (origin, remove_call_cb, self);
-
-  if (!g_list_store_find (self->origins, origin, &position))
-    g_warning ("Origin %p not found in list store while trying to remove it",
-               origin);
-  else
-    g_list_store_remove (self->origins, position);
-}
-
-/* rebuild_origins_by_protocols() when any origins were added or removed */
-static void
-rebuild_origins_by_protocols (CallsManager *self)
-{
-  GHashTableIter iter;
-  gpointer value;
-  guint n_origins;
-
-  g_assert (CALLS_IS_MANAGER (self));
-
-  /* Remove everything */
-  g_hash_table_iter_init (&iter, self->origins_by_protocol);
-
-  while (g_hash_table_iter_next (&iter, NULL, &value)) {
-    GListStore *store = G_LIST_STORE (value);
-    g_list_store_remove_all (store);
+    add_origin (self, origin);
   }
 
-  /* Iterate over all origins and check which protocols they support */
-  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
-
-  for (guint i = 0; i < n_origins; i++) {
-    g_autoptr (CallsOrigin) origin =
-      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
-
-    for (guint j = 0; j < G_N_ELEMENTS (protocols); j++) {
-      GListStore *store =
-        G_LIST_STORE (g_hash_table_lookup (self->origins_by_protocol, protocols[j]));
-
-      g_assert (store);
-
-      if (calls_origin_supports_protocol (origin, protocols[j]))
-        g_list_store_append (store, origin);
-    }
-  }
-
+  update_state_flags (self);
   update_protocol_dial_actions (self);
-}
-
-
-static void
-remove_provider (CallsManager *self,
-                 const char   *name)
-{
-  g_autoptr (CallsProvider) provider = NULL;
-
-  GListModel *origins;
-  guint n_items;
-
-  g_assert (CALLS_IS_MANAGER (self));
-  g_assert (name);
-
-  provider = g_hash_table_lookup (self->providers, name);
-  if (provider) {
-    /* Hold a ref since g_hash_table_remove () might drop the last one */
-    g_object_ref (provider);
-  } else {
-    g_warning ("Trying to remove provider %s which has not been found", name);
-    return;
-  }
-
-  g_debug ("Remove provider: %s", name);
-  g_signal_handlers_disconnect_by_data (provider, self);
-
-  origins = calls_provider_get_origins (provider);
-  g_signal_handlers_disconnect_by_data (origins, self);
-  n_items = g_list_model_get_n_items (origins);
-
-  for (guint i = 0; i < n_items; i++) {
-    g_autoptr (CallsOrigin) origin = NULL;
-
-    origin = g_list_model_get_item (origins, i);
-    remove_origin (self, origin);
-  }
-
-  g_hash_table_remove (self->providers, name);
-  calls_provider_unload_plugin (name);
-
-  rebuild_origins_by_protocols (self);
-  update_state_flags (self);
-
-  g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
-}
-
-
-static gboolean
-origin_found_in_any_provider (CallsManager *self,
-                              CallsOrigin  *origin)
-{
-  GHashTableIter iter;
-  gpointer value;
-
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
-  g_return_val_if_fail (CALLS_IS_ORIGIN (origin), FALSE);
-
-  g_hash_table_iter_init (&iter, self->providers);
-  while (g_hash_table_iter_next (&iter, NULL, &value)) {
-    guint position;
-    CallsProvider *provider = CALLS_PROVIDER (value);
-    GListModel *origins = calls_provider_get_origins (provider);
-
-    if (origins && calls_find_in_model (origins,
-                                        origin,
-                                        &position))
-      return TRUE;
-  }
-
-  return FALSE;
-}
-
-
-static void
-origin_items_changed_cb (GListModel   *model,
-                         guint         position,
-                         guint         removed,
-                         guint         added,
-                         CallsManager *self)
-{
-  guint i;
-  CallsOrigin *origin;
-  guint purged = 0;
-  guint total_origins;
-
-  g_assert (CALLS_IS_MANAGER (self));
-
-  total_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
-  g_debug ("origins changed: pos=%d rem=%d added=%d total=%d",
-           position, removed, added, g_list_model_get_n_items (model));
-
-  /* Check stale/removed origins: We need to look up */
-  if (removed == 0)
-    goto skip_remove;
-
-  for (i = 0; i < total_origins - purged; i++) {
-    origin = g_list_model_get_item (G_LIST_MODEL (self->origins), i - purged);
-
-    if (!origin_found_in_any_provider (self, origin)) {
-      remove_origin (self, origin);
-      purged++;
-    }
-  }
-
-  /** The number of purged entries from self->origins must be equal to removed
-   *  origins from the providers list
-   */
-  if (purged != removed) {
-    g_warning ("Managed origins are not in sync anymore!");
-  }
-
-skip_remove:
-  for (i = 0; i < added; i++) {
-    g_debug ("before adding: %d",
-             g_list_model_get_n_items (G_LIST_MODEL (self->origins)));
-
-    origin = g_list_model_get_item (model, position + i);
-    add_origin (self, origin); // add to list store
-    g_object_unref (origin);
-
-    g_debug ("after adding: %d",
-             g_list_model_get_n_items (G_LIST_MODEL (self->origins)));
-  }
-
-  rebuild_origins_by_protocols (self);
-  update_state_flags (self);
-}
-
-
-static void
-add_provider (CallsManager *self, const gchar *name)
-{
-  GListModel *origins;
-  CallsProvider *provider;
-  guint n_items;
-
-  g_assert (CALLS_IS_MANAGER (self));
-  g_assert (name);
-
-  if (g_hash_table_lookup (self->providers, name))
-    return;
-
-  provider = calls_provider_load_plugin (name);
-  if (provider == NULL) {
-    g_warning ("Could not load a plugin with name `%s'", name);
-    return;
-  }
-
-  g_hash_table_insert (self->providers, g_strdup (name), provider);
-
-  origins = calls_provider_get_origins (provider);
-
-  g_signal_connect_object (origins, "items-changed",
-                           G_CALLBACK (origin_items_changed_cb), self,
-                           G_CONNECT_AFTER);
-
-  n_items = g_list_model_get_n_items (origins);
-  origin_items_changed_cb (origins, 0, 0, n_items, self);
-
-  g_signal_emit (self, signals[PROVIDERS_CHANGED], 0);
 }
 
 
@@ -649,7 +455,6 @@ calls_manager_finalize (GObject *object)
   g_clear_object (&self->contacts_provider);
 
   g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
-  g_clear_pointer (&self->providers, g_hash_table_unref);
   g_clear_pointer (&self->dial_actions_by_protocol, g_hash_table_unref);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
@@ -737,35 +542,100 @@ calls_manager_class_init (CallsManagerClass *klass)
 
 
 static void
+on_providers_changed (GListModel   *model,
+                      guint         position,
+                      guint         removed,
+                      guint         added,
+                      CallsManager *self)
+{
+  g_autoptr (GPtrArray) origins_add = g_ptr_array_sized_new (added);
+
+  g_assert (CALLS_IS_MANAGER (self));
+
+  g_debug ("Provider changed at pos %u; removed %u; added %u",
+           position, removed, added);
+
+  for (guint i = 0; i < added; i++) {
+    g_autoptr (CallsProvider) provider =
+      g_list_model_get_item (model, position + i);
+
+    g_ptr_array_add (origins_add, calls_provider_get_origins (provider));
+    g_debug ("Adding provider %s with %u items",
+             calls_provider_get_name (provider),
+             g_list_model_get_n_items (calls_provider_get_origins (provider)));
+  }
+
+  g_list_store_splice (self->origins,
+                       position,
+                       removed,
+                       origins_add->pdata,
+                       added);
+
+  if (removed > 0) {
+    GHashTableIter calls_iter;
+    gpointer key;
+
+    g_hash_table_iter_init (&calls_iter, self->calls);
+    while (g_hash_table_iter_next (&calls_iter, &key, NULL)) {
+      gpointer origin = g_object_get_data (G_OBJECT (key), "call-origin");
+
+      if (!calls_find_in_model (G_LIST_MODEL (self->origins_flat), origin, NULL))
+        calls_call_hang_up (CALLS_CALL (key));
+    }
+  }
+
+  update_state_flags (self);
+}
+
+
+static void
 calls_manager_init (CallsManager *self)
 {
   g_autoptr (GVariantType) variant_type = NULL;
   GApplication *application;
-  PeasEngine *peas;
-  const gchar *dir;
-  g_autofree char *default_plugin_dir_provider = NULL;
+  CallsPluginManager *plugin_manager = calls_plugin_manager_get_default ();
+  GListModel *providers;
 
   self->state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
-  self->providers = g_hash_table_new_full (g_str_hash,
-                                           g_str_equal,
-                                           g_free,
-                                           g_object_unref);
+
+  self->origins = g_list_store_new (G_TYPE_LIST_MODEL); /* list of lists */
+  self->origins_flat = gtk_flatten_list_model_new (CALLS_TYPE_ORIGIN, G_LIST_MODEL (self->origins));
+
+  g_signal_connect_object (self->origins_flat,
+                           "items-changed",
+                           G_CALLBACK (on_origins_changed),
+                           self,
+                           0);
+
+  providers = calls_plugin_manager_get_providers (plugin_manager);
+  g_signal_connect_object (providers,
+                           "items-changed",
+                           G_CALLBACK (on_providers_changed),
+                           self,
+                           0); /* G_CONNECT_DEFAULT */
+  if (g_list_model_get_n_items (providers) > 0)
+    on_providers_changed (providers, 0, 0, g_list_model_get_n_items (providers), self);
 
   self->origins_by_protocol = g_hash_table_new_full (g_str_hash,
                                                      g_str_equal,
-                                                     g_free,
+                                                     NULL,
                                                      g_object_unref);
 
   for (guint i = 0; i < G_N_ELEMENTS (protocols); i++) {
-    GListStore *origin_store = g_list_store_new (calls_origin_get_type ());
+    g_autoptr (GtkFilter) filter =
+      gtk_custom_filter_new (match_origin_supports_protocol, (gpointer) protocols[i], NULL);
+    GtkFilterListModel *f_list =
+      gtk_filter_list_model_new (G_LIST_MODEL (self->origins_flat), filter);
+
+    g_debug ("Adding filter list model for protocol '%s'", protocols[i]);
     g_hash_table_insert (self->origins_by_protocol,
-                         g_strdup (protocols[i]),
-                         origin_store);
+                         (gpointer) protocols[i],
+                         f_list);
   }
 
   self->dial_actions_by_protocol = g_hash_table_new_full (g_str_hash,
                                                           g_str_equal,
-                                                          g_free,
+                                                          NULL,
                                                           g_object_unref);
 
   application = g_application_get_default ();
@@ -780,7 +650,7 @@ calls_manager_init (CallsManager *self)
                       self);
 
     g_hash_table_insert (self->dial_actions_by_protocol,
-                         g_strdup (protocols[i]),
+                         (gpointer) protocols[i],
                          g_object_ref (action));
 
     /* Enable action if there are suitable origins */
@@ -791,36 +661,12 @@ calls_manager_init (CallsManager *self)
       g_action_map_add_action (G_ACTION_MAP (application), G_ACTION (action));
   }
 
-  self->origins = g_list_store_new (calls_origin_get_type ());
-
   /* This hash table only owns the value, not the key */
   self->calls = g_hash_table_new_full (NULL, NULL, NULL, g_object_unref);
 
   self->settings = calls_settings_get_default ();
-  // Load the contacts provider
+  /* Load the contacts provider */
   self->contacts_provider = calls_contacts_provider_new ();
-
-  peas = peas_engine_get_default ();
-
-  dir = g_getenv ("CALLS_PLUGIN_DIR");
-  if (dir && dir[0] != '\0') {
-    g_autofree char *plugin_dir_provider = NULL;
-
-    plugin_dir_provider = g_build_filename (dir, "provider", NULL);
-
-    if (g_file_test (plugin_dir_provider, G_FILE_TEST_EXISTS)) {
-      g_debug ("Adding %s to plugin search path", plugin_dir_provider);
-      peas_engine_prepend_search_path (peas, plugin_dir_provider, NULL);
-    } else {
-      g_warning ("Not adding %s to plugin search path, because the directory doesn't exist. Check if env CALLS_PLUGIN_DIR is set correctly", plugin_dir_provider);
-    }
-  }
-
-  default_plugin_dir_provider = g_build_filename(PLUGIN_LIBDIR, "provider", NULL);
-  peas_engine_add_search_path (peas, default_plugin_dir_provider, NULL);
-  g_debug ("Scanning for plugins in `%s'", default_plugin_dir_provider);
-
-  peas_engine_rescan_plugins (peas);
 }
 
 
@@ -853,55 +699,6 @@ calls_manager_get_contacts_provider (CallsManager *self)
 }
 
 
-void
-calls_manager_add_provider (CallsManager *self,
-                            const char   *name)
-{
-  g_return_if_fail (CALLS_IS_MANAGER (self));
-  g_return_if_fail (name);
-
-  add_provider (self, name);
-}
-
-
-void
-calls_manager_remove_provider (CallsManager *self,
-                               const char   *name)
-{
-  g_return_if_fail (CALLS_IS_MANAGER (self));
-  g_return_if_fail (name);
-
-  remove_provider (self, name);
-}
-
-
-gboolean
-calls_manager_has_provider (CallsManager *self,
-                            const char   *name)
-{
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
-  g_return_val_if_fail (name, FALSE);
-
-  return !!g_hash_table_lookup (self->providers, name);
-}
-
-
-gboolean
-calls_manager_is_modem_provider (CallsManager *self,
-                                 const char   *name)
-{
-  CallsProvider *provider;
-
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
-  g_return_val_if_fail (name, FALSE);
-
-  provider = g_hash_table_lookup (self->providers, name);
-  g_return_val_if_fail (provider, FALSE);
-
-  return calls_provider_is_modem (provider);
-}
-
-
 CallsManagerFlags
 calls_manager_get_state_flags (CallsManager *self)
 {
@@ -916,7 +713,7 @@ calls_manager_get_origins (CallsManager *self)
 {
   g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
 
-  return G_LIST_MODEL (self->origins);
+  return G_LIST_MODEL (self->origins_flat);
 }
 
 
@@ -952,7 +749,7 @@ calls_manager_hang_up_all_calls (CallsManager *self)
 
   g_return_if_fail (CALLS_IS_MANAGER (self));
 
-  origins = G_LIST_MODEL (self->origins);
+  origins = G_LIST_MODEL (self->origins_flat);
   n_items = g_list_model_get_n_items (origins);
 
   for (uint i = 0; i < n_items; i++) {
@@ -996,58 +793,6 @@ calls_manager_get_suitable_origins (CallsManager *self,
   return NULL;
 }
 
-/**
- * calls_manager_has_any_provider:
- * @self: The #CallsManager
- *
- * Returns: %TRUE if any provider is loaded, %FALSE otherwise
- */
-gboolean
-calls_manager_has_any_provider (CallsManager *self)
-{
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), FALSE);
-
-  return !!g_hash_table_size (self->providers);
-}
-
-/**
- * calls_manager_get_provider_names:
- * @self: The #CallsManager
- * @length: (optional) (out): the length of the returned array
- *
- * Retrieves the names of all providers loaded by @self, as an array.
- *
- * You should free the return value with g_free().
- *
- * Returns: (array length=length) (transfer container): a
- * %NULL-terminated array containing the names of providers.
- */
-const char **
-calls_manager_get_provider_names (CallsManager *self,
-                                  guint        *length)
-{
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
-
-  return (const char **) g_hash_table_get_keys_as_array (self->providers, length);
-}
-
-/**
- * calls_manager_get_providers:
- * @self: A #CallsManager
- *
- * Get the currently loaded providers
- *
- * Returns: (transfer container): A #GList of #CallsProvider.
- * Use g_list_free() when done using the list.
- */
-GList *
-calls_manager_get_providers (CallsManager *self)
-{
-  g_return_val_if_fail (CALLS_IS_MANAGER (self), NULL);
-
-  return g_hash_table_get_values (self->providers);
-}
-
 
 CallsSettings *
 calls_manager_get_settings (CallsManager *self)
@@ -1076,10 +821,10 @@ calls_manager_get_origin_by_id (CallsManager *self,
   if (STR_IS_NULL_OR_EMPTY (origin_id))
     return NULL;
 
-  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins));
+  n_origins = g_list_model_get_n_items (G_LIST_MODEL (self->origins_flat));
   for (uint i = 0; i < n_origins; i++) {
     g_autoptr (CallsOrigin) origin =
-      g_list_model_get_item (G_LIST_MODEL (self->origins), i);
+      g_list_model_get_item (G_LIST_MODEL (self->origins_flat), i);
     g_autofree char *id = calls_origin_get_id (origin);
 
     if (g_strcmp0 (id, origin_id) == 0)
