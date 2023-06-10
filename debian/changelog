@@ -1,3 +1,11 @@
+gnome-calls (44.2) byzantium; urgency=medium
+
+  * mm-origin: Don't unref o88a9970b gnome-44 test-application: Use dummy plugin
+  * sip-provider: Add debugging to password lookup
+  * ci: Allow nightly jobs to failrigin in call_deleted_cb (Closes: #573)
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 10 Jun 2023 20:55:03 +0200
+
 gnome-calls (44.1) byzantium; urgency=medium
 
   [ Guido Günther ]

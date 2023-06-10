@@ -1,3 +1,13 @@
+Calls 44.2
+----------
+Released: June 2023
+
+Bugfix release
+
+Fixes:
+======
+* Fix origin being unrefed making calling impossible after a few of calls
+
 Calls 44.1
 ----------
 Released: April 2023

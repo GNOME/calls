@@ -62,6 +62,17 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="44.2" date="2023-06-10">
+        <description>
+          <p>
+            Calls 44.2 is a bugfix release.
+          </p>
+          <ul>
+            <li>Fix placing a call becoming impossible after a few placed calls</li>
+          </ul>
+        </description>
+      </release>
+
       <release version="44.1" date="2023-04-21">
         <description>
           <p>
