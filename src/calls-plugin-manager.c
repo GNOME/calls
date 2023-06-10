@@ -240,7 +240,12 @@ calls_plugin_manager_init (CallsPluginManager *self)
   self->providers = g_list_store_new (CALLS_TYPE_PROVIDER);
 
   for (const GList *node = peas_engine_get_plugin_list (self->plugin_engine); node; node = node->next) {
-    CallsPlugin *plugin = calls_plugin_new (node->data);
+    PeasPluginInfo *info = node->data;
+    CallsPlugin *plugin = calls_plugin_new (info);
+
+    g_debug ("Created plugin '%s', found in '%s'",
+             peas_plugin_info_get_module_name (info),
+      peas_plugin_info_get_module_dir (info));
 
     g_signal_connect_object (plugin,
                              "notify::loaded",
@@ -250,6 +255,8 @@ calls_plugin_manager_init (CallsPluginManager *self)
 
     g_list_store_append (self->plugins, plugin);
   }
+
+  g_debug ("Created %d plugins", g_list_model_get_n_items (G_LIST_MODEL (self->plugins)));
 }
 
 
