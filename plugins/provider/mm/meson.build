@@ -35,6 +35,7 @@ i18n_plugin = i18n.merge_file(
   po_dir: po_dir,
   type: 'desktop',
   build_by_default: true,
+  install: true,
   install_dir: mm_install_dir,
 )
 
