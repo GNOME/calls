@@ -129,6 +129,10 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
   GVariant *contacts;
   GVariantBuilder contacts_builder;
   CallsEmergencyCallsManager *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
+  g_autoptr (GHashTable) numbers = g_hash_table_new_full (g_str_hash,
+                                                          g_str_equal,
+                                                          g_free,
+                                                          NULL);
 
   g_variant_builder_init (&contacts_builder, G_VARIANT_TYPE (CONTACTS_FORMAT));
 
@@ -137,13 +141,35 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
     g_auto (GStrv) emergency_numbers = NULL;
     const char *country_code;
 
-    emergency_numbers = calls_origin_get_emergency_numbers (origin);
-    if (!emergency_numbers)
-      continue;
-
-    country_code = calls_origin_get_country_code (origin);
-    for (int j = 0; j < g_strv_length (emergency_numbers); j++) {
+    /* Emergency numbers by location */
+    country_code = calls_origin_get_network_country_code (origin);
+    emergency_numbers = calls_emergency_call_types_get_numbers_by_country_code (country_code);
+    for (int j = 0; emergency_numbers && j < g_strv_length (emergency_numbers); j++) {
       g_autofree char *contact = NULL;
+
+      if (g_hash_table_contains (numbers, emergency_numbers[j]))
+          continue;
+
+      contact = calls_emergency_call_type_get_name (emergency_numbers[j], country_code);
+      if (contact == NULL)
+        contact = g_strdup (emergency_numbers[j]);
+
+      add_emergency_contact (&contacts_builder,
+                             emergency_numbers[j],
+                             contact,
+                             CALLS_EMERGENCY_CONTACT_SOURCE_LOCATION);
+      g_hash_table_insert (numbers, g_strdup (emergency_numbers[j]), NULL);
+    }
+    g_clear_pointer (&emergency_numbers, g_strfreev);
+
+    /* Emergency numbers by origin */
+    country_code = calls_origin_get_country_code (origin);
+    emergency_numbers = calls_origin_get_emergency_numbers (origin);
+    for (int j = 0; emergency_numbers && j < g_strv_length (emergency_numbers); j++) {
+      g_autofree char *contact = NULL;
+
+      if (g_hash_table_contains (numbers, emergency_numbers[j]))
+          continue;
 
       contact = calls_emergency_call_type_get_name (emergency_numbers[j], country_code);
       if (contact == NULL)
@@ -154,6 +180,7 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
                              contact,
                              /* TODO: allow to query type */
                              CALLS_EMERGENCY_CONTACT_SOURCE_UNKNOWN);
+      g_hash_table_insert (numbers, g_strdup (emergency_numbers[j]), NULL);
     }
   }
   contacts = g_variant_builder_end (&contacts_builder);
