@@ -670,6 +670,8 @@ on_modem_location_get_3gpp_finish (GObject *source_object, GAsyncResult *res, gp
            mcc,
            self->network_country_code,
            mm_object_get_path (self->mm_obj));
+  /* Trigger update of known emergency numbers */
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_EMERGENCY_NUMBERS]);
 }
 
 
