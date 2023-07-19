@@ -8,9 +8,18 @@
 
 # pragma once
 
+/**
+ * CallsEmergencyContactSource:
+ *
+ * Source of the emergency numbers:
+ *
+ * CALLS_EMERGENCY_CONTACT_SOURCE_UNKNOWN: No idea where it came from
+ * CALLS_EMERGENCY_CONTACT_SOURCE_LOCATION: Based on the devices current location
+ * CALLS_EMERGENCY_CONTACT_SOURCE_SIM: Based on information on the SIM card
+ */
 typedef enum {
   CALLS_EMERGENCY_CONTACT_SOURCE_UNKNOWN     = 0,
-  CALLS_EMERGENCY_CONTACT_SOURCE_FALLBACK    = (1 << 0),
+  CALLS_EMERGENCY_CONTACT_SOURCE_LOCATION    = (1 << 0),
   CALLS_EMERGENCY_CONTACT_SOURCE_SIM         = (1 << 1),
 } CallsEmergencyContactSource;
 
