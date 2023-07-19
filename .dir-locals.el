@@ -24,4 +24,14 @@
             (c-basic-offset . 2)
             (indent-tabs-mode . nil)
             ))
+ (setq auto-mode-alist (cons '("\\.ui$" . nxml-mode) auto-mode-alist))
+ (nxml-mode . (
+            (indent-tabs-mode . nil)
+            ))
+ (css-mode . (
+            (css-indent-offset . 2)
+            ))
+ (meson-mode . (
+             (indent-tabs-mode . nil)
+            ))
 )
