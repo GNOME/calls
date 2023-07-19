@@ -103,22 +103,23 @@ flags_to_string (CallsEmergencyCallTypeFlags flags)
 char *
 calls_emergency_call_type_get_name (const char *lookup, const char *country_code)
 {
+  CallsEmergencyNumberTypes *match;
+
   g_return_val_if_fail (lookup, NULL);
   if (country_code == NULL)
     return NULL;
 
-  for (int i = 0; i < G_N_ELEMENTS (emergency_number_types); i++){
-    CallsEmergencyNumberTypes *numbers = &emergency_number_types[i];
+  init_hash ();
 
-    if (g_str_equal (numbers->country_code, country_code) == FALSE)
-      continue;
+  match = g_hash_table_lookup (by_mcc, country_code);
+  if (!match)
+    return NULL;
 
-    for (int n = 0; n < G_N_ELEMENTS (numbers->numbers); n++) {
-      CallsEmergencyNumber *number = &numbers->numbers[n];
+  for (int i = 0; i < G_N_ELEMENTS (match->numbers); i++) {
+    CallsEmergencyNumber *number = &match->numbers[i];
 
-      if (g_strcmp0 (lookup, number->number) == 0)
-	return flags_to_string (number->flags);
-    }
+    if (g_strcmp0 (lookup, number->number) == 0)
+      return flags_to_string (number->flags);
   }
 
   return NULL;
