@@ -12,7 +12,7 @@
 
       * "id" (s): The identifier to dial (usually the phone number)
       * "name' (s): The contacts name
-      * "source" (i): The contacts source (e.g. addresbook, sim, ...)
+      * "source" (i): The contacts source (e.g. address book, sim, ...)
       * "properties" (a{sv}): Additional properties
 
       Retrieves the currently known emergency contacts. The key is the item to call
