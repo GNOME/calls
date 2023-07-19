@@ -250,3 +250,27 @@ calls_origin_get_country_code (CallsOrigin *self)
 
   return iface->get_country_code (self);
 }
+
+/**
+ * calls_origin_get_network_country_code:
+ * @self: A #CallsOrigin
+ *
+ * Gets the country code of the mobile network we're currently
+ * connected to.
+ *
+ * Returns: (nullable): The country code
+ */
+const char *
+calls_origin_get_network_country_code (CallsOrigin *self)
+{
+  CallsOriginInterface *iface;
+
+  g_return_val_if_fail (CALLS_IS_ORIGIN (self), FALSE);
+
+  iface = CALLS_ORIGIN_GET_IFACE (self);
+  /* network country code is optional */
+  if (iface->get_network_country_code == NULL)
+    return NULL;
+
+  return iface->get_network_country_code (self);
+}

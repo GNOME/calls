@@ -44,6 +44,8 @@ struct _CallsOriginInterface {
   gboolean       (*supports_protocol)                   (CallsOrigin *self,
                                                          const char  *protocol);
   const char *   (*get_country_code)                    (CallsOrigin *self);
+  /* TODO: should we have an additional CALLS_MODEM_ORIGIN interface for modems? */
+  const char *   (*get_network_country_code)            (CallsOrigin *self);
 };
 
 typedef void (*CallsOriginForeachCallFunc) (gpointer param, CallsCall* call, CallsOrigin* origin);
@@ -60,6 +62,6 @@ gboolean               calls_origin_supports_protocol       (CallsOrigin *self,
                                                              const char *protocol);
 GStrv                  calls_origin_get_emergency_numbers   (CallsOrigin *self);
 const char *           calls_origin_get_country_code        (CallsOrigin *self);
+const char *           calls_origin_get_network_country_code (CallsOrigin *self);
 
 G_END_DECLS
-
