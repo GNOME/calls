@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#include <glib.h>
+
 # pragma once
 
 typedef enum {
@@ -22,3 +24,4 @@ typedef enum {
 } CallsEmergencyCallTypeFlags;
 
 char *calls_emergency_call_type_get_name (const char *number, const char *country_code);
+GStrv calls_emergency_call_types_get_numbers_by_country_code (const char *country_code);
