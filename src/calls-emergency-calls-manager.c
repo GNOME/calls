@@ -104,6 +104,24 @@ handle_call_emergency_contact (CallsDBusEmergencyCalls *object,
 #define CONTACT_FORMAT "(ssia{sv})"
 #define CONTACTS_FORMAT "a" CONTACT_FORMAT
 
+
+static void
+add_emergency_contact (GVariantBuilder             *contacts_builder,
+                       const char                  *number,
+                       const char                  *contact,
+                       CallsEmergencyContactSource  type)
+
+{
+  g_variant_builder_open (contacts_builder, G_VARIANT_TYPE (CONTACT_FORMAT));
+  g_variant_builder_add (contacts_builder, "s", number);
+  g_variant_builder_add (contacts_builder, "s", contact);
+  g_variant_builder_add (contacts_builder, "i", type);
+  /* Currently no hints */
+  g_variant_builder_add (contacts_builder, "a{sv}", NULL);
+  g_variant_builder_close (contacts_builder);
+}
+
+
 static gboolean
 handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
                                GDBusMethodInvocation   *invocation)
@@ -127,19 +145,15 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
     for (int j = 0; j < g_strv_length (emergency_numbers); j++) {
       g_autofree char *contact = NULL;
 
-      g_variant_builder_open (&contacts_builder, G_VARIANT_TYPE (CONTACT_FORMAT));
-      g_variant_builder_add (&contacts_builder, "s", emergency_numbers[j]);
-
       contact = calls_emergency_call_type_get_name (emergency_numbers[j], country_code);
       if (contact == NULL)
         contact = g_strdup (emergency_numbers[j]);
-      g_variant_builder_add (&contacts_builder, "s", contact);
-      /* Currently unused */
-      g_variant_builder_add (&contacts_builder, "i",
+
+      add_emergency_contact (&contacts_builder,
+                             emergency_numbers[j],
+                             contact,
+                             /* TODO: allow to query type */
                              CALLS_EMERGENCY_CONTACT_SOURCE_UNKNOWN);
-      /* Currently no hints */
-      g_variant_builder_add (&contacts_builder, "a{sv}", NULL);
-      g_variant_builder_close (&contacts_builder);
     }
   }
   contacts = g_variant_builder_end (&contacts_builder);
