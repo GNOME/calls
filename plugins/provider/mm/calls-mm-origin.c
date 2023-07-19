@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Purism SPC
+ * Copyright (C) 2018-2023 Purism SPC
  *
  * This file is part of Calls.
  *
@@ -40,7 +40,10 @@ struct _CallsMMOrigin {
   MMObject        *mm_obj;
   MMModemVoice    *voice;
   MMModem3gppUssd *ussd;
+  MMModemLocation *location;
+  MMLocation3gpp  *location_3gpp;
   MMSim           *sim;
+  GCancellable    *cancel;
 
   /* XXX: These should be used only for pointer comparison,
    * The content should never be used as it might be
@@ -54,6 +57,7 @@ struct _CallsMMOrigin {
   char            *name;
   GHashTable      *calls;
   char            *country_code;
+  const char      *network_country_code;
   GStrv            emergency_numbers;
 };
 
@@ -365,6 +369,17 @@ get_country_code (CallsOrigin *origin)
 }
 
 
+static const char *
+get_network_country_code (CallsOrigin *origin)
+{
+  CallsMMOrigin *self = CALLS_MM_ORIGIN (origin);
+
+  g_assert (CALLS_IS_MM_ORIGIN (origin));
+
+  return self->network_country_code;
+}
+
+
 static void
 remove_calls (CallsMMOrigin *self, const char *reason)
 {
@@ -626,6 +641,83 @@ list_calls_cb (MMModemVoice *voice,
 
 
 static void
+on_modem_location_get_3gpp_finish (GObject *source_object, GAsyncResult *res, gpointer user_data)
+{
+  MMModemLocation *location = MM_MODEM_LOCATION (source_object);
+  MMLocation3gpp *location_3gpp;
+  CallsMMOrigin *self;
+  g_autoptr (GError) err = NULL;
+  g_autofree char *str = NULL;
+  guint mcc;
+
+  location_3gpp = mm_modem_location_get_3gpp_finish (location, res, &err);
+  if (!location_3gpp) {
+    g_warning ("Failed to get 3gpp location service: %s", err->message);
+    return;
+  }
+
+  self = CALLS_MM_ORIGIN (user_data);
+  g_assert (CALLS_IS_MM_ORIGIN (self));
+  self->location_3gpp = location_3gpp;
+  mcc = mm_location_3gpp_get_mobile_country_code (self->location_3gpp);
+  if (!mcc) {
+    g_warning ("Failed to get country code for %s", mm_object_get_path (self->mm_obj));
+    return;
+  }
+  str = g_strdup_printf ("%u", mcc);
+  self->network_country_code = get_country_iso_for_mcc (str);
+  g_debug ("Got network country code %u (%s) for %s",
+           mcc,
+           self->network_country_code,
+           mm_object_get_path (self->mm_obj));
+}
+
+
+static void
+on_modem_location_enabled (CallsMMOrigin   *self,
+                           GParamSpec      *pspec,
+                           MMModemLocation *location)
+{
+  if (!(mm_modem_location_get_enabled (location) & MM_MODEM_LOCATION_SOURCE_3GPP_LAC_CI)) {
+    g_debug ("Modem '%s' has 3gpp location disabled", mm_object_get_path (self->mm_obj));
+    /* We keep the current network country code cached */
+    return;
+  }
+
+  mm_modem_location_get_3gpp (self->location,
+                              self->cancel,
+                              on_modem_location_get_3gpp_finish,
+                              self);
+}
+
+
+static void
+set_mm_object (CallsMMOrigin *self, MMObject *mm_obj)
+{
+  g_autoptr (MMModemLocation) location = NULL;
+
+  g_set_object (&self->mm_obj, mm_obj);
+
+  location = mm_object_get_modem_location (mm_obj);
+  if (location == NULL) {
+    g_debug ("Modem '%s' has no location capabilities", mm_object_get_path (mm_obj));
+    return;
+  }
+
+  g_debug ("Modem '%s' has location capabilities", mm_object_get_path (mm_obj));
+  self->location = g_steal_pointer (&location);
+
+  /* Wait for location gathering to get enabled */
+  g_signal_connect_object (self->location,
+                           "notify::enabled",
+                           G_CALLBACK (on_modem_location_enabled),
+                           self,
+                           G_CONNECT_SWAPPED);
+  on_modem_location_enabled (self, NULL, self->location);
+}
+
+
+static void
 set_property (GObject      *object,
               guint         property_id,
               const GValue *value,
@@ -639,7 +731,7 @@ set_property (GObject      *object,
     break;
 
   case PROP_MODEM:
-    g_set_object (&self->mm_obj, g_value_get_object (value));
+    set_mm_object (self, g_value_get_object (value));
     break;
 
   default:
@@ -909,11 +1001,16 @@ dispose (GObject *object)
 {
   CallsMMOrigin *self = CALLS_MM_ORIGIN (object);
 
+  g_cancellable_cancel (self->cancel);
+  g_clear_object (&self->cancel);
+
   remove_calls (self, NULL);
   g_clear_object (&self->voice);
   g_clear_object (&self->mm_obj);
   g_clear_object (&self->ussd);
   g_clear_object (&self->sim);
+  g_clear_object (&self->location);
+  g_clear_object (&self->location_3gpp);
   g_clear_pointer (&self->country_code, g_free);
   g_clear_pointer (&self->id, g_free);
 
@@ -993,12 +1090,14 @@ calls_mm_origin_origin_interface_init (CallsOriginInterface *iface)
   iface->dial = dial;
   iface->supports_protocol = supports_protocol;
   iface->get_country_code = get_country_code;
+  iface->get_network_country_code = get_network_country_code;
 }
 
 
 static void
 calls_mm_origin_init (CallsMMOrigin *self)
 {
+  self->cancel = g_cancellable_new ();
   self->calls = g_hash_table_new_full (g_str_hash, g_str_equal,
                                        g_free, g_object_unref);
 }
