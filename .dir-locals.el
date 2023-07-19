@@ -22,4 +22,6 @@
                 ))
             (c-file-style . "linux")
             (c-basic-offset . 2)
-            )))
+            (indent-tabs-mode . nil)
+            ))
+)
