@@ -6,3 +6,5 @@ _build
 build
 .buildconfig
 .flatpak-builder
+po/calls.pot
+po/missing
