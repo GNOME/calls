@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-04-08 15:45+0000\n"
-"PO-Revision-Date: 2023-04-28 10:36+0200\n"
+"POT-Creation-Date: 2023-07-02 19:54+0000\n"
+"PO-Revision-Date: 2023-07-20 23:14+0200\n"
 "Last-Translator: Fabio T. <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Clamadis"
 
@@ -197,58 +197,58 @@ msgstr "Disconession completade"
 msgid "Internal error occurred"
 msgstr "Al è vignût fûr un erôr interni"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Modifiche account: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Zonte gnûf account"
 
-#: src/calls-account-overview.c:377
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Panoramiche dal account"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Provât a componi l'URI di telefon `%s' no valit"
 
-#: src/calls-application.c:720
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No sai cemût vierzi `%s'"
 
-#: src/calls-application.c:780
-msgid "The name of the plugin to use as a call provider"
-msgstr "Il non dal plugin di doprâ tant che gjestôr di clamadis"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "Il non dai plugins di cjariâ"
 
-#: src/calls-application.c:781
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Indiche se presentâ il barcon principâl al inviament"
 
-#: src/calls-application.c:792
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Fâs un numar di telefon"
 
-#: src/calls-application.c:793
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMAR"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Abilite messaçs di debug prolìs"
 
-#: src/calls-application.c:804
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Stampe la version curinte"
 
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Telefonade anonime"
 
@@ -277,28 +277,28 @@ msgstr "Vigjii dal fûc"
 msgid "Mountain Rescue"
 msgstr "Socors alpin"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Fabio Tomat <f.t.publig@gmail.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Impussibil fâ clamadis: nissun modem o account VoIP disponibil"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Impussibil fâ clamadis: nissun plugin cjariât"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contats"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Tastiere"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Resint"
 
@@ -493,7 +493,7 @@ msgstr "Nissun modem disponibil cun capacitâts vocâls"
 msgid "Normal"
 msgstr "Normâl"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inizializât"
