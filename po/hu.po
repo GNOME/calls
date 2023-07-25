@@ -1,5 +1,5 @@
 # Hungarian translation for calls.
-# Copyright (C) 2020, 2022 Free Software Foundation, Inc.
+# Copyright (C) 2020, 2022, 2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the calls package.
 #
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2020.
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-04-08 15:45+0000\n"
-"PO-Revision-Date: 2023-04-13 23:29+0200\n"
+"POT-Creation-Date: 2023-07-20 21:15+0000\n"
+"PO-Revision-Date: 2023-07-25 23:40+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Hívások"
 
@@ -199,58 +199,59 @@ msgstr "A leválasztás befejezve"
 msgid "Internal error occurred"
 msgstr "Belső hiba történt"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Fiók szerkesztése: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Új fiók hozzáadása"
 
-#: src/calls-account-overview.c:377
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Fiók áttekintése"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Érvénytelen telefon-URI-t próbált meg tárcsázni: „%s”"
 
-#: src/calls-application.c:720
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nem tudni, hogyan kell megnyitni a következőt: „%s”"
 
-#: src/calls-application.c:780
-msgid "The name of the plugin to use as a call provider"
-msgstr "A hívásszolgáltatóként használandó bővítmény neve"
+#: src/calls-application.c:812
+#| msgid "The name of the plugin to use as a call provider"
+msgid "The name of the plugins to load"
+msgstr "A betöltendő bővítmények neve"
 
-#: src/calls-application.c:781
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "BŐVÍTMÉNY"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Megjelenjen-e a főablak indításkor"
 
-#: src/calls-application.c:792
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Telefonszám tárcsázása"
 
-#: src/calls-application.c:793
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "SZÁM"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Részletes hibakeresési üzenetek engedélyezése"
 
-#: src/calls-application.c:804
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Jelenlegi verzió kiírása"
 
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Névtelen hívó"
 
@@ -279,30 +280,30 @@ msgstr "Tűzoltóság"
 msgid "Mountain Rescue"
 msgstr "Hegyi mentőszolgálat"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Meskó Balázs <mesko dot balazs at fsf dot hu>\n"
 "Úr Balázs <ur dot balazs at fsf dot hu>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nem lehet hívásokat indítani: nincs elérhető modem vagy VoIP-fiók"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Nem lehet hívásokat indítani: nincs betöltött bővítmény"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Partnerek"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Tárcsázó"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Legutóbbi"
 
@@ -496,7 +497,7 @@ msgstr "Nem érhető el hangképes modem"
 msgid "Normal"
 msgstr "Normál"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Előkészítve"
