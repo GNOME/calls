@@ -2,13 +2,13 @@
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-19 06:49+0200\n"
+"POT-Creation-Date: 2023-05-22 14:55+0000\n"
+"PO-Revision-Date: 2023-07-28 17:03+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 20.12.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Дзвінки"
 
@@ -202,60 +202,59 @@ msgstr "Розірвання з'єднання завершено"
 msgid "Internal error occurred"
 msgstr "Сталася внутрішня помилка"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Редагувати запис: %s"
 
-#: src/calls-account-overview.c:184
-#| msgid "Add Account"
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Додати обліковий запис"
 
-#: src/calls-account-overview.c:376
-#| msgid "Account is online"
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Огляд облікових записів"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Спроба набору номера з некоректною адресою телефону «%s»"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Невідомо як відкрити «%s»"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "Назва додатка, який слід використовувати як надавача послуг дзвінка"
+#: src/calls-application.c:812
+#| msgid "The name of the plugin to use as a call provider"
+msgid "The name of the plugins to load"
+msgstr "Назва додатків для завантаження"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "ДОДАТОК"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Чи слід відкривати головне вікно після запуску"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Набрати телефонний номер"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Увімкнути докладні діагностичні повідомлення"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Вивести поточну версію"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Анонімний дзвінок"
 
@@ -268,54 +267,70 @@ msgstr ""
 "%s\n"
 "вчора"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Поліція"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Швидка допомога"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "ДСНС"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Гірничо-рятувальна служба"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Не вдалося розмістити дзвінки: немає модема або облікового запису інтернет-"
 "телефонії"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Не вдалося розмістити дзвінки: не завантажено додатків"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Контакти"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Панель набору"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Нещодавні"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Пропущено виклик"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Пропущено виклик від <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Пропущено виклик від %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Пропущено виклик від невідомого абонента"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Передзвонити"
 
@@ -486,7 +501,7 @@ msgstr "Немає модема із голосовими можливостям
 msgid "Normal"
 msgstr "Звичайний"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Ініціалізовано"
