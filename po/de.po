@@ -5,7 +5,7 @@
 #
 # heiko123abc <heiko1234aaa@gmail.com>, 2020.
 # Michael Oppliger <mj.oppliger@gmail.com>, 2021.
-# Philipp Kiemle <philipp.kiemle@gmail.com>, 2021.
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2023.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2023.
 # Tim Sabsch <tim@sabsch.com>, 2023.
 #
@@ -13,19 +13,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-01-25 15:58+0000\n"
-"PO-Revision-Date: 2023-01-29 14:27+0100\n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"POT-Creation-Date: 2023-07-25 21:41+0000\n"
+"PO-Revision-Date: 2023-07-28 11:22+0200\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Anrufe"
 
@@ -206,59 +206,58 @@ msgstr "Trennen der Verbindung abgeschlossen"
 msgid "Internal error occurred"
 msgstr "Ein interner Fehler ist aufgetreten"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Konto bearbeiten: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Neues Konto hinzufügen"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Kontenübersicht"
 
-#: src/calls-application.c:339
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Es wurde versucht, die ungültige Telefon-Adresse »%s« zu wählen"
 
-#: src/calls-application.c:672
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Es ist unbekannt, wie »%s« geöffnet werden kann"
 
-#: src/calls-application.c:730
-msgid "The name of the plugin to use as a call provider"
-msgstr ""
-"Der Name der Erweiterung, die als Telefonanbieter verwendet werden soll"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "Der Name der Erweiterungen, die geladen werden sollen"
 
-#: src/calls-application.c:731
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "ERWEITERUNG"
 
-#: src/calls-application.c:736
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Legt fest, ob beim Start das Hauptfenster angezeigt werden soll"
 
-#: src/calls-application.c:742
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Eine Telefonnummer wählen"
 
-#: src/calls-application.c:743
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Ausführliche Fehlerdiagnosemeldungen aktivieren"
 
-#: src/calls-application.c:754
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Aktuelle Versionsnummer ausgeben"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Anonymer Anrufer"
 
@@ -271,35 +270,51 @@ msgstr ""
 "%s\n"
 "Gestern"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Polizei"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Rettungsdienst"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Feuerwehr"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Bergrettung"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "heiko123abc <heiko1234aaa@gmail.com>, 2020\n"
 "Christian Kirbach <christian.kirbach@gmail.com>, 2020\n"
 "Michael Oppliger <mj.oppliger@gmail.com>, 2021\n"
-"Philipp Kiemle <philipp.kiemle@gmail.com>, 2021\n"
+"Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2023\n"
 "Jürgen Benvenuti <gastornis@posteo.org>, 2023\n"
 "Tim Sabsch <tim@sabsch.com>, 2023."
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Anrufe können nicht getätigt werden: Kein Modem oder VoIP-Konto verfügbar"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Anrufe können nicht getätigt werden: Keine Erweiterung geladen"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Ziffernblock"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Letzte"
 
@@ -494,7 +509,7 @@ msgstr "Kein sprachfähiges Modem verfügbar"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Initialisiert"
