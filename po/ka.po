@@ -1,25 +1,25 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Georgian translation for calls.
+# Copyright (C) 2023 calls authors
+# This file is distributed under the same license as the calls package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-19 06:28+0100\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2023-05-22 14:55+0000\n"
+"PO-Revision-Date: 2023-07-28 06:12+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "ზარები"
 
@@ -194,58 +194,58 @@ msgstr "გათიშვა დასრულდა"
 msgid "Internal error occurred"
 msgstr "შიდა შეცდომა"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "ანგარიშის ჩასწორება: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "ახალი ანგარიშის დამატება"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "ანგარიშის მიმოხილვა"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ვცადე დამერეკა არასწორ ტელეფონის URL-ზე '%s'"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "არ ვიცი, როგორ გავხსნა '%s'"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "დამატების სახელი, რომელიც მოგცემთ დარეკვის საშუალებას"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "ჩასატვირთი დამატებების სახელი"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "დამატება"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "გაშვებისას მთავარი ფანჯრის ჩვენება"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "ტელეფონის ნომერზე დარეკვა"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "ნომერი"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "გამართვის გაფართებული შეტყობინებების ჩართვა"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "მიმდინარე ვერსიის დაბეჭდვა"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "ანონიმური დამრეკი"
 
@@ -258,53 +258,69 @@ msgstr ""
 "%s\n"
 "გუშინ"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "პოლიცია"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "სასწრაფო"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "სახანძრო"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "მთის მშველელები"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "თემური დოღონაძე"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "ზარის განხორციელება შეუძლებელია. მოდემი ან VoIP ანგარიში ხელმიუწვდომელია"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "ზარის განხორციელება შეუძლებელია. დამატებები არ ჩატვირთულა"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "კონტაქტები"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "ციფერბლატი"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "ახლახანს"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "გამოტოვებული ზარი"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "გამოტოვებული ზარი <b>%s</b>-სგან"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "გამოტოვებული ზარი %s-სგან"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "გამოტოვებული ზარი უცნობი დამრეკისგან"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "გადარეკვა"
 
@@ -475,7 +491,7 @@ msgstr "მოდემი ზარის მხარდაჭერით ხ
 msgid "Normal"
 msgstr "ნორმალური"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "ინიციალიზაცია დასრულდა"
