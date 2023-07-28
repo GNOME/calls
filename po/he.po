@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-04-08 15:45+0000\n"
-"PO-Revision-Date: 2023-04-21 12:28+0300\n"
+"POT-Creation-Date: 2023-07-20 21:15+0000\n"
+"PO-Revision-Date: 2023-07-28 08:08+0300\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 42.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "שיחות"
 
@@ -193,58 +193,58 @@ msgstr "התנתקות הושלמה"
 msgid "Internal error occurred"
 msgstr "אירעה שגיאה פנימית"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "ערכית חשבון: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "הוספת חשבון חדש"
 
-#: src/calls-account-overview.c:377
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "סקירת חשבון"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
 
-#: src/calls-application.c:720
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "לא יודע איך לפתוח את „%s”"
 
-#: src/calls-application.c:780
-msgid "The name of the plugin to use as a call provider"
-msgstr "The name of the plugin to use as a call provider"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "The name of the plugins to load"
 
-#: src/calls-application.c:781
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Whether to present the main window on startup"
 
-#: src/calls-application.c:792
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:793
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:804
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Print current version"
 
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "חסוי"
 
@@ -273,31 +273,31 @@ msgstr "מכבי אש"
 msgid "Mountain Rescue"
 msgstr "חילוץ הרים"
 
-#: src/calls-main-window.c:123
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
 "\n"
 "<a href=\"https://l10n.gnome.org/teams/he/\">מיזם תרגום GNOME לעברית</a>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "לא נִתן לחייג: אין מודם או חשבון VoIP זמין"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "לא נִתן לחייג: אין תוסף טעון"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "אנשי קשר"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "לוח חיוג"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "אחרונים"
 
@@ -490,7 +490,7 @@ msgstr "אין מודם זמין בעל יכולת שמע"
 msgid "Normal"
 msgstr "רגיל"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "אותחל"
