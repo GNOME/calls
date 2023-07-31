@@ -1,14 +1,14 @@
 # Italian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# antonio <ant.pandolfo@gmail.com>, 2020-2022.
+# antonio <ant.pandolfo@gmail.com>, 2020-2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-11-20 16:16+0100\n"
+"POT-Creation-Date: 2023-05-22 14:55+0000\n"
+"PO-Revision-Date: 2023-07-31 13:20+0200\n"
 "Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
 "Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
 "Language: it\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chiamate"
 
@@ -199,60 +199,58 @@ msgstr "Disconnessione effettuata"
 msgid "Internal error occurred"
 msgstr "Si è verificato un errore interno"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Modifica account: %s"
 
-#: src/calls-account-overview.c:184
-#| msgid "Add Account"
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Nuovo account"
 
-#: src/calls-account-overview.c:376
-#| msgid "Account is online"
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Informazioni account"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Ho provato a comporre un URI telefonico non valido `%s'"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non so come aprire `%s'"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "Il nome del plugin da usare come fornitore di chiamate"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "Il nome del plugin da caricare"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Se presentare la finestra principale all'avvio"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Componi un numero di telefono"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Abilita i messaggi dettagliati di debug"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Stampa la versione attuale"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Chiamante anonimo "
 
@@ -265,55 +263,71 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Polizia"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulanza"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Vigili del Fuoco"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Soccorso alpino"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Pandolfo Antonio <ant.pandolfo@gmail.com>\n"
 "Vittorio <gitlapur.a8tut@aleeas.com>, 2022"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Non è possibile effettuare chiamate: nessun modem o account VoIP disponibile"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Non è possibile effettuare chiamate: Nessun plugin caricato"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contatti"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Tastiera"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recenti"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Chiamata persa"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chiamata persa da <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chiamata persa da %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Chiamata persa da uno sconosciuto"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Richiama"
 
@@ -483,7 +497,7 @@ msgstr "Nessun modem vocale disponibile"
 msgid "Normal"
 msgstr "Normale"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inizializzato"
