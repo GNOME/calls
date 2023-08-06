@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-30 23:45+0000\n"
-"PO-Revision-Date: 2023-01-02 18:14+0100\n"
+"POT-Creation-Date: 2023-08-02 09:34+0000\n"
+"PO-Revision-Date: 2023-08-06 15:02+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Volání"
 
@@ -83,11 +83,11 @@ msgstr "Kód země je použit pro vyhledávání jmen kontaktů"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
-msgstr "Pluginy pro automatické načtení"
+msgstr "Zásuvné moduly pro automatické načtení"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "Tyto pluginy budou automaticky načteny při spuštění aplikace."
+msgstr "Tyto zásuvné moduly budou automaticky načteny při spuštění aplikace."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -194,59 +194,58 @@ msgstr "Odpojení dokončeno"
 msgid "Internal error occurred"
 msgstr "Došlo k vnitřní chybě"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Upravit účet: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Přidat nový účet"
 
-#: src/calls-account-overview.c:376
-#| msgid "Account is online"
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Přehled účtu"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Pokusilo se vytočit neplatné tel URI `%s'"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Neví se, jak otevřít `%s'"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "Název pluginu, který se má použít jako poskytovatel hovorů"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "Názvy zásuvných modulů, které se mají načíst"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
-msgstr "PLUGIN"
+msgstr "ZÁSUVNÝ MODUL"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Zda-li zobrazit hlavní okno při spuštění"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Vytočit telefonní číslo"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "ČÍSLO"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Povolit detailnější ladicí zprávy"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Vypsat aktuální verzi"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Anonymní volající"
 
@@ -259,54 +258,70 @@ msgstr ""
 "%s\n"
 "včera"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Policie"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Záchranná služba"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Hasiči"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Horská záchranná služba"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Jaroslav Svoboda <multi.flexi@seznam.cz>\n"
 "Daniel Rusek <mail@asciiwolf.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nelze volat: Není dostupný modem nebo účet VoIP"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
-msgstr "Nelze volat: Není načtený plugin"
+msgstr "Nelze volat: Není načtený zásuvný modul"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Kontakty"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Číselník"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Nedávné"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Zmeškaný hovor"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Zmeškaný hovor od <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Zmeškaný hovor od %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Zmeškaný hovor od neznámého volajícího"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Volat zpět"
 
@@ -476,7 +491,7 @@ msgstr "Žádný modem s podporou hlasu není dostupný"
 msgid "Normal"
 msgstr "Normální"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializováno"
