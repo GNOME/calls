@@ -5,14 +5,15 @@
 # PerikiyoXD <perikiyoxd@gmail.com>, 2021.
 # Pablo Correa Gómez <ablocorrea@hotmail.com>, 2022.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2021-2023.
+# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: purism-calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-08 19:18+0200\n"
-"PO-Revision-Date: 2023-05-08 19:29+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2023-08-07 16:09+0000\n"
+"PO-Revision-Date: 2023-08-08 07:22+0200\n"
+"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:481 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Llamadas"
 
@@ -198,54 +199,54 @@ msgstr "Desconexión finalizada"
 msgid "Internal error occurred"
 msgstr "Error interno"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Editar cuenta: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Añadir cuenta nueva"
 
-#: src/calls-account-overview.c:381
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Vista general de la cuenta"
 
-#: src/calls-application.c:348
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Intento de marcado de URI de teléfono «%s» no válido"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No se sabe cómo abrir «%s»"
 
-#: src/calls-application.c:785
-msgid "The name of the plugin to use as a call provider"
-msgstr "El nombre del complemento utilizado por el proveedor de llamadas"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "El nombre de los complementos que cargar"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "COMPLEMENTO"
 
-#: src/calls-application.c:791
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Indica si se muestra la ventana principal al inicio"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:803
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Activar mensajes de depuración detallados"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Imprimir versión actual"
 
