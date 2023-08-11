@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-01-25 15:58+0000\n"
-"PO-Revision-Date: 2023-02-05 22:25+0100\n"
+"POT-Creation-Date: 2023-08-07 16:09+0000\n"
+"PO-Revision-Date: 2023-08-11 22:01+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-DL-Team: gl\n"
 "X-DL-Module: calls\n"
 "X-DL-Branch: gnome-43\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-DL-State: None\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:469 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
 
@@ -203,58 +203,58 @@ msgstr "Desconexión completada"
 msgid "Internal error occurred"
 msgstr "Produciuse un erro interno"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Editar conta: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Engadir nova conta"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Vista previa de conta"
 
-#: src/calls-application.c:339
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tentouse chamar a un URI de tel «%s» non válido"
 
-#: src/calls-application.c:672
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Non se sabe como abrir \"%s\""
 
-#: src/calls-application.c:730
-msgid "The name of the plugin to use as a call provider"
-msgstr "O nome do engadido a usar para o fornecedor de chamadas"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "O nome dos engadidos a cargar"
 
-#: src/calls-application.c:731
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "ENGADIDO"
 
-#: src/calls-application.c:736
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Indica se mostrar a xanela principal ao arrinque"
 
-#: src/calls-application.c:742
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Marcar un número de teléfono"
 
-#: src/calls-application.c:743
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Activar as mensaxes de depuración detalladas"
 
-#: src/calls-application.c:754
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Mostrar a versión actual"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Chamada anónima"
 
@@ -267,30 +267,46 @@ msgstr ""
 "%s\n"
 "onte"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Policia"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulancia"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Brigada de incencios"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Rescate de montaña"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Fran Diéguez <frandieguez@gnome.org>, 2020-2023."
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Non se poden realizar chamadas: Non está dispoñíbel un modem ou unha conta "
 "VoIP"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Non se poden realizar chamadas: Non se cargou o engadido"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contactos"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Teclado telefónico"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recentes"
 
@@ -485,7 +501,7 @@ msgstr "Non está dispoñíbel un módem con capacidade de voz"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializada"
