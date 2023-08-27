@@ -43,7 +43,7 @@ i18n_plugin = i18n.merge_file(
 
 ofono_deps = [
   dependency('gobject-2.0'),
-  dependency('gtk+-3.0'),
+  dependency('gtk4'),
   dependency('libpeas-1.0'),
 ]
 

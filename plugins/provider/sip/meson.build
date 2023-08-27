@@ -45,7 +45,7 @@ i18n_plugin = i18n.merge_file(
 sip_deps = [
   dependency('gobject-2.0'),
   dependency('gstreamer-1.0'),
-  dependency('gtk+-3.0'),
+  dependency('gtk4'),
   dependency('libhandy-1', version: '>= 1.1.90'),
   dependency('libpeas-1.0'),
   dependency('sofia-sip-ua-glib'),
