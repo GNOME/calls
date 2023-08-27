@@ -39,8 +39,9 @@
 #define CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD 2
 
 struct _CallsHistoryBox {
-  GtkStack           parent_instance;
+  GtkBin             parent_instance;
 
+  GtkStack          *stack;
   GtkListBox        *history;
   GtkScrolledWindow *scrolled_window;
   GtkAdjustment     *scroll_adjustment;
@@ -54,7 +55,7 @@ struct _CallsHistoryBox {
 
 };
 
-G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_STACK);
+G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_BIN);
 
 
 enum {
@@ -80,7 +81,7 @@ on_model_changed (GListModel      *model,
   else
     child_name = "history";
 
-  gtk_stack_set_visible_child_name (GTK_STACK (self), child_name);
+  gtk_stack_set_visible_child_name (self->stack, child_name);
 }
 
 
@@ -256,6 +257,7 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
 
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/history-box.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, stack);
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, history);
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, scrolled_window);
 }
