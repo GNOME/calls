@@ -27,15 +27,16 @@
 #define DEFAULT_TIMEOUT_SECONDS 3
 
 struct _CallsInAppNotification {
-  GtkRevealer parent_instance;
+  GtkBin       parent_instance;
 
-  GtkLabel   *label;
+  GtkRevealer *revealer;
+  GtkLabel    *label;
 
-  guint       timeout;
-  guint       timeout_id;
+  guint        timeout;
+  guint        timeout_id;
 };
 
-G_DEFINE_TYPE (CallsInAppNotification, calls_in_app_notification, GTK_TYPE_REVEALER)
+G_DEFINE_TYPE (CallsInAppNotification, calls_in_app_notification, GTK_TYPE_BIN)
 
 
 enum {
@@ -128,6 +129,7 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/in-app-notification.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsInAppNotification, revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsInAppNotification, label);
   gtk_widget_class_bind_template_callback (widget_class, calls_in_app_notification_hide);
 }
@@ -157,7 +159,7 @@ calls_in_app_notification_show (CallsInAppNotification *self, const gchar *messa
   if (self->timeout_id)
     g_source_remove (self->timeout_id);
 
-  gtk_revealer_set_reveal_child (GTK_REVEALER (self), TRUE);
+  gtk_revealer_set_reveal_child (self->revealer, TRUE);
   self->timeout_id = g_timeout_add_seconds (self->timeout, (GSourceFunc) timeout_cb, self);
 }
 
@@ -169,5 +171,5 @@ calls_in_app_notification_hide (CallsInAppNotification *self)
 
   g_clear_handle_id (&self->timeout_id, g_source_remove);
 
-  gtk_revealer_set_reveal_child (GTK_REVEALER (self), FALSE);
+  gtk_revealer_set_reveal_child (self->revealer, FALSE);
 }

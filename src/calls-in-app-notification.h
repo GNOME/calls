@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_IN_APP_NOTIFICATION (calls_in_app_notification_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsInAppNotification, calls_in_app_notification, CALLS, IN_APP_NOTIFICATION, GtkRevealer)
+G_DECLARE_FINAL_TYPE (CallsInAppNotification, calls_in_app_notification, CALLS, IN_APP_NOTIFICATION, GtkBin)
 
 CallsInAppNotification * calls_in_app_notification_new (void);
 void calls_in_app_notification_show (CallsInAppNotification *self, const gchar *message);

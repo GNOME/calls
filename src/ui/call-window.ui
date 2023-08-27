@@ -15,6 +15,9 @@
           <object class="CallsInAppNotification" id="in_app_notification">
             <property name="visible">True</property>
           </object>
+          <packing>
+            <property name="pass-through">True</property>
+          </packing>
         </child>
         <child>
           <object class="GtkStack" id="main_stack">
