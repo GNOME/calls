@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-01-06 17:14+0000\n"
-"PO-Revision-Date: 2023-02-13 19:22+0100\n"
+"POT-Creation-Date: 2023-08-07 16:09+0000\n"
+"PO-Revision-Date: 2023-08-31 15:19+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish\n"
 "Language: da\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Opkald"
 
@@ -196,58 +196,58 @@ msgstr "Forbindelse afbrudt"
 msgid "Internal error occurred"
 msgstr "Der opstod en intern fejl"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Redigér konto: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Tilføj ny konto"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Kontooversigt"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Prøvede at ringe til ugyldig tel-URI “%s”"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Ved ikke, hvordan “%s” skal åbnes"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "Navnet på det udvidelsemodul som skal bruges som en opkaldsudbyder"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "Navnet på udvidelsesmodulerne som skal indlæses"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "UDVIDELSESMODUL"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Om hovedvinduet skal vises ved opstart"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Ring til et telefonnummer"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Aktivér uddybende fejlsøgningsbeskeder"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Udskriv nuværende version"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Anonymt opkald"
 
@@ -260,7 +260,23 @@ msgstr ""
 "%s\n"
 "i går"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Politi"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulance"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Brandvæsen"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Bjergredning"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "scootergrisen\n"
@@ -269,48 +285,48 @@ msgstr ""
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan ikke foretage opkald: Intet modem eller VoIP-konto tilgængelig"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Kan ikke foretage opkald: Intet udvidelsesmodul indlæst"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Numerisk tastatur"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Seneste"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Mistet opkald"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Mistet opkald fra <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Mistet opkald fra %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Mistet opkald fra ukendt"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Ring tilbage"
 
@@ -480,7 +496,7 @@ msgstr "Intet modem med stemmefunktion tilgængelig"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Initialiseret"
