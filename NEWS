@@ -1,3 +1,53 @@
+Calls 45.rc.0
+----------
+Released: September 2023
+
+New features:
+=============
+* SIP: Support for AES 256 bit crypto suites
+
+Changes:
+=========
+* Fixed object life cycle of CallsMMOrigin
+
+Code contributions:
+===================
+ - Evangelos Ribeiro Tzaras
+ - Дилян Палаузов
+
+Translation updates:
+====================
+ - Friulian (Fabio Tomat)
+ - Spanish (Pablo Correa Gómez, Daniel Mustieles)
+ - Catalan (Jordi Mas i Hernandez)
+ - Turkish (Sabri Ünal)
+ - Slovak (Dušan Kazik)
+ - British English (Bruce Cowan)
+ - Chinese (Boyuan Yang)
+ - Hungarian (Balázs Úr)
+ - Georgian (Ekaterine Papava)
+ - Hebrew (Yosef Or Boczko)
+ - Ukranian (Yuri Chornoivan)
+ - German (Jürgen Benvenuti)
+ - Persian (Danial Behzadi)
+ - Greek (Efstathios Iosifidis)
+ - Belarusian (Vasil Pupkin)
+ - Slovenian (Matej Urbančič)
+ - Portuguese (Hugo Carvalho)
+ - Italian (Vittorio Monti)
+ - Russian (Artur So)
+ - Basque (Asier Sarasua Garmendia)
+ - Czech (Daniel Rusek)
+ - Polish (Piotr Drąg)
+ - Romanian (Daniel Șerbănescu)
+ - Indonesian (Kukuh Syafaat)
+ - Galician (Fran Dieguez)
+ - Lithuanian (Aurimas Černius)
+ - Finnish (Jiri Grönroos)
+ - Swedish (Anders Jonsson)
+ - Danish (Alan Mortensen)
+
+
 Calls 45.alpha.0
 ----------
 Released: April 2023

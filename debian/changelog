@@ -1,3 +1,140 @@
+gnome-calls (45~rc.0) experimental; urgency=medium
+
+  [ Fabio Tomat ]
+  * Update Friulian translation
+  * Update Friulian translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * mm-provider: Don't warn about cancelled mm_manager_new()
+  * ci: Allow flatpak jobs to fail
+  * tests: Use g_test_init instead of gtk_test_init
+  * ci: Build tarball for tags
+  * srtp-utils: Pass MKI length into error message
+  * mm-origin: Don't unref origin in call_deleted_cb (Closes: #573)
+  * ci: Allow nightly jobs to fail
+  * sip-provider: Add debugging to password lookup
+  * test-application: Use dummy plugin
+  * test-manager: Codestyle
+  * build: Define po_dir variable
+  * po: Add plugin desktop files
+  * sip: Reword plugin information
+  * ofono: Reword plugin information
+  * mm: Reword plugin information
+  * dummy: Reword plugin information
+  * Introduce CallsPlugin
+  * Introduce CallsPluginManager
+  * test-plugins: Switch to CallsPluginManager
+  * refactor: Switch to CallsPluginManager
+  * application: Reindent struct members
+  * plugin-manager: Add debugging to init()
+  * build: Install .plugin files (Closes: #585)
+
+  [ Florian Weimer ]
+  * test-sip: Use su_random() (not su_random64())
+
+  [ Дилян Палаузов ]
+  * srtp-utils: Remove unused variable srtp_crypto_suites
+  * srtp-utils: Strip padding characters in crypto attribute lines
+  * srtp-utils: Add implicit padding characters explicitly
+  * srtp-utils: Reuse existing function to get expected key length
+  * sdp-crypto: Include "ICM" in crypto suite enums
+  * srtp-utils: Add support for AES 256 bit crypto suites
+  * srtp-utils: Add skeleton code to ease adding crypto suites
+
+  [ Pablo Correa Gómez ]
+  * Update Spanish translation
+
+  [ Jordi Mas i Hernandez ]
+  * Update Catalan translation
+  * Update Catalan translation
+
+  [ Sabri Ünal ]
+  * Update Turkish translation
+  * Update Turkish translation
+
+  [ Dušan Kazik ]
+  * Update Slovak translation
+
+  [ Bruce Cowan ]
+  * Update British English translation
+
+  [ Boyuan Yang ]
+  * Update Chinese (China) translation
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+
+  [ Ekaterine Papava ]
+  * Update Georgian translation
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Jürgen Benvenuti ]
+  * Update German translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+
+  [ Vasil Pupkin ]
+  * Update Belarusian translation
+
+  [ Matej Urbančič ]
+  * Update Slovenian translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+
+  [ Artur So ]
+  * Update Russian translation
+
+  [ Asier Sarasua Garmendia ]
+  * Update Basque translation
+
+  [ Daniel Rusek ]
+  * Update Czech translation
+
+  [ Piotr Drąg ]
+  * Update Polish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Daniel Mustieles ]
+  * Updated Spanish translation
+
+  [ Kukuh Syafaat ]
+  * Update Indonesian translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ Aurimas Černius ]
+  * Update Lithuanian translation
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Amn Alam ]
+  * Add Punjabi translation
+
+  [ Alan Mortensen ]
+  * Update Danish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 02 Sep 2023 11:11:01 +0200
+
 gnome-calls (45~alpha.0) experimental; urgency=medium
 
   [ Nathan Follens ]
