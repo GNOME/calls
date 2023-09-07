@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-03-01 02:20+0000\n"
-"PO-Revision-Date: 2023-03-05 13:47+0900\n"
+"POT-Creation-Date: 2023-08-07 16:09+0000\n"
+"PO-Revision-Date: 2023-09-06 23:42+0530\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "통화"
 
@@ -55,7 +55,10 @@ msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
-msgstr "통화 앱은 그놈 데스크톱의 간단하면서 세련된 전화 걸기 및 통화 처리 앱입니다. 휴대전화 모뎀과 같이 사용해서 구식으로 전화 통화를 하는데 사용할 수도 있고, SIP 프로토콜을 사용해 인터넷 전화를 쓸 수도 있습니다."
+msgstr ""
+"통화 앱은 그놈 데스크톱의 간단하면서 세련된 전화 걸기 및 통화 처리 앱입니다. "
+"휴대전화 모뎀과 같이 사용해서 구식으로 전화 통화를 하는데 사용할 수도 있고, "
+"SIP 프로토콜을 사용해 인터넷 전화를 쓸 수도 있습니다."
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:26
@@ -94,7 +97,8 @@ msgstr "인터넷 전화 통화에 사용할 오디오 코덱, 우선하는 순�
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr "인터넷 전화 통화에 우선적으로 사용할 오디오 코덱 (인터넷 전화를 사용한다면)"
+msgstr ""
+"인터넷 전화 통화에 우선적으로 사용할 오디오 코덱 (인터넷 전화를 사용한다면)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
@@ -192,66 +196,66 @@ msgstr "연결 해제 마침"
 msgid "Internal error occurred"
 msgstr "내부 오류가 발생했습니다"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "계정 편집: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "새 계정 추가"
 
-#: src/calls-account-overview.c:377
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "계정 개요"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "잘못된 tel URI '%s'에 전화 걸기 시도"
 
 # 알 수 없는 VoIP URL 등
-#: src/calls-application.c:720
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s'을(를) 여는 방법을 알지 못합니다"
 
-#: src/calls-application.c:780
-msgid "The name of the plugin to use as a call provider"
-msgstr "통화 제공자로 사용할 플러그인의 이름"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "읽어들일 플러그인의 이름"
 
 # command line
-#: src/calls-application.c:781
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "<플러그인>"
 
 # command line
-#: src/calls-application.c:786
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "시작할 때 메인 창을 표시할지 여부"
 
 # command line
-#: src/calls-application.c:792
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "전화 번호에 전화를 겁니다"
 
 # command line
-#: src/calls-application.c:793
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "<번호>"
 
 # command line
-#: src/calls-application.c:798
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "더 많은 디버깅 메시지를 사용합니다"
 
 # command line
-#: src/calls-application.c:804
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "현재 버전을 표시합니다"
 
 # command line
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "익명 발신자"
 
@@ -264,28 +268,44 @@ msgstr ""
 "%s\n"
 "어제"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "경찰"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "구급차"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "소방서"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "산악구조대"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "류창우 <cwryu@debian.org>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "전화를 걸 수 없습니다: 모뎀이나 인터넷 전화 계정이 없습니다"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "전화를 걸 수 없습니다: 플러그인을 로그인하지 않았습니다"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "연락처"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "키패드"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "최근"
 
@@ -329,7 +349,10 @@ msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
-msgstr "인터넷 전화 계정을 여기에 추가할 수 없습니다. 이 계정에서 SIP 프로토콜을 사용해 인터넷 전화 통화를 걸거나 받을 수 있습니다. 이 기능은 상대적으로 새로운 기능이므로 아직 모든 기능이 완전하지 않습니다 (암호화되지 않은 미디어 처리 등)."
+msgstr ""
+"인터넷 전화 계정을 여기에 추가할 수 없습니다. 이 계정에서 SIP 프로토콜을 사용"
+"해 인터넷 전화 통화를 걸거나 받을 수 있습니다. 이 기능은 상대적으로 새로운 기"
+"능이므로 아직 모든 기능이 완전하지 않습니다 (암호화되지 않은 미디어 처리 등)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -481,7 +504,7 @@ msgstr "음성 사용 가능한 모뎀이 없습니다"
 msgid "Normal"
 msgstr "일반"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "초기화 마침"
