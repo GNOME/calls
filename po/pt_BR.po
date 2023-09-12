@@ -1,27 +1,33 @@
 # Brazilian Portuguese translation for calls.
-# Copyright (C) 2022 calls's COPYRIGHT HOLDER
+# Copyright (C) 2023 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Bruno Lopes <brunolopesdsilv@gmail.com>, 2021.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
 # Matheus Barbosa <mdpb.matheus@gmail.com>, 2022.
+# Leônidas Araújo <leorusvellt@hotmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-11-18 15:34+0000\n"
-"PO-Revision-Date: 2022-05-08 22:28-0300\n"
-"Last-Translator: Matheus Barbosa <mdpb.matheus@gmail.com>\n"
-"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"POT-Creation-Date: 2023-05-22 14:55+0000\n"
+"PO-Revision-Date: 2023-04-07 14:53-0300\n"
+"Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Gtranslator 42.0\n"
+"X-DL-Team: pt_BR\n"
+"X-DL-Module: calls\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Chamadas"
 
@@ -89,7 +95,8 @@ msgstr "Os plugins para carregar automaticamente"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "Estes plugins serão automaticamente carregados no início do aplicativo."
+msgstr ""
+"Estes plugins serão automaticamente carregados no início do aplicativo."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -107,7 +114,9 @@ msgstr "Se deve permitir o uso de SDES para SRTP sem TLS como o transporte"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr "Defina como verdadeiro se você quiser permitir com chaves trocadas em texto simples."
+msgstr ""
+"Defina como verdadeiro se você quiser permitir com chaves trocadas em texto "
+"simples."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -197,59 +206,59 @@ msgstr "Desconexão concluída"
 msgid "Internal error occurred"
 msgstr "Erro interno ocorreu"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Editar conta: %s"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Adicionar nova conta"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Visão geral da conta"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tentou discar para um telefone URI “%s” inválido"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Não foi possível abrir “%s”"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "O nome do plugin para usar como o provedor de chamada"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "O nome dos plugins para serem carregados"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Se deve-se apresentar a janela principal na inicialização"
 
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Disca um número de telefone"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NÚMERO"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Habilita mensagens de depuração detalhadas"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Exibe a versão atual"
 
 # Troquei o sujeito pela indetificação (o número) porque é mais inteligível do que "chamador desconhecido" ou "pessoa desconhecida"
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Número desconhecido"
 
@@ -262,55 +271,71 @@ msgstr ""
 "%s\n"
 "ontem"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "Polícia"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "Ambulância"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "Bombeiros"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "Resgate"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Bruno Lopes <brunolopesdsilv@gmail.com>\n"
 "Matheus Barbosa <mdpb.matheus@gmail.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Não é possível fazer chamadas: Nenhum modem ou conta VoIP disponível"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "Não é possível realizar chamadas: Nenhum plugin carregado"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contatos"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Teclado de discagem"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recentes"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Chamada perdida"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Chamada perdida de <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "Chamada perdida de %s"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "Chamada perdida de número desconhecido"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "Chamar de volta"
 
@@ -481,7 +506,7 @@ msgstr "Nenhum modem com capacidade de voz disponível"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Inicializado"
