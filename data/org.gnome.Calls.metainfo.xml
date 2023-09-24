@@ -62,6 +62,21 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="45.0" date="2023-09-23">
+        <description>
+          <p>
+            The Calls 45.0 release includes initial support for emergency calling,
+            fixes a couple of papercuts and brings a good chunk of updated and new translations
+          </p>
+          <ul>
+            <li>Initial support for emergency call numbers in ModemManager backend</li>
+            <li>Resolves emergency number types (police, fire brigade, etc) using hardcoded table</li>
+            <li>Fixed a crash on empty/NULL call id</li>
+            <li>Support AES 256 bit crypto suites in SIP backend</li>
+            <li>Updated translations for 36 languages</li>
+          </ul>
+        </description>
+      </release>
       <release version="44.0" date="2023-03-17">
         <description>
           <p>

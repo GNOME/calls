@@ -1,3 +1,22 @@
+gnome-calls (45.0) unstable; urgency=medium
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Changwoo Ryu ]
+  * Update Korean translation
+
+  [ Irénée THIRION ]
+  * Update French translation
+
+  [ Leônidas Araújo ]
+  * Update Brazilian Portuguese translation
+
+  [ Kristjan SCHMIDT ]
+  * Update Esperanto translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 23 Sep 2023 05:08:10 +0200
+
 gnome-calls (45~rc.0) experimental; urgency=medium
 
   [ Fabio Tomat ]
