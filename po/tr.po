@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-09-11 19:30+0000\n"
-"PO-Revision-Date: 2023-10-13 15:45+0300\n"
+"POT-Creation-Date: 2023-10-14 06:55+0000\n"
+"PO-Revision-Date: 2023-10-23 16:21+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
-msgstr "Aramalar"
+msgstr "Calls"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
-msgstr "Aramalar (art alan hizmeti)"
+msgstr "Calls (art alan hizmeti)"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
@@ -56,17 +56,17 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Aramalar; GNOME için basit, şık telefon çevirici ve arama işleyicidir. "
+"Calls; GNOME için basit, şık telefon çevirici ve arama işleyicidir. "
 "Geleneksel telefon aramaları için hücresel modemle de, VoIP aramaları için "
 "SIP iletişim kuralıyla da kullanılabilir."
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:27
 msgid "Placing a call"
 msgstr "Arama yapılıyor"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:32
 msgid "The call history"
 msgstr "Arama geçmişi"
 
@@ -412,7 +412,7 @@ msgstr "_Yardım"
 #. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
-msgstr "Aramalar _Hakkında"
+msgstr "Calls _Hakkında"
 
 #: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
