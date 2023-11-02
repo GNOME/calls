@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-08-07 16:09+0000\n"
-"PO-Revision-Date: 2023-08-17 13:45+0300\n"
+"POT-Creation-Date: 2023-09-11 19:30+0000\n"
+"PO-Revision-Date: 2023-11-02 08:20+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -338,7 +338,7 @@ msgstr "VoIP-tilit"
 
 #: src/ui/account-overview.ui:49
 msgid "Add VoIP Accounts"
-msgstr "Lisää _VoIP-tilejä"
+msgstr "Lisää VoIP-tilejä"
 
 #: src/ui/account-overview.ui:51
 msgid ""
