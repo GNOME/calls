@@ -224,8 +224,7 @@ update_time (CallsCallRecordRow *self,
   }
 
   gtk_image_set_from_icon_name (self->type,
-                                get_call_icon_symbolic_name (inbound, !answered),
-                                GTK_ICON_SIZE_MENU);
+                                get_call_icon_symbolic_name (inbound, !answered));
 }
 
 

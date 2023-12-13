@@ -36,7 +36,7 @@ insert_phonenumber (CallsContactsRow *self,
                     const gchar      *number)
 {
   GtkWidget *label = gtk_label_new (number);
-  GtkWidget *button = gtk_button_new_from_icon_name ("call-start-symbolic", GTK_ICON_SIZE_BUTTON);
+  GtkWidget *button = gtk_button_new_from_icon_name ("call-start-symbolic");
 
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);

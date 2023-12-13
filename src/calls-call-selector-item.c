@@ -67,7 +67,7 @@ set_party (CallsCallSelectorItem *self)
 {
   CuiCall *call;
   // FIXME: use AdwAvatar and the contact avatar
-  GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic", GTK_ICON_SIZE_DIALOG);
+  GtkWidget *image = gtk_image_new_from_icon_name ("avatar-default-symbolic");
 
   gtk_box_pack_start (self->main_box, image, TRUE, TRUE, 0);
   gtk_widget_show (image);
