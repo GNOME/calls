@@ -47,7 +47,7 @@ struct _CallsCallRecordRow {
   GtkButton       *button;
   GtkPopover      *popover;
   GtkGesture      *gesture;
-  GtkEventBox     *event_box;
+  GtkBox          *event_box;
 
   GMenu           *context_menu;
 

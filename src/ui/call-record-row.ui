@@ -7,7 +7,7 @@
     <property name="activatable">False</property>
     <property name="selectable">False</property>
     <child>
-      <object class="GtkEventBox" id="event_box">
+      <object class="GtkBox" id="event_box">
         <property name="visible">True</property>
         <child>
           <object class="GtkBox">
