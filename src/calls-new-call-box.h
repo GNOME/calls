@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_NEW_CALL_BOX (calls_new_call_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBox)
+G_DECLARE_FINAL_TYPE (CallsNewCallBox, calls_new_call_box, CALLS, NEW_CALL_BOX, GtkBin)
 
 CallsNewCallBox *calls_new_call_box_new  (void);
 void             calls_new_call_box_dial (CallsNewCallBox *self,

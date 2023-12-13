@@ -44,7 +44,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsNewCallBox {
-  GtkBox        parent_instance;
+  GtkBin        parent_instance;
 
   GtkListBox   *origin_list_box;
   HdyComboRow  *origin_list;
@@ -58,7 +58,7 @@ struct _CallsNewCallBox {
   gboolean      numeric_input_only;
 };
 
-G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BOX);
+G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_BIN);
 
 
 static CallsOrigin *
