@@ -26,7 +26,7 @@ gnome = import('gnome')
 
 subdir('dbus')
 
-src_include = include_directories('.', 'gtklistmodels')
+src_include = include_directories('.')
 calls_includes = [ top_include, src_include ]
 
 calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
@@ -86,8 +86,6 @@ calls_generated_sources = [
   generated_dbus_sources,
 ]
 
-subdir('gtklistmodels')
-
 calls_sources = files([
   'calls-account.c', 'calls-account.h',
   'calls-account-overview.c', 'calls-account-overview.h',
@@ -126,7 +124,7 @@ calls_sources = files([
   'calls-ui-call-data.c', 'calls-ui-call-data.h',
   'calls-ussd.c', 'calls-ussd.h',
   'calls-util.c', 'calls-util.h',
-]) + calls_generated_sources + gtklistmodel_sources
+]) + calls_generated_sources
 
 calls_config_data = config_data
 

@@ -40,10 +40,6 @@
 
 #include "enum-types.h"
 
-#include "gtkcustomfilter.h"
-#include "gtkfilterlistmodel.h"
-#include "gtkflattenlistmodel.h"
-
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
 
@@ -454,9 +450,6 @@ calls_manager_finalize (GObject *object)
   g_clear_object (&self->origins);
   g_clear_object (&self->contacts_provider);
 
-  g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
-  g_clear_pointer (&self->dial_actions_by_protocol, g_hash_table_unref);
-
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
 
@@ -599,7 +592,7 @@ calls_manager_init (CallsManager *self)
   self->state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
 
   self->origins = g_list_store_new (G_TYPE_LIST_MODEL); /* list of lists */
-  self->origins_flat = gtk_flatten_list_model_new (CALLS_TYPE_ORIGIN, G_LIST_MODEL (self->origins));
+  self->origins_flat = gtk_flatten_list_model_new (G_LIST_MODEL (self->origins));
 
   providers = calls_plugin_manager_get_providers (plugin_manager);
   g_signal_connect_object (providers,
@@ -616,8 +609,8 @@ calls_manager_init (CallsManager *self)
                                                      g_object_unref);
 
   for (guint i = 0; i < G_N_ELEMENTS (protocols); i++) {
-    g_autoptr (GtkFilter) filter =
-      gtk_custom_filter_new (match_origin_supports_protocol, (gpointer) protocols[i], NULL);
+    GtkFilter* filter =
+      GTK_FILTER (gtk_custom_filter_new (match_origin_supports_protocol, (gpointer) protocols[i], NULL));
     GtkFilterListModel *f_list =
       gtk_filter_list_model_new (G_LIST_MODEL (self->origins_flat), filter);
 

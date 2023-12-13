@@ -35,9 +35,6 @@
 #include "calls-plugin-manager.h"
 #include "calls-util.h"
 
-#include "gtkcustomfilter.h"
-#include "gtkfilterlistmodel.h"
-
 #include <glib/gi18n-lib.h>
 
 
@@ -397,7 +394,7 @@ calls_account_overview_init (CallsAccountOverview *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  self->account_provider_filter = gtk_custom_filter_new (match_account_provider, NULL, NULL);
+  self->account_provider_filter = GTK_FILTER (gtk_custom_filter_new (match_account_provider, NULL, NULL));
   self->providers =
     G_LIST_MODEL (gtk_filter_list_model_new (all_providers,
                                              self->account_provider_filter));
@@ -410,7 +407,7 @@ calls_account_overview_init (CallsAccountOverview *self)
                         0, 0, g_list_model_get_n_items (self->providers),
                         self);
 
-  self->account_filter = gtk_custom_filter_new (match_account, NULL, NULL);
+  self->account_filter = GTK_FILTER (gtk_custom_filter_new (match_account, NULL, NULL));
   self->accounts =
     G_LIST_MODEL (gtk_filter_list_model_new (all_origins,
                                              self->account_filter));

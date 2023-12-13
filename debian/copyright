@@ -32,19 +32,6 @@ Comment:
  see https://bugzilla.gnome.org/show_bug.cgi?id=792243
 
 Files:
- src/gtklistmodels/*
-Copyright:
- 2018-2019  Benjamin Otte
- 2019       Matthias Clasen
-License: LGPL-2.1+
-
-Files:
- src/gtklistmodels/gtkprivate.h
-Copyright:
- 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
-License: LGPL-2+
-
-Files:
  data/org.gnome.Calls.metainfo.xml
 Copyright:
   2018-2022  Purism SPC
