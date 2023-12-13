@@ -30,10 +30,10 @@
 
 /**
  * Section:calls-account-row
- * short_description: A #HdyActionRow for use in #CallsAccountOverview
+ * short_description: A #AdwActionRow for use in #CallsAccountOverview
  * @Title: CallsAccountRow
  *
- * This is a #HdyActionRow derived widget representing a #CallsAccount
+ * This is a #AdwActionRow derived widget representing a #CallsAccount
  * for VoIP accounts (currently only SIP).
  */
 
@@ -48,18 +48,18 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsAccountRow {
-  HdyActionRow          parent;
+  AdwActionRow          parent;
 
   CallsAccountProvider *provider;
   CallsAccount         *account;
   gboolean              online;
 
   /* UI elements */
-  HdyAvatar            *avatar;
+  AdwAvatar            *avatar;
   GtkSwitch            *online_switch;
 };
 
-G_DEFINE_TYPE (CallsAccountRow, calls_account_row, HDY_TYPE_ACTION_ROW)
+G_DEFINE_TYPE (CallsAccountRow, calls_account_row, ADW_TYPE_ACTION_ROW)
 
 
 static void

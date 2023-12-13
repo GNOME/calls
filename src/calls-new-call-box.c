@@ -32,9 +32,9 @@
 #include "calls-ussd.h"
 #include "calls-util.h"
 
+#include <adwaita.h>
 #include <call-ui.h>
 #include <glib/gi18n.h>
-#include <handy.h>
 
 enum {
   PROP_0,
@@ -47,10 +47,10 @@ struct _CallsNewCallBox {
   GtkWidget     parent_instance;
 
   GtkListBox   *origin_list_box;
-  HdyComboRow  *origin_list;
+  AdwComboRow  *origin_list;
   CuiDialpad   *dialpad;
   GtkEntry     *address_entry;
-  HdyActionRow *result;
+  AdwActionRow *result;
   GtkButton    *dial_result;
 
   GList        *dial_queue;
@@ -65,11 +65,11 @@ static CallsOrigin *
 get_selected_origin (CallsNewCallBox *self)
 {
   g_autoptr (CallsOrigin) origin = NULL;
-  GListModel *model = hdy_combo_row_get_model (self->origin_list);
+  GListModel *model = adw_combo_row_get_model (self->origin_list);
   gint index = -1;
 
   if (model)
-    index = hdy_combo_row_get_selected_index (self->origin_list);
+    index = adw_combo_row_get_selected_index (self->origin_list);
 
   if (model && index >= 0)
     origin = g_list_model_get_item (model, index);
@@ -326,7 +326,7 @@ calls_new_call_box_init (CallsNewCallBox *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 
   origins = calls_manager_get_origins (calls_manager_get_default ());
-  hdy_combo_row_bind_name_model (self->origin_list, origins,
+  adw_combo_row_bind_name_model (self->origin_list, origins,
                                  get_origin_name, self, NULL);
 
   g_signal_connect_object (origins,

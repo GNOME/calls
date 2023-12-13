@@ -25,13 +25,13 @@
 #ifndef CALLS_MAIN_WINDOW_H__
 #define CALLS_MAIN_WINDOW_H__
 
-#include <handy.h>
+#include <adwaita.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_MAIN_WINDOW (calls_main_window_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, HdyApplicationWindow);
+G_DECLARE_FINAL_TYPE (CallsMainWindow, calls_main_window, CALLS, MAIN_WINDOW, AdwApplicationWindow);
 
 CallsMainWindow *calls_main_window_new                      (GtkApplication *application,
                                                              GListModel     *record_store);

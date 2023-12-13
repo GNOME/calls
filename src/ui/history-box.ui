@@ -7,7 +7,7 @@
       <object class="GtkStack" id="stack">
         <property name="visible">True</property>
         <child>
-          <object class="HdyStatusPage">
+          <object class="AdwStatusPage">
             <property name="visible">True</property>
             <property name="icon-name">call-start-symbolic</property>
             <property name="title" translatable="yes">No Recent Calls</property>
@@ -22,7 +22,7 @@
             <property name="visible">True</property>
             <property name="hscrollbar-policy">never</property>
             <child>
-              <object class="HdyClamp">
+              <object class="AdwClamp">
                 <property name="visible">True</property>
                 <child>
                   <object class="GtkListBox" id="history">

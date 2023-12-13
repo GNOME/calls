@@ -28,10 +28,10 @@
 #include "calls-manager.h"
 #include "calls-util.h"
 
+#include <adwaita.h>
 #include <glib/gi18n.h>
 #include <glib-object.h>
 #include <glib.h>
-#include <handy.h>
 
 #include <sys/time.h>
 #include <errno.h>

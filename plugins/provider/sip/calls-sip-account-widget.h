@@ -26,7 +26,7 @@
 
 #include "calls-sip-provider.h"
 
-#include <handy.h>
+#include <adwaita.h>
 
 G_BEGIN_DECLS
 

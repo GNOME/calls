@@ -10,8 +10,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#include <adwaita.h>
 #include <folks/folks.h>
-#include <handy.h>
 
 #include "calls-contacts-row.h"
 #include "calls-contacts-provider.h"
@@ -103,7 +103,7 @@ avatar_changed_cb (CallsContactsRow *self)
   if (icon == NULL)
     return;
 
-  hdy_avatar_set_loadable_icon (HDY_AVATAR (self->avatar), icon);
+  adw_avatar_set_loadable_icon (ADW_AVATAR (self->avatar), icon);
 }
 
 static void

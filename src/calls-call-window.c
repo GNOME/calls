@@ -35,9 +35,9 @@
 #include "calls-ui-call-data.h"
 #include "calls-util.h"
 
+#include <adwaita.h>
 #include <glib/gi18n.h>
 #include <glib-object.h>
-#include <handy.h>
 
 
 struct _CallsCallWindow {

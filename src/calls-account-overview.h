@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include <handy.h>
+#include <adwaita.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_ACCOUNT_OVERVIEW (calls_account_overview_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsAccountOverview, calls_account_overview, CALLS, ACCOUNT_OVERVIEW, HdyWindow)
+G_DECLARE_FINAL_TYPE (CallsAccountOverview, calls_account_overview, CALLS, ACCOUNT_OVERVIEW, AdwWindow)
 
 CallsAccountOverview  *calls_account_overview_new                   (void);
 

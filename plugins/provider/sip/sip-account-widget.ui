@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <requires lib="libhandy" version="1.0"/>
+  <requires lib="libadwaita" version="1.0"/>
   <template class="CallsSipAccountWidget" parent="GtkWidget">
     <property name="visible">True</property>
     <child>
@@ -10,7 +10,7 @@
         <property name="orientation">vertical</property>
 
         <child>
-          <object class="HdyHeaderBar" id="header_add">
+          <object class="AdwHeaderBar" id="header_add">
             <property name="title" translatable="yes">Add Account</property>
             <property name="show-close-button">True</property>
             <child>
@@ -39,7 +39,7 @@
         </child>
 
         <child>
-          <object class="HdyHeaderBar" id="header_edit">
+          <object class="AdwHeaderBar" id="header_edit">
             <property name="visible">True</property>
             <property name="show-close-button">True</property>
             <property name="title" translatable="yes">Manage Account</property>
@@ -83,13 +83,13 @@
         </child>
 
         <child>
-          <object class="HdyPreferencesPage">
+          <object class="AdwPreferencesPage">
             <property name="visible">True</property>
             <child>
-              <object class="HdyPreferencesGroup">
+              <object class="AdwPreferencesGroup">
                 <property name="visible">True</property>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Server</property>
                     <child>
@@ -104,10 +104,10 @@
               </object>
             </child>
             <child>
-              <object class="HdyPreferencesGroup">
+              <object class="AdwPreferencesGroup">
                 <property name="visible">True</property>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Display Name</property>
                     <property name="subtitle" translatable="yes">Optional</property>
@@ -123,10 +123,10 @@
               </object>
             </child>
             <child>
-              <object class="HdyPreferencesGroup">
+              <object class="AdwPreferencesGroup">
                 <property name="visible">True</property>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">User ID</property>
                     <child>
@@ -139,7 +139,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Password</property>
                     <child>
@@ -161,10 +161,10 @@
               </object>
             </child>
             <child>
-              <object class="HdyPreferencesGroup">
+              <object class="AdwPreferencesGroup">
                 <property name="visible">True</property>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Port</property>
                     <child>
@@ -180,14 +180,14 @@
                   </object>
                 </child>
                 <child>
-                  <object class="HdyComboRow" id="protocol">
+                  <object class="AdwComboRow" id="protocol">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Transport</property>
                     <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
                 <child>
-                  <object class="HdyComboRow" id="media_encryption">
+                  <object class="AdwComboRow" id="media_encryption">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Media Encryption</property>
                     <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
@@ -196,10 +196,10 @@
               </object>
             </child>
             <child>
-              <object class="HdyPreferencesGroup">
+              <object class="AdwPreferencesGroup">
                 <property name="visible">True</property>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Use for Phone Calls</property>
                     <child>
@@ -212,7 +212,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="HdyActionRow">
+                  <object class="AdwActionRow">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Automatically Connect</property>
                     <child>

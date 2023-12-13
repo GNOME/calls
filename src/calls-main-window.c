@@ -36,19 +36,19 @@
 #include "calls-util.h"
 #include "version.h"
 
+#include <adwaita.h>
 #include <glib/gi18n.h>
 #include <glib-object.h>
-#include <handy.h>
 
 
 struct _CallsMainWindow {
-  HdyApplicationWindow    parent_instance;
+  AdwApplicationWindow    parent_instance;
 
   GListModel             *record_store;
 
   CallsInAppNotification *in_app_notification;
 
-  HdyViewSwitcherTitle   *title_switcher;
+  AdwViewSwitcherTitle   *title_switcher;
   GtkStack               *main_stack;
 
   GtkRevealer            *permanent_error_revealer;
@@ -68,7 +68,7 @@ struct _CallsMainWindow {
   GtkButton              *ussd_reply_button;
 };
 
-G_DEFINE_TYPE (CallsMainWindow, calls_main_window, HDY_TYPE_APPLICATION_WINDOW);
+G_DEFINE_TYPE (CallsMainWindow, calls_main_window, ADW_TYPE_APPLICATION_WINDOW);
 
 enum {
   PROP_0,
@@ -428,7 +428,7 @@ size_allocate (GtkWidget     *widget,
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
 
-  hdy_view_switcher_title_set_view_switcher_enabled (self->title_switcher,
+  adw_view_switcher_title_set_view_switcher_enabled (self->title_switcher,
                                                      allocation->width > 400);
 
   GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, allocation);

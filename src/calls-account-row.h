@@ -27,14 +27,14 @@
 #include "calls-account.h"
 #include "calls-account-provider.h"
 
-#include <handy.h>
+#include <adwaita.h>
 
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_ACCOUNT_ROW (calls_account_row_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsAccountRow, calls_account_row, CALLS, ACCOUNT_ROW, HdyActionRow);
+G_DECLARE_FINAL_TYPE (CallsAccountRow, calls_account_row, CALLS, ACCOUNT_ROW, AdwActionRow);
 
 CallsAccountRow      *calls_account_row_new                  (CallsAccountProvider *provider,
                                                               CallsAccount         *account);

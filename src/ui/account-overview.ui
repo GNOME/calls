@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <requires lib="libhandy" version="1.0"/>
-  <template class="CallsAccountOverview" parent="HdyWindow">
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="CallsAccountOverview" parent="AdwWindow">
     <property name="visible">True</property>
     <property name="default-width">380</property>
     <property name="default-height">660</property>
@@ -12,7 +12,7 @@
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="HdyHeaderBar">
+          <object class="AdwHeaderBar">
             <property name="title" translatable="yes">VoIP Accounts</property>
             <property name="show-close-button">True</property>
             <property name="visible">True</property>
@@ -47,7 +47,7 @@
 
                 <!-- First child type: No accounts present: Show a blurb and a Add button -->
                 <child>
-                  <object class="HdyStatusPage" id="intro">
+                  <object class="AdwStatusPage" id="intro">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Add VoIP Accounts</property>
                     <property name="icon-name">system-users-symbolic</property>
@@ -115,7 +115,7 @@
   </object>
 
 
-  <object class="HdyWindow" id="account_window">
+  <object class="AdwWindow" id="account_window">
     <property name="visible">False</property>
     <property name="default-width">380</property>
     <property name="default-height">660</property>

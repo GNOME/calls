@@ -40,10 +40,10 @@
 
 /**
  * Section:calls-account-overview
- * short_description: A #HdyWindow to manage VoIP accounts
+ * short_description: A #AdwWindow to manage VoIP accounts
  * @Title: CallsAccountOverview
  *
- * This is a #HdyWindow derived window to display and manage the
+ * This is a #AdwWindow derived window to display and manage the
  * VoIP accounts. Each available #CallsAccount from any #CallsAccountProvider
  * will be listed as a #CallsAccountRow.
  */
@@ -55,7 +55,7 @@ typedef enum {
 
 
 struct _CallsAccountOverview {
-  HdyWindow                 parent;
+  AdwWindow                 parent;
 
   /* UI widgets */
   GtkStack                 *stack;
@@ -81,7 +81,7 @@ struct _CallsAccountOverview {
   CallsInAppNotification   *in_app_notification;
 };
 
-G_DEFINE_TYPE (CallsAccountOverview, calls_account_overview, HDY_TYPE_WINDOW)
+G_DEFINE_TYPE (CallsAccountOverview, calls_account_overview, ADW_TYPE_WINDOW)
 
 
 static void

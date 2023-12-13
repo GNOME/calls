@@ -13,7 +13,7 @@
 
         <!-- Avatar -->
         <child>
-          <object class="HdyAvatar" id="avatar">
+          <object class="AdwAvatar" id="avatar">
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="size">36</property>

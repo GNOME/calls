@@ -2,8 +2,8 @@
 <!-- Generated with glade 3.22.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <requires lib="libhandy" version="1.0"/>
-  <template class="CallsMainWindow" parent="HdyApplicationWindow">
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="CallsMainWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Calls</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
@@ -13,13 +13,13 @@
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="HdyHeaderBar">
+          <object class="AdwHeaderBar">
             <property name="visible">True</property>
             <property name="centering_policy">strict</property>
             <property name="show_close_button">True</property>
             <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
             <child type="title">
-              <object class="HdyViewSwitcherTitle" id="title_switcher">
+              <object class="AdwViewSwitcherTitle" id="title_switcher">
                 <property name="visible">True</property>
                 <property name="stack">main_stack</property>
                 <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
@@ -81,7 +81,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="HdyViewSwitcherBar" id="switcher_bar">
+                  <object class="AdwViewSwitcherBar" id="switcher_bar">
                     <property name="visible">True</property>
                     <property name="stack">main_stack</property>
                     <property name="reveal" bind-source="title_switcher" bind-property="title-visible" bind-flags="sync-create"/>
@@ -102,7 +102,7 @@
     <property name="default-height">200</property>
     <signal name="delete-event" handler="gtk_widget_hide_on_delete" object="ussd_dialog" swapped="yes"/>
     <child type="titlebar">
-      <object class="HdyHeaderBar">
+      <object class="AdwHeaderBar">
         <property name="visible">True</property>
         <property name="show-close-button">False</property>
         <property name="title" translatable="yes">USSD</property>

@@ -26,7 +26,7 @@ While much of the original codebase was written using [GNU's Coding Style][1],
 please try to follow this document for newly written code.
 For existing code you should probably try to not mix different code styles too much.
 This coding style is heavily inspired/copied from [phosh's Coding Style][2]
-which itself is mostly using [libhandy's Coding Style][3].
+which itself is mostly using [libadwaita's Coding Style][3].
 
 These are the differences:
 
@@ -124,8 +124,8 @@ individual C files should be structured as (top to bottom of file):
   The reason public methods go at the bottom is that they have declarations in
   the header file and can thus be referenced from anywhere else in the source
   file.
-  
+
   Try to avoid forward declarations where possible.
 [1]: https://www.gnu.org/prep/standards/standards.html#Formatting
 [2]: https://gitlab.gnome.org/World/Phosh/phosh/-/blob/main/HACKING.md#coding-style
-[3]: https://gitlab.gnome.org/GNOME/libhandy/-/blob/main/HACKING.md#coding-style
+[3]: https://gitlab.gnome.org/GNOME/libadwaita/-/blob/main/HACKING.md#coding-style
