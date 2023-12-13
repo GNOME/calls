@@ -25,6 +25,7 @@
 #ifndef CALLS_BEST_MATCH_H__
 #define CALLS_BEST_MATCH_H__
 
+#include <gdk/gdk.h>
 #include <gio/gio.h>
 
 G_BEGIN_DECLS
@@ -40,7 +41,7 @@ const char     *calls_best_match_get_phone_number   (CallsBestMatch *self);
 void            calls_best_match_set_phone_number   (CallsBestMatch *self,
                                                      const char     *phone_number);
 const char     *calls_best_match_get_name           (CallsBestMatch *self);
-GLoadableIcon  *calls_best_match_get_avatar         (CallsBestMatch *self);
+GdkTexture     *calls_best_match_get_avatar         (CallsBestMatch *self);
 const char     *calls_best_match_get_primary_info   (CallsBestMatch *self);
 const char     *calls_best_match_get_secondary_info (CallsBestMatch *self);
 

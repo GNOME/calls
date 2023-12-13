@@ -357,7 +357,7 @@ setup_contact (CallsCallRecordRow *self)
                           G_BINDING_SYNC_CREATE);
 
   g_object_bind_property (self->contact, "avatar",
-                          self->avatar, "loadable-icon",
+                          self->avatar, "custom-image",
                           G_BINDING_SYNC_CREATE);
 
 }

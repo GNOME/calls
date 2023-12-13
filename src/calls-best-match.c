@@ -282,7 +282,7 @@ calls_best_match_class_init (CallsBestMatchClass *klass)
     g_param_spec_object ("avatar",
                          "Avatar",
                          "The avatar of the best match",
-                         G_TYPE_LOADABLE_ICON,
+                         GDK_TYPE_TEXTURE,
                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY);
 
   props[PROP_PRIMARY_INFO] =
@@ -452,15 +452,32 @@ calls_best_match_get_name (CallsBestMatch *self)
  *
  * Returns: (nullable): The avatar of a matched contact or %NULL when there's no match.
  */
-GLoadableIcon *
+GdkTexture *
 calls_best_match_get_avatar (CallsBestMatch *self)
 {
+  GdkTexture *output;
+  GLoadableIcon *loadable_icon;
+  g_autoptr (GError) error = NULL;
+
   g_return_val_if_fail (CALLS_IS_BEST_MATCH (self), NULL);
 
-  if (self->matched_individual)
-    return folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->matched_individual));
-  else
+  if (!self->matched_individual)
     return NULL;
+
+  loadable_icon = folks_avatar_details_get_avatar (FOLKS_AVATAR_DETAILS (self->matched_individual));
+
+  if (!G_IS_FILE_ICON (loadable_icon)) {
+    return NULL;
+  }
+
+  output = gdk_texture_new_from_file (g_file_icon_get_file (G_FILE_ICON (loadable_icon)), &error);
+
+  if (error != NULL) {
+    g_print ("Failed to read avatar icon file: %s", error->message);
+    return NULL;
+  }
+
+  return output;
 }
 
 /**

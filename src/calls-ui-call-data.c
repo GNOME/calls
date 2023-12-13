@@ -138,14 +138,14 @@ calls_ui_call_data_get_can_dtmf (CuiCall *call_data)
 }
 
 
-static GLoadableIcon *
+static GdkPaintable *
 calls_ui_call_data_get_avatar_icon (CuiCall *call_data)
 {
   CallsUiCallData *self = (CallsUiCallData *) call_data;
 
   g_return_val_if_fail (CALLS_UI_CALL_DATA (self), NULL);
 
-  return calls_best_match_get_avatar (self->best_match);
+  return GDK_PAINTABLE (calls_best_match_get_avatar (self->best_match));
 }
 
 
