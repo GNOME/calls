@@ -51,7 +51,7 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 struct _CallsSipAccountWidget {
-  GtkBin            parent;
+  GtkWidget         parent;
 
   /* Header bar */
   GtkWidget        *header_add;
@@ -87,7 +87,7 @@ struct _CallsSipAccountWidget {
   gboolean          port_self_change;
 };
 
-G_DEFINE_TYPE (CallsSipAccountWidget, calls_sip_account_widget, GTK_TYPE_BIN)
+G_DEFINE_TYPE (CallsSipAccountWidget, calls_sip_account_widget, GTK_TYPE_WIDGET)
 
 
 static gboolean

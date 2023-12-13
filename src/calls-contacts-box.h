@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_CONTACTS_BOX (calls_contacts_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsContactsBox, calls_contacts_box, CALLS, CONTACTS_BOX, GtkBin);
+G_DECLARE_FINAL_TYPE (CallsContactsBox, calls_contacts_box, CALLS, CONTACTS_BOX, GtkWidget);
 
 GtkWidget *calls_contacts_box_new (void);
 

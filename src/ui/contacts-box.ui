@@ -3,7 +3,7 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="0.0"/>
-  <template class="CallsContactsBox" parent="GtkBin">
+  <template class="CallsContactsBox" parent="GtkWidget">
     <property name="visible">True</property>
     <child>
       <object class="GtkScrolledWindow">

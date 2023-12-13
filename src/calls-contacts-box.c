@@ -33,7 +33,7 @@
 #include <handy.h>
 
 struct _CallsContactsBox {
-  GtkBin            parent_instance;
+  GtkWidget         parent_instance;
 
   GtkWidget        *search_entry;
   GtkWidget        *contacts_frame;
@@ -43,7 +43,7 @@ struct _CallsContactsBox {
   FolksSimpleQuery *search_query;
 };
 
-G_DEFINE_TYPE (CallsContactsBox, calls_contacts_box, GTK_TYPE_BIN);
+G_DEFINE_TYPE (CallsContactsBox, calls_contacts_box, GTK_TYPE_WIDGET);
 
 static void
 search_changed_cb (CallsContactsBox *self,

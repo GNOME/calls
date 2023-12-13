@@ -27,7 +27,7 @@
 #define DEFAULT_TIMEOUT_SECONDS 3
 
 struct _CallsInAppNotification {
-  GtkBin       parent_instance;
+  GtkWidget    parent_instance;
 
   GtkRevealer *revealer;
   GtkLabel    *label;
@@ -36,7 +36,7 @@ struct _CallsInAppNotification {
   guint        timeout_id;
 };
 
-G_DEFINE_TYPE (CallsInAppNotification, calls_in_app_notification, GTK_TYPE_BIN)
+G_DEFINE_TYPE (CallsInAppNotification, calls_in_app_notification, GTK_TYPE_WIDGET)
 
 
 enum {

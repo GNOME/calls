@@ -38,7 +38,7 @@
 #define CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD 2
 
 struct _CallsHistoryBox {
-  GtkBin             parent_instance;
+  GtkWidget          parent_instance;
 
   GtkStack          *stack;
   GtkListBox        *history;
@@ -54,7 +54,7 @@ struct _CallsHistoryBox {
 
 };
 
-G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_BIN);
+G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_WIDGET);
 
 
 enum {
