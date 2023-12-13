@@ -50,7 +50,7 @@ search_changed_cb (CallsContactsBox *self,
 {
   const gchar *search_text;
 
-  search_text = gtk_entry_get_text (entry);
+  search_text = gtk_editable_get_text (GTK_EDITABLE (entry));
 
   folks_simple_query_set_query_string (self->search_query, search_text);
 

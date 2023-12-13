@@ -105,10 +105,10 @@ is_form_filled (CallsSipAccountWidget *self)
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
   return
-    g_strcmp0 (gtk_entry_get_text (self->host), "") != 0 &&
-    g_strcmp0 (gtk_entry_get_text (self->user), "") != 0 &&
-    g_strcmp0 (gtk_entry_get_text (self->password), "") != 0 &&
-    g_strcmp0 (gtk_entry_get_text (self->port), "") != 0;
+    g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->host)), "") != 0 &&
+    g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->user)), "") != 0 &&
+    g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->password)), "") != 0 &&
+    g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->port)), "") != 0;
 }
 
 static const char *
@@ -251,7 +251,7 @@ on_port_entry_insert_text (CallsSipAccountWidget *self,
     gtk_widget_error_bell (GTK_WIDGET (entry));
   } else {
     g_free (self->last_port);
-    self->last_port = g_strdup (gtk_entry_get_text (entry));
+    self->last_port = g_strdup (gtk_editable_get_text (GTK_EDITABLE (entry)));
   }
 }
 
@@ -274,7 +274,7 @@ get_port (CallsSipAccountWidget *self)
   const char *text;
   int port = 0;
 
-  text = gtk_entry_get_text (self->port);
+  text = gtk_editable_get_text (GTK_EDITABLE (self->port));
   port = (int) g_ascii_strtod (text, NULL);
 
   return port;
@@ -293,7 +293,7 @@ on_port_entry_after_insert_text (CallsSipAccountWidget *self,
   /* Reset to the old value if new port number is invalid */
   if ((port < 0 || port > 65535) && self->last_port) {
     self->port_self_change = TRUE;
-    gtk_entry_set_text (entry, self->last_port);
+    gtk_editable_set_text (GTK_EDITABLE (entry), self->last_port);
     g_idle_add (G_SOURCE_FUNC (update_port_cursor_position), entry);
     gtk_widget_error_bell (GTK_WIDGET (entry));
     self->port_self_change = FALSE;
@@ -385,11 +385,11 @@ clear_form (CallsSipAccountWidget *self)
 {
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
-  gtk_entry_set_text (self->host, "");
-  gtk_entry_set_text (self->display_name, "");
-  gtk_entry_set_text (self->user, "");
-  gtk_entry_set_text (self->password, "");
-  gtk_entry_set_text (self->port, "0");
+  gtk_editable_set_text (GTK_EDITABLE (self->host), "");
+  gtk_editable_set_text (GTK_EDITABLE (self->display_name), "");
+  gtk_editable_set_text (GTK_EDITABLE (self->user), "");
+  gtk_editable_set_text (GTK_EDITABLE (self->password), "");
+  gtk_editable_set_text (GTK_EDITABLE (self->port), "0");
   adw_combo_row_set_selected_index (self->protocol, 0);
   gtk_widget_set_sensitive (GTK_WIDGET (self->media_encryption), FALSE);
   adw_combo_row_set_selected_index (self->media_encryption, 0);
@@ -458,12 +458,12 @@ edit_form (CallsSipAccountWidget *self,
     encryption_index = 0;
 
   /* set UI elements */
-  gtk_entry_set_text (self->host, host);
-  gtk_entry_set_text (self->display_name, display_name ?: "");
-  gtk_entry_set_text (self->user, user);
-  gtk_entry_set_text (self->password, password);
+  gtk_editable_set_text (GTK_EDITABLE (self->host), host);
+  gtk_editable_set_text (GTK_EDITABLE (self->display_name), display_name ?: "");
+  gtk_editable_set_text (GTK_EDITABLE (self->user), user);
+  gtk_editable_set_text (GTK_EDITABLE (self->password), password);
   set_password_visibility (self, FALSE);
-  gtk_entry_set_text (self->port, port_str);
+  gtk_editable_set_text (GTK_EDITABLE (self->port), port_str);
   adw_combo_row_set_selected_index (self->protocol, protocol_index);
   adw_combo_row_set_selected_index (self->media_encryption, encryption_index);
   gtk_switch_set_state (self->tel_switch, can_tel);
@@ -488,10 +488,10 @@ on_login_clicked (CallsSipAccountWidget *self)
 
   origin = calls_sip_provider_add_origin (self->provider,
                                           id,
-                                          gtk_entry_get_text (GTK_ENTRY (self->host)),
-                                          gtk_entry_get_text (GTK_ENTRY (self->user)),
-                                          gtk_entry_get_text (GTK_ENTRY (self->password)),
-                                          gtk_entry_get_text (GTK_ENTRY (self->display_name)),
+                                          gtk_editable_get_text (GTK_EDITABLE (self->host)),
+                                          gtk_editable_get_text (GTK_EDITABLE (self->user)),
+                                          gtk_editable_get_text (GTK_EDITABLE (self->password)),
+                                          gtk_editable_get_text (GTK_EDITABLE (self->display_name)),
                                           get_selected_protocol (self),
                                           get_port (self),
                                           get_selected_media_encryption (self),
@@ -522,10 +522,10 @@ on_apply_clicked (CallsSipAccountWidget *self)
   g_debug ("Applying changes to the account");
 
   calls_sip_origin_set_credentials (self->origin,
-                                    gtk_entry_get_text (self->host),
-                                    gtk_entry_get_text (self->user),
-                                    gtk_entry_get_text (self->password),
-                                    gtk_entry_get_text (self->display_name),
+                                    gtk_editable_get_text (GTK_EDITABLE (self->host)),
+                                    gtk_editable_get_text (GTK_EDITABLE (self->user)),
+                                    gtk_editable_get_text (GTK_EDITABLE (self->password)),
+                                    gtk_editable_get_text (GTK_EDITABLE (self->display_name)),
                                     get_selected_protocol (self),
                                     get_port (self),
                                     get_selected_media_encryption (self),

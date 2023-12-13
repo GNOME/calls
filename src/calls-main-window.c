@@ -205,7 +205,7 @@ window_ussd_entry_changed_cb (CallsMainWindow *self,
   g_assert (CALLS_IS_MAIN_WINDOW (self));
   g_assert (GTK_IS_ENTRY (entry));
 
-  text = gtk_entry_get_text (entry);
+  text = gtk_editable_get_text (GTK_EDITABLE (entry));
   allow_send = text && *text;
 
   gtk_widget_set_sensitive (GTK_WIDGET (self->ussd_reply_button), allow_send);
@@ -250,8 +250,8 @@ window_ussd_reply_clicked_cb (CallsMainWindow *self)
   ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
   g_assert (CALLS_IS_USSD (ussd));
 
-  response = g_strdup (gtk_entry_get_text (self->ussd_entry));
-  gtk_entry_set_text (self->ussd_entry, "");
+  response = g_strdup (gtk_editable_get_text (GTK_EDITABLE (self->ussd_entry)));
+  gtk_editable_set_text (GTK_EDITABLE (self->ussd_entry), "");
   calls_ussd_respond_async (ussd, response, NULL,
                             window_ussd_respond_cb, self);
 }
