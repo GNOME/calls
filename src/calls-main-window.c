@@ -420,14 +420,16 @@ dispose (GObject *object)
 
 static void
 size_allocate (GtkWidget     *widget,
-               GtkAllocation *allocation)
+               int            width,
+               int            height,
+               int            baseline)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
 
   adw_view_switcher_title_set_view_switcher_enabled (self->title_switcher,
-                                                     allocation->width > 400);
+                                                     width > 400);
 
-  GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, allocation);
+  GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, width, height, baseline);
 }
 
 
