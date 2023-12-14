@@ -474,19 +474,15 @@ startup (GApplication *application)
 {
   g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
-#if ADW_CHECK_VERSION (1, 5, 0)
   AdwStyleManager *style_manager;
-#endif
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
   adw_init ();
 
-#if ADW_CHECK_VERSION (1, 5, 0)
   style_manager = adw_style_manager_get_default ();
 
   adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
-#endif
 
   if (!call_audio_init (&error))
     g_warning ("Failed to init libcallaudio: %s", error->message);
