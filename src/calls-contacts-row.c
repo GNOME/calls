@@ -41,13 +41,13 @@ insert_phonenumber (CallsContactsRow *self,
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_style_context_add_class (gtk_widget_get_style_context (label), "dim-label");
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
   gtk_grid_attach (GTK_GRID (self->grid), label, 1, self->n_phonenumbers, 1, 1);
 
   gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "app.dial");
   gtk_actionable_set_action_target (GTK_ACTIONABLE (button), "s", number, NULL);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
   gtk_grid_attach_next_to (GTK_GRID (self->grid),
                            button,
                            label,

@@ -306,12 +306,12 @@ update_header (CallsSipAccountWidget *self)
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
   if (self->origin) {
-    gtk_widget_show (self->header_edit);
-    gtk_widget_hide (self->header_add);
+    gtk_widget_set_visible (self->header_edit, TRUE);
+    gtk_widget_set_visible (self->header_add, FALSE);
 
   } else {
-    gtk_widget_show (self->header_add);
-    gtk_widget_hide (self->header_edit);
+    gtk_widget_set_visible (self->header_add, TRUE);
+    gtk_widget_set_visible (self->header_edit, FALSE);
   }
 
   if (self->connecting) {

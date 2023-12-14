@@ -157,9 +157,9 @@ window_update_ussd_state (CallsMainWindow *self,
 
   if (state == CALLS_USSD_STATE_USER_RESPONSE ||
       state == CALLS_USSD_STATE_ACTIVE)
-    gtk_widget_show (GTK_WIDGET (self->ussd_cancel_button));
+    gtk_widget_set_visible (GTK_WIDGET (self->ussd_cancel_button), TRUE);
   else
-    gtk_widget_show (GTK_WIDGET (self->ussd_close_button));
+    gtk_widget_set_visible (GTK_WIDGET (self->ussd_close_button), TRUE);
 }
 
 static void
@@ -506,8 +506,8 @@ calls_main_window_dial (CallsMainWindow *self,
                         const gchar     *target)
 {
   if (calls_number_is_ussd (target)) {
-    gtk_widget_hide (GTK_WIDGET (self->ussd_cancel_button));
-    gtk_widget_hide (GTK_WIDGET (self->ussd_reply_button));
+    gtk_widget_set_visible (GTK_WIDGET (self->ussd_cancel_button), FALSE);
+    gtk_widget_set_visible (GTK_WIDGET (self->ussd_reply_button), FALSE);
     gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_spinner));
     gtk_spinner_start (self->ussd_spinner);
 

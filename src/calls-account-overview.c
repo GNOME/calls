@@ -285,6 +285,16 @@ on_accounts_changed (GListModel           *accounts,
 }
 
 
+/*
+ * Helper for `on_providers_changed` signal callback
+ */
+static void
+hide_widget (GtkWidget *widget)
+{
+  gtk_widget_set_visible (widget, FALSE);
+}
+
+
 static void
 on_providers_changed (GListModel           *providers,
                       guint                 position,
@@ -297,12 +307,12 @@ on_providers_changed (GListModel           *providers,
       g_list_model_get_item (providers, position + i);
 
     g_signal_connect_swapped (provider, "widget-edit-done",
-                              G_CALLBACK (gtk_widget_hide), self->account_window);
+                              G_CALLBACK (hide_widget), self->account_window);
   }
 
   /* Clear any acccount widgets, because they might've gone stale */
   attach_account_widget (self, NULL);
-  gtk_widget_hide (GTK_WIDGET (self->account_window));
+  gtk_widget_set_visible (GTK_WIDGET (self->account_window), FALSE);
 }
 
 
@@ -314,7 +324,7 @@ on_key_pressed (GtkEventControllerKey *controller,
                 GtkWidget             *widget)
 {
   if (keyval == GDK_KEY_Escape) {
-    gtk_widget_hide (widget);
+    gtk_widget_set_visible (widget, FALSE);
     return GDK_EVENT_STOP;
   }
 
