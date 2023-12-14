@@ -328,7 +328,7 @@ constructed (GObject *object)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
-  GtkContainer *main_stack = GTK_CONTAINER (self->main_stack);
+  GtkStackPage *page;
   GtkWidget *widget;
   CallsHistoryBox *history;
 
@@ -351,13 +351,23 @@ constructed (GObject *object)
                            G_CONNECT_SWAPPED);
   gtk_window_set_transient_for (GTK_WINDOW (self->ussd_dialog), GTK_WINDOW (self));
 
-  // Add contacs box
+  // Add call records
+  history = calls_history_box_new (self->record_store);
+  widget = GTK_WIDGET (history);
+  gtk_stack_add_titled (self->main_stack, widget,
+                        /* Recent as in "Recent calls" (the call history) */
+                        "recent", _("Recent"));
+  page = gtk_stack_get_page (self->main_stack, widget);
+  gtk_stack_page_set_icon_name (page, "document-open-recent-symbolic");
+  gtk_widget_set_visible (widget, TRUE);
+  gtk_stack_set_visible_child_name (self->main_stack, "recent");
+
+  // Add contacts box
   widget = calls_contacts_box_new ();
   gtk_stack_add_titled (self->main_stack, widget,
                         "contacts", _("Contacts"));
-  gtk_container_child_set (main_stack, widget,
-                           "icon-name", "system-users-symbolic",
-                           NULL);
+  page = gtk_stack_get_page (self->main_stack, widget);
+  gtk_stack_page_set_icon_name (page, "system-users-symbolic");
   gtk_widget_set_visible (widget, TRUE);
 
   // Add new call box
@@ -365,22 +375,8 @@ constructed (GObject *object)
   widget = GTK_WIDGET (self->new_call);
   gtk_stack_add_titled (self->main_stack, widget,
                         "dial-pad", _("Dial Pad"));
-  gtk_container_child_set (main_stack, widget,
-                           "icon-name", "input-dialpad-symbolic",
-                           NULL);
-  // Add call records
-  history = calls_history_box_new (self->record_store);
-  widget = GTK_WIDGET (history);
-  gtk_stack_add_titled (self->main_stack, widget,
-                        /* Recent as in "Recent calls" (the call history) */
-                        "recent", _("Recent"));
-  gtk_container_child_set
-    (main_stack, widget,
-    "icon-name", "document-open-recent-symbolic",
-    "position", 0,
-    NULL);
-  gtk_widget_set_visible (widget, TRUE);
-  gtk_stack_set_visible_child_name (self->main_stack, "recent");
+  page = gtk_stack_get_page (self->main_stack, widget);
+  gtk_stack_page_set_icon_name (page, "input-dialpad-symbolic");
 
   // Add actions
   simple_action_group = g_simple_action_group_new ();
