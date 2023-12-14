@@ -414,7 +414,7 @@ dispose (GObject *object)
 
   g_clear_object (&self->record_store);
   if (self->account_overview) {
-    gtk_widget_destroy (GTK_WIDGET (self->account_overview));
+    gtk_window_destroy (GTK_WINDOW (self->account_overview));
     self->account_overview = NULL;
   }
 
