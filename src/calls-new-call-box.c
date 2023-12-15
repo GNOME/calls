@@ -69,7 +69,7 @@ get_selected_origin (CallsNewCallBox *self)
   gint index = -1;
 
   if (model)
-    index = adw_combo_row_get_selected_index (self->origin_list);
+    index = adw_combo_row_get_selected (self->origin_list);
 
   if (model && index >= 0)
     origin = g_list_model_get_item (model, index);
@@ -269,15 +269,6 @@ dial_queued (CallsNewCallBox *self)
 }
 
 
-static char *
-get_origin_name (gpointer item,
-                 gpointer user_data)
-{
-  g_assert (CALLS_IS_ORIGIN (item));
-
-  return calls_origin_get_name (item);
-}
-
 static void
 origin_count_changed_cb (CallsNewCallBox *self)
 {
@@ -322,12 +313,15 @@ static void
 calls_new_call_box_init (CallsNewCallBox *self)
 {
   GListModel *origins;
+  GtkExpression *get_origin_name;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
   origins = calls_manager_get_origins (calls_manager_get_default ());
-  adw_combo_row_bind_name_model (self->origin_list, origins,
-                                 get_origin_name, self, NULL);
+  adw_combo_row_set_model (self->origin_list, origins);
+  get_origin_name = gtk_property_expression_new (CALLS_TYPE_ORIGIN,
+                                                 NULL, "name");
+  adw_combo_row_set_expression(self->origin_list, get_origin_name);
 
   g_signal_connect_object (origins,
                            "items-changed",
