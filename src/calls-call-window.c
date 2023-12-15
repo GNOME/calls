@@ -218,8 +218,7 @@ remove_call (CallsCallWindow *self,
 
     if (display_call_data == ui_call_data) {
       g_list_store_remove (self->calls, i);
-      gtk_container_remove (GTK_CONTAINER (self->call_stack),
-                            GTK_WIDGET (display));
+      gtk_stack_remove (self->call_stack, GTK_WIDGET (display));
       break;
     }
   }
@@ -231,14 +230,11 @@ remove_call (CallsCallWindow *self,
 static void
 remove_calls (CallsCallWindow *self)
 {
-  GList *children, *child;
+  GtkWidget *child;
 
   /* Safely remove the call stack's children. */
-  children = gtk_container_get_children (GTK_CONTAINER (self->call_stack));
-  for (child = children; child != NULL; child = child->next)
-    gtk_container_remove (GTK_CONTAINER (self->call_stack),
-                          GTK_WIDGET (child->data));
-  g_list_free (children);
+  while ((child = gtk_stack_get_visible_child (self->call_stack)))
+    gtk_stack_remove (self->call_stack, child);
 
   g_list_store_remove_all (self->calls);
 
