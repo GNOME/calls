@@ -404,10 +404,10 @@ copy_number (GSimpleAction *action,
              gpointer       user_data)
 {
   const char *number = g_variant_get_string (parameter, NULL);
-  GtkClipboard *clipboard =
-    gtk_clipboard_get_default (gdk_display_get_default ());
+  GdkClipboard *clipboard =
+    gdk_display_get_clipboard (gdk_display_get_default ());
 
-  gtk_clipboard_set_text (clipboard, number, -1);
+  gdk_clipboard_set_text (clipboard, number);
 
   g_debug ("Copied `%s' to clipboard", number);
 }
