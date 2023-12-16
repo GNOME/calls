@@ -668,7 +668,7 @@ start_proper (CallsApplication *self)
 
   self->main_window =
     calls_main_window_new (gtk_app,
-                           G_LIST_MODEL (self->record_store));
+                           calls_record_store_get_list_model (self->record_store));
   g_assert (self->main_window != NULL);
 
   self->call_window = calls_call_window_new (gtk_app);

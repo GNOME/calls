@@ -31,9 +31,10 @@ G_BEGIN_DECLS
 
 #define CALLS_TYPE_RECORD_STORE (calls_record_store_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsRecordStore, calls_record_store, CALLS, RECORD_STORE, GListStore);
+G_DECLARE_FINAL_TYPE (CallsRecordStore, calls_record_store, CALLS, RECORD_STORE, GObject);
 
 CallsRecordStore *calls_record_store_new (void);
+GListModel *calls_record_store_get_list_model (CallsRecordStore *);
 
 G_END_DECLS
 

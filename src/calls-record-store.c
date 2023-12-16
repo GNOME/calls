@@ -92,14 +92,16 @@ record_state_to_string (CallsCallRecordState state)
 
 
 struct _CallsRecordStore {
-  GtkApplicationWindow parent_instance;
+  GObject              parent_instance;
 
   gchar               *filename;
   GomAdapter          *adapter;
   GomRepository       *repository;
+
+  GListStore          *list_store;
 };
 
-G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_LIST_STORE);
+G_DEFINE_TYPE (CallsRecordStore, calls_record_store, G_TYPE_OBJECT);
 
 
 static void
@@ -191,7 +193,7 @@ load_calls_fetch_cb (GomResourceGroup *group,
                       self);
   }
 
-  g_list_store_splice (G_LIST_STORE (self),
+  g_list_store_splice (G_LIST_STORE (self->list_store),
                        0,
                        0,
                        records,
@@ -442,7 +444,7 @@ record_call_save_cb (GomResource                *resource,
 
   } else {
     g_debug ("Successfully saved new call record to database");
-    g_list_store_insert (G_LIST_STORE (data->self),
+    g_list_store_insert (G_LIST_STORE (data->self->list_store),
                          0,
                          CALLS_CALL_RECORD (resource));
 
@@ -699,8 +701,6 @@ dispose (GObject *object)
 {
   CallsRecordStore *self = CALLS_RECORD_STORE (object);
 
-  g_list_store_remove_all (G_LIST_STORE (self));
-
   g_clear_object (&self->repository);
 
   G_OBJECT_CLASS (calls_record_store_parent_class)->dispose (object);
@@ -780,13 +780,20 @@ calls_record_store_init (CallsRecordStore *self)
   self->filename = g_build_filename (used_dir,
                                      RECORD_STORE_FILENAME,
                                      NULL);
+
+  self->list_store = g_list_store_new (CALLS_TYPE_CALL_RECORD);
 }
 
 
 CallsRecordStore *
 calls_record_store_new (void)
 {
-  return g_object_new (CALLS_TYPE_RECORD_STORE,
-                       "item-type", CALLS_TYPE_CALL_RECORD,
-                       NULL);
+  return g_object_new (CALLS_TYPE_RECORD_STORE, NULL);
+}
+
+
+GListModel *
+calls_record_store_get_list_model (CallsRecordStore *self)
+{
+  return G_LIST_MODEL (self->list_store);
 }
