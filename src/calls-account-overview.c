@@ -150,13 +150,9 @@ attach_account_widget (CallsAccountOverview *self,
   if (widget == self->current_account_widget)
     return;
 
-  if (self->current_account_widget)
-    gtk_container_remove (GTK_CONTAINER (self->account_window),
-                          self->current_account_widget);
+  gtk_window_set_child (self->account_window, widget);
 
   self->current_account_widget = widget;
-  if (widget)
-    gtk_container_add (GTK_CONTAINER (self->account_window), widget);
 }
 
 
@@ -249,7 +245,7 @@ on_accounts_changed (GListModel           *accounts,
     GtkListBoxRow *row =
       gtk_list_box_get_row_at_index (GTK_LIST_BOX (self->overview), position + i - 1);
 
-    gtk_container_remove (GTK_CONTAINER (self->overview), GTK_WIDGET (row));
+    gtk_list_box_remove (GTK_LIST_BOX (self->overview), GTK_WIDGET (row));
   }
 
   for (guint i = 0; i < added; i++) {
