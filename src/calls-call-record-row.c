@@ -46,7 +46,6 @@ struct _CallsCallRecordRow {
   GtkLabel        *time;
   GtkButton       *button;
   GtkPopover      *popover;
-  GtkGesture      *gesture;
   GtkBox          *event_box;
 
   GMenu           *context_menu;
@@ -506,7 +505,6 @@ dispose (GObject *object)
 
   g_clear_object (&self->contact);
   g_clear_object (&self->action_map);
-  g_clear_object (&self->gesture);
 
   calls_clear_source (&self->date_change_timeout);
   calls_clear_signal (self->record, &self->answered_notify_handler_id);
@@ -639,6 +637,7 @@ static void
 calls_call_record_row_init (CallsCallRecordRow *self)
 {
   GAction *act;
+  GtkGesture *gesture;
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -654,9 +653,10 @@ calls_call_record_row_init (CallsCallRecordRow *self)
   act = g_action_map_lookup_action (self->action_map, "delete-call");
   g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
 
-  self->gesture = gtk_gesture_long_press_new (GTK_WIDGET (self->event_box));
-  gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (self->gesture), TRUE);
-  g_signal_connect (self->gesture, "pressed", G_CALLBACK (on_long_pressed), self);
+  gesture = gtk_gesture_long_press_new ();
+  gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (gesture), TRUE);
+  g_signal_connect (gesture, "pressed", G_CALLBACK (on_long_pressed), self);
+  gtk_widget_add_controller (GTK_WIDGET (self->event_box), GTK_EVENT_CONTROLLER (gesture));
 }
 
 
