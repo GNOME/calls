@@ -201,14 +201,14 @@ dialpad_dialed_cb (CuiDialpad      *dialpad,
                    const char      *number,
                    CallsNewCallBox *self)
 {
-  GtkWidget *window;
+  GtkRoot *root;
 
   g_assert (CALLS_IS_NEW_CALL_BOX (self));
 
-  window = gtk_widget_get_toplevel (GTK_WIDGET (self));
+  root = gtk_widget_get_root (GTK_WIDGET (self));
 
-  if (CALLS_IS_MAIN_WINDOW (window))
-    calls_main_window_dial (CALLS_MAIN_WINDOW (window), number);
+  if (CALLS_IS_MAIN_WINDOW (root))
+    calls_main_window_dial (CALLS_MAIN_WINDOW (root), number);
   else
     calls_new_call_box_dial (self, number);
 }
