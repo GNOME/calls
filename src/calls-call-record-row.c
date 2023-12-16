@@ -382,14 +382,6 @@ context_menu (GtkWidget *widget,
 }
 
 
-static gboolean
-calls_call_record_row_popup_menu (GtkWidget *self)
-{
-  context_menu (self, NULL);
-  return TRUE;
-}
-
-
 static void
 on_long_pressed (GtkGestureLongPress *gesture,
                  gdouble              x,
@@ -526,8 +518,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   object_class->constructed = constructed;
   object_class->get_property = get_property;
   object_class->dispose = dispose;
-
-  widget_class->popup_menu = calls_call_record_row_popup_menu;
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
