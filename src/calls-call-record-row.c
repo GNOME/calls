@@ -400,16 +400,17 @@ on_long_pressed (GtkGestureLongPress *gesture,
 }
 
 
-static gboolean
-calls_call_record_row_button_press_event (GtkWidget      *self,
-                                          GdkEventButton *event)
+static void
+calls_call_record_row_button_press_event (GtkGestureClick* controller,
+                                          gint n_press,
+                                          gdouble x,
+                                          gdouble y,
+                                          GtkWidget *self)
 {
-  if (gdk_event_triggers_context_menu ((GdkEvent *) event)) {
+  GdkEvent *event = gtk_event_controller_get_current_event (GTK_EVENT_CONTROLLER (controller));
+  if (gdk_event_triggers_context_menu (event)) {
     context_menu (self, (GdkEvent *) event);
-    return TRUE;
   }
-
-  return GTK_WIDGET_CLASS (calls_call_record_row_parent_class)->button_press_event (self, event);
 }
 
 
@@ -527,7 +528,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   object_class->dispose = dispose;
 
   widget_class->popup_menu = calls_call_record_row_popup_menu;
-  widget_class->button_press_event = calls_call_record_row_button_press_event;
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
@@ -652,6 +652,10 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
   act = g_action_map_lookup_action (self->action_map, "delete-call");
   g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
+
+  gesture = gtk_gesture_click_new ();
+  g_signal_connect (gesture, "pressed", G_CALLBACK (calls_call_record_row_button_press_event), self);
+  gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (gesture));
 
   gesture = gtk_gesture_long_press_new ();
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (gesture), TRUE);
