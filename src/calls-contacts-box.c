@@ -115,7 +115,7 @@ contacts_provider_added (CallsContactsBox *self,
 
   row = calls_contacts_row_new (individual);
 
-  gtk_container_add (GTK_CONTAINER (self->contacts_listbox), row);
+  gtk_list_box_append (GTK_LIST_BOX (self->contacts_listbox), row);
 
   g_signal_connect_object (individual,
                            "notify::is-favourite",
@@ -128,13 +128,15 @@ static void
 contacts_provider_removed (CallsContactsBox *self,
                            FolksIndividual  *individual)
 {
-  g_autoptr (GList) list = gtk_container_get_children (GTK_CONTAINER (self->contacts_listbox));
-  GList *l;
+  int i = 0;
+  GtkListBoxRow *row = gtk_list_box_get_row_at_index(GTK_LIST_BOX (self->contacts_listbox), i);
 
-  for (l = list; l != NULL; l = l->next) {
-    CallsContactsRow *row = CALLS_CONTACTS_ROW (l->data);
-    if (calls_contacts_row_get_item (row) == individual)
-      gtk_container_remove (GTK_CONTAINER (self->contacts_listbox), GTK_WIDGET (row));
+  while (row != NULL) {
+    if (calls_contacts_row_get_item (CALLS_CONTACTS_ROW (row)) == individual)
+      gtk_list_box_remove (GTK_LIST_BOX (self->contacts_listbox), GTK_WIDGET (row));
+
+    i += 1;
+    row = gtk_list_box_get_row_at_index(GTK_LIST_BOX (self->contacts_listbox), i);
   }
 }
 
