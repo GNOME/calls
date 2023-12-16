@@ -34,6 +34,8 @@
 struct _CallsContactsBox {
   GtkWidget         parent_instance;
 
+  GtkWidget        *child;
+
   GtkWidget        *search_entry;
   GtkWidget        *contacts_frame;
   GtkWidget        *contacts_listbox;
@@ -161,15 +163,32 @@ contacts_sort_func (CallsContactsRow *a,
 
 
 static void
+calls_contacts_box_dispose (GObject *object)
+{
+  CallsContactsBox *self = CALLS_CONTACTS_BOX (object);
+
+  GtkWidget *child = self->child;
+
+  g_clear_pointer (&child, gtk_widget_unparent);
+}
+
+
+static void
 calls_contacts_box_class_init (CallsContactsBoxClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = calls_contacts_box_dispose;
+
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/contacts-box.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, child);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, contacts_listbox);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, contacts_frame);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, search_entry);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, placeholder_empty);
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

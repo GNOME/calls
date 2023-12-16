@@ -46,6 +46,8 @@ static GParamSpec *props[PROP_LAST_PROP];
 struct _CallsNewCallBox {
   GtkWidget     parent_instance;
 
+  GtkWidget    *child;
+
   GtkListBox   *origin_list_box;
   AdwComboRow  *origin_list;
   CuiDialpad   *dialpad;
@@ -337,7 +339,11 @@ calls_new_call_box_dispose (GObject *object)
 {
   CallsNewCallBox *self = CALLS_NEW_CALL_BOX (object);
 
+  GtkWidget *child = self->child;
+
   clear_dial_queue (self);
+
+  g_clear_pointer (&child, gtk_widget_unparent);
 
   G_OBJECT_CLASS (calls_new_call_box_parent_class)->dispose (object);
 }
@@ -353,6 +359,7 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
   object_class->dispose = calls_new_call_box_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/new-call-box.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, child);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_list_box);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, origin_list);
   gtk_widget_class_bind_template_child (widget_class, CallsNewCallBox, dialpad);
@@ -372,6 +379,8 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

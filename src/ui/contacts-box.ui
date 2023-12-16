@@ -4,7 +4,7 @@
   <requires lib="libadwaita" version="0.0"/>
   <template class="CallsContactsBox" parent="GtkWidget">
     <child>
-      <object class="GtkScrolledWindow">
+      <object class="GtkScrolledWindow" id="child">
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <child>

@@ -53,6 +53,8 @@ static GParamSpec *props[PROP_LAST_PROP];
 struct _CallsSipAccountWidget {
   GtkWidget         parent;
 
+  GtkWidget        *child;
+
   /* Header bar */
   GtkWidget        *header_add;
   GtkSpinner       *spinner_add;
@@ -582,6 +584,10 @@ calls_sip_account_widget_dispose (GObject *object)
 {
   CallsSipAccountWidget *self = CALLS_SIP_ACCOUNT_WIDGET (object);
 
+  GtkWidget *child = GTK_WIDGET (self->child);
+
+  g_clear_pointer (&child, gtk_widget_unparent);
+
   g_clear_pointer (&self->last_port, g_free);
   g_clear_object (&self->protocols_store);
   g_clear_object (&self->media_encryption_store);
@@ -617,6 +623,8 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/sip-account-widget.ui");
+  gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, child);
+
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, header_add);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, spinner_add);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, header_edit);
@@ -642,6 +650,8 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_password_visibility_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

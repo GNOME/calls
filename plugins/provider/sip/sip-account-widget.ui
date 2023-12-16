@@ -4,7 +4,7 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsSipAccountWidget" parent="GtkWidget">
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="child">
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwHeaderBar" id="header_add">

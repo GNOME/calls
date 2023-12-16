@@ -4,7 +4,7 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsNewCallBox" parent="GtkWidget">
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="child">
         <property name="margin-start">24</property>
         <property name="margin-end">24</property>
         <property name="margin_top">6</property>

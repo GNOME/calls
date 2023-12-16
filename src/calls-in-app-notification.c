@@ -96,6 +96,19 @@ calls_in_app_notification_set_property (GObject      *object,
 
 
 static void
+calls_in_app_notification_dispose (GObject *object)
+{
+  CallsInAppNotification *self = CALLS_IN_APP_NOTIFICATION (object);
+
+  GtkWidget *revealer = GTK_WIDGET (self->revealer);
+
+  g_clear_pointer (&revealer, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (calls_in_app_notification_parent_class)->dispose (object);
+}
+
+
+static void
 calls_in_app_notification_finalize (GObject *object)
 {
   CallsInAppNotification *self = CALLS_IN_APP_NOTIFICATION (object);
@@ -114,6 +127,7 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
 
   object_class->get_property = calls_in_app_notification_get_property;
   object_class->set_property = calls_in_app_notification_set_property;
+  object_class->dispose = calls_in_app_notification_dispose;
   object_class->finalize = calls_in_app_notification_finalize;
 
   props[PROP_TIMEOUT] = g_param_spec_uint ("timeout",
@@ -132,6 +146,8 @@ calls_in_app_notification_class_init (CallsInAppNotificationClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsInAppNotification, revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsInAppNotification, label);
   gtk_widget_class_bind_template_callback (widget_class, calls_in_app_notification_hide);
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 
