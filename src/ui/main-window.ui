@@ -140,7 +140,6 @@
       <object class="GtkBox">
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
-        <property name="border-width">0</property>
         <property name="margin-start">12</property>
         <property name="margin-end">12</property>
         <property name="margin-top">12</property>
