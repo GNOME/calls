@@ -429,13 +429,13 @@ calls_account_overview_init (CallsAccountOverview *self)
                        -1);
   gtk_window_set_transient_for (self->account_window, GTK_WINDOW (self));
 
-  self->key_controller = gtk_event_controller_key_new (GTK_WIDGET (self));
+  self->key_controller = gtk_event_controller_key_new ();
   g_signal_connect (self->key_controller,
                     "key-pressed",
                     G_CALLBACK (on_key_pressed),
                     self);
 
-  self->key_controller_account = gtk_event_controller_key_new (GTK_WIDGET (self->account_window));
+  self->key_controller_account = gtk_event_controller_key_new ();
   g_signal_connect (self->key_controller_account,
                     "key-pressed",
                     G_CALLBACK (on_key_pressed),
