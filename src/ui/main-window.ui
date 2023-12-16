@@ -64,7 +64,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkStack" id="main_stack">
+                  <object class="AdwViewStack" id="main_stack">
                     <property name="vhomogeneous">False</property>
                     <property name="hhomogeneous">False</property>
                     <property name="hexpand">True</property>

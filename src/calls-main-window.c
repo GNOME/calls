@@ -49,7 +49,7 @@ struct _CallsMainWindow {
   CallsInAppNotification *in_app_notification;
 
   AdwViewSwitcherTitle   *title_switcher;
-  GtkStack               *main_stack;
+  AdwViewStack           *main_stack;
 
   GtkRevealer            *permanent_error_revealer;
   GtkLabel               *permanent_error_label;
@@ -328,7 +328,7 @@ constructed (GObject *object)
 {
   CallsMainWindow *self = CALLS_MAIN_WINDOW (object);
   GSimpleActionGroup *simple_action_group;
-  GtkStackPage *page;
+  AdwViewStackPage *page;
   GtkWidget *widget;
   CallsHistoryBox *history;
 
@@ -354,29 +354,29 @@ constructed (GObject *object)
   // Add call records
   history = calls_history_box_new (self->record_store);
   widget = GTK_WIDGET (history);
-  gtk_stack_add_titled (self->main_stack, widget,
-                        /* Recent as in "Recent calls" (the call history) */
-                        "recent", _("Recent"));
-  page = gtk_stack_get_page (self->main_stack, widget);
-  gtk_stack_page_set_icon_name (page, "document-open-recent-symbolic");
+  adw_view_stack_add_titled (self->main_stack, widget,
+                             /* Recent as in "Recent calls" (the call history) */
+                             "recent", _("Recent"));
+  page = adw_view_stack_get_page (self->main_stack, widget);
+  adw_view_stack_page_set_icon_name (page, "document-open-recent-symbolic");
   gtk_widget_set_visible (widget, TRUE);
-  gtk_stack_set_visible_child_name (self->main_stack, "recent");
+  adw_view_stack_set_visible_child_name (self->main_stack, "recent");
 
   // Add contacts box
   widget = calls_contacts_box_new ();
-  gtk_stack_add_titled (self->main_stack, widget,
-                        "contacts", _("Contacts"));
-  page = gtk_stack_get_page (self->main_stack, widget);
-  gtk_stack_page_set_icon_name (page, "system-users-symbolic");
+  adw_view_stack_add_titled (self->main_stack, widget,
+                             "contacts", _("Contacts"));
+  page = adw_view_stack_get_page (self->main_stack, widget);
+  adw_view_stack_page_set_icon_name (page, "system-users-symbolic");
   gtk_widget_set_visible (widget, TRUE);
 
   // Add new call box
   self->new_call = calls_new_call_box_new ();
   widget = GTK_WIDGET (self->new_call);
-  gtk_stack_add_titled (self->main_stack, widget,
-                        "dial-pad", _("Dial Pad"));
-  page = gtk_stack_get_page (self->main_stack, widget);
-  gtk_stack_page_set_icon_name (page, "input-dialpad-symbolic");
+  adw_view_stack_add_titled (self->main_stack, widget,
+                             "dial-pad", _("Dial Pad"));
+  page = adw_view_stack_get_page (self->main_stack, widget);
+  adw_view_stack_page_set_icon_name (page, "input-dialpad-symbolic");
 
   // Add actions
   simple_action_group = g_simple_action_group_new ();
