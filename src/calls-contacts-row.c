@@ -90,7 +90,9 @@ static void
 avatar_changed_cb (CallsContactsRow *self)
 {
   FolksAvatarDetails *avatar_details;
-  GLoadableIcon *icon;
+  GLoadableIcon *loadable_icon;
+  g_autoptr (GdkTexture) icon = NULL;
+  g_autoptr (GError) error = NULL;
 
   g_assert (FOLKS_IS_INDIVIDUAL (self->item));
 
@@ -98,12 +100,18 @@ avatar_changed_cb (CallsContactsRow *self)
   if (avatar_details == NULL)
     return;
 
-  icon = folks_avatar_details_get_avatar (avatar_details);
-
-  if (icon == NULL)
+  loadable_icon = folks_avatar_details_get_avatar (avatar_details);
+  if (!G_IS_FILE_ICON (loadable_icon)) {
     return;
+  }
 
-  adw_avatar_set_loadable_icon (ADW_AVATAR (self->avatar), icon);
+  icon = gdk_texture_new_from_file (g_file_icon_get_file (G_FILE_ICON (loadable_icon)), &error);
+  if (icon == NULL) {
+    g_print ("Failed to load avatar icon: %s", error->message);
+    return;
+  }
+
+  adw_avatar_set_custom_image (ADW_AVATAR (self->avatar), GDK_PAINTABLE (icon));
 }
 
 static void
