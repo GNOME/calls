@@ -129,7 +129,7 @@ call_selector_child_activated_cb (GtkFlowBox      *box,
                                   GtkFlowBoxChild *child,
                                   CallsCallWindow *self)
 {
-  GtkWidget *widget = gtk_bin_get_child (GTK_BIN (child));
+  GtkWidget *widget = gtk_flow_box_child_get_child (child);
   CallsCallSelectorItem *item = CALLS_CALL_SELECTOR_ITEM (widget);
   CuiCallDisplay *display = calls_call_selector_item_get_display (item);
 
