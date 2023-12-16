@@ -1,10 +1,9 @@
 keypad > grid > button, .dial-button, .delete-button .rounded-button {
   border-radius: 9999px;
-  -gtk-outline-radius: 9999px;
 }
 
 .dial-button {
-  padding: 19px 42px
+  padding: 19px 42px;
 }
 
 .delete-button {
