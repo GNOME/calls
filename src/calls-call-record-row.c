@@ -374,10 +374,8 @@ context_menu (GtkWidget *widget,
   self = CALLS_CALL_RECORD_ROW (widget);
 
   if (!self->popover) {
-    self->popover = GTK_POPOVER (gtk_popover_new (widget));
-    gtk_popover_bind_model (self->popover,
-                            G_MENU_MODEL (self->context_menu),
-                            "row-history");
+    self->popover = GTK_POPOVER (gtk_popover_menu_new_from_model (G_MENU_MODEL (self->context_menu)));
+    gtk_widget_set_parent (GTK_WIDGET (self->popover), widget);
   }
 
   setup_popover_actions (self);
