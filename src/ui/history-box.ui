@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.0 -->
 <interface>
-  <requires lib="gtk+" version="3.22"/>
+  <requires lib="gtk" version="4.0"/>
   <template class="CallsHistoryBox" parent="GtkWidget">
     <child>
       <object class="GtkStack" id="stack">
-        <property name="visible">True</property>
         <child>
-          <object class="AdwStatusPage">
-            <property name="visible">True</property>
-            <property name="icon-name">call-start-symbolic</property>
-            <property name="title" translatable="yes">No Recent Calls</property>
-          </object>
-          <packing>
+          <object class="GtkStackPage">
             <property name="name">empty</property>
-          </packing>
-        </child>
-
-        <child>
-          <object class="GtkScrolledWindow" id="scrolled_window">
-            <property name="visible">True</property>
-            <property name="hscrollbar-policy">never</property>
-            <child>
-              <object class="AdwClamp">
+            <property name="child">
+              <object class="AdwStatusPage">
                 <property name="visible">True</property>
+                <property name="icon-name">call-start-symbolic</property>
+                <property name="title" translatable="yes">No Recent Calls</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">history</property>
+            <property name="child">
+              <object class="GtkScrolledWindow" id="scrolled_window">
+                <property name="hscrollbar-policy">never</property>
                 <child>
-                  <object class="GtkListBox" id="history">
+                  <object class="AdwClamp">
                     <property name="visible">True</property>
-                    <property name="margin">12</property>
-                    <property name="valign">start</property>
-                    <style>
-                      <class name="content"/>
-                    </style>
+                    <child>
+                      <object class="GtkListBox" id="history">
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="valign">start</property>
+                        <style>
+                          <class name="content"/>
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
           </object>
-          <packing>
-            <property name="name">history</property>
-          </packing>
         </child>
       </object>
     </child>

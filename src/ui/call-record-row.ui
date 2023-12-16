@@ -1,55 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
+  <requires lib="gtk" version="4.0"/>
   <template class="CallsCallRecordRow" parent="GtkListBoxRow">
-    <property name="visible">True</property>
     <property name="activatable">False</property>
     <property name="selectable">False</property>
-    <child>
+    <property name="child">
       <object class="GtkBox" id="event_box">
-        <property name="visible">True</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <child>
               <object class="AdwAvatar" id="avatar">
                 <property name="visible">True</property>
-                <property name="margin_left">8</property>
+                <property name="margin-start">8</property>
                 <property name="margin_top">8</property>
                 <property name="margin_bottom">8</property>
                 <property name="size">48</property>
-                <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"></property>
+                <property name="text" bind-source="target" bind-property="label" bind-flags="sync-create"/>
                 <property name="show-initials">True</property>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkImage" id="type">
-                <property name="visible">True</property>
-                <property name="margin_left">8</property>
+                <property name="margin-start">8</property>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel" id="target">
-                <property name="visible">True</property>
-                <property name="margin_left">10</property>
+                <property name="margin-start">10</property>
                 <property name="ellipsize">middle</property>
               </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkButton" id="button">
-                <property name="visible">True</property>
-                <property name="margin_left">12</property>
-                <property name="margin_right">8</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">8</property>
                 <property name="margin_top">8</property>
                 <property name="margin_bottom">8</property>
                 <property name="halign">center</property>
@@ -64,37 +48,27 @@
                 </child>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="icon-name">call-start-symbolic</property>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-                <property name="position">3</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel" id="time">
-                <property name="visible">True</property>
-                <property name="margin_left">8</property>
+                <property name="margin-start">8</property>
                 <property name="justify">right</property>
                 <style>
                   <class name="dim-label"/>
                 </style>
                 <attributes>
-                  <attribute name="scale" value="0.7"/>
+                  <attribute name="scale" value="0.7"></attribute>
                 </attributes>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-                <property name="position">4</property>
-              </packing>
             </child>
           </object>
         </child>
       </object>
-    </child>
+    </property>
   </template>
   <menu id="context_menu">
     <section>
@@ -103,7 +77,6 @@
         <attribute name="action">delete-call</attribute>
       </item>
       <item>
-        <!-- Translators: This is a phone number -->
         <attribute name="label" translatable="yes">_Copy number</attribute>
         <attribute name="action">copy-number</attribute>
         <attribute name="hidden-when">action-disabled</attribute>

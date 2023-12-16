@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.0 -->
 <interface>
-  <requires lib="gtk+" version="3.22"/>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsNewCallBox" parent="GtkWidget">
-    <property name="visible">True</property>
     <child>
       <object class="GtkBox">
-        <property name="margin_left">24</property>
-        <property name="margin_right">24</property>
+        <property name="margin-start">24</property>
+        <property name="margin-end">24</property>
         <property name="margin_top">6</property>
         <property name="orientation">vertical</property>
-        <property name="visible">True</property>
-
         <child>
           <object class="AdwClamp">
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkListBox" id="origin_list_box">
-                    <property name="visible">True</property>
                     <property name="selection-mode">none</property>
                     <property name="halign">center</property>
                     <child>
@@ -72,7 +66,6 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="dial_result_btn">
-                            <property name="visible">True</property>
                             <property name="always_show_image">True</property>
                             <signal name="clicked" handler="dial_result_clicked_cb" swapped="yes"/>
                             <style>
@@ -80,7 +73,6 @@
                             </style>
                             <child>
                               <object class="GtkImage">
-                                <property name="visible">True</property>
                                 <property name="icon-name">call-start-symbolic</property>
                               </object>
                             </child>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.0 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsMainWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Calls</property>
@@ -10,7 +9,6 @@
     <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwHeaderBar">
@@ -27,11 +25,9 @@
             </child>
             <child>
               <object class="GtkMenuButton">
-                <property name="visible">True</property>
                 <property name="popover">menu_popover</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="icon_name">open-menu-symbolic</property>
                   </object>
                 </child>
@@ -44,40 +40,35 @@
         </child>
         <child>
           <object class="GtkOverlay">
-            <property name="visible">True</property>
             <child type="overlay">
               <object class="CallsInAppNotification" id="in_app_notification">
+                <property name="can-target">False</property>
                 <property name="visible">True</property>
               </object>
-              <packing>
-                <property name="pass-through">True</property>
-              </packing>
             </child>
-            <child>
+            <property name="child">
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkRevealer" id="permanent_error_revealer">
-                    <property name="visible">True</property>
                     <property name="reveal_child">True</property>
-                    <child>
+                    <property name="child">
                       <object class="GtkLabel" id="permanent_error_label">
                         <property name="justify">center</property>
                         <property name="wrap">True</property>
-                        <property name="visible">True</property>
                         <style>
                           <class name="error-state-message"/>
                         </style>
                       </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkStack" id="main_stack">
-                    <property name="visible">True</property>
-                    <property name="homogeneous">False</property>
-                    <property name="expand">True</property>
+                    <property name="vhomogeneous">False</property>
+                    <property name="hhomogeneous">False</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
                   </object>
                 </child>
                 <child>
@@ -88,15 +79,13 @@
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
           </object>
         </child>
       </object>
     </child>
   </template>
-
   <object class="GtkDialog" id="ussd_dialog">
-    <property name="can-focus">False</property>
     <property name="modal">True</property>
     <property name="default-width">240</property>
     <property name="default-height">200</property>
@@ -106,11 +95,8 @@
         <property name="visible">True</property>
         <property name="show-close-button">False</property>
         <property name="title" translatable="yes">USSD</property>
-
         <child>
           <object class="GtkButton" id="ussd_cancel_button">
-            <property name="visible">True</property>
-            <property name="sensitive">True</property>
             <property name="has-default">True</property>
             <property name="can-default">True</property>
             <property name="use-underline">True</property>
@@ -121,13 +107,9 @@
             <property name="pack_type">start</property>
           </packing>
         </child>
-
         <child>
           <object class="GtkButton" id="ussd_close_button">
-            <property name="visible" bind-source="ussd_cancel_button" bind-property="visible"
-                      bind-flags="sync-create|invert-boolean|bidirectional"/>
-            <property name="visible">True</property>
-            <property name="sensitive">True</property>
+            <property name="visible" bind-source="ussd_cancel_button" bind-property="visible" bind-flags="sync-create|invert-boolean|bidirectional"/>
             <property name="has-default">True</property>
             <property name="can-default">True</property>
             <property name="use-underline">True</property>
@@ -138,11 +120,9 @@
             <property name="pack_type">start</property>
           </packing>
         </child>
-
         <child>
           <object class="GtkButton" id="ussd_reply_button">
             <property name="label" translatable="yes">_Send</property>
-            <property name="visible">True</property>
             <property name="sensitive">False</property>
             <property name="use-underline">True</property>
             <signal name="clicked" handler="window_ussd_reply_clicked_cb" swapped="yes"/>
@@ -154,28 +134,25 @@
             <property name="pack-type">end</property>
           </packing>
         </child>
-
       </object>
     </child>
     <child internal-child="vbox">
       <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="expand">True</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
         <property name="border-width">0</property>
-        <property name="margin">12</property>
-
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
         <child>
           <object class="GtkStack" id="ussd_stack">
-            <property name="visible">True</property>
-
             <child>
               <object class="GtkBox" id="ussd_content">
-                <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="ussd_label">
-                    <property name="visible">True</property>
                     <property name="wrap">True</property>
                     <property name="xalign">0</property>
                   </object>
@@ -188,28 +165,25 @@
                 </child>
               </object>
             </child>
-
             <child>
               <object class="GtkSpinner" id="ussd_spinner">
                 <property name="valign">center</property>
                 <property name="vexpand">True</property>
-                <property name="visible">True</property>
               </object>
             </child>
-
           </object>
         </child>
-
       </object>
     </child>
   </object>
-
   <object class="GtkPopoverMenu" id="menu_popover">
-    <child>
+    <property name="child">
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="orientation">vertical</property>
-        <property name="margin">12</property>
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkModelButton">
@@ -220,7 +194,6 @@
         </child>
         <child>
           <object class="GtkSeparator">
-            <property name="visible">True</property>
             <property name="orientation">vertical</property>
           </object>
         </child>
@@ -243,9 +216,7 @@
             <property name="action-name">win.about</property>
           </object>
         </child>
-
       </object>
-    </child>
+    </property>
   </object>
-
 </interface>
