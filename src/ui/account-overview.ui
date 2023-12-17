@@ -15,11 +15,8 @@
             <property name="title" translatable="yes">VoIP Accounts</property>
             <property name="show-close-button">True</property>
             <property name="visible">True</property>
-            <child>
+            <child type="end">
               <object class="GtkSpinner" id="spinner"/>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
           </object>
         </child>

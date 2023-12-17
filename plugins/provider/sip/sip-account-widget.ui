@@ -10,7 +10,7 @@
           <object class="AdwHeaderBar" id="header_add">
             <property name="title" translatable="yes">Add Account</property>
             <property name="show-close-button">True</property>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="login_btn">
                 <property name="use-underline">True</property>
                 <property name="label" translatable="yes">_Log In</property>
@@ -19,15 +19,9 @@
                   <class name="suggested-action"/>
                 </style>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkSpinner" id="spinner_add"/>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
           </object>
         </child>
@@ -36,7 +30,7 @@
             <property name="visible">True</property>
             <property name="show-close-button">True</property>
             <property name="title" translatable="yes">Manage Account</property>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="apply_btn">
                 <property name="use-underline">True</property>
                 <property name="label" translatable="yes">_Apply</property>
@@ -45,11 +39,8 @@
                   <class name="suggested-action"/>
                 </style>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="delete_btn">
                 <property name="use-underline">True</property>
                 <property name="label" translatable="yes">_Delete</property>
@@ -58,15 +49,9 @@
                   <class name="destructive-action"/>
                 </style>
               </object>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkSpinner" id="spinner_edit"/>
-              <packing>
-                <property name="pack_type">end</property>
-              </packing>
             </child>
           </object>
         </child>
