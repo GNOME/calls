@@ -158,46 +158,28 @@
     </child>
   </object>
   <object class="GtkPopoverMenu" id="menu_popover">
-    <property name="child">
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">12</property>
-        <property name="margin-bottom">12</property>
-        <property name="spacing">6</property>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">True</property>
-            <property name="text" translatable="yes">_VoIP Accounts</property>
-            <property name="action-name">app.accounts</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="orientation">vertical</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">False</property>
-            <property name="text" translatable="yes">_Keyboard shortcuts</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">False</property>
-            <property name="text" translatable="yes">_Help</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkModelButton">
-            <property name="visible">True</property>
-            <property name="text" translatable="yes" comments="&quot;Calls&quot; is the application name, do not translate">_About Calls</property>
-            <property name="action-name">win.about</property>
-          </object>
-        </child>
-      </object>
-    </property>
+    <property name="menu-model">app-menu</property>
   </object>
+  <menu id="app-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_VoIP Accounts</attribute>
+        <attribute name="action">app.accounts</attribute>
+      </item>
+    </section>
+    <section>
+      <!--item>
+        <attribute name="label" translatable="yes">_Keyboard shortcuts</attribute>
+        <attribute name="action"></attribute>
+      </item-->
+      <!--item>
+        <attribute name="label" translatable="yes">_Help</attribute>
+        <attribute name="action"></attribute>
+      </item-->
+      <item>
+        <attribute name="label" translatable="yes" comments="&quot;Calls&quot; is the application name, do not translate">_About Calls</attribute>
+        <attribute name="action">win.about</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
