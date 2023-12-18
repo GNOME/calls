@@ -12,8 +12,6 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwHeaderBar">
-            <property name="title" translatable="yes">VoIP Accounts</property>
-            <property name="show-close-button">True</property>
             <property name="visible">True</property>
             <child type="end">
               <object class="GtkSpinner" id="spinner"/>

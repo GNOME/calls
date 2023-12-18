@@ -177,6 +177,7 @@ window_ussd_added_cb (CallsMainWindow *self,
   g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
                           g_object_ref (ussd), g_object_unref);
   window_update_ussd_state (self, ussd);
+  gtk_window_set_title (GTK_WINDOW (self->ussd_dialog), _("USSD"));
   gtk_window_present (GTK_WINDOW (self->ussd_dialog));
 }
 

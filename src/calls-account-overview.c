@@ -441,7 +441,7 @@ calls_account_overview_init (CallsAccountOverview *self)
                     G_CALLBACK (on_key_pressed),
                     self->account_window);
 
-  gtk_window_set_title (GTK_WINDOW (self), _("Account overview"));
+  gtk_window_set_title (GTK_WINDOW (self), _("VoIP Accounts"));
 }
 
 

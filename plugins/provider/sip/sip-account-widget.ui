@@ -8,8 +8,6 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwHeaderBar" id="header_add">
-            <property name="title" translatable="yes">Add Account</property>
-            <property name="show-close-button">True</property>
             <child type="end">
               <object class="GtkButton" id="login_btn">
                 <property name="use-underline">True</property>
@@ -28,8 +26,6 @@
         <child>
           <object class="AdwHeaderBar" id="header_edit">
             <property name="visible">True</property>
-            <property name="show-close-button">True</property>
-            <property name="title" translatable="yes">Manage Account</property>
             <child type="end">
               <object class="GtkButton" id="apply_btn">
                 <property name="use-underline">True</property>
