@@ -21,6 +21,13 @@
     <launchable type="desktop-id">org.gnome.Calls.desktop</launchable>
     <translation type="gettext">calls</translation>
 
+  <!-- developer_name tag deprecated with Appstream 1.0 -->
+  <developer_name>Julian Sparber, Evangelos Ribeiro Tzaras</developer_name>
+    <developer id="puri.sm">
+      <name translatable="no">Julian Sparber</name>
+      <name translatable="no">Evangelos Ribeiro Tzaras</name>
+    </developer>
+
     <screenshots>
       <screenshot type="default">
         <!-- Translators: A screenshot description. -->
