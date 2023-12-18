@@ -4,6 +4,7 @@
   <template class="CallsHistoryBox" parent="GtkWidget">
     <child>
       <object class="GtkStack" id="stack">
+        <property name="hexpand">True</property>
         <child>
           <object class="GtkStackPage">
             <property name="name">empty</property>
