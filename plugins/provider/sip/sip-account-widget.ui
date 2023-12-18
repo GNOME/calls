@@ -189,15 +189,15 @@
           </object>
         </child>
       </object>
-      <object class="GtkSizeGroup">
-        <widgets>
-          <widget name="host"/>
-          <widget name="display_name"/>
-          <widget name="user"/>
-          <widget name="password"/>
-          <widget name="port"/>
-        </widgets>
-      </object>
     </child>
   </template>
+  <object class="GtkSizeGroup">
+    <widgets>
+      <widget name="host"/>
+      <widget name="display_name"/>
+      <widget name="user"/>
+      <widget name="password"/>
+      <widget name="port"/>
+    </widgets>
+  </object>
 </interface>
