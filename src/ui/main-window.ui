@@ -6,7 +6,7 @@
     <property name="title" translatable="yes">Calls</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+    <property name="hide-on-close">True</property>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
@@ -84,7 +84,7 @@
     <property name="modal">True</property>
     <property name="default-width">240</property>
     <property name="default-height">200</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete" object="ussd_dialog" swapped="yes"/>
+    <property name="hide-on-close">True</property>
     <child type="titlebar">
       <object class="AdwHeaderBar">
         <property name="visible">True</property>

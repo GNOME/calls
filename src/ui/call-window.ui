@@ -4,7 +4,7 @@
   <template class="CallsCallWindow" parent="GtkApplicationWindow">
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="title" translatable="yes">Calls</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+    <property name="hide-on-close">True</property>
     <child>
       <object class="GtkOverlay">
         <child type="overlay">

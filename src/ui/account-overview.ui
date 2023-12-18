@@ -6,7 +6,7 @@
     <property name="visible">True</property>
     <property name="default-width">380</property>
     <property name="default-height">660</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+    <property name="hide-on-close">True</property>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
@@ -98,6 +98,6 @@
     <property name="visible">False</property>
     <property name="default-width">380</property>
     <property name="default-height">660</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete"/>
+    <property name="hide-on-close">True</property>
   </object>
 </interface>
