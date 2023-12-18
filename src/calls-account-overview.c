@@ -150,7 +150,7 @@ attach_account_widget (CallsAccountOverview *self,
   if (widget == self->current_account_widget)
     return;
 
-  gtk_window_set_child (self->account_window, widget);
+  adw_window_set_content (ADW_WINDOW (self->account_window), widget);
 
   self->current_account_widget = widget;
 }
