@@ -72,7 +72,6 @@
                 <child>
                   <object class="GtkButton" id="show_calls">
                     <property name="receives_default">True</property>
-                    <property name="no_show_all">True</property>
                     <signal name="clicked" handler="show_calls_clicked_cb" swapped="no"/>
                     <child>
                       <object class="GtkImage">
