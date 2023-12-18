@@ -4,7 +4,6 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsMainWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Calls</property>
-    <property name="hide_titlebar_when_maximized">True</property>
     <property name="show_menubar">False</property>
     <property name="hide-on-close">True</property>
     <child>
