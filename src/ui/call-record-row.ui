@@ -38,14 +38,10 @@
                 <property name="margin_bottom">8</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
+                <property name="tooltip-text">Call</property>
                 <style>
                   <class name="image-button"/>
                 </style>
-                <child internal-child="accessible">
-                  <object class="AtkObject" id="a11y-call">
-                    <property name="accessible-name" translatable="yes" comments="Translators: This is a verb, not a noun. Call the number of the currently selected row.">Call</property>
-                  </object>
-                </child>
                 <child>
                   <object class="GtkImage">
                     <property name="icon-name">call-start-symbolic</property>
