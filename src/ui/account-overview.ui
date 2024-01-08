@@ -19,13 +19,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkOverlay">
-            <child type="overlay">
-              <object class="CallsInAppNotification" id="in_app_notification">
-                <property name="can-target">False</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
+          <object class="AdwToastOverlay" id="toast_overlay">
             <property name="child">
               <object class="GtkStack" id="stack">
                 <property name="vexpand">True</property>

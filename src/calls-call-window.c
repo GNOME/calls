@@ -45,7 +45,7 @@ struct _CallsCallWindow {
 
   GListStore             *calls;
 
-  CallsInAppNotification *in_app_notification;
+  AdwToastOverlay        *toast_overlay;
 
   GtkStack               *main_stack;
   GtkStack               *header_bar_stack;
@@ -272,7 +272,7 @@ calls_call_window_init (CallsCallWindow *self)
   g_signal_connect_object (calls_manager_get_default (),
                            "message",
                            G_CALLBACK (calls_in_app_notification_show),
-                           self->in_app_notification,
+                           self->toast_overlay,
                            G_CONNECT_SWAPPED);
 
   g_signal_connect_object (calls_manager_get_default (),
@@ -318,7 +318,7 @@ calls_call_window_class_init (CallsCallWindowClass *klass)
   object_class->dispose = dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/call-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, in_app_notification);
+  gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, toast_overlay);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, header_bar_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsCallWindow, show_calls);

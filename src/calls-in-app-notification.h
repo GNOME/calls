@@ -25,17 +25,11 @@
 #ifndef CALLS_IN_APP_NOTIFICATION_H__
 #define CALLS_IN_APP_NOTIFICATION_H__
 
+#include <adwaita.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
-
-#define CALLS_TYPE_IN_APP_NOTIFICATION (calls_in_app_notification_get_type ())
-
-G_DECLARE_FINAL_TYPE (CallsInAppNotification, calls_in_app_notification, CALLS, IN_APP_NOTIFICATION, GtkWidget)
-
-CallsInAppNotification * calls_in_app_notification_new (void);
-void calls_in_app_notification_show (CallsInAppNotification *self, const gchar *message);
-void calls_in_app_notification_hide (CallsInAppNotification *self);
+void calls_in_app_notification_show (AdwToastOverlay *overlay, const gchar *message);
 
 G_END_DECLS
 

@@ -46,7 +46,7 @@ struct _CallsMainWindow {
 
   GListModel             *record_store;
 
-  CallsInAppNotification *in_app_notification;
+  AdwToastOverlay        *toast_overlay;
 
   AdwViewSwitcherTitle   *title_switcher;
   AdwViewStack           *main_stack;
@@ -337,7 +337,7 @@ constructed (GObject *object)
   g_signal_connect_object (calls_manager_get_default (),
                            "message",
                            G_CALLBACK (calls_in_app_notification_show),
-                           self->in_app_notification,
+                           self->toast_overlay,
                            G_CONNECT_SWAPPED);
 
   g_signal_connect_object (calls_manager_get_default (),
@@ -457,7 +457,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   widget_class->size_allocate = size_allocate;
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/main-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, in_app_notification);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, toast_overlay);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);

@@ -78,7 +78,7 @@ struct _CallsAccountOverview {
   GtkEventController       *key_controller;
   GtkEventController       *key_controller_account;
   CallsAccountOverviewState state;
-  CallsInAppNotification   *in_app_notification;
+  AdwToastOverlay          *toast_overlay;
 };
 
 G_DEFINE_TYPE (CallsAccountOverview, calls_account_overview, ADW_TYPE_WINDOW)
@@ -228,7 +228,7 @@ on_account_message (CallsAccount         *account,
   notification = g_strdup_printf ("%s: %s",
                                   calls_account_get_address (account),
                                   message);
-  calls_in_app_notification_show (self->in_app_notification, notification);
+  calls_in_app_notification_show (self->toast_overlay, notification);
 }
 
 
@@ -363,7 +363,7 @@ calls_account_overview_class_init (CallsAccountOverviewClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, account_window);
 
-  gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, in_app_notification);
+  gtk_widget_class_bind_template_child (widget_class, CallsAccountOverview, toast_overlay);
 
   gtk_widget_class_bind_template_callback (widget_class, on_add_account_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_account_row_activated);
