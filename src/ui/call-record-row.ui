@@ -39,9 +39,6 @@
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="tooltip-text">Call</property>
-                <style>
-                  <class name="image-button"/>
-                </style>
                 <child>
                   <object class="GtkImage">
                     <property name="icon-name">call-start-symbolic</property>
