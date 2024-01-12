@@ -21,7 +21,7 @@
             </child>
             <child type="end">
               <object class="GtkMenuButton">
-                <property name="popover">menu_popover</property>
+                <property name="menu-model">app-menu</property>
                 <property name="icon-name">open-menu-symbolic</property>
               </object>
             </child>
@@ -145,9 +145,6 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkPopoverMenu" id="menu_popover">
-    <property name="menu-model">app-menu</property>
   </object>
   <menu id="app-menu">
     <section>
