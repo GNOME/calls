@@ -65,7 +65,6 @@
               <object class="GtkHeaderBar">
                 <child>
                   <object class="GtkButton" id="show_calls">
-                    <property name="receives_default">True</property>
                     <signal name="clicked" handler="show_calls_clicked_cb" swapped="no"/>
                     <child>
                       <object class="GtkImage">
