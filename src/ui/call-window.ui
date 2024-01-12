@@ -65,12 +65,8 @@
               <object class="GtkHeaderBar">
                 <child>
                   <object class="GtkButton" id="show_calls">
+                    <property name="icon-name">system-switch-user-symbolic</property>
                     <signal name="clicked" handler="show_calls_clicked_cb" swapped="no"/>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">system-switch-user-symbolic</property>
-                      </object>
-                    </child>
                   </object>
                 </child>
               </object>

@@ -66,15 +66,11 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="dial_result_btn">
+                            <property name="icon-name">call-start-symbolic</property>
                             <signal name="clicked" handler="dial_result_clicked_cb" swapped="yes"/>
                             <style>
                               <class name="rounded-button"/>
                             </style>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="icon-name">call-start-symbolic</property>
-                              </object>
-                            </child>
                           </object>
                         </child>
                       </object>
