@@ -24,7 +24,6 @@
         </child>
         <child type="top">
           <object class="AdwHeaderBar" id="header_edit">
-            <property name="visible">True</property>
             <child type="end">
               <object class="GtkButton" id="apply_btn">
                 <property name="use-underline">True</property>
@@ -52,13 +51,10 @@
         </child>
         <property name="content">
           <object class="AdwPreferencesPage">
-            <property name="visible">True</property>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Server</property>
                     <child>
                       <object class="GtkEntry" id="host">
@@ -72,10 +68,8 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Display Name</property>
                     <property name="subtitle" translatable="yes">Optional</property>
                     <child>
@@ -90,10 +84,8 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">User ID</property>
                     <child>
                       <object class="GtkEntry" id="user">
@@ -105,7 +97,6 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Password</property>
                     <child>
                       <object class="GtkEntry" id="password">
@@ -124,10 +115,8 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Port</property>
                     <child>
                       <object class="GtkEntry" id="port">
@@ -142,14 +131,12 @@
                 </child>
                 <child>
                   <object class="AdwComboRow" id="protocol">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Transport</property>
                     <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
                 <child>
                   <object class="AdwComboRow" id="media_encryption">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Media Encryption</property>
                     <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
                   </object>
@@ -158,10 +145,8 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="visible">True</property>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Use for Phone Calls</property>
                     <child>
                       <object class="GtkSwitch" id="tel_switch">
@@ -173,7 +158,6 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="visible">True</property>
                     <property name="title" translatable="yes">Automatically Connect</property>
                     <child>
                       <object class="GtkSwitch" id="auto_connect_switch">

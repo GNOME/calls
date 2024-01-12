@@ -3,13 +3,11 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsAccountRow" parent="AdwActionRow">
-    <property name="visible">True</property>
     <property name="title">Title</property>
     <property name="subtitle">Subtitle</property>
     <property name="activatable">True</property>
     <child type="prefix">
       <object class="AdwAvatar" id="avatar">
-        <property name="visible">True</property>
         <property name="show-initials">True</property>
         <property name="size">48</property>
       </object>

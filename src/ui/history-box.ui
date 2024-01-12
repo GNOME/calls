@@ -10,7 +10,6 @@
             <property name="name">empty</property>
             <property name="child">
               <object class="AdwStatusPage">
-                <property name="visible">True</property>
                 <property name="icon-name">call-start-symbolic</property>
                 <property name="title" translatable="yes">No Recent Calls</property>
               </object>
@@ -25,7 +24,6 @@
                 <property name="hscrollbar-policy">never</property>
                 <child>
                   <object class="AdwClamp">
-                    <property name="visible">True</property>
                     <child>
                       <object class="GtkListBox" id="history">
                         <property name="margin-start">12</property>

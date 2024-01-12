@@ -10,11 +10,9 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
-            <property name="visible">True</property>
             <property name="centering_policy">strict</property>
             <child type="title">
               <object class="AdwViewSwitcherTitle" id="title_switcher">
-                <property name="visible">True</property>
                 <property name="stack">main_stack</property>
                 <property name="title" bind-source="CallsMainWindow" bind-property="title" bind-flags="sync-create"/>
               </object>
@@ -56,7 +54,6 @@
                 </child>
                 <child>
                   <object class="AdwViewSwitcherBar" id="switcher_bar">
-                    <property name="visible">True</property>
                     <property name="stack">main_stack</property>
                     <property name="reveal" bind-source="title_switcher" bind-property="title-visible" bind-flags="sync-create"/>
                   </object>
@@ -76,7 +73,6 @@
     <property name="default-widget">ussd_cancel_button</property>
     <child type="titlebar">
       <object class="AdwHeaderBar">
-        <property name="visible">True</property>
         <property name="show-start-title-buttons">False</property>
         <property name="show-end-title-buttons">False</property>
         <child type="start">

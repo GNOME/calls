@@ -3,7 +3,6 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsAccountOverview" parent="AdwWindow">
-    <property name="visible">True</property>
     <property name="default-width">380</property>
     <property name="default-height">660</property>
     <property name="hide-on-close">True</property>
@@ -11,7 +10,6 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
-            <property name="visible">True</property>
             <child type="end">
               <object class="GtkSpinner" id="spinner"/>
             </child>
@@ -28,7 +26,6 @@
                     <property name="name">intro-page</property>
                     <property name="child">
                       <object class="AdwStatusPage" id="intro">
-                        <property name="visible">True</property>
                         <property name="title" translatable="yes">Add VoIP Accounts</property>
                         <property name="icon-name">system-users-symbolic</property>
                         <property name="description" translatable="yes">You can add VoIP account here. It will allow you to place and receive VoIP calls using the SIP protocol. This feature is still relatively new and not yet feature complete (i.e. no encrypted media).</property>

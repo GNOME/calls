@@ -11,7 +11,6 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="AdwClamp">
-            <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox">
@@ -22,7 +21,6 @@
                     <property name="halign">center</property>
                     <child>
                       <object class="AdwComboRow" id="origin_list">
-                        <property name="visible">True</property>
                         <signal name="notify::selected-index" handler="notify_selected_index_cb" swapped="yes"/>
                       </object>
                     </child>
@@ -59,7 +57,6 @@
                         <property name="subtitle" translatable="yes">SIP Account</property>
                         <child type="prefix">
                           <object class="AdwAvatar">
-                            <property name="visible">True</property>
                             <property name="show-initials">True</property>
                             <property name="size">36</property>
                           </object>
