@@ -4,9 +4,8 @@
   <requires lib="libadwaita" version="1.0"/>
   <template class="CallsSipAccountWidget" parent="GtkWidget">
     <child>
-      <object class="GtkBox" id="child">
-        <property name="orientation">vertical</property>
-        <child>
+      <object class="AdwToolbarView" id="child">
+        <child type="top">
           <object class="AdwHeaderBar" id="header_add">
             <child type="end">
               <object class="GtkButton" id="login_btn">
@@ -23,7 +22,7 @@
             </child>
           </object>
         </child>
-        <child>
+        <child type="top">
           <object class="AdwHeaderBar" id="header_edit">
             <property name="visible">True</property>
             <child type="end">
@@ -51,7 +50,7 @@
             </child>
           </object>
         </child>
-        <child>
+        <property name="content">
           <object class="AdwPreferencesPage">
             <property name="visible">True</property>
             <child>
@@ -187,7 +186,7 @@
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </child>
   </template>
