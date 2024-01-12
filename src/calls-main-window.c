@@ -360,7 +360,6 @@ constructed (GObject *object)
                              "recent", _("Recent"));
   page = adw_view_stack_get_page (self->main_stack, widget);
   adw_view_stack_page_set_icon_name (page, "document-open-recent-symbolic");
-  gtk_widget_set_visible (widget, TRUE);
   adw_view_stack_set_visible_child_name (self->main_stack, "recent");
 
   // Add contacts box
@@ -369,7 +368,6 @@ constructed (GObject *object)
                              "contacts", _("Contacts"));
   page = adw_view_stack_get_page (self->main_stack, widget);
   adw_view_stack_page_set_icon_name (page, "system-users-symbolic");
-  gtk_widget_set_visible (widget, TRUE);
 
   // Add new call box
   self->new_call = calls_new_call_box_new ();
