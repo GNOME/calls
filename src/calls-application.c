@@ -58,7 +58,7 @@
  */
 
 struct _CallsApplication {
-  GtkApplication      parent_instance;
+  AdwApplication      parent_instance;
 
   gboolean            daemon;
   CallsRinger        *ringer;
@@ -78,7 +78,7 @@ struct _CallsApplication {
   gboolean            db_done;
 };
 
-G_DEFINE_TYPE (CallsApplication, calls_application, GTK_TYPE_APPLICATION);
+G_DEFINE_TYPE (CallsApplication, calls_application, ADW_TYPE_APPLICATION);
 
 
 static void start_proper (CallsApplication *self);
@@ -474,15 +474,8 @@ startup (GApplication *application)
 {
   g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
-  AdwStyleManager *style_manager;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
-
-  adw_init ();
-
-  style_manager = adw_style_manager_get_default ();
-
-  adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_PREFER_LIGHT);
 
   if (!call_audio_init (&error))
     g_warning ("Failed to init libcallaudio: %s", error->message);
@@ -507,12 +500,6 @@ startup (GApplication *application)
                            G_CONNECT_SWAPPED);
 
   manager_state_changed_cb (application);
-
-  provider = gtk_css_provider_new ();
-  gtk_css_provider_load_from_resource (provider, "/org/gnome/Calls/style.css");
-  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
-                                              GTK_STYLE_PROVIDER (provider),
-                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 

@@ -25,13 +25,14 @@
 
 #pragma once
 
+#include <adwaita.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_APPLICATION (calls_application_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsApplication, calls_application, CALLS, APPLICATION, GtkApplication)
+G_DECLARE_FINAL_TYPE (CallsApplication, calls_application, CALLS, APPLICATION, AdwApplication)
 
 CallsApplication   *calls_application_new                               (void);
 
