@@ -37,17 +37,7 @@
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkRevealer" id="permanent_error_revealer">
-                    <property name="reveal_child">True</property>
-                    <property name="child">
-                      <object class="GtkLabel" id="permanent_error_label">
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <style>
-                          <class name="error-state-message"/>
-                        </style>
-                      </object>
-                    </property>
+                  <object class="AdwBanner" id="permanent_error_banner">
                   </object>
                 </child>
                 <child>

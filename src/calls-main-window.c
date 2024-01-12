@@ -51,8 +51,7 @@ struct _CallsMainWindow {
   AdwViewSwitcherTitle   *title_switcher;
   AdwViewStack           *main_stack;
 
-  GtkRevealer            *permanent_error_revealer;
-  GtkLabel               *permanent_error_label;
+  AdwBanner              *permanent_error_banner;
 
   CallsAccountOverview   *account_overview;
   CallsNewCallBox        *new_call;
@@ -314,8 +313,10 @@ state_changed_cb (CallsMainWindow *self,
   else if (state_flags & CALLS_MANAGER_FLAGS_UNKNOWN)
     error = _("Can't place calls: No plugin loaded");
 
-  gtk_label_set_text (self->permanent_error_label, error);
-  gtk_revealer_set_reveal_child (self->permanent_error_revealer, !!error);
+  if (error)
+    adw_banner_set_title (self->permanent_error_banner, error);
+
+  adw_banner_set_revealed (self->permanent_error_banner, !!error);
 }
 
 
@@ -435,8 +436,7 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/main-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, toast_overlay);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_label);
+  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_banner);
 
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_dialog);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, ussd_stack);
