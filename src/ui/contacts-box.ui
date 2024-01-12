@@ -53,7 +53,7 @@
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">No Contacts Found</property>
                                 <style>
-                                  <class name="large-title"/>
+                                  <class name="title-1"/>
                                 </style>
                               </object>
                             </child>
