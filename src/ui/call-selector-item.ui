@@ -29,14 +29,8 @@
                 </child>
               </object>
             </child>
-            <child>
-              <placeholder/>
-            </child>
           </object>
         </property>
-        <child type="label_item">
-          <placeholder/>
-        </child>
       </object>
     </child>
   </template>

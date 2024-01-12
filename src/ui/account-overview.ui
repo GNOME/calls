@@ -62,7 +62,6 @@
                         <property name="margin-start">12</property>
                         <property name="margin-end">12</property>
                         <signal name="row-activated" handler="on_account_row_activated" swapped="no"/>
-                        <child type="placeholder"/>
                         <style>
                           <class name="boxed-list"/>
                         </style>
