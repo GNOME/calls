@@ -25,37 +25,9 @@
                     <property name="child">
                       <object class="GtkListBox" id="contacts_listbox">
                         <child type="placeholder">
-                          <object class="GtkBox" id="placeholder_empty">
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">24</property>
-                            <property name="margin-start">32</property>
-                            <property name="margin-end">32</property>
-                            <property name="margin-top">32</property>
-                            <property name="margin-bottom">32</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="pixel_size">128</property>
-                                <property name="icon_name">edit-find-symbolic</property>
-                                <style>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="wrap">True</property>
-                                <property name="wrap-mode">word-char</property>
-                                <property name="justify">center</property>
-                                <property name="label" translatable="yes">No Contacts Found</property>
-                                <style>
-                                  <class name="title-1"/>
-                                </style>
-                              </object>
-                            </child>
+                          <object class="AdwStatusPage" id="placeholder_empty">
+                            <property name="icon_name">edit-find-symbolic</property>
+                            <property name="title" translatable="yes">No Contacts Found</property>
                           </object>
                         </child>
                       </object>
