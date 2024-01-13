@@ -51,7 +51,7 @@ static GParamSpec *props[PROP_LAST_PROP];
 
 
 struct _CallsSipAccountWidget {
-  GtkWidget         parent;
+  AdwBin            parent;
 
   GtkWidget        *child;
 
@@ -89,7 +89,7 @@ struct _CallsSipAccountWidget {
   gboolean          port_self_change;
 };
 
-G_DEFINE_TYPE (CallsSipAccountWidget, calls_sip_account_widget, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (CallsSipAccountWidget, calls_sip_account_widget, ADW_TYPE_BIN)
 
 
 static gboolean
@@ -650,8 +650,6 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_password_visibility_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

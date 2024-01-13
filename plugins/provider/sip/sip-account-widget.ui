@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.0"/>
-  <template class="CallsSipAccountWidget" parent="GtkWidget">
+  <template class="CallsSipAccountWidget" parent="AdwBin">
     <child>
       <object class="AdwToolbarView" id="child">
         <child type="top">

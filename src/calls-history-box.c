@@ -38,7 +38,7 @@
 #define CALLS_HISTORY_INCREASE_N_PAGES_THRESHOLD 2
 
 struct _CallsHistoryBox {
-  GtkWidget          parent_instance;
+  AdwBin             parent_instance;
 
   GtkStack          *stack;
   GtkListBox        *history;
@@ -54,7 +54,7 @@ struct _CallsHistoryBox {
 
 };
 
-G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (CallsHistoryBox, calls_history_box, ADW_TYPE_BIN);
 
 
 enum {
@@ -262,8 +262,6 @@ calls_history_box_class_init (CallsHistoryBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, stack);
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, history);
   gtk_widget_class_bind_template_child (widget_class, CallsHistoryBox, scrolled_window);
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

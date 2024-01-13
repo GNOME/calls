@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="0.0"/>
-  <template class="CallsContactsBox" parent="GtkWidget">
+  <template class="CallsContactsBox" parent="AdwBin">
     <child>
       <object class="GtkScrolledWindow" id="child">
         <property name="hexpand">True</property>

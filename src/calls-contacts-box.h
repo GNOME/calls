@@ -25,13 +25,14 @@
 #ifndef CALLS_CONTACTS_BOX_H__
 #define CALLS_CONTACTS_BOX_H__
 
+#include <adwaita.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_CONTACTS_BOX (calls_contacts_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsContactsBox, calls_contacts_box, CALLS, CONTACTS_BOX, GtkWidget);
+G_DECLARE_FINAL_TYPE (CallsContactsBox, calls_contacts_box, CALLS, CONTACTS_BOX, AdwBin);
 
 GtkWidget *calls_contacts_box_new (void);
 

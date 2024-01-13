@@ -27,13 +27,14 @@
 
 #include "calls-new-call-box.h"
 
+#include <adwaita.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define CALLS_TYPE_HISTORY_BOX (calls_history_box_get_type ())
 
-G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, GtkWidget);
+G_DECLARE_FINAL_TYPE (CallsHistoryBox, calls_history_box, CALLS, HISTORY_BOX, AdwBin);
 
 CallsHistoryBox *calls_history_box_new (GListModel *model);
 

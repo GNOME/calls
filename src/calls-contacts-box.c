@@ -32,7 +32,7 @@
 #include <adwaita.h>
 
 struct _CallsContactsBox {
-  GtkWidget         parent_instance;
+  AdwBin            parent_instance;
 
   GtkWidget        *child;
 
@@ -44,7 +44,7 @@ struct _CallsContactsBox {
   FolksSimpleQuery *search_query;
 };
 
-G_DEFINE_TYPE (CallsContactsBox, calls_contacts_box, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (CallsContactsBox, calls_contacts_box, ADW_TYPE_BIN);
 
 static void
 search_changed_cb (CallsContactsBox *self,
@@ -187,8 +187,6 @@ calls_contacts_box_class_init (CallsContactsBoxClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, contacts_frame);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, search_entry);
   gtk_widget_class_bind_template_child (widget_class, CallsContactsBox, placeholder_empty);
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

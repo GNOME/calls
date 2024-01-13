@@ -44,7 +44,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CallsNewCallBox {
-  GtkWidget     parent_instance;
+  AdwBin        parent_instance;
 
   GtkWidget    *child;
 
@@ -60,7 +60,7 @@ struct _CallsNewCallBox {
   gboolean      numeric_input_only;
 };
 
-G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (CallsNewCallBox, calls_new_call_box, ADW_TYPE_BIN);
 
 
 static CallsOrigin *
@@ -379,8 +379,6 @@ calls_new_call_box_class_init (CallsNewCallBoxClass *klass)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

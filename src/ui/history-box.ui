@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <template class="CallsHistoryBox" parent="GtkWidget">
+  <template class="CallsHistoryBox" parent="AdwBin">
     <child>
       <object class="GtkStack" id="stack">
         <property name="hexpand">True</property>

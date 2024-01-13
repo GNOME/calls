@@ -33,7 +33,7 @@
 
 
 struct _CallsCallSelectorItem {
-  GtkBox     parent_instance;
+  AdwBin     parent_instance;
 
   CuiCallDisplay *display;
 
@@ -42,7 +42,7 @@ struct _CallsCallSelectorItem {
   GtkLabel       *status;
 };
 
-G_DEFINE_TYPE (CallsCallSelectorItem, calls_call_selector_item, GTK_TYPE_BOX);
+G_DEFINE_TYPE (CallsCallSelectorItem, calls_call_selector_item, ADW_TYPE_BIN);
 
 enum {
   PROP_0,

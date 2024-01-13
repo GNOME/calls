@@ -25,6 +25,7 @@
 #ifndef CALLS_CALL_SELECTOR_ITEM_H__
 #define CALLS_CALL_SELECTOR_ITEM_H__
 
+#include <adwaita.h>
 #include <call-ui.h>
 #include <gtk/gtk.h>
 
@@ -33,7 +34,7 @@ G_BEGIN_DECLS
 #define CALLS_TYPE_CALL_SELECTOR_ITEM (calls_call_selector_item_get_type ())
 
 G_DECLARE_FINAL_TYPE (CallsCallSelectorItem, calls_call_selector_item,
-                      CALLS, CALL_SELECTOR_ITEM, GtkBox);
+                      CALLS, CALL_SELECTOR_ITEM, AdwBin);
 
 CallsCallSelectorItem *calls_call_selector_item_new         (CuiCallDisplay *display);
 CuiCallDisplay        *calls_call_selector_item_get_display (CallsCallSelectorItem *item);
