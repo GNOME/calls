@@ -46,7 +46,6 @@ struct _CallsCallRecordRow {
   GtkLabel        *time;
   GtkButton       *button;
   GtkPopover      *popover;
-  GtkBox          *event_box;
 
   GMenu           *context_menu;
 
@@ -509,6 +508,19 @@ dispose (GObject *object)
 
 
 static void
+finalize (GObject *object)
+{
+  CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
+
+  GtkWidget *popover = GTK_WIDGET (self->popover);
+
+  g_clear_pointer (&popover, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (calls_call_record_row_parent_class)->dispose (object);
+}
+
+
+static void
 calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -518,6 +530,7 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   object_class->constructed = constructed;
   object_class->get_property = get_property;
   object_class->dispose = dispose;
+  object_class->finalize = finalize;
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
@@ -536,7 +549,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, time);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, button);
 
-  gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, event_box);
   gtk_widget_class_bind_template_child (widget_class, CallsCallRecordRow, context_menu);
 }
 
@@ -616,10 +628,10 @@ new_sms_activated (GSimpleAction *action,
 
 static GActionEntry entries[] =
 {
-  { "delete-call", delete_call_activated, NULL, NULL, NULL},
-  { "copy-number", copy_number_activated, NULL, NULL, NULL},
-  { "new-contact", new_contact_activated, NULL, NULL, NULL},
-  { "new-sms", new_sms_activated, NULL, NULL, NULL},
+  { "delete-call", delete_call_activated },
+  { "copy-number", copy_number_activated },
+  { "new-contact", new_contact_activated },
+  { "new-sms", new_sms_activated },
 };
 
 
@@ -644,13 +656,14 @@ calls_call_record_row_init (CallsCallRecordRow *self)
   g_simple_action_set_enabled (G_SIMPLE_ACTION (act), TRUE);
 
   gesture = gtk_gesture_click_new ();
+  gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (gesture), GDK_BUTTON_SECONDARY);
   g_signal_connect (gesture, "pressed", G_CALLBACK (calls_call_record_row_button_press_event), self);
   gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (gesture));
 
   gesture = gtk_gesture_long_press_new ();
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (gesture), TRUE);
   g_signal_connect (gesture, "pressed", G_CALLBACK (on_long_pressed), self);
-  gtk_widget_add_controller (GTK_WIDGET (self->event_box), GTK_EVENT_CONTROLLER (gesture));
+  gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (gesture));
 }
 
 
