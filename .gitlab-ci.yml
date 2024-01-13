@@ -10,7 +10,6 @@ stages:
  - deploy
 
 variables:
-  L5_DOCKER_IMAGE: debian:bookworm
   DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20230120
   GIT_SUBMODULE_STRATEGY: normal
 
@@ -82,9 +81,9 @@ check-po:
     - cd po/
     - intltool-update -m 2>&1 | grep -qs '/.*\.\(c|ui\)' && { intltool-update -m; exit 1; } || exit 0
 
-package:deb-pureos-byzantium:arm64:
+package:deb-debian-trixie:arm64:
   variables:
-    L5_DOCKER_IMAGE: pureos/byzantium
+    L5_DOCKER_IMAGE: debian:trixie
     DEB_BUILD_PROFILES: nodoc
   tags:
     - aarch64
