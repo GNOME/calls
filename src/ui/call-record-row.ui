@@ -28,15 +28,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="button">
-            <property name="margin-start">12</property>
-            <property name="margin-end">8</property>
-            <property name="margin_top">8</property>
-            <property name="margin_bottom">8</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="tooltip-text">Call</property>
-            <property name="icon-name">call-start-symbolic</property>
+          <object class="GtkBox">
+            <property name="hexpand">True</property>
           </object>
         </child>
         <child>
@@ -49,6 +42,18 @@
             <attributes>
               <attribute name="scale" value="0.7"></attribute>
             </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="button">
+            <property name="margin-start">12</property>
+            <property name="margin-end">8</property>
+            <property name="margin_top">8</property>
+            <property name="margin_bottom">8</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="tooltip-text">Call</property>
+            <property name="icon-name">call-start-symbolic</property>
           </object>
         </child>
       </object>
