@@ -15,17 +15,13 @@
                   <object class="GtkScrolledWindow">
                     <property name="hscrollbar_policy">never</property>
                     <property name="child">
-                      <object class="GtkViewport">
-                        <property name="child">
-                          <object class="GtkFlowBox" id="call_selector">
-                            <property name="orientation">vertical</property>
-                            <property name="homogeneous">True</property>
-                            <property name="column_spacing">12</property>
-                            <property name="row_spacing">12</property>
-                            <property name="selection_mode">none</property>
-                            <signal name="child-activated" handler="call_selector_child_activated_cb" swapped="no"/>
-                          </object>
-                        </property>
+                      <object class="GtkFlowBox" id="call_selector">
+                        <property name="orientation">vertical</property>
+                        <property name="homogeneous">True</property>
+                        <property name="column_spacing">12</property>
+                        <property name="row_spacing">12</property>
+                        <property name="selection_mode">none</property>
+                        <signal name="child-activated" handler="call_selector_child_activated_cb" swapped="no"/>
                       </object>
                     </property>
                   </object>
