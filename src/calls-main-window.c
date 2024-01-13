@@ -418,21 +418,6 @@ dispose (GObject *object)
 
 
 static void
-size_allocate (GtkWidget     *widget,
-               int            width,
-               int            height,
-               int            baseline)
-{
-  CallsMainWindow *self = CALLS_MAIN_WINDOW (widget);
-
-  adw_view_switcher_title_set_view_switcher_enabled (self->title_switcher,
-                                                     width > 400);
-
-  GTK_WIDGET_CLASS (calls_main_window_parent_class)->size_allocate (widget, width, height, baseline);
-}
-
-
-static void
 calls_main_window_class_init (CallsMainWindowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -452,11 +437,8 @@ calls_main_window_class_init (CallsMainWindowClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
 
-  widget_class->size_allocate = size_allocate;
-
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/Calls/ui/main-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, toast_overlay);
-  gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, title_switcher);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_revealer);
   gtk_widget_class_bind_template_child (widget_class, CallsMainWindow, permanent_error_label);
