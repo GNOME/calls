@@ -69,8 +69,6 @@ struct _CallsAccountOverview {
   GtkWidget                *current_account_widget;
 
   /* models */
-  GtkFilter                *account_provider_filter;
-  GtkFilter                *account_filter;
   GListModel               *providers;
   GListModel               *accounts;
 
@@ -333,10 +331,8 @@ calls_account_overview_dispose (GObject *object)
   CallsAccountOverview *self = CALLS_ACCOUNT_OVERVIEW (object);
 
   g_clear_object (&self->providers);
-  g_clear_object (&self->account_provider_filter);
 
   g_clear_object (&self->accounts);
-  g_clear_object (&self->account_filter);
 
   g_clear_object (&self->key_controller);
   g_clear_object (&self->key_controller_account);
@@ -393,6 +389,9 @@ match_account (gpointer item,
 static void
 calls_account_overview_init (CallsAccountOverview *self)
 {
+  GtkFilter *account_provider_filter;
+  GtkFilter *account_filter;
+
   GListModel *all_providers =
     calls_plugin_manager_get_providers (calls_plugin_manager_get_default ());
   GListModel *all_origins =
@@ -400,10 +399,9 @@ calls_account_overview_init (CallsAccountOverview *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  self->account_provider_filter = GTK_FILTER (gtk_custom_filter_new (match_account_provider, NULL, NULL));
+  account_provider_filter = GTK_FILTER (gtk_custom_filter_new (match_account_provider, NULL, NULL));
   self->providers =
-    G_LIST_MODEL (gtk_filter_list_model_new (all_providers,
-                                             self->account_provider_filter));
+    G_LIST_MODEL (gtk_filter_list_model_new (all_providers, account_provider_filter));
 
   g_signal_connect (self->providers,
                     "items-changed",
@@ -413,10 +411,9 @@ calls_account_overview_init (CallsAccountOverview *self)
                         0, 0, g_list_model_get_n_items (self->providers),
                         self);
 
-  self->account_filter = GTK_FILTER (gtk_custom_filter_new (match_account, NULL, NULL));
+  account_filter = GTK_FILTER (gtk_custom_filter_new (match_account, NULL, NULL));
   self->accounts =
-    G_LIST_MODEL (gtk_filter_list_model_new (all_origins,
-                                             self->account_filter));
+    G_LIST_MODEL (gtk_filter_list_model_new (all_origins, account_filter));
   g_signal_connect_object (self->accounts,
                            "items-changed",
                            G_CALLBACK (on_accounts_changed),

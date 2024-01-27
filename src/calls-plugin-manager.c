@@ -162,8 +162,14 @@ calls_plugin_manager_dispose (GObject *object)
 {
   CallsPluginManager *self = CALLS_PLUGIN_MANAGER (object);
 
+  guint n = g_list_model_get_n_items (G_LIST_MODEL (self->plugins));
+  for (guint i = 0; i < n; i++) {
+    // The manager will be disposed immediately; don't let unloaded plugins callback to it
+    g_autoptr (CallsPlugin) plugin = g_list_model_get_item (G_LIST_MODEL (self->plugins), i);
+    g_signal_handlers_disconnect_by_func (G_OBJECT (plugin), G_CALLBACK (on_plugin_loaded), self);
+  }
+
   g_clear_pointer (&self->plugins, unload_and_free_plugins);
-  g_clear_object (&self->providers);
   g_clear_object (&self->plugin_engine);
 
   G_OBJECT_CLASS (calls_plugin_manager_parent_class)->dispose (object);

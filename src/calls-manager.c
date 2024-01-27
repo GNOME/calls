@@ -447,7 +447,6 @@ calls_manager_finalize (GObject *object)
 {
   CallsManager *self = CALLS_MANAGER (object);
 
-  g_clear_object (&self->origins);
   g_clear_object (&self->contacts_provider);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
