@@ -1,0 +1,569 @@
+# Burmese translation for calls.
+# Copyright (C) 2024 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# zayar lwin <zyl.pol.mm@zohomail.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
+"POT-Creation-Date: 2024-01-26 10:11+0000\n"
+"PO-Revision-Date: 2024-02-03 16:55+0630\n"
+"Last-Translator: Zayar Lwin <zyl.pol.mm@zohomail.com>\n"
+"Language-Team: Burmese <my@li.org>\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "ဖုန်းခေါ်ကိရိယာ"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "ဖုန်း"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "ဖုန်းခေါ်ဆိုမှုနှင့်လက်ခံမှုကိရိယာ"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "တယ်လီဖုန်း;ဖုန်း;ဖုန်းခေါ်ဆိုမှု;Dial;Dialer;PTSN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "ဖုန်းခေါ်ကိရိယာ (နောက်ကွယ်ပရိုဂရမ်ငယ်)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "ဖုန်းခေါ်ဆိုမှုနှင့်လက်ခံမှုကိရိယာ (နောက်ကွယ်ပရိုဂရမ်ငယ်)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "ဖုန်းခေါ်ဆိုမှုများနှင့် SIPခေါ်ဆိုမှုများ လုပ်ပေးနိုင်သည်"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"ဖုန်းခေါ်ကိရိယာသည် GNOMEအတွက် ရိုးရှင်းလှပသော ဖုန်းခေါ်ဆိုမှုနှင့်လက်ခံမှုကိရိယာတစ်ခုဖြစ်သည်။ ၎င်းကို "
+"ဆယ်လူလာမော်ဒန်အသုံးပြု၍ ရိုးရိုးဖုန်းခေါ်ဆိုမှုများအတွက် အသုံးပြုနိုင်ရုံသာမက SIPထုံးနည်းအသုံးပြု၍ "
+"VoIPခေါ်ဆိုမှုများလည်း လုပ်နိုင်ပါသည်။"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:27
+msgid "Placing a call"
+msgstr "ဖုန်းခေါ်မည့်ပုံစံ"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:32
+msgid "The call history"
+msgstr "ဖုန်းခေါ်ဆိုမှုမှတ်တမ်း"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "ဖုန်းခေါ်ဆိုမှုကိရိယာသည် မူလသတ်မှတ်ချက်ကို သုံး၊ မသုံး"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "မော်ဒန်မှ တင်ပြသော နိုင်ငံကုဒ်"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "အဆက်အသွယ်ရှာဖွေရာတွင် နိုင်ငံကုဒ်ကို အသုံးပြုပါသည်"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "အလိုအလျောက်တွန်းတင်ရန် ပရိုဂရမ်ငယ်"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "အပ္ပလီကေးရှင်းစတင်ချိန်တွင် ယင်း တိုးချဲ့ပရိုဂရမ်ငယ်များကို အလိုအလျောက်တွန်းတင်သွားမည်။"
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "VoIPဖုန်းခေါ်ဆိုမှုအတွက် အသုံးပြုမည့် အသံကုဒ်ဖေါ်၊ဖွက်စနစ်များစာရင်း"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "ဦးစားပေးအသံကုဒ်ဖေါ်၊ဖွက်စနစ်ကို အသုံးပြုသွားမည် (သုံးနိုင်လျှင်)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "TLSကို ပို့ဆောင်ယာဉ်အဖြစ်မသုံးဘဲ SDESကို SRTPအတွက် အသုံးပြု၊ မပြု"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr "သော့များကို စာသားဖြင့်သာ ဖလှယ်လိုလျင် အမှန်သတ်မှတ်ပါ။"
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "မူလသတ်မှတ်ချက်အခြေအနေ (မစတင်ရသေး)"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "အကောင့်ကို စတင်ပြင်ဆင်နေသည်…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "အကောင့်ကို စတင်ပြင်ဆင်မှုပယ်ဖျက်နေသည်…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "ဆာဗာသို့ချိတ်ဆက်နေသည်…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "အွန်လိုင်းဖြစ်နေပါပြီ"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "ဆာဗာနှင့်ချိတ်ဆက်မှု ပယ်ဖျက်နေပါသည်…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "ကွန်ရက်ချိတ်ဆက်မှုမရှိပါ"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "အကောင့်ဆိုင်ရာချို့ယွင်းချက်ဖြစ်ပွားခဲ့သည်"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "အကြောင်းပြချက်မပေးထားပါ"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "စတင်ပြင်ဆင်ခြင်း စတင်ပါပြီ"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "စတင်ပြင်ဆင်ခြင်း ပြီးပါပြီ"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "စတင်ပြင်ဆင်မှုပယ်ဖျက်ခြင်း စတင်ပါပြီ"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "စတင်ပြင်ဆင်မှုပယ်ဖျက်ခြင်း ပြီးပါပြိ"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "ထောက်ခံစာချွန်လွှာ မသတ်မှတ်ထားပါ"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "ချိတ်ဆက်မှုစတင်နေပါပြိ"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "ချိတ်ဆက်မှုအချိန်ကုန်သွားပါပြီ"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "ဒိုမိန်းအမည်ကို မရှာနိုင်ခဲ့ပါ"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "ဆာဗာသည် သုံးစွဲသူအမည် သို့ စကားဝှက်ကို လက်မခံပါ"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "ချိတ်ဆက်မှုပြီးပါပြီ"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "ဖြုတ်ချမှု စတင်နေပါပြီ"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "ဖြုတ်ချမှု ပြီးပါပြီ"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "စနစ်အတွင်းပိုင်းဆိုင်ရာချို့ယွင်းမှုဖြစ်ပေါ်ခဲ့သည်"
+
+#: src/calls-account-overview.c:202
+#, c-format
+msgid "Edit account: %s"
+msgstr "အကောင့်ပြင်ဆင်- %s"
+
+#: src/calls-account-overview.c:209
+msgid "Add new account"
+msgstr "အကောင့်သစ်ထည့်မည်"
+
+#: src/calls-account-overview.c:441
+msgid "Account overview"
+msgstr "အကောင့်ခြုံငုံမြင်ကွင်း"
+
+#: src/calls-application.c:367
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "မမှန်သော tel URI `%s' ကိုခေါ်ဆိုရန်ကြိုးပမ်းခဲ့သည်"
+
+#: src/calls-application.c:748
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "`%s' ကို မဖွင့်တတ်ပါ"
+
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "တွန်းတင်မည့် တိုးချဲ့ပရိုဂရမ်ငယ်များ၏အမည်စာရင်း"
+
+#: src/calls-application.c:813
+msgid "PLUGIN"
+msgstr "တိုးချဲ့ပရိုဂရမ်ငယ်"
+
+#: src/calls-application.c:818
+msgid "Whether to present the main window on startup"
+msgstr "စတင်ချိန်တွင် ပင်မဝင်းဒိုးကို ပြ၊ မပြ"
+
+#: src/calls-application.c:824
+msgid "Dial a telephone number"
+msgstr "ဖုန်းနံပါတ်နှိပ်မည်"
+
+#: src/calls-application.c:825
+msgid "NUMBER"
+msgstr "နံပါတ်"
+
+#: src/calls-application.c:830
+msgid "Enable verbose debug messages"
+msgstr "ပရိုဂရမ်ပြစ်ချက်ရှာဖွေ့မှုဆိုင်ရာသတင်းပို့မှု ဖွင့်မည်"
+
+#: src/calls-application.c:836
+msgid "Print current version"
+msgstr "လက်ရှိဗားရှင်းနံပါတ်ပြမည်"
+
+#: src/calls-best-match.c:487
+msgid "Anonymous caller"
+msgstr "အမည်မသိဖုန်းခေါ်ဆိုသူ"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"မနေ့"
+
+#: src/calls-emergency-call-types.c:64
+msgid "Police"
+msgstr "ရဲ"
+
+#: src/calls-emergency-call-types.c:67
+msgid "Ambulance"
+msgstr "လူနာကား"
+
+#: src/calls-emergency-call-types.c:70
+msgid "Fire Brigade"
+msgstr "မီးသတ်တပ်ဖွဲ့"
+
+#: src/calls-emergency-call-types.c:73
+msgid "Mountain Rescue"
+msgstr "တောင်ပေါ်ဒေသကယ်ဆယ်ရေးအဖွဲ့"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr "ဇေယျာလွင်"
+
+#: src/calls-main-window.c:317
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "ဖုန်းခေါ်၍မရနိုင်ပါ - မော်ဒန် သို့ VoIPအကောင့် မရှိပါ"
+
+#: src/calls-main-window.c:319
+msgid "Can't place calls: No plugin loaded"
+msgstr "ဖုန်းခေါ်၍မရနိုင်ပါ - တိုးချဲ့ပရိုဂရမ်ငယ် မတွန်းတင်ရသေးပါ"
+
+#: src/calls-main-window.c:357
+msgid "Contacts"
+msgstr "အဆက်အသွယ်များ"
+
+#: src/calls-main-window.c:367
+msgid "Dial Pad"
+msgstr "ဖုန်းနံပါတ်နှိပ်ကွက်"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:376
+msgid "Recent"
+msgstr "လတ်တလော"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "လွတ်သွားသောဖုန်းခေါ်ဆိုမှုများ"
+
+#. %s is a name here
+#: src/calls-notifier.c:77
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "<b>%s</b> ထံမှ လွတ်သွားသောဖုန်းခေါ်ဆိုမှု"
+
+#. %s is a id here
+#: src/calls-notifier.c:80
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s ထံမှ လွတ်သွားသောဖုန်းခေါ်ဆိုမှု"
+
+#: src/calls-notifier.c:82
+msgid "Missed call from unknown caller"
+msgstr "အမည်မသိဖုန်းခေါ်သူထံမှ လွတ်သွားသော ဖုန်းခေါ်ဆိုမှုများ"
+
+#: src/calls-notifier.c:88
+msgid "Call back"
+msgstr "ပြန်ခေါ်မည်"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIPအကောင့်များ"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "VoIPအကောင့်ထည့်မည်"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"ဤနေရာတွင် VoIPအကောင့် ထည့်သွင်း၍ SIPထုံးနည်းအသုံးပြုထားသော VoIPဖုန်းခေါ်ဆိုမှုများ ပြုလုပ်နိုင်သည်။ "
+"သို့သော် ယင်းစွမ်းရည်သည် လတ်တလောမှ ရလာခြင်းဖြစ်၍ မပြီးမြောက်သေးပါ (မီဒီယာကုဒ်ဖွက်ခြင်း "
+"ပြုလုပ်၍မရသေး)။"
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "အကောင့်_ထည့်မည်"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "ခေါ်မည်"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "ခေါ်ဆိုမှု_ဖျက်ရန်"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "ဖုန်းနံပါတ်_ကူးယူမည်"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "အဆက်အသွယ်_မှတ်မည်"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "စာတို_ပို့မည်"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "ခေတ္တရပ်ဆိုင်း"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "အဆက်အသွယ်ရှာမတွေ့ပါ"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "လတ်တလောခေါ်ဆိုထားသောဖုန်းခေါ်ဆိုမှုများမရှိပါ"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "ပယ်_ဖျက်"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_ပိတ်"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_စာပို့"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_VoIPအကောင့်များ"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "ကီး_ဘုတ်ဖြတ်လမ်းခလုတ်များ"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "အကူအ_ညီ"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "ဖုန်းခေါ်ဆိုမှုကိရိယာ_အကြောင်း"
+
+#: src/ui/new-call-box.ui:38
+msgid "Enter a VoIP address"
+msgstr "VoIPလိပ်စာရေးသွင်းပါ"
+
+#: src/ui/new-call-box.ui:62
+msgid "SIP Account"
+msgstr "SIPအကောင့်"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "ဖုန်းခေါ်ဆိုမှုအသစ်"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "ပြန်လှည့်"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "အကြောင်းပြချက်မသိ"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "အထွက်ဖုန်းခေါ်ဆိုမှု စတင်ပါပြီ"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "အဝင်ဖုန်းခေါ်ဆိုမှုအသစ်"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "ဖုန်းခေါ်ဆိုမှု လက်ခံလိုက်သည်"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပြီးသွားပါပြီ"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပြုတ်ကျသွားပါပြီ (ဖုန်းမအားသေး သို့ ငြင်းခံလိုက်ရပါသည်)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပြုတ်ကျသွားပါပြီ (အိုင်ဒီမှားနေသည် သို့ ဆ.သ.ရ.ကွန်ရက် ပြဿနာ)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပြုတ်ကျသွားပါပြီ (အသံချန်နယ် ပြင်ဆင်ရာတွင် အမှားအယွင်းဖြစ်ပေါ်ခဲ့)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "ဖုန်းခေါ်ဆိုမှုရွှေ့ပြောင်းပေးလိုက်ပြီ"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပယ်ချလိုက်သည်"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "ဖုန်းခေါ်ဆိုမှု ပြုတ်ကျသွားပါပြီ (အကြောင်းပြချက်မသိ ကုဒ်%i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager သုံးမရနိုင်ပါ"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "အသံ ပို့၊လက်ခံနိုင်သော မော်ဒန် မရှိပါ"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "ပုံမှန်"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "စတင်ပြင်ဆင်ပြီးပါပြီ"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus သုံးမရနိုင်ပါ"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "ကုဒ်ဖွက်မှုမသုံးထား"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "ကုဒ်ဖွက်ခြင်း အတင်းလုပ်မည်"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "ကုဒ်ဖွက်သော့ အလဲအလှယ်လုပ်ခြင်း မအောင်မြင်ပါ"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "အကောင့်ထည့်ရန်"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_လက်မှတ်ထိုးဝင်"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "အကောင့်စီမံရန်"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_သုံး"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_ဖျက်"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "ဆာဗာ"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "ပြမည့်အမည်"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "ရွေးချယ်စရာ"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "သုံးစွဲသူ အိုင်ဒီ"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "စကားဝှက်"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "ကွန်ရက်ဆိပ်ကမ်း"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "ပို့ဆောင်ယာဉ်"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "မီဒီယာကုဒ်ဖွက်ခြင်း"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "ဖုန်းခေါ်ဆိုမှုများအတွက်အသုံးပြုရန်"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "အလိုအလျောက်ချိတ်ဆက်ရန်"
