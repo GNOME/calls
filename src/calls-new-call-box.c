@@ -312,6 +312,13 @@ calls_new_call_box_get_property (GObject    *object,
 }
 
 static void
+on_main_window_closed (CallsNewCallBox *self)
+{
+  cui_dialpad_set_number (self->dialpad, "");
+  gtk_editable_set_text (GTK_EDITABLE (self->address_entry), "");
+}
+
+static void
 calls_new_call_box_init (CallsNewCallBox *self)
 {
   GListModel *origins;
@@ -330,6 +337,11 @@ calls_new_call_box_init (CallsNewCallBox *self)
                            G_CALLBACK (origin_count_changed_cb),
                            self,
                            G_CONNECT_SWAPPED);
+  g_signal_connect_swapped (g_application_get_default (),
+                            "main-window-closed",
+                            G_CALLBACK (on_main_window_closed),
+                            self);
+
   origin_count_changed_cb (self);
 }
 
