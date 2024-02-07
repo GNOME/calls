@@ -80,6 +80,12 @@ struct _CallsApplication {
 
 G_DEFINE_TYPE (CallsApplication, calls_application, ADW_TYPE_APPLICATION);
 
+enum {
+  SIGNAL_MAIN_WINDOW_CLOSED,
+  N_SIGNALS
+};
+
+static guint signals[N_SIGNALS];
 
 static void start_proper (CallsApplication *self);
 
@@ -623,6 +629,16 @@ on_db_done (CallsRecordStore *store,
     g_warning ("Database did not get opened");
 }
 
+static gboolean
+on_main_window_hidden (GtkWidget *widget,
+                       gpointer data)
+{
+  CallsApplication *self = CALLS_APPLICATION (g_application_get_default ());
+
+  g_signal_emit_by_name (self, "main-window-closed", 0);
+
+  return FALSE;
+}
 
 static void
 start_proper (CallsApplication *self)
@@ -670,8 +686,12 @@ start_proper (CallsApplication *self)
                            G_CALLBACK (notify_window_visible_cb),
                            self,
                            G_CONNECT_AFTER);
-}
 
+  g_signal_connect (G_OBJECT (self->main_window),
+                    "hide",
+                    G_CALLBACK (on_main_window_hidden),
+                    NULL);
+}
 
 static void
 activate (GApplication *application)
@@ -772,6 +792,13 @@ calls_application_class_init (CallsApplicationClass *klass)
 {
   GApplicationClass *application_class = G_APPLICATION_CLASS (klass);
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  signals [SIGNAL_MAIN_WINDOW_CLOSED] =
+    g_signal_new ("main-window-closed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize = finalize;
 
