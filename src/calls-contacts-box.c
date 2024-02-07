@@ -148,6 +148,11 @@ contacts_sort_func (FolksIndividual *a,
   return fav_a ? -1 : 1;
 }
 
+static void
+on_main_window_closed (CallsContactsBox *self)
+{
+  gtk_editable_set_text (GTK_EDITABLE (self->search_entry), "");
+}
 
 static void
 calls_contacts_box_dispose (GObject *object)
@@ -232,6 +237,11 @@ calls_contacts_box_init (CallsContactsBox *self)
   g_signal_connect_swapped (self->search_entry,
                             "search-changed",
                             G_CALLBACK (search_changed_cb),
+                            self);
+
+  g_signal_connect_swapped (g_application_get_default (),
+                            "main-window-closed",
+                            G_CALLBACK (on_main_window_closed),
                             self);
 
   if (!gee_collection_get_is_empty (individuals))
