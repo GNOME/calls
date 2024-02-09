@@ -6,7 +6,7 @@
  * Author: Guido Günther <agx@sigxcpu.org>
  */
 
-#define G_LOG_DOMAIN "CallsEmergencyCallsManger"
+#define G_LOG_DOMAIN "CallsEmergencyCallsManager"
 
 #include "calls-emergency-calls-manager.h"
 #include "calls-emergency-call-types.h"
@@ -26,7 +26,7 @@ typedef struct _CallsEmergencyCallsManager {
   CallsDBusEmergencyCallsSkeleton parent;
 
   GListModel                     *origins;
-} CallsEmergencyCallsManger;
+} CallsEmergencyCallsManager;
 
 static void calls_emergency_calls_iface_init (CallsDBusEmergencyCallsIface *iface);
 G_DEFINE_TYPE_WITH_CODE (CallsEmergencyCallsManager,
@@ -37,17 +37,17 @@ G_DEFINE_TYPE_WITH_CODE (CallsEmergencyCallsManager,
                            calls_emergency_calls_iface_init));
 
 static void
-on_emergency_numbers_changed (CallsEmergencyCallsManger *self)
+on_emergency_numbers_changed (CallsEmergencyCallsManager *self)
 {
   g_signal_emit_by_name (self, "emergency-numbers-changed", 0);
 }
 
 
 static void
-on_origins_changed (CallsEmergencyCallsManger *self,
-                    guint                      position,
-                    guint                      removed,
-                    guint                      added)
+on_origins_changed (CallsEmergencyCallsManager *self,
+                    guint                       position,
+                    guint                       removed,
+                    guint                       added)
 {
   g_assert (CALLS_IS_EMERGENCY_CALLS_MANAGER (self));
 
@@ -69,7 +69,7 @@ handle_call_emergency_contact (CallsDBusEmergencyCalls *object,
                                GDBusMethodInvocation   *invocation,
                                const gchar             *arg_id)
 {
-  CallsEmergencyCallsManger *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
+  CallsEmergencyCallsManager *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
   g_debug ("Looking for emergency number %s", arg_id);
 
   g_return_val_if_fail (CALLS_IS_EMERGENCY_CALLS_MANAGER (self), FALSE);
@@ -110,7 +110,7 @@ handle_get_emergency_contacts (CallsDBusEmergencyCalls *object,
 {
   GVariant *contacts;
   GVariantBuilder contacts_builder;
-  CallsEmergencyCallsManger *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
+  CallsEmergencyCallsManager *self = CALLS_EMERGENCY_CALLS_MANAGER (object);
 
   g_variant_builder_init (&contacts_builder, G_VARIANT_TYPE (CONTACTS_FORMAT));
 
