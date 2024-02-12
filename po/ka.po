@@ -1,14 +1,14 @@
 # Georgian translation for calls.
 # Copyright (C) 2023 calls authors
 # This file is distributed under the same license as the calls package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-22 14:55+0000\n"
-"PO-Revision-Date: 2023-07-28 06:12+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-12 11:26+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -58,13 +58,18 @@ msgstr ""
 "შეიძლება გამოყენებული იქნას როგორც ჩვეულებრივი ტელეფონის მაგიერ, ასევე VoIP "
 "ზარების განსახორციელებლად."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "ზარის განთავსება"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "ზარების ისტორია"
 
@@ -258,19 +263,19 @@ msgstr ""
 "%s\n"
 "გუშინ"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "პოლიცია"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "სასწრაფო"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "სახანძრო"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "მთის მშველელები"
 
