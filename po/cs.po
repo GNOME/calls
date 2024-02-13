@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calls package.
 # Jaroslav Svoboda <multi.flexi@seznam.cz>, 2021.
 # Daniel Rusek <mail@asciiwolf.com>, 2022.
+# Marek Černocký <marek@manet.cz>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-08-02 09:34+0000\n"
-"PO-Revision-Date: 2023-08-06 15:02+0200\n"
-"Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-13 12:42+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +36,7 @@ msgstr "Vytáčení a obsluha hovorů"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr "Telefon;Hovor;Vytáčení;Číselník;PSTN;"
+msgstr "telefon;volat;volání;hovor;telefonování;vytočit;vytáčení;číselník;PSTN;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
@@ -56,16 +57,21 @@ msgid ""
 "calls using the SIP protocol."
 msgstr ""
 "Volání je jednoduchý, elegantní telefonní číselník a správce hovorů pro "
-"GNOME. Je možné jej využít jak s mobilním modemem pro obyčejné staré "
+"GNOME. Je možné jej využít jak s mobilním modemem pro obyčejné klasické "
 "telefonní hovory, tak i pro VoIP hovory pomocí protokolu SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Uskutečňování hovoru"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "Historie hovorů"
 
@@ -104,7 +110,7 @@ msgstr "Zda povolit použití SDES pro SRTP bez TLS jako přenosu"
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
 msgstr ""
-"Nastavte na true, pokud chcete povolit s klíči vyměněnými v čistém textu."
+"Zapněte, pokud chcete povolit s klíči vyměněnými v čistém textu."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -258,19 +264,19 @@ msgstr ""
 "%s\n"
 "včera"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Policie"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Záchranná služba"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Hasiči"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Horská záchranná služba"
 
