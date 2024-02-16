@@ -30,7 +30,7 @@ src_include = include_directories('.')
 calls_includes = [ top_include, src_include ]
 
 calls_deps = [ dependency('gobject-2.0', version: '>= 2.58'),
-               dependency('gtk4'),
+               dependency('gtk4', version: '>= @0@'.format(gtk_version)),
                dependency('libadwaita-1', version: '>= 1.2'),
                dependency('libfeedback-0.0'),
                dependency('libpeas-1.0'),

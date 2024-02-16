@@ -32,6 +32,11 @@ project(
   ]
 )
 
+gtk_version = '4.8'
+gtk_version_arr = gtk_version.split('.')
+gtk_major = gtk_version_arr[0]
+gtk_minor = gtk_version_arr[1]
+
 calls_id = 'org.gnome.Calls'
 calls_homepage = 'https://gitlab.gnome.org/GNOME/calls'
 calls_name = meson.project_name()
@@ -111,6 +116,8 @@ test_c_args = [
   '-Wunused-variable',
   '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_64',
   '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_70',
+  '-DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor),
+  '-DGDK_VERSION_MAX_ALLOWED=GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor),
   # see https://gitlab.gnome.org/GNOME/evolution-data-server/-/issues/332
   '-DEDS_DISABLE_DEPRECATED',
   # in preparation for the switch to Gtk4 we should make sure not to use deprecated symbols
