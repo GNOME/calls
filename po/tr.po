@@ -1,14 +1,14 @@
 # Turkish translation for calls.
-# Copyright (C) 2020-2023 calls's COPYRIGHT HOLDER
+# Copyright (C) 2020-2024 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 #
-# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022, 2023.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"POT-Creation-Date: 2024-02-13 10:39+0000\n"
 "PO-Revision-Date: 2024-02-12 18:35+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
