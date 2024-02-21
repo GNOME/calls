@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-04-08 15:45+0000\n"
-"PO-Revision-Date: 2023-07-02 20:53+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-21 17:21+0000\n"
+"PO-Revision-Date: 2024-02-21 19:51+0000\n"
 "Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
 "Language-Team: English - United Kingdom <en@li.org>\n"
 "Language: en_GB\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:482 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "Calls"
 
@@ -55,17 +55,22 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"Calls is a simple, elegant phone dialler and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Placing a call"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "The call history"
 
@@ -193,60 +198,58 @@ msgstr "Disconnecting complete"
 msgid "Internal error occurred"
 msgstr "Internal error occurred"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "Edit account: %s"
 
-#: src/calls-account-overview.c:184
-#| msgid "Add Account"
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "Add new account"
 
-#: src/calls-account-overview.c:377
-#| msgid "Account is online"
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "Account overview"
 
-#: src/calls-application.c:349
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tried dialing invalid tel URI `%s'"
 
-#: src/calls-application.c:720
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Don't know how to open `%s'"
 
-#: src/calls-application.c:780
-msgid "The name of the plugin to use as a call provider"
-msgstr "The name of the plug-in to use as a call provider"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "The name of the plug-ins to load"
 
-#: src/calls-application.c:781
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUG-IN"
 
-#: src/calls-application.c:786
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "Whether to present the main window on startup"
 
-#: src/calls-application.c:792
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:793
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:798
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:804
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "Print current version"
 
-#: src/calls-best-match.c:458
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "Anonymous caller"
 
@@ -259,30 +262,47 @@ msgstr ""
 "%s\n"
 "yesterday"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:250
+msgid "Police"
+msgstr "Police"
+
+#: src/calls-emergency-call-types.c:253
+msgid "Ambulance"
+msgstr "Ambulance"
+
+#: src/calls-emergency-call-types.c:256
+msgid "Fire Brigade"
+msgstr "Fire Brigade"
+
+#: src/calls-emergency-call-types.c:259
+msgid "Mountain Rescue"
+msgstr "Mountain Rescue"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Zander Brown <zbrown@gnome.org>\n"
-"Bruce Cowan <bruce@bcowan.me.uk>"
+"Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Andi Chandler <andi@gowling.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Can't place calls: No modem or VoIP account available"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
-msgstr "Can't place calls: No plugin loaded"
+msgstr "Can't place calls: No plug-in loaded"
 
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "Contacts"
 
-#: src/calls-main-window.c:366
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "Dial Pad"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:375
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "Recent"
 
@@ -476,7 +496,7 @@ msgstr "No voice-capable modem available"
 msgid "Normal"
 msgstr "Normal"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "Initialised"
