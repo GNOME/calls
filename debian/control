@@ -35,6 +35,7 @@ Build-Depends:
  xvfb,
 Standards-Version: 4.1.3
 Homepage: https://gitlab.gnome.org/GNOME/calls
+Rules-Requires-Root: no
 
 Package: gnome-calls
 Replaces:
