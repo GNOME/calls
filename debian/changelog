@@ -1,3 +1,156 @@
+gnome-calls (46.0) unstable; urgency=medium
+
+  [ Sabri Ünal ]
+  * appdata: add vcs-browser support.
+    This URL is visible on Flathub and GNOME Control Center.
+  * Update Turkish translation
+  * appdata: Improve appdata for AppStream 1.0
+  * Update developer ID.
+
+  [ Eugenio Paolantonio (g7) ]
+  * ofono: Implement empty emergency call property.
+    See 75cbc30dc06a417ab014795c6cf08e31fbabe7bf.
+
+  [ Guido Günther ]
+  * ci: Switch to package test to trixie.
+    PureOS Byzantium tracks Debian oldstable which isn't suitable for an
+    upstream test. Track Debian testing instead which has recent GNOME.
+  * ci: Switch to a trixie based base image.
+    Debian Bookworm doesn't get any GNOME updates and we want to ensure
+    we build and run against latest.
+  * dir-locals: Avoid tabs in C mode
+  * dir-locals: Ease formatting of CSS, meson and ui files
+  * po: Ignore generated files
+  * origin: Add network country code.
+    This is technically only useful for mobile networks.
+  * mm-origin: Get 3gpp network country code when available.
+    We currently don't enable location gathering explicitly so we rely
+    on other services (like geoclue) to do so. Use
+        mmcli -m 0 --location-enable-3gpp
+    We could enable for a short time when there's an explicit emergency
+    number request.
+  * mm-origin: Notify emergency number change when we get a location.
+    Technically the emergency numbers exported by the origin doesn't change
+    but it's enough to trigger the DBus signal so clients see the updated
+    numbers.
+  * emergency-call-types: Allow to lookup emergency numbers by country code.
+    We build a hash as cache to speed up lookups. As this is a one time
+    thing we just do it once and don't bother to free it up.
+    We currently assume that all numbers can be used for the location based
+    lookups. Should that change we want to add a flag indicating that.
+  * emergency-call-types: Use hash for flag lookups too
+  * emergency-call-types: Add location source.
+    We named it fallback but location is a better name as we get it
+    from the current country code.
+  * emergency-calls-manager: Fix object name
+  * emergency-calls-manager: Move contact adding to separate function.
+    Improves readability and will be get another call site soon.
+  * emergency-calls-manager: Use network code to get emergency numbers.
+    By far not all sims have emergency numbers and we want to respect the
+    users current location anyway.
+    We use a hash to avoid duplicates.
+  * emergency-call-types: Add EU countries.
+    They all support 112.
+  * calls-manager: Connect listener past the list model filters.
+    The list model filters connect signal handlers for item-changed to
+    refilter the list models.
+    In order to enable protocols based on what the origin supports
+    `on_origins_changed` needs these filtered results. Since it is a signal
+    handler by itself connect it late so it runs later in the filter chain.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/601
+  * d/control: Don't require root for building.
+    Helps in ci
+    Part-of: <https://gitlab.gnome.org/GNOME/calls/-/merge_requests/723>
+
+  [ Марко Костић ]
+  * Update Serbian translation
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ zayar lwin ]
+  * Add Burmese translation
+
+  [ Jürgen Benvenuti ]
+  * Update German translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Ekaterine Papava ]
+  * Update Georgian translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Aurimas Černius ]
+  * Update Lithuanian translation
+
+  [ Marek Černocký ]
+  * Update Czech translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Artur S0 ]
+  * Update Russian translation
+
+  [ Vasil Pupkin ]
+  * Update Belarusian translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ Jordi Mas i Hernandez ]
+  * Update Catalan translation
+
+  [ Kukuh Syafaat ]
+  * Update Indonesian translation
+
+  [ Yaron Shahrabani ]
+  * Update Hebrew translation
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+
+  [ Matej Urbančič ]
+  * Update Slovenian translation
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Andi Chandler ]
+  * Update British English translation
+
+  [ Asier Sarasua Garmendia ]
+  * Update Basque translation
+
+  [ Irénée THIRION ]
+  * Update French translation
+
+  [ Daniel Mustieles ]
+  * Updated Spanish translation
+
+  [ Alan Mortensen ]
+  * Update Danish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Rūdolfs Mazurs ]
+  * Add Latvian translation
+
+  [ Daniel Rusek ]
+  * emergency-call-types: Add Czech Republic
+
+  [ Piotr Drąg ]
+  * Update Polish translation
+
+  [ Athmane MOKRAOUI ]
+  * Add Kabyle translation
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 13 Mar 2024 16:41:16 +0100
+
 gnome-calls (45.0) unstable; urgency=medium
 
   [ Nathan Follens ]
