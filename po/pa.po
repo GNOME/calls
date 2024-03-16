@@ -3,21 +3,21 @@
 # This file is distributed under the same license as the calls package.
 #
 # Amn Alam <amanpreet.alam@gmail.com>, 2023.
-# A S Alam <aalam@satluj.org>, 2023.
+# SPDX-FileCopyrightText: 2023, 2024 A S Alam <aalam@satluj.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-08-18 21:49+0000\n"
-"PO-Revision-Date: 2023-08-20 11:34-0700\n"
-"Last-Translator: A S Alam <aalam@satluj.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-03-02 16:39+0000\n"
+"PO-Revision-Date: 2024-03-16 12:24-0500\n"
+"Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <punjab-translation@googlegroups.com>\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -55,14 +55,17 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
+"ਕਾਲਸ ਸਰਲ, ਸ਼ਾਨਦਾਰ ਫ਼ੋਨ ਡਾਈਲਰ ਅਤੇ ਗਨੋਮ ਲਈ ਕਾਲ ਹੈਂਡਲਰ ਹੈ। ਇਸ ਨੂੰ ਸਰਲ ਪੁਰਾਣੇ"
+" ਟੈਲੀਫ਼ੋਨ ਲਈ ਸੈਲੂਲਰ ਮਾਡਮ ਨਾਲ ਅਤੇ SIP ਪਰੋਟੋਕਾਲ ਦੀ ਵਰਤੋਂ ਕਰਕੇ VoIP ਕਾਲਸਾਂ ਲਈ"
+" ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:27
 msgid "Placing a call"
 msgstr "ਕਾਲ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:32
 msgid "The call history"
 msgstr "ਕਾਲਾਂ ਦਾ ਅਤੀਤ"
 
@@ -76,7 +79,7 @@ msgstr "ਮਾਡਮ ਵਲੋਂ ਦਿੱਤਾ ਗਿਆ ਦੇਸ਼ ਕੋਡ"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr ""
+msgstr "ਦੇਸ਼ ਦਾ ਕੋਡ ਸੰਪਰਕ ਦੇ ਨਾਂ ਲੱਭਣ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -88,23 +91,23 @@ msgstr "ਇਹ ਪਲੱਗਇਨਾਂ ਨੂੰ ਐਪਲੀਕੇਸ਼ਨ ਚ�
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr ""
+msgstr "VoIP ਕਾਲਾਂ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਆਡੀਓ ਕੋਡਕਸ ਤਰਜੀਹ ਦੇ ਕ੍ਰਮ ਮੁਤਾਬਕ"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr ""
+msgstr "VoIP ਕਾਲਾਂ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਪਸੰਦੀਦਾ ਆਡੀਓ ਕੋਡਕਸ (ਜੇ ਮੌਜੂਦ ਹੋਣ)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
+msgstr "ਕੀ SRTP ਲਈ ਟਰਾਂਸਪੋਰਟ ਵਜੋਂ ਬਿਨਾਂ TLS ਦੇ SDES ਵਰਤਣ ਦੀ ਮਨਜ਼ੂਰੀ ਦੇਣੀ ਹੈ"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr ""
+msgstr "ਜੇ ਤੁਸੀਂ ਕੁੰਜੀ ਤਬਾਦਲਾ ਸਰਲ-ਲਿਖਤ ਵਿੱਚ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਸਹੀ ਸੈਟ ਕਰੋ।"
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
-msgstr ""
+msgstr "ਮੂਲ (ਬਿਨਾਂ ਸ਼ੁਰੂ ਕੀਤੀ) ਸਥਿਤੀ"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
@@ -112,7 +115,7 @@ msgstr "…ਖਾਤਾ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
-msgstr ""
+msgstr "…ਖਾਤਾ ਨਾ-ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
@@ -148,11 +151,11 @@ msgstr "ਸ਼ੁਰੂ ਕਰਨਾ ਪੂਰਾ"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr ""
+msgstr "ਨਾ-ਸ਼ੁਰੂ ਕਰਨਾ ਸ਼ੁਰੂ ਹੋਇਆ"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
-msgstr ""
+msgstr "ਨਾ-ਸ਼ੁਰੂ ਕਰਨਾ ਪੂਰਾ"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
@@ -206,16 +209,16 @@ msgstr "ਖਾਤੇ ਦਾ ਸਾਰ"
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr ""
+msgstr "ਗਲਤ ਟੈਲੀ URI `%s' ਡਾਈਲ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ"
 
 #: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr ""
+msgstr "ਪਤਾ ਨਹੀਂ ਹੈ ਕਿ `%s' ਨੂੰ ਕਿਵੇਂ ਖੋਲ੍ਹਿਆ ਜਾਵੇ"
 
 #: src/calls-application.c:812
 msgid "The name of the plugins to load"
-msgstr ""
+msgstr "ਲੋਡ ਕਰਨ ਲਈ ਪਲੱਗਇਨ ਦਾ ਨਾਂ"
 
 #: src/calls-application.c:813
 msgid "PLUGIN"
@@ -235,7 +238,7 @@ msgstr "ਨੰਬਰ"
 
 #: src/calls-application.c:830
 msgid "Enable verbose debug messages"
-msgstr ""
+msgstr "ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਵਾਲੇ ਡੀਬੱਗ ਸੁਨੇਹੇ ਸਮਰੱਥ ਕਰੋ"
 
 #: src/calls-application.c:836
 msgid "Print current version"
@@ -254,19 +257,19 @@ msgstr ""
 "%s\n"
 "ਕੱਲ੍ਹ"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "ਪੁਲਸ"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "ਐਂਬੂਲਸ"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "ਅੱਗ ਬੁਝਾਊ ਦਸਤਾ"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "ਪਹਾੜੀ ਬਚਾਅ"
 
@@ -278,11 +281,11 @@ msgstr ""
 
 #: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr ""
+msgstr "ਕਾਲ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ: ਕੋਈ ਮਾਡਮ ਜਾਂ VoIP ਖਾਤਾ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
 
 #: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
-msgstr ""
+msgstr "ਕਾਲ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ: ਕੋਈ ਪਲੱਗਇਨ ਲੋਡ ਨਹੀਂ ਹੈ"
 
 #: src/calls-main-window.c:357
 msgid "Contacts"
@@ -335,6 +338,9 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
+"ਤੁਸੀਂ VoIP ਖਾਤਾ ਇੱਥੇ ਜੋੜ ਸਕਦੇ ਹੋ। ਇਹ ਤੁਹਾਨੂੰ SIP ਪਰੋਟੋਕਾਲ ਦੀ ਵਰਤੋਂ ਕਰਕੇ VoIP"
+" ਕਾਲ ਕਰਨ ਅਤੇ ਲੈਣ ਲਈ ਸਹਾਇਕ ਹੈ। ਇਹ ਫ਼ੀਚਰ ਹਾਲੇ ਵੀ ਨਵਾਂ ਹੈ ਅਤੇ ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ ਹੈ"
+" (ਜਿਵੇਂ ਕਿ ਇੰਕ੍ਰਿਪਟ ਕੀਤਾ ਮੀਡੀਆ)।"
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -409,7 +415,7 @@ msgstr "ਕਾਲਾਂ ਬਾਰੇ(_A)"
 
 #: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
-msgstr ""
+msgstr "VoIP ਸਿਰਨਾਵਾਂ ਦਿਓ"
 
 #: src/ui/new-call-box.ui:62
 msgid "SIP Account"
@@ -445,15 +451,15 @@ msgstr "ਕਾਲ ਖਤਮ ਹੋਈ"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
-msgstr ""
+msgstr "ਕਾਲ ਡਿਸ-ਕਨੈਕਟ ਹੈ (ਰੁਝੀ ਜਾਂ ਕਾਲ ਤੋਂ ਇਨਕਾਰ)"
 
 #: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
-msgstr ""
+msgstr "ਕਾਲ ਡਿਸ-ਕਨੈਕਟ ਹੈ (ਗਲਤ ID ਜਾਂ ਨੈੱਟਵਰਕ ਸਮੱਸਿਆ ਹੈ)"
 
 #: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
-msgstr ""
+msgstr "ਕਾਲ ਡਿਸ-ਕਨੈਕਟ ਹੈ (ਆਡੀਓ ਚੈਨਲ ਸੈਟਅੱਪ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ)"
 
 #. Translators: Transfer is for active or held calls
 #: plugins/provider/mm/calls-mm-call.c:82
@@ -463,21 +469,21 @@ msgstr "ਕਾਲ ਟਰਾਂਸਫ਼ਰ ਕੀਤੀ"
 #. Translators: Deflecting is for incoming or waiting calls
 #: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
-msgstr ""
+msgstr "ਕਾਲ ਦਿਸ਼ਾ ਤਬਦੀਲ"
 
 #: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
-msgstr ""
+msgstr "ਕਾਲ ਡਿਸ-ਕਨੈਕਟ ਹੈ (ਅਣਪਛਾਤਾ ਕਾਰਨ ਕੋਡ %i)"
 
 #: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
-msgstr ""
+msgstr "ਮਾਡਮ-ਮੈਨੇਜਰ ਗ਼ੈਰ-ਮੌਜੂਦ"
 
 #: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
-msgstr ""
+msgstr "ਕੋਈ ਵਾਈਸ-ਸਮਰੱਥ ਮਾਡਮ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
 
 #: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
@@ -487,11 +493,11 @@ msgstr "ਸਧਾਰਨ"
 #: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
-msgstr ""
+msgstr "ਸ਼ੁਰੂ ਕੀਤਾ"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
-msgstr ""
+msgstr "DBus ਗ਼ੈਰ-ਮੌਜੂਦ"
 
 #: plugins/provider/sip/calls-sip-account-widget.c:668
 msgid "No encryption"
@@ -500,15 +506,15 @@ msgstr "ਕੋਈ ਇੰਕ੍ਰਿਪਸ਼ਨ ਨਹੀਂ"
 #. TODO Optional encryption
 #: plugins/provider/sip/calls-sip-account-widget.c:675
 msgid "Force encryption"
-msgstr ""
+msgstr "ਇੰਕ੍ਰਿਪਸ਼ਨ ਲਈ ਮਜ਼ਬੂਰ"
 
 #: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
-msgstr ""
+msgstr "ਕ੍ਰਿਪਟੋਗਰਾਫ਼ਿਕ ਕੁੰਜੀ ਤਬਾਦਲਾ ਨਾ-ਕਾਮਯਾਬ"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
 msgid "Add Account"
-msgstr "ਖਾਤਾ ਜੋੜੋ"
+msgstr "ਖਾਤਾ ਨੂੰ ਜੋੜੋ"
 
 #: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
@@ -565,3 +571,4 @@ msgstr "ਫ਼ੋਨ ਕਾਲਾਂ ਲਈ ਵਰਤੋਂ"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "ਆਪਣੇ-ਆਪ ਕਨੈਕਟ ਕਰੋ"
+
