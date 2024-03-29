@@ -197,22 +197,6 @@ set_password_visibility (CallsSipAccountWidget *self, gboolean visible)
 }
 
 
-static void
-on_password_visibility_changed (CallsSipAccountWidget *self,
-                                GtkEntryIconPosition   icon_pos,
-                                GdkEvent              *event,
-                                GtkEntry              *entry)
-{
-  gboolean visible;
-
-  g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
-  g_assert (GTK_IS_ENTRY (entry));
-  g_assert (icon_pos == GTK_ENTRY_ICON_SECONDARY);
-
-  visible = !gtk_entry_get_visibility (entry);
-  set_password_visibility (self, visible);
-}
-
 /*
  * Stop "insert-text" signal emission if any undesired port
  * value occurs
@@ -647,7 +631,6 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_delete_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_apply_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_user_changed);
-  gtk_widget_class_bind_template_callback (widget_class, on_password_visibility_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_insert_text);
   gtk_widget_class_bind_template_callback (widget_class, on_port_entry_after_insert_text);
 }
