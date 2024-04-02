@@ -41,7 +41,10 @@ struct _CallsContactsBox {
   GtkWidget        *contacts_listbox;
   GtkWidget        *placeholder_empty;
 
+  GListStore       *contacts_list;
+  GtkCustomSorter  *contacts_sorter;
   FolksSimpleQuery *search_query;
+  GtkCustomFilter  *search_filter;
 };
 
 G_DEFINE_TYPE (CallsContactsBox, calls_contacts_box, ADW_TYPE_BIN);
@@ -56,15 +59,13 @@ search_changed_cb (CallsContactsBox *self,
 
   folks_simple_query_set_query_string (self->search_query, search_text);
 
-  gtk_list_box_invalidate_filter (GTK_LIST_BOX (self->contacts_listbox));
+  gtk_filter_changed (GTK_FILTER (self->search_filter), GTK_FILTER_CHANGE_DIFFERENT);
 }
 
 static gboolean
-contacts_filter_func (CallsContactsRow *row,
+contacts_filter_func (FolksIndividual *item,
                       CallsContactsBox *self)
 {
-  FolksIndividual *item = calls_contacts_row_get_item (row);
-
   return folks_query_is_match (FOLKS_QUERY (self->search_query), item) > 0;
 }
 
@@ -104,18 +105,14 @@ on_favourite_changed (CallsContactsBox *self)
 {
   g_assert (CALLS_IS_CONTACTS_BOX (self));
 
-  gtk_list_box_invalidate_sort (GTK_LIST_BOX (self->contacts_listbox));
+  gtk_sorter_changed (GTK_SORTER (self->contacts_sorter), GTK_SORTER_CHANGE_DIFFERENT);
 }
 
 static void
 contacts_provider_added (CallsContactsBox *self,
                          FolksIndividual  *individual)
 {
-  GtkWidget *row;
-
-  row = calls_contacts_row_new (individual);
-
-  gtk_list_box_append (GTK_LIST_BOX (self->contacts_listbox), row);
+  g_list_store_append (G_LIST_STORE (self->contacts_list), individual);
 
   g_signal_connect_object (individual,
                            "notify::is-favourite",
@@ -128,32 +125,24 @@ static void
 contacts_provider_removed (CallsContactsBox *self,
                            FolksIndividual  *individual)
 {
-  int i = 0;
-  GtkListBoxRow *row = gtk_list_box_get_row_at_index(GTK_LIST_BOX (self->contacts_listbox), i);
-
-  while (row != NULL) {
-    if (calls_contacts_row_get_item (CALLS_CONTACTS_ROW (row)) == individual)
-      gtk_list_box_remove (GTK_LIST_BOX (self->contacts_listbox), GTK_WIDGET (row));
-
-    i += 1;
-    row = gtk_list_box_get_row_at_index(GTK_LIST_BOX (self->contacts_listbox), i);
+  guint position;
+  while (g_list_store_find (G_LIST_STORE (self->contacts_list), individual, &position)) {
+    g_list_store_remove(G_LIST_STORE (self->contacts_list), position);
   }
 }
 
 static gint
-contacts_sort_func (CallsContactsRow *a,
-                    CallsContactsRow *b,
+contacts_sort_func (FolksIndividual *a,
+                    FolksIndividual *b,
                     gpointer          unused)
 {
-  FolksIndividual *individual_a = calls_contacts_row_get_item (a);
-  FolksIndividual *individual_b = calls_contacts_row_get_item (b);
-  const char *name_a = folks_individual_get_display_name (individual_a);
-  const char *name_b = folks_individual_get_display_name (individual_b);
+  const char *name_a = folks_individual_get_display_name (a);
+  const char *name_b = folks_individual_get_display_name (b);
   gboolean fav_a;
   gboolean fav_b;
 
-  g_object_get (G_OBJECT (individual_a), "is-favourite", &fav_a, NULL);
-  g_object_get (G_OBJECT (individual_b), "is-favourite", &fav_b, NULL);
+  g_object_get (G_OBJECT (a), "is-favourite", &fav_a, NULL);
+  g_object_get (G_OBJECT (b), "is-favourite", &fav_b, NULL);
 
   if (fav_a == fav_b)
     return g_strcmp0 (name_a, name_b);
@@ -194,6 +183,8 @@ static void
 calls_contacts_box_init (CallsContactsBox *self)
 {
   CallsContactsProvider *contacts_provider;
+  GtkSortListModel *sorted_contacts;
+  GtkFilterListModel *filtered_contacts;
 
   g_autoptr (GeeCollection) individuals = NULL;
   gchar* query_fields[] = { "alias",
@@ -204,21 +195,24 @@ calls_contacts_box_init (CallsContactsBox *self)
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
+  self->contacts_list = g_list_store_new(FOLKS_TYPE_INDIVIDUAL);
+
+  self->contacts_sorter = gtk_custom_sorter_new ((GCompareDataFunc) contacts_sort_func, NULL, NULL);
+  sorted_contacts = gtk_sort_list_model_new (G_LIST_MODEL (g_object_ref (self->contacts_list)), GTK_SORTER (g_object_ref (self->contacts_sorter)));
+
   self->search_query = folks_simple_query_new ("", query_fields, G_N_ELEMENTS (query_fields));
+  self->search_filter = gtk_custom_filter_new ((GtkCustomFilterFunc) contacts_filter_func, self, NULL);
+  filtered_contacts = gtk_filter_list_model_new (G_LIST_MODEL (sorted_contacts), GTK_FILTER (g_object_ref (self->search_filter)));
+
+  gtk_list_box_bind_model (GTK_LIST_BOX (self->contacts_listbox),
+                           G_LIST_MODEL (filtered_contacts),
+                           (GtkListBoxCreateWidgetFunc) calls_contacts_row_new,
+                           NULL,
+                           NULL);
 
   gtk_list_box_set_header_func (GTK_LIST_BOX (self->contacts_listbox),
                                 (GtkListBoxUpdateHeaderFunc) header_cb,
                                 NULL,
-                                NULL);
-
-  gtk_list_box_set_sort_func (GTK_LIST_BOX (self->contacts_listbox),
-                              (GtkListBoxSortFunc) contacts_sort_func,
-                              NULL,
-                              NULL);
-
-  gtk_list_box_set_filter_func (GTK_LIST_BOX (self->contacts_listbox),
-                                (GtkListBoxFilterFunc) contacts_filter_func,
-                                self,
                                 NULL);
 
   g_signal_connect_swapped (self->placeholder_empty, "map", G_CALLBACK (adjust_style), self);
