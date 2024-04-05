@@ -179,24 +179,6 @@ on_user_changed (CallsSipAccountWidget *self)
 }
 
 
-static void
-set_password_visibility (CallsSipAccountWidget *self, gboolean visible)
-{
-  const char *icon_name;
-
-  g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
-  g_assert (GTK_IS_ENTRY (self->password));
-
-  icon_name = visible ?
-              "view-conceal-symbolic" :
-              "view-reveal-symbolic";
-
-  gtk_entry_set_visibility (self->password, visible);
-  gtk_entry_set_icon_from_icon_name (self->password, GTK_ENTRY_ICON_SECONDARY,
-                                     icon_name);
-}
-
-
 /*
  * Stop "insert-text" signal emission if any undesired port
  * value occurs
@@ -444,7 +426,6 @@ edit_form (CallsSipAccountWidget *self,
   gtk_editable_set_text (GTK_EDITABLE (self->display_name), display_name ?: "");
   gtk_editable_set_text (GTK_EDITABLE (self->user), user);
   gtk_editable_set_text (GTK_EDITABLE (self->password), password);
-  set_password_visibility (self, FALSE);
   gtk_editable_set_text (GTK_EDITABLE (self->port), port_str);
   adw_combo_row_set_selected (self->protocol, protocol_index);
   adw_combo_row_set_selected (self->media_encryption, encryption_index);
