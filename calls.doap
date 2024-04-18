@@ -19,13 +19,6 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Julian Sparber</foaf:name>
-      <foaf:mbox rdf:resource="mailto:julian.sparber@puri.sm" />
-      <gnome:userid>jsparber</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
       <foaf:name>Evangelos Ribeiro Tzaras</foaf:name>
       <foaf:mbox rdf:resource="mailto:evangelos.tzaras@puri.sm" />
       <foaf:mbox rdf:resource="mailto:devrtz@fortysixandtwo.eu" />
