@@ -48,6 +48,7 @@ insert_phonenumber (CallsContactsRow *self,
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "app.dial");
   gtk_actionable_set_action_target (GTK_ACTIONABLE (button), "s", number, NULL);
   gtk_widget_set_visible (button, TRUE);
+  gtk_widget_add_css_class (button, "flat");
   gtk_grid_attach_next_to (GTK_GRID (self->grid),
                            button,
                            label,

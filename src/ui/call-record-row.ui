@@ -53,6 +53,9 @@
             <property name="valign">center</property>
             <property name="tooltip-text">Call</property>
             <property name="icon-name">call-start-symbolic</property>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
         </child>
       </object>
