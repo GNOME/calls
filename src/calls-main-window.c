@@ -87,7 +87,7 @@ about_action (GSimpleAction *action,
 
   const gchar *version = NULL;
 
-  static const gchar *authors[] = {
+  static const gchar *developers[] = {
     "Adrien Plazas <kekun.plazas@laposte.net>",
     "Bob Ham <rah@settrans.net>",
     "Guido Günther <agx@sigxcpu.org>",
@@ -96,7 +96,7 @@ about_action (GSimpleAction *action,
     NULL
   };
 
-  static const gchar *artists[] = {
+  static const gchar *designers[] = {
     "Tobias Bernard <tbernard@gnome.org>",
     NULL
   };
@@ -109,22 +109,17 @@ about_action (GSimpleAction *action,
   version = g_str_equal (VCS_TAG, "") ?
             PACKAGE_VERSION : PACKAGE_VERSION "-" VCS_TAG;
 
-  /*
-   * “program-name” defaults to g_get_application_name().
-   * Don’t set it explicitly so that there is one less
-   * string to translate.
-   */
-  gtk_show_about_dialog (GTK_WINDOW (self),
-                         "artists", artists,
-                         "authors", authors,
-                         "copyright", "Copyright © 2018 - 2022 Purism",
-                         "documenters", documenters,
-                         "license-type", GTK_LICENSE_GPL_3_0,
-                         "logo-icon-name", APP_ID,
-                         "translator-credits", _("translator-credits"),
-                         "version", version,
-                         "website", PACKAGE_URL,
-                         NULL);
+  adw_show_about_window_from_appdata (GTK_WINDOW (self),
+                                      "/org/gnome/Calls/org.gnome.Calls.metainfo.xml",
+                                      PACKAGE_VERSION, // must match a release in metainfo.xml
+                                      "designers", designers,
+                                      "developers", developers,
+                                      "developer-name", "The GNOME Project",
+                                      "copyright", "Copyright © 2018 - 2022 Purism",
+                                      "documenters", documenters,
+                                      "translator-credits", _("translator-credits"),
+                                      "version", version,
+                                      NULL);
 }
 
 

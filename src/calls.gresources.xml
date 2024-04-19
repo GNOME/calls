@@ -15,6 +15,7 @@
   </gresource>
   <gresource prefix="/org/gnome/Calls/">
     <file>style.css</file>
+    <file>org.gnome.Calls.metainfo.xml</file>
   </gresource>
   <gresource prefix="/org/gnome/Calls/icons/">
     <file>call-arrow-incoming-symbolic.svg</file>
