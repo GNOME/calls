@@ -37,6 +37,9 @@
                                 <property name="title" translatable="yes">No Contacts Found</property>
                               </object>
                             </child>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
                           </object>
                         </property>
                       </object>
