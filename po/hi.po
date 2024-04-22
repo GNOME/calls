@@ -3,25 +3,25 @@
 # This file is distributed under the same license as the calls package.
 # Translators:
 # Hemish <hemish04082005@gmail.com>, 2022.
+# Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2022-12-08 22:45+0000\n"
-"PO-Revision-Date: 2022-12-27 16:25+0530\n"
-"Last-Translator: Hemish <hemish04082005@gmail.com>\n"
-"Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net https://indlinux."
-"org/hindi>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-03-02 16:39+0000\n"
+"PO-Revision-Date: 2024-04-17 18:37+0530\n"
+"Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
+"Language-Team: Hindi\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 46.0\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:457 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
 msgstr "कॉल"
 
@@ -63,12 +63,12 @@ msgstr ""
 "कॉल के लिए किया जा सकता है।"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:27
 msgid "Placing a call"
 msgstr "एक कॉल करना"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:32
 msgid "The call history"
 msgstr "कॉल इतिहास"
 
@@ -198,59 +198,59 @@ msgstr "संबंध हटाना पूर्ण हुआ"
 msgid "Internal error occurred"
 msgstr "आंतरिक गड़बड़ी हुई"
 
-#: src/calls-account-overview.c:177
+#: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
 msgstr "%s खाते में संशोधन करें"
 
-#: src/calls-account-overview.c:184
+#: src/calls-account-overview.c:209
 msgid "Add new account"
 msgstr "नया खाता जोङें"
 
-#: src/calls-account-overview.c:376
+#: src/calls-account-overview.c:441
 msgid "Account overview"
 msgstr "खाता अवलोकन"
 
-#: src/calls-application.c:327
+#: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "अमान्य tel URI `%s' डायल करने का प्रयास किया गया"
 
-#: src/calls-application.c:660
+#: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "एप्लिकेशन को नहीं पता कि कैसे `%s' को खोला जाए"
 
-#: src/calls-application.c:717
-msgid "The name of the plugin to use as a call provider"
-msgstr "कॉल क्षमता प्रदाता के रूप में उपयोग करने के लिए प्लगिन का नाम"
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "लोड करने के लिए प्लगइन्स का नाम"
 
-#: src/calls-application.c:718
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:723
+#: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
 msgstr "यदि शुरूआत पर मुख्य विंडो प्रस्तुत की जाए या नहीं"
 
 # Even though this command line option is named "dial a telephone number", it is valid for all type of number not just telephone, also it not only dials, but calls, these are reflected in Hindi translation
-#: src/calls-application.c:729
+#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr "एक फ़ोन नंबर डायल कर कॉल करें"
 
-#: src/calls-application.c:730
+#: src/calls-application.c:825
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:735
+#: src/calls-application.c:830
 msgid "Enable verbose debug messages"
 msgstr "वर्बोज़ डिबग संदेशों को सक्षम करें"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:836
 msgid "Print current version"
 msgstr "वर्तमान संस्करण संख्या दिखाएँ"
 
-#: src/calls-best-match.c:435
+#: src/calls-best-match.c:487
 msgid "Anonymous caller"
 msgstr "अनाम कॉलर"
 
@@ -264,53 +264,69 @@ msgstr ""
 "%s\n"
 "कल"
 
-#: src/calls-main-window.c:123
+#: src/calls-emergency-call-types.c:250
+msgid "Police"
+msgstr "पुलिस"
+
+#: src/calls-emergency-call-types.c:253
+msgid "Ambulance"
+msgstr "रोगी वाहन"
+
+#: src/calls-emergency-call-types.c:256
+msgid "Fire Brigade"
+msgstr "अग्निशामक दल"
+
+#: src/calls-emergency-call-types.c:259
+msgid "Mountain Rescue"
+msgstr "पर्वतीय बचाव"
+
+#: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr "Hemish (हेमिश) <hemish04082005@gmail.com>"
 
-#: src/calls-main-window.c:316
+#: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "कॉल नहीं लगाई जा सकतीं: कोई मॉडेम या VoIP खाता उपलब्ध नहीं है।"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
 msgstr "कॉल नहीं लगाई जा सकतीं: कोई प्लगिन लोड नहीं है।"
 
-#: src/calls-main-window.c:353
+#: src/calls-main-window.c:357
 msgid "Contacts"
 msgstr "संपर्क"
 
-#: src/calls-main-window.c:363
+#: src/calls-main-window.c:367
 msgid "Dial Pad"
 msgstr "डायल पैड"
 
 # Google Dialer on Android shows 'हाल के कॉल' on translation of 'Recent', so this translations is picked up from there
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:376
 msgid "Recent"
 msgstr "हाल के"
 
-#: src/calls-notifier.c:52
+#: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "मिस कॉल"
 
 #. %s is a name here
-#: src/calls-notifier.c:76
+#: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "<b>%s</b> से मिस कॉल"
 
 #. %s is a id here
-#: src/calls-notifier.c:79
+#: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
 msgstr "%s से मिस कॉल"
 
-#: src/calls-notifier.c:81
+#: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
 msgstr "अज्ञात कॉलर से मिस कॉल"
 
-#: src/calls-notifier.c:87
+#: src/calls-notifier.c:88
 msgid "Call back"
 msgstr "वापस कॉल करें"
 
@@ -480,7 +496,7 @@ msgstr "कोई आवाज़-सक्षम मॉडेम उपलब्�
 msgid "Normal"
 msgstr "साधारण"
 
-#: plugins/provider/mm/calls-mm-provider.c:456
+#: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:546
 msgid "Initialized"
 msgstr "आरंभीकृत"
