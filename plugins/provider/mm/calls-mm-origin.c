@@ -652,7 +652,8 @@ on_modem_location_get_3gpp_finish (GObject *source_object, GAsyncResult *res, gp
 
   location_3gpp = mm_modem_location_get_3gpp_finish (location, res, &err);
   if (!location_3gpp) {
-    g_warning ("Failed to get 3gpp location service: %s", err->message);
+    if (err)
+      g_warning ("Failed to get 3gpp location service: %s", err->message);
     return;
   }
 
