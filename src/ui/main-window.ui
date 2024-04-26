@@ -70,7 +70,7 @@
       </object>
     </child>
   </template>
-  <object class="GtkDialog" id="ussd_dialog">
+  <object class="GtkWindow" id="ussd_dialog">
     <property name="modal">True</property>
     <property name="default-width">240</property>
     <property name="default-height">200</property>
@@ -108,7 +108,7 @@
         </child>
       </object>
     </child>
-    <child internal-child="content_area">
+    <child>
       <object class="GtkBox">
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>

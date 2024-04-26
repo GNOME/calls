@@ -57,7 +57,7 @@ struct _CallsMainWindow {
   CallsAccountOverview   *account_overview;
   CallsNewCallBox        *new_call;
 
-  GtkDialog              *ussd_dialog;
+  GtkWindow              *ussd_dialog;
   GtkStack               *ussd_stack;
   GtkSpinner             *ussd_spinner;
   GtkBox                 *ussd_content;
@@ -177,8 +177,8 @@ window_ussd_added_cb (CallsMainWindow *self,
   g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
                           g_object_ref (ussd), g_object_unref);
   window_update_ussd_state (self, ussd);
-  gtk_window_set_title (GTK_WINDOW (self->ussd_dialog), _("USSD"));
-  gtk_window_present (GTK_WINDOW (self->ussd_dialog));
+  gtk_window_set_title (self->ussd_dialog, _("USSD"));
+  gtk_window_present (self->ussd_dialog);
 }
 
 static void
@@ -193,7 +193,7 @@ window_ussd_cancel_clicked_cb (CallsMainWindow *self)
   if (ussd)
     calls_ussd_cancel_async (ussd, NULL, NULL, NULL);
 
-  gtk_window_close (GTK_WINDOW (self->ussd_dialog));
+  gtk_window_close (self->ussd_dialog);
 }
 
 static void
@@ -226,7 +226,7 @@ window_ussd_respond_cb (GObject      *object,
   response = calls_ussd_respond_finish (ussd, result, &error);
 
   if (error) {
-    gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+    gtk_window_close (self->ussd_dialog);
     g_warning ("USSD Error: %s", error->message);
     return;
   }
@@ -271,7 +271,7 @@ main_window_ussd_send_cb (GObject      *object,
   ussd = g_task_get_task_data (G_TASK (result));
 
   if (error) {
-    gtk_dialog_response (self->ussd_dialog, GTK_RESPONSE_CLOSE);
+    gtk_window_close (self->ussd_dialog);
     g_warning ("USSD Error: %s", error->message);
     return;
   }
@@ -350,7 +350,7 @@ constructed (GObject *object)
                            G_CALLBACK (window_update_ussd_state),
                            self,
                            G_CONNECT_SWAPPED);
-  gtk_window_set_transient_for (GTK_WINDOW (self->ussd_dialog), GTK_WINDOW (self));
+  gtk_window_set_transient_for (self->ussd_dialog, GTK_WINDOW (self));
 
   // Add call records
   history = calls_history_box_new (self->record_store);
@@ -493,7 +493,7 @@ calls_main_window_dial (CallsMainWindow *self,
     calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
                                         main_window_ussd_send_cb, self);
 
-    gtk_window_present (GTK_WINDOW (self->ussd_dialog));
+    gtk_window_present (self->ussd_dialog);
   } else {
     calls_new_call_box_dial (self->new_call, target);
   }
