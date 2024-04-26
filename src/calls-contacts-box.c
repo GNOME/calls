@@ -77,12 +77,10 @@ adjust_style (CallsContactsBox *self, GtkWidget *widget)
 
   if (gtk_widget_get_mapped (widget)) {
     gtk_widget_set_vexpand (self->contacts_frame, TRUE);
-    gtk_style_context_add_class (gtk_widget_get_style_context (self->contacts_listbox),
-                                 "no-background");
+    gtk_widget_add_css_class (self->contacts_listbox, "no-background");
   } else {
     gtk_widget_set_vexpand (self->contacts_frame, FALSE);
-    gtk_style_context_remove_class (gtk_widget_get_style_context (self->contacts_listbox),
-                                    "no-background");
+    gtk_widget_remove_css_class (self->contacts_listbox, "no-background");
   }
 }
 

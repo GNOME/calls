@@ -40,7 +40,7 @@ insert_phonenumber (CallsContactsRow *self,
 
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
-  gtk_style_context_add_class (gtk_widget_get_style_context (label), "dim-label");
+  gtk_widget_add_css_class (label, "dim-label");
   gtk_widget_set_visible (label, TRUE);
   gtk_grid_attach (GTK_GRID (self->grid), label, 1, self->n_phonenumbers, 1, 1);
 
