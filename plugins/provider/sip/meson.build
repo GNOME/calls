@@ -46,7 +46,7 @@ sip_deps = [
   dependency('gobject-2.0'),
   dependency('gstreamer-1.0'),
   dependency('gtk4'),
-  dependency('libadwaita-1', version: '>= 1.2'),
+  dependency('libadwaita-1', version: '>= 1.3'),
   dependency('libpeas-1.0'),
   dependency('sofia-sip-ua-glib'),
   dependency('libsecret-1'),

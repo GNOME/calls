@@ -32,7 +32,7 @@ project(
   ]
 )
 
-gtk_version = '4.8'
+gtk_version = '4.10'
 gtk_version_arr = gtk_version.split('.')
 gtk_major = gtk_version_arr[0]
 gtk_minor = gtk_version_arr[1]
