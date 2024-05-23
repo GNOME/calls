@@ -1,22 +1,22 @@
 # Italian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# antonio <ant.pandolfo@gmail.com>, 2020-2023.
+# Vittorio Monti <postav@proton.me>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-22 14:55+0000\n"
-"PO-Revision-Date: 2023-07-31 13:20+0200\n"
-"Last-Translator: antonio <ant.pandolfo@gmail.com>\n"
-"Language-Team: Italiano <ant.pandolfo@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-03-16 17:26+0000\n"
+"PO-Revision-Date: 2024-03-26 16:56+0100\n"
+"Last-Translator: Vittorio Monti <postav@proton.me>\n"
+"Language-Team: Italian <international-italian@discourse.gnome.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -55,18 +55,23 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Chiamate è un programma semplice ed elegante per la composizione telefonica "
-"e la gestione delle chiamate per GNOME. Può essere usato con un modem "
-"cellulare per chiamate telefoniche normali e chiamate VoIP utilizzando il "
-"protocollo SIP."
+"Chiamate è uno strumento semplice ed elegante per la composizione e la "
+"gestione delle chiamate in GNOME. Può essere utilizzato con un modem "
+"cellulare per le normali chiamate telefoniche e con il protocollo SIP per le "
+"chiamate VoIP."
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Effettuare una chiamata"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "La cronologia delle chiamate"
 
@@ -102,8 +107,7 @@ msgstr "I codec audio preferiti da usare per le chiamate VoIP (se disponibili)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
-"Se consentire l'uso di SDES per SRTP senza TLS come mezzo di trasporto."
+msgstr "Se consentire l'uso di SDES per SRTP senza TLS come mezzo di trasporto"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
@@ -252,7 +256,7 @@ msgstr "Stampa la versione attuale"
 
 #: src/calls-best-match.c:487
 msgid "Anonymous caller"
-msgstr "Chiamante anonimo "
+msgstr "Chiamante anonimo"
 
 #: src/calls-call-record-row.c:97
 #, c-format
@@ -263,27 +267,27 @@ msgstr ""
 "%s\n"
 "ieri"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Polizia"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Ambulanza"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Vigili del Fuoco"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
-msgstr "Soccorso alpino"
+msgstr "Soccorso Alpino"
 
 #: src/calls-main-window.c:124
 msgid "translator-credits"
 msgstr ""
 "Pandolfo Antonio <ant.pandolfo@gmail.com>\n"
-"Vittorio <gitlapur.a8tut@aleeas.com>, 2022"
+"Vittorio Monti <postav@proton.me>"
 
 #: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
@@ -300,7 +304,7 @@ msgstr "Contatti"
 
 #: src/calls-main-window.c:367
 msgid "Dial Pad"
-msgstr "Tastiera"
+msgstr "Tastierino"
 
 #. Recent as in "Recent calls" (the call history)
 #: src/calls-main-window.c:376
@@ -345,9 +349,9 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Qui puoi aggiungere un account VoIP. Ti permetterà di effettuare e ricevere "
-"chiamate VoIP utilizzando il protocollo SIP. Questa caratteristica è "
-"relativamente nuova e non ancora completa (cioè nessun media cifrato)."
+"Qui è possibile aggiungere account VoIP. Sarà possibile effettuare e "
+"ricevere chiamate VoIP utilizzando il protocollo SIP. Questa caratteristica "
+"è relativamente nuova e non ancora completa (cioè nessun media cifrato)."
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
@@ -365,7 +369,7 @@ msgstr "_Elimina chiamata"
 #. Translators: This is a phone number
 #: src/ui/call-record-row.ui:107
 msgid "_Copy number"
-msgstr "_Copia numero "
+msgstr "_Copia numero"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
@@ -529,7 +533,7 @@ msgstr "_Login"
 
 #: plugins/provider/sip/sip-account-widget.ui:42
 msgid "Manage Account"
-msgstr "Gestisci account"
+msgstr "Gestione account"
 
 #: plugins/provider/sip/sip-account-widget.ui:47
 msgid "_Apply"
@@ -561,7 +565,7 @@ msgstr "Password"
 
 #: plugins/provider/sip/sip-account-widget.ui:166
 msgid "Port"
-msgstr "Port"
+msgstr "Porta"
 
 #: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
