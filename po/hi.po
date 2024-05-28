@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-03-02 16:39+0000\n"
+"POT-Creation-Date: 2024-04-22 18:06+0000\n"
 "PO-Revision-Date: 2024-04-17 18:37+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi\n"
@@ -23,34 +23,32 @@ msgstr ""
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
 msgid "Calls"
-msgstr "कॉल"
+msgstr "Calls"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
-msgstr "फ़ोन"
+msgstr "फोन"
 
 #: data/org.gnome.Calls.desktop.in:5
 msgid "A phone dialer and call handler"
-msgstr "एक फ़ोन डायलर और कॉल नियंत्रक"
+msgstr "एक फोन डायलर और कॉल नियंत्रक"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
-"Telephone;Call;Phone;Dial;Dialer;PSTN;टेलेफ़ोन;टेलिफ़ोन;टेलीफ़ोन;कॉल;फ़ोन;डाइल;डाएल;"
-"डाइलर;डाएलर;"
+msgstr "टेलीफोन;कॉल;फोन;डायल;डायलर;PSTN;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
-msgstr "कॉल (डीमन)"
+msgstr "Calls (डेमॉन))"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
-msgstr "एक फ़ोन डायलर और कॉल नियंत्रक (डीमन मोड)"
+msgstr "एक फोन डायलर और कॉल नियंत्रक (डेमॉन मोड)"
 
 #: data/org.gnome.Calls.metainfo.xml:7
 msgid "Make phone and SIP calls"
-msgstr "फ़ोन और SIP कॉल करें"
+msgstr "फोन और SIP कॉल करें"
 
 #: data/org.gnome.Calls.metainfo.xml:10
 msgid ""
@@ -58,14 +56,14 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"'कॉल' गनोम के लिए एक सरल, सुंदर फ़ोन डायलर और कॉल नियंत्रक है। इसका उपयोग सेलुलर मॉडेम "
-"के साथ सादे पुराने टेलीफोन कॉल करने और उसके अतिरिक्त SIP प्रोटोकॉल का उपयोग करके VoIP "
-"कॉल के लिए किया जा सकता है।"
+"Calls GNOME के लिए एक सरल, सुंदर फोन डायलर और कॉल नियंत्रक है। इसका उपयोग सेलुलर "
+"मॉडेम के साथ सादे पुराने टेलीफोन कॉल करने और उसके अतिरिक्त SIP प्रोटोकॉल का उपयोग करके "
+"VoIP कॉल के लिए किया जा सकता है।"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:27
 msgid "Placing a call"
-msgstr "एक कॉल करना"
+msgstr "कॉल लगाना"
 
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml:32
@@ -74,7 +72,7 @@ msgstr "कॉल इतिहास"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
-msgstr "यदि कॉल को स्वचालित रूप से डिफ़ॉल्ट मूल का उपयोग करना चाहिए या नहीं"
+msgstr "क्या कॉल को स्वचालित रूप से तयशुदा मूल का उपयोग करना चाहिए"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
@@ -86,31 +84,34 @@ msgstr "देश कोड का उपयोग संपर्क नाम 
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
-msgstr "प्लगिन जो स्वचालित रूप से लोड हो जाने चाहिएँ"
+msgstr "प्लगिन जो स्वचालित रूप से लोड हो जाने चाहिएं"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "ये प्लगिन स्वचालित रूप से एप्लिकेशन के शुरू होने पर लोड हो जाएँगे।"
+msgstr "ये प्लगिन स्वचालित रूप से अनुप्रयोग के शुरू होने पर लोड हो जाएंगे।"
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr "VoIP कॉल में उपयोग करने के लिए ऑडियो कोडेक (वरीयता के क्रम में)"
+msgstr "प्राथमिकता के क्रम में VoIP कॉल के लिए उपयोग किए जाने वाले ऑडियो कोडेक्स"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr "VoIP कॉल के लिए उपयोग करने के लिए प्रेफ़र किए गए ऑडियो कोडेक (यदि उपलब्ध हों)"
+msgstr "VoIP कॉल के लिए उपयोग करने के लिए वरीय ऑडियो कोडेक्स (यदि उपलब्ध हों)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "संचार के लिए TLS के बिना SRTP के लिए SDES का उपयोग करने की अनुमति है या नहीं"
+msgstr ""
+"क्या परिवहन के रूप में TLS के बिना SRTP के लिए SDES का उपयोग करने की अनुमति दी जाए"
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr "यदि आप क्लीयरटेक्स्ट में कुंजियों के लेनदेन की अनुमति देना चाहते हैं, तो true पर सेट करें।"
+msgstr ""
+"यदि आप स्पष्टपाठ में कुंजियों के कुंजी विनिमय की अनुमति देना चाहते हैं तो सही पर निर्धारित "
+"करें।"
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
-msgstr "डिफ़ॉल्ट (अप्रारंभीकृत) स्थिति"
+msgstr "तयशुदा (अप्रारंभीकृत) स्थिति"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
@@ -122,7 +123,7 @@ msgstr "खाता अप्रारंभीकृत किया जा �
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr "सर्वर से संबंध जोङा जा रहा है…"
+msgstr "सर्वर से जुड़ रहें हैं…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
@@ -130,11 +131,11 @@ msgstr "खाता ऑनलाइन है"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr "सर्वर से संबंध बंद किया जा रहा है…"
+msgstr "सर्वर से वियोजित हो रहा है…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr "खाता ऑफ़लाइन है"
+msgstr "खाता ऑफलाइन है"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
@@ -142,41 +143,41 @@ msgstr "खाते में त्रुटि आई"
 
 #: src/calls-account.c:202
 msgid "No reason given"
-msgstr "कोई कारण नहीं प्रदान किया गया"
+msgstr "कोई कारण नहीं दिया गया"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
-msgstr "प्रारंभिकरण शुरू हो गया"
+msgstr "प्रारंभिकरण शुरू हुआ"
 
 #: src/calls-account.c:208
 msgid "Initialization complete"
-msgstr "प्रारंभिकरण पूर्ण हो गयाअ"
+msgstr "प्रारंभिकरण पूर्ण"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr "अप्रारंभिकरण शुरू हो गया"
+msgstr "अप्रारंभीकरण शुरू हुआ"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
-msgstr "प्रारंभिकरण पूर्ण हो गया"
+msgstr "अप्रारंभीकरण पूर्ण"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr "कोई पहचान क्रेडेन्शियल नहीं सेट किए गए"
+msgstr "कोई प्रत्यय-पत्र निर्धारित नहीं"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr "संबंध बनाया जा रहा है"
+msgstr "जुड़ना शुरू हो रहा है"
 
 # 'time out' is a technical term, so has not been translated
 #: src/calls-account.c:223
 msgid "Connection timed out"
-msgstr "संबंध टाइमऑउट हो गया"
+msgstr "कनेक्शन का समय समाप्त"
 
 # 'resolve' is a technical term, so is not translated
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
-msgstr "डोमेन नाम रिसॉल्व नहीं किया जा सका"
+msgstr "डोमेन नाम का समाधान नहीं किया जा सका"
 
 #: src/calls-account.c:229
 msgid "Server did not accept username or password"
@@ -184,28 +185,28 @@ msgstr "सर्वर ने उपयोक्ता नाम या पा�
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
-msgstr "संबंध पूर्ण हुआ"
+msgstr "जुड़ना पूर्ण"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr "संबंध हटाया जा रहा है"
+msgstr "वियोग शुरू हो रहा है"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr "संबंध हटाना पूर्ण हुआ"
+msgstr "वियोग पूर्ण"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
-msgstr "आंतरिक गड़बड़ी हुई"
+msgstr "आंतरिक त्रुटि हुई"
 
 #: src/calls-account-overview.c:202
 #, c-format
 msgid "Edit account: %s"
-msgstr "%s खाते में संशोधन करें"
+msgstr "खाता संपादित करें: %s"
 
 #: src/calls-account-overview.c:209
 msgid "Add new account"
-msgstr "नया खाता जोङें"
+msgstr "नया खाता जोड़ें"
 
 #: src/calls-account-overview.c:441
 msgid "Account overview"
@@ -214,12 +215,12 @@ msgstr "खाता अवलोकन"
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr "अमान्य tel URI `%s' डायल करने का प्रयास किया गया"
+msgstr "अमान्य टेली URI `%s' डायल करने का प्रयास किया गया"
 
 #: src/calls-application.c:748
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr "एप्लिकेशन को नहीं पता कि कैसे `%s' को खोला जाए"
+msgstr "पता नहीं `%s' कैसे खोलें"
 
 #: src/calls-application.c:812
 msgid "The name of the plugins to load"
@@ -227,32 +228,32 @@ msgstr "लोड करने के लिए प्लगइन्स का 
 
 #: src/calls-application.c:813
 msgid "PLUGIN"
-msgstr "PLUGIN"
+msgstr "प्लगइन"
 
 #: src/calls-application.c:818
 msgid "Whether to present the main window on startup"
-msgstr "यदि शुरूआत पर मुख्य विंडो प्रस्तुत की जाए या नहीं"
+msgstr "क्या शुरुआत पर मुख्य विंडो प्रस्तुत करनी है"
 
 # Even though this command line option is named "dial a telephone number", it is valid for all type of number not just telephone, also it not only dials, but calls, these are reflected in Hindi translation
 #: src/calls-application.c:824
 msgid "Dial a telephone number"
-msgstr "एक फ़ोन नंबर डायल कर कॉल करें"
+msgstr "एक टेलीफोन नंबर डायल करें"
 
 #: src/calls-application.c:825
 msgid "NUMBER"
-msgstr "NUMBER"
+msgstr "नंबर"
 
 #: src/calls-application.c:830
 msgid "Enable verbose debug messages"
-msgstr "वर्बोज़ डिबग संदेशों को सक्षम करें"
+msgstr "वाचाल डिबग संदेशों को सक्षम करें"
 
 #: src/calls-application.c:836
 msgid "Print current version"
-msgstr "वर्तमान संस्करण संख्या दिखाएँ"
+msgstr "वर्तमान संस्करण छापें"
 
 #: src/calls-best-match.c:487
 msgid "Anonymous caller"
-msgstr "अनाम कॉलर"
+msgstr "गुमनाम कॉलर"
 
 # Hindi translation of both 'yesterday' and 'tomorrow' is 'कल'. Since a call can not be placed in future or a log of call in future, the translation of 'yesterday' is only provided as 'कल' without any hinting that this 'कल' means yesterday and not tomorrow.
 #: src/calls-call-record-row.c:97
@@ -282,15 +283,17 @@ msgstr "पर्वतीय बचाव"
 
 #: src/calls-main-window.c:124
 msgid "translator-credits"
-msgstr "Hemish (हेमिश) <hemish04082005@gmail.com>"
+msgstr ""
+"Hemish (हेमिश) <hemish04082005@gmail.com>\n"
+"Scrambled777 <weblate.scrambled777@simplelogin.com>"
 
 #: src/calls-main-window.c:317
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "कॉल नहीं लगाई जा सकतीं: कोई मॉडेम या VoIP खाता उपलब्ध नहीं है।"
+msgstr "कॉल नहीं कर सकते: कोई मॉडेम या VoIP खाता उपलब्ध नहीं है"
 
 #: src/calls-main-window.c:319
 msgid "Can't place calls: No plugin loaded"
-msgstr "कॉल नहीं लगाई जा सकतीं: कोई प्लगिन लोड नहीं है।"
+msgstr "कॉल नहीं कर सकते: कोई प्लगइन लोड नहीं हुआ"
 
 #: src/calls-main-window.c:357
 msgid "Contacts"
@@ -308,23 +311,23 @@ msgstr "हाल के"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
-msgstr "मिस कॉल"
+msgstr "छूटी कॉल"
 
 #. %s is a name here
 #: src/calls-notifier.c:77
 #, c-format
 msgid "Missed call from <b>%s</b>"
-msgstr "<b>%s</b> से मिस कॉल"
+msgstr "<b>%s</b> से कॉल छूटी"
 
 #. %s is a id here
 #: src/calls-notifier.c:80
 #, c-format
 msgid "Missed call from %s"
-msgstr "%s से मिस कॉल"
+msgstr "%s से कॉल छूटी"
 
 #: src/calls-notifier.c:82
 msgid "Missed call from unknown caller"
-msgstr "अज्ञात कॉलर से मिस कॉल"
+msgstr "अज्ञात कॉलर से कॉल छूटी"
 
 #: src/calls-notifier.c:88
 msgid "Call back"
@@ -344,13 +347,13 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"आप यहाँ VoIP खाता जोड़ सकते हैं। यह आपको SIP प्रोटोकॉल द्वारा VoIP कॉल करने और प्राप्त "
-"करने की क्षमता देगा। यह सुविधा अभी नई है और अभी तक पूर्ण नहीं है (कोई एन्क्रिप्टेड मीडिया "
-"की क्षमता नहीं है)।"
+"आप यहां VoIP खाता जोड़ सकते हैं। यह आपको SIP प्रोटोकॉल का उपयोग करके VoIP कॉल करने "
+"और प्राप्त करने की अनुमति देगा। यह सुविधा अभी भी अपेक्षाकृत नई है और अभी तक पूर्ण नहीं हुई "
+"है (अर्थात कोई कूटलेखित मीडिया नहीं है)।"
 
 #: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
 msgid "_Add Account"
-msgstr "खाता जोङें (_A)"
+msgstr "खाता जोड़ें (_A)"
 
 #. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:62
@@ -359,32 +362,32 @@ msgstr "कॉल करें"
 
 #: src/ui/call-record-row.ui:102
 msgid "_Delete Call"
-msgstr "कॉल हटाएँ (_D)"
+msgstr "कॉल मिटाएं (_D)"
 
 #. Translators: This is a phone number
 #: src/ui/call-record-row.ui:107
 msgid "_Copy number"
-msgstr "नंबर कॉपी करें"
+msgstr "नंबर कॉपी करें (_C)"
 
 #: src/ui/call-record-row.ui:112
 msgid "_Add contact"
-msgstr "संपर्क जोङें"
+msgstr "संपर्क जोड़ें (_A)"
 
 #: src/ui/call-record-row.ui:117
 msgid "_Send SMS"
-msgstr "SMS भेजें"
+msgstr "SMS भेजें (_S)"
 
 #: src/ui/call-selector-item.ui:38
 msgid "On hold"
-msgstr "होल्ड पर है"
+msgstr "होल्ड पर"
 
 #: src/ui/contacts-box.ui:60
 msgid "No Contacts Found"
-msgstr "कोई संपर्क नहीं पाए गए।"
+msgstr "कोई संपर्क नहीं मिला"
 
 #: src/ui/history-box.ui:10
 msgid "No Recent Calls"
-msgstr "कोई हाल ही का कॉल नहीं"
+msgstr "कोई हालिया कॉल नहीं"
 
 #: src/ui/main-window.ui:105
 msgid "USSD"
@@ -392,7 +395,7 @@ msgstr "USSD"
 
 #: src/ui/main-window.ui:114
 msgid "_Cancel"
-msgstr "रद्द (_C)"
+msgstr "रद्द करें (_C)"
 
 #: src/ui/main-window.ui:131
 msgid "_Close"
@@ -417,11 +420,11 @@ msgstr "मदद (_H)"
 #. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:239
 msgid "_About Calls"
-msgstr "'कॉल' का परिचय (_A)"
+msgstr "Calls के बारे में (_A)"
 
 #: src/ui/new-call-box.ui:38
 msgid "Enter a VoIP address"
-msgstr "एक VoIP पता भरें"
+msgstr "VoIP पता दर्ज करें"
 
 #: src/ui/new-call-box.ui:62
 msgid "SIP Account"
@@ -441,15 +444,15 @@ msgstr "अज्ञात कारण"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
-msgstr "आउटगोइंग कॉल शुरू की गई"
+msgstr "जावक कॉल प्रारंभ हुई"
 
 #: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
-msgstr "नई कॉल आ रही है"
+msgstr "नई आवक कॉल"
 
 #: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
-msgstr "कॉल स्वीकारित"
+msgstr "कॉल स्वीकृत"
 
 #: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
@@ -457,15 +460,15 @@ msgstr "कॉल समाप्त"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
-msgstr "कॉल डिसकनेक्ट हो गई (व्यस्त या कॉल अस्वीकृत कर दी गई)"
+msgstr "कॉल वियोजित (व्यस्त या कॉल अस्वीकृत)"
 
 #: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
-msgstr "कॉल डिसकनेक्ट हो गई (गलत ID या नेटवर्क समस्या)"
+msgstr "कॉल वियोजित (गलत ID या नेटवर्क समस्या)"
 
 #: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
-msgstr "कॉल डिसकनेक्ट हो गई (ऑडियो चैनल सेट करने में त्रुटि)"
+msgstr "कॉल वियोजित (ऑडियो चैनल तय करने में त्रुटि)"
 
 #. Translators: Transfer is for active or held calls
 #: plugins/provider/mm/calls-mm-call.c:82
@@ -475,21 +478,21 @@ msgstr "कॉल स्थानांतरित हो गई"
 #. Translators: Deflecting is for incoming or waiting calls
 #: plugins/provider/mm/calls-mm-call.c:84
 msgid "Call deflected"
-msgstr "कॉल डिफ़्लेक्ट हो गई"
+msgstr "कॉल विक्षेपित"
 
 #: plugins/provider/mm/calls-mm-call.c:109
 #, c-format
 msgid "Call disconnected (unknown reason code %i)"
-msgstr "कॉल डिसकनेक्ट हो गया (अज्ञात त्रुटि कोड %i)"
+msgstr "कॉल विक्षेपित (अज्ञात कारण कोड %i)"
 
 #: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
-msgstr "ModemManager उपलब्ध नहीं है।"
+msgstr "ModemManager अनुपलब्ध"
 
 #: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
-msgstr "कोई आवाज़-सक्षम मॉडेम उपलब्ध नहीं है"
+msgstr "कोई आवाज-सक्षम मॉडेम उपलब्ध नहीं है"
 
 #: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
@@ -503,20 +506,20 @@ msgstr "आरंभीकृत"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
-msgstr "DBus उपलब्ध नहीं है।"
+msgstr "DBus अनुपलब्ध"
 
 #: plugins/provider/sip/calls-sip-account-widget.c:668
 msgid "No encryption"
-msgstr "कोई इंक्रिपशन नहीं"
+msgstr "कोई कूटलेखन नहीं"
 
 #. TODO Optional encryption
 #: plugins/provider/sip/calls-sip-account-widget.c:675
 msgid "Force encryption"
-msgstr "इंक्रिपशन बलपूर्वक लागू करें"
+msgstr "बलपूर्वक कूटलेखन"
 
 #: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
-msgstr "क्रिप्टोग्राफ़िक कुंजी लेन-देन असफल"
+msgstr "गूढ़लेखन कुंजी विनिमय असफल"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
 msgid "Add Account"
@@ -524,7 +527,7 @@ msgstr "खाता जोङें"
 
 #: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
-msgstr "लॉगिन करें (_L)"
+msgstr "लॉगिन (_L)"
 
 #: plugins/provider/sip/sip-account-widget.ui:42
 msgid "Manage Account"
@@ -536,7 +539,7 @@ msgstr "लागू करें (_A)"
 
 #: plugins/provider/sip/sip-account-widget.ui:61
 msgid "_Delete"
-msgstr "हटाएँ (_D)"
+msgstr "मिटाएं (_D)"
 
 #: plugins/provider/sip/sip-account-widget.ui:91
 msgid "Server"
@@ -544,7 +547,7 @@ msgstr "सर्वर"
 
 #: plugins/provider/sip/sip-account-widget.ui:109
 msgid "Display Name"
-msgstr "प्रदर्शित नाम"
+msgstr "प्रदर्शन नाम"
 
 #: plugins/provider/sip/sip-account-widget.ui:110
 msgid "Optional"
@@ -552,7 +555,7 @@ msgstr "वैकल्पिक"
 
 #: plugins/provider/sip/sip-account-widget.ui:128
 msgid "User ID"
-msgstr "उपयोगक्ता ID"
+msgstr "उपयोक्ता ID"
 
 #: plugins/provider/sip/sip-account-widget.ui:141
 msgid "Password"
@@ -565,16 +568,16 @@ msgstr "पोर्ट"
 # "Transport" here means "transport protocol which are tls, udp, etc. So instead of 'यातायात', 'संचार' is more apt.
 #: plugins/provider/sip/sip-account-widget.ui:182
 msgid "Transport"
-msgstr "संचार"
+msgstr "परिवहन"
 
 #: plugins/provider/sip/sip-account-widget.ui:189
 msgid "Media Encryption"
-msgstr "मीडिया इंक्रिपशन"
+msgstr "मीडिया कूटलेखन"
 
 #: plugins/provider/sip/sip-account-widget.ui:201
 msgid "Use for Phone Calls"
-msgstr "फ़ोन कॉल के लिए प्रयोग करें"
+msgstr "फोन कॉल के लिए प्रयोग करें"
 
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
-msgstr "स्वत: संबंध जोङें"
+msgstr "स्वत: जुड़ें"
