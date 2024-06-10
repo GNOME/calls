@@ -59,6 +59,16 @@ libcall_ui_dep = dependency('call-ui',
   default_options: ['tests=false', 'examples=false', 'gtk_doc=false'],
 )
 
+systemd_user_unit_dir = get_option('systemd_user_unit_dir')
+systemd_dep = dependency('systemd', required: false)
+if systemd_user_unit_dir == ''
+  if systemd_dep.found()
+    systemd_user_unit_dir = systemd_dep.get_variable('systemd_user_unit_dir')
+  else
+    systemd_user_unit_dir = prefix / libdir / 'systemd/user'
+  endif
+endif
+
 config_data = configuration_data()
 config_data.set_quoted('APP_ID', calls_id)
 config_data.set_quoted('APP_DATA_NAME', calls_name)
@@ -145,6 +155,7 @@ summary({
   'Build manpages': get_option('manpages'),
   'Build tests': get_option('tests'),
   'Use gstreamers debug API': get_option('gst_debug'),
+  'Directory for systemd user units': systemd_user_unit_dir,
 })
 
 subdir('po')

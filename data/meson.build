@@ -20,17 +20,27 @@ desktop_daemon_file = i18n.merge_file(
   install_dir : join_paths(sysconfdir, 'xdg/autostart')
 )
 
-# DBus service
 service_data = configuration_data()
 service_data.set('bindir', full_bindir)
-service_file = 'org.gnome.Calls.service'
 
+# DBus service
+service_file = 'org.gnome.Calls.service'
 configure_file(
   input : service_file + '.in',
   output : service_file,
   configuration : service_data,
   install : true,
   install_dir : full_servicedir,
+)
+
+# Systemd user service
+systemd_unit = 'calls-daemon.service'
+configure_file(
+  input : systemd_unit + '.in',
+  output : systemd_unit,
+  configuration : service_data,
+  install : true,
+  install_dir : systemd_user_unit_dir,
 )
 
 desktop_utils = find_program('desktop-file-validate', required: false)

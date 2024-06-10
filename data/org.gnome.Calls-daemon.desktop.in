@@ -15,3 +15,4 @@ Terminal=false
 Categories=Network;GNOME;GTK;Telephony;
 X-GNOME-AutoRestart=true
 X-GNOME-UsesNotifications=true
+X-GNOME-HiddenUnderSystemd=true

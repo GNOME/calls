@@ -13,3 +13,7 @@ option('manpages',
 option('gst_debug',
        type: 'boolean', value: true,
        description: 'Whether to use gstreamers debugging API')
+
+option('systemd_user_unit_dir',
+       type: 'string', value: '',
+       description: 'Directory for systemd user units')

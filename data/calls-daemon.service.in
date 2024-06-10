@@ -1,0 +1,11 @@
+[Unit]
+Description=A phone dialer and call handler (daemon mode)
+PartOf=graphical-session.target
+
+[Service]
+BusName=org.gnome.Calls
+ExecStart=@bindir@/gnome-calls --daemon
+Type=dbus
+
+[Install]
+WantedBy=graphical-session.target
