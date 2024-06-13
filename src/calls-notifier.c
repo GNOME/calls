@@ -59,9 +59,7 @@ notify (CallsNotifier *self, CuiCall *call)
   gboolean got_id;
   gboolean got_contact;
 
-#if GLIB_CHECK_VERSION (2,70,0)
   g_notification_set_category (notification, "x-gnome.call.unanswered");
-#endif
   /* TODO: We need to update the notification when the contact name changes
      We would need to resend the notification in this case, as changing the properties
      after having called g_application_send_notification() will have no effect.
