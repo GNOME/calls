@@ -58,6 +58,10 @@ typedef enum {
   CALLS_CALL_TYPE_SIP_VOICE,
 } CallsCallType;
 
+/**
+ * CallsCallClass:
+ * @hang_up: Called to hang up a call.
+ */
 struct _CallsCallClass {
   GObjectClass parent_class;
 
@@ -88,6 +92,7 @@ void           calls_call_hang_up                (CallsCall *self);
 gboolean       calls_call_can_dtmf               (CallsCall *self);
 void           calls_call_send_dtmf_tone         (CallsCall *self,
                                                   char       key);
+gboolean       calls_call_get_we_hung_up         (CallsCall *self);
 
 gboolean       calls_call_state_parse_nick (CallsCallState *state,
                                             const char     *nick);

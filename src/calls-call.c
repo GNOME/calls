@@ -73,6 +73,7 @@ typedef struct {
   gboolean       inbound;
   gboolean       encrypted;
   CallsCallType  call_type;
+  gboolean       hung_up;
 } CallsCallPrivate;
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (CallsCall, calls_call, G_TYPE_OBJECT)
@@ -511,7 +512,12 @@ calls_call_answer (CallsCall *self)
 void
 calls_call_hang_up (CallsCall *self)
 {
+  CallsCallPrivate *priv;
+
   g_return_if_fail (CALLS_IS_CALL (self));
+  priv = calls_call_get_instance_private (self);
+
+  priv->hung_up = TRUE;
 
   CALLS_CALL_GET_CLASS (self)->hang_up (self);
 }
@@ -649,4 +655,23 @@ calls_call_set_encrypted (CallsCall *self,
   priv->encrypted = encrypted;
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_ENCRYPTED]);
+}
+
+/**
+ * calls_call_get_we_hung_up:
+ * @self: The call
+ *
+ * Get whether we hung up or the remote side.
+ *
+ * Returns: `TRUE` if we hung up, otherwise `FALSE`
+ */
+gboolean
+calls_call_get_we_hung_up (CallsCall *self)
+{
+  CallsCallPrivate *priv;
+
+  g_return_val_if_fail (CALLS_IS_CALL (self), FALSE);
+  priv = calls_call_get_instance_private (self);
+
+  return priv->hung_up;
 }
