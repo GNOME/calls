@@ -24,7 +24,7 @@ project(
   'c', 'vala',
   version: '46.0',
   license: 'GPLv3+',
-  meson_version: '>= 0.56.0',
+  meson_version: '>= 1.0',
   default_options: [
     'warning_level=1',
     'buildtype=debugoptimized',
@@ -139,6 +139,13 @@ add_project_arguments(
   global_c_args,
   language: 'c'
 )
+
+summary({
+  'Build documentation': get_option('gtk_doc'),
+  'Build manpages': get_option('manpages'),
+  'Build tests': get_option('tests'),
+  'Use gstreamers debug API': get_option('gst_debug'),
+})
 
 subdir('po')
 subdir('src')
