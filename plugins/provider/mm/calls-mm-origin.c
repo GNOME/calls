@@ -882,13 +882,18 @@ get_sim_ready_cb (MMModem      *modem,
                   GAsyncResult *res,
                   gpointer      user_data)
 {
+  g_autoptr (GError) err = NULL;
   g_autoptr (CallsMMOrigin) self = NULL;
   const char *code;
 
   g_assert (CALLS_IS_MM_ORIGIN (user_data));
   self = CALLS_MM_ORIGIN (user_data);
 
-  self->sim = mm_modem_get_sim_finish (modem, res, NULL);
+  self->sim = mm_modem_get_sim_finish (modem, res, &err);
+  if (!self->sim) {
+    g_warning ("Couldn't get sim: %s", err->message);
+    return;
+  }
 
   code = get_country_iso_for_mcc (mm_sim_get_imsi (self->sim));
   if (code && g_strcmp0 (self->country_code, code)) {
