@@ -218,7 +218,8 @@ remove_calls (CallsSipOrigin *self,
 
   g_hash_table_remove_all (self->call_handles);
 
-  g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
+  if (self->oper)
+    g_clear_pointer (&self->oper->call_handle, nua_handle_unref);
 }
 
 
