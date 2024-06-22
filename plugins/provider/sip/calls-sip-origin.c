@@ -1267,8 +1267,12 @@ deinit_sip_account (CallsSipOrigin *self)
 static void
 recreate_sip (CallsSipOrigin *self)
 {
-  if (deinit_sip_account (self))
-    init_sip_account (self, NULL);
+  if (deinit_sip_account (self)) {
+    g_autoptr (GError) err = NULL;
+
+    if (!init_sip_account (self, &err))
+      g_warning ("Failed to re-init sip account: %s", err->message);
+  }
 }
 
 
