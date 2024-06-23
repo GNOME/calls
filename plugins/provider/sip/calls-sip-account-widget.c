@@ -65,18 +65,18 @@ struct _CallsSipAccountWidget {
   GtkWidget        *delete_btn;
 
   /* widgets for editing account credentials */
-  GtkEntry         *host;
-  GtkEntry         *display_name;
-  GtkEntry         *user;
-  GtkEntry         *password;
-  GtkEntry         *port;
+  AdwEntryRow      *host;
+  AdwEntryRow      *display_name;
+  AdwEntryRow      *user;
+  AdwEntryRow      *password;
+  AdwEntryRow      *port;
   char             *last_port;
   AdwComboRow      *protocol;
   GtkStringList    *protocols_store; /* bound model for protocol AdwComboRow */
   AdwComboRow      *media_encryption;
   GListStore       *media_encryption_store;
-  GtkSwitch        *tel_switch;
-  GtkSwitch        *auto_connect_switch;
+  AdwSwitchRow     *tel_switch;
+  AdwSwitchRow     *auto_connect_switch;
 
 
   /* properties */
@@ -188,13 +188,13 @@ on_port_entry_insert_text (CallsSipAccountWidget *self,
                            char                  *new_text,
                            int                    new_text_length,
                            gpointer               position,
-                           GtkEntry              *entry)
+                           AdwEntryRow           *entry)
 {
   size_t digit_end, len;
   int *pos;
 
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
-  g_assert (GTK_IS_ENTRY (entry));
+  g_assert (ADW_IS_ENTRY_ROW (entry));
 
   if (!new_text || !*new_text || self->port_self_change)
     return;
@@ -223,7 +223,7 @@ on_port_entry_insert_text (CallsSipAccountWidget *self,
 
 
 static gboolean
-update_port_cursor_position (GtkEntry *entry)
+update_port_cursor_position (AdwEntryRow *entry)
 {
   int pos;
 
@@ -252,7 +252,7 @@ on_port_entry_after_insert_text (CallsSipAccountWidget *self,
                                  char                  *new_text,
                                  int                    new_text_length,
                                  gpointer               position,
-                                 GtkEntry              *entry)
+                                 AdwEntryRow           *entry)
 {
   int port = get_port (self);
 
@@ -357,8 +357,8 @@ clear_form (CallsSipAccountWidget *self)
   adw_combo_row_set_selected (self->protocol, 0);
   gtk_widget_set_sensitive (GTK_WIDGET (self->media_encryption), FALSE);
   adw_combo_row_set_selected (self->media_encryption, 0);
-  gtk_switch_set_state (self->tel_switch, FALSE);
-  gtk_switch_set_state (self->auto_connect_switch, TRUE);
+  adw_switch_row_set_active (self->tel_switch, FALSE);
+  adw_switch_row_set_active (self->auto_connect_switch, TRUE);
 
   self->origin = NULL;
 
@@ -429,8 +429,8 @@ edit_form (CallsSipAccountWidget *self,
   gtk_editable_set_text (GTK_EDITABLE (self->port), port_str);
   adw_combo_row_set_selected (self->protocol, protocol_index);
   adw_combo_row_set_selected (self->media_encryption, encryption_index);
-  gtk_switch_set_state (self->tel_switch, can_tel);
-  gtk_switch_set_state (self->auto_connect_switch, auto_connect);
+  adw_switch_row_set_active (self->tel_switch, can_tel);
+  adw_switch_row_set_active (self->auto_connect_switch, auto_connect);
 
   gtk_widget_set_sensitive (self->apply_btn, FALSE);
 
@@ -492,8 +492,8 @@ on_apply_clicked (CallsSipAccountWidget *self)
                                     get_selected_protocol (self),
                                     get_port (self),
                                     get_selected_media_encryption (self),
-                                    gtk_switch_get_state (self->tel_switch),
-                                    gtk_switch_get_state (self->auto_connect_switch));
+                                    adw_switch_row_get_active (self->tel_switch),
+                                    adw_switch_row_get_active (self->auto_connect_switch));
 
   update_header (self);
   calls_sip_provider_save_accounts_to_disk (self->provider);

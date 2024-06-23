@@ -52,14 +52,9 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwEntryRow" id="host">
                     <property name="title" translatable="yes">Server</property>
-                    <child>
-                      <object class="GtkEntry" id="host">
-                        <property name="valign">center</property>
-                        <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -67,15 +62,9 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
-                    <property name="title" translatable="yes">Display Name</property>
-                    <property name="subtitle" translatable="yes">Optional</property>
-                    <child>
-                      <object class="GtkEntry" id="display_name">
-                        <property name="valign">center</property>
-                        <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                  <object class="AdwEntryRow" id="display_name">
+                    <property name="title" translatable="yes">Display Name (Optional)</property>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -83,26 +72,15 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwEntryRow" id="user">
                     <property name="title" translatable="yes">User ID</property>
-                    <child>
-                      <object class="GtkEntry" id="user">
-                        <property name="valign">center</property>
-                        <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwPasswordEntryRow" id="password">
                     <property name="title" translatable="yes">Password</property>
-                    <child>
-                      <object class="GtkPasswordEntry" id="password">
-                        <property name="valign">center</property>
-                        <property name="show-peek-icon">True</property>
-                        <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
@@ -110,17 +88,12 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwEntryRow" id="port">
                     <property name="title" translatable="yes">Port</property>
-                    <child>
-                      <object class="GtkEntry" id="port">
-                        <property name="valign">center</property>
-                        <property name="input-purpose">digits</property>
-                        <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                        <signal name="insert-text" handler="on_port_entry_insert_text" swapped="yes"/>
-                        <signal name="insert-text" handler="on_port_entry_after_insert_text" swapped="yes" after="yes"/>
-                      </object>
-                    </child>
+                    <property name="input-purpose">digits</property>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
+                    <signal name="insert-text" handler="on_port_entry_insert_text" swapped="yes"/>
+                    <signal name="insert-text" handler="on_port_entry_after_insert_text" swapped="yes" after="yes"/>
                   </object>
                 </child>
                 <child>
@@ -140,25 +113,15 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwSwitchRow" id="tel_switch">
                     <property name="title" translatable="yes">Use for Phone Calls</property>
-                    <child>
-                      <object class="GtkSwitch" id="tel_switch">
-                        <property name="valign">center</property>
-                        <signal name="notify::active" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                    <signal name="notify::active" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwSwitchRow" id="auto_connect_switch">
                     <property name="title" translatable="yes">Automatically Connect</property>
-                    <child>
-                      <object class="GtkSwitch" id="auto_connect_switch">
-                        <property name="valign">center</property>
-                        <signal name="notify::active" handler="on_user_changed" swapped="yes"/>
-                      </object>
-                    </child>
+                    <signal name="notify::active" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
