@@ -2,23 +2,23 @@
 # Copyright (C) 2021 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021-2022.
-# Nathan Follens <nfollens@gnome.org>, 2021-2023.
+# Nathan Follens <nfollens@gnome.org>, 2021-2024.
 # Philip Goto, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-09-01 18:17+0000\n"
-"PO-Revision-Date: 2023-09-03 15:28+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-18 17:29+0100\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
-"Language-Team: GNOME-NL <https://matrix.to/#/#nl:gnome.org>\n"
+"Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -62,13 +62,18 @@ msgstr ""
 "GNOME. Oproepen kan gebruikt worden met een mobiele modem voor goede oude "
 "telefoongesprekken, evenals VoIP-oproepen met het SIP-protocol."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Een oproep plaatsen"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "De oproepgeschiedenis"
 
@@ -267,19 +272,19 @@ msgstr ""
 "%s\n"
 "gisteren"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Politie"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Ambulance"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Brandweer"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Bergreddingsdienst"
 

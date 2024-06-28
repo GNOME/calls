@@ -1,15 +1,15 @@
 # Hungarian translation for calls.
-# Copyright (C) 2020, 2022, 2023 Free Software Foundation, Inc.
+# Copyright (C) 2020, 2022, 2023, 2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the calls package.
 #
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2020.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2022, 2023.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-07-20 21:15+0000\n"
-"PO-Revision-Date: 2023-07-25 23:40+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-16 22:02+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -59,13 +59,18 @@ msgstr ""
 "Használható mobilmodemmel egyszerű, régi telefonhívásokhoz, valamint a SIP-"
 "protokollt használó VoIP-hívásokhoz."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Hívás indítása"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "A hívás előzményei"
 
@@ -223,7 +228,6 @@ msgid "Don't know how to open `%s'"
 msgstr "Nem tudni, hogyan kell megnyitni a következőt: „%s”"
 
 #: src/calls-application.c:812
-#| msgid "The name of the plugin to use as a call provider"
 msgid "The name of the plugins to load"
 msgstr "A betöltendő bővítmények neve"
 
@@ -264,19 +268,19 @@ msgstr ""
 "%s\n"
 "tegnap"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Rendőrség"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Mentőszolgálat"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Tűzoltóság"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Hegyi mentőszolgálat"
 

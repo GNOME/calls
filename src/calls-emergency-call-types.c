@@ -68,6 +68,13 @@ CallsEmergencyNumberTypes emergency_number_types[] = {
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
+  { "CZ",
+    {
+      { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
+		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
+		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
+    }
+  },
   { "DE",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |

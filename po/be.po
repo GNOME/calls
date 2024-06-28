@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-22 14:55+0000\n"
-"PO-Revision-Date: 2023-07-29 16:04+0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-14 17:30+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -60,13 +60,18 @@ msgstr ""
 "для GNOME. Праграму можна выкарыстоўваць з мадэмам сотавай сувязі для "
 "звычайнага тэлефанавання, а таксама для выклікаў праз VoIP па пратаколе SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Выконваецца выклік"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "Гісторыя выклікаў"
 
@@ -261,19 +266,19 @@ msgstr ""
 "%s\n"
 "учора"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Міліцыя (паліцыя)"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Хуткая медыцынская дапамога"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Пажарная служба"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Горнавыратавальная служба"
 

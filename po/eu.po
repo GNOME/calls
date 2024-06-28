@@ -1,13 +1,13 @@
 # Basque translation for calls.
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2022, 2023.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2022, 2023, 2024.
 #
 msgid ""
 msgstr "Project-Id-Version: calls main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-08-02 09:34+0000\n"
-"PO-Revision-Date: 2023-08-05 14:04+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-22 14:04+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -52,13 +52,18 @@ msgid ""
 "calls using the SIP protocol."
 msgstr "Deiak aplikazioa GNOME ingurunerako telefono-markatzaile eta dei-kudeatzaile sinplea da. Sare mugikorraren bidez betiko telefono-deiak egiteko erabili daiteke, edo SIP protokoloaren bidez VoIP deiak egiteko."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Deitzen"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "Deien historia"
 
@@ -249,19 +254,19 @@ msgid ""
 msgstr "%s\n"
 "atzo"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Polizia"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Anbulantzia"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Suhiltzaileak"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Mendiko erreskatea"
 

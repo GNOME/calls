@@ -1,11 +1,11 @@
 # Marc Riera <marcriera@softcatala.org>, 2020.
-#Jordi Mas i Hernàndez <jmas@sofcatala.org>, 2023
+# Jordi Mas i Hernàndez <jmas@sofcatala.org>, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-28 05:41+0000\n"
-"PO-Revision-Date: 2023-05-28 18:35+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-14 23:11+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@sofcatala.org>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -27,8 +27,7 @@ msgstr "Telèfon"
 msgid "A phone dialer and call handler"
 msgstr "Marcador telefònic i gestor de trucades"
 
-#. Translators: Search terms to find this application. Do NOT translate or
-#. localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telèfon;Trucada;Teclat;Marcador;XTC;"
@@ -51,17 +50,22 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Trucades és un gestor de trucades per al GNOME. Es pot usar amb un mòbil per"
-" a les trucades de tota la vida com també per a trucader VoIP usant el "
+"Trucades és un gestor de trucades per al GNOME. Es pot usar amb un mòbil per "
+"a les trucades de tota la vida com també per a trucader VoIP usant el "
 "protocol SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Establint una trucada"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "Històric de trucades"
 
@@ -259,19 +263,19 @@ msgstr ""
 "%s\n"
 "ahir"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Policia"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Ambulància"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Bombers"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Rescat de muntanya"
 
@@ -351,8 +355,7 @@ msgstr ""
 msgid "_Add Account"
 msgstr "_Afegeix compte"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently
-#. selected row.
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
 #: src/ui/call-record-row.ui:62
 msgid "Call"
 msgstr "Trucada"

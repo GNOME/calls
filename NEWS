@@ -1,3 +1,51 @@
+Calls 46.0
+----------
+Released: March 2024
+* Metainfo improvements
+* Add available emergency numbers by location (country code)
+* Fix call back button being insensitive
+* Issues fixed:
+  * https://gitlab.gnome.org/GNOME/calls/-/issues/601
+* Contributors:
+    * Daniel Rusek
+    * Eugenio Paolantonio (g7)
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+    * Sabri Ünal
+* UI translations:
+    * Alan Mortensen (da)
+    * Anders Jonsson (sv)
+    * Andi Chandler (en_GB)
+    * Artur S0 (ru)
+    * Asier Sarasua Garmendia (eu)
+    * Athmane MOKRAOUI (kab)
+    * Aurimas Černius (lt)
+    * Balázs Úr (hu)
+    * Changwoo Ryu (ko)
+    * Danial Behzadi (fa)
+    * Daniel Mustieles (es)
+    * Daniel Șerbănescu (ro)
+    * Ekaterine Papava (ka)
+    * Fran Dieguez (gl)
+    * Irénée THIRION (fr)
+    * Jiri Grönroos (fi)
+    * Jordi Mas i Hernandez (ca)
+    * Jürgen Benvenuti (de)
+    * Kristjan SCHMIDT (eo)
+    * Kukuh Syafaat (id)
+    * Leônidas Araújo (pt_BR)
+    * Marek Černocký (cs)
+    * Matej Urbančič (sl)
+    * Nathan Follens (nl)
+    * Piotr Drąg (pl)
+    * Rūdolfs Mazurs (lv)
+    * Sabri Ünal (tr)
+    * Vasil Pupkin (be)
+    * Yaron Shahrabani (he)
+    * Yuri Chornoivan (uk)
+    * zayar lwin (my)
+    * Марко Костић (sr)
+
 Calls 45.0
 ----------
 Released: September 2023

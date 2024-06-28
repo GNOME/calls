@@ -5,21 +5,27 @@
 # Thibault Martin <mail@thibaultmart.in>, 2020-2022.
 # Éloi Rivard <eloi.rivard@nubla.fr>, 2022
 # Claude Paroz <claude@2xlibre.net>, 2022
+# Irénée THIRION <irenee.thirion@e.email>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-08-07 16:09+0000\n"
-"PO-Revision-Date: 2023-09-07 21:41+0200\n"
-"Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-02-11 10:02+0000\n"
+"PO-Revision-Date: 2024-02-25 15:05+0100\n"
+"Last-Translator: Irénée THIRION <irenee.thirion@e.email>\n"
+"Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 45.3\n"
+"X-DL-Lang: fr\n"
+"X-DL-Module: calls\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
@@ -63,13 +69,18 @@ msgstr ""
 "des appels. Elle peut être utilisée avec le modem de téléphones portables "
 "aussi bien qu’avec le protocole SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:34
 msgid "Placing a call"
 msgstr "Passer un appel"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:39
 msgid "The call history"
 msgstr "Historique des appels"
 
@@ -263,19 +274,19 @@ msgstr ""
 "%s\n"
 "hier"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:250
 msgid "Police"
 msgstr "Police"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:253
 msgid "Ambulance"
 msgstr "Ambulance"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:256
 msgid "Fire Brigade"
 msgstr "Pompiers"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:259
 msgid "Mountain Rescue"
 msgstr "Secours en montagne"
 
@@ -581,54 +592,3 @@ msgstr "Utiliser pour les appels téléphoniques"
 #: plugins/provider/sip/sip-account-widget.ui:214
 msgid "Automatically Connect"
 msgstr "Connecter automatiquement"
-
-#~ msgid "Enter a number"
-#~ msgstr "Composer un numéro"
-
-#~ msgid "Dial"
-#~ msgstr "Composer"
-
-#~ msgid "Delete character in front of cursor"
-#~ msgstr "Supprime le caractère devant le curseur"
-
-#~ msgid "Calling…"
-#~ msgstr "Appel…"
-
-#~ msgid "Can't place calls: No SIM card"
-#~ msgstr "Impossible d’appeler : pas de carte SIM"
-
-#~ msgid "Mute"
-#~ msgstr "Muet"
-
-#~ msgid "Speaker"
-#~ msgstr "Haut-parleur"
-
-#~ msgid "Hold"
-#~ msgstr "Mettre en attente"
-
-#~ msgid "Hang up"
-#~ msgstr "Raccrocher"
-
-#~ msgid "Answer"
-#~ msgstr "Répondre"
-
-#~ msgid "Hide the dial pad"
-#~ msgstr "Masquer le pavé numérique"
-
-#~ msgid "Call the party"
-#~ msgstr "Appeler le correspondant"
-
-#~ msgid "This call is not encrypted"
-#~ msgstr "Cet appel n’est pas chiffré"
-
-#~ msgid "Recent Calls"
-#~ msgstr "Appels récents"
-
-#~ msgid "New call…"
-#~ msgstr "Nouvel appel…"
-
-#~ msgid "No modem found"
-#~ msgstr "Pas de modem détecté"
-
-#~ msgid "Backspace through number"
-#~ msgstr "Effacer un chiffre du numéro"

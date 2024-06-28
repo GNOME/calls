@@ -601,12 +601,6 @@ calls_manager_init (CallsManager *self)
   self->origins = g_list_store_new (G_TYPE_LIST_MODEL); /* list of lists */
   self->origins_flat = gtk_flatten_list_model_new (CALLS_TYPE_ORIGIN, G_LIST_MODEL (self->origins));
 
-  g_signal_connect_object (self->origins_flat,
-                           "items-changed",
-                           G_CALLBACK (on_origins_changed),
-                           self,
-                           0);
-
   providers = calls_plugin_manager_get_providers (plugin_manager);
   g_signal_connect_object (providers,
                            "items-changed",
@@ -632,6 +626,12 @@ calls_manager_init (CallsManager *self)
                          (gpointer) protocols[i],
                          f_list);
   }
+
+  g_signal_connect_object (self->origins_flat,
+                           "items-changed",
+                           G_CALLBACK (on_origins_changed),
+                           self,
+                           0);
 
   self->dial_actions_by_protocol = g_hash_table_new_full (g_str_hash,
                                                           g_str_equal,

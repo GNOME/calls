@@ -21,6 +21,12 @@
     <launchable type="desktop-id">org.gnome.Calls.desktop</launchable>
     <translation type="gettext">calls</translation>
 
+  <!-- developer_name tag deprecated with Appstream 1.0 -->
+  <developer_name>Julian Sparber, Evangelos Ribeiro Tzaras</developer_name>
+    <developer id="sm.puri">
+      <name>Julian Sparber, Evangelos Ribeiro Tzaras</name>
+    </developer>
+
     <screenshots>
       <screenshot type="default">
         <!-- Translators: A screenshot description. -->
@@ -63,6 +69,14 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="46.0" date="2024-03-14">
+        <description>
+          <p>
+            This release improves emergency call support by adding emergency numbers based
+            on the country the device is currently in.
+          </p>
+        </description>
+      </release>
       <release version="45.0" date="2023-09-23">
         <description>
           <p>
