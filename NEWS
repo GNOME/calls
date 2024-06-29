@@ -1,3 +1,22 @@
+Calls 47.alpha.0
+----------------
+Released: June 2024
+* GTK4 Port
+* Fix crash when Modem has no location services
+* Fix crash when SIP handles have never gotten set up
+* Issues fixed:
+  * https://gitlab.gnome.org/GNOME/calls/-/issues/641
+* Contributors:
+    * Anton Lazarev
+    * Guido Günther
+* UI translations:
+    * A S Alam (pa)
+    * Aefgh Threenine (th)
+    * Vittorio Monti (it)
+    * Scrambled 777 (hi)
+    * Pawan Chitrakar (ne)
+
+
 Calls 46.0
 ----------
 Released: March 2024

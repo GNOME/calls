@@ -1,3 +1,127 @@
+gnome-calls (47~alpha.0) unstable; urgency=medium
+
+  [ A S Alam ]
+  * Update Punjabi translation
+
+  [ Aefgh Threenine ]
+  * Add Thai translation
+
+  [ Anton Lazarev ]
+  * history-box: compose with GtkBin instead of subclassing GtkStack
+  * in-app-notification: compose with GtkBin instead of subclassing GtkRevealer
+  * sip-account-widget: compose with GtkBin instead of subclassing GtkBox
+  * calls-new-call-box: compose with GtkBin instead of subclassing GtkBox
+  * meson: Bump gtk dependency to 4.0
+  * libcall-ui: bump version to v0.2.0
+  * ci: replace NO_AT_BRIDGE with GTK_A11Y
+  * gtklistmodels: remove gtklistmodels polyfills
+  * treewide: Subclass custom classes from GtkWidget
+  * treewide: Replace libhandy with libadwaita
+  * treewide: Remove GtkEventBox
+  * treewide: GtkEntry -> GtkEditable
+  * treewide: Remove icon size from constructors
+  * calls-best-match: AdwAvatar API changes
+  * treewide: Replace hide/show with set_visible
+  * treewide: `gtk_widget_destroy()` removal
+  * calls-application: Unconditionally use `AdwStyleManager`
+  * calls-main-window: Adapt to GtkContainer removal
+  * calls-main-window: Adapt to GTKWidget's size allocation changes
+  * calls-application: Stop using GdkScreen
+  * calls-sip-account-widget: Stop using `HdyValueObject` and adapt to `AdwComboRow` API changes
+  * calls-new-call-box: adapt to `AdwComboRow` API changes
+  * calls-application: Replace GtkClipboard with GdkClipboard
+  * calls-call-window: Adapt to GtkContainer removal
+  * calls-account-overview: Adapt to GtkBin/GtkContainer removal
+  * calls-contacts-box: Adapt to GtkContainer removal
+  * calls-contacts-box: Stop using GtkShadowType property
+  * calls-account-overview: Adapt to event controller API changes
+  * calls-call-record-row: Adapt to GtkPopover changes
+  * calls-call-window: Adapt to GtkBin removal
+  * calls-call-record-row: Adapt to event controller API changes
+  * calls-call-record-row: migrate button-press-event to GtkGestureClick
+  * calls-call-record-row: Stop using Gtk.Widget::popup-menu
+  * calls-contacts-row: AdwAvatar API changes
+  * calls-call-selector-item: Adapt to `GtkBox` API changes
+  * calls-new-call-box: `gtk_widget_get_toplevel` has been removed
+  * calls-record-store: GtkApplicationWindow is not a GListModel
+  * ui: gtk4-builder-tool simplify --3to4 --replace *.ui
+  * main-window: Stop using GtkContainer::border-width
+  * main-window: Adapt to View Switcher API Changes
+  * stylesheet: Don't use -gtk-outline-...-radius
+  * treewide: Dispose and layout manager implementations
+  * treewide: remove `<packing>` from Adwaita widgets
+  * new-call-box: Stop using `GtkButton`'s image-related API
+  * treewide: Adapt to `GtkHeaderBar` API changes
+  * treewide: Replace gtk_widget_hide_on_delete with hide-on-close property
+  * treewide: Remove GtkWindow::hide-titlebar-when-maximized
+  * call-window: Remove no-show-all property
+  * main-window: Stop setting `::has-default`
+  * main-window: Replace vbox internal-child with content_area
+  * main-window: Use menu model for app menu popover
+  * history-box: expand to fill available horizontal space
+  * calls-account-overview: Use `content` property for `AdwWindow`
+  * sip-account-widget: move GtkSizeGroup out of child
+  * call-record-row: Accessible role changes
+  * calls-in-app-notification: migrate to AdwToastOverlay
+  * treewide: Use AdwToolbarView for all windows with header bars
+  * treewide: Replace "content" style class with "boxed-list"
+  * treewide: Remove unused placeholder elements
+  * call-window: receives_default is already true for buttons
+  * treewide: image-button style class is automatically handled by GTK
+  * treewide: Use `GtkButton:icon-name` instead of manual `GtkImage` child
+  * contacts-box: Use `title-1` instead of `large-title`
+  * main-window: Set `menu-model` directly on the `GtkMenuButton`
+  * calls-application: subclass `AdwApplication`
+  * calls-main-window: Widgets are visible by default
+  * call-selector-item: Remove misc unavailable properties
+  * treewide: Remove `visible=True` on adwaita widgets
+  * call-record-row: Improve event handling
+  * call-record-row: Fix layout
+  * call-window: Remove superfluous `GtkViewport`
+  * treewide: Parent from `AdwBin` where possible
+  * main-window: Replace `AdwViewSwitcherTitle`
+  * contacts-box: Use `AdwStatusPage` for the placeholder
+  * contacts-box: Use `AdwToolbarView` with search as top bar
+  * treewide: Ensure memory is not disposed multiple times
+  * new-call-box: Expand to fill horizontal width
+  * build: Specify required GTK version
+  * sip-account-widget: Use GtkPasswordEntry
+  * treewide: Remove `requires` glade-isms from ui definitions
+  * calls-contacts-box: Migrate to `GListModel`
+  * sip-account-widget: Remove set_password_visibility
+  * build: Use gtk4.10, libadwaita 1.3
+  * treewide: Replace StyleContext with GtkWidget CSS operations
+  * main-window: Change GtkDialog to GtkWindow
+  * treewide: Use gtk4.12, libadwaita 1.4
+  * about: Switch to AdwAboutWindow
+  * main-window: Use `AdwBanner` for the permanent error label
+  * sip-account-widget: Use adwaita rows for server settings
+
+  [ Julian Sparber ]
+  * Remove Julian Sparber as maintainer
+
+  [ Guido Günther ]
+  * mm-origin: Don't crash when Modem has no location services
+  * ci: Simplify image updates
+  * ci: Update image
+  * mm-origin: Handle missing SIM case more gracefully
+  * build: Add summary
+  * calls-ringer: Don't restart when feedback got ended explicitly
+  * sip: Don't crash when handles never got set up
+  * sip: Don't drop errors when recreating sip account
+
+  [ Vittorio Monti ]
+  * Update Italian translation
+
+  [ Scrambled 777 ]
+  * Update Hindi translation
+
+  [ Pawan Chitrakar ]
+  * Add Nepali translation
+  * Update Nepali translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 29 Jun 2024 10:11:02 +0200
+
 gnome-calls (46.0) unstable; urgency=medium
 
   [ Sabri Ünal ]
