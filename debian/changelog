@@ -1,3 +1,40 @@
+gnome-calls (46.3) unstable; urgency=medium
+
+  [ Rūdolfs Mazurs ]
+  * Add Latvian translation
+
+  [ Bruce Cowan ]
+  * Update British English translation
+
+  [ A S Alam ]
+  * Update Punjabi translation
+
+  [ Athmane MOKRAOUI ]
+  * Add Kabyle translation
+  * Update Kabyle translation
+
+  [ Rachida SACI ]
+  * Update Kabyle translation
+
+  [ Aefgh Threenine ]
+  * Add Thai translation
+
+  [ Scrambled 777 ]
+  * Update Hindi translation
+  * Update Hindi translation
+
+  [ Pawan Chitrakar ]
+  * Add Nepali translation
+  * Update Nepali translation
+
+  [ Guido Günther ]
+  * mm-origin: Don't crash when Modem has no location services
+  * mm-origin: Handle missing SIM case more gracefully
+  * sip: Don't crash when handles never got set up
+  * calls-ringer: Don't restart when feedback got ended explicitly
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 29 Jun 2024 09:01:57 +0200
+
 gnome-calls (46.0) unstable; urgency=medium
 
   [ Sabri Ünal ]

@@ -1,3 +1,23 @@
+Calls 46.3
+----------
+Released: June 2024
+* Fix crash when Modem has no location services
+* Fix crash when SIP handles have never gotten set up
+* Issues fixed:
+  * https://gitlab.gnome.org/GNOME/calls/-/issues/641
+* Contributors:
+    * Guido Günther
+* UI translations:
+    * Rūdolfs Mazurs (lv)
+    * Bruce Cowan (en_GB)
+    * A S Alam (pa)
+    * Athmane MOKRAOUI (kab)
+    * Rachida SACI (kab)
+    * Aefgh Threenine (th)
+    * Scrambled 777 (hi)
+    * Pawan Chitrakar (ne)
+
+
 Calls 46.0
 ----------
 Released: March 2024

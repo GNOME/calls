@@ -69,6 +69,14 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="46.3" date="2024-06-29">
+        <description>
+          <p>
+            This stable release fixes crashes in the ModemManager and SIP backend
+            as well as bringing updated and new translations.
+          </p>
+        </description>
+      </release>
       <release version="46.0" date="2024-03-14">
         <description>
           <p>
