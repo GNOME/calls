@@ -43,6 +43,10 @@
 #include <glib/gi18n.h>
 #include <libpeas/peas.h>
 
+#define LIBFEEDBACK_USE_UNSTABLE_API
+#include <libfeedback.h>
+
+
 /**
  * SECTION:manager
  * @short_description: Central management object
@@ -310,6 +314,13 @@ remove_call (CallsManager *self, CallsCall *call, gchar *reason, CallsOrigin *or
   g_timeout_add (DELAY_CALL_REMOVE_MS,
                  G_SOURCE_FUNC (on_remove_delayed),
                  data);
+
+  /* Notify that remote side hung up */
+  if (!calls_call_get_we_hung_up (call) && lfb_is_initted ()) {
+    LfbEvent *event = lfb_event_new ("phone-hangup");
+
+    lfb_event_trigger_feedback_async (event, NULL, NULL, NULL);
+  }
 }
 #undef DELAY_CALL_REMOVE_MS
 
