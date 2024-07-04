@@ -59,7 +59,7 @@ typedef enum {
 } CallsCallType;
 
 struct _CallsCallClass {
-  GObjectClass parent_iface;
+  GObjectClass parent_class;
 
   const char  *(*get_protocol)         (CallsCall *self);
   void         (*answer)               (CallsCall *self);
