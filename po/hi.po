@@ -1,7 +1,6 @@
 # Hindi translation for calls.
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Translators:
 # Hemish <hemish04082005@gmail.com>, 2022.
 # Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024.
 #
@@ -9,21 +8,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-05-12 07:52+0000\n"
-"PO-Revision-Date: 2024-05-13 00:55+0530\n"
+"POT-Creation-Date: 2024-06-29 12:16+0000\n"
+"PO-Revision-Date: 2024-07-02 22:57+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
 #: src/calls-application.c:489 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
-msgstr "Calls"
+msgstr "कॉल"
 
 #: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
 msgid "Phone"
@@ -40,7 +39,7 @@ msgstr "टेलीफोन;कॉल;फोन;डायल;डायलर;P
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
-msgstr "Calls (डेमॉन))"
+msgstr "कॉल (डेमॉन))"
 
 #: data/org.gnome.Calls-daemon.desktop.in:5
 msgid "A phone dialer and call handler (daemon mode)"
@@ -56,9 +55,9 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Calls GNOME के लिए एक सरल, सुंदर फोन डायलर और कॉल नियंत्रक है। इसका उपयोग सेलुलर "
-"मॉडेम के साथ सादे पुराने टेलीफोन कॉल करने और उसके अतिरिक्त SIP प्रोटोकॉल का उपयोग करके "
-"VoIP कॉल के लिए किया जा सकता है।"
+"कॉल गनोम के लिए एक सरल, सुंदर फोन डायलर और कॉल नियंत्रक है। इसका उपयोग सेलुलर मॉडेम के "
+"साथ सादे पुराने टेलीफोन कॉल करने और उसके अतिरिक्त SIP प्रोटोकॉल का उपयोग करके VoIP "
+"कॉल के लिए किया जा सकता है।"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml:25
@@ -85,7 +84,7 @@ msgstr "मॉडेम द्वारा बयान किया गया �
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr "देश कोड का उपयोग संपर्क नाम ढूँढने के लिए किया जाता है।"
+msgstr "देश कोड का उपयोग संपर्क नाम खोजने के लिए किया जाता है"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -268,7 +267,7 @@ msgid ""
 "yesterday"
 msgstr ""
 "%s\n"
-"कल"
+"बिता कल"
 
 #: src/calls-emergency-call-types.c:257
 msgid "Police"
@@ -280,41 +279,41 @@ msgstr "एम्बुलेंस"
 
 #: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
-msgstr "अग्निशामक दस्ता"
+msgstr "अग्निशामक दल"
 
 #: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "पर्वतीय बचाव"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr ""
 "Hemish (हेमिश) <hemish04082005@gmail.com>\n"
 "Scrambled777 <weblate.scrambled777@simplelogin.com>"
 
-#: src/calls-main-window.c:180
+#: src/calls-main-window.c:174
 msgid "USSD"
 msgstr "USSD"
 
-#: src/calls-main-window.c:318
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "कॉल नहीं कर सकते: कोई मॉडेम या VoIP खाता उपलब्ध नहीं है"
 
-#: src/calls-main-window.c:320
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "कॉल नहीं कर सकते: कोई प्लगइन लोड नहीं हुआ"
 
 # Google Dialer on Android shows 'हाल के कॉल' on translation of 'Recent', so this translations is picked up from there
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:360
+#: src/calls-main-window.c:356
 msgid "Recent"
 msgstr "हालिया"
 
-#: src/calls-main-window.c:368
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "संपर्क"
 
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "डायल पैड"
 
@@ -388,26 +387,26 @@ msgstr "कोई संपर्क नहीं मिला"
 msgid "No Recent Calls"
 msgstr "कोई हालिया कॉल नहीं"
 
-#: src/ui/main-window.ui:86
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "रद्द करें (_C)"
 
-#: src/ui/main-window.ui:94
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "बंद करें (_C)"
 
-#: src/ui/main-window.ui:100
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "भेजें (_S)"
 
-#: src/ui/main-window.ui:153
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "_VoIP खाते"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:167
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
-msgstr "Calls के बारे में (_A)"
+msgstr "कॉल के बारे में (_A)"
 
 #: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
@@ -493,7 +492,7 @@ msgstr "आरंभीकृत"
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
-msgstr "DBus अनुपलब्ध"
+msgstr "डीबस अनुपलब्ध"
 
 #: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
@@ -524,39 +523,35 @@ msgstr "मिटाएं (_D)"
 msgid "Server"
 msgstr "सर्वर"
 
-#: plugins/provider/sip/sip-account-widget.ui:71
-msgid "Display Name"
-msgstr "प्रदर्शन नाम"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "प्रदर्शन नाम (वैकल्पिक)"
 
-#: plugins/provider/sip/sip-account-widget.ui:72
-msgid "Optional"
-msgstr "वैकल्पिक"
-
-#: plugins/provider/sip/sip-account-widget.ui:87
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "उपयोक्ता ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:98
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "पासवर्ड"
 
-#: plugins/provider/sip/sip-account-widget.ui:114
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "पोर्ट"
 
 #
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "परिवहन"
 
-#: plugins/provider/sip/sip-account-widget.ui:134
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "मीडिया कूटलेखन"
 
-#: plugins/provider/sip/sip-account-widget.ui:144
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "फोन कॉल के लिए प्रयोग करें"
 
-#: plugins/provider/sip/sip-account-widget.ui:155
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "स्वत: जुड़ें"
