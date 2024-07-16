@@ -1,0 +1,570 @@
+# Malayalam translation for calls.
+# Copyright (C) 2024 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# murukesh s kumar <murukesh.cvv230159@cvv.ac.in>,  2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls gnome-46\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-06-28 16:57+0000\n"
+"PO-Revision-Date: 2024-07-13 19:40+0530\n"
+"Last-Translator: \n"
+"Language-Team: Malayalam <Malayalam>\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "കോളുകൾ"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "ഫോൺ"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "ഒരു ഫോൺ ഡയലറും കോൾ ഹാൻഡ്ലറും"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;ടെലിഫോൺ;കോൾ;ഫോൺ;ഡയൽ;ഡയലർ;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "കോളുകൾ (daemon)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "ഒരു ഫോൺ ഡയലറും കോൾ ഹാൻഡ്‌ലറും (daemon mode)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "ഫോൺ, SIP കോളുകൾ ചെയ്യുക"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"ഗ്നോമിനുള്ള ലളിതവും മനോഹരവുമായ ഫോൺ ഡയലറും കോൾ ഹാൻഡ്‌ലറുമാണ് കോളുകൾ. SIP പ്രോട്ടോക്കോൾ "
+"ഉപയോഗിച്ച് പഴയ ടെലിഫോൺ കോളുകൾക്കും VoIP കോളുകൾക്കും ഒരു സെല്ലുലാർ മോഡം ഉപയോഗിച്ച് "
+"ഇത് ഉപയോഗിക്കാം."
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:27
+msgid "Placing a call"
+msgstr "ഒരു കോൾ ചെയ്യുന്നു"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:32
+msgid "The call history"
+msgstr "കോൾ ഹിസ്റ്ററി"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "കോളുകൾ സ്വയമേവ ഡിഫോൾട്ട് ഉറവിടം ഉപയോഗിക്കേണ്ടതുണ്ടോ"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "മോഡം റിപ്പോർട്ട് ചെയ്ത രാജ്യ കോഡ്"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "കോൺടാക്റ്റ് നെയിം ലുക്കപ്പിനായി രാജ്യത്തിൻ്റെ കോഡ് ഉപയോഗിക്കുന്നു"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "സ്വയമേവ ലോഡ് ചെയ്യാനുള്ള പ്ലഗിനുകൾ"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "ആപ്ലിക്കേഷൻ ആരംഭിക്കുമ്പോൾ ഈ പ്ലഗിനുകൾ സ്വയമേവ ലോഡ് ചെയ്യപ്പെടും."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "മുൻഗണനാ ക്രമത്തിൽ VoIP കോളുകൾക്ക് ഉപയോഗിക്കാനുള്ള ഓഡിയോ കോഡെക്കുകൾ"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "VoIP കോളുകൾക്കായി ഉപയോഗിക്കാൻ ഇഷ്ടപ്പെടുന്ന ഓഡിയോ കോഡക്കുകൾ (ലഭ്യമെങ്കിൽ)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr "ഗതാഗതമായി TLS ഇല്ലാതെ SRTP-യ്‌ക്ക് SDES ഉപയോഗിക്കാൻ അനുവദിക്കണോ"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"ക്ലിയർ ടെക്‌സ്‌റ്റിൽ കൈമാറ്റം ചെയ്‌ത കീകൾ ഉപയോഗിച്ച് അനുവദിക്കണമെങ്കിൽ true ആയി സജ്ജീകരിക്കുക."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "ഡിഫോൾട്ട് (ആരംഭിച്ചിട്ടില്ലാത്ത) അവസ്ഥ"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "അക്കൗണ്ട് ആരംഭിക്കുന്നു…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "അക്കൗണ്ട് ആരംഭിക്കുന്നത് ഒഴിവാക്കുന്നു…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "സെർവറിലേക്ക് ബന്ധിപ്പിക്കുന്നു…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "അക്കൗണ്ട് ഓൺലൈനാണ്"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "സെർവറിൽ നിന്ന് വിച്ഛേദിക്കുന്നു…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "അക്കൗണ്ട് ഓഫ്‌ലൈനാണ്"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "അക്കൗണ്ടിൽ ഒരു പിശക് ഉണ്ടായി"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "ഒരു കാരണവും പറഞ്ഞിട്ടില്ല"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "പ്രാരംഭീകരണം ആരംഭിച്ചു"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "പ്രാരംഭീകരണം പൂർത്തിയായി"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Uninitialization ആരംഭിച്ചു"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Uninitialization പൂർത്തിയായി"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "ക്രെഡൻഷ്യലുകൾ സജ്ജീകരിച്ചിട്ടില്ല"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "കണക്റ്റു ചെയ്യാൻ തുടങ്ങുന്നു"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "കണക്ഷൻ കാലഹരണപ്പെട്ടു"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "ഡൊമെയ്ൻ നാമം പരിഹരിക്കാൻ കഴിഞ്ഞില്ല"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "സെർവർ ഉപയോക്തൃനാമമോ പാസ്‌വേഡോ സ്വീകരിച്ചില്ല"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "ബന്ധിപ്പിക്കൽ പൂർത്തിയായി"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "വിച്ഛേദിക്കാൻ തുടങ്ങുന്നു"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "വിച്ഛേദിക്കുന്നത് പൂർത്തിയായി"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "ആന്തരിക പിശക് സംഭവിച്ചു"
+
+#: src/calls-account-overview.c:202
+#, c-format
+msgid "Edit account: %s"
+msgstr "അക്കൗണ്ട് എഡിറ്റുചെയ്യുക: %s"
+
+#: src/calls-account-overview.c:209
+msgid "Add new account"
+msgstr "പുതിയ അക്കൗണ്ട് ചേർക്കുക"
+
+#: src/calls-account-overview.c:441
+msgid "Account overview"
+msgstr "അക്കൗണ്ട് അവലോകനം"
+
+#: src/calls-application.c:367
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "അസാധുവായ ടെൽ യുആർഐ '%s' ഡയൽ ചെയ്യാൻ ശ്രമിച്ചു"
+
+#: src/calls-application.c:748
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "'%s' എങ്ങനെ തുറക്കണമെന്ന് അറിയില്ല"
+
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "ലോഡുചെയ്യാനുള്ള പ്ലഗിന്നുകളുടെ പേര്"
+
+#: src/calls-application.c:813
+msgid "PLUGIN"
+msgstr "പ്ലഗിൻ"
+
+#: src/calls-application.c:818
+msgid "Whether to present the main window on startup"
+msgstr "സ്റ്റാർട്ടപ്പിലെ പ്രധാന ജാലകം അവതരിപ്പിക്കണോ വേണ്ടയോ"
+
+#: src/calls-application.c:824
+msgid "Dial a telephone number"
+msgstr "ഒരു ടെലിഫോൺ നമ്പർ ഡയൽ ചെയ്യുക"
+
+#: src/calls-application.c:825
+msgid "NUMBER"
+msgstr "സംഖ്യ"
+
+#: src/calls-application.c:830
+msgid "Enable verbose debug messages"
+msgstr "വെർബോസ് ഡീബഗ് സന്ദേശങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക"
+
+#: src/calls-application.c:836
+msgid "Print current version"
+msgstr "നിലവിലെ പതിപ്പ് അച്ചടിക്കുക"
+
+#: src/calls-best-match.c:487
+msgid "Anonymous caller"
+msgstr "അജ്ഞാത കോളർ"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"ഇന്നലെ"
+
+#: src/calls-emergency-call-types.c:250
+msgid "Police"
+msgstr "പോലീസ്"
+
+#: src/calls-emergency-call-types.c:253
+msgid "Ambulance"
+msgstr "ആംബുലൻസ്"
+
+#: src/calls-emergency-call-types.c:256
+msgid "Fire Brigade"
+msgstr "അഗ്നിശമനസേന"
+
+#: src/calls-emergency-call-types.c:259
+msgid "Mountain Rescue"
+msgstr "പർവത രക്ഷാപ്രവർത്തനം"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr "murukesh s kumar <murukesh.cvv230159@cvv.ac.in>"
+
+#: src/calls-main-window.c:317
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "കോളുകൾ വിളിക്കാൻ കഴിയില്ല: മോഡം അല്ലെങ്കിൽ VoIP അക്കൗണ്ട് ലഭ്യമല്ല"
+
+#: src/calls-main-window.c:319
+msgid "Can't place calls: No plugin loaded"
+msgstr "കോളുകൾ നടത്താൻ കഴിയില്ല: പ്ലഗിൻ ലോഡ് ചെയ്തിട്ടില്ല"
+
+#: src/calls-main-window.c:357
+msgid "Contacts"
+msgstr "കോൺടാക്റ്റുകൾ"
+
+#: src/calls-main-window.c:367
+msgid "Dial Pad"
+msgstr "ഡയൽ പാഡ്"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:376
+msgid "Recent"
+msgstr "അടുത്തിടെ"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "മിസ്ഡ് കോൾ"
+
+#. %s is a name here
+#: src/calls-notifier.c:77
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "<b>%s</b> നിന്ന് മിസ്ഡ് കോൾ"
+
+#. %s is a id here
+#: src/calls-notifier.c:80
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s ൽ നിന്നുള്ള മിസ്ഡ് കോൾ"
+
+#: src/calls-notifier.c:82
+msgid "Missed call from unknown caller"
+msgstr "അജ്ഞാത ആളില്‍ നിന്നുള്ള മിസ്ഡ് കോൾ"
+
+#: src/calls-notifier.c:88
+msgid "Call back"
+msgstr "തിരിച്ചുവിളിക്കുക"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "VoIP അക്കൗണ്ടുകൾ"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "VoIP അക്കൗണ്ടുകൾ ചേർക്കുക"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"നിങ്ങൾക്ക് ഇവിടെ VoIP അക്കൗണ്ട് ചേർക്കാം. SIP പ്രോട്ടോക്കോൾ ഉപയോഗിച്ച് VoIP കോളുകൾ "
+"വിളിക്കാനും സ്വീകരിക്കാനും ഇത് നിങ്ങളെ അനുവദിക്കും. ഈ സവിശേഷത ഇപ്പോഴും താരതമ്യേന പുതിയതാണ്, "
+"ഇതുവരെ ഫീച്ചർ പൂർത്തിയായിട്ടില്ല (അതായത് എൻക്രിപ്റ്റ് ചെയ്ത മീഡിയ ഇല്ല)."
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "_അക്കൗണ്ട് ചേർക്കുക"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "വിളി"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "_കോൾ ഇല്ലാതാക്കുക"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "_നമ്പർ പകർത്തുക"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "_കോൺടാക്റ്റ് ചേർക്കുക"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_SMS അയയ്‌ക്കുക"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "ഹോൾഡ് ചെയ്തിരിക്കുന്നു"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "കോൺടാക്‌റ്റുകളൊന്നും കണ്ടെത്തിയില്ല"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "സമീപകാല കോളുകളൊന്നുമില്ല"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr ""
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_റദ്ദാക്കുക"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_അടയ്ക്കുക"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_അയക്കുക"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_VoIP അക്കൗണ്ടുകൾ"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_കീബോർഡ് കുറുക്കുവഴികൾ"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_സഹായം"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_കോളുകളെ കുറിച്ച്"
+
+#: src/ui/new-call-box.ui:38
+msgid "Enter a VoIP address"
+msgstr "ഒരു VoIP വിലാസം നൽകുക"
+
+#: src/ui/new-call-box.ui:62
+msgid "SIP Account"
+msgstr "SIP അക്കൗണ്ട്"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "പുതിയ കോൾ"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "തിരികെ"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "അജ്ഞാതമായ കാരണം"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "ഔട്ട്‌ഗോയിംഗ് കോൾ ആരംഭിച്ചു"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "പുതിയ ഇൻകമിംഗ് കോൾ"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "കോൾ സ്വീകരിച്ചു"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "കോൾ അവസാനിച്ചു"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "കോൾ വിച്ഛേദിച്ചു (തിരക്കിലാണ് അല്ലെങ്കിൽ കോൾ നിരസിച്ചു)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "കോൾ വിച്ഛേദിച്ചു (തെറ്റായ ഐഡി അല്ലെങ്കിൽ നെറ്റ്‌വർക്ക് പ്രശ്നം)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "കോൾ വിച്ഛേദിച്ചു (ഓഡിയോ ചാനൽ സജ്ജീകരിക്കുന്നതിൽ പിശക്)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "കോൾ കൈമാറി"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "കോൾ വഴിതിരിച്ചുവിട്ടു"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "കോൾ ഡിസ്കണക്ട് ചെയ്തു (അജ്ഞാത കാരണം കോഡ് %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "മോഡംമാനേജർ ലഭ്യമല്ല"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "ശബ്ദ ശേഷിയുള്ള മോഡം ലഭ്യമല്ല"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "സാധാരണ"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "ആരംഭിച്ചത്"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus ലഭ്യമല്ല"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "എൻക്രിപ്ഷൻ ഇല്ല"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "നിർബന്ധിത എൻക്രിപ്ഷൻ"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "ക്രിപ്‌റ്റോഗ്രാഫിക് കീ കൈമാറ്റം പരാജയപ്പെട്ടു"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "അക്കൗണ്ട് ചേർക്കുക"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_ലോഗിൻ"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "അക്കൌണ്ട് കൈകാര്യം ചെയ്യുക"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_അപേക്ഷിക്കുക"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_ഇല്ലാതാക്കുക"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "സെർവർ"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "പ്രദർശന നാമം"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "ഓപ്ഷണൽ"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ഉപയോക്തൃ ഐഡി"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr ""
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "പോർട്ട്"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "ഗതാഗതം"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "മീഡിയ എൻക്രിപ്ഷൻ"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "ഫോൺ കോളുകൾക്കായി ഉപയോഗിക്കുക"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "യാന്ത്രികമായി ബന്ധിപ്പിക്കുക"
