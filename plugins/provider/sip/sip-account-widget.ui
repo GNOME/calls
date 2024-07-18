@@ -99,13 +99,13 @@
                 <child>
                   <object class="AdwComboRow" id="protocol">
                     <property name="title" translatable="yes">Transport</property>
-                    <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
+                    <signal name="notify::selected-item" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
                 <child>
                   <object class="AdwComboRow" id="media_encryption">
                     <property name="title" translatable="yes">Media Encryption</property>
-                    <signal name="notify::selected-index" handler="on_user_changed" swapped="yes"/>
+                    <signal name="notify::selected-item" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
