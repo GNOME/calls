@@ -28,8 +28,9 @@
 
     <key name="always-allow-sdes" type="b">
       <default>false</default>
-      <summary>Whether to allow using SDES for SRTP without TLS as the transport</summary>
-      <description>Set to true if you want to allow with keys exchanged in cleartext.</description>
+      <summary>Allow insecure crypto key exchange for encrypted media.</summary>
+      <description>Set to true if you want to allow keys to be exchangable in cleartext,
+      otherwise you must set the TLS transport.</description>
     </key>
 
   </schema>
