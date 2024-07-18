@@ -472,7 +472,6 @@ calls_application_handle_local_options (GApplication *application,
 static void
 startup (GApplication *application)
 {
-  g_autoptr (GtkCssProvider) provider = NULL;
   g_autoptr (GError) error = NULL;
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
