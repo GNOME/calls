@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-06-29 06:58+0000\n"
-"PO-Revision-Date: 2024-07-03 13:00+0300\n"
+"POT-Creation-Date: 2024-07-18 08:54+0000\n"
+"PO-Revision-Date: 2024-07-19 14:46+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:489 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Вызовы"
 
@@ -103,14 +103,19 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "Предпочтительные аудиокодеки для VoIP-вызовов (если доступны)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "Разрешить ли использование SDES для SRTP без TLS в качестве транспорта"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Разрешить небезопасный обмен криптографическими ключами для зашифрованных "
+"носителей."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Установите значение true, если вы хотите разрешить обмен ключами открытым "
-"текстом."
+"Установите значение true, если вы хотите разрешить обмен ключами в открытом "
+"виде, в противном случае вы должны настроить передачу данных по протоколу "
+"TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -218,36 +223,36 @@ msgstr "Учетные записи VoIP"
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Попытка набрать недопустимый телефонный URI `%s'"
 
-#: src/calls-application.c:731
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Неизвестно как открыть `%s'"
 
-#: src/calls-application.c:795
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Названия загружаемых плагинов"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "ПЛАГИН"
 
-#: src/calls-application.c:801
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Показывать ли главное окно при запуске"
 
-#: src/calls-application.c:807
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Набрать телефонный номер"
 
-#: src/calls-application.c:808
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "НОМЕР"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Включить подробные отладочные сообщения"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Вывести текущую версию"
 
@@ -546,6 +551,10 @@ msgstr "Использовать для телефонных вызовов"
 #: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Автоматическое подключение"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr ""
+#~ "Разрешить ли использование SDES для SRTP без TLS в качестве транспорта"
 
 #~ msgid "Account overview"
 #~ msgstr "Обзор учетной записи"
