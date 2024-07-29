@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-06-29 12:16+0000\n"
-"PO-Revision-Date: 2024-07-02 22:57+0530\n"
+"POT-Creation-Date: 2024-07-18 08:54+0000\n"
+"PO-Revision-Date: 2024-07-19 20:12+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 46.1\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:489 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "कॉल"
 
@@ -103,15 +103,16 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "VoIP कॉल के लिए उपयोग करने के लिए वरीय ऑडियो कोडेक्स (यदि उपलब्ध हों)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
-"क्या परिवहन के रूप में TLS के बिना SRTP के लिए SDES का उपयोग करने की अनुमति दी जाए"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "कूटलेखित मीडिया के लिए असुरक्षित क्रिप्टो कुंजी विनिमय की अनुमति दें।"
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"यदि आप स्पष्टपाठ में कुंजियों के कुंजी विनिमय की अनुमति देना चाहते हैं तो सही पर निर्धारित "
-"करें।"
+"यदि आप कुंजियों को क्लियरटेक्स्ट में विनिमय योग्य बनाना चाहते हैं तो इसे चयनित पर तय करें, "
+"अन्यथा आपको TLS ट्रांसपोर्ट तय करना होगा।"
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -221,37 +222,37 @@ msgstr "VoIP खाते"
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "अमान्य टेली URI `%s' डायल करने का प्रयास किया गया"
 
-#: src/calls-application.c:731
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "पता नहीं `%s' कैसे खोलें"
 
-#: src/calls-application.c:795
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "लोड करने के लिए प्लगइन्स का नाम"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "प्लगइन"
 
-#: src/calls-application.c:801
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "क्या शुरुआत पर मुख्य विंडो प्रस्तुत करनी है"
 
 # Even though this command line option is named "dial a telephone number", it is valid for all type of number not just telephone, also it not only dials, but calls, these are reflected in Hindi translation
-#: src/calls-application.c:807
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "एक टेलीफोन नंबर डायल करें"
 
-#: src/calls-application.c:808
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "नंबर"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "वाचाल डिबग संदेशों को सक्षम करें"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "वर्तमान संस्करण छापें"
 
