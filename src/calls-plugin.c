@@ -67,7 +67,7 @@ calls_plugin_set_property (GObject      *object,
 
   switch (prop_id) {
   case PROP_PLUGIN_INFO:
-    self->info = g_value_get_boxed (value);
+    self->info = g_value_get_object (value);
     break;
 
   default:
@@ -146,7 +146,7 @@ calls_plugin_class_init (CallsPluginClass *klass)
    * The #PeasPluginInfo containing information about the plugin
    */
   props[PROP_PLUGIN_INFO] =
-    g_param_spec_boxed ("plugin-info",
+    g_param_spec_object ("plugin-info",
                         "",
                         "",
                         PEAS_TYPE_PLUGIN_INFO,
@@ -264,7 +264,7 @@ calls_plugin_load (CallsPlugin *self,
                    GError     **error)
 {
   PeasEngine *peas = peas_engine_get_default ();
-  PeasExtension *extension;
+  GObject *extension;
 
   g_return_val_if_fail (CALLS_IS_PLUGIN (self), FALSE);
 
@@ -384,7 +384,7 @@ calls_plugin_get_description (CallsPlugin *self)
 }
 
 
-const char **
+const char * const *
 calls_plugin_get_authors (CallsPlugin *self)
 {
   g_return_val_if_fail (CALLS_IS_PLUGIN (self), NULL);

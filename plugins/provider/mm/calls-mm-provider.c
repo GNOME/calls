@@ -31,7 +31,7 @@
 #include "calls-origin.h"
 
 #include <libmm-glib.h>
-#include <libpeas/peas.h>
+#include <libpeas.h>
 #include <glib/gi18n.h>
 
 static const char * const supported_protocols[] = {

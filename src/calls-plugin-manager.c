@@ -30,7 +30,7 @@
 #include "calls-plugin-manager.h"
 #include "calls-util.h"
 
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 /**
  * SECTION:plugin-manager
@@ -217,6 +217,7 @@ calls_plugin_manager_init (CallsPluginManager *self)
 {
   g_autofree char *default_plugin_dir_provider = NULL;
   const char *dir;
+  uint n_plugins;
 
   self->plugin_engine = peas_engine_new ();
 
@@ -228,7 +229,7 @@ calls_plugin_manager_init (CallsPluginManager *self)
 
     if (g_file_test (plugin_dir_provider, G_FILE_TEST_EXISTS)) {
       g_debug ("Adding '%s' to plugin search path", plugin_dir_provider);
-      peas_engine_prepend_search_path (self->plugin_engine, plugin_dir_provider, NULL);
+      peas_engine_add_search_path (self->plugin_engine, plugin_dir_provider, NULL);
     } else {
       g_warning ("Not adding '%s' to plugin search path, because the directory doesn't exist.\n"
                  "Check if env CALLS_PLUGIN_DIR is set correctly", plugin_dir_provider);
@@ -245,8 +246,11 @@ calls_plugin_manager_init (CallsPluginManager *self)
 
   self->providers = g_list_store_new (CALLS_TYPE_PROVIDER);
 
-  for (const GList *node = peas_engine_get_plugin_list (self->plugin_engine); node; node = node->next) {
-    PeasPluginInfo *info = node->data;
+  n_plugins = g_list_model_get_n_items (G_LIST_MODEL (self->plugin_engine));
+
+  for (uint i = 0; i < n_plugins; i++) {
+    g_autoptr (PeasPluginInfo) info =
+      g_list_model_get_item (G_LIST_MODEL (self->plugin_engine), i);
     CallsPlugin *plugin = calls_plugin_new (info);
 
     g_debug ("Created plugin '%s', found in '%s'",

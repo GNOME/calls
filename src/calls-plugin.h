@@ -25,7 +25,7 @@
 
 #include "calls-provider.h"
 
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 G_BEGIN_DECLS
 
@@ -44,7 +44,7 @@ CallsProvider *calls_plugin_get_provider           (CallsPlugin *self);
 const char    *calls_plugin_get_module_name        (CallsPlugin *self);
 const char    *calls_plugin_get_name               (CallsPlugin *self);
 const char    *calls_plugin_get_description        (CallsPlugin *self);
-const char   **calls_plugin_get_authors            (CallsPlugin *self);
+const char* const *calls_plugin_get_authors            (CallsPlugin *self);
 const char    *calls_plugin_get_copyright          (CallsPlugin *self);
 const char    *calls_plugin_get_version            (CallsPlugin *self);
 

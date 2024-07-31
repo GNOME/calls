@@ -17,7 +17,7 @@
 #include <glib.h>
 #include <gst/gst.h>
 #include <sofia-sip/su_uniqueid.h>
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 typedef struct {
   CallsSipProvider *provider;

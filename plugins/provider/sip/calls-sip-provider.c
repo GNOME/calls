@@ -40,7 +40,7 @@
 #include "calls-sip-util.h"
 #include "calls-util.h"
 
-#include <libpeas/peas.h>
+#include <libpeas.h>
 #include <sofia-sip/nua.h>
 #include <sofia-sip/su_glib.h>
 

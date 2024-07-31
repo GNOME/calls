@@ -34,7 +34,7 @@
 #include <libgdbofono/gdbo-modem.h>
 
 #include <glib/gi18n.h>
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 static const char * const supported_protocols[] = {
   "tel",

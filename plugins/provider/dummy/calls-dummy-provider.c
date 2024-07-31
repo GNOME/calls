@@ -29,7 +29,7 @@
 #include "calls-provider.h"
 #include "calls-dummy-origin.h"
 
-#include <libpeas/peas.h>
+#include <libpeas.h>
 #include <glib-unix.h>
 
 static const char * const supported_protocols[] = {

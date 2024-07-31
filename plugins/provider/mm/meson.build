@@ -45,7 +45,7 @@ mm_deps = [
   dependency('gtk4', version: '>= @0@'.format(gtk_version)),
   dependency('ModemManager'),
   dependency('mm-glib', version: '>= 1.12.0'),
-  dependency('libpeas-1.0'),
+  dependency('libpeas-2'),
 ]
 
 mm_sources = files(

@@ -41,7 +41,7 @@
 #include "enum-types.h"
 
 #include <glib/gi18n.h>
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 #define LIBFEEDBACK_USE_UNSTABLE_API
 #include <libfeedback.h>

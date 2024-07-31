@@ -31,7 +31,7 @@
 #include "calls-util.h"
 
 #include <glib/gi18n.h>
-#include <libpeas/peas.h>
+#include <libpeas.h>
 
 /**
  * SECTION:calls-provider
