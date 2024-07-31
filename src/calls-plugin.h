@@ -33,19 +33,19 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (CallsPlugin, calls_plugin, CALLS, PLUGIN, GObject)
 
-CallsPlugin   *calls_plugin_new                    (PeasPluginInfo *info);
-gboolean       calls_plugin_load                   (CallsPlugin *self,
-                                                    GError     **error);
-gboolean       calls_plugin_unload                 (CallsPlugin *self,
-                                                    GError     **error);
-gboolean       calls_plugin_is_loaded              (CallsPlugin *self);
-gboolean       calls_plugin_has_provider           (CallsPlugin *self);
-CallsProvider *calls_plugin_get_provider           (CallsPlugin *self);
-const char    *calls_plugin_get_module_name        (CallsPlugin *self);
-const char    *calls_plugin_get_name               (CallsPlugin *self);
-const char    *calls_plugin_get_description        (CallsPlugin *self);
+CallsPlugin       *calls_plugin_new                    (PeasPluginInfo *info);
+gboolean           calls_plugin_load                   (CallsPlugin *self,
+                                                        GError     **error);
+gboolean           calls_plugin_unload                 (CallsPlugin *self,
+                                                        GError     **error);
+gboolean           calls_plugin_is_loaded              (CallsPlugin *self);
+gboolean           calls_plugin_has_provider           (CallsPlugin *self);
+CallsProvider     *calls_plugin_get_provider           (CallsPlugin *self);
+const char        *calls_plugin_get_module_name        (CallsPlugin *self);
+const char        *calls_plugin_get_name               (CallsPlugin *self);
+const char        *calls_plugin_get_description        (CallsPlugin *self);
 const char* const *calls_plugin_get_authors            (CallsPlugin *self);
-const char    *calls_plugin_get_copyright          (CallsPlugin *self);
-const char    *calls_plugin_get_version            (CallsPlugin *self);
+const char        *calls_plugin_get_copyright          (CallsPlugin *self);
+const char        *calls_plugin_get_version            (CallsPlugin *self);
 
 G_END_DECLS
