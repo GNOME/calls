@@ -1,3 +1,54 @@
+gnome-calls (47~beta.0) unstable; urgency=medium
+
+  [ Martin ]
+  * Update Slovenian translation
+  * Update Slovenian translation
+
+  [ Artur S0 ]
+  * Update Russian translation
+  * Update Russian translation
+
+  [ Antonio Marin ]
+  * Update Romanian translation
+
+  [ Clayton Craft ]
+  * data: add systemd unit file for running daemon
+  * readme: mention systemctl for stopping calls
+
+  [ Yosef Or Boczko ]
+  * Update Hebrew translation
+
+  [ Scrambled 777 ]
+  * Update Hindi translation
+  * Update Hindi translation
+
+  [ Guido Günther ]
+  * README: Link to linphone's sofia-sip
+  * build: Bump minimum glib version
+  * call: Fix name of parent class
+  * call: Track which side hung up the call
+  * manager: Emit phone-hangup event if the other side hung up
+
+  [ Evangelos Ribeiro Tzaras ]
+  * application: Remove unused variable in startup()
+  * application: Log version on startup
+  * gschema: Reword confusing always-allow-sdes key description
+  * sip/account-widget: Adjust to renamed AdwComboRow property
+  * treewide: Port to libpeas-2
+  * plugin: Reindent
+  * ci: Update debian image
+
+  [ Yaron Shahrabani ]
+  * Update Hebrew translation
+
+  [ Chao-Hsiung Liao ]
+  * Update Chinese (Taiwan) translation
+
+  [ Emin Tufan Çetin ]
+  * Update Turkish translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 03 Aug 2024 19:53:14 +0200
+
 gnome-calls (47~alpha.0) unstable; urgency=medium
 
   [ A S Alam ]

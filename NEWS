@@ -1,3 +1,28 @@
+Calls 47.beta.0
+---------------
+Released:  August 2024
+* Add systemd unit file
+* Emit phone-hangup event
+* libpeas-2 port
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/609
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/624
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/653
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/652
+* Contributors:
+    * Clayton Craft
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+* UI translations:
+    * Artur s0 (ru)
+    * Antonion Marin (ro)
+    * Chao-Hsiung Liao (zh_TW)
+    * Emin Tufan Çetin (tr)
+    * Martin (sl)
+    * Scrambled 777 (hi)
+    * Yaron Shahrabani (he)
+    * Yosef Or Boczko (he)
+
 Calls 47.alpha.0
 ----------------
 Released: June 2024
