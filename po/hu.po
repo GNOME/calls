@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-07-29 17:37+0000\n"
-"PO-Revision-Date: 2024-08-04 00:02+0200\n"
+"POT-Creation-Date: 2024-08-03 22:03+0000\n"
+"PO-Revision-Date: 2024-08-05 16:08+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -108,14 +108,18 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
 "A VoIP-hívásokhoz használandó előnyben részesített hangkodekek (ha elérhető)"
 
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Nem biztonságos kriptokulcscsere engedélyezése a titkosított adathordozóknál."
+
 #: data/org.gnome.Calls.gschema.xml:32
-#| msgid "Set to true if you want to allow with keys exchanged in cleartext."
 msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
 msgstr ""
-"Állítsa igazra, ha engedélyezni szeretné, hogy a kulcsok nyílt szövegben"
-" legyenek cserélhetők, egyébként be kell állítania a TLS-átvitelt."
+"Állítsa igazra, ha engedélyezni szeretné, hogy a kulcsok nyílt szövegben "
+"legyenek cserélhetők, egyébként be kell állítania a TLS-átvitelt."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -321,22 +325,22 @@ msgid "Missed call"
 msgstr "Nem fogadott hívás"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Nem fogadott hívás innen: <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Nem fogadott hívás innen: %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Nem fogadott hívás ismeretlen hívótól"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "Visszahívás"
 
@@ -523,7 +527,6 @@ msgid "Server"
 msgstr "Kiszolgáló"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-#| msgid "Display Name"
 msgid "Display Name (Optional)"
 msgstr "Megjelenített név (elhagyható)"
 
