@@ -1,0 +1,573 @@
+# Bengali translation for calls.
+# Copyright (C) 2024 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Mahdi Hasan <mahdi4260@proton.me>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls gnome-46\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-06-28 16:57+0000\n"
+"PO-Revision-Date: 2024-08-21 06:05+0600\n"
+"Last-Translator: Mahdi Hasan <mahdi4260@proton.me>\n"
+"Language-Team: Bengali\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.1\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
+#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+msgid "Calls"
+msgstr "কল"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "ফোন"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "একটি ফোন ডায়ালার এবং কল হ্যান্ডলার"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "টেলিফোন;কল;ফোন;ডায়াল;ডায়ালার;পিএসটিএন;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "কল (ডেমন)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "একটি ফোন ডায়ালার এবং কল হ্যান্ডলার (ডেমন মোড)"
+
+#: data/org.gnome.Calls.metainfo.xml:7
+msgid "Make phone and SIP calls"
+msgstr "ফোন এবং এসআইপি কল করুন"
+
+#: data/org.gnome.Calls.metainfo.xml:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"কল হল জিনোমের জন্য একটি সহজ, মার্জিত ফোন ডায়ালার এবং কল হ্যান্ডলার। এটি এস. আই. "
+"পি প্রোটোকল ব্যবহার করে সাধারণ পুরানো টেলিফোন কলগুলির পাশাপাশি ভি. ও. আই. পি "
+"কলগুলির জন্য একটি সেলুলার মডেমের সাথে ব্যবহার করা যেতে পারে।"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:27
+msgid "Placing a call"
+msgstr "একটি কল করা হচ্ছে"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml:32
+msgid "The call history"
+msgstr "কলের ইতিহাস"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "কলগুলি স্বয়ংক্রিয়ভাবে ডিফল্ট উৎস ব্যবহার করবে না"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "মডেম দ্বারা রিপোর্ট করা দেশের কোড"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "যোগাযোগের নাম খোঁজার জন্য দেশের কোড ব্যবহার করা হয়"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "স্বয়ংক্রিয়ভাবে লোড করার জন্য প্লাগইন"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "এই প্লাগইনগুলি অ্যাপ্লিকেশন স্টার্টআপে স্বয়ংক্রিয়ভাবে লোড হয়ে যাবে।"
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "পছন্দ অনুসারে ভিওআইপি কলের জন্য ব্যবহার করার জন্য অডিও কোডেক"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "ভিওআইপি কলের জন্য পছন্দের অডিও কোডেক (যদি থাকে)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgstr ""
+"পরিবহন হিসাবে টিএলএস ছাড়া এসআরটিপি-র জন্য এসডিইএস ব্যবহার করার অনুমতি দেওয়া হবে "
+"কি না"
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgstr ""
+"আপনি যদি ক্লিয়ারটেক্সটে বিনিময় করা চাবি দিয়ে অনুমতি দিতে চান তবে সত্য সেট করুন।"
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "ডিফল্ট (uninitialized) অবস্থা"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "অ্যাকাউন্ট চালু করা হচ্ছে..."
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "অ্যাকাউন্ট চালু করা হচ্ছে না..."
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "সার্ভারের সাথে সংযোগ করা হচ্ছে..."
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "অ্যাকাউন্টটি অনলাইনে রয়েছে"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "সার্ভার থেকে সংযোগ বিচ্ছিন্ন হচ্ছে..."
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "অ্যাকাউন্ট অফলাইনে রয়েছে"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "অ্যাকাউন্ট একটি ত্রুটির সম্মুখীন হয়েছে"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "কোনও কারণ জানানো হয়নি"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "সূচনা শুরু"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "সূচনা সম্পূর্ণ"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "সূচনা বন্ধ শুরু"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "সূচনা বন্ধ সম্পুর্ণ"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "কোন শংসাপত্র সেট করা হয়নি"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "সংযোগ শুরু করা হচ্ছে"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "সংযোগের সময় শেষ"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "ডোমেইন নাম সমাধান করা যায়নি"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "সার্ভার ব্যবহারকারীর নাম বা পাসওয়ার্ড গ্রহণ করেনি"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "সংযোগ করা সম্পূর্ণ হয়েছে"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "সংযোগ বিচ্ছিন্ন করা শুরু হচ্ছে"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "সংযোগ বিচ্ছিন্ন করা সম্পূর্ণ হয়েছে"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "অভ্যন্তরীণ ত্রুটি ঘটেছে"
+
+#: src/calls-account-overview.c:202
+#, c-format
+msgid "Edit account: %s"
+msgstr "অ্যাকাউন্ট সম্পাদনা করুন: %s"
+
+#: src/calls-account-overview.c:209
+msgid "Add new account"
+msgstr "নতুন অ্যাকাউন্ট যোগ করুন"
+
+#: src/calls-account-overview.c:441
+msgid "Account overview"
+msgstr "অ্যাকাউন্টের সংক্ষিপ্ত বিবরণ"
+
+#: src/calls-application.c:367
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "ভুল টেল ইউআরআই '%s' ডায়াল করার চেষ্টা করা হয়েছে"
+
+#: src/calls-application.c:748
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "কিভাবে '%s' খুলতে হবে জানা নেই"
+
+#: src/calls-application.c:812
+msgid "The name of the plugins to load"
+msgstr "লোড করার জন্য প্লাগইনগুলির নাম"
+
+#: src/calls-application.c:813
+msgid "PLUGIN"
+msgstr "প্লাগিন"
+
+#: src/calls-application.c:818
+msgid "Whether to present the main window on startup"
+msgstr "স্টার্টআপে প্রধান উইন্ডোটি উপস্থাপন করা হবে কি না"
+
+#: src/calls-application.c:824
+msgid "Dial a telephone number"
+msgstr "একটি টেলিফোন নম্বর ডায়াল করুন"
+
+#: src/calls-application.c:825
+msgid "NUMBER"
+msgstr "নম্বর"
+
+#: src/calls-application.c:830
+msgid "Enable verbose debug messages"
+msgstr "শব্দবহুল ডিবাগ বার্তা সক্রিয় করুন"
+
+#: src/calls-application.c:836
+msgid "Print current version"
+msgstr "বর্তমান সংস্করণটি মুদ্রণ করুন"
+
+#: src/calls-best-match.c:487
+msgid "Anonymous caller"
+msgstr "বেনামী কলার"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"গতকাল"
+
+#: src/calls-emergency-call-types.c:250
+msgid "Police"
+msgstr "পুলিশ"
+
+#: src/calls-emergency-call-types.c:253
+msgid "Ambulance"
+msgstr "অ্যাম্বুলেন্স"
+
+#: src/calls-emergency-call-types.c:256
+msgid "Fire Brigade"
+msgstr "ফায়ার ব্রিগেড"
+
+#: src/calls-emergency-call-types.c:259
+msgid "Mountain Rescue"
+msgstr "পাহাড়ি উদ্ধার"
+
+#: src/calls-main-window.c:124
+msgid "translator-credits"
+msgstr "Mahdi Hasan <mahdi4260@proton.me>"
+
+#: src/calls-main-window.c:317
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "কল করা যাচ্ছে নাঃ কোন মডেম বা ভিওআইপি অ্যাকাউন্ট উপলব্ধ নেই"
+
+#: src/calls-main-window.c:319
+msgid "Can't place calls: No plugin loaded"
+msgstr "কল করা যাবে নাঃ কোন প্লাগইন লোড করা হয়নি"
+
+#: src/calls-main-window.c:357
+msgid "Contacts"
+msgstr "পরিচিতিসমূহ"
+
+#: src/calls-main-window.c:367
+msgid "Dial Pad"
+msgstr "ডায়াল প্যাড"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:376
+msgid "Recent"
+msgstr "সাম্প্রতিক"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "মিসড কল"
+
+#. %s is a name here
+#: src/calls-notifier.c:77
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "<b>%s</b> থেকে মিসড কল"
+
+#. %s is a id here
+#: src/calls-notifier.c:80
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s থেকে মিসড কল"
+
+#: src/calls-notifier.c:82
+msgid "Missed call from unknown caller"
+msgstr "অপরিচিত কলার থেকে মিসড কল"
+
+#: src/calls-notifier.c:88
+msgid "Call back"
+msgstr "ফেরত কল করুন"
+
+#: src/ui/account-overview.ui:16
+msgid "VoIP Accounts"
+msgstr "ভিওআইপি অ্যাকাউন্টসমূহ"
+
+#: src/ui/account-overview.ui:49
+msgid "Add VoIP Accounts"
+msgstr "ভিওআইপি অ্যাকাউন্টসমূহ সংযুক্ত করুন"
+
+#: src/ui/account-overview.ui:51
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"আপনি এখানে ভিওআইপি অ্যাকাউন্ট যুক্ত করতে পারেন। এটি আপনাকে এসআইপি প্রোটোকল ব্যবহার "
+"করে ভিওআইপি কল করার এবং গ্রহণ করার অনুমতি দেবে। এই বৈশিষ্ট্যটি এখনও তুলনামূলকভাবে "
+"নতুন এবং এখনও সম্পূর্ণ নয় (অর্থাৎ কোনও এনক্রিপ্ট করা মাধ্যম নেই)।"
+
+#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+msgid "_Add Account"
+msgstr "_অ্যাকাউন্ট সংযুক্ত করুন"
+
+#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
+#: src/ui/call-record-row.ui:62
+msgid "Call"
+msgstr "কল"
+
+#: src/ui/call-record-row.ui:102
+msgid "_Delete Call"
+msgstr "_কল মুছে ফেলুন"
+
+#. Translators: This is a phone number
+#: src/ui/call-record-row.ui:107
+msgid "_Copy number"
+msgstr "_নম্বর কপি করুন"
+
+#: src/ui/call-record-row.ui:112
+msgid "_Add contact"
+msgstr "_পরিচিতি যোগ করুন"
+
+#: src/ui/call-record-row.ui:117
+msgid "_Send SMS"
+msgstr "_এসএমএস পাঠান"
+
+#: src/ui/call-selector-item.ui:38
+msgid "On hold"
+msgstr "আটকে আছে"
+
+#: src/ui/contacts-box.ui:60
+msgid "No Contacts Found"
+msgstr "কোন পরিচিতি পাওয়া যায়নি"
+
+#: src/ui/history-box.ui:10
+msgid "No Recent Calls"
+msgstr "কোনও সাম্প্রতিক কল নেই"
+
+#: src/ui/main-window.ui:105
+msgid "USSD"
+msgstr "ইউএসএসডি"
+
+#: src/ui/main-window.ui:114
+msgid "_Cancel"
+msgstr "_বাতিল করুন"
+
+#: src/ui/main-window.ui:131
+msgid "_Close"
+msgstr "_বন্ধ করুন"
+
+#: src/ui/main-window.ui:141
+msgid "_Send"
+msgstr "_পাঠান"
+
+#: src/ui/main-window.ui:214
+msgid "_VoIP Accounts"
+msgstr "_ভিওআইপি অ্যাকাউন্টসমূহ"
+
+#: src/ui/main-window.ui:227
+msgid "_Keyboard shortcuts"
+msgstr "_কীবোর্ড শর্টকাট"
+
+#: src/ui/main-window.ui:233
+msgid "_Help"
+msgstr "_সাহায্য"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:239
+msgid "_About Calls"
+msgstr "_Calls সম্পর্কে"
+
+#: src/ui/new-call-box.ui:38
+msgid "Enter a VoIP address"
+msgstr "একটি ভিওআইপি ঠিকানা লিখুন"
+
+#: src/ui/new-call-box.ui:62
+msgid "SIP Account"
+msgstr "এসআইপি অ্যাকাউন্ট"
+
+#: src/ui/new-call-header-bar.ui:6
+msgid "New Call"
+msgstr "নতুন কল"
+
+#: src/ui/new-call-header-bar.ui:19
+msgid "Back"
+msgstr "ফেরত"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "অজানা কারণ"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "আউটগোয়িং কল শুরু হয়েছে"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "নতুন কল আসছে"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "কল গৃহীত"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "কল সমাপ্ত"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "কল সংযোগ বিচ্ছিন্ন (ব্যস্ত অথবা কল প্রত্যাখ্যাত)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "কল সংযোগ বিচ্ছিন্ন (ভুল আইডি বা নেটওয়ার্ক সমস্যা)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "কল সংযোগ বিচ্ছিন্ন (অডিও চ্যানেল স্থাপনে ত্রুটি)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "কল স্থানান্তরিত"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "কল বিচ্যুত"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "কল সংযোগ বিচ্ছিন্ন (অজানা কারণ কোড %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "মডেম-ম্যানেজার পাওয়া যাচ্ছে না"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "কোনও ভয়েস-সক্ষম মডেম উপলব্ধ নেই"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "স্বাভাবিক"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "শুরু করা হয়েছে"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "ডিবাস অনুপলব্ধ"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:668
+msgid "No encryption"
+msgstr "কোনো এনক্রিপশন নেই"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:675
+msgid "Force encryption"
+msgstr "জোর করে এনক্রিপশন"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "ক্রিপ্টোগ্রাফিক চাবি বিনিময় ব্যর্থ"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "Add Account"
+msgstr "অ্যাকাউন্ট সংযুক্ত করুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:17
+msgid "_Log In"
+msgstr "_লগ ইন করুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:42
+msgid "Manage Account"
+msgstr "অ্যাকাউন্ট পরিচালনা করুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:47
+msgid "_Apply"
+msgstr "_প্রয়োগ করুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:61
+msgid "_Delete"
+msgstr "_মুছে ফেলুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:91
+msgid "Server"
+msgstr "সার্ভার"
+
+#: plugins/provider/sip/sip-account-widget.ui:109
+msgid "Display Name"
+msgstr "প্রদর্শনের নাম"
+
+#: plugins/provider/sip/sip-account-widget.ui:110
+msgid "Optional"
+msgstr "ঐচ্ছিক"
+
+#: plugins/provider/sip/sip-account-widget.ui:128
+msgid "User ID"
+msgstr "ব্যবহারকারীর আইডি"
+
+#: plugins/provider/sip/sip-account-widget.ui:141
+msgid "Password"
+msgstr "পাসওয়ার্ড"
+
+#: plugins/provider/sip/sip-account-widget.ui:166
+msgid "Port"
+msgstr "পোর্ট"
+
+#: plugins/provider/sip/sip-account-widget.ui:182
+msgid "Transport"
+msgstr "পরিবহণ"
+
+#: plugins/provider/sip/sip-account-widget.ui:189
+msgid "Media Encryption"
+msgstr "মিডিয়া এনক্রিপশন"
+
+#: plugins/provider/sip/sip-account-widget.ui:201
+msgid "Use for Phone Calls"
+msgstr "ফোন কলের জন্য ব্যবহার করুন"
+
+#: plugins/provider/sip/sip-account-widget.ui:214
+msgid "Automatically Connect"
+msgstr "স্বয়ংক্রিয়ভাবে সংযোগ করুন"
