@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-02-11 10:02+0000\n"
-"PO-Revision-Date: 2024-02-12 11:26+0100\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-08-23 07:47+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "ზარები"
 
@@ -64,12 +64,12 @@ msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:34
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "ზარის განთავსება"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:39
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "ზარების ისტორია"
 
@@ -104,12 +104,16 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "VoIP ზარების დროს გამოყენებული აუდიო კოდეკების სია (თუ ხელმისაწვდომია)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "SRTP_სთვის SDES-ის TLS-ის გარეშე გამოყენების ნების დართვა"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "დაცველი კრიპტოგასაღების მიმოცვლის დაშვება დაშიფრული მედიისთვის."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr "ჩართეთ, თუ გნებავთ გასაღებების ღია ტექსტით მიმოცვლა."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"ჩართეთ, თუ გნებავთ გასაღებები ღია ტექსტით იყოს მიმოცვლადი. სხვა შემთხვევაში "
+"TLS ტრანსპორტი უნდა დააყენოთ."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -199,62 +203,62 @@ msgstr "გათიშვა დასრულდა"
 msgid "Internal error occurred"
 msgstr "შიდა შეცდომა"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "ანგარიშის ჩასწორება: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "ახალი ანგარიშის დამატება"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "ანგარიშის მიმოხილვა"
+msgid "VoIP Accounts"
+msgstr "VoIP ანგარიშები"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ვცადე დამერეკა არასწორ ტელეფონის URL-ზე '%s'"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "არ ვიცი, როგორ გავხსნა '%s'"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "ჩასატვირთი დამატებების სახელი"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "დამატება"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "გაშვებისას მთავარი ფანჯრის ჩვენება"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "ტელეფონის ნომერზე დარეკვა"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "ნომერი"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "გამართვის გაფართებული შეტყობინებების ჩართვა"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "მიმდინარე ვერსიის დაბეჭდვა"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "ანონიმური დამრეკი"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -263,81 +267,81 @@ msgstr ""
 "%s\n"
 "გუშინ"
 
-#: src/calls-emergency-call-types.c:250
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "პოლიცია"
 
-#: src/calls-emergency-call-types.c:253
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "სასწრაფო"
 
-#: src/calls-emergency-call-types.c:256
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "სახანძრო"
 
-#: src/calls-emergency-call-types.c:259
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "მთის მშველელები"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr "თემური დოღონაძე"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "ზარის განხორციელება შეუძლებელია. მოდემი ან VoIP ანგარიში ხელმიუწვდომელია"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "ზარის განხორციელება შეუძლებელია. დამატებები არ ჩატვირთულა"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "ახლახანს"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "კონტაქტები"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "ციფერბლატი"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "ახლახანს"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "გამოტოვებული ზარი"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "გამოტოვებული ზარი <b>%s</b>-სგან"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "გამოტოვებული ზარი %s-სგან"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "გამოტოვებული ზარი უცნობი დამრეკისგან"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "გადარეკვა"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "VoIP ანგარიშები"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "VoIP ანგარიშების დამატება"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -348,90 +352,72 @@ msgstr ""
 "შედარებით ახალია და ბოლომდე არაა დამუშავებული (მაგ. არ აქვს დაშიფრვის "
 "მხარდაჭერა)"
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_ანგარიშის დამატება"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "ზარი"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_ზარის წაშლა"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "_ნომრის კოპირება"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_კონტაქტის დამატება"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "SMS-ის _გაგზავნა"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "დალოდება"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "კონტაქტი ნაპოვნი არაა"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "ზარები არ არსებობს"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "_დახურვა"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "_გაგზავნა"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "_VoIP ანგარიშები"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "_კლავიატურის მალსახმობები"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "_დახმარება"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "_ზარების შესახებ"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "შეიყვანეთ VoIP მისამართი"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "SIP ანგარიში"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "ახალი ზარი"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "უკან"
 
@@ -505,12 +491,12 @@ msgstr "ინიციალიზაცია დასრულდა"
 msgid "DBus unavailable"
 msgstr "DBus-ი მიუწვდომელია"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "დაშიფვრის გარეშე"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "ძალით დაშიფვრა"
 
@@ -519,64 +505,76 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "კრიპტოგრაფიული გასაღების მიმოცვლის შეცდომა"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "ანგარიშის დამატება"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_შესვლა"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "ანგარიშის მართვა"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_გადატარება"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_წაშლა"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "სერვერი"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "საჩვენებელი სახელი"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "საჩვენებელი სახელი (არასავალდებულო)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "არასავალდებულო"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "მომხმარებლის ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "პაროლი"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "პორტი"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "ტრანსპორტი"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "მედიის დაშიფვრა"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "ზარებისთვის გამოყენება"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "ავტომატური მიერთება"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr "SRTP_სთვის SDES-ის TLS-ის გარეშე გამოყენების ნების დართვა"
+
+#~ msgid "Account overview"
+#~ msgstr "ანგარიშის მიმოხილვა"
+
+#~ msgid "Call"
+#~ msgstr "ზარი"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_კლავიატურის მალსახმობები"
+
+#~ msgid "_Help"
+#~ msgstr "_დახმარება"
+
+#~ msgid "Add Account"
+#~ msgstr "ანგარიშის დამატება"
+
+#~ msgid "Manage Account"
+#~ msgstr "ანგარიშის მართვა"
+
+#~ msgid "Optional"
+#~ msgstr "არასავალდებულო"
 
 #~ msgid "Enter a number"
 #~ msgstr "შეიყვანეთ ნომერი"
