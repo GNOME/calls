@@ -2,23 +2,25 @@
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Boyuan Yang <073plan@gmail.com>, 2022.
+# lumingzh <lumingzh@qq.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-07-02 19:54+0000\n"
-"PO-Revision-Date: 2023-07-04 10:13-0400\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-08-23 14:59+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Gtranslator 46.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "通话"
 
@@ -53,16 +55,21 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"通话是 GNOME 的一款简单而优雅的电话拨号器和通话管理软件。它可与蜂窝网络调制"
-"解调器一起使用以进行传统的拨号通话，或使用 SIP 协议进行 VoIP 通话。"
+"通话是 GNOME 的一款简单而优雅的电话拨号器和通话管理软件。它可与蜂窝网络调制解"
+"调器一起使用以进行传统的拨号通话，或使用 SIP 协议进行 VoIP 通话。"
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber、Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "拨打电话"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "通话记录"
 
@@ -95,12 +102,14 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "用于 VoIP 呼叫的首选音频编解码器（如果可用）"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "是否允许在没有 TLS 作为传输的情况下对 SRTP 使用 SDES"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "允许不安全的加密密钥交换用于加密的媒体。"
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr "如果要允许以明文形式交换密钥，请设置为 true。"
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr "如果要允许以明文形式交换密钥请设置为 true，否则您必须设置 TLS 传输。"
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -190,62 +199,62 @@ msgstr "已断开连接"
 msgid "Internal error occurred"
 msgstr "发生内部错误"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "编辑帐号：%s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "添加新帐号"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "账号概览"
+msgid "VoIP Accounts"
+msgstr "VoIP 帐号"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "已尝试拨打无效的电话 URI “%s”"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "不知道如何打开 “%s”"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "要加载的插件的名称"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "插件"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "是否在启动时显示主窗口"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "拨打电话号码"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "号码"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "启用详细调试信息"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "输出当前版本"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "匿名呼叫者"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -254,172 +263,157 @@ msgstr ""
 "%s\n"
 "昨天"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "警察"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "救护车"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "消防队"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "山地救援"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
-msgstr "Victor_Trista <ljlzjzm@hotmail.com>"
+msgstr ""
+"Boyuan Yang <073plan@gmail.com>\n"
+"lumingzh <lumingzh@qq.com>\n"
+"Victor_Trista <ljlzjzm@hotmail.com>"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "无法拨打电话：没有可用的调制解调器或 VoIP 帐号"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "无法拨打电话：未加载插件"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "最近"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "联系人"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "拨号盘"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "最近"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "未接来电"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "来自 <b>%s</b> 的未接来电"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "来自 %s 的未接来电"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "来自未知来电者的未接来电"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "回拨"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "VoIP 帐号"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "添加 VoIP 帐号"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"您可以在此处添加 VoIP 帐号。它将允许您使用 SIP 协议拨打和接收 VoIP 呼叫。此"
-"功能较新，尚不完善（没有加密媒体）。"
+"您可以在此处添加 VoIP 帐号。它将允许您使用 SIP 协议拨打和接收 VoIP 呼叫。此功"
+"能较新，尚不完善（没有加密媒体）。"
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "添加账号(_A)"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "通话"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "删除通话(_D)"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "复制号码(_C)"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "添加联系人(_A)"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "发送短信(_S)"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "等待中"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "未找到联系人"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "无最近通话"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "发送(_S)"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "_VoIP 帐号"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "快捷键(_K)"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "帮助(_H)"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "关于通话(_A)"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "输入 VoIP 地址"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "SIP 账号"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "新呼叫"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "后退"
 
@@ -493,12 +487,12 @@ msgstr "已初始化"
 msgid "DBus unavailable"
 msgstr "DBus 不可用"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "不加密"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "强制加密"
 
@@ -507,61 +501,73 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "加密密钥交换未成功"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "添加账号"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "登录(_L)"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "管理帐号"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "应用(_A)"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "服务器"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "显示名称"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "显示名称（可选）"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "可选"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "用户 ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "密码"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "端口"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "传输"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "媒体加密"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "用于拨打电话"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "自动连接"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr "是否允许在没有 TLS 作为传输的情况下对 SRTP 使用 SDES"
+
+#~ msgid "Account overview"
+#~ msgstr "账号概览"
+
+#~ msgid "Call"
+#~ msgstr "通话"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "快捷键(_K)"
+
+#~ msgid "_Help"
+#~ msgstr "帮助(_H)"
+
+#~ msgid "Add Account"
+#~ msgstr "添加账号"
+
+#~ msgid "Manage Account"
+#~ msgstr "管理帐号"
+
+#~ msgid "Optional"
+#~ msgstr "可选"
