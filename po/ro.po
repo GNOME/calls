@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-06-29 06:58+0000\n"
-"PO-Revision-Date: 2024-07-06 13:22+0200\n"
+"POT-Creation-Date: 2024-08-22 17:35+0000\n"
+"PO-Revision-Date: 2024-08-23 18:41+0200\n"
 "Last-Translator: Antonio Marin (libre) <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:489 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Apeluri"
 
@@ -107,16 +107,18 @@ msgstr ""
 "disponibile)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgid "Allow insecure crypto key exchange for encrypted media."
 msgstr ""
-"Dacă să se permită utilizarea SDES pentru SRTP fără TLS ca mijloc de "
-"transport"
+"Permite schimbul nesigur de chei criptografice pentru conținutul media "
+"cifrat."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Trebuie pus „adevărat”(true) dacă se dorește schimbul de chei în text "
-"necifrat."
+"Trebuie pus „true”(adevărat) dacă se dorește schimbul de chei în text "
+"necifrat, în caz contrar trebuie stabilit transportul TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -224,36 +226,36 @@ msgstr "Conturi VoIP"
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "S-a încercat apelarea un URI telefonic greșit „%s”"
 
-#: src/calls-application.c:731
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nu știu cum să deschid „%s”"
 
-#: src/calls-application.c:795
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Module care se încarcă automat"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "MODUL"
 
-#: src/calls-application.c:801
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Dacă să se prezinte fereastra principală la pornire"
 
-#: src/calls-application.c:807
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Apelează un număr de telefon"
 
-#: src/calls-application.c:808
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "NUMĂR"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Permite mesaje detaliate de depanare"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Tipărește versiunea actuală"
 
@@ -327,24 +329,24 @@ msgid "Missed call"
 msgstr "Apel pierdut"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Apel pierdut de la <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Apel pierdut de la %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Apel pierdut de la un necunoscut"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
-msgstr "Sună din nou"
+msgstr "Apelează"
 
 #: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
@@ -387,11 +389,11 @@ msgstr "În așteptare"
 
 #: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
-msgstr "Nu sunt contacte"
+msgstr "Niciun contact"
 
 #: src/ui/history-box.ui:13
 msgid "No Recent Calls"
-msgstr "Nu sunt apeluri recente"
+msgstr "Niciun apel recent"
 
 #: src/ui/main-window.ui:76
 msgid "_Cancel"
