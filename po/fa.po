@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-02-11 10:02+0000\n"
-"PO-Revision-Date: 2024-02-12 18:46+0330\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-08-26 17:15+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "تماس‌ها"
 
@@ -63,12 +63,12 @@ msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "ژولیان اسپاربر، اوانجلوس ریبیرو تزاراس"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:34
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "برقراری یک تماس"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:39
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "تاریخچهٔ تماس"
 
@@ -101,14 +101,16 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "رمزینه‌های صوتی ترجیحی برای استفاده در تماس‌های ویپ (در صورت وجود)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr ""
-"این که به استفاده از SDES برای SRTP بدون TLS به عنوان انتقال، اجازه داده شود یا "
-"نه"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "اجازه به جابه حابه‌جایی ناامن کلید رمزنگاری برای رسانهٔ رمز شده."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
-msgstr "اگر می‌خواهید به تبادل کلیدها در متن خام اجازه دهید، روی درست تنظیم کنید."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, otherwise "
+"you must set the TLS transport."
+msgstr ""
+"تنظیم به درست در صورتی که می‌خواهید بگذارید کلیدها به صورت متن خام جابه‌جا شوند. "
+"در غیر این صورت باید جابه‌جاگر TLS را تنظیم کنید."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -198,62 +200,62 @@ msgstr "قطع کامل شد"
 msgid "Internal error occurred"
 msgstr "خزایی داخلی رخ داد"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "ویرایش حساب: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "افزودن حساب جدید"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "نمای کلی حساب"
+msgid "VoIP Accounts"
+msgstr "حساب‌های ویپ"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "تلاش شد نشانی نامعتبر «%s» شماره‌گیری شود"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "نمی‌دانیم «%s» را چگونه بگشاییم"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "نام افزایه برای بار کردن"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "این که پنجرهٔ اصلی در شروع نمایان شود یا خیر"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "گرفتن شماره تلفن"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "به کار انداختن پیام‌های رفع اشکال پرگو"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "چاپ نگارش کنونی"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -262,80 +264,80 @@ msgstr ""
 "%s\n"
 "دیروز"
 
-#: src/calls-emergency-call-types.c:250
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "پلیس"
 
-#: src/calls-emergency-call-types.c:253
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "آمبولانس"
 
-#: src/calls-emergency-call-types.c:256
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "آتشنشانی"
 
-#: src/calls-emergency-call-types.c:259
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "امداد کوهستان"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@gmail.com>"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "نمی‌توان تماس برقرار کرد: بدون حساب ویپ یا مودم"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "نمی‌توان تماس برقرار کرد: افزایه‌ای بار نشده"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "اخیر"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "آشنایان"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "صفحهٔ شماره‌گیری"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "اخیر"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "تماس از دست رفته"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "تماس از دست رفته از <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "تماس از دست رفته از %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "تماس از دست رفته از تماس‌گیرندهٔ ناشناس"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "پاسخ تماس"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "حساب‌های ویپ"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "افزودن حساب ویپ"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not yet "
@@ -345,90 +347,72 @@ msgstr ""
 "تماس‌های ویپ برقرار کنید. این ویژگی تقریباً جدید بوده و هنوز همهٔ ویژگی‌ها را ندارد "
 "(مثلاً رسانهٔ رمزنگاشته)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_افزودن حساب"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "تماس"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_حذف تماس"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "_رونوشت از شماره"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_افزودن آشنا"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "_فرستادن پیامک"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "در حال انتظار"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "هیچ آشنایی پیدا نشد"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "هیج تماس اخیری نیست"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "_لغو"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "_بستن"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "_فرستادن"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "حساب‌های _ویپ"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "میان‌برهای _صفحه‌کلید"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "_راهنما"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "_دربارهٔ تماس‌ها"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "نشانی ویپی وارد کنید"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "حساب سیپ"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "تماس جدید"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "بازگشت"
 
@@ -502,12 +486,12 @@ msgstr "مقداردهی شد"
 msgid "DBus unavailable"
 msgstr "دی‌باس موجود نیست"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "بدون رمزنگاری"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "اجبار به رمزنگاری"
 
@@ -516,64 +500,78 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "تبادل کلید رمزنگاری ناموفق"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "افزودن حساب"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_ورود"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "مدیریت حساب"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_اعمال"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_حذف"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "کارساز"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "نام نمایشی"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "نام نمایشی (اختیاری)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "اختیاری"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "شناسهٔ کاربری"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "گذرواژه"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "درگاه"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "انتقال"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "رمزگذاری رسانه"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "استفاده برای تماس‌های تلفنی"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "وصل شدن خودکار"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr ""
+#~ "این که به استفاده از SDES برای SRTP بدون TLS به عنوان انتقال، اجازه داده شود "
+#~ "یا نه"
+
+#~ msgid "Account overview"
+#~ msgstr "نمای کلی حساب"
+
+#~ msgid "Call"
+#~ msgstr "تماس"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "میان‌برهای _صفحه‌کلید"
+
+#~ msgid "_Help"
+#~ msgstr "_راهنما"
+
+#~ msgid "Add Account"
+#~ msgstr "افزودن حساب"
+
+#~ msgid "Manage Account"
+#~ msgstr "مدیریت حساب"
+
+#~ msgid "Optional"
+#~ msgstr "اختیاری"
 
 #~ msgid "Enter a number"
 #~ msgstr "شماره‌ای وارد کنید"
