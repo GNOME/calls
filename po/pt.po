@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-21 10:48+0000\n"
-"PO-Revision-Date: 2024-08-29 16:06+0100\n"
+"POT-Creation-Date: 2024-08-29 15:07+0000\n"
+"PO-Revision-Date: 2024-08-29 16:09+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese < https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -110,6 +110,12 @@ msgstr "Codecs de áudio a usar para chamadas VoIP por ordem de preferência"
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
 "Os codecs de áudio preferidos a usar para chamadas VoIP (se disponível)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Permitir a troca insegura de chaves criptográficas para suportes de dados "
+"encriptados."
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
