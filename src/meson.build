@@ -31,7 +31,7 @@ calls_includes = [ top_include, src_include ]
 
 calls_deps = [ dependency('gobject-2.0', version: '>= 2.74'),
                dependency('gtk4', version: '>= @0@'.format(gtk_version)),
-               dependency('libadwaita-1', version: '>= 1.4'),
+               dependency('libadwaita-1', version: '>= 1.5'),
                dependency('libfeedback-0.0'),
                dependency('libpeas-2'),
                dependency('gom-1.0'),
