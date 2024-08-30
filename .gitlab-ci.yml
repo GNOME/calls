@@ -10,7 +10,7 @@ stages:
  - deploy
 
 variables:
-  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.20240731
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2024-08-30
   GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
