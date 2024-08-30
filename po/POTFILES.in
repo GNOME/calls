@@ -1,7 +1,7 @@
 # List of source files containing translatable strings.
 data/org.gnome.Calls.desktop.in
 data/org.gnome.Calls-daemon.desktop.in
-data/org.gnome.Calls.metainfo.xml
+data/org.gnome.Calls.metainfo.xml.in
 data/org.gnome.Calls.gschema.xml
 src/calls-account.c
 src/calls-account-overview.c

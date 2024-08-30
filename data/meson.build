@@ -1,3 +1,6 @@
+gnome = import('gnome')
+i18n = import('i18n')
+
 datadir = get_option('datadir')
 sysconfdir = get_option('sysconfdir')
 
@@ -67,8 +70,12 @@ endif
 
 
 # Metainfo file
-install_data('org.gnome.Calls.metainfo.xml',
-    install_dir: join_paths(datadir, 'metainfo'),
+metainfo_file = i18n.merge_file(
+  input: 'org.gnome.Calls.metainfo.xml.in',
+  output: 'org.gnome.Calls.metainfo.xml',
+  po_dir: '../po',
+  install: true,
+  install_dir: join_paths(datadir, 'metainfo')
 )
 
 appstreamcli = find_program('appstreamcli', required: false)
@@ -77,8 +84,7 @@ if appstreamcli.found()
        args: ['validate',
               '--pedantic',
               '--no-net',
-              join_paths(meson.current_source_dir(),
-                         'org.gnome.Calls.metainfo.xml')
+              metainfo_file
              ])
 endif
 

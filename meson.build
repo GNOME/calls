@@ -159,11 +159,11 @@ summary({
 })
 
 subdir('po')
+subdir('data')
 subdir('src')
 subdir('plugins')
 subdir('tests')
 subdir('doc')
-subdir('data')
 
 # gnome.post_install() is available since meson 0.59.0
 # Distributions use their own tooling (e.g. postinst, triggers, etc)

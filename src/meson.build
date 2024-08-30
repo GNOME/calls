@@ -78,6 +78,7 @@ calls_resources = gnome.compile_resources(
    'calls.gresources.xml',
    source_dir: ['ui', '../data'],
    c_name: 'call',
+   dependencies: metainfo_file,
 )
 
 calls_generated_sources = [
