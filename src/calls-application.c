@@ -489,6 +489,9 @@ startup (GApplication *application)
   if (!g_get_application_name ())
     g_set_application_name (_("Calls"));
 
+  if (!gtk_window_get_default_icon_name ())
+    gtk_window_set_default_icon_name (APP_ID);
+
   g_action_map_add_action_entries (G_ACTION_MAP (application),
                                    actions,
                                    G_N_ELEMENTS (actions),
