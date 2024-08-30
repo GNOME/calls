@@ -108,7 +108,7 @@ about_action (GSimpleAction *action,
   version = g_str_equal (VCS_TAG, "") ?
             PACKAGE_VERSION : PACKAGE_VERSION "-" VCS_TAG;
 
-  adw_show_about_window_from_appdata (GTK_WINDOW (self),
+  adw_show_about_dialog_from_appdata (GTK_WIDGET (self),
                                       "/org/gnome/Calls/org.gnome.Calls.metainfo.xml",
                                       PACKAGE_VERSION, // must match a release in metainfo.xml
                                       "designers", designers,
