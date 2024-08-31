@@ -1,3 +1,32 @@
+gnome-calls 47~rc.1
+-------------------
+Released August 2024
+* Now uses AdwAboutDialog, requiring Adwaita 1.5
+* Improved style sheets
+* Actually shipping translated metainfo
+* Contributors:
+    * Anton Lazarev
+    * Balló György
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+* UI translations:
+    * Asier Sarasua Garmendia (eu)
+    * Balázs Úr (hu)
+    * Brage Fuglseth (nb)
+    * Danial Behzadi (fa)
+    * Daniel Rusek (cs)
+    * Daniel Șerbănescu (ro)
+    * Ekaterine Papava (ka)
+    * Hugo Carvalho (pt)
+    * Jiri Grönroos (fi)
+    * Jordi Mas i Hernandez (ca)
+    * Juliano de Souza Camargo (pt_BR)
+    * Jürgen Benvenuti (de)
+    * Luming Zh (zh_CN)
+    * twlvnn kraftwerk (bg)
+    * Vasil Pupkin (be)
+    * Yuri Chornoivan (uk)
+
 Calls 47.beta.0
 ---------------
 Released:  August 2024

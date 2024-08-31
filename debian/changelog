@@ -1,3 +1,75 @@
+gnome-calls (47~rc.1) unstable; urgency=medium
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+  * Update Hungarian translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Jordi Mas i Hernandez ]
+  * Update Catalan translation
+
+  [ Vasil Pupkin ]
+  * Update Belarusian translation
+
+  [ Ekaterine Papava ]
+  * Update Georgian translation
+
+  [ Luming Zh ]
+  * Update Chinese (China) translation
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Daniel Șerbănescu ]
+  * Update Romanian translation
+
+  [ Juliano de Souza Camargo ]
+  * Update Brazilian Portuguese translation
+  * Update Brazilian Portuguese translation
+
+  [ Asier Sarasua Garmendia ]
+  * Update Basque translation
+
+  [ Daniel Rusek ]
+  * Update Czech translation
+  * Update Czech translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+  * Update Portuguese translation
+
+  [ Brage Fuglseth ]
+  * Add Norwegian Bokmål translation
+
+  [ Balló György ]
+  * application: Set default window icon
+  * build: Actually translate metainfo
+
+  [ Jürgen Benvenuti ]
+  * Update German translation
+
+  [ twlvnn kraftwerk ]
+  * Update Bulgarian translation
+
+  [ Guido Günther ]
+  * ci: Update image
+  * build: Bump libadwaita dep to 1.5
+  * main-window: Use AdwAboutDialog
+
+  [ Anton Lazarev ]
+  * call buttons: Add .flat CSS class
+  * contacts-box: add .boxed-list CSS class
+
+  [ Evangelos Ribeiro Tzaras ]
+  * d/gbp.conf: Add dch postedit hook to keep meson project version in sync
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 31 Aug 2024 23:17:38 +0200
+
 gnome-calls (47~beta.0) unstable; urgency=medium
 
   [ Martin ]
