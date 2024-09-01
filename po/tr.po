@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-07-31 17:51+0000\n"
+"POT-Creation-Date: 2024-08-22 17:35+0000\n"
 "PO-Revision-Date: 2024-08-01 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
@@ -37,8 +37,8 @@ msgstr "Telefon çevirici ve arama işleyici"
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
-"Telephone;Call;Phone;Dial;Dialer;Calls;PSTN;Telefon;Arama;Ara;Çağrı;Çevir;Tuşla;"
-"Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;"
+"Telephone;Call;Phone;Dial;Dialer;Calls;PSTN;Telefon;Arama;Ara;Çağrı;Çevir;"
+"Tuşla;Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Calls (daemon)"
@@ -115,9 +115,9 @@ msgid ""
 "otherwise you must set the TLS transport."
 msgstr ""
 "Eğer anahtarların düz metinde değiş tokuşuna izin vermek istiyorsanız doğru "
-"(true) olarak belirleyin."
-"Anahtarların düz metinde değiş tokuşuna izin vermek istiyorsanız doğru olarak "
-"belirleyin, diğer durumda TLS aktarımını ayarlamalısınız."
+"(true) olarak belirleyin.Anahtarların düz metinde değiş tokuşuna izin vermek "
+"istiyorsanız doğru olarak belirleyin, diğer durumda TLS aktarımını "
+"ayarlamalısınız."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -554,26 +554,3 @@ msgstr "Telefon Aramalarında Kullan"
 msgid "Automatically Connect"
 msgstr "Kendiliğinden Bağlan"
 
-#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-#~ msgstr "Taşıt olarak TLS’siz SRTP için SDES kullanımına izin verilmesi"
-
-#~ msgid "Optional"
-#~ msgstr "İsteğe Bağlı"
-
-#~ msgid "Account overview"
-#~ msgstr "Hesap genel görünümü"
-
-#~ msgid "Call"
-#~ msgstr "Ara"
-
-#~ msgid "_Keyboard shortcuts"
-#~ msgstr "_Klavye kısayolları"
-
-#~ msgid "_Help"
-#~ msgstr "_Yardım"
-
-#~ msgid "Add Account"
-#~ msgstr "Hesap Ekle"
-
-#~ msgid "Manage Account"
-#~ msgstr "Hesabı Yönet"
