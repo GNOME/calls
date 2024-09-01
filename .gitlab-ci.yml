@@ -87,6 +87,10 @@ check-po:
   dependencies:
     - build:native
 
+check-consistency:
+  stage: test
+  extends: .phosh-check-consistency
+
 package:deb-debian-trixie:arm64:
   variables:
     L5_DOCKER_IMAGE: debian:trixie
