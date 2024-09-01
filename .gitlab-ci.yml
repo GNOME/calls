@@ -9,6 +9,15 @@ stages:
  - test-package
  - deploy
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    # Don't trigger a branch pipeline if there is an open MR
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH
+
 variables:
   DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2024-08-30
   GIT_SUBMODULE_STRATEGY: normal
