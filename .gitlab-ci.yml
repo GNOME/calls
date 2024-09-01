@@ -1,6 +1,9 @@
 include:
  - 'https://source.puri.sm/Librem5/librem5-ci/raw/master/librem5-pipeline-definitions.yml'
  - 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+ - project: 'guidog/meta-phosh'
+   ref: '2aeb9bfe2b230ca3aeda8275e42c95f94f6723ca'
+   file: '/ci/phosh-common-jobs.yml'
 
 stages:
  - build
@@ -79,16 +82,10 @@ build-gtkdoc:
       - _reference
 
 check-po:
-  extends: build:native
   stage: test
+  extends: .phosh-check-po
   dependencies:
     - build:native
-  script:
-    # barf on untranslated C or UI files. Seems intltool
-    # can't be told to exit with non-zero exit status
-    # in this case
-    - cd po/
-    - intltool-update -m 2>&1 | grep -qs '/.*\.\(c|ui\)' && { intltool-update -m; exit 1; } || exit 0
 
 package:deb-debian-trixie:arm64:
   variables:
