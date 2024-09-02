@@ -6,20 +6,20 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-22 14:55+0000\n"
-"PO-Revision-Date: 2023-07-29 09:55+0300\n"
-"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-09-03 00:20+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek <gnome-el-list@gnome.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Κλήσεις"
 
@@ -60,13 +60,18 @@ msgstr ""
 "κλήσεων για το GNOME. Μπορεί να χρησιμοποιηθεί με κινητό για απλές παλιές "
 "τηλεφωνικές κλήσεις καθώς και κλήσεις VoIP χρησιμοποιώντας το πρωτόκολλο SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Πραγματοποίηση κλήσης"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "Το ιστορικό κλήσης"
 
@@ -103,14 +108,18 @@ msgstr ""
 "Οι προτιμώμενοι κωδικοποιητές ήχου για χρήση για κλήσεις VoIP (εάν υπάρχουν)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "Εάν επιτρέπεται η χρήση SDES για SRTP χωρίς TLS ως μεταφορά"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Να επιτρέπεται η μη ασφαλής ανταλλαγή κλειδιών κρυπτογράφησης για "
+"κρυπτογραφημένα μέσα."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Ορίστε το σε true εάν θέλετε να το επιτρέψετε με κλειδιά που ανταλλάσσονται "
-"σε καθαρό κείμενο."
+"Ορίστε την τιμή true αν θέλετε να επιτρέπετε την ανταλλαγή κλειδιών σε "
+"καθαρό κείμενο, διαφορετικά πρέπει να ορίσετε τη μεταφορά TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -200,62 +209,62 @@ msgstr "Η αποσύνδεση ολοκληρώθηκε"
 msgid "Internal error occurred"
 msgstr "Παρουσιάστηκε εσωτερικό σφάλμα"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "Επεξεργασία λογαριασμού: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "Προσθήκη νέου λογαριασμού"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "Επισκόπηση λογαριασμού"
+msgid "VoIP Accounts"
+msgstr "Λογαριασμοί VoIP"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Δοκίμασε να καλέσει μη έγκυρο URI \"%s\""
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Δεν ξέρω πώς να ανοίξω το \"%s\""
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Το όνομα των πρόσθετων προς φόρτωση"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "ΠΡΟΣΘΕΤΟ"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Εάν θα παρουσιάζεται το κύριο παράθυρο κατά την εκκίνηση"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Πληκτρολογήστε έναν τηλεφωνικό αριθμό"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "ΑΡΙΘΜΟΣ"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Ενεργοποίηση αναλυτικών μηνυμάτων εντοπισμού σφαλμάτων"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Εμφάνιση τρέχουσας έκδοσης"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "Ανώνυμος"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -264,23 +273,23 @@ msgstr ""
 "%s\n"
 "χθες"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Αστυνομία"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Ασθενοφόρο"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Πυροσβεστική"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "Ορεινή διάσωση"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -289,62 +298,62 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
 "http://gnome.gr/"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει μόντεμ ή διαθέσιμος λογαριασμός "
 "VoIP"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "Αδυναμία πραγματοποίησης κλήσης: Δεν υπάρχει πρόσθετο"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "Πρόσφατα"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "Επαφές"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "Πληκτρολόγιο κλήσης"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "Πρόσφατα"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Αναπάντητη κλήση"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Αναπάντητη κλήση από τον <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Αναπάντητη κλήση από %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Αναπάντητη κλήση από άγνωστο αριθμό"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "Επανάκληση"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "Λογαριασμοί VoIP"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "Προσθήκη λογαριασμών VoIP"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -355,90 +364,72 @@ msgstr ""
 "SIP. Αυτή η δυνατότητα είναι ακόμα σχετικά νέα και δεν έχει ακόμη "
 "ολοκληρωθεί η λειτουργία (δηλαδή δεν υπάρχουν κρυπτογραφημένα μέσα)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_Προσθήκη λογαριασμού"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "Κλήση"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_Διαγραφή κλήσης"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "_Αντιγραφή αριθμού"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_Προσθήκη επαφής"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "_Αποστολή SMS"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "Σε αναμονή"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "Δεν βρέθηκαν επαφές"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "Καμιά πρόσφατη κλήση"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "A_κύρωση"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "Α_ποστολή"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "Λογαριασμοί _VoIP"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "_Συντομεύσεις πληκτρολογίου"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "_Βοήθεια"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "_Περί Κλήσεις"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "Εισαγωγή διεύθυνσης VoIP"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "Λογαριασμός SIP"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "Νέα κλήση"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "Πίσω"
 
@@ -512,12 +503,12 @@ msgstr "Αρχικοποιήθηκε"
 msgid "DBus unavailable"
 msgstr "Το DBus δεν είναι διαθέσιμο"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "Χωρίς κρυπτογράφηση"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "Αναγκαστική κρυπτογράφηση"
 
@@ -526,64 +517,76 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "Η ανταλλαγή κρυπτογραφικού κλειδιού δεν ήταν επιτυχής"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Προσθήκη λογαριασμού"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Είσοδος"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Διαχείριση λογαριασμού"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_Εφαρμογή"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_Διαγραφή"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "Διακομιστής"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Εμφάνιση ονόματος"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Εμφάνιση ονόματος (προαιρετικό)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Προαιρετικό"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ID Χρήστη"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "Συνθηματικό"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "Θύρα"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "Μεταφορά"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "Κρυπτογράφηση μέσων"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "Χρήση για τηλεφωνικές κλήσεις"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Αυτόματη σύνδεση"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr "Εάν επιτρέπεται η χρήση SDES για SRTP χωρίς TLS ως μεταφορά"
+
+#~ msgid "Account overview"
+#~ msgstr "Επισκόπηση λογαριασμού"
+
+#~ msgid "Call"
+#~ msgstr "Κλήση"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Συντομεύσεις πληκτρολογίου"
+
+#~ msgid "_Help"
+#~ msgstr "_Βοήθεια"
+
+#~ msgid "Add Account"
+#~ msgstr "Προσθήκη λογαριασμού"
+
+#~ msgid "Manage Account"
+#~ msgstr "Διαχείριση λογαριασμού"
+
+#~ msgid "Optional"
+#~ msgstr "Προαιρετικό"
 
 #~ msgid "Enter a number"
 #~ msgstr "Εισαγωγή ενός αριθμού"
