@@ -55,10 +55,8 @@
             "name" : "libpeas-2",
             "buildsystem" : "meson",
             "config-opts" : [
-                "-Ddemos=false",
-                "-Dwidgetry=false",
+		"-Dgjs=false",
                 "-Dlua51=false",
-                "-Dglade_catalog=false",
                 "-Dintrospection=false"
             ],
             "sources" : [
