@@ -26,7 +26,6 @@
 #define CALLS_CALL_RECORD_ROW_H__
 
 #include "calls-call-record.h"
-#include "calls-new-call-box.h"
 
 #include <gtk/gtk.h>
 
