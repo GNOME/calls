@@ -121,6 +121,9 @@ create_row_cb (CallsCallRecord *record,
 
   row_widget = GTK_WIDGET (calls_call_record_row_new (record));
 
+  g_debug ("Created new row [%p] for record [%p]",
+           row_widget, record);
+
   g_signal_connect (record,
                     "call-delete",
                     G_CALLBACK (delete_call_cb),

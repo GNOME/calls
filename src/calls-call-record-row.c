@@ -401,6 +401,7 @@ calls_call_record_row_button_press_event (GtkGestureClick* controller,
                                           GtkWidget *self)
 {
   GdkEvent *event = gtk_event_controller_get_current_event (GTK_EVENT_CONTROLLER (controller));
+
   if (gdk_event_triggers_context_menu (event)) {
     context_menu (self, (GdkEvent *) event);
   }
