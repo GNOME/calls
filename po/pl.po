@@ -1,15 +1,15 @@
 # Polish translation for calls.
-# Copyright © 2022-2023 the calls authors.
+# Copyright © 2022-2024 the calls authors.
 # This file is distributed under the same license as the calls package.
-# Piotr Drąg <piotrdrag@gmail.com>, 2022-2023.
-# Aviary.pl <community-poland@mozilla.org>, 2022-2023.
+# Piotr Drąg <piotrdrag@gmail.com>, 2022-2024.
+# Aviary.pl <community-poland@mozilla.org>, 2022-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-02-11 10:02+0000\n"
-"PO-Revision-Date: 2023-08-06 17:52+0200\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-09-08 16:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Rozmowy"
 
@@ -66,12 +66,12 @@ msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:34
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Dzwonienie"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:39
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "Historia połączeń"
 
@@ -106,14 +106,18 @@ msgstr ""
 "Preferowane kodeki dźwięku używane do połączeń VoIP (jeśli są dostępne)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "Czy zezwalać na używanie SDES do SRTP bez TLS jako protokołu"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Zezwolenie na niezabezpieczoną wymianę kluczy kryptograficznych dla "
+"zaszyfrowanych multimediów."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Ustawienie na wartość „true” zezwoli za pomocą kluczy wymienionych w zwykłym "
-"tekście."
+"Ustawienie na wartość „true” zezwoli na wymianę kluczy w zwykłym tekście, "
+"w przeciwnym wypadku należy ustawić protokół TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -203,62 +207,62 @@ msgstr "Ukończono rozłączanie"
 msgid "Internal error occurred"
 msgstr "Wystąpił wewnętrzny błąd"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "Modyfikacja konta: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "Dodanie nowego konta"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "Przegląd konta"
+msgid "VoIP Accounts"
+msgstr "Konta VoIP"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Próbowano zadzwonić na nieprawidłowy adres URI tel: „%s”"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nie wiadomo, jak otwierać „%s”"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Nazwa wczytywanej wtyczki"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "WTYCZKA"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Czy wyświetlać główne okno po uruchomieniu"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Dzwoni na numer telefonu"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "NUMER"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Włącza obszerne komunikaty debugowania"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Wyświetla obecną wersję"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "Nieznany numer"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -267,82 +271,82 @@ msgstr ""
 "%s\n"
 "wczoraj"
 
-#: src/calls-emergency-call-types.c:250
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Policja"
 
-#: src/calls-emergency-call-types.c:253
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Pogotowie ratunkowe"
 
-#: src/calls-emergency-call-types.c:256
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Straż pożarna"
 
-#: src/calls-emergency-call-types.c:259
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "Ratownictwo górskie"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2022-2023\n"
-"Aviary.pl <community-poland@mozilla.org>, 2022-2023"
+"Piotr Drąg <piotrdrag@gmail.com>, 2022-2024\n"
+"Aviary.pl <community-poland@mozilla.org>, 2022-2024"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nie można dzwonić: brak modemu lub konta VoIP"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "Nie można dzwonić: nie wczytano wtyczki"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "Ostatnie"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "Kontakty"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "Klawiatura"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "Ostatnie"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Nieodebrane połączenie"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Nieodebrane połączenie od: <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Nieodebrane połączenie od: %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Nieodebrane połączenie z nieznanego numeru"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "Oddzwoń"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "Konta VoIP"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "Dodanie kont VoIP"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -352,90 +356,72 @@ msgstr ""
 "VoIP za pomocą protokołu SIP. Ta funkcja jest nadal względnie nowa i nie ma "
 "wszystkich możliwości (np. szyfrowania multimediów)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_Dodaj konto"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "Zadzwoń"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_Usuń połączenie"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "S_kopiuj numer"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_Dodaj kontakt"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "_Wyślij SMS"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "Zawieszone"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "Nie odnaleziono kontaktów"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "Brak ostatnich połączeń"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "Za_mknij"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "_Wyślij"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "Konta _VoIP"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "_Skróty klawiszowe"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "Pomo_c"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "_O programie"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "Wpisz adres VoIP"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "Konto SIP"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "Nowe połączenie"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "Wstecz"
 
@@ -512,12 +498,12 @@ msgstr "Zainicjowano"
 msgid "DBus unavailable"
 msgstr "Usługa D-Bus jest niedostępna"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "Bez szyfrowania"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "Wymuszenie szyfrowania"
 
@@ -526,61 +512,49 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "Wymiana klucza kryptograficznego się nie powiodła"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Dodanie konta"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Zaloguj się"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Zarządzanie kontem"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_Zastosuj"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_Usuń"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "Serwer"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Wyświetlana nazwa"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Wyświetlana nazwa (opcjonalnie)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Opcjonalne"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Identyfikator użytkownika"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "Hasło"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "Port"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "Protokół"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "Szyfrowanie multimediów"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "Używanie do połączeń telefonicznych"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Łączenie automatyczne"
