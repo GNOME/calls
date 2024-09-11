@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-02-22 19:49+0000\n"
-"PO-Revision-Date: 2024-02-27 23:51+0200\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-09-11 22:47+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
 " 2);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Zvani"
 
@@ -54,9 +54,9 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Lietotne “Zvani” ir vienkārša un eleganta zvanītājprogramma GNOME videi. To"
-" var izmantot ar mobilo sakaru modemiem parastajiem zvaniem, kā arī VoIP"
-" zvaniem, izmantojot SIP protokolu."
+"Lietotne “Zvani” ir vienkārša un eleganta zvanītājprogramma GNOME videi. To "
+"var izmantot ar mobilo sakaru modemiem parastajiem zvaniem, kā arī VoIP "
+"zvaniem, izmantojot SIP protokolu."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml:25
@@ -64,12 +64,12 @@ msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:34
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Zvanīšana"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:39
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "Zvanu vēsture"
 
@@ -102,14 +102,17 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "Vēlamais audio kodeks, ko izmantot VoIP zvaniem (ja tāds ir pieejams)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "Vai atļaut izmantot SDES priekš SRTP bez LTS transporta slāņa"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "Šifrētiem datu nesējiem atļaut nedrošo šifrēšanas atslēgu apmaiņu."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+#| msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Iestatiet uz “patiess”, ja vēlaties atļaut [?] ar apmainītām atslēgtām"
-" nešifrētā tekstā."
+"Iestatiet uz “patiess”, ja vēlaties atļaut apmainīties ar atslēgām nešifrētā"
+" tekstā, citādi jums ir jāiestata TLS transports."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -199,62 +202,62 @@ msgstr "Atvienošanās ir pabeigta"
 msgid "Internal error occurred"
 msgstr "Gadījās iekšējā kļūda"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "Rediģēt kontu: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "Pievienot jaunu kontu"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "Konta pārskats"
+msgid "VoIP Accounts"
+msgstr "VoIP konti"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Mēģināja sastādīt nederīgu tālruņa URI “%s”"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Nezina, kā atvērt “%s”"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Nosaukums spraudnim, kuru ielādēt"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "SPRAUDNIS"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Vai, startējot lietotni, rādīt galveno logu"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Sastādīt tālruņa numuru"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "NUMURS"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Ieslēgt detalizētus atkļūdošanas ziņojumus"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Drukāt pašreizējo versiju"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "Anonīms zvanītājs"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -263,173 +266,155 @@ msgstr ""
 "%s\n"
 "vakar"
 
-#: src/calls-emergency-call-types.c:250
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Policija"
 
-#: src/calls-emergency-call-types.c:253
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Neatliekamā palīdzība"
 
-#: src/calls-emergency-call-types.c:256
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Ugunsdzēsēji"
 
-#: src/calls-emergency-call-types.c:259
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "Kalnu glābēji"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr "Rūdolfs Mazurs"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Nevar zvanīt — nav pieejama modema vai VoIP konta"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "Nevar zvanīt — nav ielādēts spraudnis"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "Nesenās"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "Kontakti"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "Ciparnīca"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "Nesenās"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Neatbildēts zvans"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Neatbildēts zvans no <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Neatbildēts zvans no %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Neatbildēts zvans no nezināma numura"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "Atzvanīt"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "VoIP konti"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "Pievienot VoIP kontu"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Varat pievienot VoIP kontu šeit. Tas jums ļaus sazvanīties ar VoIP,"
-" izmantojot SIP protokolu. Šī iespēja ir salīdzinoši jauna un vēl nav līdz"
-" galam pabeigta (piemēram, nav šifrēti mediji)."
+"Varat pievienot VoIP kontu šeit. Tas jums ļaus sazvanīties ar VoIP, "
+"izmantojot SIP protokolu. Šī iespēja ir salīdzinoši jauna un vēl nav līdz "
+"galam pabeigta (piemēram, nav šifrēti mediji)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_Pievienot kontu"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "Zvanīt"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_Dzēst zvanu"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "_Kopēt numuru"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_Pievienot kontaktu"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "_Sūtīt SMS"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "Uzgaida"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "Nav atrastu kontaktu"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "Nav nesenu zvanu"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "At_celt"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "_Aizvērt"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "_Sūtīt"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "_VoIP konti"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "_Tastatūras īsinājumtaustiņi"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "_Palīdzība"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "P_ar Zvaniem"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "Ievadiet VoIP adresi"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "SIP konts"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "Jauns zvans"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "Atpakaļ"
 
@@ -503,12 +488,12 @@ msgstr "Inicializēts"
 msgid "DBus unavailable"
 msgstr "DBus nav pieejams"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "Bez šifrēšanas"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "Piespiest šifrēt"
 
@@ -517,62 +502,75 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "Kriptogrāfisko atslēgu apmaiņa bija neveiksmīga"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Pievienot kontu"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Ierakstīties"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Pārvaldīt kontu"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_Pielietot"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_Dzēst"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "Serveris"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Attēlojamais vārds"
+#: plugins/provider/sip/sip-account-widget.ui:66
+#| msgid "Display Name"
+msgid "Display Name (Optional)"
+msgstr "Attēlojamais vārds (neobligāts)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Neobligāts"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Lietotāja ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "Parole"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "Ports"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "Transports"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "Mediju šifrēšana"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "Izmantot tālruņa zvaniem"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Automātiski savienoties"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr "Vai atļaut izmantot SDES priekš SRTP bez LTS transporta slāņa"
+
+#~ msgid "Account overview"
+#~ msgstr "Konta pārskats"
+
+#~ msgid "Call"
+#~ msgstr "Zvanīt"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Tastatūras īsinājumtaustiņi"
+
+#~ msgid "_Help"
+#~ msgstr "_Palīdzība"
+
+#~ msgid "Add Account"
+#~ msgstr "Pievienot kontu"
+
+#~ msgid "Manage Account"
+#~ msgstr "Pārvaldīt kontu"
+
+#~ msgid "Optional"
+#~ msgstr "Neobligāts"
 
