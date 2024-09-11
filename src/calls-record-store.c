@@ -522,13 +522,12 @@ update_cb (GomResource  *resource,
 
 static void
 stamp_call (CallsCallRecord *record,
-            const gchar     *stamp_name)
+            const char      *stamp_name)
 {
-  GObject *record_obj = G_OBJECT (record);
   GDateTime *stamp = NULL;
 
   /* Check the call has not already been stamped */
-  g_object_get (record_obj,
+  g_object_get (record,
                 stamp_name, &stamp,
                 NULL);
   if (stamp)
@@ -537,7 +536,7 @@ stamp_call (CallsCallRecord *record,
 
   g_debug ("Stamping call `%s'", stamp_name);
   stamp = g_date_time_new_now_utc ();
-  g_object_set (record_obj,
+  g_object_set (record,
                 stamp_name, stamp,
                 NULL);
   g_date_time_unref (stamp);
