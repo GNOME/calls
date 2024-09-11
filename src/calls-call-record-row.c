@@ -189,7 +189,7 @@ date_change_cb (CallsCallRecordRow *self)
   GDateTime *end;
   gboolean final;
 
-  g_object_get (G_OBJECT (self->record),
+  g_object_get (self->record,
                 "end", &end,
                 NULL);
   g_assert (end != NULL);
