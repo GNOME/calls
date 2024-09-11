@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsCallRecordRow"
+
 #include "calls-call-record-row.h"
 #include "calls-best-match.h"
 #include "calls-contacts-provider.h"
