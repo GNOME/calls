@@ -653,12 +653,16 @@ calls_call_record_row_init (CallsCallRecordRow *self)
 
   gesture = gtk_gesture_click_new ();
   gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (gesture), GDK_BUTTON_SECONDARY);
-  g_signal_connect (gesture, "pressed", G_CALLBACK (calls_call_record_row_button_press_event), self);
+  g_signal_connect_object (gesture, "pressed",
+                           G_CALLBACK (calls_call_record_row_button_press_event),
+                           self, G_CONNECT_AFTER);
   gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (gesture));
 
   gesture = gtk_gesture_long_press_new ();
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (gesture), TRUE);
-  g_signal_connect (gesture, "pressed", G_CALLBACK (on_long_pressed), self);
+  g_signal_connect_object (gesture, "pressed",
+                           G_CALLBACK (on_long_pressed),
+                           self, G_CONNECT_AFTER);
   gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (gesture));
 }
 
