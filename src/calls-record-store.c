@@ -487,10 +487,8 @@ record_call (CallsRecordStore *self,
                           record, g_object_unref);
 
   data = g_new (struct CallsRecordCallData, 1);
-  g_object_ref (self);
-  g_object_ref (call);
-  data->self = self;
-  data->call = call;
+  data->self = g_object_ref (self);
+  data->call = g_object_ref (call);
 
   gom_resource_save_async (GOM_RESOURCE (record),
                            (GAsyncReadyCallback) record_call_save_cb,
