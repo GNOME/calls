@@ -494,7 +494,7 @@ dispose (GObject *object)
   g_clear_object (&self->contact);
   g_clear_object (&self->action_map);
 
-  calls_clear_source (&self->date_change_timeout);
+  g_clear_handle_id (&self->date_change_timeout, g_source_remove);
   calls_clear_signal (self->record, &self->answered_notify_handler_id);
   calls_clear_signal (self->record, &self->end_notify_handler_id);
   g_clear_object (&self->record);
