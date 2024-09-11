@@ -132,7 +132,9 @@ static gboolean date_change_cb (CallsCallRecordRow *self);
 static void
 setup_date_change_timeout (CallsCallRecordRow *self)
 {
-  GDateTime *gnow, *gnextday, *gtomorrow;
+  g_autoptr (GDateTime) gnow = NULL;
+  g_autoptr (GDateTime) gnextday = NULL;
+  g_autoptr (GDateTime) gtomorrow = NULL;
   struct timeval now, tomorrow, delta;
   int err;
   guint interval;
@@ -142,7 +144,6 @@ setup_date_change_timeout (CallsCallRecordRow *self)
 
   // Get the next day
   gnextday = g_date_time_add_days (gnow, 1);
-  g_date_time_unref (gnow);
 
   // Get the start of the next day
   gtomorrow =
@@ -153,12 +154,10 @@ setup_date_change_timeout (CallsCallRecordRow *self)
                      0,
                      0,
                      0.0);
-  g_date_time_unref (gnextday);
 
   // Convert to a timeval
   tomorrow.tv_sec = g_date_time_to_unix (gtomorrow);
   tomorrow.tv_usec = 0;
-  g_date_time_unref (gtomorrow);
 
   // Get the precise time now
   err = gettimeofday (&now, NULL);
@@ -188,7 +187,7 @@ setup_date_change_timeout (CallsCallRecordRow *self)
 static gboolean
 date_change_cb (CallsCallRecordRow *self)
 {
-  GDateTime *end;
+  g_autoptr (GDateTime) end = NULL;
   gboolean final;
 
   g_object_get (self->record,
@@ -197,7 +196,6 @@ date_change_cb (CallsCallRecordRow *self)
   g_assert (end != NULL);
 
   update_time_text (self, end, &final);
-  g_date_time_unref (end);
 
   if (final)
     self->date_change_timeout = 0;
@@ -233,9 +231,9 @@ notify_time_cb (CallsCallRecordRow *self,
                 GParamSpec         *pspec,
                 CallsCallRecord    *record)
 {
+  g_autoptr (GDateTime) answered = NULL;
+  g_autoptr (GDateTime) end = NULL;
   gboolean inbound;
-  GDateTime *answered;
-  GDateTime *end;
 
   g_object_get (G_OBJECT (self->record),
                 "inbound", &inbound,
@@ -245,14 +243,11 @@ notify_time_cb (CallsCallRecordRow *self,
 
   update_time (self, inbound, answered, end);
 
-  if (answered) {
-    g_date_time_unref (answered);
+  if (answered)
     calls_clear_signal (record, &self->answered_notify_handler_id);
-  }
-  if (end) {
-    g_date_time_unref (end);
+
+  if (end)
     calls_clear_signal (record, &self->end_notify_handler_id);
-  }
 }
 
 
@@ -434,8 +429,8 @@ constructed (GObject *object)
 {
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
   gboolean inbound;
-  GDateTime *answered;
-  GDateTime *end;
+  g_autoptr (GDateTime) answered = NULL;
+  g_autoptr (GDateTime) end = NULL;
   g_autofree char *protocol = NULL;
   g_autofree char *action_name = NULL;
   g_autofree char *target = NULL;
@@ -466,8 +461,6 @@ constructed (GObject *object)
                                       "(ss)", target, "");
 
   setup_time (self, inbound, answered, end);
-  calls_date_time_unref (answered);
-  calls_date_time_unref (end);
 
   setup_contact (self);
 }
