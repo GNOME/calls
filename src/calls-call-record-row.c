@@ -384,6 +384,11 @@ on_long_pressed (GtkGestureLongPress *gesture,
                  gdouble              y,
                  GtkWidget           *self)
 {
+  if (!gtk_widget_get_realized (self)) {
+    g_warning ("widget is not realized, why does it emit 'pressed'? Aborting..");
+    return;
+  }
+
   context_menu (self, NULL);
 }
 
