@@ -462,6 +462,10 @@ calls_manager_finalize (GObject *object)
   g_clear_object (&self->origins);
   g_clear_object (&self->origins_flat);
 
+  g_clear_pointer (&self->origins_by_protocol, g_hash_table_unref);
+  g_clear_pointer (&self->dial_actions_by_protocol, g_hash_table_unref);
+  g_clear_pointer (&self->calls, g_hash_table_unref);
+
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
 
