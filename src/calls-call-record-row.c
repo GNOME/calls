@@ -244,10 +244,10 @@ notify_time_cb (CallsCallRecordRow *self,
   update_time (self, inbound, answered, end);
 
   if (answered)
-    calls_clear_signal (record, &self->answered_notify_handler_id);
+    g_clear_signal_handler (&self->answered_notify_handler_id, record);
 
   if (end)
-    calls_clear_signal (record, &self->end_notify_handler_id);
+    g_clear_signal_handler (&self->end_notify_handler_id, record);
 }
 
 
@@ -499,8 +499,8 @@ dispose (GObject *object)
   g_clear_object (&self->action_map);
 
   g_clear_handle_id (&self->date_change_timeout, g_source_remove);
-  calls_clear_signal (self->record, &self->answered_notify_handler_id);
-  calls_clear_signal (self->record, &self->end_notify_handler_id);
+  g_clear_signal_handler (&self->answered_notify_handler_id, self->record);
+  g_clear_signal_handler (&self->end_notify_handler_id, self->record);
   g_clear_object (&self->record);
 
   G_OBJECT_CLASS (calls_call_record_row_parent_class)->dispose (object);
