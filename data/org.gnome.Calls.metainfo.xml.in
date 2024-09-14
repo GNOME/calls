@@ -91,7 +91,7 @@
             <li>Updated 46 out of 51 translations (including 6 new languages)</li>
           </ul>
 
-          <p>Known issues that you can find out more about by searching for relevant keywords on the <a href="https://gitlab.gnome.org/GNOME/calls/-/issues">Issue Tracker</a>:</p>
+          <p>Known issues that you can find out more about by searching for relevant keywords on the Issue Tracker:</p>
           <ul>
             <li>Connecting to SIP servers does not reliably work with the freeswitch fork of sofia-sip</li>
             <li>No local ringback tone when using SIP for outgoing calls</li>
