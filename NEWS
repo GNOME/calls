@@ -1,3 +1,33 @@
+gnome-calls 47.0
+----------------
+Released September 2024
+* Clear number and address entries when closing the application window
+* Fix crash on mobile when placing outgoing call
+* Fix keypad layout in RTL locales
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/666
+* Contributors:
+    * Chris Talbot
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+* UI translations:
+    * Aefgh Threenine (th)
+    * Alan Mortensen (da)
+    * Anders Jonsson (sv)
+    * Andi Chandler (en_GB)
+    * Andika Triwidada (id)
+    * Aurimas Černius (lt)
+    * Daniel (es)
+    * Efstathios Iosifidis (el)
+    * Fran Dieguez (gl)
+    * Irénée THIRION (fr)
+    * Jose Riha (sk)
+    * Piotr Drąg (pl)
+    * Quentin PAGÈS (oc)
+    * Rūdolfs Mazurs (lv)
+    * Sabri Ünal (tr)
+    * Vincent Chatelain (fr)
+
 gnome-calls 47~rc.1
 -------------------
 Released August 2024

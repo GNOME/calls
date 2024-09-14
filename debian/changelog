@@ -1,3 +1,82 @@
+gnome-calls (47.0) unstable; urgency=medium
+
+  [ Sabri Ünal ]
+  * Update Turkish translation
+
+  [ Aurimas Černius ]
+  * Update Lithuanian translation
+
+  [ Fran Dieguez ]
+  * Update Galician translation
+
+  [ Chris Talbot ]
+  * application: add signal for main window hiding
+  * contacts-box: clear entry if window is closed
+  * new-call-box: clear number entry when windows is closed
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+
+  [ Daniel ]
+  * Updated Spanish translation
+
+  [ Andika Triwidada ]
+  * Update Indonesian translation
+
+  [ Irénée THIRION ]
+  * Update French translation
+
+  [ Guido Günther ]
+  * packaging: Keep meson verson in sync with changelog
+  * ci: Avoid duplicate pipelines
+  * ci: Use shared checks
+  * ci: Check consistency
+
+  [ Evangelos Ribeiro Tzaras ]
+  * flatpak: Fix libpeas2 configuration options
+  * tree: Ignore gdb history
+  * dir-locals: Update projectile commands
+  * record-store: Remove unnecessary casts
+  * record-row: Remove unnecessary cast
+  * record-row: Remove unused include
+  * record-row: Define log domain
+  * history-box: Add debug statement
+  * record-row: Prefer g_autoptr for GDateTime
+  * record-store: Simplify struct setup of record call data
+  * tree: Remove custom clearing macros
+  * record-row: Prefer g_signal_connect_object() over a plain connect()
+  * record-row: Only popup context menu if row is realized
+  * libcall-ui: Bump to 0.2.1
+
+  [ Andi Chandler ]
+  * Update British English translation
+
+  [ Piotr Drąg ]
+  * Update Polish translation
+
+  [ Aefgh Threenine ]
+  * Update Thai translation
+
+  [ Alan Mortensen ]
+  * Update Danish translation
+
+  [ Quentin PAGÈS ]
+  * Update Occitan translation
+
+  [ Rūdolfs Mazurs ]
+  * Update Latvian translation
+
+  [ Vincent Chatelain ]
+  * Update French translation
+
+  [ Jose Riha ]
+  * Update Slovak translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 14 Sep 2024 21:53:36 +0200
+
 gnome-calls (47~rc.1) unstable; urgency=medium
 
   [ Balázs Úr ]

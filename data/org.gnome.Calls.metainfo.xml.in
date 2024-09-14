@@ -69,6 +69,36 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="47.0" date="2024-09-14">
+        <description>
+          <p>
+            This is the first stable release of the GTK4 version.
+          </p>
+          <ul>
+            <li>
+              The big one: The port to GTK4 and libadwaita!
+              Thanks to Anton Lazarev for code
+              and Chris, Maximiliano and Guido for reviews!
+            </li>
+            <li>Trigger phone-hangup event</li>
+            <li>Now shipping systemd unit files</li>
+            <li>Improved styling</li>
+            <li>Number (or SIP address) entry's now get cleared when the application window gets closed</li>
+            <li>Fixed a crash related to modems missing cell location services</li>
+            <li>Fixed a crash in the VoIP account preferences </li>
+            <li>Fix keypad layout in right-to-left locales</li>
+            <li>Fixed untranslated metainfo files being installed</li>
+            <li>Updated 46 out of 51 translations (including 6 new languages)</li>
+          </ul>
+
+          <p>Known issues that you can find out more about by searching for relevant keywords on the <a href="https://gitlab.gnome.org/GNOME/calls/-/issues">Issue Tracker</a>:</p>
+          <ul>
+            <li>Connecting to SIP servers does not reliably work with the freeswitch fork of sofia-sip</li>
+            <li>No local ringback tone when using SIP for outgoing calls</li>
+            <li>DTMF is not implemented for SIP</li>
+          </ul>
+        </description>
+      </release>
       <release version="46.0" date="2024-03-14">
         <description>
           <p>
