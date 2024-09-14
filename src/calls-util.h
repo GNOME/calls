@@ -89,14 +89,6 @@ G_BEGIN_DECLS
   CALLS_DEFINE_IFACE_GETTER_BASE(calls,iface,Calls,Iface,CALLS,IFACE,prop,rettype,errval)
 
 
-#define calls_clear_signal(object,handler_id_ptr)               \
-  if (*handler_id_ptr != 0)                                     \
-    {                                                           \
-      g_signal_handler_disconnect (object, *handler_id_ptr);    \
-      *handler_id_ptr = 0;                                      \
-    }
-
-
 gboolean    calls_date_time_is_same_day  (GDateTime  *a,
                                            GDateTime *b);
 gboolean    calls_date_time_is_yesterday (GDateTime  *now,
