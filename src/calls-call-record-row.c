@@ -418,8 +418,7 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_RECORD:
-    g_set_object (&self->record,
-                  CALLS_CALL_RECORD (g_value_get_object (value)));
+    g_set_object (&self->record, g_value_get_object (value));
     break;
 
   default:
