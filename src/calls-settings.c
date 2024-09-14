@@ -388,7 +388,7 @@ calls_settings_set_preferred_audio_codecs (CallsSettings      *self,
       return;
   }
 
-  g_free (self->preferred_audio_codecs);
+  g_strfreev (self->preferred_audio_codecs);
   self->preferred_audio_codecs = g_strdupv ((char **) codecs);
 
   if (!initial)
