@@ -494,6 +494,9 @@ static void
 dispose (GObject *object)
 {
   CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
+  GtkWidget *popover = GTK_WIDGET (self->popover);
+
+  g_clear_pointer (&popover, gtk_widget_unparent);
 
   g_clear_object (&self->contact);
   g_clear_object (&self->action_map);
@@ -507,18 +510,6 @@ dispose (GObject *object)
 }
 
 
-static void
-finalize (GObject *object)
-{
-  CallsCallRecordRow *self = CALLS_CALL_RECORD_ROW (object);
-
-  GtkWidget *popover = GTK_WIDGET (self->popover);
-
-  g_clear_pointer (&popover, gtk_widget_unparent);
-
-  G_OBJECT_CLASS (calls_call_record_row_parent_class)->dispose (object);
-}
-
 
 static void
 calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
@@ -530,7 +521,6 @@ calls_call_record_row_class_init (CallsCallRecordRowClass *klass)
   object_class->constructed = constructed;
   object_class->get_property = get_property;
   object_class->dispose = dispose;
-  object_class->finalize = finalize;
 
   props[PROP_RECORD] =
     g_param_spec_object ("record",
