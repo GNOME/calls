@@ -204,7 +204,7 @@ constructed (GObject *object)
 
   G_OBJECT_CLASS (calls_history_box_parent_class)->constructed (object);
 
-  self->slice_model = gtk_slice_list_model_new (self->model,
+  self->slice_model = gtk_slice_list_model_new (g_object_ref (self->model),
                                                 0,
                                                 CALLS_HISTORY_SIZE_INITIAL);
 
