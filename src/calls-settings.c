@@ -342,7 +342,7 @@ calls_settings_set_autoload_plugins (CallsSettings      *self,
       return;
   }
 
-  g_free (self->autoload_plugins);
+  g_strfreev (self->autoload_plugins);
   self->autoload_plugins = g_strdupv ((char **) plugins);
 
   if (!initial)
