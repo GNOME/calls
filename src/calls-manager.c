@@ -459,6 +459,8 @@ calls_manager_finalize (GObject *object)
   CallsManager *self = CALLS_MANAGER (object);
 
   g_clear_object (&self->contacts_provider);
+  g_clear_object (&self->origins);
+  g_clear_object (&self->origins_flat);
 
   G_OBJECT_CLASS (calls_manager_parent_class)->finalize (object);
 }
@@ -602,7 +604,7 @@ calls_manager_init (CallsManager *self)
   self->state_flags = CALLS_MANAGER_FLAGS_UNKNOWN;
 
   self->origins = g_list_store_new (G_TYPE_LIST_MODEL); /* list of lists */
-  self->origins_flat = gtk_flatten_list_model_new (G_LIST_MODEL (self->origins));
+  self->origins_flat = gtk_flatten_list_model_new (G_LIST_MODEL (g_object_ref (self->origins)));
 
   providers = calls_plugin_manager_get_providers (plugin_manager);
   g_signal_connect_object (providers,
@@ -622,7 +624,7 @@ calls_manager_init (CallsManager *self)
     GtkFilter* filter =
       GTK_FILTER (gtk_custom_filter_new (match_origin_supports_protocol, (gpointer) protocols[i], NULL));
     GtkFilterListModel *f_list =
-      gtk_filter_list_model_new (G_LIST_MODEL (self->origins_flat), filter);
+      gtk_filter_list_model_new (G_LIST_MODEL (g_object_ref (self->origins_flat)), filter);
 
     g_debug ("Adding filter list model for protocol '%s'", protocols[i]);
     g_hash_table_insert (self->origins_by_protocol,
