@@ -22,7 +22,7 @@ workflow:
     - if: $CI_COMMIT_BRANCH
 
 variables:
-  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2024-08-30
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2024-09-15
   GIT_SUBMODULE_STRATEGY: normal
 
 build:native:
