@@ -8,4 +8,5 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    && eatmydata apt-get --no-install-recommends -y build-dep . \
    && eatmydata apt-get --no-install-recommends -y install build-essential git wget gcovr \
    && eatmydata apt-get --no-install-recommends -y install intltool \
+   && eatmydata apt-get --no-install-recommends -y install appstream desktop-file-utils \
    && eatmydata apt-get clean
