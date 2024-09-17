@@ -60,7 +60,7 @@
 struct _CallsApplication {
   AdwApplication      parent_instance;
 
-  gboolean            daemon;
+  gboolean            ignore_activation;
   CallsRinger        *ringer;
   CallsNotifier      *notifier;
   CallsRecordStore   *record_store;
@@ -247,12 +247,9 @@ set_daemon_action (GSimpleAction *action,
                    gpointer       user_data)
 {
   CallsApplication *self = CALLS_APPLICATION (user_data);
-  gboolean daemon = g_variant_get_boolean (parameter);
 
-  self->daemon = daemon;
-
-  g_debug ("Application %smarked as daemon",
-           daemon ? "" : "not ");
+  self->ignore_activation = g_variant_get_boolean (parameter);
+  g_debug ("Application ignores activation: %d", self->ignore_activation);
 }
 
 
@@ -700,14 +697,12 @@ static void
 activate (GApplication *application)
 {
   CallsApplication *self = CALLS_APPLICATION (application);
-  gboolean present;
 
   g_debug ("Activated");
 
   start_proper (self);
-  present = !self->daemon;
 
-  if (present || self->uri) {
+  if (!self->ignore_activation || self->uri) {
     gtk_window_present (GTK_WINDOW (self->main_window));
   }
 
@@ -721,6 +716,7 @@ activate (GApplication *application)
   }
 
   g_clear_pointer (&self->uri, g_free);
+  self->ignore_activation = FALSE;
 }
 
 
