@@ -5,21 +5,22 @@
 # Rafael Fontenelle <rafaelff@gnome.org>, 2020-2021.
 # Matheus Barbosa <mdpb.matheus@gmail.com>, 2022.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2023.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-05-22 14:55+0000\n"
-"PO-Revision-Date: 2023-04-07 14:53-0300\n"
-"Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-09-14 23:40+0000\n"
+"PO-Revision-Date: 2024-09-19 20:40-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 46.1\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: calls\n"
 "X-DL-Branch: main\n"
@@ -67,13 +68,18 @@ msgstr ""
 "GNOME. Ele pode ser utilizado com um modem celular para as antigas chamadas "
 "telefonicas, assim como chamadas VoIP utilizando o protocolo SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Fazendo uma chamada"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "O histórico de chamada"
 
@@ -271,19 +277,19 @@ msgstr ""
 "%s\n"
 "ontem"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Polícia"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Ambulância"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Bombeiros"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "Resgate"
 
