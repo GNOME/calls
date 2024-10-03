@@ -26,7 +26,7 @@ static void
 test_application_shutdown_daemon (void)
 {
   CallsApplication *app = calls_application_new ();
-  char *argv[] = { "test", "--daemon", "-p", "dummy", NULL };
+  char *argv[] = { "test", "--gapplication-service", "-p", "dummy", NULL };
   int status;
 
   g_idle_add (on_idle_quit, app);
@@ -135,10 +135,11 @@ main (int   argc,
 
   g_test_init (&argc, &argv, NULL);
 
-  g_test_add_func ("/Calls/application/shutdown_daemon", (GTestFunc) test_application_shutdown_daemon);
   g_test_add_func ("/Calls/application/shutdown_no_daemon", (GTestFunc) test_application_shutdown_no_daemon);
   g_test_add_func ("/Calls/application/shutdown_delayed", (GTestFunc) test_application_shutdown_delayed);
   g_test_add_func ("/Calls/application/shutdown_sigterm", (GTestFunc) test_application_shutdown_sigterm);
+  /* Last test so we don't need to bother if --gpplication-service keeps us alive a bit longer */
+  g_test_add_func ("/Calls/application/shutdown_daemon", (GTestFunc) test_application_shutdown_daemon);
 
   status = g_test_run ();
 

@@ -60,7 +60,6 @@
 struct _CallsApplication {
   AdwApplication      parent_instance;
 
-  gboolean            ignore_activation;
   CallsRinger        *ringer;
   CallsNotifier      *notifier;
   CallsRecordStore   *record_store;
@@ -103,6 +102,9 @@ quit_calls (CallsApplication *self)
 
   if (self->call_window)
     gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->call_window));
+
+  if (g_application_get_flags (G_APPLICATION (self)) & G_APPLICATION_IS_SERVICE)
+    g_application_release (G_APPLICATION (self));
 
   self->shutdown = TRUE;
 }
@@ -238,18 +240,6 @@ set_default_plugins_action (GSimpleAction *action,
     if (!calls_plugin_manager_load_plugin (self->plugin_manager, plugins[i], &error))
       g_warning ("Could not load plugin '%s': %s", plugins[i], error->message);
   }
-}
-
-
-static void
-set_daemon_action (GSimpleAction *action,
-                   GVariant      *parameter,
-                   gpointer       user_data)
-{
-  CallsApplication *self = CALLS_APPLICATION (user_data);
-
-  self->ignore_activation = g_variant_get_boolean (parameter);
-  g_debug ("Application ignores activation: %d", self->ignore_activation);
 }
 
 
@@ -444,7 +434,6 @@ static const GActionEntry actions[] =
 {
   { "set-plugin-names", set_plugin_names_action, "as" },
   { "set-default-plugins", set_default_plugins_action, NULL },
-  { "set-daemon", set_daemon_action, "b" },
   { "dial", dial_action, "s" },
   { "copy-number", copy_number, "s" },
   /* TODO About dialog { "about", show_about, NULL}, */
@@ -509,6 +498,11 @@ startup (GApplication *application)
                            application,
                            G_CONNECT_SWAPPED);
 
+  if (g_application_get_flags (application) & G_APPLICATION_IS_SERVICE) {
+    g_application_hold (application);
+    g_debug ("Enable daemon mode");
+  }
+
   manager_state_changed_cb (application);
 }
 
@@ -551,10 +545,6 @@ calls_application_command_line (GApplication            *application,
                                     "set-default-plugins",
                                     NULL);
   }
-
-  g_action_group_activate_action (G_ACTION_GROUP (application),
-                                  "set-daemon",
-                                  g_variant_new_boolean (g_variant_dict_contains (options, "daemon")));
 
   if (g_variant_dict_lookup (options, "dial", "&s", &arg))
     g_action_group_activate_action (G_ACTION_GROUP (application),
@@ -702,9 +692,7 @@ activate (GApplication *application)
 
   start_proper (self);
 
-  if (!self->ignore_activation || self->uri) {
-    gtk_window_present (GTK_WINDOW (self->main_window));
-  }
+  gtk_window_present (GTK_WINDOW (self->main_window));
 
   if (self->uri) {
     if (g_str_has_prefix (self->uri, "tel:"))
@@ -716,7 +704,6 @@ activate (GApplication *application)
   }
 
   g_clear_pointer (&self->uri, g_free);
-  self->ignore_activation = FALSE;
 }
 
 
@@ -824,12 +811,6 @@ calls_application_init (CallsApplication *self)
       G_OPTION_ARG_STRING_ARRAY, NULL,
       _("The name of the plugins to load"),
       _("PLUGIN")
-    },
-    {
-      "daemon", 'd', G_OPTION_FLAG_NONE,
-      G_OPTION_ARG_NONE, NULL,
-      _("Whether to present the main window on startup"),
-      NULL
     },
     {
       "dial", 'l', G_OPTION_FLAG_NONE,
