@@ -98,8 +98,11 @@ quit_calls (CallsApplication *self)
   if (self->shutdown)
     return;
 
-  gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->main_window));
-  gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->call_window));
+  if (self->main_window)
+    gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->main_window));
+
+  if (self->call_window)
+    gtk_application_remove_window (GTK_APPLICATION (self), GTK_WINDOW (self->call_window));
 
   self->shutdown = TRUE;
 }
