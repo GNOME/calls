@@ -1,0 +1,19 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+
+  <interface name="org.ofono.SupplementaryServices"><method name="Initiate"><arg name="command" type="s" direction="in"/>
+<arg name="result_name" type="s" direction="out"/>
+<arg name="value" type="v" direction="out"/>
+</method><method name="Respond"><arg name="reply" type="s" direction="in"/>
+<arg name="result" type="s" direction="out"/>
+</method><method name="Cancel"></method><method name="GetProperties"><arg name="properties" type="a{sv}" direction="out"/>
+</method><signal name="NotificationReceived"><arg name="message" type="s"/>
+</signal>
+<signal name="RequestReceived"><arg name="message" type="s"/>
+</signal>
+<signal name="PropertyChanged"><arg name="name" type="s"/>
+<arg name="value" type="v"/>
+</signal>
+  </interface>
+</node>

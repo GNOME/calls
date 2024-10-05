@@ -26,6 +26,7 @@
 #define CALLS_OFONO_ORIGIN_H__
 
 #include <libgdbofono/gdbo-modem.h>
+#include <libgdbofono/gdbo-ussd.h>
 
 #include <glib-object.h>
 
