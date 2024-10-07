@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/-/issues\n"
-"POT-Creation-Date: 2023-07-02 19:54+0000\n"
-"PO-Revision-Date: 2023-07-20 23:14+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2024-08-21 10:48+0000\n"
+"PO-Revision-Date: 2024-10-07 13:16+0000\n"
 "Last-Translator: Fabio T. <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Editor: HaiPO 1.4 beta\n"
+"X-Editor: HaiPO 2.0 beta\n"
 "X-Generator: Poedit 3.2.2\n"
 
 #: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Clamadis"
 
@@ -32,7 +32,8 @@ msgstr "Telefon"
 msgid "A phone dialer and call handler"
 msgstr "Une tastiere telefoniche e un gjestôr di clamadis"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telefon;Clamade;Tastierin;PSTN;"
@@ -55,18 +56,23 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Clamadis al è un sempliç, elegant compositôr telefonic e gjestôr di clamadis "
-"par GNOME. Al è pussibil doprâlu cuntun modem di celulâr par semplicis "
+"Clamadis al è un sempliç, elegant compositôr telefonic e gjestôr di clamadis"
+" par GNOME. Al è pussibil doprâlu cuntun modem di celulâr par semplicis "
 "clamadis telefonichis in vecjo stîl ma ancje pes clamadis VoIP doprant il "
 "protocol SIP."
 
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:26
+#: data/org.gnome.Calls.metainfo.xml:33
 msgid "Placing a call"
 msgstr "Fâ une clamade"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:31
+#: data/org.gnome.Calls.metainfo.xml:38
 msgid "The call history"
 msgstr "La cronologjie des clamadis"
 
@@ -101,13 +107,16 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr "I codecs audio preferîts di doprâ pes clamadis VoIP (se disponibii)"
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-msgstr "Indiche se permeti l'ûs di SDES par SRTP cence TLS tant che traspuart"
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "Permet il scambi no sigûr di clâfs di cifradure pai supuarts cifrâts."
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
-"Met a vêr (true) se tu desideris permeti il scambi des clâfs in test in clâr."
+"Met a vêr (true) se tu desideris permeti che lis clâfs si podedin scambiâ in"
+" test in clâr, in câs contrari tu scugnis stabilî il traspuart TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -197,62 +206,62 @@ msgstr "Disconession completade"
 msgid "Internal error occurred"
 msgstr "Al è vignût fûr un erôr interni"
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "Modifiche account: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "Zonte gnûf account"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr "Panoramiche dal account"
+msgid "VoIP Accounts"
+msgstr "Accounts VoIP"
 
 #: src/calls-application.c:367
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Provât a componi l'URI di telefon `%s' no valit"
 
-#: src/calls-application.c:748
+#: src/calls-application.c:732
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "No sai cemût vierzi `%s'"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:796
 msgid "The name of the plugins to load"
 msgstr "Il non dai plugins di cjariâ"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:797
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:802
 msgid "Whether to present the main window on startup"
 msgstr "Indiche se presentâ il barcon principâl al inviament"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:808
 msgid "Dial a telephone number"
 msgstr "Fâs un numar di telefon"
 
-#: src/calls-application.c:825
+#: src/calls-application.c:809
 msgid "NUMBER"
 msgstr "NUMAR"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:814
 msgid "Enable verbose debug messages"
 msgstr "Abilite messaçs di debug prolìs"
 
-#: src/calls-application.c:836
+#: src/calls-application.c:820
 msgid "Print current version"
 msgstr "Stampe la version curinte"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr "Telefonade anonime"
 
-#: src/calls-call-record-row.c:97
+#: src/calls-call-record-row.c:95
 #, c-format
 msgid ""
 "%s\n"
@@ -261,80 +270,80 @@ msgstr ""
 "%s\n"
 "îr"
 
-#: src/calls-emergency-call-types.c:64
+#: src/calls-emergency-call-types.c:257
 msgid "Police"
 msgstr "Polizie"
 
-#: src/calls-emergency-call-types.c:67
+#: src/calls-emergency-call-types.c:260
 msgid "Ambulance"
 msgstr "Ambulance"
 
-#: src/calls-emergency-call-types.c:70
+#: src/calls-emergency-call-types.c:263
 msgid "Fire Brigade"
 msgstr "Vigjii dal fûc"
 
-#: src/calls-emergency-call-types.c:73
+#: src/calls-emergency-call-types.c:266
 msgid "Mountain Rescue"
 msgstr "Socors alpin"
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:119
 msgid "translator-credits"
 msgstr "Fabio Tomat <f.t.publig@gmail.com>"
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:174
+msgid "USSD"
+msgstr "USSD"
+
+#: src/calls-main-window.c:312
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Impussibil fâ clamadis: nissun modem o account VoIP disponibil"
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:314
 msgid "Can't place calls: No plugin loaded"
 msgstr "Impussibil fâ clamadis: nissun plugin cjariât"
 
-#: src/calls-main-window.c:357
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:356
+msgid "Recent"
+msgstr "Resint"
+
+#: src/calls-main-window.c:364
 msgid "Contacts"
 msgstr "Contats"
 
-#: src/calls-main-window.c:367
+#: src/calls-main-window.c:372
 msgid "Dial Pad"
 msgstr "Tastiere"
-
-#. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
-msgid "Recent"
-msgstr "Resint"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
 msgstr "Clamade pierdude"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "Clamade pierdude di <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "Clamade pierdude di %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "Clamade pierdude di un numar no cognossût"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "Torne clame"
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr "Accounts VoIP"
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
 msgstr "Zonte accounts VoIP"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
@@ -345,90 +354,72 @@ msgstr ""
 "mancul gnove e no je complete di dutis lis funzionalitâts (vâl a dî nissun "
 "media cifrât)."
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "_Zonte Account"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr "Clame"
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:64
 msgid "_Delete Call"
 msgstr "_Elimine clamade"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:68
 msgid "_Copy number"
 msgstr "_Copie il numar"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:73
 msgid "_Add contact"
 msgstr "_Zonte contat"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:78
 msgid "_Send SMS"
 msgstr "_Mande SMS"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "In spiete"
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:37
 msgid "No Contacts Found"
 msgstr "Nissun contat cjatât"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
 msgstr "Nissune clamade resinte"
 
-#: src/ui/main-window.ui:105
-msgid "USSD"
-msgstr "USSD"
-
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:76
 msgid "_Cancel"
 msgstr "_Anule"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:84
 msgid "_Close"
 msgstr "_Siere"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:90
 msgid "_Send"
 msgstr "_Invie"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:143
 msgid "_VoIP Accounts"
 msgstr "Accounts _VoIP"
 
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "_Scurtis di tastiere"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "_Jutori"
-
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:157
 msgid "_About Calls"
 msgstr "_Informazions su Clamadis"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
 msgstr "Inserìs une direzion VoIP"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "Account SIP"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "Gnove clamade"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "Indaûr"
 
@@ -502,12 +493,12 @@ msgstr "Inizializât"
 msgid "DBus unavailable"
 msgstr "DBus no disponibil"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
 msgstr "Nissune cifradure"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
 msgstr "Sfuarce cifradure"
 
@@ -516,64 +507,76 @@ msgid "Cryptographic key exchange unsuccessful"
 msgstr "Il scambi de clâf criptografiche nol è lât a bon fin"
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Zonte un Account"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "_Jentre"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr "Gjestìs account"
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
 msgstr "_Apliche"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
 msgstr "_Elimine"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "Servidôr"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr "Non mostrât"
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Non mostrât (facoltatîf)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr "Opzionâl"
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ID utent"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "Password"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
 msgstr "Puarte"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr "Traspuart"
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
 msgstr "Cifradure dal multimedia"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
 msgstr "Doprâ pes clamadis telefonichis"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Conet in automatic"
+
+#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+#~ msgstr "Indiche se permeti l'ûs di SDES par SRTP cence TLS tant che traspuart"
+
+#~ msgid "Account overview"
+#~ msgstr "Panoramiche dal account"
+
+#~ msgid "Call"
+#~ msgstr "Clame"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "_Scurtis di tastiere"
+
+#~ msgid "_Help"
+#~ msgstr "_Jutori"
+
+#~ msgid "Add Account"
+#~ msgstr "Zonte un Account"
+
+#~ msgid "Manage Account"
+#~ msgstr "Gjestìs account"
+
+#~ msgid "Optional"
+#~ msgstr "Opzionâl"
 
 #~ msgid "Enter a number"
 #~ msgstr "Inserìs un numar"
