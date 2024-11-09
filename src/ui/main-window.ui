@@ -121,6 +121,7 @@
                 <child>
                   <object class="GtkEntry" id="ussd_entry">
                     <property name="visible">False</property>
+                    <property name="input-purpose">phone</property>
                     <signal name="changed" handler="window_ussd_entry_changed_cb" swapped="yes"/>
                   </object>
                 </child>
