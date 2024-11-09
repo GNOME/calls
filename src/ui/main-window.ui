@@ -65,7 +65,7 @@
     <property name="default-width">240</property>
     <property name="default-height">200</property>
     <property name="hide-on-close">True</property>
-    <property name="default-widget">ussd_cancel_button</property>
+    <property name="default-widget">ussd_entry</property>
     <child type="titlebar">
       <object class="AdwHeaderBar">
         <property name="show-start-title-buttons">False</property>
@@ -73,6 +73,7 @@
         <child type="start">
           <object class="GtkButton" id="ussd_cancel_button">
             <property name="use-underline">True</property>
+            <property name="focus-on-click">False</property>
             <property name="label" translatable="yes">_Cancel</property>
             <signal name="clicked" handler="window_ussd_cancel_clicked_cb" swapped="yes"/>
           </object>
@@ -80,6 +81,7 @@
         <child type="start">
           <object class="GtkButton" id="ussd_close_button">
             <property name="visible" bind-source="ussd_cancel_button" bind-property="visible" bind-flags="sync-create|invert-boolean|bidirectional"/>
+            <property name="focus-on-click">False</property>
             <property name="use-underline">True</property>
             <property name="label" translatable="yes">_Close</property>
             <signal name="clicked" handler="gtk_window_close" object="ussd_dialog" swapped="yes"/>
@@ -88,6 +90,7 @@
         <child type="end">
           <object class="GtkButton" id="ussd_reply_button">
             <property name="label" translatable="yes">_Send</property>
+            <property name="focus-on-click">False</property>
             <property name="sensitive">False</property>
             <property name="use-underline">True</property>
             <signal name="clicked" handler="window_ussd_reply_clicked_cb" swapped="yes"/>
