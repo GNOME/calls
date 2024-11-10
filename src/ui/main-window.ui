@@ -67,84 +67,84 @@
     <property name="follows-content-size">True</property>
     <property name="child">
       <object class="AdwToolbarView">
-    <child type="top">
-      <object class="AdwHeaderBar">
-        <property name="show-start-title-buttons">False</property>
-        <property name="show-end-title-buttons">False</property>
-        <child type="start">
-          <object class="GtkButton" id="ussd_cancel_button">
-            <property name="use-underline">True</property>
-            <property name="focus-on-click">False</property>
-            <property name="label" translatable="yes">_Cancel</property>
-            <signal name="clicked" handler="window_ussd_cancel_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-        <child type="start">
-          <object class="GtkButton" id="ussd_close_button">
-            <property name="visible" bind-source="ussd_cancel_button" bind-property="visible" bind-flags="sync-create|invert-boolean|bidirectional"/>
-            <property name="focus-on-click">False</property>
-            <property name="use-underline">True</property>
-            <property name="label" translatable="yes">_Close</property>
-            <signal name="clicked" handler="gtk_widget_hide" object="ussd_dialog" swapped="yes"/>
-          </object>
-        </child>
-        <child type="end">
-          <object class="GtkButton" id="ussd_reply_button">
-            <property name="label" translatable="yes">_Send</property>
-            <property name="focus-on-click">False</property>
-            <property name="sensitive">False</property>
-            <property name="use-underline">True</property>
-            <signal name="clicked" handler="window_ussd_reply_clicked_cb" swapped="yes"/>
-            <style>
-              <class name="suggested-action"/>
-            </style>
-          </object>
-        </child>
-      </object>
-    </child>
-    <property name="content">
-      <object class="GtkBox">
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">12</property>
-        <property name="margin-bottom">12</property>
-        <child>
-          <object class="GtkStack" id="ussd_stack">
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <child>
-              <object class="GtkBox" id="ussd_content">
-                <property name="orientation">vertical</property>
-                <property name="spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="ussd_label">
-                    <property name="wrap">True</property>
-                    <property name="xalign">0</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="ussd_entry">
-                    <property name="visible">False</property>
-                    <property name="input-purpose">phone</property>
-                    <signal name="changed" handler="window_ussd_entry_changed_cb" swapped="yes"/>
-                  </object>
-                </child>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">False</property>
+            <property name="show-end-title-buttons">False</property>
+            <child type="start">
+              <object class="GtkButton" id="ussd_cancel_button">
+                <property name="use-underline">True</property>
+                <property name="focus-on-click">False</property>
+                <property name="label" translatable="yes">_Cancel</property>
+                <signal name="clicked" handler="window_ussd_cancel_clicked_cb" swapped="yes"/>
               </object>
             </child>
+            <child type="start">
+              <object class="GtkButton" id="ussd_close_button">
+                <property name="visible" bind-source="ussd_cancel_button" bind-property="visible" bind-flags="sync-create|invert-boolean|bidirectional"/>
+                <property name="focus-on-click">False</property>
+                <property name="use-underline">True</property>
+                <property name="label" translatable="yes">_Close</property>
+                <signal name="clicked" handler="gtk_widget_hide" object="ussd_dialog" swapped="yes"/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="ussd_reply_button">
+                <property name="label" translatable="yes">_Send</property>
+                <property name="focus-on-click">False</property>
+                <property name="sensitive">False</property>
+                <property name="use-underline">True</property>
+                <signal name="clicked" handler="window_ussd_reply_clicked_cb" swapped="yes"/>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="margin-start">12</property>
+            <property name="margin-end">12</property>
+            <property name="margin-top">12</property>
+            <property name="margin-bottom">12</property>
             <child>
-              <object class="AdwSpinner" id="ussd_spinner">
-                <property name="valign">center</property>
+              <object class="GtkStack" id="ussd_stack">
+                <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="width-request">48</property>
-                <property name="height-request">48</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <child>
+                  <object class="GtkBox" id="ussd_content">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="ussd_label">
+                        <property name="wrap">True</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="ussd_entry">
+                        <property name="visible">False</property>
+                        <property name="input-purpose">phone</property>
+                        <signal name="changed" handler="window_ussd_entry_changed_cb" swapped="yes"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinner" id="ussd_spinner">
+                    <property name="valign">center</property>
+                    <property name="vexpand">True</property>
+                    <property name="width-request">48</property>
+                    <property name="height-request">48</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
-        </child>
-      </object>
-    </property>
+        </property>
       </object>
     </property>
   </object>
@@ -158,13 +158,13 @@
     </section>
     <section>
       <!--item>
-        <attribute name="label" translatable="yes">_Keyboard shortcuts</attribute>
-        <attribute name="action"></attribute>
-      </item-->
+          <attribute name="label" translatable="yes">_Keyboard shortcuts</attribute>
+          <attribute name="action"></attribute>
+          </item-->
       <!--item>
-        <attribute name="label" translatable="yes">_Help</attribute>
-        <attribute name="action"></attribute>
-      </item-->
+          <attribute name="label" translatable="yes">_Help</attribute>
+          <attribute name="action"></attribute>
+          </item-->
       <item>
         <attribute name="label" translatable="yes" comments="&quot;Calls&quot; is the application name, do not translate">_About Calls</attribute>
         <attribute name="action">win.about</attribute>
