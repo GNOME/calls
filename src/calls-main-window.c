@@ -242,7 +242,6 @@ window_ussd_respond_cb (GObject      *object,
     gtk_label_set_text (self->ussd_label, response);
   }
 
-  gtk_spinner_stop (self->ussd_spinner);
   gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_content));
 }
 
@@ -286,7 +285,6 @@ main_window_ussd_send_cb (GObject      *object,
                           g_object_ref (ussd), g_object_unref);
   window_update_ussd_state (self, ussd);
   gtk_label_set_text (self->ussd_label, response);
-  gtk_spinner_stop (self->ussd_spinner);
   gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_content));
 }
 
@@ -500,7 +498,6 @@ calls_main_window_dial (CallsMainWindow *self,
     gtk_widget_set_visible (GTK_WIDGET (self->ussd_cancel_button), FALSE);
     gtk_widget_set_visible (GTK_WIDGET (self->ussd_reply_button), FALSE);
     gtk_stack_set_visible_child (self->ussd_stack, GTK_WIDGET (self->ussd_spinner));
-    gtk_spinner_start (self->ussd_spinner);
 
     calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
                                         main_window_ussd_send_cb, self);

@@ -134,9 +134,11 @@
               </object>
             </child>
             <child>
-              <object class="GtkSpinner" id="ussd_spinner">
+              <object class="AdwSpinner" id="ussd_spinner">
                 <property name="valign">center</property>
                 <property name="vexpand">True</property>
+                <property name="width-request">48</property>
+                <property name="height-request">48</property>
               </object>
             </child>
           </object>
