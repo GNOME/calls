@@ -22,6 +22,8 @@
  *
  */
 
+#define G_LOG_DOMAIN "CallsMainWindow"
+
 #include "calls-config.h"
 
 #include "calls-account-overview.h"
