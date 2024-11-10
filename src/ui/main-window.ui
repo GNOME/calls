@@ -60,13 +60,14 @@
       </object>
     </child>
   </template>
-  <object class="GtkWindow" id="ussd_dialog">
-    <property name="modal">True</property>
-    <property name="default-width">240</property>
-    <property name="default-height">200</property>
-    <property name="hide-on-close">True</property>
+
+  <object class="AdwDialog" id="ussd_dialog">
     <property name="default-widget">ussd_entry</property>
-    <child type="titlebar">
+    <property name="title" translatable="yes">USSD</property>
+    <property name="follows-content-size">True</property>
+    <property name="child">
+      <object class="AdwToolbarView">
+    <child type="top">
       <object class="AdwHeaderBar">
         <property name="show-start-title-buttons">False</property>
         <property name="show-end-title-buttons">False</property>
@@ -84,7 +85,7 @@
             <property name="focus-on-click">False</property>
             <property name="use-underline">True</property>
             <property name="label" translatable="yes">_Close</property>
-            <signal name="clicked" handler="gtk_window_close" object="ussd_dialog" swapped="yes"/>
+            <signal name="clicked" handler="gtk_widget_hide" object="ussd_dialog" swapped="yes"/>
           </object>
         </child>
         <child type="end">
@@ -101,16 +102,18 @@
         </child>
       </object>
     </child>
-    <child>
+    <property name="content">
       <object class="GtkBox">
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
         <property name="margin-start">12</property>
         <property name="margin-end">12</property>
         <property name="margin-top">12</property>
         <property name="margin-bottom">12</property>
         <child>
           <object class="GtkStack" id="ussd_stack">
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
             <child>
               <object class="GtkBox" id="ussd_content">
                 <property name="orientation">vertical</property>
@@ -139,8 +142,11 @@
           </object>
         </child>
       </object>
-    </child>
+    </property>
+      </object>
+    </property>
   </object>
+
   <menu id="app-menu">
     <section>
       <item>

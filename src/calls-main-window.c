@@ -58,7 +58,7 @@ struct _CallsMainWindow {
   CallsAccountOverview   *account_overview;
   CallsNewCallBox        *new_call;
 
-  GtkWindow              *ussd_dialog;
+  AdwDialog              *ussd_dialog;
   GtkStack               *ussd_stack;
   GtkSpinner             *ussd_spinner;
   GtkBox                 *ussd_content;
@@ -150,6 +150,8 @@ window_update_ussd_state (CallsMainWindow *self,
                           state == CALLS_USSD_STATE_USER_RESPONSE);
   gtk_widget_set_visible (GTK_WIDGET (self->ussd_entry),
                           state == CALLS_USSD_STATE_USER_RESPONSE);
+  if (state == CALLS_USSD_STATE_USER_RESPONSE)
+    gtk_widget_grab_focus (GTK_WIDGET (self->ussd_entry));
 
   if (state == CALLS_USSD_STATE_USER_RESPONSE ||
       state == CALLS_USSD_STATE_ACTIVE)
@@ -173,24 +175,32 @@ window_ussd_added_cb (CallsMainWindow *self,
   g_object_set_data_full (G_OBJECT (self->ussd_dialog), "ussd",
                           g_object_ref (ussd), g_object_unref);
   window_update_ussd_state (self, ussd);
-  gtk_window_set_title (self->ussd_dialog, _("USSD"));
-  gtk_window_present (self->ussd_dialog);
 }
 
+
 static void
-window_ussd_cancel_clicked_cb (CallsMainWindow *self)
+ussd_dialog_closed_cb (CallsMainWindow *self)
 {
   CallsUssd *ussd;
 
   g_assert (CALLS_IS_MAIN_WINDOW (self));
 
   ussd = g_object_get_data (G_OBJECT (self->ussd_dialog), "ussd");
-
   if (ussd)
     calls_ussd_cancel_async (ussd, NULL, NULL, NULL);
-
-  gtk_window_close (self->ussd_dialog);
 }
+
+
+static void
+window_ussd_cancel_clicked_cb (CallsMainWindow *self)
+{
+  g_assert (CALLS_IS_MAIN_WINDOW (self));
+
+  ussd_dialog_closed_cb (self);
+
+  adw_dialog_close (self->ussd_dialog);
+}
+
 
 static void
 window_ussd_entry_changed_cb (CallsMainWindow *self,
@@ -222,7 +232,7 @@ window_ussd_respond_cb (GObject      *object,
   response = calls_ussd_respond_finish (ussd, result, &error);
 
   if (error) {
-    gtk_window_close (self->ussd_dialog);
+    adw_dialog_close (self->ussd_dialog);
     g_warning ("USSD Error: %s", error->message);
     return;
   }
@@ -267,7 +277,7 @@ main_window_ussd_send_cb (GObject      *object,
   ussd = g_task_get_task_data (G_TASK (result));
 
   if (error) {
-    gtk_window_close (self->ussd_dialog);
+    adw_dialog_close (self->ussd_dialog);
     g_warning ("USSD Error: %s", error->message);
     return;
   }
@@ -348,7 +358,6 @@ constructed (GObject *object)
                            G_CALLBACK (window_update_ussd_state),
                            self,
                            G_CONNECT_SWAPPED);
-  gtk_window_set_transient_for (self->ussd_dialog, GTK_WINDOW (self));
 
   // Add call records
   history = calls_history_box_new (self->record_store);
@@ -460,6 +469,12 @@ static void
 calls_main_window_init (CallsMainWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_signal_connect_object (self->ussd_dialog,
+                           "closed",
+                           G_CALLBACK (ussd_dialog_closed_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
 }
 
 
@@ -490,7 +505,7 @@ calls_main_window_dial (CallsMainWindow *self,
     calls_new_call_box_send_ussd_async (self->new_call, target, NULL,
                                         main_window_ussd_send_cb, self);
 
-    gtk_window_present (self->ussd_dialog);
+    adw_dialog_present (self->ussd_dialog, GTK_WIDGET (self));
   } else {
     calls_new_call_box_dial (self->new_call, target);
   }
