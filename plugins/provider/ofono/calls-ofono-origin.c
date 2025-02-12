@@ -315,8 +315,7 @@ dial_cb (GDBOVoiceCallManager *voice,
 
   g_autoptr (GError) error = NULL;
 
-  ok = gdbo_voice_call_manager_call_dial_finish
-         (voice, NULL, res, &error);
+  ok = gdbo_voice_call_manager_call_dial_finish (voice, NULL, res, &error);
   if (!ok) {
     g_warning ("Error dialing number on modem `%s': %s",
                self->name, error->message);
@@ -335,13 +334,12 @@ dial (CallsOrigin *origin, const gchar *number)
 
   g_return_if_fail (self->voice != NULL);
 
-  gdbo_voice_call_manager_call_dial
-    (self->voice,
-    number,
-    "default" /* default caller id settings */,
-    NULL,
-    (GAsyncReadyCallback) dial_cb,
-    self);
+  gdbo_voice_call_manager_call_dial (self->voice,
+                                     number,
+                                     "default" /* default caller id settings */,
+                                     NULL,
+                                     (GAsyncReadyCallback) dial_cb,
+                                     self);
 }
 
 
@@ -390,8 +388,7 @@ set_property (GObject      *object,
     break;
 
   case PROP_MODEM:
-    g_set_object
-      (&self->modem, GDBO_MODEM (g_value_get_object (value)));
+    g_set_object (&self->modem, GDBO_MODEM (g_value_get_object (value)));
     break;
 
   default:
@@ -598,14 +595,13 @@ call_added_cb (GDBOVoiceCallManager *voice,
   data->properties = properties;
   g_variant_ref (properties);
 
-  gdbo_voice_call_proxy_new
-    (self->connection,
-    G_DBUS_PROXY_FLAGS_NONE,
-    g_dbus_proxy_get_name (G_DBUS_PROXY (voice)),
-    path,
-    NULL,
-    (GAsyncReadyCallback) voice_call_proxy_new_cb,
-    data);
+  gdbo_voice_call_proxy_new (self->connection,
+                             G_DBUS_PROXY_FLAGS_NONE,
+                             g_dbus_proxy_get_name (G_DBUS_PROXY (voice)),
+                             path,
+                             NULL,
+                             (GAsyncReadyCallback) voice_call_proxy_new_cb,
+                             data);
 
   g_debug ("Call `%s' addition in progress", path);
 }
@@ -660,8 +656,10 @@ get_calls_cb (GDBOVoiceCallManager *voice,
   const gchar *path;
   GVariant *properties;
 
-  ok = gdbo_voice_call_manager_call_get_calls_finish
-         (voice, &calls_with_properties, res, &error);
+  ok = gdbo_voice_call_manager_call_get_calls_finish (voice,
+                                                      &calls_with_properties,
+                                                      res,
+                                                      &error);
   if (!ok) {
     g_warning ("Error getting calls from oFono"
                " VoiceCallManager `%s': %s",
@@ -697,8 +695,7 @@ voice_new_cb (GDBusConnection  *connection,
 {
   g_autoptr (GError) error = NULL;
 
-  self->voice = gdbo_voice_call_manager_proxy_new_finish
-                  (res, &error);
+  self->voice = gdbo_voice_call_manager_proxy_new_finish (res, &error);
   if (!self->voice) {
     g_warning ("Error creating oFono"
                " VoiceCallManager `%s' proxy: %s",
@@ -756,14 +753,13 @@ constructed (GObject *object)
   if (name)
     self->name = g_strdup (name);
 
-  gdbo_voice_call_manager_proxy_new
-    (self->connection,
-    G_DBUS_PROXY_FLAGS_NONE,
-    g_dbus_proxy_get_name (modem_proxy),
-    g_dbus_proxy_get_object_path (modem_proxy),
-    NULL,
-    (GAsyncReadyCallback) voice_new_cb,
-    self);
+  gdbo_voice_call_manager_proxy_new (self->connection,
+                                     G_DBUS_PROXY_FLAGS_NONE,
+                                     g_dbus_proxy_get_name (modem_proxy),
+                                     g_dbus_proxy_get_object_path (modem_proxy),
+                                     NULL,
+                                     (GAsyncReadyCallback) voice_new_cb,
+                                     self);
 
   G_OBJECT_CLASS (calls_ofono_origin_parent_class)->constructed (object);
 

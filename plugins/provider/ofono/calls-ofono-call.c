@@ -103,10 +103,9 @@ calls_ofono_call_answer (CallsCall *call)
   data->self = g_object_ref (self);
   data->finish_func = gdbo_voice_call_call_answer_finish;
 
-  gdbo_voice_call_call_answer
-    (self->voice_call, NULL,
-    (GAsyncReadyCallback) operation_cb,
-    data);
+  gdbo_voice_call_call_answer (self->voice_call, NULL,
+                               (GAsyncReadyCallback) operation_cb,
+                               data);
 }
 
 
@@ -121,10 +120,9 @@ calls_ofono_call_hang_up (CallsCall *call)
   data->self = g_object_ref (self);
   data->finish_func = gdbo_voice_call_call_hangup_finish;
 
-  gdbo_voice_call_call_hangup
-    (self->voice_call, NULL,
-    (GAsyncReadyCallback) operation_cb,
-    data);
+  gdbo_voice_call_call_hangup (self->voice_call, NULL,
+                               (GAsyncReadyCallback) operation_cb,
+                               data);
 }
 
 

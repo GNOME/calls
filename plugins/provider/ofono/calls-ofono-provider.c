@@ -321,14 +321,13 @@ modem_added_cb (GDBOManager        *manager,
     g_variant_ref (data->ifaces);
   }
 
-  gdbo_modem_proxy_new
-    (self->connection,
-    G_DBUS_PROXY_FLAGS_NONE,
-    g_dbus_proxy_get_name (G_DBUS_PROXY (manager)),
-    path,
-    NULL,
-    (GAsyncReadyCallback) modem_proxy_new_cb,
-    data);
+  gdbo_modem_proxy_new (self->connection,
+                        G_DBUS_PROXY_FLAGS_NONE,
+                        g_dbus_proxy_get_name (G_DBUS_PROXY (manager)),
+                        path,
+                        NULL,
+                        (GAsyncReadyCallback) modem_proxy_new_cb,
+                        data);
 
   g_debug ("Modem `%s' addition in progress", path);
 }
@@ -447,11 +446,10 @@ ofono_appeared_cb (GDBusConnection    *connection,
   g_signal_connect (self->manager, "modem-removed",
                     G_CALLBACK (modem_removed_cb), self);
 
-  gdbo_manager_call_get_modems
-    (self->manager,
-    NULL,
-    (GAsyncReadyCallback) get_modems_cb,
-    self);
+  gdbo_manager_call_get_modems (self->manager,
+                                NULL,
+                                (GAsyncReadyCallback) get_modems_cb,
+                                self);
 }
 
 
