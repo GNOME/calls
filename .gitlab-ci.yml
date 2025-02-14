@@ -62,6 +62,7 @@ build:tarball:
   script:
     - meson setup . "${MESON_BUILD_DIR}"
     - xvfb-run -s -noreset meson dist --include-subprojects -C "${MESON_BUILD_DIR}"
+    - mv ${MESON_BUILD_DIR}/meson-dist/calls*.tar.xz ${TARBALL_ARTIFACT_PATH}
   only:
     - tags
 
