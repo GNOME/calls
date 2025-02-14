@@ -1,3 +1,46 @@
+gnome-calls (48~beta.0) unstable; urgency=medium
+
+  [ Evangelos Ribeiro Tzaras ]
+  * ci: Include appstreamcli and desktop-file-utils in images
+  * ci: Update image
+  * ci: Use GNOME release pipeline
+
+  [ Guido Günther ]
+  * calls-notifier: Use official notification category
+  * calls-manager: Keep ref on list models
+  * calls-manager: Don't leak hash tables
+  * settings: Don't leak audio codecs
+  * settings: Don't leak autoload plugins
+  * history-box: No need to unparent the stack
+  * history-box: Keep ref on list model
+  * call-record-row: Drop superfluous cast
+  * call-record-row: Use g_clear_signal_handler
+  * util: Drop now unused macros
+  * call-record-row: Unparent popover in dispose
+  * call-record-row: Turn the realized check into a critical
+  * ci: Use newer image
+  * build: Bump libadwaita dependency to 1.6
+  * main-window: Set log domain
+  * ussd-dialog: Set phone input purose on entry
+  * ussd-dialog: Simplify navigation
+  * main-window: Use AdwDialog for USSD
+  * ussd-dialog: Use AdwSpinner
+
+  [ Juliano de Souza Camargo ]
+  * Update Brazilian Portuguese translation
+
+  [ Fabio Tomat ]
+  * Update Friulian translation
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Милош Поповић ]
+  * Update Serbian translation
+  * Add Serbian (Latin) translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Fri, 14 Feb 2025 14:23:50 +0100
+
 gnome-calls (47.0) unstable; urgency=medium
 
   [ Sabri Ünal ]

@@ -1,3 +1,17 @@
+gnome-calls 48~beta.0
+---------------------
+Released Februar 2025
+* Use notification categories
+* Modernize USSD dialog
+* Contributors:
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+* UI translations:
+    * Fabio Tomat (fur)
+    * Juliano de Souza Camargo (pt_BR)
+    * Nathan Follens (nl)
+    * Милош Поповић (sr)
+
 gnome-calls 47.0
 ----------------
 Released September 2024
