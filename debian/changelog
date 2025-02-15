@@ -1,3 +1,9 @@
+gnome-calls (48~beta.1) unstable; urgency=medium
+
+  * ci: Rename dist tarball so it will be found by the release pipeline
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 15 Feb 2025 08:45:33 +0100
+
 gnome-calls (48~beta.0) unstable; urgency=medium
 
   [ Evangelos Ribeiro Tzaras ]
