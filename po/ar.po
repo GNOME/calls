@@ -1,0 +1,564 @@
+# Arabic translation for calls.
+# Copyright (C) 2025 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Amar <al_janabi7@yahoo.com>, 2025.
+# Khalid Abu Shawarib <khalid.shawarib@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2025-03-10 11:22+0000\n"
+"PO-Revision-Date: 2025-03-14 22:03+0300\n"
+"Last-Translator: Khalid Abu Shawarib <khalid.shawarib@gmail.com>\n"
+"Language-Team: Arabic <doc@arabeyes.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 47.1\n"
+"Plural-Forms: nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+msgid "Calls"
+msgstr "المكالمات"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "هاتف"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "طالب هاتف ومعالج اتصال"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;هاتف;مكالمة;طلب;طالب;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "المكالمات (خدمة)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "طالب هاتف ومعالج اتصال (وضع الخدمة)"
+
+#: data/org.gnome.Calls.metainfo.xml.in:7
+msgid "Make phone and SIP calls"
+msgstr "اجري مكالمات هاتف وSIP"
+
+#: data/org.gnome.Calls.metainfo.xml.in:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"«المكالمات» طالب هاتف بسيط ومعالج اتصالات أنيق لـGNOME «جنوم». يمكن استخدامه "
+"مع مودم خليوي للهاتف القديم ايضا لمكالمات VoIP باستخدام بروتوكول SIP."
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml.in:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "جوليان سباربر، إيفانجلوس ريبيرو تزاراس"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:33
+msgid "Placing a call"
+msgstr "إجراء مكالمة"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:38
+msgid "The call history"
+msgstr "سجل المكالمات"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "ما إذا كان يجب على المكالمات استخدام الأصل المبدأيّ تلقائيًا"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "رمز الدولة من كما أتى من المودم"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "رمز الدولة يستخدم في البحث عن اسم للاتصال"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "اضافات تحمل تلقائيا"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "هذه الاضافات ستحمل تلقائيا عند بدء تشغيل البرنامج."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "ترميز الصوت المستخدم لمكالمات VoIP مرتَّب حسب التفضيل"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "ترميز الصوت المفضل للاستخدام مع اتصالات VoIP (إن توفَّر)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "اسمح بتبادل مفتاح التشفير غير الآمن للوسائط المشفَّرة."
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"مكن اذا اردت السماح بأن تكون المفاتيح قابلة للتبادل بنصٍ مكشوف، وإلا فعليك "
+"ضبط تناقل TLS."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "حالة (عدم التهيئة) المبدئية"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "يُهيَّأْ الحساب…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "يُلغى تهيئة الحساب…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "جاري الاتصال بالخادوم…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "الحساب متصل"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "جاري قطع الاتصال بالخادوم…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "الحساب غير متصل"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "حدث خطئ في الحساب"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "لم يُعطَ سبب"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "بدأت التهيئة"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "اكتملت التهئية"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "إلغاء التهيئة بدأت"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "اكتمل إلغاء التهيئة"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "لم يتم تعيين بيانات الاعتماد"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "يبدأُ الاتصال"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "انتهت مهلة الاتصال"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "لا يمكن إيجاد اسم النطاق"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "الخادوم لم يقبل اسم المستخدم او كلمة المرور"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "اكتمل الاتصال"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "يُقطع الاتصال"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "قُطعَ الاتصال"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "حدث خطأ داخلي"
+
+#: src/calls-account-overview.c:193
+#, c-format
+msgid "Edit account: %s"
+msgstr "تحرير حساب: %s"
+
+#: src/calls-account-overview.c:200
+msgid "Add new account"
+msgstr "اضافة حساب جديد"
+
+#: src/calls-account-overview.c:441
+msgid "VoIP Accounts"
+msgstr "حسابات VoIP"
+
+#: src/calls-application.c:373
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "حاول طلب URI غير صحيح `%s'"
+
+#: src/calls-application.c:755
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "لا أعرف كيفية فتح `%s'"
+
+#: src/calls-application.c:826
+msgid "The name of the plugins to load"
+msgstr "اسم الإضافات لتُحمَّل"
+
+#: src/calls-application.c:827
+msgid "PLUGIN"
+msgstr "إضافة"
+
+#: src/calls-application.c:832
+msgid "Whether to present the main window on startup"
+msgstr "ما إذا كان سيتم تقديم النافذة الرئيسية عند بدء التشغيل"
+
+#: src/calls-application.c:838
+msgid "Dial a telephone number"
+msgstr "اطلب رقم هاتف"
+
+#: src/calls-application.c:839
+msgid "NUMBER"
+msgstr "رقم"
+
+#: src/calls-application.c:844
+msgid "Enable verbose debug messages"
+msgstr "تفعيل رسائل التنقيح المطولة"
+
+#: src/calls-application.c:850
+msgid "Print current version"
+msgstr "طباعة النسخة الحالية"
+
+#: src/calls-best-match.c:504
+msgid "Anonymous caller"
+msgstr "متصل مجهول"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"امس"
+
+#: src/calls-emergency-call-types.c:257
+msgid "Police"
+msgstr "الشرطة"
+
+#: src/calls-emergency-call-types.c:260
+msgid "Ambulance"
+msgstr "الاسعاف"
+
+#: src/calls-emergency-call-types.c:263
+msgid "Fire Brigade"
+msgstr "الاطفاء"
+
+#: src/calls-emergency-call-types.c:266
+msgid "Mountain Rescue"
+msgstr "الانقاذ الجبلي"
+
+#: src/calls-main-window.c:121
+msgid "translator-credits"
+msgstr ""
+"فريق عربآيز للترجمة http://www.arabeyes.org :\n"
+"عصام بيازيدي\t\t<bayazidi@arabeyes.org>\n"
+"سيد جعفر الموسوي\t<mosawi@arabeyes.org>\n"
+"عرفات المديني\t\t<lumina@silverpen.de>\n"
+"حسن عابدين\t\t<abdin@arabeyes.org>\n"
+"عبد العزيز العرفج\t<alarfaj0@yahoo.com>\n"
+"يوسف الشهيبي\t\t<chahibi@gmail.com>\n"
+"جهاد عفيفي\t\t<djihed@gmail.com>\n"
+"خالد حسني\t\t<khaledhosny@eglug.org>\n"
+"صهيب عفيفي\t\t<sohaibafifi@gmail.com>\n"
+"أنس عفيف عماد\t\t<anas.e87@gmail.com>\n"
+"إبراهيم سعيد\t\t<ibraheem5000@gmail.com>\n"
+"مهند الرسيني\t\t<muhannad.alrusayni@gmail.com>\n"
+"خالد أبو شوارب\t\t<khalid.shawarib@gmail.com>"
+
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "لا يمكن اجراء مكالمة: لا يوجد مودم او حساب VoIP"
+
+#: src/calls-main-window.c:324
+msgid "Can't place calls: No plugin loaded"
+msgstr "لا يمكن اجراء مكالمة: الاضافة لم تحمل"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:365
+msgid "Recent"
+msgstr "الحديثة"
+
+#: src/calls-main-window.c:373
+msgid "Contacts"
+msgstr "جهات اتصال"
+
+#: src/calls-main-window.c:381
+msgid "Dial Pad"
+msgstr "لوح الطلب"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "مكالمة فائتة"
+
+#. %s is a name here
+#: src/calls-notifier.c:75
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "مكالمة فائتة من <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:78
+#, c-format
+msgid "Missed call from %s"
+msgstr "مكالمة فائتة من %s"
+
+#: src/calls-notifier.c:80
+msgid "Missed call from unknown caller"
+msgstr "مكالمة فائتة من متصل غير معروف"
+
+#: src/calls-notifier.c:86
+msgid "Call back"
+msgstr "معاودة الاتصال"
+
+#: src/ui/account-overview.ui:27
+msgid "Add VoIP Accounts"
+msgstr "اضافة حسابات VoIP"
+
+#: src/ui/account-overview.ui:29
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"بامكانك اضافة حساب VoIP هنا. سيتيح لك اجراء واستقبال مكالمات VoIP باستخدام "
+"بروتوكول SIP. هذه الميزة لازالت جديدة نسبيا وغير مكتملة (مثلا لا يوجد وسائط "
+"مشفرة)."
+
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
+msgid "_Add Account"
+msgstr "_إضافة حساب"
+
+#: src/ui/call-record-row.ui:67
+msgid "_Delete Call"
+msgstr "_حذف مكالمة"
+
+#: src/ui/call-record-row.ui:71
+msgid "_Copy number"
+msgstr "_نسخ الرقم"
+
+#: src/ui/call-record-row.ui:76
+msgid "_Add contact"
+msgstr "إ_ضافة جهة اتصال"
+
+#: src/ui/call-record-row.ui:81
+msgid "_Send SMS"
+msgstr "إر_سال رسالة نصية"
+
+#: src/ui/call-selector-item.ui:22
+msgid "On hold"
+msgstr "انتظار"
+
+#: src/ui/contacts-box.ui:37
+msgid "No Contacts Found"
+msgstr "لا يوجد جهات اتصال"
+
+#: src/ui/history-box.ui:13
+msgid "No Recent Calls"
+msgstr "لا يوجد مكالمات حديثة"
+
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "بيانات الخدمة التكميلية غير المنظمة USSD"
+
+#: src/ui/main-window.ui:78
+msgid "_Cancel"
+msgstr "أل_غِ"
+
+#: src/ui/main-window.ui:87
+msgid "_Close"
+msgstr "إغلا_ق"
+
+#: src/ui/main-window.ui:93
+msgid "_Send"
+msgstr "أر_سل"
+
+#: src/ui/main-window.ui:155
+msgid "_VoIP Accounts"
+msgstr "_حسابات VoIP"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:169
+msgid "_About Calls"
+msgstr "_عن المكالمات"
+
+#: src/ui/new-call-box.ui:32
+msgid "Enter a VoIP address"
+msgstr "ادخل عنوان VoIP"
+
+#: src/ui/new-call-box.ui:56
+msgid "SIP Account"
+msgstr "حساب SIP"
+
+#: src/ui/new-call-header-bar.ui:4
+msgid "New Call"
+msgstr "مكالمة جديدة"
+
+#: src/ui/new-call-header-bar.ui:13
+msgid "Back"
+msgstr "عودة"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "سبب مجهول"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "بدأت المكالمة الصادرة"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "مكالمة جديدة قادمة"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "تم قبول المكالمة"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "انتهت المكالمة"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "قطع المكالمة (مشغول او رفض الرد)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "قطع المكالمة (معرف خاطئ او مشكلة شبكة)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "قطع المكالمة (خطأ في اعداد قناة الصوت)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "حُولت المكالمة"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "ارتدت المكالمة"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "قطع المكالمة (سبب مجهول برمز %Ii)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "خدمة ModemManager غير متوفرة"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "لا يوجد مودم يدعم الاتصال الصوتي"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "عادي"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "مُهيئ"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus غير متوفر"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:636
+msgid "No encryption"
+msgstr "لا تشفير"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:643
+msgid "Force encryption"
+msgstr "إجبار التشفير"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "فشل تبادل مفتاح التشفير"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "_Log In"
+msgstr "_تسجيل دخول"
+
+#: plugins/provider/sip/sip-account-widget.ui:28
+msgid "_Apply"
+msgstr "_طبّق"
+
+#: plugins/provider/sip/sip-account-widget.ui:38
+msgid "_Delete"
+msgstr "ا_حذف"
+
+#: plugins/provider/sip/sip-account-widget.ui:56
+msgid "Server"
+msgstr "الخادوم"
+
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "اسم العرض (اختياري)"
+
+#: plugins/provider/sip/sip-account-widget.ui:76
+msgid "User ID"
+msgstr "معرف المستخدم"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Password"
+msgstr "كلمة السّر"
+
+#: plugins/provider/sip/sip-account-widget.ui:92
+msgid "Port"
+msgstr "المنفذ"
+
+#: plugins/provider/sip/sip-account-widget.ui:101
+msgid "Transport"
+msgstr "النقل"
+
+#: plugins/provider/sip/sip-account-widget.ui:107
+msgid "Media Encryption"
+msgstr "تشفير الوسائط"
+
+#: plugins/provider/sip/sip-account-widget.ui:117
+msgid "Use for Phone Calls"
+msgstr "استخدم لمكالمات الهاتف"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Automatically Connect"
+msgstr "اتصال تلقائي"
