@@ -1,3 +1,16 @@
+gnome-calls (48.0) unstable; urgency=medium
+
+  [ Pawan Chitrakar ]
+  * Update Nepali translation
+
+  [ Changwoo Ryu ]
+  * Update Korean translation
+
+  [ Abdullah Ibrahim ]
+  * Add Arabic translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Mon, 17 Mar 2025 02:31:50 +0100
+
 gnome-calls (48~beta.1) unstable; urgency=medium
 
   * ci: Rename dist tarball so it will be found by the release pipeline

@@ -69,6 +69,17 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="48.0" date="2025-03-17">
+        <description>
+          <p>
+            This is the first stable release of the 48 cycle.
+          </p>
+          <ul>
+            <li>Modernize USSD dialog</li>
+            <li>Updated translations (including 1 new language)</li>
+          </ul>
+        </description>
+      </release>
       <release version="47.0" date="2024-09-14">
         <description>
           <p>
