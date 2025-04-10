@@ -1,7 +1,18 @@
+gnome-calls 48.1
+----------------
+Released April 2025
+* Start as part of gnome-session
+* Contributors:
+    * Guido Günther
+    * Jan Tojnar
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/690
+* UI translations:
+    * Baxrom Raxmatov (uz)
+
 gnome-calls 48.0
 ----------------
 Released March 2025
-
 * UI translations:
     * Abdullah Ibrahim (ar)
     * Changwoo Ryu (ko)

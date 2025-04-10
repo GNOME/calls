@@ -1,3 +1,16 @@
+gnome-calls (48.1) unstable; urgency=medium
+
+  [ Baxrom Raxmatov ]
+  * Add Uzbek (Latin) translation
+
+  [ Jan Tojnar ]
+  * ci: Fix dist tarball name
+
+  [ Guido Günther ]
+  * data: Start calls as part of gnome-session
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Thu, 10 Apr 2025 18:25:03 +0200
+
 gnome-calls (48.0) unstable; urgency=medium
 
   [ Pawan Chitrakar ]
