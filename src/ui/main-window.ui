@@ -85,7 +85,7 @@
                 <property name="focus-on-click">False</property>
                 <property name="use-underline">True</property>
                 <property name="label" translatable="yes">_Close</property>
-                <signal name="clicked" handler="gtk_widget_hide" object="ussd_dialog" swapped="yes"/>
+                <signal name="clicked" handler="adw_dialog_close" object="ussd_dialog" swapped="yes"/>
               </object>
             </child>
             <child type="end">

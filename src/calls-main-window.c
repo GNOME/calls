@@ -201,7 +201,6 @@ window_ussd_cancel_clicked_cb (CallsMainWindow *self)
   adw_dialog_close (self->ussd_dialog);
 }
 
-
 static void
 window_ussd_entry_changed_cb (CallsMainWindow *self,
                               GtkEntry        *entry)
