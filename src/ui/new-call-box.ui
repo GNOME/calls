@@ -20,7 +20,7 @@
                     <property name="halign">center</property>
                     <child>
                       <object class="AdwComboRow" id="origin_list">
-                        <signal name="notify::selected-index" handler="notify_selected_index_cb" swapped="yes"/>
+                        <signal name="notify::selected" handler="notify_selected_index_cb" swapped="yes"/>
                       </object>
                     </child>
                   </object>
