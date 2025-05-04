@@ -401,7 +401,7 @@ calls_account_overview_init (CallsAccountOverview *self)
 
   account_provider_filter = GTK_FILTER (gtk_custom_filter_new (match_account_provider, NULL, NULL));
   self->providers =
-    G_LIST_MODEL (gtk_filter_list_model_new (all_providers, account_provider_filter));
+    G_LIST_MODEL (gtk_filter_list_model_new (g_object_ref (all_providers), account_provider_filter));
 
   g_signal_connect (self->providers,
                     "items-changed",
@@ -413,7 +413,7 @@ calls_account_overview_init (CallsAccountOverview *self)
 
   account_filter = GTK_FILTER (gtk_custom_filter_new (match_account, NULL, NULL));
   self->accounts =
-    G_LIST_MODEL (gtk_filter_list_model_new (all_origins, account_filter));
+    G_LIST_MODEL (gtk_filter_list_model_new (g_object_ref (all_origins), account_filter));
   g_signal_connect_object (self->accounts,
                            "items-changed",
                            G_CALLBACK (on_accounts_changed),
