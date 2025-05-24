@@ -247,16 +247,16 @@
         </description>
       </release>
       <release version="41.0" date="2021-09-18">
-        <description>SIP plugin bugfixes.</description>
+        <description><p>SIP plugin bugfixes.</p></description>
       </release>
       <release version="41~rc" date="2021-09-02">
-        <description>SIP Plugin polish and bugfixes.</description>
+        <description><p>SIP Plugin polish and bugfixes.</p></description>
       </release>
       <release version="41~beta" date="2021-08-14">
-        <description>SIP Plugin usable from the UI.</description>
+        <description><p>SIP Plugin usable from the UI.</p></description>
       </release>
       <release version="41~alpha" date="2021-07-16">
-        <description>First GNOME release</description>
+        <description><p>First GNOME release</p></description>
       </release>
     </releases>
 
