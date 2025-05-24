@@ -1,3 +1,17 @@
+gnome-calls (48.2) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * account-overview: Ref list models
+  * call-box: Use correct property
+
+  [ knoppix ]
+  * main-window.ui: add a proper callback for Close button
+
+  [ Vivek wagdare ]
+  * contacts-box: Add vertical margins to SearchEntry in contacts view
+
+ -- Evangelos Ribeiro Tzaras <devrtz-debian@fortysixandtwo.eu>  Sat, 24 May 2025 18:15:43 +0200
+
 gnome-calls (48.1) unstable; urgency=medium
 
   [ Baxrom Raxmatov ]

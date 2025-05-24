@@ -69,6 +69,19 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="48.2" date="2025-05-24">
+        <description>
+          <p>
+            Bugfix release
+          </p>
+          <ul>
+            <li>Fix crash on shutdown</li>
+            <li>Fix not properly switching between keypad and text entry</li>
+            <li>Fix USSD dialog becoming hidden, turning the whole application unresponsive</li>
+          </ul>
+        </description>
+      </release>
+
       <release version="48.1" date="2025-04-10">
         <description>
           <p>

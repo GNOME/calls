@@ -1,3 +1,14 @@
+gnome-calls 48.2
+----------------
+Released May 2025
+* Fix crash on shutdown
+* Fix not properly switching between keypad and text entry
+* Fix USSD dialog getting hidden, turning the whole application unresponsive
+* Contributors:
+    * Guido Günther
+    * knoppix
+    * Vivek wagdare
+
 gnome-calls 48.1
 ----------------
 Released April 2025
