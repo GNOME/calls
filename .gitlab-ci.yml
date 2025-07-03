@@ -27,7 +27,7 @@ workflow:
     - if: $CI_COMMIT_BRANCH
 
 variables:
-  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2024-11-10
+  DEBIAN_IMAGE: $CI_REGISTRY/gnome/calls/debian:v0.0.2025-07-02
   GIT_SUBMODULE_STRATEGY: normal
   MESON_BUILD_DIR: "_build"
 
