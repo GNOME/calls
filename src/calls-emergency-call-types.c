@@ -145,6 +145,13 @@ CallsEmergencyNumberTypes emergency_number_types[] = {
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
+  { "IL",
+    {
+      { "100", CALLS_EMERGENCY_CALL_TYPE_POLICE },
+      { "101", CALLS_EMERGENCY_CALL_TYPE_AMBULANCE },
+      { "102", CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE }
+    }
+  },
   { "IT",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
