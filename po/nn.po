@@ -1,0 +1,546 @@
+# Norwegian Nynorsk translation for calls.
+# Copyright (C) 2025 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Bjørn Mørkedal <gnome@morkedal.com>,  2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2025-07-19 07:11+0000\n"
+"PO-Revision-Date: 2025-07-25 20:20+0200\n"
+"Last-Translator: Bjørn Mørkedal <gnome@morkedal.com>\n"
+"Language-Team: Norwegian Nynorsk <nn@li.org>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+msgid "Calls"
+msgstr "Samtaler"
+
+#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+msgid "Phone"
+msgstr "Telefon"
+
+#: data/org.gnome.Calls.desktop.in:5
+msgid "A phone dialer and call handler"
+msgstr "Ein telefonoppringar og samtalehandsamar"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telefon;Samtale;Oppringing;Telefonoppringar;PSTN;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Calls (daemon)"
+msgstr "Samtaler (tenestemodus)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:5
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Ein telefonoppringar og samtalehandsamar (tenestemodus)"
+
+#: data/org.gnome.Calls.metainfo.xml.in:7
+msgid "Make phone and SIP calls"
+msgstr "Ring telefon- og SIP-samtaler"
+
+#: data/org.gnome.Calls.metainfo.xml.in:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Samtaler er ein enkel og elegant telefonoppringar og samtalehandsamar for GNOME. "
+"Han kan brukast med mobilmodem for vanlege telefonoppringingar samt VoIP-samtaler "
+"via SIP-protokollen."
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml.in:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:33
+msgid "Placing a call"
+msgstr "Ringer"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:38
+msgid "The call history"
+msgstr "Samtalehistorikk"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Om samtaler skal automatisk bruke standard opphav"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Landskoden rapportert av modemet"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Landskoden blir brukt for å finne kontaktnamn"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Programtillegg som skal lastast automatisk"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "Desse programtillegga blir automatisk lasta ved oppstart."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Lydkodekar som skal brukast for VoIP-samtaler i prioritert rekkefølgje"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Føretrekte lydkodekar for VoIP-samtaler (om dei er tilgjengelege)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "Tillat usikker nøkkelutveksling for kryptert media."
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"Set til «sann» om du vil tillate nøkkelutveksling i klartekst, elles må du "
+"aktivere TLS-transport."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Standardtilstand (ikkje initialisert)"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Initialiserer konto …"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Avsluttar initialisering av konto …"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Koplar til tenar …"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Konto er tilkopla"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Koplar frå tenar …"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Konto er frakopla"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Kontoen støytte på ein feil"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Ingen grunn oppgitt"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Initialisering starta"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Initialisering fullført"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Avslutning av initialisering starta"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Avslutning av initialisering fullført"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Ingen legitimasjon satt opp"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Startar tilkopling"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Tilkoplinga gjekk ut på tid"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Domenenamn kunne ikkje løysast"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Tenaren godkjende ikkje brukarnamn eller passord"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Tilkopling fullført"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Startar fråkopling"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Fråkopling fullført"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Intern feil oppstod"
+
+#: src/calls-account-overview.c:193
+#, c-format
+msgid "Edit account: %s"
+msgstr "Rediger konto: %s"
+
+#: src/calls-account-overview.c:200
+msgid "Add new account"
+msgstr "Legg til ny konto"
+
+#: src/calls-account-overview.c:441
+msgid "VoIP Accounts"
+msgstr "VoIP-kontoar"
+
+#: src/calls-application.c:373
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Prøvde å ringe ugyldig telefon-URI «%s»"
+
+#: src/calls-application.c:755
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "Veit ikkje korleis «%s» skal opnast"
+
+#: src/calls-application.c:826
+msgid "The name of the plugins to load"
+msgstr "Namnet på programtillegga som skal lastast"
+
+#: src/calls-application.c:827
+msgid "PLUGIN"
+msgstr "PROGRAMTILLEGG"
+
+#: src/calls-application.c:832
+msgid "Whether to present the main window on startup"
+msgstr "Om hovudvindauget skal visast ved oppstart"
+
+#: src/calls-application.c:838
+msgid "Dial a telephone number"
+msgstr "Ring eit telefonnummer"
+
+#: src/calls-application.c:839
+msgid "NUMBER"
+msgstr "NUMMER"
+
+#: src/calls-application.c:844
+msgid "Enable verbose debug messages"
+msgstr "Slå på utførlege feilmeldingar"
+
+#: src/calls-application.c:850
+msgid "Print current version"
+msgstr "Vis gjeldande versjon"
+
+#: src/calls-best-match.c:504
+msgid "Anonymous caller"
+msgstr "Anonym oppringjar"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr "%s\ni går"
+
+#: src/calls-emergency-call-types.c:264
+msgid "Police"
+msgstr "Politi"
+
+#: src/calls-emergency-call-types.c:267
+msgid "Ambulance"
+msgstr "Ambulanse"
+
+#: src/calls-emergency-call-types.c:270
+msgid "Fire Brigade"
+msgstr "Brannvesen"
+
+#: src/calls-emergency-call-types.c:273
+msgid "Mountain Rescue"
+msgstr "Fjellredning"
+
+#: src/calls-main-window.c:121
+msgid "translator-credits"
+msgstr "Omsetjing: Bjørn Mørkedal <gnome@morkedal.com>"
+
+#: src/calls-main-window.c:321
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Kan ikkje ringe: Ingen modem eller VoIP-konto tilgjengeleg"
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No plugin loaded"
+msgstr "Kan ikkje ringe: Ingen programtillegg lasta"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:364
+msgid "Recent"
+msgstr "Nyleg"
+
+#: src/calls-main-window.c:372
+msgid "Contacts"
+msgstr "Kontaktar"
+
+#: src/calls-main-window.c:380
+msgid "Dial Pad"
+msgstr "Tastatur"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "Tapt samtale"
+
+#. %s is a name here
+#: src/calls-notifier.c:75
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "Tapt samtale frå <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:78
+#, c-format
+msgid "Missed call from %s"
+msgstr "Tapt samtale frå %s"
+
+#: src/calls-notifier.c:80
+msgid "Missed call from unknown caller"
+msgstr "Tapt samtale frå ukjend oppringjar"
+
+#: src/calls-notifier.c:86
+msgid "Call back"
+msgstr "Ring tilbake"
+
+#: src/ui/account-overview.ui:27
+msgid "Add VoIP Accounts"
+msgstr "Legg til VoIP-kontoar"
+
+#: src/ui/account-overview.ui:29
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Her kan du leggje til VoIP-kontoar. Det vil la deg ringe og motta VoIP-samtaler "
+"via SIP-protokollen. Denne funksjonen er framleis relativt ny og manglar nokre funksjonar "
+"(t.d. ingen kryptert media)"
+
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
+msgid "_Add Account"
+msgstr "_Legg til konto"
+
+#: src/ui/call-record-row.ui:67
+msgid "_Delete Call"
+msgstr "_Slett samtale"
+
+#: src/ui/call-record-row.ui:71
+msgid "_Copy number"
+msgstr "_Kopier nummer"
+
+#: src/ui/call-record-row.ui:76
+msgid "_Add contact"
+msgstr "_Legg til kontakt"
+
+#: src/ui/call-record-row.ui:81
+msgid "_Send SMS"
+msgstr "_Send SMS"
+
+#: src/ui/call-selector-item.ui:22
+msgid "On hold"
+msgstr "Sett på vent"
+
+#: src/ui/contacts-box.ui:39
+msgid "No Contacts Found"
+msgstr "Ingen kontaktar funne"
+
+#: src/ui/history-box.ui:13
+msgid "No Recent Calls"
+msgstr "Ingen nylege samtaler"
+
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
+msgid "_Cancel"
+msgstr "_Avbryt"
+
+#: src/ui/main-window.ui:87
+msgid "_Close"
+msgstr "_Lukk"
+
+#: src/ui/main-window.ui:93
+msgid "_Send"
+msgstr "_Send"
+
+#: src/ui/main-window.ui:155
+msgid "_VoIP Accounts"
+msgstr "_VoIP-kontoar"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:169
+msgid "_About Calls"
+msgstr "_Om Samtaler"
+
+#: src/ui/new-call-box.ui:32
+msgid "Enter a VoIP address"
+msgstr "Skriv inn VoIP-adresse"
+
+#: src/ui/new-call-box.ui:56
+msgid "SIP Account"
+msgstr "SIP-konto"
+
+#: src/ui/new-call-header-bar.ui:4
+msgid "New Call"
+msgstr "Ny samtale"
+
+#: src/ui/new-call-header-bar.ui:13
+msgid "Back"
+msgstr "Tilbake"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Ukjend grunn"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Utgåande samtale starta"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Innkommande samtale"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Samtale godkjent"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Samtale avslutta"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Samtale avslutta (opptatt eller avvist)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Samtale avslutta (feil ID eller nettproblem)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Samtale avslutta (feil ved oppretting av lydkanal)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "Samtale overført"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Samtale omdirigert"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Samtale avslutta (ukjend feilkode %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager er ikkje tilgjengeleg"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Ingen modem med talefunksjon tilgjengeleg"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Normal"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:544
+msgid "Initialized"
+msgstr "Initialisert"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus er ikkje tilgjengeleg"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:636
+msgid "No encryption"
+msgstr "Ingen kryptering"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:643
+msgid "Force encryption"
+msgstr "Tving kryptering"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Kryptografisk nøkkelutveksling mislukkast"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "_Log In"
+msgstr "_Logg inn"
+
+#: plugins/provider/sip/sip-account-widget.ui:28
+msgid "_Apply"
+msgstr "_Bruk"
+
+#: plugins/provider/sip/sip-account-widget.ui:38
+msgid "_Delete"
+msgstr "_Slett"
+
+#: plugins/provider/sip/sip-account-widget.ui:56
+msgid "Server"
+msgstr "Tenar"
+
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Visingsnamn (valfritt)"
+
+#: plugins/provider/sip/sip-account-widget.ui:76
+msgid "User ID"
+msgstr "Brukar-ID"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Password"
+msgstr "Passord"
+
+#: plugins/provider/sip/sip-account-widget.ui:92
+msgid "Port"
+msgstr "Port"
+
+#: plugins/provider/sip/sip-account-widget.ui:101
+msgid "Transport"
+msgstr "Transport"
+
+#: plugins/provider/sip/sip-account-widget.ui:107
+msgid "Media Encryption"
+msgstr "Mediakryptering"
+
+#: plugins/provider/sip/sip-account-widget.ui:117
+msgid "Use for Phone Calls"
+msgstr "Bruk til telefonsamtaler"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Automatically Connect"
+msgstr "Kopla til automatisk"
