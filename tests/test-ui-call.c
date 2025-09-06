@@ -30,6 +30,17 @@ test_cui_call_state_mapping (void)
   g_assert_cmpint (calls_call_state_to_cui_call_state (42), ==, CUI_CALL_STATE_UNKNOWN);
 }
 
+static void
+test_cui_call_type_mapping (void)
+{
+  g_assert_cmpint (calls_call_type_to_cui_call_type (CALLS_CALL_TYPE_CELLULAR),
+                   ==, CUI_CALL_TYPE_CELLULAR);
+  g_assert_cmpint (calls_call_type_to_cui_call_type (CALLS_CALL_TYPE_SIP_VOICE),
+                   ==, CUI_CALL_TYPE_SIP_VOICE);
+  g_assert_cmpint (calls_call_type_to_cui_call_type (CALLS_CALL_TYPE_UNKNOWN),
+                   ==, CUI_CALL_TYPE_UNKNOWN);
+}
+
 
 static void
 test_cui_call_properties (void)
@@ -52,7 +63,9 @@ test_cui_call_properties (void)
   g_assert_cmpstr (calls_call_get_id (call), ==, cui_call_get_id (cui_call));
   g_assert_cmpstr (calls_call_get_name (call), ==, cui_call_get_display_name (cui_call));
   g_assert_cmpint (calls_call_state_to_cui_call_state (calls_call_get_state (call)), ==,
-                 cui_call_get_state (cui_call));
+                   cui_call_get_state (cui_call));
+  g_assert_cmpint (calls_call_type_to_cui_call_type (calls_call_get_call_type(call)), ==,
+                   cui_call_get_call_type(cui_call));
 
   g_object_get (cui_call, "inbound", &inbound, NULL);
   g_assert_true (calls_call_get_inbound (call) == inbound);
@@ -83,6 +96,7 @@ main (int   argc,
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/UI/state_mapping", (GTestFunc) test_cui_call_state_mapping);
+  g_test_add_func ("/Calls/UI/type_mapping", (GTestFunc) test_cui_call_type_mapping);
   g_test_add_func ("/Calls/UI/call_properties", (GTestFunc) test_cui_call_properties);
 
   g_test_run ();

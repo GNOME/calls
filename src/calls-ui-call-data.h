@@ -45,5 +45,5 @@ const char   *calls_ui_call_data_get_origin_id     (CallsUiCallData *self);
 char         *calls_ui_call_data_dup_origin_name   (CallsUiCallData *self);
 
 CuiCallState  calls_call_state_to_cui_call_state   (CallsCallState state);
-
+CuiCallType   calls_call_type_to_cui_call_type     (CallsCallType type);
 G_END_DECLS

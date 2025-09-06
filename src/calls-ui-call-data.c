@@ -38,6 +38,7 @@ enum {
   PROP_DISPLAY_NAME,
   PROP_ID,
   PROP_STATE,
+  PROP_CALL_TYPE,
   PROP_ENCRYPTED,
   PROP_CAN_DTMF,
   PROP_AVATAR_ICON,
@@ -66,6 +67,8 @@ struct _CallsUiCallData {
   guint           timer_id;
 
   CuiCallState    state;
+  CuiCallType     call_type;
+
   char           *origin_id;
   gboolean        silenced;
 
@@ -114,6 +117,16 @@ calls_ui_call_data_get_state (CuiCall *call_data)
   return self->state;
 }
 
+static CuiCallType
+calls_ui_call_data_get_cui_call_type (CuiCall *call_data)
+{
+  CallsUiCallData *self = (CallsUiCallData *) call_data;
+
+  g_return_val_if_fail (CALLS_IS_UI_CALL_DATA (self), CUI_CALL_TYPE_UNKNOWN);
+  g_return_val_if_fail (!!self->call, CUI_CALL_TYPE_UNKNOWN);
+
+  return self->call_type;
+}
 
 static gboolean
 calls_ui_call_data_get_encrypted (CuiCall *call_data)
@@ -220,6 +233,7 @@ calls_ui_call_data_cui_call_interface_init (CuiCallInterface *iface)
   iface->get_id = calls_ui_call_data_get_id;
   iface->get_display_name = calls_ui_call_data_get_display_name;
   iface->get_state = calls_ui_call_data_get_state;
+  iface->get_call_type = calls_ui_call_data_get_cui_call_type;
   iface->get_encrypted = calls_ui_call_data_get_encrypted;
   iface->get_can_dtmf = calls_ui_call_data_get_can_dtmf;
   iface->get_avatar_icon = calls_ui_call_data_get_avatar_icon;
@@ -351,6 +365,8 @@ set_call_data (CallsUiCallData *self,
                            G_CONNECT_SWAPPED);
 
   on_notify_state (self);
+
+  self->call_type = calls_call_get_call_type (call);
 
   manager = calls_manager_get_default ();
   contacts_provider = calls_manager_get_contacts_provider (manager);
@@ -491,6 +507,10 @@ calls_ui_call_data_get_property (GObject    *object,
     g_value_set_enum (value, calls_ui_call_data_get_state (cui_call));
     break;
 
+  case PROP_CALL_TYPE:
+    g_value_set_enum (value, calls_ui_call_data_get_cui_call_type (cui_call));
+    break;
+
   case PROP_ENCRYPTED:
     g_value_set_boolean (value, calls_ui_call_data_get_encrypted (cui_call));
     break;
@@ -615,6 +635,9 @@ calls_ui_call_data_class_init (CallsUiCallDataClass *klass)
 
   g_object_class_override_property (object_class, PROP_STATE, "state");
   props[PROP_STATE] = g_object_class_find_property (object_class, "state");
+
+  g_object_class_override_property (object_class, PROP_CALL_TYPE, "call-type");
+  props[PROP_CALL_TYPE] = g_object_class_find_property (object_class, "call-type");
 
   g_object_class_override_property (object_class, PROP_ENCRYPTED, "encrypted");
   props[PROP_ENCRYPTED] = g_object_class_find_property (object_class, "encrypted");
@@ -778,6 +801,26 @@ calls_call_state_to_cui_call_state (CallsCallState state)
     return CUI_CALL_STATE_INCOMING;
   case CALLS_CALL_STATE_DISCONNECTED:
     return CUI_CALL_STATE_DISCONNECTED;
+  default:
+    return CUI_CALL_STATE_UNKNOWN;
+  }
+}
+
+/**
+ * calls_call_type_to_cui_call_type:
+ * @type: A #CallsCallType
+ *
+ * Returns: a #CuiCallType @type is mapped to.
+ */
+CuiCallType
+calls_call_type_to_cui_call_type(CallsCallType type)
+{
+  switch (type) {
+  case CALLS_CALL_TYPE_CELLULAR:
+    return CUI_CALL_TYPE_CELLULAR;
+  case CALLS_CALL_TYPE_SIP_VOICE:
+    return CUI_CALL_TYPE_SIP_VOICE;
+  case CALLS_CALL_TYPE_UNKNOWN:
   default:
     return CUI_CALL_STATE_UNKNOWN;
   }
