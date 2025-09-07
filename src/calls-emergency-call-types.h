@@ -34,9 +34,21 @@ typedef enum {
 
 
 typedef struct {
+  char                         *number;
+  CallsEmergencyCallTypeFlags   flags;
+} CallsEmergencyNumber;
+
+CallsEmergencyNumber *calls_emergency_number_new  (const char                  *number,
+                                                   CallsEmergencyCallTypeFlags  flags);
+void                  calls_emergency_number_free (CallsEmergencyNumber *emergency_number);
+
+typedef struct {
   char       country_code[3]; /* Two letter country code */
   GPtrArray *numbers;         /* (element-type: CallsEmergencyNumber) */
 } CallsEmergencyCallCountryData;
+
+CallsEmergencyCallCountryData *calls_emergency_call_country_data_new  (const char *country);
+void                           calls_emergency_call_country_data_free (CallsEmergencyCallCountryData *country_data);
 
 
 char *calls_emergency_call_type_get_name (const char *number, const char *country_code);

@@ -21,11 +21,6 @@
  */
 
 typedef struct {
-  char                         *number;
-  CallsEmergencyCallTypeFlags   flags;
-} CallsEmergencyNumber;
-
-typedef struct {
   char                 *country_code;
   CallsEmergencyNumber  numbers[3];
 } CallsEmergencyNumberTypes;
@@ -239,17 +234,15 @@ CallsEmergencyNumberTypes emergency_number_types[] = {
 };
 
 
-static void
-calls_emergency_number_free (gpointer data)
+void
+calls_emergency_number_free (CallsEmergencyNumber *emergency_number)
 {
-  CallsEmergencyNumber *emergency_number = data;
-
   g_free (emergency_number->number);
   g_free (emergency_number);
 }
 
 
-static CallsEmergencyNumber *
+CallsEmergencyNumber *
 calls_emergency_number_new (const char *number, CallsEmergencyCallTypeFlags flags)
 {
   CallsEmergencyNumber *emergency_number;
@@ -262,17 +255,15 @@ calls_emergency_number_new (const char *number, CallsEmergencyCallTypeFlags flag
 }
 
 
-static void
-calls_emergency_call_country_data_free (gpointer data)
+void
+calls_emergency_call_country_data_free (CallsEmergencyCallCountryData *country_data)
 {
-  CallsEmergencyCallCountryData *country_data = data;
-
   g_ptr_array_unref (country_data->numbers);
   g_free (country_data);
 }
 
 
-static CallsEmergencyCallCountryData *
+CallsEmergencyCallCountryData *
 calls_emergency_call_country_data_new (const char *country)
 {
   CallsEmergencyCallCountryData *country_data;
@@ -281,7 +272,7 @@ calls_emergency_call_country_data_new (const char *country)
   g_assert (strlen (country) == 2);
 
   country_data = g_new0 (CallsEmergencyCallCountryData, 1);
-  country_data->numbers = g_ptr_array_new_with_free_func (calls_emergency_number_free);
+  country_data->numbers = g_ptr_array_new_with_free_func ((GDestroyNotify) calls_emergency_number_free);
   strcpy (country_data->country_code, country);
 
   return country_data;
@@ -295,7 +286,7 @@ init_hash (void)
     GHashTable *table = g_hash_table_new_full (g_str_hash,
                                                g_str_equal,
                                                NULL,
-                                               calls_emergency_call_country_data_free);
+                                               (GDestroyNotify) calls_emergency_call_country_data_free);
 
     for (int i = 0; i < G_N_ELEMENTS (emergency_number_types); i++) {
       CallsEmergencyCallCountryData *country;
