@@ -207,18 +207,31 @@ calls_emergency_calls_manager_dispose (GObject *object)
   G_OBJECT_CLASS (calls_emergency_calls_manager_parent_class)->dispose (object);
 }
 
+
+static void
+calls_emergency_calls_manager_finalize (GObject *object)
+{
+  calls_emergency_call_types_destroy ();
+
+  G_OBJECT_CLASS (calls_emergency_calls_manager_parent_class)->finalize (object);
+}
+
+
 static void
 calls_emergency_calls_manager_class_init (CallsEmergencyCallsManagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->dispose = calls_emergency_calls_manager_dispose;
+  object_class->finalize = calls_emergency_calls_manager_finalize;
 }
 
 static void
 calls_emergency_calls_manager_init (CallsEmergencyCallsManager *self)
 {
   CallsManager *manager = calls_manager_get_default ();
+
+  calls_emergency_call_types_init ();
 
   self->origins = g_object_ref (calls_manager_get_origins (manager));
   g_signal_connect_object (self->origins,

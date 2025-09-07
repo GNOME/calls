@@ -46,9 +46,15 @@ int
 main (int   argc,
       char *argv[])
 {
+  gint ret;
   g_test_init (&argc, &argv, NULL);
+
+  calls_emergency_call_types_init ();
 
   g_test_add_func ("/Calls/EmergencyCallTypes/lookup", test_lookup);
 
-  return g_test_run ();
+  ret = g_test_run ();
+
+  calls_emergency_call_types_destroy ();
+  return ret;
 }

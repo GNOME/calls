@@ -279,8 +279,8 @@ calls_emergency_call_country_data_new (const char *country)
 }
 
 
-static void
-init_hash (void)
+void
+calls_emergency_call_types_init (void)
 {
   if (g_once_init_enter (&by_mcc)) {
     GHashTable *table = g_hash_table_new_full (g_str_hash,
@@ -305,6 +305,13 @@ init_hash (void)
 
     g_once_init_leave (&by_mcc, table);
   }
+}
+
+
+void
+calls_emergency_call_types_destroy (void)
+{
+  g_clear_pointer (&by_mcc, g_hash_table_unref);
 }
 
 
@@ -344,7 +351,7 @@ calls_emergency_call_type_get_name (const char *lookup, const char *country_code
   if (country_code == NULL)
     return NULL;
 
-  init_hash ();
+  g_assert (by_mcc);
 
   match = g_hash_table_lookup (by_mcc, country_code);
   if (!match)
@@ -377,7 +384,7 @@ calls_emergency_call_types_get_numbers_by_country_code (const char *country_code
  if (country_code == NULL)
     return NULL;
 
-  init_hash ();
+ g_assert (by_mcc);
 
   match = g_hash_table_lookup (by_mcc, country_code);
   if (!match)

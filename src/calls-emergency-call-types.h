@@ -50,6 +50,7 @@ typedef struct {
 CallsEmergencyCallCountryData *calls_emergency_call_country_data_new  (const char *country);
 void                           calls_emergency_call_country_data_free (CallsEmergencyCallCountryData *country_data);
 
-
+void  calls_emergency_call_types_init (void);
+void  calls_emergency_call_types_destroy (void);
 char *calls_emergency_call_type_get_name (const char *number, const char *country_code);
 GStrv calls_emergency_call_types_get_numbers_by_country_code (const char *country_code);
