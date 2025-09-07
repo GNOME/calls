@@ -28,203 +28,203 @@ typedef struct {
 static GHashTable *by_mcc;
 
 CallsEmergencyNumberTypes emergency_number_types[] = {
-  { "AT",
+  { "at",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "BE",
+  { "be",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "BG",
+  { "bg",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "CH",
+  { "ch",
     {
       { "117", CALLS_EMERGENCY_CALL_TYPE_POLICE },
       { "144", CALLS_EMERGENCY_CALL_TYPE_AMBULANCE },
       { "118", CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE }
     }
   },
-  { "CY",
+  { "cy",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "CZ",
+  { "cz",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "DE",
+  { "de",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "DK",
+  { "dk",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "EE",
+  { "ee",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "ES",
+  { "es",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "FI",
+  { "fi",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "FR",
+  { "fr",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "GR",
+  { "gr",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "HR",
+  { "hr",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "HU",
+  { "hu",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "IE",
+  { "ie",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "IL",
+  { "il",
     {
       { "100", CALLS_EMERGENCY_CALL_TYPE_POLICE },
       { "101", CALLS_EMERGENCY_CALL_TYPE_AMBULANCE },
       { "102", CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE }
     }
   },
-  { "IT",
+  { "it",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "LV",
+  { "lv",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "LT",
+  { "lt",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "LU",
+  { "lu",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "MT",
+  { "mt",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "NL",
+  { "nl",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "PL",
+  { "pl",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "PT",
+  { "pt",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "RO",
+  { "ro",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "SI",
+  { "si",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "SK",
+  { "sk",
     {
       { "112", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
 		CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE) }
     }
   },
-  { "US",
+  { "us",
     {
       { "911", (CALLS_EMERGENCY_CALL_TYPE_POLICE |
 		CALLS_EMERGENCY_CALL_TYPE_AMBULANCE |
@@ -346,6 +346,7 @@ char *
 calls_emergency_call_type_get_name (const char *lookup, const char *country_code)
 {
   CallsEmergencyCallCountryData *match;
+  g_autofree char *lcode = NULL;
 
   g_return_val_if_fail (lookup, NULL);
   if (country_code == NULL)
@@ -353,7 +354,8 @@ calls_emergency_call_type_get_name (const char *lookup, const char *country_code
 
   g_assert (by_mcc);
 
-  match = g_hash_table_lookup (by_mcc, country_code);
+  lcode = g_ascii_strdown (country_code, -1);
+  match = g_hash_table_lookup (by_mcc, lcode);
   if (!match)
     return NULL;
 
@@ -380,13 +382,15 @@ calls_emergency_call_types_get_numbers_by_country_code (const char *country_code
 {
   CallsEmergencyCallCountryData *match;
   g_autoptr (GStrvBuilder) builder = g_strv_builder_new ();
+  g_autofree char *lcode = NULL;
 
  if (country_code == NULL)
     return NULL;
 
  g_assert (by_mcc);
+ lcode = g_ascii_strdown (country_code, -1);
 
-  match = g_hash_table_lookup (by_mcc, country_code);
+  match = g_hash_table_lookup (by_mcc, lcode);
   if (!match)
     return NULL;
 
