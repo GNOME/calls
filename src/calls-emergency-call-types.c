@@ -30,7 +30,7 @@ typedef struct {
   CallsEmergencyNumber  numbers[3];
 } CallsEmergencyNumberTypes;
 
-GHashTable *by_mcc;
+static GHashTable *by_mcc;
 
 CallsEmergencyNumberTypes emergency_number_types[] = {
   { "AT",
