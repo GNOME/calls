@@ -32,5 +32,12 @@ typedef enum {
   CALLS_EMERGENCY_CALL_TYPE_MOUNTAIN_RESCUE  = (1 << 3),
 } CallsEmergencyCallTypeFlags;
 
+
+typedef struct {
+  char       country_code[3]; /* Two letter country code */
+  GPtrArray *numbers;         /* (element-type: CallsEmergencyNumber) */
+} CallsEmergencyCallCountryData;
+
+
 char *calls_emergency_call_type_get_name (const char *number, const char *country_code);
 GStrv calls_emergency_call_types_get_numbers_by_country_code (const char *country_code);

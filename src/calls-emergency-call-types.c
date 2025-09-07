@@ -240,16 +240,78 @@ CallsEmergencyNumberTypes emergency_number_types[] = {
 
 
 static void
+calls_emergency_number_free (gpointer data)
+{
+  CallsEmergencyNumber *emergency_number = data;
+
+  g_free (emergency_number->number);
+  g_free (emergency_number);
+}
+
+
+static CallsEmergencyNumber *
+calls_emergency_number_new (const char *number, CallsEmergencyCallTypeFlags flags)
+{
+  CallsEmergencyNumber *emergency_number;
+
+  emergency_number = g_new0 (CallsEmergencyNumber, 1);
+  emergency_number->number = g_strdup (number);
+  emergency_number->flags = flags;
+
+  return emergency_number;
+}
+
+
+static void
+calls_emergency_call_country_data_free (gpointer data)
+{
+  CallsEmergencyCallCountryData *country_data = data;
+
+  g_ptr_array_unref (country_data->numbers);
+  g_free (country_data);
+}
+
+
+static CallsEmergencyCallCountryData *
+calls_emergency_call_country_data_new (const char *country)
+{
+  CallsEmergencyCallCountryData *country_data;
+
+  g_assert (country);
+  g_assert (strlen (country) == 2);
+
+  country_data = g_new0 (CallsEmergencyCallCountryData, 1);
+  country_data->numbers = g_ptr_array_new_with_free_func (calls_emergency_number_free);
+  strcpy (country_data->country_code, country);
+
+  return country_data;
+}
+
+
+static void
 init_hash (void)
 {
   if (g_once_init_enter (&by_mcc)) {
-    GHashTable *table = g_hash_table_new (g_str_hash, g_str_equal);
+    GHashTable *table = g_hash_table_new_full (g_str_hash,
+                                               g_str_equal,
+                                               NULL,
+                                               calls_emergency_call_country_data_free);
 
     for (int i = 0; i < G_N_ELEMENTS (emergency_number_types); i++) {
-      CallsEmergencyNumberTypes *numbers = &emergency_number_types[i];
+      CallsEmergencyCallCountryData *country;
 
-      g_hash_table_insert (table, numbers->country_code, numbers);
+      country = calls_emergency_call_country_data_new (emergency_number_types[i].country_code);
+      for (int k = 0; k < G_N_ELEMENTS (emergency_number_types[i].numbers); k++) {
+        CallsEmergencyNumber *number;
+
+        number = calls_emergency_number_new (emergency_number_types[i].numbers[k].number,
+                                             emergency_number_types[i].numbers[k].flags);
+        g_ptr_array_add (country->numbers, number);
+      }
+
+      g_hash_table_insert (table, country->country_code, country);
     }
+
     g_once_init_leave (&by_mcc, table);
   }
 }
@@ -285,7 +347,7 @@ flags_to_string (CallsEmergencyCallTypeFlags flags)
 char *
 calls_emergency_call_type_get_name (const char *lookup, const char *country_code)
 {
-  CallsEmergencyNumberTypes *match;
+  CallsEmergencyCallCountryData *match;
 
   g_return_val_if_fail (lookup, NULL);
   if (country_code == NULL)
@@ -297,8 +359,8 @@ calls_emergency_call_type_get_name (const char *lookup, const char *country_code
   if (!match)
     return NULL;
 
-  for (int i = 0; i < G_N_ELEMENTS (match->numbers); i++) {
-    CallsEmergencyNumber *number = &match->numbers[i];
+  for (int i = 0; i < match->numbers->len; i++) {
+    CallsEmergencyNumber *number = g_ptr_array_index (match->numbers, i);
 
     if (g_strcmp0 (lookup, number->number) == 0)
       return flags_to_string (number->flags);
@@ -318,7 +380,7 @@ calls_emergency_call_type_get_name (const char *lookup, const char *country_code
 GStrv
 calls_emergency_call_types_get_numbers_by_country_code (const char *country_code)
 {
-  CallsEmergencyNumberTypes *match;
+  CallsEmergencyCallCountryData *match;
   g_autoptr (GStrvBuilder) builder = g_strv_builder_new ();
 
  if (country_code == NULL)
@@ -330,8 +392,11 @@ calls_emergency_call_types_get_numbers_by_country_code (const char *country_code
   if (!match)
     return NULL;
 
-  for (int i = 0; i < G_N_ELEMENTS (match->numbers); i++)
-    g_strv_builder_add (builder, match->numbers[i].number);
+  for (int i = 0; i < match->numbers->len; i++) {
+    CallsEmergencyNumber *number = g_ptr_array_index (match->numbers, i);
+
+    g_strv_builder_add (builder, number->number);
+  }
 
   return g_strv_builder_end (builder);
 }
