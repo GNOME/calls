@@ -19,6 +19,7 @@ test_env = [
 test_cflags = [
   '-DFOR_TESTING',
   '-Wno-error=deprecated-declarations',
+  '-DTEST_DATABASE="@0@"'.format(meson.current_source_dir() / 'data' / 'serviceproviders.xml'),
 ]
 
 test_link_args = [
@@ -51,6 +52,19 @@ t = executable('emergency-call-types', test_sources,
                  ]
                )
 test('emergency-call-types', t, env: test_env)
+
+test_sources = [ 'test-service-providers.c' ]
+t = executable('service-providers', test_sources,
+               c_args : test_cflags,
+               link_args: test_link_args,
+               pie: true,
+               link_with : [calls_vala, libcalls],
+               dependencies: calls_deps,
+               include_directories : [
+                   calls_includes,
+                 ]
+               )
+test('service-providers', t, env: test_env)
 
 test_sources = [ 'test-manager.c' ]
 

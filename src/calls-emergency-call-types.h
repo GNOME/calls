@@ -25,7 +25,7 @@ typedef enum {
 
 /* See 3GPP TS 22.101 version 14.8.0 Release 14, Chapter 10.1 */
 typedef enum {
-  CALLS_EMERGENCY_CALL_TYPE_UNKNOWN          = 0,
+  CALLS_EMERGENCY_CALL_TYPE_NONE             = 0,
   CALLS_EMERGENCY_CALL_TYPE_POLICE           = (1 << 0),
   CALLS_EMERGENCY_CALL_TYPE_AMBULANCE        = (1 << 1),
   CALLS_EMERGENCY_CALL_TYPE_FIRE_BRIGADE     = (1 << 2),

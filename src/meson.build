@@ -123,6 +123,7 @@ calls_sources = files([
   'calls-ringer.c', 'calls-ringer.h',
   'calls-secret-store.c', 'calls-secret-store.h',
   'calls-settings.c', 'calls-settings.h',
+  'calls-service-providers.c', 'calls-service-providers.h',
   'calls-ui-call-data.c', 'calls-ui-call-data.h',
   'calls-ussd.c', 'calls-ussd.h',
   'calls-util.c', 'calls-util.h',

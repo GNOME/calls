@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding='utf-8'?>
+<!-- -*- Mode: XML; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- -->
+<!DOCTYPE serviceproviders SYSTEM "serviceproviders.2.dtd">
+<serviceproviders format="2.0">
+  <country code="yy">
+    <name>Germany</name>
+    <emergency-numbers>
+      <emergency-number number="112">
+        <callee type="ambulance"/>
+        <callee type="fire-brigade"/>
+        <callee type="police"/>
+      </emergency-number>
+    </emergency-numbers>
+    <provider>
+    </provider>
+  </country>
+
+  <country code="xx">
+    <name>Switzerland</name>
+    <emergency-numbers>
+      <emergency-number number="114">
+        <callee type="ambulance"/>
+      </emergency-number>
+      <emergency-number number="117">
+        <callee type="police"/>
+      </emergency-number>
+      <emergency-number number="118">
+        <callee type="fire-brigade"/>
+      </emergency-number>
+    </emergency-numbers>
+  </country>
+
+  <country code="zz">
+  </country>
+</serviceproviders>
