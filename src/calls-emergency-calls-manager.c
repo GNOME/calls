@@ -8,6 +8,8 @@
 
 #define G_LOG_DOMAIN "CallsEmergencyCallsManager"
 
+#include "calls-config.h"
+
 #include "calls-emergency-calls-manager.h"
 #include "calls-emergency-call-types.h"
 #include "calls-origin.h"
@@ -231,7 +233,7 @@ calls_emergency_calls_manager_init (CallsEmergencyCallsManager *self)
 {
   CallsManager *manager = calls_manager_get_default ();
 
-  calls_emergency_call_types_init ();
+  calls_emergency_call_types_init (CALLS_EMERGENCY_INFO_DATABASE);
 
   self->origins = g_object_ref (calls_manager_get_origins (manager));
   g_signal_connect_object (self->origins,

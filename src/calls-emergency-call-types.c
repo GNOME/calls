@@ -9,6 +9,7 @@
 #define G_LOG_DOMAIN "CallsEmergencyCallType"
 
 #include "calls-emergency-call-types.h"
+#include "calls-service-providers.h"
 
 #include <glib/gi18n.h>
 
@@ -280,17 +281,29 @@ calls_emergency_call_country_data_new (const char *country)
 
 
 void
-calls_emergency_call_types_init (void)
+calls_emergency_call_types_init (const char *dbfilename)
 {
   if (g_once_init_enter (&by_mcc)) {
-    GHashTable *table = g_hash_table_new_full (g_str_hash,
-                                               g_str_equal,
-                                               NULL,
-                                               (GDestroyNotify) calls_emergency_call_country_data_free);
+    g_autoptr (GError) err = NULL;
+    GHashTable *table = NULL;
+
+    table = calls_service_providers_get_emergency_info_sync (dbfilename, &err);
+    if (!table) {
+      g_warning ("Failed to load emergency number database: '%s'", err->message);
+      table = g_hash_table_new_full (g_str_hash,
+                                     g_str_equal,
+                                     NULL,
+                                     (GDestroyNotify) calls_emergency_call_country_data_free);
+    }
 
     for (int i = 0; i < G_N_ELEMENTS (emergency_number_types); i++) {
       CallsEmergencyCallCountryData *country;
+      const char *country_code = emergency_number_types[i].country_code;
 
+      if (g_hash_table_lookup (table, country_code))
+        continue;
+
+      /* Add a built in fallback */
       country = calls_emergency_call_country_data_new (emergency_number_types[i].country_code);
       for (int k = 0; k < G_N_ELEMENTS (emergency_number_types[i].numbers); k++) {
         CallsEmergencyNumber *number;

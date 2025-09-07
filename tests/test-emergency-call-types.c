@@ -40,6 +40,11 @@ test_lookup (void)
   /* Numbers that doesn't match */
   lookup = calls_emergency_call_type_get_name ("123456", "DE");
   g_assert_null (lookup);
+
+  /* Lookup from service provider db */
+  lookup = calls_emergency_call_type_get_name ("112", "yy");
+  g_assert_cmpstr (lookup, ==, "Police, Ambulance, Fire Brigade");
+  g_free (lookup);
 }
 
 int
@@ -49,7 +54,7 @@ main (int   argc,
   gint ret;
   g_test_init (&argc, &argv, NULL);
 
-  calls_emergency_call_types_init ();
+  calls_emergency_call_types_init (TEST_DATABASE);
 
   g_test_add_func ("/Calls/EmergencyCallTypes/lookup", test_lookup);
 
