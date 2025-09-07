@@ -1,5 +1,7 @@
 /*
- * Copyright (C) Guido Günther
+ * Copyright (C) 2022 The Phosh Developers
+ *
+ * Author: Guido Günther <agx@sigxcpu.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,7 +15,7 @@ test_lookup (void)
 {
   char *lookup = NULL;
 
-  /* No countyr code -> no match */
+  /* No country code -> no match */
   lookup = calls_emergency_call_type_get_name ("112", NULL);
   g_assert_null (lookup);
 
