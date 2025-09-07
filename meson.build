@@ -135,6 +135,7 @@ test_c_args = [
   # in preparation for the switch to Gtk4 we should make sure not to use deprecated symbols
   '-DGDK_DISABLE_DEPRECATED',
   '-DGTK_DISABLE_DEPRECATED',
+  '-DGMOBILE_USE_UNSTABLE_API',
 ]
 
 if get_option('buildtype') != 'plain'

@@ -29,7 +29,8 @@ subdir('dbus')
 src_include = include_directories('.')
 calls_includes = [ top_include, src_include ]
 
-calls_deps = [ dependency('gobject-2.0', version: '>= 2.74'),
+calls_deps = [ dependency('gmobile', version: '>= 0.3.0'),
+               dependency('gobject-2.0', version: '>= 2.74'),
                dependency('gtk4', version: '>= @0@'.format(gtk_version)),
                dependency('libadwaita-1', version: '>= 1.6'),
                dependency('libfeedback-0.0'),

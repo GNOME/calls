@@ -284,6 +284,25 @@
             ]
         },
         {
+            "name" : "gmobile",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dexamples=false",
+                '-Dintrospection=false',
+                '-Dgtk_doc=false',
+                '-Dtests=false',
+                '-Dvapi=false',
+                '-Dhwdb=false'
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/World/Phosh/gmobile",
+                    "branch" : "main"
+                }
+            ]
+        },
+        {
             "name" : "mobile-broadband-provider-info",
             "buildsystem" : "meson",
             "sources" : [

@@ -16,6 +16,7 @@ Build-Depends:
  libebook-contacts1.2-dev,
  libfeedback-dev (>= 0.0.1),
  libfolks-dev,
+ libgmobile-dev,
  libgom-1.0-dev,
  libgstreamer1.0-dev,
  libgtk-3-dev,
