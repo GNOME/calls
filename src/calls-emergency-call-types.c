@@ -318,8 +318,8 @@ calls_emergency_call_type_get_name (const char *lookup, const char *country_code
 GStrv
 calls_emergency_call_types_get_numbers_by_country_code (const char *country_code)
 {
-  g_autoptr (GPtrArray) ret = g_ptr_array_new_with_free_func (g_free);
   CallsEmergencyNumberTypes *match;
+  g_autoptr (GStrvBuilder) builder = g_strv_builder_new ();
 
  if (country_code == NULL)
     return NULL;
@@ -330,12 +330,8 @@ calls_emergency_call_types_get_numbers_by_country_code (const char *country_code
   if (!match)
     return NULL;
 
-  /* Can use g_strv_builder with glib > 2.68 */
-  for (int i = 0; i < G_N_ELEMENTS (match->numbers); i++) {
-    char *number = g_strdup (match->numbers[i].number);
-    g_ptr_array_add (ret, number);
-  }
-  g_ptr_array_add (ret, NULL);
+  for (int i = 0; i < G_N_ELEMENTS (match->numbers); i++)
+    g_strv_builder_add (builder, match->numbers[i].number);
 
-  return (GStrv) g_ptr_array_steal (ret, NULL);
+  return g_strv_builder_end (builder);
 }
