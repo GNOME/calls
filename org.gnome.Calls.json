@@ -284,6 +284,17 @@
             ]
         },
         {
+            "name" : "mobile-broadband-provider-info",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/mobile-broadband-provider-info",
+                    "branch" : "main"
+                }
+            ]
+        },
+        {
             "name" : "calls",
             "builddir" : true,
             "buildsystem" : "meson",

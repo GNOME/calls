@@ -54,6 +54,7 @@ full_localedir = join_paths(prefix, localedir)
 full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
 po_dir = join_paths(meson.project_source_root(), 'po')
 
+mbpi_dep = dependency('mobile-broadband-provider-info')
 libcall_ui_dep = dependency('call-ui',
   fallback:  ['libcall-ui', 'libcall_ui_dep'],
   default_options: ['tests=false', 'examples=false', 'gtk_doc=false'],
@@ -78,6 +79,7 @@ config_data.set_quoted('PLUGIN_LIBDIR', full_calls_plugin_libdir)
 config_data.set_quoted('PACKAGE_URL', calls_homepage)
 config_data.set_quoted('PACKAGE_VERSION', calls_version)
 config_data.set('PACKAGE_URL_RAW', calls_homepage)
+config_data.set_quoted('CALLS_EMERGENCY_INFO_DATABASE', mbpi_dep.get_variable('database'))
 
 gst_debug = get_option('gst_debug')
 config_data.set('CALLS_GST_DEBUG', gst_debug, description: 'Use GStreamer debugging API')

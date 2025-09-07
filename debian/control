@@ -27,6 +27,7 @@ Build-Depends:
  libsofia-sip-ua-glib-dev,
  libxml2-utils,
  meson,
+ mobile-broadband-provider-info,
  modemmanager-dev,
  pkg-config,
  python3-docutils,
@@ -45,6 +46,7 @@ Breaks:
 Architecture: any
 Depends:
  callaudiod,
+ mobile-broadband-provider-info,
  modemmanager,
  ${misc:Depends},
  ${shlibs:Depends},
