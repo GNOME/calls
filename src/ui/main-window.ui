@@ -48,15 +48,15 @@
                     <property name="vexpand">True</property>
                   </object>
                 </child>
-                <child>
-                  <object class="AdwViewSwitcherBar" id="switcher_bar">
-                    <property name="stack">main_stack</property>
-                  </object>
-                </child>
               </object>
             </property>
           </object>
         </property>
+        <child type="bottom">
+          <object class="AdwViewSwitcherBar" id="switcher_bar">
+            <property name="stack">main_stack</property>
+          </object>
+        </child>
       </object>
     </child>
   </template>
