@@ -23,6 +23,7 @@
     "cleanup" : [
         "/include",
         "/lib/pkgconfig",
+        "/lib/systemd",
         "/man",
         "/share/doc",
         "/share/gtk-doc",
@@ -36,18 +37,25 @@
     "modules" : [
         {
             "name" : "modem-manager",
+            "buildsystem" : "meson",
             "config-opts" : [
-                "--without-udev",
-                "--without-mbim",
-                "--without-qmi",
-                "--with-systemdsystemunitdir=/app/lib/systemd/system",
-                "--with-udev-base-dir=/app/lib/udev"
+                "-Dudev=false",
+                "-Dmbim=false",
+                "-Dqmi=false",
+                "-Dqrtr=false",
+                "-Dexamples=false",
+                "-Dtests=false",
+                "-Dman=false",
+                "-Dbash_completion=false",
+                "-Dsystemdsystemunitdir=/app/lib/systemd/system",
+                "-Dudevdir=/app/lib/udev"
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://www.freedesktop.org/software/ModemManager/ModemManager-1.18.6.tar.xz",
-                    "sha256" : "d4f804b31cf504239c5f1d4973c62095c00cba1ee9abb503718dac6d146a470a"
+                    "type" : "git",
+                    "url" : "https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git",
+                    "tag" : "1.24.2",
+                    "commit" : "f2b9ab1ad78d322f32134a444b5b54c6e8160e19"
                 }
             ]
         },
@@ -55,21 +63,23 @@
             "name" : "libpeas-2",
             "buildsystem" : "meson",
             "config-opts" : [
-		"-Dgjs=false",
+                "-Dgtk_doc=false",
                 "-Dlua51=false",
-                "-Dintrospection=false"
+		"-Dgjs=false",
+                "-Dintrospection=false",
+                "-Dpython3=false"
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/libpeas/2.0/libpeas-2.0.3.tar.xz",
-                    "sha256": "39e3b507c29d2d01df1345e9b3380fd7a9d0aeb5b2e657d38e6c2bea5023e5f0"
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/libpeas",
+                    "branch" : "main"
                 }
             ]
         },
         {
             "name" : "libphonenumber",
-            "buildsystem" : "cmake",
+            "buildsystem" : "cmake-ninja",
             "config-opts" : [
                 "-DCMAKE_CXX_STANDARD=17",
                 "-DREGENERATE_METADATA=OFF",
@@ -77,15 +87,10 @@
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://github.com/google/libphonenumber/archive/refs/tags/v8.12.54.tar.gz",
-                    "sha256" : "cf3d531a6b097cad508c475888bcf042ff15fabc6be05e3f817224ae8512ce63"
-                },
-                {
-                    "type" : "shell",
-                    "commands" : [
-                        "sed -i -e 's/\${\${NAME}_BIN}-NOTFOUND/\${NAME}_BIN-NOTFOUND/' cpp/CMakeLists.txt"
-                    ]
+                    "type" : "git",
+                    "url" : "https://github.com/google/libphonenumber.git",
+                    "tag" : "v9.0.14",
+                    "commit" : "ef5facd4d0881041cd776e518df4ba94e01cfd08"
                 }
             ],
             "subdir" : "cpp",
@@ -127,9 +132,10 @@
 		    ],
 		    "sources" : [
 		        {
-		            "type" : "archive",
-		            "url" : "https://github.com/abseil/abseil-cpp/archive/refs/tags/20220623.1.tar.gz",
-		            "sha256" : "91ac87d30cc6d79f9ab974c51874a704de9c2647c40f6932597329a282217ba8"
+		            "type" : "git",
+		            "url" : "https://github.com/abseil/abseil-cpp.git",
+		            "tag" : "20250814.0",
+		            "commit" : "987c57f325f7fa8472fa84e1f885f7534d391b0d"
 		        }
 		    ]
 		}
@@ -153,9 +159,10 @@
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://github.com/libical/libical/releases/download/v3.0.14/libical-3.0.14.tar.gz",
-                    "sha256" : "4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f"
+                    "type" : "git",
+                    "url" : "https://github.com/libical/libical.git",
+                    "tag" : "v3.0.20",
+                    "commit" : "57ce34025066935f356fd539e6deb7a7a9952618"
                 }
             ]
         },
@@ -179,27 +186,27 @@
                 "-DENABLE_DOT_LOCKING=OFF",
                 "-DENABLE_FILE_LOCKING=fcntl",
                 "-DENABLE_GOA=OFF",
+                "-DENABLE_GTK=OFF",
                 "-DENABLE_GTK4=ON",
                 "-DENABLE_OAUTH2_WEBKITGTK4=OFF",
-                "-DENABLE_GOOGLE=OFF",
                 "-DENABLE_VALA_BINDINGS=ON",
                 "-DENABLE_WEATHER=OFF",
                 "-DWITH_OPENLDAP=OFF",
                 "-DWITH_LIBDB=OFF",
                 "-DENABLE_INTROSPECTION=ON",
+                "-DENABLE_TESTS=OFF",
                 "-DENABLE_INSTALLED_TESTS=OFF",
                 "-DENABLE_GTK_DOC=OFF",
                 "-DENABLE_EXAMPLES=OFF",
-                "-DWITH_PHONENUMBER:PATH=/",
+                "-DWITH_PHONENUMBER=ON",
                 "-DPHONENUMBER_DEFINITIONS=",
-                "-DENABLE_CANBERRA=OFF",
-                "-DENABLE_DOT_LOCKING=OFF"
+                "-DENABLE_CANBERRA=OFF"
             ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://download-fallback.gnome.org/sources/evolution-data-server/3.47/evolution-data-server-3.47.1.tar.xz",
-                    "sha256" : "2c685f3a6ec4712ead8fc6c3a0f9cf54e3edbb20c1ee5833af7946301061cc31"
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git",
+                    "branch" : "master"
                 }
             ]
         },
@@ -209,9 +216,9 @@
             "config-opts" : [ "-Denable-introspection=false" ],
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/gom/0.4/gom-0.4.tar.xz",
-                    "sha256" : "68d08006aaa3b58169ce7cf1839498f45686fba8115f09acecb89d77e1018a9d"
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/gom.git",
+                    "branch" : "master"
                 }
             ]
         },
@@ -230,7 +237,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/folks.git"
+                    "url" : "https://gitlab.gnome.org/GNOME/folks.git",
+                    "branch" : "main"
                 }
             ]
         },
@@ -262,9 +270,9 @@
             "buildsystem" : "autotools",
             "sources" : [
                 {
-                    "type" : "archive",
-                    "url" : "https://github.com/freeswitch/sofia-sip/archive/refs/tags/v1.13.9.tar.gz",
-                    "sha256" : "3e7bfe9345e7d196bb13cf2c6e758cec8d959f1b9dbbb3bd5459b004f6f65c6c"
+                    "type" : "git",
+                    "url" : "https://github.com/freeswitch/sofia-sip.git",
+                    "commit" : "43f41d153f8034288083a440b1569d63f431f1b9"
                 }
             ]
         },
@@ -273,7 +281,8 @@
             "builddir" : true,
             "buildsystem" : "meson",
             "config-opts" : [
-                "-Dmanpages=false"
+                "-Dmanpages=false",
+                "-Dsystemd_user_unit_dir=/app/lib/systemd/user"
             ],
             "sources" : [
                 {
