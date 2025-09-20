@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-22 17:35+0000\n"
+"POT-Creation-Date: 2025-09-10 11:28+0000\n"
 "PO-Revision-Date: 2024-08-01 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
@@ -19,40 +19,38 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Çağrılar"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "Telefon"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "Telefon çevirici ve arama işleyici"
 
 # https://gitlab.gnome.org/GNOME/glib/-/issues/443 hatası sebebiyle uygulama adı dahil ingilizce hallerini de koruyalım.
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
-"Telephone;Call;Phone;Dial;Dialer;Calls;PSTN;Telefon;Arama;Ara;Çağrı;Çevir;"
-"Tuşla;Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;Calls;PSTN;Telefon;Arama;Ara;Çağrı;Çevir;Tuşla;Çevirici;Tuşlayıcı;Arayıcı;Çağrıcı;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "Çağrılar (art alan hizmeti)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Telefon çevirici ve arama işleyici (art alan hizmeti kipi)"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "Telefon ve SIP aramaları yap"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -63,17 +61,17 @@ msgstr ""
 "SIP iletişim kuralıyla da kullanılabilir."
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "Arama yapılıyor"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "Arama geçmişi"
 
@@ -220,41 +218,37 @@ msgstr "Yeni hesap ekle"
 msgid "VoIP Accounts"
 msgstr "VoIP Hesapları"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:363
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "`%s' geçersiz tel URIʼsini arama denendi"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:741
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s' nasıl açılır bilinmiyor"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:812
 msgid "The name of the plugins to load"
 msgstr "Yüklenecek eklentinin adı"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:813
 msgid "PLUGIN"
 msgstr "EKLENTİ"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "Ana ekranın başlangıçta sunulup sunulmayacağı"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:818
 msgid "Dial a telephone number"
 msgstr "Telefon numarası çevir"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:819
 msgid "NUMBER"
 msgstr "NUMARA"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:824
 msgid "Enable verbose debug messages"
 msgstr "Ayrıntılı hata ayıklama iletilerini etkinleştir"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:830
 msgid "Print current version"
 msgstr "Geçerli sürümü yazdır"
 
@@ -262,7 +256,7 @@ msgstr "Geçerli sürümü yazdır"
 msgid "Anonymous caller"
 msgstr "Anonim çağrı"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -271,48 +265,44 @@ msgstr ""
 "%s\n"
 "dün"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:264
 msgid "Police"
 msgstr "Polis"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:267
 msgid "Ambulance"
 msgstr "Ambulans"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:270
 msgid "Fire Brigade"
 msgstr "İtfaiye"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:273
 msgid "Mountain Rescue"
 msgstr "Dağ Kurtarma"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:321
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Aranamıyor: Modem veya uygun VoIP hesabı yok"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No plugin loaded"
 msgstr "Aranamıyor: Eklenti yüklenmedi"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:364
 msgid "Recent"
 msgstr "Son"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:372
 msgid "Contacts"
 msgstr "Kişiler"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:380
 msgid "Dial Pad"
 msgstr "Tuş Takımı"
 
@@ -358,19 +348,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "Hesap _Ekle"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "Aramayı _Sil"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "Numarayı _kopyala"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "Kişi _ekle"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "SMS _Gönder"
 
@@ -378,7 +368,7 @@ msgstr "SMS _Gönder"
 msgid "On hold"
 msgstr "Beklemede"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:39
 msgid "No Contacts Found"
 msgstr "Kişi Bulunamadı"
 
@@ -386,24 +376,28 @@ msgstr "Kişi Bulunamadı"
 msgid "No Recent Calls"
 msgstr "Son Aranan Yok"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "_Kapat"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "_Gönder"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_VoIP Hesapları"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "Calls _Hakkında"
 
@@ -485,7 +479,7 @@ msgid "Normal"
 msgstr "Olağan"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "Çalıştı"
 
@@ -553,4 +547,3 @@ msgstr "Telefon Aramalarında Kullan"
 #: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
 msgstr "Kendiliğinden Bağlan"
-
