@@ -8,53 +8,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-03-02 16:43+0000\n"
-"PO-Revision-Date: 2024-03-09 18:35+0100\n"
+"POT-Creation-Date: 2025-09-20 15:42+0000\n"
+"PO-Revision-Date: 2025-09-22 20:44+0100\n"
 "Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: Kabyle <ButterflyOfFire@protonmail.com>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-DL-Team: kab\n"
 "X-DL-Module: calls\n"
 "X-DL-Branch: main\n"
 "X-DL-Domain: po\n"
 "X-DL-State: None\n"
-"Plural-Forms: nplurals=2; plural=n>1\n"
-"X-Generator: Gtranslator 41.0\n"
+"X-Generator: Poedit 3.7\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:500 src/ui/call-window.ui:9 src/ui/main-window.ui:7
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
-msgstr ""
+msgstr "Isawalen"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
-msgstr ""
+msgstr "Tiliɣri"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr ""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr ""
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
-msgstr ""
+msgstr "Isawalen (daemon)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr ""
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr ""
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -62,19 +62,19 @@ msgid ""
 msgstr ""
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr ""
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:34
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr ""
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:39
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
-msgstr ""
+msgstr "Azray n usiwel"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
@@ -105,11 +105,13 @@ msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:31
-msgid "Whether to allow using SDES for SRTP without TLS as the transport"
+msgid "Allow insecure crypto key exchange for encrypted media."
 msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:32
-msgid "Set to true if you want to allow with keys exchanged in cleartext."
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
 msgstr ""
 
 #: src/calls-account.c:163
@@ -118,7 +120,7 @@ msgstr ""
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr ""
+msgstr "Awennez n umiḍan…"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
@@ -126,7 +128,7 @@ msgstr ""
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr ""
+msgstr "Tuqqna ɣer uqeddac…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
@@ -146,7 +148,7 @@ msgstr ""
 
 #: src/calls-account.c:202
 msgid "No reason given"
-msgstr ""
+msgstr "Ulac ssebba i d-yettunefken"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
@@ -166,11 +168,11 @@ msgstr ""
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr ""
+msgstr "Ulac inekcam i yettusbadun"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr ""
+msgstr "Beddu n tuqqna"
 
 #: src/calls-account.c:223
 msgid "Connection timed out"
@@ -186,42 +188,42 @@ msgstr ""
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
-msgstr ""
+msgstr "Tuqqna temmed"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr ""
+msgstr "Beddu i usenser"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr ""
+msgstr "Asenser yemmed"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
 msgstr ""
 
-#: src/calls-account-overview.c:202
+#: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
 msgstr "Ẓreg amiḍan: %s"
 
-#: src/calls-account-overview.c:209
+#: src/calls-account-overview.c:200
 msgid "Add new account"
 msgstr "Rnu amiḍan amaynut"
 
 #: src/calls-account-overview.c:441
-msgid "Account overview"
-msgstr ""
+msgid "VoIP Accounts"
+msgstr "Imiḍanen VoIP"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:363
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr ""
 
-#: src/calls-application.c:748
+#: src/calls-application.c:741
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr ""
+msgstr "Ur ẓriɣ ara amek i yettalday '%s'"
 
 #: src/calls-application.c:812
 msgid "The name of the plugins to load"
@@ -229,29 +231,25 @@ msgstr ""
 
 #: src/calls-application.c:813
 msgid "PLUGIN"
-msgstr ""
+msgstr "IZEGRAR"
 
 #: src/calls-application.c:818
-msgid "Whether to present the main window on startup"
-msgstr ""
-
-#: src/calls-application.c:824
 msgid "Dial a telephone number"
 msgstr ""
 
-#: src/calls-application.c:825
+#: src/calls-application.c:819
 msgid "NUMBER"
 msgstr "UTTUN"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:824
 msgid "Enable verbose debug messages"
 msgstr ""
 
-#: src/calls-application.c:836
+#: src/calls-application.c:830
 msgid "Print current version"
-msgstr ""
+msgstr "Siggez lqem amiran"
 
-#: src/calls-best-match.c:487
+#: src/calls-best-match.c:504
 msgid "Anonymous caller"
 msgstr ""
 
@@ -264,176 +262,158 @@ msgstr ""
 "%s\n"
 "iḍelli"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:264
 msgid "Police"
 msgstr "Tamsulta"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:267
 msgid "Ambulance"
 msgstr ""
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:270
 msgid "Fire Brigade"
 msgstr ""
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:273
 msgid "Mountain Rescue"
 msgstr ""
 
-#: src/calls-main-window.c:124
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 
-#: src/calls-main-window.c:317
+#: src/calls-main-window.c:321
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 
-#: src/calls-main-window.c:319
+#: src/calls-main-window.c:323
 msgid "Can't place calls: No plugin loaded"
 msgstr ""
 
-#: src/calls-main-window.c:357
-msgid "Contacts"
-msgstr ""
-
-#: src/calls-main-window.c:367
-msgid "Dial Pad"
-msgstr ""
-
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:376
+#: src/calls-main-window.c:364
 msgid "Recent"
+msgstr "Amaynut"
+
+#: src/calls-main-window.c:372
+msgid "Contacts"
+msgstr "Inermisen"
+
+#: src/calls-main-window.c:380
+msgid "Dial Pad"
 msgstr ""
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
-msgstr ""
+msgstr "Asiwel ifuten"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
-msgstr ""
+msgstr "Asiwel ifuten seg <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr ""
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr ""
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr ""
 
-#: src/ui/account-overview.ui:16
-msgid "VoIP Accounts"
-msgstr ""
-
-#: src/ui/account-overview.ui:49
+#: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
-msgstr ""
+msgstr "Rnu imiḍanen VoIP"
 
-#: src/ui/account-overview.ui:51
+#: src/ui/account-overview.ui:29
 msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
 
-#: src/ui/account-overview.ui:58 src/ui/account-overview.ui:106
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
 msgstr "Rnu _amiḍan"
 
-#. Translators: This is a verb, not a noun. Call the number of the currently selected row.
-#: src/ui/call-record-row.ui:62
-msgid "Call"
-msgstr ""
-
-#: src/ui/call-record-row.ui:102
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
-msgstr ""
+msgstr "Kkes asiwel (_D)"
 
-#. Translators: This is a phone number
-#: src/ui/call-record-row.ui:107
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
-msgstr ""
+msgstr "Nɣel uṭṭun (_C)"
 
-#: src/ui/call-record-row.ui:112
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
-msgstr ""
+msgstr "Rnu anermis (_A)"
 
-#: src/ui/call-record-row.ui:117
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
-msgstr ""
+msgstr "Azen SMS (_S)"
 
-#: src/ui/call-selector-item.ui:38
+#: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr ""
 
-#: src/ui/contacts-box.ui:60
+#: src/ui/contacts-box.ui:39
 msgid "No Contacts Found"
-msgstr ""
+msgstr "Ulac inermisen i yettwafen"
 
-#: src/ui/history-box.ui:10
+#: src/ui/history-box.ui:13
 msgid "No Recent Calls"
-msgstr ""
+msgstr "Ulac isawalen imaynuten"
 
-#: src/ui/main-window.ui:105
+#: src/ui/main-window.ui:66
 msgid "USSD"
-msgstr ""
+msgstr "USDD"
 
-#: src/ui/main-window.ui:114
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "Sefsex (C)"
 
-#: src/ui/main-window.ui:131
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "Mdel (_C)"
 
-#: src/ui/main-window.ui:141
+#: src/ui/main-window.ui:93
 msgid "_Send"
-msgstr ""
+msgstr "Azen (_S)"
 
-#: src/ui/main-window.ui:214
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
-msgstr ""
-
-#: src/ui/main-window.ui:227
-msgid "_Keyboard shortcuts"
-msgstr "Inegzumen n unasiw (_K)"
-
-#: src/ui/main-window.ui:233
-msgid "_Help"
-msgstr "Tallelt (_H)"
+msgstr "Imiḍanen VoIP (_V)"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:239
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
-msgstr ""
+msgstr "Ɣef yisawalen (_A)"
 
-#: src/ui/new-call-box.ui:38
+#: src/ui/new-call-box.ui:32
 msgid "Enter a VoIP address"
-msgstr ""
+msgstr "Sekcem tansa VoIP"
 
-#: src/ui/new-call-box.ui:62
+#: src/ui/new-call-box.ui:56
 msgid "SIP Account"
 msgstr "Amiḍan SIP"
 
-#: src/ui/new-call-header-bar.ui:6
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
-msgstr ""
+msgstr "Asiwel amaynut"
 
-#: src/ui/new-call-header-bar.ui:19
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "Uɣal"
 
 #: plugins/provider/mm/calls-mm-call.c:73
 msgid "Unknown reason"
-msgstr ""
+msgstr "Ssebba tarussint"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -441,15 +421,15 @@ msgstr ""
 
 #: plugins/provider/mm/calls-mm-call.c:75
 msgid "New incoming call"
-msgstr ""
+msgstr "Asiwel amaynut i d-iteddun"
 
 #: plugins/provider/mm/calls-mm-call.c:76
 msgid "Call accepted"
-msgstr ""
+msgstr "Yettwaqbal usiwel"
 
 #: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
-msgstr ""
+msgstr "Ifukk usiwel"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
@@ -490,86 +470,83 @@ msgstr ""
 #: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
-msgstr ""
+msgstr "Amagnu"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr ""
 
 #: plugins/provider/ofono/calls-ofono-provider.c:94
 msgid "DBus unavailable"
-msgstr ""
+msgstr "Ulac DBus"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:668
+#: plugins/provider/sip/calls-sip-account-widget.c:636
 msgid "No encryption"
-msgstr ""
+msgstr "Ulac awgelhen"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:675
+#: plugins/provider/sip/calls-sip-account-widget.c:643
 msgid "Force encryption"
-msgstr ""
+msgstr "Ḥettem awgelhen"
 
 #: plugins/provider/sip/calls-sip-call.c:123
 msgid "Cryptographic key exchange unsuccessful"
 msgstr ""
 
 #: plugins/provider/sip/sip-account-widget.ui:11
-msgid "Add Account"
-msgstr "Rnu amiḍan"
-
-#: plugins/provider/sip/sip-account-widget.ui:17
 msgid "_Log In"
 msgstr "Qqen (_L)"
 
-#: plugins/provider/sip/sip-account-widget.ui:42
-msgid "Manage Account"
-msgstr ""
-
-#: plugins/provider/sip/sip-account-widget.ui:47
+#: plugins/provider/sip/sip-account-widget.ui:28
 msgid "_Apply"
-msgstr ""
+msgstr "Snes (_A)"
 
-#: plugins/provider/sip/sip-account-widget.ui:61
+#: plugins/provider/sip/sip-account-widget.ui:38
 msgid "_Delete"
-msgstr ""
+msgstr "Kkes (_D)"
 
-#: plugins/provider/sip/sip-account-widget.ui:91
+#: plugins/provider/sip/sip-account-widget.ui:56
 msgid "Server"
 msgstr "Aqeddac"
 
-#: plugins/provider/sip/sip-account-widget.ui:109
-msgid "Display Name"
-msgstr ""
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Isem i yettwaskanen (D afrayan)"
 
-#: plugins/provider/sip/sip-account-widget.ui:110
-msgid "Optional"
-msgstr ""
-
-#: plugins/provider/sip/sip-account-widget.ui:128
+#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
-msgstr ""
+msgstr "Asulay n useqdac"
 
-#: plugins/provider/sip/sip-account-widget.ui:141
+#: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Password"
 msgstr "Awal n uɛeddi"
 
-#: plugins/provider/sip/sip-account-widget.ui:166
+#: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
-msgstr ""
+msgstr "Tawwurt"
 
-#: plugins/provider/sip/sip-account-widget.ui:182
+#: plugins/provider/sip/sip-account-widget.ui:101
 msgid "Transport"
 msgstr ""
 
-#: plugins/provider/sip/sip-account-widget.ui:189
+#: plugins/provider/sip/sip-account-widget.ui:107
 msgid "Media Encryption"
-msgstr ""
+msgstr "Awgelhen n umidya"
 
-#: plugins/provider/sip/sip-account-widget.ui:201
+#: plugins/provider/sip/sip-account-widget.ui:117
 msgid "Use for Phone Calls"
-msgstr ""
+msgstr "Seqdec i yisawalen n tiliɣri"
 
-#: plugins/provider/sip/sip-account-widget.ui:214
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Automatically Connect"
-msgstr ""
+msgstr "Tuqqna s wudem awurman"
+
+#~ msgid "_Keyboard shortcuts"
+#~ msgstr "Inegzumen n unasiw (_K)"
+
+#~ msgid "_Help"
+#~ msgstr "Tallelt (_H)"
+
+#~ msgid "Add Account"
+#~ msgstr "Rnu amiḍan"
