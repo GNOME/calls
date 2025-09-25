@@ -245,12 +245,19 @@
         {
             "name" : "feedbackd",
             "buildsystem" : "meson",
-            "config-opts" : [ "-Ddaemon=false" ],
+            "config-opts" : [
+                "-Dintrospection=disabled",
+                "-Dvapi=false",
+                "-Ddaemon=false",
+                "-Dudev=false",
+                "-Dgtk_doc=false",
+                "-Dtests=false"
+            ],
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://source.puri.sm/Librem5/feedbackd/-/archive/v0.0.1/feedbackd-v0.0.1.tar.gz",
-                    "sha256" : "95c0658698e1ba17dae89f64e03a5ba57d938b22ff9869e36f2ded07dc6ccc48"
+                    "url" : "https://sources.phosh.mobi/releases/feedbackd/feedbackd-0.8.4.tar.xz",
+                    "sha256" : "b0b5b22216940b485d0d43679dce403583e33438f06c49a83cf1820cdbbca174"
                 }
             ]
         },
