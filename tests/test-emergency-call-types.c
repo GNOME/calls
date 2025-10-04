@@ -47,6 +47,38 @@ test_lookup (void)
   g_free (lookup);
 }
 
+
+static void
+test_country (void)
+{
+  GStrv result = NULL;
+  const char *const expected_xx[] = { "114", "117", "118", NULL };
+
+  /* Hit the built in fallbacks */
+  result = calls_emergency_call_types_get_numbers_by_country_code ("de");
+  g_assert_cmpint (g_strv_length (result), ==, 1);
+  g_strfreev (result);
+
+  /* Hit the test data */
+  result = calls_emergency_call_types_get_numbers_by_country_code ("xx");
+  g_assert_cmpint (g_strv_length (result), ==, 3);
+  g_assert_cmpstrv (result, expected_xx);
+  g_strfreev (result);
+
+  /* Hit the test data */
+  result = calls_emergency_call_types_get_numbers_by_country_code ("yy");
+  g_assert_cmpint (g_strv_length (result), ==, 1);
+  g_strfreev (result);
+
+  /* Hit the test data */
+  result = calls_emergency_call_types_get_numbers_by_country_code ("zz");
+  g_assert_null (result);
+
+  result = calls_emergency_call_types_get_numbers_by_country_code ("doesnotexist");
+  g_assert_null (result);
+}
+
+
 int
 main (int   argc,
       char *argv[])
@@ -57,6 +89,7 @@ main (int   argc,
   calls_emergency_call_types_init (TEST_DATABASE);
 
   g_test_add_func ("/Calls/EmergencyCallTypes/lookup", test_lookup);
+  g_test_add_func ("/Calls/EmergencyCallTypes/country", test_country);
 
   ret = g_test_run ();
 
