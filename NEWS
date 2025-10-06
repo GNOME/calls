@@ -1,7 +1,37 @@
+gnome-calls 49.1
+----------------
+Released October 2025
+* Start calls as part of gnome-session
+* Make use of DBus activation
+* oFono backends now supports USSD
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/699
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/687
+* Contributors:
+    * Bardia Moshiri
+    * Boris Shtrasman
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+    * Jan Tojnar
+    * knoppix
+    * Markus Göllnitz
+    * Vivek wagdare
+* UI translations:
+    * Abduqadir Abliz (ug)
+    * Baxrom Raxmatov (uz)
+    * Bjørn Mørkedal (nn)
+    * Emilio Sepúlveda (ia)
+    * Iverson Briones (fil)
+    * Kristjan SCHMIDT (eo)
+    * Sabri Ünal (tr)
+    * Yi-Jyun Pan (zh_TW)
+    * Zayar Lwin (my)
+    * Ziri Sut (kab)
+
 gnome-calls 48.0
 ----------------
 Released March 2025
-
+* No code changes over beta.1
 * UI translations:
     * Abdullah Ibrahim (ar)
     * Changwoo Ryu (ko)

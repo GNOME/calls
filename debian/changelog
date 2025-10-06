@@ -1,3 +1,69 @@
+gnome-calls (49.1) unstable; urgency=medium
+
+  [ Baxrom Raxmatov ]
+  * Add Uzbek (Latin) translation
+
+  [ Jan Tojnar ]
+  * ci: Fix dist tarball name
+
+  [ Guido Günther ]
+  * data: Start calls as part of gnome-session
+  * call-box: Use correct property
+  * build: Drop meson version check
+  * account-overview: Ref list models
+  * application: Don't try to remove inexistent window
+  * data: Switch calls to DBus activation
+  * application: Validate daemon flag only on first startup
+  * application: Drop ignore_activation flag
+
+  [ Bardia Moshiri ]
+  * ofono: implement USSD interface
+  * ofono: fixup styling
+
+  [ Yi-Jyun Pan ]
+  * Update Chinese (Taiwan) translation
+
+  [ knoppix ]
+  * main-window.ui: add a proper callback for Close button
+
+  [ Vivek wagdare ]
+  * contacts-box: Add vertical margins to SearchEntry in contacts view
+
+  [ Evangelos Ribeiro Tzaras ]
+  * metainfo: Wrap old release notes in paragraph
+
+  [ Boris Shtrasman ]
+  * emergency-call-types: add Israeli emergency numbers
+
+  [ Bjørn Mørkedal ]
+  * Add Norwegian Nynorsk translation
+
+  [ Kristjan SCHMIDT ]
+  * Update Esperanto translation
+
+  [ Sabri Ünal ]
+  * Update Turkish translation
+
+  [ Ziri Sut ]
+  * Update Kabyle translation
+
+  [ Abduqadir Abliz ]
+  * Add Uighur translation
+
+  [ Markus Göllnitz ]
+  * flatpak: update to resolve build errors
+
+  [ Iverson Briones ]
+  * Add Filipino translation
+
+  [ Emilio Sepúlveda ]
+  * Add Interlingua translation
+
+  [ Zayar Lwin ]
+  * Update Burmese translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Mon, 06 Oct 2025 08:50:45 +0200
+
 gnome-calls (48.0) unstable; urgency=medium
 
   [ Pawan Chitrakar ]

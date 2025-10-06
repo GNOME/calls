@@ -69,6 +69,20 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="49.1" date="2025-10-06">
+        <description>
+          <p>
+            This is the first stable release of the 49 cycle.
+          </p>
+          <ul>
+            <li>Fix issue with USSD dialog leaving the application window unresponsive</li>
+            <li>Fix dialpad not showing with SIP or when switching origins</li>
+            <li>oFono backend now supports USSD interface</li>
+            <li>Startup splash screen should get properly dismissed now</li>
+            <li>Updated translations (including 5 new locales)</li>
+          </ul>
+        </description>
+      </release>
       <release version="48.0" date="2025-03-17">
         <description>
           <p>
