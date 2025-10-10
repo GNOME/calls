@@ -20,7 +20,6 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Evangelos Ribeiro Tzaras</foaf:name>
-      <foaf:mbox rdf:resource="mailto:evangelos.tzaras@puri.sm" />
       <foaf:mbox rdf:resource="mailto:devrtz@fortysixandtwo.eu" />
       <gnome:userid>devrtz</gnome:userid>
     </foaf:Person>
