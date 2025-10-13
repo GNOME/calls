@@ -35,6 +35,7 @@ G_DECLARE_FINAL_TYPE (CallsRecordStore, calls_record_store, CALLS, RECORD_STORE,
 
 CallsRecordStore *calls_record_store_new (void);
 GListModel *calls_record_store_get_list_model (CallsRecordStore *);
+gboolean    calls_record_store_is_busy (CallsRecordStore *self);
 
 G_END_DECLS
 

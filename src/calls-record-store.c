@@ -97,6 +97,7 @@ struct _CallsRecordStore {
   gchar               *filename;
   GomAdapter          *adapter;
   GomRepository       *repository;
+  int                  busy;
 
   GListStore          *list_store;
 };
@@ -202,6 +203,7 @@ load_calls_fetch_cb (GomResourceGroup *group,
   g_free (records);
   g_object_unref (group);
 exit:
+  self->busy--;
   g_object_unref (self);
 }
 
@@ -234,12 +236,14 @@ load_calls_find_cb (GomRepository    *repository,
 
   g_debug ("Found %u call records in database `%s', fetching",
            count, self->filename);
+  self->busy++;
   gom_resource_group_fetch_async (group,
                                   0,
                                   count,
                                   (GAsyncReadyCallback) load_calls_fetch_cb,
                                   g_object_ref (self));
 exit:
+  self->busy--;
   g_object_unref (self);
 }
 
@@ -260,6 +264,7 @@ load_calls (CallsRecordStore *self)
 
   g_debug ("Finding records in call record database `%s'",
            self->filename);
+  self->busy++;
   gom_repository_find_sorted_async (self->repository,
                                     CALLS_TYPE_CALL_RECORD,
                                     filter,
@@ -297,6 +302,7 @@ set_up_repo_migrate_cb (GomRepository    *repo,
   }
 
   g_signal_emit (self, signals[SIGNAL_DB_DONE], 0, ok);
+  self->busy--;
   g_object_unref (self);
 }
 
@@ -320,6 +326,7 @@ set_up_repo (CallsRecordStore *self)
            " record database `%s'",
            self->filename);
   types = g_list_append (types, (gpointer) CALLS_TYPE_CALL_RECORD);
+  self->busy++;
   gom_repository_automatic_migrate_async
     (repo,
     RECORD_STORE_VERSION,
@@ -380,6 +387,7 @@ open_repo_adapter_open_cb (GomAdapter       *adapter,
     set_up_repo (self);
   }
 
+  self->busy--;
   g_object_unref (self);
 }
 
@@ -406,6 +414,7 @@ open_repo (CallsRecordStore *self)
   uri = g_strdup_printf ("file:%s", self->filename);
   g_debug ("Opening call record database using URI `%s'", uri);
   self->adapter = gom_adapter_new ();
+  self->busy++;
   gom_adapter_open_async
     (self->adapter,
     uri,
@@ -793,4 +802,24 @@ GListModel *
 calls_record_store_get_list_model (CallsRecordStore *self)
 {
   return G_LIST_MODEL (self->list_store);
+}
+
+/**
+ * calls_record_store_is_busy:
+ * @self: The record store
+ *
+ * Check whether there are async database operations in flight. It
+ * is only save to dispose the record store when this function returns
+ * `FALSE`.
+ *
+ * Returns: `TRUE` when there are async db operations, otherwise
+ *   `FALSE`.
+ */
+gboolean
+calls_record_store_is_busy (CallsRecordStore *self)
+{
+  g_assert (CALLS_IS_RECORD_STORE (self));
+  g_assert (self->busy >= 0);
+
+  return !!self->busy;
 }
