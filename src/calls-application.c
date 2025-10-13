@@ -468,6 +468,7 @@ static void
 startup (GApplication *application)
 {
   g_autoptr (GError) error = NULL;
+  CallsApplication *self = CALLS_APPLICATION (application);
 
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
@@ -502,6 +503,11 @@ startup (GApplication *application)
     g_application_hold (application);
     g_debug ("Enable daemon mode");
   }
+
+  start_proper (self);
+  g_action_group_activate_action (G_ACTION_GROUP (application),
+                                  "set-default-plugins",
+                                  NULL);
 
   manager_state_changed_cb (application);
 }
@@ -540,10 +546,6 @@ calls_application_command_line (GApplication            *application,
     g_action_group_activate_action (G_ACTION_GROUP (application),
                                     "set-plugin-names",
                                     plugins);
-  } else {
-    g_action_group_activate_action (G_ACTION_GROUP (application),
-                                    "set-default-plugins",
-                                    NULL);
   }
 
   if (g_variant_dict_lookup (options, "dial", "&s", &arg))
