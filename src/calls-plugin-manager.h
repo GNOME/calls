@@ -40,6 +40,7 @@ gboolean            calls_plugin_manager_load_plugin (CallsPluginManager *self,
 gboolean            calls_plugin_manager_unload_plugin (CallsPluginManager *self,
                                                         const char         *name,
                                                         GError            **error);
+gboolean            calls_plugin_manager_unload_all_plugins (CallsPluginManager *self, GError **error);
 const char        **calls_plugin_manager_get_plugin_names (CallsPluginManager *self,
                                                            guint              *length);
 gboolean            calls_plugin_manager_has_plugin (CallsPluginManager *self,

@@ -439,3 +439,25 @@ calls_plugin_manager_get_plugin_names (CallsPluginManager *self,
 
   return (const char **) g_ptr_array_free (array, FALSE);
 }
+
+gboolean
+calls_plugin_manager_unload_all_plugins (CallsPluginManager *self, GError **error)
+{
+  GListModel *plugins;
+  uint n_plugins;
+  gboolean ok = TRUE;
+
+  g_return_val_if_fail (CALLS_IS_PLUGIN_MANAGER (self), FALSE);
+
+  plugins = G_LIST_MODEL (self->plugins);
+  n_plugins = g_list_model_get_n_items (plugins);
+
+  for (uint i = 0; i < n_plugins; i++) {
+    g_autoptr (CallsPlugin) plugin = g_list_model_get_item (plugins, i);
+
+    if (calls_plugin_is_loaded (plugin))
+      ok = ok && calls_plugin_unload (plugin, error);
+  }
+
+  return ok;
+}
