@@ -297,8 +297,7 @@ set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_RECORD_STORE:
-    g_set_object (&self->record_store,
-                  G_LIST_MODEL (g_value_get_object (value)));
+    g_set_object (&self->record_store, g_value_get_object (value));
     break;
 
   default:
