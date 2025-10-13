@@ -582,6 +582,13 @@ app_shutdown (GApplication *application)
     g_main_context_iteration (context, TRUE);
   }
 
+  while (self->record_store && calls_record_store_is_busy (self->record_store)) {
+    if (g_timer_elapsed (timer, NULL) > 10)
+      break;
+
+    g_main_context_iteration (context, TRUE);
+  }
+
   cui_uninit ();
 
   G_APPLICATION_CLASS (calls_application_parent_class)->shutdown (application);
