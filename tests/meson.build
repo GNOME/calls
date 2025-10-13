@@ -181,7 +181,8 @@ if dbus_run_session.found ()
       dbus_run_session,
       args: t.full_path(),
       env: test_env,
-      timeout : 300
+      timeout : 300,
+      depends: t
       )
 endif
 
