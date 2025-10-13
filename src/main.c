@@ -33,7 +33,7 @@ int
 main (int    argc,
       char **argv)
 {
-  GApplication *app;
+  g_autoptr (GApplication) app = NULL;
   int status;
 
   textdomain (GETTEXT_PACKAGE);
@@ -44,7 +44,6 @@ main (int    argc,
 
   app = G_APPLICATION (calls_application_new ());
   status = g_application_run (app, argc, argv);
-  g_object_unref (app);
 
   return status;
 }
