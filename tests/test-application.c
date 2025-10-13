@@ -66,6 +66,9 @@ on_idle_quit (gpointer user_data)
   g_application_quit (app);
 
   g_assert_true (calls_plugin_manager_has_any_plugins (plugins));
+  g_assert_true (calls_plugin_manager_unload_all_plugins (plugins, &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_any_plugins (plugins));
 
   return G_SOURCE_REMOVE;
 }

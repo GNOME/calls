@@ -112,13 +112,46 @@ test_calls_plugin_loading (void)
 }
 
 
-gint
-main (gint   argc,
-      gchar *argv[])
+static void
+test_calls_plugin_unload_all (void)
+{
+  CallsPluginManager *manager = calls_plugin_manager_get_default ();
+  g_autoptr (GError) error = NULL;
+
+  g_assert_false (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "dummy", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "dummy"));
+
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "mm", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "mm"));
+
+  g_assert_true (calls_plugin_manager_load_plugin (manager, "sip", &error));
+  g_assert_no_error (error);
+  g_assert_true (calls_plugin_manager_has_plugin (manager, "sip"));
+
+  g_assert_true (calls_plugin_manager_has_any_plugins (manager));
+  g_assert_true (calls_plugin_manager_unload_all_plugins (manager, &error));
+  g_assert_no_error (error);
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "dummy"));
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "mm"));
+  g_assert_false (calls_plugin_manager_has_plugin (manager, "sip"));
+  g_assert_false (calls_plugin_manager_has_any_plugins (manager));
+
+  g_assert_finalize_object (manager);
+}
+
+
+int
+main (int   argc,
+      char *argv[])
 {
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/Calls/Plugins/load_plugins", test_calls_plugin_loading);
+  g_test_add_func ("/Calls/Plugins/unload_all", test_calls_plugin_unload_all);
 
   return g_test_run ();
 }
