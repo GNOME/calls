@@ -11,6 +11,29 @@
 #include <glib/gstdio.h>
 #include <glib.h>
 
+
+#define calls_assert_in_dir(file, dir) G_STMT_START {                   \
+  g_autofree char *__p = g_build_path ("/", dir, file, NULL);           \
+  g_autoptr (GFile) __f = g_file_new_for_path (__p);                    \
+  if (!g_file_query_exists (__f, NULL)) {                               \
+    g_autofree char *__msg =                                            \
+      g_strdup_printf ("File %s does not exist", __p);                  \
+    g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, __msg); \
+  }                                                                     \
+} G_STMT_END
+
+
+#define calls_assert_not_in_dir(file, dir) G_STMT_START {               \
+  g_autofree char *__p = g_build_path ("/", dir, file, NULL);           \
+  g_autoptr (GFile) __f = g_file_new_for_path (__p);                    \
+  if (g_file_query_exists (__f, NULL)) {                                \
+    g_autofree char *__msg =                                            \
+      g_strdup_printf ("File %s must not exist", __p);                  \
+    g_assertion_message (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, __msg); \
+  }                                                                     \
+} G_STMT_END
+
+
 static gboolean
 on_idle_quit (gpointer user_data)
 {
@@ -96,29 +119,6 @@ test_application_shutdown_sigterm (void)
 }
 
 
-static gboolean
-dir_contains (const char *dir,
-              const char *file,
-              gboolean    only_file)
-{
-  g_autoptr (GDir) tmp_dir = g_dir_open (dir, 0, NULL);
-  const char *tmp_file;
-  gboolean found = FALSE;
-  uint n = 0;
-
-  while ((tmp_file = g_dir_read_name (tmp_dir))) {
-    if (g_strcmp0 (tmp_file, file) == 0)
-      found = TRUE;
-    n++;
-  }
-
-  if (only_file)
-    return found && n == 1;
-
-  return found;
-}
-
-
 int
 main (int   argc,
       char *argv[])
@@ -143,8 +143,10 @@ main (int   argc,
 
   status = g_test_run ();
 
-  /* assert there is no dangling write-ahead-log */
-  g_assert_true (dir_contains (rec_dir, "records.db", TRUE));
+  /* Check that sqlite db is there but no stale write ahead logs */
+  calls_assert_in_dir ("records.db", rec_dir);
+  calls_assert_not_in_dir ("records.db-wal", rec_dir);
+  calls_assert_not_in_dir ("records.db-shm", rec_dir);
 
   g_rmdir (rec_dir);
 
