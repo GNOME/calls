@@ -1,3 +1,82 @@
+gnome-calls (49.1.1) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * doap: Add Guido as co-maintainer
+  * doap: Update Evangelos email.
+    The dropped one isn't used since ages
+  * main-window: Drop confusing cast
+  * record-store: Track async operations.
+    We need to be able to tell when all async operations finished.
+    Otherwise we might shut down the daemon with in flight operations
+    leaving a open database around.
+  * application: Wait until all async database operations finished.
+    When shutting down make sure there are no in-flight database operations.
+    Otherwise the database might not be closed correctly.
+    Improves fix for https://gitlab.gnome.org/GNOME/calls/-/issues/508
+  * tests: Make the application test depend on the binary.
+    Otherwise it is not rebuilt when it changes
+  * application: Actually test for write ahead log.
+    While the test was correct and checked if there is only
+    `record.db` in a given dir (and no other files) it wouldn't
+    tell us whether the file wasn't there or there were additional
+    files found. Hence replace the test by assertions that tell
+    use exactly what failed easing debugging in CI.
+    Fixes: e4bd4580 ("tests: Add application shutdown tests")
+  * app: Use automatic cleanup
+  * application: Load plugins early.
+    Fixes: 574e1f79 ("application: Drop ignore_activation flag")
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/718
+
+  [ Markus Göllnitz ]
+  * main-window: increase width of switcher breakpoint.
+    The current breakpoint is more or less perfect for
+    English. However, there are other languages with longer
+    strings there, such as German. Increasing the width at
+    which the breakpoint sits to switch the switcher location
+    enables most languages to have no or minimal ellipses
+    while not looking too spacious with English.
+  * main-window: move bottom switcher to toolbar.
+    The toolbar view is meant for these. This allows
+    libadwaita's style to apply the way it can be seen in
+    basically every other GNOME app.
+    The differences are with the scroll dependent undershoot
+    instead of an unconditional border.
+  * new-call-box: wrap dialer in scrolled window.
+    It was possible to increase the window's size below the
+    minimum size of the dialer view. As such it is important
+    to wrap it in a scrolled window in order not to lose
+    access to otherwise hidden interface components.
+    This is, of course, not a replacement for a better
+    adapting dialer.
+  * contacts-box: adjust search bar's margin inside toolbar.
+    A toolbar view, per its docs, expects its toolbar
+    children to either be of a set of known widget types that
+    are supported by default, or otherwise be a Gtk.Box-like
+    container with the .toolbar CSS style class.
+    This expectation was not met, but instead similar, but
+    not identical margins manually applied. These similar yet
+    different margins made it look off.
+    While this now adheres to the toolbar child requirements
+    of libadwaita, and the margins look more familiar, it
+    still breaks with libadwaita's assumption that toolbars
+    are not stacked. Its stylesheet allows for stacking
+    toolbar views only if one is providing the top and the
+    other the bottom one.
+    This view, especially, deserves a more thorough design
+    overhaul, regardless of this. Thus, I will leave it at
+    this.
+    Link: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html
+
+  [ Evangelos Ribeiro Tzaras ]
+  * test-application: Check for expected plugins to be loaded.
+    These tests helps ensure the application will always have plugins
+    loaded and prevent regressions.
+    Helps: https://gitlab.gnome.org/GNOME/calls/-/issues/718
+  * plugin-manager: Add API to unload all plugins.
+    And add tests for it.
+
+ -- Evangelos Ribeiro Tzaras <devrtz@debian.org>  Tue, 14 Oct 2025 16:05:51 +0200
+
 gnome-calls (49.1) unstable; urgency=medium
 
   [ Baxrom Raxmatov ]
