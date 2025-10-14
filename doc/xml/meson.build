@@ -6,4 +6,8 @@ ent_conf.set('PACKAGE_STRING', 'calls')
 ent_conf.set('PACKAGE_TARNAME', 'calls-' + meson.project_version())
 ent_conf.set('PACKAGE_URL', 'https://gitlab.gnome.org/GNOME/calls')
 ent_conf.set('PACKAGE_VERSION', meson.project_version())
-configure_file(input: 'gtkdocentities.ent.in', output: 'gtkdocentities.ent', configuration: ent_conf)
+configure_file(
+  input: 'gtkdocentities.ent.in',
+  output: 'gtkdocentities.ent',
+  configuration: ent_conf,
+)

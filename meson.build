@@ -21,15 +21,16 @@
 
 project(
   'calls',
-  'c', 'vala',
+  'c',
+  'vala',
   version: '49.1.1',
   license: 'GPLv3+',
   meson_version: '>= 1.0',
   default_options: [
     'warning_level=1',
     'buildtype=debugoptimized',
-    'c_std=gnu11'
-  ]
+    'c_std=gnu11',
+  ],
 )
 
 gtk_version = '4.12'
@@ -55,8 +56,9 @@ full_calls_plugin_libdir = join_paths(prefix, libdir, calls_name, 'plugins')
 po_dir = join_paths(meson.project_source_root(), 'po')
 
 mbpi_dep = dependency('mobile-broadband-provider-info')
-libcall_ui_dep = dependency('call-ui',
-  fallback:  ['libcall-ui', 'libcall_ui_dep'],
+libcall_ui_dep = dependency(
+  'call-ui',
+  fallback: ['libcall-ui', 'libcall_ui_dep'],
   default_options: ['tests=false', 'examples=false', 'gtk_doc=false'],
 )
 
@@ -79,20 +81,24 @@ config_data.set_quoted('PLUGIN_LIBDIR', full_calls_plugin_libdir)
 config_data.set_quoted('PACKAGE_URL', calls_homepage)
 config_data.set_quoted('PACKAGE_VERSION', calls_version)
 config_data.set('PACKAGE_URL_RAW', calls_homepage)
-config_data.set_quoted('CALLS_EMERGENCY_INFO_DATABASE', mbpi_dep.get_variable('database'))
+config_data.set_quoted(
+  'CALLS_EMERGENCY_INFO_DATABASE',
+  mbpi_dep.get_variable('database'),
+)
 
 gst_debug = get_option('gst_debug')
-config_data.set('CALLS_GST_DEBUG', gst_debug, description: 'Use GStreamer debugging API')
+config_data.set(
+  'CALLS_GST_DEBUG',
+  gst_debug,
+  description: 'Use GStreamer debugging API',
+)
 
 
 run_data = configuration_data()
 run_data.set('ABS_BUILDDIR', meson.current_build_dir())
 run_data.set('ABS_SRCDIR', meson.current_source_dir())
 
-configure_file(
-  input: 'run.in',
-  output: 'run',
-  configuration: run_data)
+configure_file(input: 'run.in', output: 'run', configuration: run_data)
 
 cc = meson.get_compiler('c')
 
@@ -142,24 +148,23 @@ if get_option('buildtype') != 'plain'
   test_c_args += '-fstack-protector-strong'
 endif
 
-foreach arg: test_c_args
+foreach arg : test_c_args
   if cc.has_multi_arguments(arg)
     global_c_args += arg
   endif
 endforeach
 
-add_project_arguments(
-  global_c_args,
-  language: 'c'
-)
+add_project_arguments(global_c_args, language: 'c')
 
-summary({
-  'Build documentation': get_option('gtk_doc'),
-  'Build manpages': get_option('manpages'),
-  'Build tests': get_option('tests'),
-  'Use gstreamers debug API': get_option('gst_debug'),
-  'Directory for systemd user units': systemd_user_unit_dir,
-})
+summary(
+  {
+    'Build documentation': get_option('gtk_doc'),
+    'Build manpages': get_option('manpages'),
+    'Build tests': get_option('tests'),
+    'Use gstreamers debug API': get_option('gst_debug'),
+    'Directory for systemd user units': systemd_user_unit_dir,
+  },
+)
 
 subdir('po')
 subdir('data')
@@ -169,7 +174,7 @@ subdir('tests')
 subdir('doc')
 
 gnome.post_install(
-    glib_compile_schemas: true,
-    gtk_update_icon_cache: true,
-    update_desktop_database: true,
+  glib_compile_schemas: true,
+  gtk_update_icon_cache: true,
+  update_desktop_database: true,
 )

@@ -48,22 +48,18 @@ ofono_deps = [
 ]
 
 ofono_sources = files(
-  [
-    'calls-ofono-call.c', 'calls-ofono-call.h',
-    'calls-ofono-origin.c', 'calls-ofono-origin.h',
-    'calls-ofono-provider.c', 'calls-ofono-provider.h'
-  ]
+  'calls-ofono-call.c',
+  'calls-ofono-origin.c',
+  'calls-ofono-provider.c',
 )
 
 calls_ofono = shared_module(
   'ofono',
-  ofono_sources, gdbofono_headers,
+  ofono_sources,
+  gdbofono_headers,
   dependencies: ofono_deps,
-  include_directories: [
-    src_include,
-    include_directories('.')
-  ],
+  include_directories: [src_include, include_directories('.')],
   link_with: [gdbofono_lib, libcalls],
   install: true,
-  install_dir: ofono_install_dir
+  install_dir: ofono_install_dir,
 )

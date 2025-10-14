@@ -49,11 +49,9 @@ dummy_deps = [
 ]
 
 dummy_sources = files(
-  [
-    'calls-dummy-call.c', 'calls-dummy-call.h',
-    'calls-dummy-origin.c', 'calls-dummy-origin.h',
-    'calls-dummy-provider.c', 'calls-dummy-provider.h'
-  ]
+  'calls-dummy-call.c',
+  'calls-dummy-origin.c',
+  'calls-dummy-provider.c',
 )
 
 calls_dummy = shared_module(
@@ -63,5 +61,5 @@ calls_dummy = shared_module(
   include_directories: src_include,
   link_with: libcalls,
   install: true,
-  install_dir: dummy_install_dir
+  install_dir: dummy_install_dir,
 )

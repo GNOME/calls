@@ -27,25 +27,22 @@ dbus_interfaces = ['manager', 'modem', 'call', 'ussd']
 
 gdbofono_src = []
 gdbofono_headers = []
-foreach iface: dbus_interfaces
+foreach iface : dbus_interfaces
   src = gnome.gdbus_codegen(
     'gdbo-' + iface,
     iface + '.xml',
     interface_prefix: 'org.ofono.',
-    namespace: 'GDBO'
+    namespace: 'GDBO',
   )
   gdbofono_src += src
   gdbofono_headers += src[1]
 endforeach
 
-gdbofono_deps = [
-  dependency('gio-2.0'),
-  dependency('gio-unix-2.0'),
-]
+gdbofono_deps = [dependency('gio-2.0'), dependency('gio-unix-2.0')]
 
 gdbofono_lib = static_library(
   'gdbofono',
   gdbofono_src,
   include_directories: top_include,
-  dependencies: gdbofono_deps
+  dependencies: gdbofono_deps,
 )

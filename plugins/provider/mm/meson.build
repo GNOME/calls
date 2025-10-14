@@ -48,13 +48,7 @@ mm_deps = [
   dependency('libpeas-2'),
 ]
 
-mm_sources = files(
-  [
-    'calls-mm-call.c', 'calls-mm-call.h',
-    'calls-mm-origin.c', 'calls-mm-origin.h',
-    'calls-mm-provider.c', 'calls-mm-provider.h'
-  ]
-)
+mm_sources = files('calls-mm-call.c', 'calls-mm-origin.c', 'calls-mm-provider.c')
 
 calls_mm = shared_module(
   'mm',
@@ -63,5 +57,5 @@ calls_mm = shared_module(
   include_directories: src_include,
   link_with: libcalls,
   install: true,
-  install_dir: mm_install_dir
+  install_dir: mm_install_dir,
 )

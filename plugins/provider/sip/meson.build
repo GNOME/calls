@@ -53,36 +53,29 @@ sip_deps = [
 ]
 
 sip_sources = files(
-  [
-    'calls-sdp-crypto-context.c', 'calls-sdp-crypto-context.h',
-    'calls-sip-account-widget.c', 'calls-sip-account-widget.h',
-    'calls-sip-call.c', 'calls-sip-call.h',
-    'calls-sip-media-manager.c', 'calls-sip-media-manager.h',
-    'calls-sip-media-pipeline.c', 'calls-sip-media-pipeline.h',
-    'calls-sip-origin.c', 'calls-sip-origin.h',
-    'calls-sip-provider.c', 'calls-sip-provider.h',
-    'calls-sip-util.c', 'calls-sip-util.h',
-    'calls-srtp-utils.c', 'calls-srtp-utils.h',
-    'gst-rfc3551.c', 'gst-rfc3551.h',
-  ]
+  'calls-sdp-crypto-context.c',
+  'calls-sip-account-widget.c',
+  'calls-sip-call.c',
+  'calls-sip-media-manager.c',
+  'calls-sip-media-pipeline.c',
+  'calls-sip-origin.c',
+  'calls-sip-provider.c',
+  'calls-sip-util.c',
+  'calls-srtp-utils.c',
+  'gst-rfc3551.c',
 )
 
-pipeline_enum_headers = [
-  'calls-sip-media-pipeline.h',
-]
+pipeline_enum_headers = ['calls-sip-media-pipeline.h']
 
-pipeline_enums = gnome.mkenums_simple('calls-media-pipeline-enums',
-                                      sources: pipeline_enum_headers)
+pipeline_enums = gnome.mkenums_simple(
+  'calls-media-pipeline-enums',
+  sources: pipeline_enum_headers,
+)
 sip_sources += pipeline_enums
 
-sip_enum_headers = [
-  'calls-sdp-crypto-context.h',
-  'calls-sip-util.h',
-]
+sip_enum_headers = ['calls-sdp-crypto-context.h', 'calls-sip-util.h']
 
-sip_enums = gnome.mkenums_simple('calls-sip-enums',
-                                 sources: sip_enum_headers,
-)
+sip_enums = gnome.mkenums_simple('calls-sip-enums', sources: sip_enum_headers)
 
 sip_sources += sip_enums
 
@@ -102,5 +95,5 @@ calls_sip = shared_module(
   include_directories: src_include,
   link_with: libcalls,
   install: true,
-  install_dir: sip_install_dir
+  install_dir: sip_install_dir,
 )

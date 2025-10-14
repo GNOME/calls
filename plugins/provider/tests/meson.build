@@ -20,7 +20,9 @@
 #
 
 
-if get_option('tests')
+if not get_option('tests')
+  subdir_done()
+endif
 
 test_env = [
   'G_DEBUG=gc-friendly,fatal-warnings',
@@ -35,19 +37,14 @@ test_env = [
   'CALLS_PLUGIN_DIR=@0@/plugins'.format(meson.project_build_root()),
 ]
 
-test_cflags = [
-  '-DFOR_TESTING',
-  '-Wno-error=deprecated-declarations',
-]
+test_cflags = ['-DFOR_TESTING', '-Wno-error=deprecated-declarations']
 
-test_link_args = [
-  '-fPIC',
-]
+test_link_args = ['-fPIC']
 
 tests = [
-  [ 'provider', []                       ],
-  [ 'origin',   [ 'provider' ]           ],
-  [ 'call',     [ 'provider', 'origin' ] ],
+  ['provider', []],
+  ['origin', ['provider']],
+  ['call', ['provider', 'origin']],
 ]
 
 foreach test : tests
@@ -58,88 +55,78 @@ foreach test : tests
 
   test_sources = []
   foreach base : setup_bases
-    test_sources += [ 'setup-' + base + '.c',
-                      'setup-' + base + '.h' ]
+    test_sources += ['setup-' + base + '.c', 'setup-' + base + '.h']
   endforeach
-  test_sources += [ 'test-' + name + '.c',
-                    'common.h' ]
+  test_sources += ['test-' + name + '.c', 'common.h']
 
-  t = executable(name, test_sources,
-                 dummy_sources,
-                 c_args : test_cflags,
-                 link_args: test_link_args,
-                 pie: true,
-                 link_with : [calls_vala, libcalls],
-                 dependencies: calls_deps,
-                 include_directories : [
-                   calls_includes,
-                   dummy_include,
-                 ]
-                )
+  t = executable(
+    name,
+    test_sources,
+    dummy_sources,
+    c_args: test_cflags,
+    link_args: test_link_args,
+    pie: true,
+    link_with: [calls_vala, libcalls],
+    dependencies: calls_deps,
+    include_directories: [calls_includes, dummy_include],
+  )
   test(name, t, env: test_env)
 endforeach
 
 
 
-test_sources = [ 'test-media.c' ]
+test_sources = ['test-media.c']
 test_sources += sip_sources
-t = executable('media', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
+t = executable(
+  'media',
+  test_sources,
+  c_args: test_cflags,
+  link_args: test_link_args,
+  pie: true,
+  link_with: [calls_vala, libcalls],
+  dependencies: [calls_deps, sip_deps],
+  include_directories: [calls_includes, sip_include],
+)
 test('media', t, env: test_env)
 
-test_sources = [ 'test-sip.c' ]
+test_sources = ['test-sip.c']
 test_sources += sip_sources
-t = executable('sip', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
+t = executable(
+  'sip',
+  test_sources,
+  c_args: test_cflags,
+  link_args: test_link_args,
+  pie: true,
+  link_with: [calls_vala, libcalls],
+  dependencies: [calls_deps, sip_deps],
+  include_directories: [calls_includes, sip_include],
+)
 test('sip', t, env: test_env)
 
-test_sources = [ 'test-srtp.c' ]
+test_sources = ['test-srtp.c']
 test_sources += sip_sources
-t = executable('srtp', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
+t = executable(
+  'srtp',
+  test_sources,
+  c_args: test_cflags,
+  link_args: test_link_args,
+  pie: true,
+  link_with: [calls_vala, libcalls],
+  dependencies: [calls_deps, sip_deps],
+  include_directories: [calls_includes, sip_include],
+)
 test('srtp', t, env: test_env)
 
-test_sources = [ 'test-sdp-crypto.c' ]
+test_sources = ['test-sdp-crypto.c']
 test_sources += sip_sources
-t = executable('sdp-crypto', test_sources,
-               c_args : test_cflags,
-               link_args: test_link_args,
-               pie: true,
-               link_with : [calls_vala, libcalls],
-               dependencies: [calls_deps, sip_deps],
-               include_directories : [
-                   calls_includes,
-                   sip_include,
-                 ]
-               )
+t = executable(
+  'sdp-crypto',
+  test_sources,
+  c_args: test_cflags,
+  link_args: test_link_args,
+  pie: true,
+  link_with: [calls_vala, libcalls],
+  dependencies: [calls_deps, sip_deps],
+  include_directories: [calls_includes, sip_include],
+)
 test('sdp-crypto', t, env: test_env)
-
-
-endif

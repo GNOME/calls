@@ -1,2 +1,2 @@
 i18n = import('i18n')
-i18n.gettext(calls_name, preset : 'glib')
+i18n.gettext(calls_name, preset: 'glib')
