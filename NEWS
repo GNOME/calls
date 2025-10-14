@@ -1,3 +1,14 @@
+gnome-calls 49.1.1
+------------------
+Released October 2025
+* Fix daemon starting up without any plugins
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/718
+* Contributors:
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+    * Markus Göllnitz
+
 gnome-calls 49.1
 ----------------
 Released October 2025
