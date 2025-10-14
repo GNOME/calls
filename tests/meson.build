@@ -46,140 +46,55 @@ test_includes = include_directories('.')
 subdir('mock')
 subdir('services')
 
-test_sources = ['test-emergency-call-types.c']
-t = executable(
-  'emergency-call-types',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('emergency-call-types', t, env: test_env)
+tests = [
+  ['emergency-call-types', ['test-emergency-call-types.c']],
+  ['manager', ['test-manager.c'], {'extra_test_deps' : [calls_plugins]}],
+  [
+    'plugins',
+    ['test-plugins.c', calls_sources],
+    {'extra_test_deps' : [calls_plugins]},
+  ],
+  ['util', ['test-util.c']],
+  ['ui-call', ['test-ui-call.c', 'mock-call.c']],
+  ['contacts', ['test-contacts.c']],
+  ['settings', ['test-settings.c']],
+  ['dbus', ['test-dbus.c', generated_dbus_sources]],
+  [
+    'ringer',
+    ['mock-call.c', 'test-ringer.c'],
+    {'extra_link_with' : libfeedback},
+  ],
+  ['service-providers', ['test-service-providers.c']],
+]
 
-test_sources = ['test-service-providers.c']
-t = executable(
-  'service-providers',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('service-providers', t, env: test_env)
+foreach t : tests
+  test_name = t[0]
+  test_sources = t[1]
+  link_with = [calls_vala, libcalls]
 
-test_sources = ['test-manager.c']
+  if t.length() == 3 and t[2].has_key('extra_link_with')
+    link_with += t[2]['extra_link_with']
+  endif
 
-t = executable(
-  'manager',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('manager', t, env: test_env, depends: calls_plugins)
+  exe = executable(
+    test_name,
+    test_sources,
+    c_args: test_cflags,
+    link_args: test_link_args,
+    pie: true,
+    link_with: link_with,
+    dependencies: calls_deps,
+    include_directories: [calls_includes, test_includes],
+  )
 
-test_sources = ['test-plugins.c']
+  test_deps = [exe]
+  if t.length() == 3 and t[2].has_key('extra_test_deps')
+    test_deps += t[2]['extra_test_deps']
+  endif
 
-t = executable(
-  'plugins',
-  test_sources,
-  calls_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('plugins', t, env: test_env, depends: calls_plugins)
+  test(t[0], exe, env: test_env, depends: test_deps)
+endforeach
 
-test_sources = ['test-util.c']
-t = executable(
-  'util',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('util', t, env: test_env)
-
-test_sources = ['test-ui-call.c', 'mock-call.c', 'mock-call.h']
-t = executable(
-  'ui-call',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('ui-call', t, env: test_env)
-
-test_sources = ['mock-call.c', 'mock-call.h', 'test-ringer.c']
-
-t = executable(
-  'ringer',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls, libfeedback],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('ringer', t, env: test_env)
-
-test_sources = ['test-contacts.c']
-t = executable(
-  'contacts',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('contacts', t, env: test_env)
-
-test_sources = ['test-settings.c']
-t = executable(
-  'settings',
-  test_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('settings', t, env: test_env)
-
-test_sources = ['test-dbus.c']
-t = executable(
-  'dbus',
-  test_sources,
-  generated_dbus_sources,
-  c_args: test_cflags,
-  link_args: test_link_args,
-  pie: true,
-  link_with: [calls_vala, libcalls],
-  dependencies: calls_deps,
-  include_directories: [calls_includes],
-)
-test('dbus', t, env: test_env)
 
 dbus_run_session = find_program('dbus-run-session')
 
