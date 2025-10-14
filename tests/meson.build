@@ -62,7 +62,11 @@ tests = [
   ['ui-call', ['test-ui-call.c', 'mock-call.c']],
   ['contacts', ['test-contacts.c']],
   ['settings', ['test-settings.c']],
-  ['dbus', ['test-dbus.c', generated_dbus_sources]],
+  [
+    'dbus',
+    ['test-dbus.c', generated_dbus_sources],
+    {'extra_test_deps' : [dbus_server]},
+  ],
   [
     'ringer',
     ['mock-call.c', 'test-ringer.c'],

@@ -1,4 +1,4 @@
-t = executable(
+dbus_server = executable(
   'calls-dbus-server',
   'calls-server.c',
   dbus_config_h,
