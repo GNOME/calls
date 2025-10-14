@@ -41,6 +41,8 @@ i18n_plugin = i18n.merge_file(
   install_dir: ofono_install_dir,
 )
 
+plugins_test_depends += [i18n_plugin]
+
 ofono_deps = [
   dependency('gobject-2.0'),
   dependency('gtk4', version: '>= @0@'.format(gtk_version)),

@@ -1,4 +1,7 @@
 calls_provider_plugin_libdir = join_paths(full_calls_plugin_libdir, 'provider')
+
+plugins_test_depends = []
+
 subdir('provider/mm')
 subdir('provider/dummy')
 subdir('provider/ofono')

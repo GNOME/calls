@@ -39,6 +39,7 @@ i18n_plugin = i18n.merge_file(
   install_dir: mm_install_dir,
 )
 
+plugins_test_depends += [i18n_plugin]
 
 mm_deps = [
   dependency('gobject-2.0'),

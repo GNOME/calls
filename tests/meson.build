@@ -48,11 +48,15 @@ subdir('services')
 
 tests = [
   ['emergency-call-types', ['test-emergency-call-types.c']],
-  ['manager', ['test-manager.c'], {'extra_test_deps' : [calls_plugins]}],
+  [
+    'manager',
+    ['test-manager.c'],
+    {'extra_test_deps' : [calls_plugins, plugins_test_depends]},
+  ],
   [
     'plugins',
     ['test-plugins.c', calls_sources],
-    {'extra_test_deps' : [calls_plugins]},
+    {'extra_test_deps' : [calls_plugins, plugins_test_depends]},
   ],
   ['util', ['test-util.c']],
   ['ui-call', ['test-ui-call.c', 'mock-call.c']],
