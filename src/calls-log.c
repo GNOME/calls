@@ -176,21 +176,21 @@ calls_log_handler (GLogLevelFlags   log_level,
   /* If domain is “all” show logs upto debug regardless of the verbosity */
   switch ((int) log_level) {
   case G_LOG_LEVEL_MESSAGE:
-    if (any_domain && domains)
+    if (any_domain || domains)
       break;
     if (verbosity < 1)
       return G_LOG_WRITER_HANDLED;
     break;
 
   case G_LOG_LEVEL_INFO:
-    if (any_domain && domains)
+    if (any_domain || domains)
       break;
     if (verbosity < 2)
       return G_LOG_WRITER_HANDLED;
     break;
 
   case G_LOG_LEVEL_DEBUG:
-    if (any_domain && domains)
+    if (any_domain || domains)
       break;
     if (verbosity < 3)
       return G_LOG_WRITER_HANDLED;
