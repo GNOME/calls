@@ -7,5 +7,6 @@ _build
 .buildconfig
 .flatpak-builder
 .gdb_history
+subprojects/.wraplock
 po/calls.pot
 po/missing
