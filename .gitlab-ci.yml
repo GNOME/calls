@@ -1,6 +1,9 @@
 include:
  - 'https://source.puri.sm/Librem5/librem5-ci/raw/master/librem5-pipeline-definitions.yml'
  - 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+ - project: 'Infrastructure/freedesktop-ci-templates'
+   ref: 'fb9d50ccb3cbbb4c6dc5f9ef53a0ad3cb0d8a177'
+   file: '/templates/ci-fairy.yml'
  - project: 'guidog/meta-phosh'
    ref: 'eb1c7f3c602f93e50ba0f1b7da31c936c771a75c'
    file: '/ci/phosh-common-jobs.yml'
@@ -106,6 +109,22 @@ check-meson:
   stage: style-checks
   extends:
     - .phosh-check-meson
+
+commit-log-check:
+  extends:
+    - .fdo.ci-fairy
+  stage: style-checks
+  variables:
+    GIT_DEPTH: "100"
+    FDO_UPSTREAM_REPO: "GNOME/calls"
+  needs: []
+  script: |
+    ci-fairy check-commits --signed-off-by --junit-xml=commit-message-junit-report.xml
+  artifacts:
+    reports:
+      junit: commit-message-junit-report.xml
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
 
 package:deb-debian-trixie:arm64:
   variables:
