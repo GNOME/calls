@@ -47,6 +47,12 @@ subdir('mock')
 subdir('services')
 
 tests = [
+  ['contacts', ['test-contacts.c']],
+  [
+    'dbus',
+    ['test-dbus.c', generated_dbus_sources],
+    {'extra_test_deps' : [dbus_server]},
+  ],
   ['emergency-call-types', ['test-emergency-call-types.c']],
   [
     'manager',
@@ -58,21 +64,15 @@ tests = [
     ['test-plugins.c', calls_sources],
     {'extra_test_deps' : [calls_plugins, plugins_test_depends]},
   ],
-  ['util', ['test-util.c']],
-  ['ui-call', ['test-ui-call.c', 'mock-call.c']],
-  ['contacts', ['test-contacts.c']],
-  ['settings', ['test-settings.c']],
-  [
-    'dbus',
-    ['test-dbus.c', generated_dbus_sources],
-    {'extra_test_deps' : [dbus_server]},
-  ],
   [
     'ringer',
     ['mock-call.c', 'test-ringer.c'],
     {'extra_link_with' : libfeedback},
   ],
   ['service-providers', ['test-service-providers.c']],
+  ['settings', ['test-settings.c']],
+  ['ui-call', ['test-ui-call.c', 'mock-call.c']],
+  ['util', ['test-util.c']],
 ]
 
 foreach t : tests
