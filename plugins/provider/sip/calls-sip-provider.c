@@ -120,6 +120,7 @@ on_origin_pw_looked_up (GObject      *source,
   g_autoptr (GError) error = NULL;
   g_autofree char *id = NULL;
   g_autofree char *host = NULL;
+  g_autofree char *proxy = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
   g_autofree char *display_name = NULL;
@@ -143,6 +144,7 @@ on_origin_pw_looked_up (GObject      *source,
   g_debug ("Password looked up for %s", id);
 
   host = g_key_file_get_string (data->key_file, data->name, "Host", NULL);
+  proxy = g_key_file_get_string (data->key_file, data->name, "Proxy", NULL);
   user = g_key_file_get_string (data->key_file, data->name, "User", NULL);
   display_name = g_key_file_get_string (data->key_file, data->name, "DisplayName", NULL);
   protocol = g_key_file_get_string (data->key_file, data->name, "Protocol", NULL);
@@ -187,6 +189,7 @@ on_origin_pw_looked_up (GObject      *source,
   calls_sip_provider_add_origin_full (data->provider,
                                       id,
                                       host,
+                                      proxy,
                                       user,
                                       password,
                                       display_name,
@@ -207,6 +210,7 @@ new_origin_from_keyfile_secret (CallsSipProvider *self,
                                 const char       *name)
 {
   g_autofree char *host = NULL;
+  g_autofree char *proxy = NULL;
   g_autofree char *user = NULL;
   SipOriginLoadData *data;
 
@@ -220,6 +224,7 @@ new_origin_from_keyfile_secret (CallsSipProvider *self,
   }
 
   host = g_key_file_get_string (key_file, name, "Host", NULL);
+  proxy = g_key_file_get_string (key_file, name, "Proxy", NULL);
   user = g_key_file_get_string (key_file, name, "User", NULL);
 
   data = g_new0 (SipOriginLoadData, 1);
@@ -254,12 +259,14 @@ static void
 origin_pw_delete_secret (CallsSipOrigin *origin)
 {
   g_autofree char *host = NULL;
+  g_autofree char *proxy = NULL;
   g_autofree char *user = NULL;
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
   g_object_get (origin,
                 "host", &host,
+                "proxy", &proxy,
                 "user", &user,
                 NULL);
 
@@ -292,6 +299,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
 {
   g_autofree char *id = NULL;
   g_autofree char *host = NULL;
+  g_autofree char *proxy = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
   g_autofree char *display_name = NULL;
@@ -310,6 +318,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
   g_object_get (origin,
                 "id", &id,
                 "host", &host,
+                "proxy", &proxy,
                 "user", &user,
                 "password", &password,
                 "display-name", &display_name,
@@ -324,6 +333,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
 
   g_key_file_set_string (key_file, name, "Id", id);
   g_key_file_set_string (key_file, name, "Host", host);
+  g_key_file_set_string (key_file, name, "Proxy", proxy);
   g_key_file_set_string (key_file, name, "User", user);
   g_key_file_set_string (key_file, name, "DisplayName", display_name ?: "");
   g_key_file_set_string (key_file, name, "Protocol", protocol);
@@ -658,6 +668,7 @@ calls_sip_provider_init (CallsSipProvider *self)
  * @self: A #CallsSipProvider
  * @id: The id of the new origin (should be unique)
  * @host: The host to connect to
+ * @proxy: The proxy to connect to
  * @user: The username to use
  * @password: The password to use
  * @display_name: The display name
@@ -674,6 +685,7 @@ CallsSipOrigin *
 calls_sip_provider_add_origin (CallsSipProvider  *self,
                                const char        *id,
                                const char        *host,
+                               const char        *proxy,
                                const char        *user,
                                const char        *password,
                                const char        *display_name,
@@ -685,6 +697,7 @@ calls_sip_provider_add_origin (CallsSipProvider  *self,
   return calls_sip_provider_add_origin_full (self,
                                              id,
                                              host,
+                                             proxy,
                                              user,
                                              password,
                                              display_name,
@@ -703,6 +716,7 @@ calls_sip_provider_add_origin (CallsSipProvider  *self,
  * @self: A #CallsSipProvider
  * @id: The id of the new origin (should be unique)
  * @host: The host to connect to
+ * @proxy: The proxy to connect to
  * @user: The username to use
  * @password: The password to use
  * @display_name: The display name
@@ -724,6 +738,7 @@ CallsSipOrigin *
 calls_sip_provider_add_origin_full (CallsSipProvider  *self,
                                     const char        *id,
                                     const char        *host,
+                                    const char        *proxy,
                                     const char        *user,
                                     const char        *password,
                                     const char        *display_name,
@@ -759,6 +774,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider  *self,
                          "id", id,
                          "sip-context", self->ctx,
                          "host", host,
+                         "proxy", proxy,
                          "user", user,
                          "password", password,
                          "display-name", display_name,

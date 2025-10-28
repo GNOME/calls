@@ -65,6 +65,7 @@ enum {
   PROP_ID,
   PROP_EMERGENCY_NUMBERS,
   PROP_ACC_HOST,
+  PROP_ACC_PROXY,
   PROP_ACC_USER,
   PROP_ACC_PASSWORD,
   PROP_ACC_DISPLAY_NAME,
@@ -107,6 +108,7 @@ struct _CallsSipOrigin {
 
   /* Account information */
   char                 *host;
+  char                 *proxy;
   char                 *user;
   char                 *password;
   char                 *display_name;
@@ -427,7 +429,7 @@ sip_authenticate (CallsSipOrigin *self,
     g_warning ("No authentication context found");
     return;
   }
-  g_debug ("need to authenticate to realm %s", realm);
+  g_debug ("Authenticating to realm %s using %s", realm, www_auth ? "www_auth" : "proxy_auth");
 
   /* TODO handle authentication to different realms
    * https://source.puri.sm/Librem5/calls/-/issues/266
@@ -953,6 +955,7 @@ setup_nua (CallsSipOrigin *self)
   g_autofree char *sip_url = NULL;
   g_autofree char *sips_url = NULL;
   g_autofree char *from_str = NULL;
+  g_autofree char *proxy_url = NULL;
 
   if (!sip_test_env || sip_test_env[0] == '\0') {
     CallsNetworkWatch *nw = calls_network_watch_get_default ();
@@ -1000,12 +1003,15 @@ setup_nua (CallsSipOrigin *self)
     g_free (temp);
   }
 
+  proxy_url = g_strdup_printf ("%s:%s", self->protocol_prefix, self->proxy);
+
   nua = nua_create (self->ctx->root,
                     sip_callback,
                     self,
                     NUTAG_USER_AGENT (APP_DATA_NAME),
                     NUTAG_URL (sip_url),
                     TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
+                    TAG_IF (!!self->proxy, NUTAG_PROXY (proxy_url)),
                     SIPTAG_FROM_STR (from_str),
                     NUTAG_ALLOW ("INVITE, ACK, BYE, CANCEL, OPTIONS, UPDATE"),
                     NUTAG_SUPPORTED ("replaces, gruu, outbound"),
@@ -1330,6 +1336,11 @@ calls_sip_origin_set_property (GObject      *object,
     self->host = g_value_dup_string (value);
     break;
 
+  case PROP_ACC_PROXY:
+    g_free (self->proxy);
+    self->proxy = g_value_dup_string (value);
+    break;
+
   case PROP_ACC_DISPLAY_NAME:
     g_free (self->display_name);
     self->display_name = g_value_dup_string (value);
@@ -1414,6 +1425,10 @@ calls_sip_origin_get_property (GObject    *object,
 
   case PROP_ACC_HOST:
     g_value_set_string (value, self->host);
+    break;
+
+  case PROP_ACC_PROXY:
+    g_value_set_string (value, self->proxy);
     break;
 
   case PROP_ACC_DISPLAY_NAME:
@@ -1533,6 +1548,7 @@ calls_sip_origin_dispose (GObject *object)
   g_clear_pointer (&self->transport_protocol, g_free);
   g_clear_pointer (&self->display_name, g_free);
   g_clear_pointer (&self->host, g_free);
+  g_clear_pointer (&self->proxy, g_free);
   g_clear_pointer (&self->user, g_free);
   g_clear_pointer (&self->password, g_free);
   g_clear_pointer (&self->address, g_free);
@@ -1570,6 +1586,14 @@ calls_sip_origin_class_init (CallsSipOriginClass *klass)
                          NULL,
                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_ACC_HOST, props[PROP_ACC_HOST]);
+
+  props[PROP_ACC_PROXY] =
+    g_param_spec_string ("proxy",
+                         "Proxy",
+                         "The proxy to connect to",
+                         NULL,
+                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_ACC_PROXY, props[PROP_ACC_PROXY]);
 
   props[PROP_ACC_USER] =
     g_param_spec_string ("user",
@@ -1718,6 +1742,7 @@ calls_sip_origin_init (CallsSipOrigin *self)
 void
 calls_sip_origin_set_credentials (CallsSipOrigin    *self,
                                   const char        *host,
+                                  const char        *proxy,
                                   const char        *user,
                                   const char        *password,
                                   const char        *display_name,
@@ -1743,6 +1768,9 @@ calls_sip_origin_set_credentials (CallsSipOrigin    *self,
 
   g_free (self->host);
   self->host = g_strdup (host);
+
+  g_free (self->proxy);
+  self->proxy = g_strdup (proxy);
 
   g_free (self->user);
   self->user = g_strdup (user);

@@ -36,6 +36,7 @@ G_DECLARE_FINAL_TYPE (CallsSipOrigin, calls_sip_origin, CALLS, SIP_ORIGIN, GObje
 
 void calls_sip_origin_set_credentials          (CallsSipOrigin    *self,
                                                 const char        *host,
+                                                const char        *proxy,
                                                 const char        *user,
                                                 const char        *password,
                                                 const char        *display_name,

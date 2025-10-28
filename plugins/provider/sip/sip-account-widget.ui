@@ -62,6 +62,16 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
+                  <object class="AdwEntryRow" id="proxy">
+                    <property name="title" translatable="yes">Proxy (Optional)</property>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
                   <object class="AdwEntryRow" id="display_name">
                     <property name="title" translatable="yes">Display Name (Optional)</property>
                     <signal name="changed" handler="on_user_changed" swapped="yes"/>

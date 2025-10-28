@@ -82,6 +82,9 @@ test_sip_origin_objects (SipFixture   *fixture,
                          gconstpointer user_data)
 {
   CallsAccountState state_alice, state_bob, state_offline;
+  g_autofree gchar *proxy_alice = NULL;
+  g_autofree gchar *proxy_bob = NULL;
+  g_autofree gchar *proxy_offline = NULL;
 
   g_assert_true (G_IS_OBJECT (fixture->origin_alice));
   g_assert_true (G_IS_OBJECT (fixture->origin_bob));
@@ -112,6 +115,20 @@ test_sip_origin_objects (SipFixture   *fixture,
   g_assert_cmpint (state_alice, ==, CALLS_ACCOUNT_STATE_ONLINE);
   g_assert_cmpint (state_bob, ==, CALLS_ACCOUNT_STATE_ONLINE);
   g_assert_cmpint (state_offline, ==, CALLS_ACCOUNT_STATE_OFFLINE);
+
+  g_object_get (fixture->origin_alice,
+                "proxy", &proxy_alice,
+                NULL);
+  g_object_get (fixture->origin_bob,
+                "proxy", &proxy_bob,
+                NULL);
+  g_object_get (fixture->origin_offline,
+                "proxy", &proxy_offline,
+                NULL);
+  
+  g_assert_null (proxy_alice);
+  g_assert_null (proxy_bob);
+  g_assert_cmpstr (proxy_offline, ==, "proxy.sip.imaginary-host.org");
 }
 
 static void
@@ -364,6 +381,7 @@ setup_sip_origins (SipFixture   *fixture,
     calls_sip_provider_add_origin_full (fixture->provider,
                                         "sip1",
                                         NULL,
+                                        NULL,
                                         "alice",
                                         NULL,
                                         NULL,
@@ -379,6 +397,7 @@ setup_sip_origins (SipFixture   *fixture,
   fixture->origin_bob =
     calls_sip_provider_add_origin_full (fixture->provider,
                                         "sip2",
+                                        NULL,
                                         NULL,
                                         "bob",
                                         NULL,
@@ -396,6 +415,7 @@ setup_sip_origins (SipFixture   *fixture,
     calls_sip_provider_add_origin_full (fixture->provider,
                                         "sip3",
                                         "sip.imaginary-host.org",
+                                        "proxy.sip.imaginary-host.org",
                                         "username",
                                         "password",
                                         NULL,

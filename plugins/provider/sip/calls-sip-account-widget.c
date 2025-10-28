@@ -66,6 +66,7 @@ struct _CallsSipAccountWidget {
 
   /* widgets for editing account credentials */
   AdwEntryRow      *host;
+  AdwEntryRow      *proxy;
   AdwEntryRow      *display_name;
   AdwEntryRow      *user;
   AdwEntryRow      *password;
@@ -350,6 +351,7 @@ clear_form (CallsSipAccountWidget *self)
   g_assert (CALLS_IS_SIP_ACCOUNT_WIDGET (self));
 
   gtk_editable_set_text (GTK_EDITABLE (self->host), "");
+  gtk_editable_set_text (GTK_EDITABLE (self->proxy), "");
   gtk_editable_set_text (GTK_EDITABLE (self->display_name), "");
   gtk_editable_set_text (GTK_EDITABLE (self->user), "");
   gtk_editable_set_text (GTK_EDITABLE (self->password), "");
@@ -374,6 +376,7 @@ edit_form (CallsSipAccountWidget *self,
            CallsSipOrigin        *origin)
 {
   g_autofree char *host = NULL;
+  g_autofree char *proxy = NULL;
   g_autofree char *display_name = NULL;
   g_autofree char *user = NULL;
   g_autofree char *password = NULL;
@@ -399,6 +402,7 @@ edit_form (CallsSipAccountWidget *self,
 
   g_object_get (origin,
                 "host", &host,
+                "proxy", &proxy,
                 "display-name", &display_name,
                 "user", &user,
                 "password", &password,
@@ -423,6 +427,7 @@ edit_form (CallsSipAccountWidget *self,
 
   /* set UI elements */
   gtk_editable_set_text (GTK_EDITABLE (self->host), host);
+  gtk_editable_set_text (GTK_EDITABLE (self->proxy), proxy ?: "");
   gtk_editable_set_text (GTK_EDITABLE (self->display_name), display_name ?: "");
   gtk_editable_set_text (GTK_EDITABLE (self->user), user);
   gtk_editable_set_text (GTK_EDITABLE (self->password), password);
@@ -452,6 +457,7 @@ on_login_clicked (CallsSipAccountWidget *self)
   origin = calls_sip_provider_add_origin (self->provider,
                                           id,
                                           gtk_editable_get_text (GTK_EDITABLE (self->host)),
+                                          gtk_editable_get_text (GTK_EDITABLE (self->proxy)),
                                           gtk_editable_get_text (GTK_EDITABLE (self->user)),
                                           gtk_editable_get_text (GTK_EDITABLE (self->password)),
                                           gtk_editable_get_text (GTK_EDITABLE (self->display_name)),
@@ -486,6 +492,7 @@ on_apply_clicked (CallsSipAccountWidget *self)
 
   calls_sip_origin_set_credentials (self->origin,
                                     gtk_editable_get_text (GTK_EDITABLE (self->host)),
+                                    gtk_editable_get_text (GTK_EDITABLE (self->proxy)),
                                     gtk_editable_get_text (GTK_EDITABLE (self->user)),
                                     gtk_editable_get_text (GTK_EDITABLE (self->password)),
                                     gtk_editable_get_text (GTK_EDITABLE (self->display_name)),
@@ -599,6 +606,7 @@ calls_sip_account_widget_class_init (CallsSipAccountWidgetClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, apply_btn);
 
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, host);
+  gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, proxy);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, display_name);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, user);
   gtk_widget_class_bind_template_child (widget_class, CallsSipAccountWidget, password);
