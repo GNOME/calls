@@ -132,8 +132,8 @@ test_c_args = [
   '-Wtype-limits',
   '-Wunused-function',
   '-Wunused-variable',
-  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_70',
-  '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_70',
+  '-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_76',
+  '-DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_86',
   '-DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor),
   '-DGDK_VERSION_MAX_ALLOWED=GDK_VERSION_@0@_@1@'.format(gtk_major, gtk_minor),
   # see https://gitlab.gnome.org/GNOME/evolution-data-server/-/issues/332
