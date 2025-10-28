@@ -39,10 +39,8 @@
 #include "calls-sip-media-manager.h"
 #include "calls-network-watch.h"
 #include "calls-config.h"
-#include "enum-types.h"
 
 #include <glib/gi18n.h>
-#include <glib-object.h>
 
 #include <sofia-sip/sofia_features.h>
 #include <sofia-sip/nua.h>
