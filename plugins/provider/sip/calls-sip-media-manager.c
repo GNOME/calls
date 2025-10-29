@@ -121,8 +121,8 @@ calls_sip_media_manager_finalize (GObject *object)
 {
   CallsSipMediaManager *self = CALLS_SIP_MEDIA_MANAGER (object);
 
-  g_list_free (self->preferred_codecs);
-  g_object_unref (self->pipelines);
+  g_clear_list (&self->preferred_codecs, NULL);
+  g_clear_object (&self->pipelines);
 
   G_OBJECT_CLASS (calls_sip_media_manager_parent_class)->finalize (object);
 }
