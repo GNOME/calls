@@ -42,7 +42,7 @@ typedef enum {
 G_DECLARE_FINAL_TYPE (CallsRinger, calls_ringer, CALLS, RINGER, GObject)
 
 
-CallsRinger *calls_ringer_new                 (void);
+CallsRinger   *calls_ringer_new               (void);
 CallsRingState calls_ringer_get_state         (CallsRinger *self);
 
 G_END_DECLS
