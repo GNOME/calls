@@ -30,15 +30,16 @@ src_include = include_directories('.')
 calls_includes = [top_include, src_include]
 
 calls_deps = [
+  dependency('folks'),
   dependency('gmobile', version: '>= 0.3.0'),
   dependency('gobject-2.0', version: '>= 2.74'),
+  dependency('gom-1.0'),
   dependency('gtk4', version: '>= @0@'.format(gtk_version)),
   dependency('libadwaita-1', version: '>= 1.6'),
+  dependency('libcallaudio-0.1'),
+  dependency('libebook-contacts-1.2'),
   dependency('libfeedback-0.0'),
   dependency('libpeas-2'),
-  dependency('gom-1.0'),
-  dependency('libebook-contacts-1.2'),
-  dependency('folks'),
   dependency('libsecret-1'),
   libcall_ui_dep,
 ]

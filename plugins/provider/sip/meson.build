@@ -49,8 +49,8 @@ sip_deps = [
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
   dependency('libpeas-2'),
-  dependency('sofia-sip-ua-glib'),
   dependency('libsecret-1'),
+  dependency('sofia-sip-ua-glib'),
 ]
 
 sip_sources = files(
