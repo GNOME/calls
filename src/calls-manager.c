@@ -28,12 +28,10 @@
 #include "calls-config.h"
 
 #include "calls-account.h"
-#include "calls-contacts-provider.h"
 #include "calls-manager.h"
 #include "calls-message-source.h"
 #include "calls-plugin-manager.h"
 #include "calls-provider.h"
-#include "calls-settings.h"
 #include "calls-ui-call-data.h"
 #include "calls-ussd.h"
 #include "calls-util.h"
