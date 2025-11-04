@@ -1,14 +1,14 @@
 # Romanian translation for calls.
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Antonio Marin <gnmer.6qxyg@slmail.me>, 2020-2025.
+# Antonio Marin <gnmer.6qxyg@slmail.me>, 2021-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2025-10-16 16:52+0000\n"
-"PO-Revision-Date: 2025-11-04 11:40+0100\n"
+"PO-Revision-Date: 2025-11-04 12:04+0100\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -290,7 +290,7 @@ msgstr "Salvamont"
 
 #: src/calls-main-window.c:121
 msgid "translator-credits"
-msgstr "Antonio Marin <gnmer.6qxyg@slmail.me>, 2020-2025"
+msgstr "Antonio Marin <gnmer.6qxyg@slmail.me>"
 
 #: src/calls-main-window.c:321
 msgid "Can't place calls: No modem or VoIP account available"
