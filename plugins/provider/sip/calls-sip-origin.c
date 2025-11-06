@@ -30,6 +30,7 @@
 
 
 #include "calls-account.h"
+#include "calls-media-playback.h"
 #include "calls-message-source.h"
 #include "calls-origin.h"
 #include "calls-sip-call.h"
@@ -105,6 +106,7 @@ struct _CallsSipOrigin {
   CallsAccountState     state;
 
   CallsSipMediaManager *media_manager;
+  CallsMediaPlayback   *media_playback;
 
   /* Account information */
   char                 *host;
@@ -231,10 +233,27 @@ on_call_state_changed (CallsSipCall   *call,
   g_assert (CALLS_IS_SIP_ORIGIN (self));
   g_assert (CALLS_IS_CALL (call));
 
-  if (calls_call_get_state (CALLS_CALL (call)) != CALLS_CALL_STATE_DISCONNECTED)
-    return;
+  switch (calls_call_get_state (CALLS_CALL (call))) {
+  case CALLS_CALL_STATE_ALERTING:
+    calls_media_playback_play_calling (self->media_playback);
+    break;
 
-  remove_call (self, CALLS_CALL (call), "Disconnected");
+  case CALLS_CALL_STATE_DISCONNECTED:
+    calls_media_playback_stop_calling (self->media_playback);
+    remove_call (self, CALLS_CALL (call), "Disconnected");
+    break;
+
+  case CALLS_CALL_STATE_ACTIVE:
+    calls_media_playback_stop_calling (self->media_playback);
+    break;
+
+  case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_HELD:
+  case CALLS_CALL_STATE_INCOMING:
+  case CALLS_CALL_STATE_UNKNOWN:
+  default:
+    break;
+  }
 }
 
 
@@ -1550,6 +1569,7 @@ calls_sip_origin_dispose (GObject *object)
 
   deinit_sip_account (self);
 
+  g_clear_object (&self->media_playback);
   g_clear_pointer (&self->id, g_free);
   g_clear_pointer (&self->own_ip, g_free);
   g_clear_pointer (&self->transport_protocol, g_free);
@@ -1744,6 +1764,7 @@ calls_sip_origin_init (CallsSipOrigin *self)
 
   self->call_handles = g_hash_table_new (NULL, NULL);
 
+  self->media_playback = calls_media_playback_new ();
 }
 
 void
