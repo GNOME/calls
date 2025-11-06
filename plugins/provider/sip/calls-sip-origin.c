@@ -572,7 +572,7 @@ sip_i_state (int              status,
   const sdp_session_t *r_sdp = NULL;
   const sdp_session_t *l_sdp = NULL;
   const char *r_sdp_str = NULL;
-  gint call_state = nua_callstate_init;
+  int call_state = nua_callstate_init;
   CallsCallState state;
   CallsSipCall *call;
   int offer_sent = 0;
@@ -709,6 +709,13 @@ sip_i_state (int              status,
 
   case nua_callstate_calling:
     state = CALLS_CALL_STATE_DIALING;
+    break;
+
+  case nua_callstate_proceeding:
+    if (status == 180)
+      state = CALLS_CALL_STATE_ALERTING;
+    else
+      state = CALLS_CALL_STATE_DIALING;
     break;
 
   case nua_callstate_received:
