@@ -62,8 +62,14 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwEntryRow" id="proxy">
-                    <property name="title" translatable="yes">Proxy (Optional)</property>
+                  <object class="AdwEntryRow" id="user">
+                    <property name="title" translatable="yes">User ID</property>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPasswordEntryRow" id="password">
+                    <property name="title" translatable="yes">Password</property>
                     <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
@@ -74,22 +80,6 @@
                 <child>
                   <object class="AdwEntryRow" id="display_name">
                     <property name="title" translatable="yes">Display Name (Optional)</property>
-                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwEntryRow" id="user">
-                    <property name="title" translatable="yes">User ID</property>
-                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPasswordEntryRow" id="password">
-                    <property name="title" translatable="yes">Password</property>
                     <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
@@ -116,6 +106,12 @@
                   <object class="AdwComboRow" id="media_encryption">
                     <property name="title" translatable="yes">Media Encryption</property>
                     <signal name="notify::selected-item" handler="on_user_changed" swapped="yes"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="proxy">
+                    <property name="title" translatable="yes">Proxy (Optional)</property>
+                    <signal name="changed" handler="on_user_changed" swapped="yes"/>
                   </object>
                 </child>
               </object>
