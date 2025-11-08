@@ -6,7 +6,7 @@ After=gnome-session-initialized.target
 
 [Service]
 BusName=org.gnome.Calls
-ExecStart=@bindir@/gnome-calls --daemon
+ExecStart=@bindir@/gnome-calls --gapplication-service
 Type=dbus
 
 [Install]
