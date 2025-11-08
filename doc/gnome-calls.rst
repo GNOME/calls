@@ -57,7 +57,7 @@ OPTIONS
 
   Dial a phone number (no need for the ``tel:`` URI scheme prefix).
 
-``-d, --daemon``
+``--gapplication-service``
 
   Whether to present the main window on startup.
 
