@@ -1,3 +1,4 @@
 [D-BUS Service]
 Name=org.gnome.Calls
 Exec=@bindir@/gnome-calls --gapplication-service
+SystemdService=calls-daemon.service
