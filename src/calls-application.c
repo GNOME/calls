@@ -48,7 +48,6 @@
 #include <call-ui.h>
 #include <glib/gi18n.h>
 #include <glib-unix.h>
-#include <libcallaudio.h>
 
 /**
  * SECTION: calls-application
@@ -473,9 +472,6 @@ startup (GApplication *application)
   G_APPLICATION_CLASS (calls_application_parent_class)->startup (application);
 
   g_print ("Calls %s starting up...\n", VCS_TAG);
-
-  if (!call_audio_init (&error))
-    g_warning ("Failed to init libcallaudio: %s", error->message);
 
   cui_init (TRUE);
 
