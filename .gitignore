@@ -8,5 +8,6 @@ _build
 .flatpak-builder
 .gdb_history
 subprojects/.wraplock
+subprojects/libcall-ui
 po/calls.pot
 po/missing
