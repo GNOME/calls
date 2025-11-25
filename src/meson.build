@@ -39,7 +39,6 @@ calls_deps = [
   dependency('gom-1.0'),
   dependency('libebook-contacts-1.2'),
   dependency('folks'),
-  dependency('libcallaudio-0.1'),
   dependency('libsecret-1'),
   libcall_ui_dep,
 ]
