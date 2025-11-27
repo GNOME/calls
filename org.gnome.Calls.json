@@ -326,12 +326,19 @@
             "buildsystem": "meson",
             "config-opts": [
                 "-Dmanpages=false",
-                "-Dsystemd_user_unit_dir=/app/lib/systemd/user"
+                "-Dsystemd_user_unit_dir=/app/lib/systemd/user",
+                "--wrap-mode=nodownload"
             ],
             "sources": [
                 {
                     "type": "dir",
                     "path": "./"
+                },
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/World/Phosh/libcall-ui.git",
+                    "commit": "3a2044f8e7c45387954ed35d22c6b6309e6751d6",
+                    "dest": "subprojects/libcall-ui"
                 }
             ]
         }
