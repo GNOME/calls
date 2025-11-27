@@ -1,10 +1,10 @@
 {
-    "app-id" : "org.gnome.Calls",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
-    "sdk" : "org.gnome.Sdk",
-    "command" : "gnome-calls",
-    "finish-args" : [
+    "app-id": "org.gnome.Calls",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "master",
+    "sdk": "org.gnome.Sdk",
+    "command": "gnome-calls",
+    "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
         "--socket=wayland",
@@ -20,7 +20,7 @@
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfsd"
     ],
-    "cleanup" : [
+    "cleanup": [
         "/include",
         "/lib/pkgconfig",
         "/lib/systemd",
@@ -34,11 +34,11 @@
         "*.la",
         "*.a"
     ],
-    "modules" : [
+    "modules": [
         {
-            "name" : "modem-manager",
-            "buildsystem" : "meson",
-            "config-opts" : [
+            "name": "modem-manager",
+            "buildsystem": "meson",
+            "config-opts": [
                 "-Dudev=false",
                 "-Dmbim=false",
                 "-Dqmi=false",
@@ -50,105 +50,106 @@
                 "-Dsystemdsystemunitdir=/app/lib/systemd/system",
                 "-Dudevdir=/app/lib/udev"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git",
-                    "tag" : "1.24.2",
-                    "commit" : "f2b9ab1ad78d322f32134a444b5b54c6e8160e19"
+                    "type": "git",
+                    "url": "https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git",
+                    "tag": "1.24.2",
+                    "commit": "f2b9ab1ad78d322f32134a444b5b54c6e8160e19"
                 }
             ]
         },
         {
-            "name" : "libpeas-2",
-            "buildsystem" : "meson",
-            "config-opts" : [
+            "name": "libpeas-2",
+            "buildsystem": "meson",
+            "config-opts": [
                 "-Dgtk_doc=false",
                 "-Dlua51=false",
-		"-Dgjs=false",
+                "-Dgjs=false",
                 "-Dintrospection=false",
                 "-Dpython3=false"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libpeas",
-                    "branch" : "main"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/libpeas",
+                    "branch": "main"
                 }
             ]
         },
         {
-            "name" : "libphonenumber",
-            "buildsystem" : "cmake-ninja",
-            "config-opts" : [
+            "name": "libphonenumber",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
                 "-DCMAKE_CXX_STANDARD=17",
                 "-DREGENERATE_METADATA=OFF",
                 "-DUSE_BOOST=OFF"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://github.com/google/libphonenumber.git",
-                    "tag" : "v9.0.14",
-                    "commit" : "ef5facd4d0881041cd776e518df4ba94e01cfd08"
+                    "type": "git",
+                    "url": "https://github.com/google/libphonenumber.git",
+                    "tag": "v9.0.14",
+                    "commit": "ef5facd4d0881041cd776e518df4ba94e01cfd08"
                 }
             ],
-            "subdir" : "cpp",
-            "modules" : [
-		{
-		    "name" : "GTest",
-		    "buildsystem" : "cmake-ninja",
-		    "cleanup" : ["*"],
-		    "sources" : [
-		        {
-		            "type" : "archive",
-		            "url" : "https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz",
-		            "sha256" : "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2"
-		        }
-		    ]
-		},
-		{
-		    "name" : "protobuf",
-		    "cleanup" : [
-		        "protoc",
-		        "/bin",
-		        "/doc",
-		        "/lib/plugins"
-		    ],
-		    "sources" : [
-		        {
-		            "type" : "archive",
-		            "url" : "https://github.com/protocolbuffers/protobuf/releases/download/v21.6/protobuf-cpp-3.21.6.tar.gz",
-		            "sha256" : "a3c4c104b98a21a577ce5ecc0d9b9f43a359b917d0bcf69467b70dc27416dfdc"
-		        }
-		    ]
-		},
-		{
-		    "name" : "abseil",
-		    "buildsystem" : "cmake",
-		    "config-opts" : [
-		        "-DCMAKE_CXX_STANDARD=17",
-		        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
-		    ],
-		    "sources" : [
-		        {
-		            "type" : "git",
-		            "url" : "https://github.com/abseil/abseil-cpp.git",
-		            "tag" : "20250814.0",
-		            "commit" : "987c57f325f7fa8472fa84e1f885f7534d391b0d"
-		        }
-		    ]
-		}
-	    ]
-
+            "subdir": "cpp",
+            "modules": [
+                {
+                    "name": "GTest",
+                    "buildsystem": "cmake-ninja",
+                    "cleanup": [
+                        "*"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz",
+                            "sha256": "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2"
+                        }
+                    ]
+                },
+                {
+                    "name": "protobuf",
+                    "cleanup": [
+                        "protoc",
+                        "/bin",
+                        "/doc",
+                        "/lib/plugins"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/protocolbuffers/protobuf/releases/download/v21.6/protobuf-cpp-3.21.6.tar.gz",
+                            "sha256": "a3c4c104b98a21a577ce5ecc0d9b9f43a359b917d0bcf69467b70dc27416dfdc"
+                        }
+                    ]
+                },
+                {
+                    "name": "abseil",
+                    "buildsystem": "cmake",
+                    "config-opts": [
+                        "-DCMAKE_CXX_STANDARD=17",
+                        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+                    ],
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/abseil/abseil-cpp.git",
+                            "tag": "20250814.0",
+                            "commit": "987c57f325f7fa8472fa84e1f885f7534d391b0d"
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "name" : "libical",
-            "cleanup" : [
+            "name": "libical",
+            "cleanup": [
                 "/lib/cmake"
             ],
-            "buildsystem" : "cmake-ninja",
-            "config-opts" : [
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
                 "-DCMAKE_INSTALL_LIBDIR=lib",
                 "-DBUILD_SHARED_LIBS:BOOL=ON",
@@ -157,31 +158,35 @@
                 "-DICAL_GLIB_VAPI=true",
                 "-DICAL_BUILD_DOCS=false"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://github.com/libical/libical.git",
-                    "tag" : "v3.0.20",
-                    "commit" : "57ce34025066935f356fd539e6deb7a7a9952618"
+                    "type": "git",
+                    "url": "https://github.com/libical/libical.git",
+                    "tag": "v3.0.20",
+                    "commit": "57ce34025066935f356fd539e6deb7a7a9952618"
                 }
             ]
         },
         {
-            "name" : "intltool",
-            "cleanup" : [ "*" ],
-            "sources" : [
+            "name": "intltool",
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
                 {
-                    "type" : "archive",
-                    "url" : "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
-                    "sha256" : "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd"
+                    "type": "archive",
+                    "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+                    "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd"
                 }
             ]
         },
         {
-            "name" : "evolution-data-server",
-            "cleanup" : [ "/share/GConf" ],
-            "buildsystem" : "cmake-ninja",
-            "config-opts" : [
+            "name": "evolution-data-server",
+            "cleanup": [
+                "/share/GConf"
+            ],
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
                 "-DENABLE_PHONENUMBER=ON",
                 "-DENABLE_DOT_LOCKING=OFF",
                 "-DENABLE_FILE_LOCKING=fcntl",
@@ -202,50 +207,52 @@
                 "-DPHONENUMBER_DEFINITIONS=",
                 "-DENABLE_CANBERRA=OFF"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/evolution-data-server.git",
-                    "branch" : "master"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/evolution-data-server.git",
+                    "branch": "master"
                 }
             ]
         },
         {
-            "name" : "gom",
-            "buildsystem" : "meson",
-            "config-opts" : [ "-Denable-introspection=false" ],
-            "sources" : [
+            "name": "gom",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Denable-introspection=false"
+            ],
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/gom.git",
-                    "branch" : "master"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gom.git",
+                    "branch": "master"
                 }
             ]
         },
         {
-            "name" : "folks",
-            "buildsystem" : "meson",
-            "cleanup" : [
+            "name": "folks",
+            "buildsystem": "meson",
+            "cleanup": [
                 "/bin"
             ],
-            "config-opts" : [
+            "config-opts": [
                 "-Dtelepathy_backend=false",
                 "-Dinspect_tool=false",
                 "-Dimport_tool=false",
                 "-Dbluez_backend=false"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/folks.git",
-                    "branch" : "main"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/folks.git",
+                    "branch": "main"
                 }
             ]
         },
         {
-            "name" : "feedbackd",
-            "buildsystem" : "meson",
-            "config-opts" : [
+            "name": "feedbackd",
+            "buildsystem": "meson",
+            "config-opts": [
                 "-Dintrospection=disabled",
                 "-Dvapi=false",
                 "-Ddaemon=false",
@@ -253,78 +260,78 @@
                 "-Dgtk_doc=false",
                 "-Dtests=false"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "archive",
-                    "url" : "https://sources.phosh.mobi/releases/feedbackd/feedbackd-0.8.4.tar.xz",
-                    "sha256" : "b0b5b22216940b485d0d43679dce403583e33438f06c49a83cf1820cdbbca174"
+                    "type": "archive",
+                    "url": "https://sources.phosh.mobi/releases/feedbackd/feedbackd-0.8.4.tar.xz",
+                    "sha256": "b0b5b22216940b485d0d43679dce403583e33438f06c49a83cf1820cdbbca174"
                 }
             ]
         },
         {
-            "name" : "callaudiod",
-            "buildsystem" : "meson",
-            "sources" : [
+            "name": "callaudiod",
+            "buildsystem": "meson",
+            "sources": [
                 {
-                    "type" : "archive",
-                    "url" : "https://gitlab.com/mobian1/callaudiod/-/archive/0.1.3/callaudiod-0.1.3.tar.gz",
-                    "sha256" : "4e844539457860975fe8407f583a625cd2e696576a6977306e7904c2a0679571"
+                    "type": "archive",
+                    "url": "https://gitlab.com/mobian1/callaudiod/-/archive/0.1.3/callaudiod-0.1.3.tar.gz",
+                    "sha256": "4e844539457860975fe8407f583a625cd2e696576a6977306e7904c2a0679571"
                 }
             ]
         },
         {
-            "name" : "sofia-sip",
-            "buildsystem" : "autotools",
-            "sources" : [
+            "name": "sofia-sip",
+            "buildsystem": "autotools",
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://github.com/freeswitch/sofia-sip.git",
-                    "commit" : "43f41d153f8034288083a440b1569d63f431f1b9"
+                    "type": "git",
+                    "url": "https://github.com/freeswitch/sofia-sip.git",
+                    "commit": "43f41d153f8034288083a440b1569d63f431f1b9"
                 }
             ]
         },
         {
-            "name" : "gmobile",
-            "buildsystem" : "meson",
-            "config-opts" : [
+            "name": "gmobile",
+            "buildsystem": "meson",
+            "config-opts": [
                 "-Dexamples=false",
-                '-Dintrospection=false',
-                '-Dgtk_doc=false',
-                '-Dtests=false',
-                '-Dvapi=false',
-                '-Dhwdb=false'
+                "-Dintrospection=false",
+                "-Dgtk_doc=false",
+                "-Dtests=false",
+                "-Dvapi=false",
+                "-Dhwdb=false"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/World/Phosh/gmobile",
-                    "branch" : "main"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/World/Phosh/gmobile",
+                    "branch": "main"
                 }
             ]
         },
         {
-            "name" : "mobile-broadband-provider-info",
-            "buildsystem" : "meson",
-            "sources" : [
+            "name": "mobile-broadband-provider-info",
+            "buildsystem": "meson",
+            "sources": [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/mobile-broadband-provider-info",
-                    "branch" : "main"
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/mobile-broadband-provider-info",
+                    "branch": "main"
                 }
             ]
         },
         {
-            "name" : "calls",
-            "builddir" : true,
-            "buildsystem" : "meson",
-            "config-opts" : [
+            "name": "calls",
+            "builddir": true,
+            "buildsystem": "meson",
+            "config-opts": [
                 "-Dmanpages=false",
                 "-Dsystemd_user_unit_dir=/app/lib/systemd/user"
             ],
-            "sources" : [
+            "sources": [
                 {
-                    "type" : "dir",
-                    "path" : "./"
+                    "type": "dir",
+                    "path": "./"
                 }
             ]
         }
