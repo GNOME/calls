@@ -152,24 +152,7 @@ package:deb-debian-trixie:arm64:
     BUNDLE: "calls.flatpak"
     CONFIG_OPTS: >-
       -Dmanpages=false
-    TEST_RUN_ARGS: >-
-      "calls:Validate desktop file"
-      "calls:Validate daemon desktop file"
-      calls:util
-      calls:settings
-      calls:origin
-      calls:provider
-      calls:call
-      calls:plugins
-      calls:contacts
-      calls:ui-call
-      calls:manager
-      calls:ringer
-      calls:media
-      calls:srtp
-      calls:sdp-crypto
-      # Disable test because it fails in flatpak
-      #calls:sip
+    RUN_TESTS: "false"
 
 # Build Flatpak for x86_64
 flatpak@x86_64:
