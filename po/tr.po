@@ -8,19 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-09-10 11:28+0000\n"
-"PO-Revision-Date: 2024-08-01 08:00+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2025-11-25 17:14+0000\n"
+"PO-Revision-Date: 2025-11-22 23:48+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Çağrılar"
 
@@ -218,37 +218,37 @@ msgstr "Yeni hesap ekle"
 msgid "VoIP Accounts"
 msgstr "VoIP Hesapları"
 
-#: src/calls-application.c:363
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "`%s' geçersiz tel URIʼsini arama denendi"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s' nasıl açılır bilinmiyor"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "Yüklenecek eklentinin adı"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "EKLENTİ"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Telefon numarası çevir"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMARA"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Ayrıntılı hata ayıklama iletilerini etkinleştir"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Geçerli sürümü yazdır"
 
@@ -265,19 +265,19 @@ msgstr ""
 "%s\n"
 "dün"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Polis"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulans"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "İtfaiye"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Dağ Kurtarma"
 
@@ -285,24 +285,24 @@ msgstr "Dağ Kurtarma"
 msgid "translator-credits"
 msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Aranamıyor: Modem veya uygun VoIP hesabı yok"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Aranamıyor: Eklenti yüklenmedi"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Son"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Kişiler"
 
-#: src/calls-main-window.c:380
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Tuş Takımı"
 
@@ -368,7 +368,7 @@ msgstr "SMS _Gönder"
 msgid "On hold"
 msgstr "Beklemede"
 
-#: src/ui/contacts-box.ui:39
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Kişi Bulunamadı"
 
@@ -399,13 +399,13 @@ msgstr "_VoIP Hesapları"
 #. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:169
 msgid "_About Calls"
-msgstr "Calls _Hakkında"
+msgstr "Çağrılar _Hakkında"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "VoIP hesabı gir"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP Hesabı"
 
@@ -487,12 +487,12 @@ msgstr "Çalıştı"
 msgid "DBus unavailable"
 msgstr "DBus uygun değil"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Şifreleme yok"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Şifrelemeye zorla"
 
@@ -517,16 +517,16 @@ msgid "Server"
 msgstr "Sunucu"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Görünüm Adı (İsteğe Bağlı)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Kullanıcı Kimliği"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Parola"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Görünüm Adı (İsteğe Bağlı)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -540,10 +540,14 @@ msgstr "Taşıma"
 msgid "Media Encryption"
 msgstr "Ortam Şifreleme"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Vekil (İsteğe Bağlı)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Telefon Aramalarında Kullan"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Kendiliğinden Bağlan"
