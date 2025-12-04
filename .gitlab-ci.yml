@@ -35,6 +35,13 @@ variables:
   GIT_SUBMODULE_STRATEGY: normal
   MESON_BUILD_DIR: "_build"
 
+.build_dep_before_script: &build_dep_before_script
+  before_script:
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get -y update
+    - apt-get -y install eatmydata
+    - eatmydata apt-get -y build-dep .
+
 build:native:
   stage: build
   artifacts:
@@ -49,6 +56,7 @@ build:native:
       - $PKG_ONLY == "1"
   image: "${DEBIAN_IMAGE}"
   tags: []
+  <<: *build_dep_before_script
   script:
     - 'echo "Build opts: ${BUILD_OPTS}"'
     - meson ${BUILD_OPTS} . _build
@@ -64,6 +72,7 @@ build:tarball:
       - "${MESON_BUILD_DIR}/meson-dist"
     reports:
       dotenv: build.env
+  <<: *build_dep_before_script
   script:
     - meson setup . "${MESON_BUILD_DIR}"
     - xvfb-run -s -noreset meson dist --include-subprojects -C "${MESON_BUILD_DIR}"
