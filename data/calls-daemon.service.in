@@ -8,6 +8,7 @@ After=gnome-session-initialized.target
 BusName=org.gnome.Calls
 ExecStart=@bindir@/gnome-calls --gapplication-service
 Type=dbus
+Restart=on-failure
 
 [Install]
 WantedBy=gnome-session.target
