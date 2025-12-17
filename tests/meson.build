@@ -51,23 +51,23 @@ tests = [
   [
     'dbus',
     ['test-dbus.c', generated_dbus_sources],
-    {'extra_test_deps' : [dbus_server]},
+    {'extra_test_deps': [dbus_server]},
   ],
   ['emergency-call-types', ['test-emergency-call-types.c']],
   [
     'manager',
     ['test-manager.c'],
-    {'extra_test_deps' : [calls_plugins, plugins_test_depends]},
+    {'extra_test_deps': [calls_plugins, plugins_test_depends]},
   ],
   [
     'plugins',
     ['test-plugins.c', calls_sources],
-    {'extra_test_deps' : [calls_plugins, plugins_test_depends]},
+    {'extra_test_deps': [calls_plugins, plugins_test_depends]},
   ],
   [
     'ringer',
     ['mock-call.c', 'test-ringer.c'],
-    {'extra_link_with' : libfeedback},
+    {'extra_link_with': libfeedback},
   ],
   ['service-providers', ['test-service-providers.c']],
   ['settings', ['test-settings.c']],
