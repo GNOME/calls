@@ -68,7 +68,7 @@ if systemd_user_unit_dir == ''
   if systemd_dep.found()
     systemd_user_unit_dir = systemd_dep.get_variable('systemd_user_unit_dir')
   else
-    systemd_user_unit_dir = prefix / libdir / 'systemd/user'
+    systemd_user_unit_dir = prefix / 'lib' / 'systemd' / 'user'
   endif
 endif
 
