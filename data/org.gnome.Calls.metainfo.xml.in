@@ -55,10 +55,6 @@
         <kudo>Notifications</kudo>
     </kudos>
 
-    <categories>
-        <category>Audio</category>
-    </categories>
-
     <provides>
         <mediatype>x-scheme-handler/tel</mediatype>
         <mediatype>x-scheme-handler/sip</mediatype>
