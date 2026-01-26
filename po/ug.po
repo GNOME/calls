@@ -4,20 +4,21 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
-msgstr "Project-Id-Version: \n"
+msgstr ""
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-09-10 11:28+0000\n"
-"PO-Revision-Date: 2025-09-11 00:26-0400\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-01-26 09:22-0500\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: \n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "چاقىرىش"
 
@@ -51,7 +52,10 @@ msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
-msgstr "چاقىرىش ئاددىي، نەپىس تېلېفون ئۇرغۇچى ۋە GNOME ئۈچۈن تېلېفون بىر تەرەپ قىلغۇچى. ئۇنى ئاددىي كونا تېلېفون، شۇنداقلا SIP كېلىشىمىنى ئىشلىتىپ VoIP چاقىرىش ئۈچۈن كۆچمە مودېل بىلەن ئىشلىتىشكە بولىدۇ."
+msgstr ""
+"چاقىرىش ئاددىي، نەپىس تېلېفون ئۇرغۇچى ۋە GNOME ئۈچۈن تېلېفون بىر تەرەپ "
+"قىلغۇچى. ئۇنى ئاددىي كونا تېلېفون، شۇنداقلا SIP كېلىشىمىنى ئىشلىتىپ VoIP "
+"چاقىرىش ئۈچۈن كۆچمە مودېل بىلەن ئىشلىتىشكە بولىدۇ."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
@@ -90,7 +94,8 @@ msgstr "بۇ قىستۇرمىلار پىروگرامما قوزغالغاندا 
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr "VoIP چاقىرىشقا ئىشلىتىدىغان ئاۋازلىق كود يەشكۈچلەرنىڭ  مايىللىق تەرتىپى"
+msgstr ""
+"VoIP چاقىرىشقا ئىشلىتىدىغان ئاۋازلىق كود يەشكۈچلەرنىڭ  مايىللىق تەرتىپى"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
@@ -98,13 +103,17 @@ msgstr "VoIP چاقىرىشقا ئىشلىتىدىغان بەلگىلەنگەن 
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Allow insecure crypto key exchange for encrypted media."
-msgstr "بىخەتەر بولمىغان شىفىرلىق ئاچقۇچ بىلەن شىفىرلانغان ۋاسىتىنى ئالماشتۇرۇشقا يول قويىدۇ."
+msgstr ""
+"بىخەتەر بولمىغان شىفىرلىق ئاچقۇچ بىلەن شىفىرلانغان ۋاسىتىنى ئالماشتۇرۇشقا "
+"يول قويىدۇ."
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
-msgstr "ئەگەر ئاچقۇچ ئالماشتۇرۇشنى ئوچۇق تېكىست قىلماقچى بولغاندا،  true قىلىپ تەڭشىلىدۇ، بولمىسا TLS يوللاشقا تەڭشىلىدۇ."
+msgstr ""
+"ئەگەر ئاچقۇچ ئالماشتۇرۇشنى ئوچۇق تېكىست قىلماقچى بولغاندا،  true قىلىپ "
+"تەڭشىلىدۇ، بولمىسا TLS يوللاشقا تەڭشىلىدۇ."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -207,37 +216,37 @@ msgstr "يېڭى ھېسابات قوش"
 msgid "VoIP Accounts"
 msgstr "VoIP ھېساباتى"
 
-#: src/calls-application.c:363
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ئىناۋەتسىز تېلېفون URI «%s» نومۇر بۇراشنى سىنىدى"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "«%s» نى قانداق ئېچىشنى بىلمەيدۇ"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "يۈكلەيدىغان قىستۇرمىنىڭ ئىسمى"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "قىستۇرما"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "بىر تېلېفون نومۇرىنى بۇراش"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "تەپسىلىي سازلاش ئۇچۇرىنى قوزغات"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "نۆۋەتتىكى نەشرىنى باس"
 
@@ -250,29 +259,32 @@ msgstr "نامسىز چاقىرغۇچى"
 msgid ""
 "%s\n"
 "yesterday"
-msgstr "%s\n"
+msgstr ""
+"%s\n"
 "تۈنۈگۈن"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "ساقچى"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "دوختۇرخانا"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "ئوت ئۆچۈرۈش ئەترىتى"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "تاغدا قۇتقۇزۇش"
 
 #: src/calls-main-window.c:121
 msgid "translator-credits"
-msgstr "تەرجىمان تۆھپىسى\n"
-"GNOME Uighur Translation Project <gnome-uighur@yahoogroups.comAbduxukur Abdurixit <abduxukur.abdurixit@t-systems.ch>, 2005\n"
+msgstr ""
+"تەرجىمان تۆھپىسى\n"
+"GNOME Uighur Translation Project <gnome-uighur@yahoogroups.comAbduxukur "
+"Abdurixit <abduxukur.abdurixit@t-systems.ch>, 2005\n"
 "\n"
 "Launchpad Contributions:\n"
 "  Burkut https://launchpad.net/~burkut\n"
@@ -280,24 +292,24 @@ msgstr "تەرجىمان تۆھپىسى\n"
 "  Sebastien Bacher https://launchpad.net/~seb128\n"
 "ئابدۇقادىر ئابلىز <sahranbay@gmail.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "تېلېفون ئۇرالمايدۇ: مودېم ياكى VoIP ھېساباتى يوق"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "تېلېفون ئۇرالمايدۇ: ھېچقانداق قىستۇرما يۈكلەنمىگەن"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "يېقىنقى"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "ئالاقەداش"
 
-#: src/calls-main-window.c:380
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "نومۇر تاختىسى"
 
@@ -334,7 +346,10 @@ msgid ""
 "You can add VoIP account here. It will allow you to place and receive VoIP "
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
-msgstr "بۇ جايدا VoIP ھېساباتى قوشالايسىز. SIP كېلىشىمىنى ئىشلىتىپ VoIP ئارقىلىق چاقىرالايسىز ۋە چاقىرىقىنى قوبۇل قىلالايسىز. بۇ ئىقتىدار تېخى يېڭى بولۇپ ئىقتىدارى تولۇق ئەمەس (مەسىلەن، تېخى ۋاسىتە شىفىرلانمىغان)."
+msgstr ""
+"بۇ جايدا VoIP ھېساباتى قوشالايسىز. SIP كېلىشىمىنى ئىشلىتىپ VoIP ئارقىلىق "
+"چاقىرالايسىز ۋە چاقىرىقىنى قوبۇل قىلالايسىز. بۇ ئىقتىدار تېخى يېڭى بولۇپ "
+"ئىقتىدارى تولۇق ئەمەس (مەسىلەن، تېخى ۋاسىتە شىفىرلانمىغان)."
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
@@ -360,7 +375,7 @@ msgstr "قىسقا ئۇچۇر يوللا(_S)"
 msgid "On hold"
 msgstr "كۈتۈپ تۇر"
 
-#: src/ui/contacts-box.ui:39
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "ھېچقانداق ئالاقەداش تېپىلمىدى"
 
@@ -393,11 +408,11 @@ msgstr "_VoIP ھېساباتى"
 msgid "_About Calls"
 msgstr "چاقىرىش ھەققىدە(_A)"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "VoIP ئادرېسى كىرگۈزۈلىدۇ"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP ھېسابات"
 
@@ -479,12 +494,12 @@ msgstr "دەسلەپلەشتۈرۈلدى"
 msgid "DBus unavailable"
 msgstr "DBus يوق"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "شىفىرلاش يوق"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "مەجبۇرىي شىفىرلاش"
 
@@ -509,16 +524,16 @@ msgid "Server"
 msgstr "مۇلازىمېتىر"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "كۆرسىتىدىغان ئىسمى (تاللاشچان)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ئىشلەتكۈچى كىملىكى"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "ئىم"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "كۆرسىتىدىغان ئىسمى (تاللاشچان)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -532,10 +547,14 @@ msgstr "يوللاش"
 msgid "Media Encryption"
 msgstr "ۋاسىتە شىفىرلاش"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "ۋاكالەتچى (تاللاشچان)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "تېلېفون ئۇرۇشقا ئىشلىتىلىدۇ"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "ئۆزلۈكىدىن باغلان"
