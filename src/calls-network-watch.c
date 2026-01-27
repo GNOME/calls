@@ -107,7 +107,7 @@ req_route_v4 (CallsNetworkWatch *self)
   self->req->r.rtm_family = AF_INET;
 
 
-  rta = ((struct rtattr *) (((void *) (&self->req->n)) +
+  rta = ((struct rtattr *) (((void *) (self->req)) +
                             NLMSG_ALIGN (self->req->n.nlmsg_len)));
   rta->rta_type = RTA_DST;
   rta->rta_len = len;
@@ -136,7 +136,7 @@ req_route_v6 (CallsNetworkWatch *self)
   self->req->n.nlmsg_type = RTM_GETROUTE;
   self->req->r.rtm_family = AF_INET6;
 
-  rta = ((struct rtattr *) (((void *) (&self->req->n)) +
+  rta = ((struct rtattr *) (((void *) (self->req)) +
                             NLMSG_ALIGN (self->req->n.nlmsg_len)));
   rta->rta_type = RTA_DST;
   rta->rta_len = len;
