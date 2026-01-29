@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-49\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-12-10 11:25+0000\n"
-"PO-Revision-Date: 2026-01-09 07:15+0500\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-01-29 21:59+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <Kazakh>\n"
 "Language: kk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:486 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Қоңыраулар"
 
@@ -30,8 +30,7 @@ msgstr "Телефон"
 msgid "A phone dialer and call handler"
 msgstr "Телефон нөмірін теруші және қоңырауларды өңдеуші"
 
-#. Translators: Search terms to find this application. Do NOT translate or
-#. localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Телефон;Қоңырау;Теру;Теруші;"
@@ -221,37 +220,37 @@ msgstr "Жаңа тіркелгіні қосу"
 msgid "VoIP Accounts"
 msgstr "VoIP тіркелгілері"
 
-#: src/calls-application.c:363
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Жарамсыз tel URI `%s' нөмірін теру әрекеті жасалды"
 
-#: src/calls-application.c:750
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s' қалай ашу керектігі белгісіз"
 
-#: src/calls-application.c:821
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "Жүктелетін плагиндердің атауы"
 
-#: src/calls-application.c:822
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "ПЛАГИН"
 
-#: src/calls-application.c:827
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Телефон нөмірін теру"
 
-#: src/calls-application.c:828
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "НӨМІР"
 
-#: src/calls-application.c:833
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Толық жөндеу хабарларын іске қосу"
 
-#: src/calls-application.c:839
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Ағымдағы нұсқаны шығару"
 
@@ -268,19 +267,19 @@ msgstr ""
 "%s\n"
 "кеше"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Полиция"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Жедел жәрдем"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Өрт сөндіру қызметі"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Таудағы құтқару қызметі"
 
@@ -490,12 +489,12 @@ msgstr "Іске қосылды"
 msgid "DBus unavailable"
 msgstr "DBus қолжетімсіз"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Шифрлеу жоқ"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Мәжбүрлі шифрлеу"
 
@@ -520,16 +519,16 @@ msgid "Server"
 msgstr "Сервер"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Көрсетілетін атауы (міндетті емес)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Пайдаланушы ID-і"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Пароль"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Көрсетілетін атауы (міндетті емес)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -543,10 +542,14 @@ msgstr "Транспорт"
 msgid "Media Encryption"
 msgstr "Медиа шифрлеу"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Прокси (міндетті емес)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Телефон қоңыраулары үшін пайдалану"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Автоматты түрде байланысу"
