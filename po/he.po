@@ -2,54 +2,61 @@
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Yosef Or Boczko <yoseforb@gmail.com>, 2022-2024.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-07-18 08:54+0000\n"
-"PO-Revision-Date: 2024-07-19 15:28+0300\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-01-30 10:52+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew\n"
+"Language-Team: Hebrew <heb-bugzap@hamakor.org.il>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
-"2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Plural-Forms: ‪nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Gtranslator 49.0\n"
+"X-DL-VCS-Web: https://gitlab.gnome.org/GNOME/calls/\n"
+"X-DL-Lang: he\n"
+"X-DL-Module: calls\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: None\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "שיחות"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "טלפון"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "חייגן לטלפון עם אפשרויות שיחה"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "טלפון;פלאפון;שיחות;שיחה;חיוג;חייגן;PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "שיחות (שרת)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "חייגן לטלפון עם אפשרויות שיחה (מצב שרת)"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "ביוע שיחות טלפון ו־VoIP (שיחות על גבי רשת האינטרנט)"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -60,17 +67,17 @@ msgstr ""
 "פרוטוקול SIP (שיחות על גבי רשת האינטרנט)."
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "ג׳וליאן שפרבר,אוונגלוס ריביירו טזראס"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "חיוג"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "היסטוריית שיחות"
 
@@ -215,41 +222,37 @@ msgstr "הוספת חשבון חדש"
 msgid "VoIP Accounts"
 msgstr "חשבונות VoIP"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "ניסיון חיוג למספר טלפון לא תקין „%s”"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "לא יודע איך לפתוח את „%s”"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "The name of the plugins to load"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "Whether to present the main window on startup"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Print current version"
 
@@ -257,7 +260,7 @@ msgstr "Print current version"
 msgid "Anonymous caller"
 msgstr "חסוי"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -266,51 +269,47 @@ msgstr ""
 "%s\n"
 "אתמול"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "משטרה"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "אמבולנס"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "מכבי אש"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "חילוץ הרים"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
 "\n"
 "<a href=\"https://l10n.gnome.org/teams/he/\">מיזם תרגום GNOME לעברית</a>"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "לא נִתן לחייג: אין מודם או חשבון VoIP זמין"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "לא נִתן לחייג: אין תוסף טעון"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "אחרונים"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "אנשי קשר"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "לוח חיוג"
 
@@ -319,22 +318,22 @@ msgid "Missed call"
 msgstr "שיחה שלא נענתה"
 
 #. %s is a name here
-#: src/calls-notifier.c:77
+#: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
 msgstr "שיחה שלא נענתה מאת <b>%s</b>"
 
 #. %s is a id here
-#: src/calls-notifier.c:80
+#: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
 msgstr "שיחה שלא נענתה מאת %s"
 
-#: src/calls-notifier.c:82
+#: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
 msgstr "שיחה שלא נענתה ממספר לא מזוהה"
 
-#: src/calls-notifier.c:88
+#: src/calls-notifier.c:86
 msgid "Call back"
 msgstr "להתקשר חזרה"
 
@@ -355,19 +354,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "_הוספת חשבון"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "_מחיקת שיחה"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "_העתקת מספר"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "_הוספת איש קשר"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "_שליחת מסרון"
 
@@ -375,7 +374,7 @@ msgstr "_שליחת מסרון"
 msgid "On hold"
 msgstr "בהמתנה"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "לא נמצאו אנשי קשר"
 
@@ -383,32 +382,36 @@ msgstr "לא נמצאו אנשי קשר"
 msgid "No Recent Calls"
 msgstr "אין שיחות אחרונות"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "_סגירה"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "_שליחה"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "חשבונות _VoIP"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "_על אודות שיחות"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "הזנת כתובת VoIP"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "חשבון SIP"
 
@@ -482,7 +485,7 @@ msgid "Normal"
 msgstr "רגיל"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "אותחל"
 
@@ -490,12 +493,12 @@ msgstr "אותחל"
 msgid "DBus unavailable"
 msgstr "‏DBus לא זמין"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "ללא הצפנה"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "לכפות הצפנה"
 
@@ -520,16 +523,16 @@ msgid "Server"
 msgstr "שרת"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "שם התצוגה (רשות)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "מזהה משתמש"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "ססמה"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "שם התצוגה (רשות)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -543,13 +546,20 @@ msgstr "תעבורה"
 msgid "Media Encryption"
 msgstr "הצפנת מדיה"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "מתווך (רשות)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "שימוש עבור שיחות טלפון"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "התחברות אוטומטית"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "Whether to present the main window on startup"
 
 #~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
 #~ msgstr "Whether to allow using SDES for SRTP without TLS as the transport"
@@ -571,9 +581,6 @@ msgstr "התחברות אוטומטית"
 
 #~ msgid "Manage Account"
 #~ msgstr "ניהול חשבון"
-
-#~ msgid "Optional"
-#~ msgstr "אפשרי"
 
 #~ msgid "Enter a number"
 #~ msgstr "הזנת מספר"
