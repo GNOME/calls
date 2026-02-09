@@ -6,15 +6,15 @@
 # heiko123abc <heiko1234aaa@gmail.com>, 2020.
 # Michael Oppliger <mj.oppliger@gmail.com>, 2021.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2023.
-# Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024, 2026.
 # Tim Sabsch <tim@sabsch.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-21 10:48+0000\n"
-"PO-Revision-Date: 2024-08-28 22:47+0200\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-02-08 21:51+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -22,39 +22,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.8\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Anrufe"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "Telefon"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "Eine Telefonanwendung"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Telefon;Handy;Anruf;Wählen;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "Anrufe (daemon)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Eine Telefonanwendung (daemon-Modus)"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "Telefon- und SIP-Anrufe machen"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -65,17 +65,17 @@ msgstr ""
 "Anrufe über das SIP-Protokoll verwendet werden."
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "Einen Anruf tätigen"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "Die Anrufchronik"
 
@@ -226,41 +226,37 @@ msgstr "Neues Konto hinzufügen"
 msgid "VoIP Accounts"
 msgstr "VoIP-Konten"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Es wurde versucht, die ungültige Telefon-Adresse »%s« zu wählen"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Es ist unbekannt, wie »%s« geöffnet werden kann"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "Der Name der Erweiterungen, die geladen werden sollen"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "ERWEITERUNG"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "Legt fest, ob beim Start das Hauptfenster angezeigt werden soll"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Eine Telefonnummer wählen"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Ausführliche Fehlerdiagnosemeldungen aktivieren"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Aktuelle Versionsnummer ausgeben"
 
@@ -268,7 +264,7 @@ msgstr "Aktuelle Versionsnummer ausgeben"
 msgid "Anonymous caller"
 msgstr "Anonymer Anrufer"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -277,55 +273,51 @@ msgstr ""
 "%s\n"
 "Gestern"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Polizei"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Rettungsdienst"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Feuerwehr"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Bergrettung"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "heiko123abc <heiko1234aaa@gmail.com>, 2020\n"
 "Christian Kirbach <christian.kirbach@gmail.com>, 2020\n"
 "Michael Oppliger <mj.oppliger@gmail.com>, 2021\n"
 "Philipp Kiemle <philipp.kiemle@gmail.com>, 2021, 2023\n"
-"Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024\n"
+"Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024, 2026\n"
 "Tim Sabsch <tim@sabsch.com>, 2023."
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 "Anrufe können nicht getätigt werden: Kein Modem oder VoIP-Konto verfügbar"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Anrufe können nicht getätigt werden: Keine Erweiterung geladen"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Letzte"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Ziffernblock"
 
@@ -372,19 +364,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "Konto _hinzufügen"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "Anruf _löschen"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "Nummer _kopieren"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "Kontakt _hinzufügen"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "_SMS senden"
 
@@ -392,7 +384,7 @@ msgstr "_SMS senden"
 msgid "On hold"
 msgstr "Wird gehalten"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Keine Kontakte gefunden"
 
@@ -400,32 +392,36 @@ msgstr "Keine Kontakte gefunden"
 msgid "No Recent Calls"
 msgstr "Keine kürzlichen Anrufe"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "S_chließen"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "_Senden"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_VoIP-Konten"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "_Info zu Calls"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Geben Sie eine VoIP-Adresse ein"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP-Konto"
 
@@ -499,7 +495,7 @@ msgid "Normal"
 msgstr "Normal"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "Initialisiert"
 
@@ -507,12 +503,12 @@ msgstr "Initialisiert"
 msgid "DBus unavailable"
 msgstr "DBus nicht verfügbar"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Keine Verschlüsselung"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Verschlüsselung erzwingen"
 
@@ -537,16 +533,16 @@ msgid "Server"
 msgstr "Server"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Angezeigter Name (optional)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Benutzerkennung"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Passwort"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Angezeigter Name (optional)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -560,13 +556,20 @@ msgstr "Transport"
 msgid "Media Encryption"
 msgstr "Medien-Verschlüsselung"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Proxy (optional)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Für Telefonanrufe verwenden"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Automatisch verbinden"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "Legt fest, ob beim Start das Hauptfenster angezeigt werden soll"
 
 #~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
 #~ msgstr ""
@@ -590,9 +593,6 @@ msgstr "Automatisch verbinden"
 
 #~ msgid "Manage Account"
 #~ msgstr "Konto verwalten"
-
-#~ msgid "Optional"
-#~ msgstr "Optional"
 
 #~ msgid "Calling…"
 #~ msgstr "Anrufen …"
