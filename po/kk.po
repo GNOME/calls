@@ -1,0 +1,555 @@
+# Kazakh translation for calls.
+# Copyright (C) 2026 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls gnome-49\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2025-05-24 16:21+0000\n"
+"PO-Revision-Date: 2026-02-13 21:41+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <Kazakh>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+msgid "Calls"
+msgstr "Қоңыраулар"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Phone"
+msgstr "Телефон"
+
+#: data/org.gnome.Calls.desktop.in:4
+msgid "A phone dialer and call handler"
+msgstr "Телефон нөмірін теруші және қоңырауларды өңдеуші"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Телефон;Қоңырау;Теру;Теруші;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:2
+msgid "Calls (daemon)"
+msgstr "Қоңыраулар (қызмет)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:4
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "Телефон нөмірін теруші және қоңырауларды өңдеуші (демон режимі)"
+
+#: data/org.gnome.Calls.metainfo.xml.in:7
+msgid "Make phone and SIP calls"
+msgstr "Телефон және SIP қоңырауларын жасау"
+
+#: data/org.gnome.Calls.metainfo.xml.in:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"Қоңыраулар қолданбасы — бұл GNOME үшін қарапайым әрі талғампаз телефон "
+"нөмірін теруші және қоңырауларды өңдеуші. Оны ұялы модеммен кәдімгі телефон "
+"қоңыраулары үшін, сондай-ақ SIP протоколын қолданатын VoIP қоңыраулары үшін "
+"пайдалануға болады."
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml.in:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:33
+msgid "Placing a call"
+msgstr "Қоңырау шалу"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:38
+msgid "The call history"
+msgstr "Қоңыраулар журналы"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Қоңыраулар әдепкі шығыс орнын автоматты түрде пайдалану керек пе"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "Модем хабарлаған ел коды"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "Ел коды контакт атын іздеу үшін пайдаланылады"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Автоматты түрде жүктелетін плагиндер"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+"Бұл плагиндер бағдарламалық қамтама іске қосылғанда автоматты түрде "
+"жүктеледі."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "VoIP қоңыраулары үшін басымдық ретімен қолданылатын аудио кодектер"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"VoIP қоңыраулары үшін пайдалануға болатын (қолжетімді болса) таңдаулы аудио "
+"кодектер"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+"Шифрленген медиа үшін қауіпсіз емес криптографиялық кілттер алмасуға рұқсат "
+"беру."
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"Кілттердің ашық мәтін түрінде алмасуына рұқсат бергіңіз келсе, \"true\" "
+"мәніне орнатыңыз, әйтпесе TLS транспортын орнатуыңыз керек."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "Әдепкі (іске қосылмаған) күйі"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "Тіркелгіні іске қосу…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "Тіркелгіні сөндіру…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "Серверге қосылу…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "Тіркелгі желіде"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "Серверден ажырату…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "Тіркелгі желіде емес"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "Тіркелгіде қате орын алды"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "Себебі көрсетілмеген"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "Іске қосылу басталды"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "Іске қосылу аяқталды"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "Сөндірілу басталды"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "Сөндірілу аяқталды"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "Тіркелу деректері орнатылмаған"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "Қосылу басталуда"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "Қосылудың күту уақыты аяқталды"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "Домен атын шешу мүмкін болмады"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "Сервер пайдаланушы атын немесе парольді қабылдамады"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "Қосылу аяқталды"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "Ажырату басталуда"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "Ажырату аяқталды"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "Ішкі қате орын алды"
+
+#: src/calls-account-overview.c:193
+#, c-format
+msgid "Edit account: %s"
+msgstr "Тіркелгіні түзету: %s"
+
+#: src/calls-account-overview.c:200
+msgid "Add new account"
+msgstr "Жаңа тіркелгіні қосу"
+
+#: src/calls-account-overview.c:441
+msgid "VoIP Accounts"
+msgstr "VoIP тіркелгілері"
+
+#: src/calls-application.c:373
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "Жарамсыз tel URI `%s' нөмірін теру әрекеті жасалды"
+
+#: src/calls-application.c:755
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "`%s' қалай ашу керектігі белгісіз"
+
+#: src/calls-application.c:826
+msgid "The name of the plugins to load"
+msgstr "Жүктелетін плагиндердің атауы"
+
+#: src/calls-application.c:827
+msgid "PLUGIN"
+msgstr "ПЛАГИН"
+
+#: src/calls-application.c:832
+msgid "Whether to present the main window on startup"
+msgstr "Іске қосылған кезде басты терезені көрсету керек пе"
+
+#: src/calls-application.c:838
+msgid "Dial a telephone number"
+msgstr "Телефон нөмірін теру"
+
+#: src/calls-application.c:839
+msgid "NUMBER"
+msgstr "НӨМІР"
+
+#: src/calls-application.c:844
+msgid "Enable verbose debug messages"
+msgstr "Толық жөндеу хабарларын іске қосу"
+
+#: src/calls-application.c:850
+msgid "Print current version"
+msgstr "Ағымдағы нұсқаны шығару"
+
+#: src/calls-best-match.c:504
+msgid "Anonymous caller"
+msgstr "Жасырын қоңырау шалушы"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"кеше"
+
+#: src/calls-emergency-call-types.c:257
+msgid "Police"
+msgstr "Полиция"
+
+#: src/calls-emergency-call-types.c:260
+msgid "Ambulance"
+msgstr "Жедел жәрдем"
+
+#: src/calls-emergency-call-types.c:263
+msgid "Fire Brigade"
+msgstr "Өрт сөндіру қызметі"
+
+#: src/calls-emergency-call-types.c:266
+msgid "Mountain Rescue"
+msgstr "Таудағы құтқару қызметі"
+
+#: src/calls-main-window.c:121
+msgid "translator-credits"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
+
+#: src/calls-main-window.c:321
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "Қоңырау шалу мүмкін емес: қолжетімді модем немесе VoIP тіркелгісі жоқ"
+
+#: src/calls-main-window.c:323
+msgid "Can't place calls: No plugin loaded"
+msgstr "Қоңырау шалу мүмкін емес: плагин жүктелмеген"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:364
+msgid "Recent"
+msgstr "Соңғылар"
+
+#: src/calls-main-window.c:372
+msgid "Contacts"
+msgstr "Контактілер"
+
+#: src/calls-main-window.c:380
+msgid "Dial Pad"
+msgstr "Теру панелі"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "Жіберіліп алынған қоңырау"
+
+#. %s is a name here
+#: src/calls-notifier.c:75
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "<b>%s</b> нөмірінен жіберіліп алынған қоңырау"
+
+#. %s is a id here
+#: src/calls-notifier.c:78
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s нөмірінен жіберіліп алынған қоңырау"
+
+#: src/calls-notifier.c:80
+msgid "Missed call from unknown caller"
+msgstr "Белгісіз нөмірден жіберіліп алынған қоңырау"
+
+#: src/calls-notifier.c:86
+msgid "Call back"
+msgstr "Кері қоңырау шалу"
+
+#: src/ui/account-overview.ui:27
+msgid "Add VoIP Accounts"
+msgstr "VoIP тіркелгілерін қосу"
+
+#: src/ui/account-overview.ui:29
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"Мұнда VoIP тіркелгісін қосуға болады. Бұл SIP протоколы арқылы VoIP "
+"қоңырауларын шалуға және қабылдауға мүмкіндік береді. Бұл мүмкіндік әлі де "
+"жаңа және функциялары толық емес (яғни, шифрленген медиа жоқ)."
+
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
+msgid "_Add Account"
+msgstr "_Тіркелгі қосу"
+
+#: src/ui/call-record-row.ui:67
+msgid "_Delete Call"
+msgstr "Қоңырауды ө_шіру"
+
+#: src/ui/call-record-row.ui:71
+msgid "_Copy number"
+msgstr "Нөмірді _көшіру"
+
+#: src/ui/call-record-row.ui:76
+msgid "_Add contact"
+msgstr "_Контакт қосу"
+
+#: src/ui/call-record-row.ui:81
+msgid "_Send SMS"
+msgstr "SMS жібер_у"
+
+#: src/ui/call-selector-item.ui:22
+msgid "On hold"
+msgstr "Күтуде"
+
+#: src/ui/contacts-box.ui:39
+msgid "No Contacts Found"
+msgstr "Контактілер табылмады"
+
+#: src/ui/history-box.ui:13
+msgid "No Recent Calls"
+msgstr "Соңғы қоңыраулар жоқ"
+
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
+msgid "_Cancel"
+msgstr "_Бас тарту"
+
+#: src/ui/main-window.ui:87
+msgid "_Close"
+msgstr "_Жабу"
+
+#: src/ui/main-window.ui:93
+msgid "_Send"
+msgstr "_Жіберу"
+
+#: src/ui/main-window.ui:155
+msgid "_VoIP Accounts"
+msgstr "_VoIP тіркелгілері"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:169
+msgid "_About Calls"
+msgstr "Қоңыраулар қолданбасы _туралы"
+
+#: src/ui/new-call-box.ui:32
+msgid "Enter a VoIP address"
+msgstr "VoIP адресін енгізіңіз"
+
+#: src/ui/new-call-box.ui:56
+msgid "SIP Account"
+msgstr "SIP тіркелгісі"
+
+#: src/ui/new-call-header-bar.ui:4
+msgid "New Call"
+msgstr "Жаңа қоңырау"
+
+#: src/ui/new-call-header-bar.ui:13
+msgid "Back"
+msgstr "Артқа"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "Белгісіз себеп"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "Шығыс қоңырау басталды"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "Жаңа кіріс қоңырауы"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "Қоңырау қабылданды"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "Қоңырау аяқталды"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "Қоңырау ажыратылды (бос емес немесе қабылданбады)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "Қоңырау ажыратылды (қате id немесе желілік мәселе)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "Қоңырау ажыратылды (аудио арнасын баптау қатесі)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "Қоңырау ауыстырылды"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "Қоңырау бағытталды"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "Қоңырау ажыратылды (белгісіз себеп коды %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager қолжетімсіз"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "Дауысқа қабілетті модем қолжетімсіз"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "Қалыпты"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:546
+msgid "Initialized"
+msgstr "Іске қосылды"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus қолжетімсіз"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:636
+msgid "No encryption"
+msgstr "Шифрлеу жоқ"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:643
+msgid "Force encryption"
+msgstr "Мәжбүрлі шифрлеу"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "Криптографиялық кілттермен алмасу сәтсіз аяқталды"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "_Log In"
+msgstr "_Кіру"
+
+#: plugins/provider/sip/sip-account-widget.ui:28
+msgid "_Apply"
+msgstr "І_ске асыру"
+
+#: plugins/provider/sip/sip-account-widget.ui:38
+msgid "_Delete"
+msgstr "Ө_шіру"
+
+#: plugins/provider/sip/sip-account-widget.ui:56
+msgid "Server"
+msgstr "Сервер"
+
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "Display Name (Optional)"
+msgstr "Көрсетілетін атауы (міндетті емес)"
+
+#: plugins/provider/sip/sip-account-widget.ui:76
+msgid "User ID"
+msgstr "Пайдаланушы ID-і"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Password"
+msgstr "Пароль"
+
+#: plugins/provider/sip/sip-account-widget.ui:92
+msgid "Port"
+msgstr "Порт"
+
+#: plugins/provider/sip/sip-account-widget.ui:101
+msgid "Transport"
+msgstr "Транспорт"
+
+#: plugins/provider/sip/sip-account-widget.ui:107
+msgid "Media Encryption"
+msgstr "Медиа шифрлеу"
+
+#: plugins/provider/sip/sip-account-widget.ui:117
+msgid "Use for Phone Calls"
+msgstr "Телефон қоңыраулары үшін пайдалану"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Automatically Connect"
+msgstr "Автоматты түрде байланысу"
