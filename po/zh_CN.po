@@ -2,54 +2,54 @@
 # Copyright (C) 2022 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Boyuan Yang <073plan@gmail.com>, 2022.
-# lumingzh <lumingzh@qq.com>, 2024.
+# lumingzh <lumingzh@qq.com>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-21 10:48+0000\n"
-"PO-Revision-Date: 2024-08-23 14:59+0800\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-02-14 16:13+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Gtranslator 49.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "通话"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "电话"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "一款电话拨号器和通话管理软件"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;电话;呼叫;通话;拨号;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "通话（守护程序）"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "一款电话拨号器和通话管理软件（守护程序模式）"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "拨打电话和 SIP 通话"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -59,17 +59,17 @@ msgstr ""
 "调器一起使用以进行传统的拨号通话，或使用 SIP 协议进行 VoIP 通话。"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber、Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "拨打电话"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "通话记录"
 
@@ -212,41 +212,37 @@ msgstr "添加新帐号"
 msgid "VoIP Accounts"
 msgstr "VoIP 帐号"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "已尝试拨打无效的电话 URI “%s”"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "不知道如何打开 “%s”"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "要加载的插件的名称"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "插件"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "是否在启动时显示主窗口"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "拨打电话号码"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "号码"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "启用详细调试信息"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "输出当前版本"
 
@@ -254,7 +250,7 @@ msgstr "输出当前版本"
 msgid "Anonymous caller"
 msgstr "匿名呼叫者"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -263,51 +259,47 @@ msgstr ""
 "%s\n"
 "昨天"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "警察"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "救护车"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "消防队"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "山地救援"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "Boyuan Yang <073plan@gmail.com>\n"
 "lumingzh <lumingzh@qq.com>\n"
 "Victor_Trista <ljlzjzm@hotmail.com>"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "无法拨打电话：没有可用的调制解调器或 VoIP 帐号"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "无法拨打电话：未加载插件"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "最近"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "联系人"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "拨号盘"
 
@@ -352,19 +344,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "添加账号(_A)"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "删除通话(_D)"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "复制号码(_C)"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "添加联系人(_A)"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "发送短信(_S)"
 
@@ -372,7 +364,7 @@ msgstr "发送短信(_S)"
 msgid "On hold"
 msgstr "等待中"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "未找到联系人"
 
@@ -380,32 +372,36 @@ msgstr "未找到联系人"
 msgid "No Recent Calls"
 msgstr "无最近通话"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "发送(_S)"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_VoIP 帐号"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "关于通话(_A)"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "输入 VoIP 地址"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP 账号"
 
@@ -479,7 +475,7 @@ msgid "Normal"
 msgstr "常规"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "已初始化"
 
@@ -487,12 +483,12 @@ msgstr "已初始化"
 msgid "DBus unavailable"
 msgstr "DBus 不可用"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "不加密"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "强制加密"
 
@@ -517,16 +513,16 @@ msgid "Server"
 msgstr "服务器"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "显示名称（可选）"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "用户 ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "密码"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "显示名称（可选）"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -540,13 +536,20 @@ msgstr "传输"
 msgid "Media Encryption"
 msgstr "媒体加密"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "代理（可选）"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "用于拨打电话"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "自动连接"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "是否在启动时显示主窗口"
 
 #~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
 #~ msgstr "是否允许在没有 TLS 作为传输的情况下对 SRTP 使用 SDES"
@@ -568,6 +571,3 @@ msgstr "自动连接"
 
 #~ msgid "Manage Account"
 #~ msgstr "管理帐号"
-
-#~ msgid "Optional"
-#~ msgstr "可选"
