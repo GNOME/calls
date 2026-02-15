@@ -2,14 +2,14 @@
 # Copyright (C) 2025 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Emilio Sepúlveda <emism.translations@gmail.com>, 2025.
+# Emilio Sepúlveda <emism.translations@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-09-29 04:03+0000\n"
-"PO-Revision-Date: 2025-10-01 15:00-0300\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-02-15 18:33-0300\n"
 "Last-Translator: Emilio Sepúlveda <emism.translations@gmail.com>\n"
 "Language-Team: Interlingua <softinterlingua@gmail.com>\n"
 "Language: ia\n"
@@ -20,12 +20,13 @@ msgstr ""
 "X-DL-Module: calls\n"
 "X-DL-Branch: main\n"
 "X-DL-Domain: po\n"
-"X-DL-State: Translating\n"
+"X-DL-State: None\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 49.0\n"
+"X-DL-VCS-Web: https://gitlab.gnome.org/GNOME/calls/\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Appellos"
 
@@ -40,7 +41,7 @@ msgstr ""
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
+msgstr "Telephono;Appello;Phono;Dial;Marcator;PSTN;"
 
 #: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
@@ -215,37 +216,37 @@ msgstr "Adder nove conto"
 msgid "VoIP Accounts"
 msgstr "Contos VoIP"
 
-#: src/calls-application.c:363
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr ""
 
-#: src/calls-application.c:741
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr ""
 
-#: src/calls-application.c:812
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
-msgstr ""
+msgstr "Le nomine del plugins a cargar"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr ""
 
-#: src/calls-application.c:818
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Telephona un numero"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr ""
 
-#: src/calls-application.c:830
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Imprime le version actual"
 
@@ -262,19 +263,19 @@ msgstr ""
 "%s\n"
 "heri"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Policia"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulantia"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Pumperos"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Salvamento de montania"
 
@@ -282,24 +283,24 @@ msgstr "Salvamento de montania"
 msgid "translator-credits"
 msgstr "Emilio Sepúlveda <emism.translations@gmail.com>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr ""
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr ""
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Recente"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Contactos"
 
-#: src/calls-main-window.c:380
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr ""
 
@@ -311,21 +312,21 @@ msgstr "Appello perdite"
 #: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
-msgstr ""
+msgstr "Appello perdite ab <b>%s</b>"
 
 #. %s is a id here
 #: src/calls-notifier.c:78
 #, c-format
 msgid "Missed call from %s"
-msgstr ""
+msgstr "Appello perdite ab %s"
 
 #: src/calls-notifier.c:80
 msgid "Missed call from unknown caller"
-msgstr ""
+msgstr "Appello perdite ab appellator incognite"
 
 #: src/calls-notifier.c:86
 msgid "Call back"
-msgstr ""
+msgstr "Appellar retro"
 
 #: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
@@ -362,7 +363,7 @@ msgstr "Inviar _SMS"
 msgid "On hold"
 msgstr ""
 
-#: src/ui/contacts-box.ui:39
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Necun contactos trovate"
 
@@ -395,11 +396,11 @@ msgstr "Contos _VoIP"
 msgid "_About Calls"
 msgstr "A proposito de Appellos"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Insere un addresse VoIP"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "Conto SIP"
 
@@ -460,7 +461,7 @@ msgstr ""
 
 #: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
-msgstr ""
+msgstr "ModemManager non disponibile"
 
 #: plugins/provider/mm/calls-mm-provider.c:86
 #: plugins/provider/ofono/calls-ofono-provider.c:96
@@ -470,7 +471,7 @@ msgstr ""
 #: plugins/provider/mm/calls-mm-provider.c:88
 #: plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
 #: plugins/provider/ofono/calls-ofono-provider.c:544
@@ -481,12 +482,12 @@ msgstr ""
 msgid "DBus unavailable"
 msgstr "DBus non disponibile"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Sin cryptation"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Fortiar cryptation"
 
@@ -511,16 +512,16 @@ msgid "Server"
 msgstr "Servitor"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Nomine a monstrar (optional)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ID de usator"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Contrasigno"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Nomine a monstrar (optional)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -534,10 +535,14 @@ msgstr "Transporto"
 msgid "Media Encryption"
 msgstr "Cryptation de medios"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
-msgid "Use for Phone Calls"
-msgstr ""
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Proxy (optional)"
 
 #: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Use for Phone Calls"
+msgstr "Usar pro appellos de telephono"
+
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Connecter automaticamente"
