@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-01-25 18:22+0000\n"
-"PO-Revision-Date: 2026-02-20 18:15+0100\n"
+"PO-Revision-Date: 2026-02-22 20:38+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -54,8 +54,8 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Sonadas es una aplicacion simpla e eleganta per compausar de numèros e "
-"gerir de sonadas sus GNOME. Fonciona amb un modèm cellular per las sonadas "
+"Sonadas es una aplicacion simpla e eleganta per compausar de numèros e gerir "
+"de sonadas sus GNOME. Fonciona amb un modèm cellular per las sonadas "
 "tradicionalas e permet tanben las sonadas VoIP amb lo protocòl SIP."
 
 #. developer_name tag deprecated with Appstream 1.0
@@ -72,6 +72,45 @@ msgstr "Realizar una sonada"
 #: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "L’istoric de sonadas"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "L’indicatiu internacional del país coma senhalat pel modèm"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "Los empeutons de cargar automaticament"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Còdecs àudio a utilizar per las sonadas per òrdre de preferéncia"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr ""
+"Los còdecs àudio preferits a utilizar per las sonadas VoIP (se disponible)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr ""
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -299,9 +338,9 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Podètz apondre un compte VoIP aicí. Aquò vos permetrà de passar e de "
-"recebre de sonadas VoIP en utilizant lo protocòl SIP. Aquesta foncionalitat "
-"es encara pro novèla e pas encara complèta (valent a dire, cap de mèdia "
+"Podètz apondre un compte VoIP aicí. Aquò vos permetrà de passar e de recebre "
+"de sonadas VoIP en utilizant lo protocòl SIP. Aquesta foncionalitat es "
+"encara pro novèla e pas encara complèta (valent a dire, cap de mèdia "
 "chifrat)."
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
