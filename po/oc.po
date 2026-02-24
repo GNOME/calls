@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-01-25 18:22+0000\n"
-"PO-Revision-Date: 2026-02-22 20:38+0100\n"
+"PO-Revision-Date: 2026-02-24 18:59+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -76,6 +76,7 @@ msgstr "L’istoric de sonadas"
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
 msgstr ""
+"Indica se las sonadas devon automaticament utilizar l’origina per defaut"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
@@ -84,6 +85,7 @@ msgstr "L’indicatiu internacional del país coma senhalat pel modèm"
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
 msgstr ""
+"Lo còdi internacional es utilizat per la consultat dels noms de contact"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -92,6 +94,7 @@ msgstr "Los empeutons de cargar automaticament"
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
 msgstr ""
+"Aquestes empeutons seràn automaticament cargats al lançament de l’aplicacion."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -105,12 +108,16 @@ msgstr ""
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Allow insecure crypto key exchange for encrypted media."
 msgstr ""
+"Autorizar l'escambi de claus criptograficas non securizadas per los mèdias "
+"chifrats."
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
 msgstr ""
+"Metre a verai se volètz permetre que las claus se pòscan escambiar en clar, "
+"autrament devètz configurar lo transpòrt TLS."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
