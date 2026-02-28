@@ -1,7 +1,7 @@
 # Korean translation for calls.
 # Copyright (C) 2023 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
-# Changwoo Ryu <cwryu@debian.org>, 2023-2025.
+# Changwoo Ryu <cwryu@debian.org>, 2023-2026.
 #
 # 용어
 # - VoIP - 인터넷 전화
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-02-27 09:43+0000\n"
-"PO-Revision-Date: 2025-03-03 13:58+0900\n"
+"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"PO-Revision-Date: 2026-02-27 13:44+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -20,29 +20,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "통화"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "전화"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "전화 걸기 및 통화 처리 앱"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;전화;Call;통화;Phone;Dial;다이얼;Dialer;걸기;PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "통화 (데몬)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "전화 걸기 및 통화 처리 앱 (데몬 모드)"
 
@@ -113,7 +113,9 @@ msgstr "암호화된 미디어에 대해 안전하지 않은 암호화 키 교�
 msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
-msgstr "참이면 일반 텍스트로 키를 교환하도록 허용하고, 거짓이면 TLS 전송을 사용합니다."
+msgstr ""
+"참이면 일반 텍스트로 키를 교환하도록 허용하고, 거짓이면 TLS 전송을 사용합니"
+"다."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -216,48 +218,43 @@ msgstr "새 계정 추가"
 msgid "VoIP Accounts"
 msgstr "인터넷 전화 계정"
 
-#: src/calls-application.c:373
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "잘못된 tel URI '%s'에 전화 걸기 시도"
 
 # 알 수 없는 VoIP URL 등
-#: src/calls-application.c:755
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "`%s'을(를) 여는 방법을 알지 못합니다"
 
-#: src/calls-application.c:826
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "읽어들일 플러그인의 이름"
 
 # command line
-#: src/calls-application.c:827
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "<플러그인>"
 
 # command line
-#: src/calls-application.c:832
-msgid "Whether to present the main window on startup"
-msgstr "시작할 때 메인 창을 표시할지 여부"
-
-# command line
-#: src/calls-application.c:838
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "전화 번호에 전화를 겁니다"
 
 # command line
-#: src/calls-application.c:839
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "<번호>"
 
 # command line
-#: src/calls-application.c:844
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "더 많은 디버깅 메시지를 사용합니다"
 
 # command line
-#: src/calls-application.c:850
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "현재 버전을 표시합니다"
 
@@ -275,19 +272,19 @@ msgstr ""
 "%s\n"
 "어제"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "경찰"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "구급차"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "소방서"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "산악구조대"
 
@@ -295,24 +292,24 @@ msgstr "산악구조대"
 msgid "translator-credits"
 msgstr "류창우 <cwryu@debian.org>"
 
-#: src/calls-main-window.c:322
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "전화를 걸 수 없습니다: 모뎀이나 인터넷 전화 계정이 없습니다"
 
-#: src/calls-main-window.c:324
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "전화를 걸 수 없습니다: 플러그인을 로그인하지 않았습니다"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:365
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "최근"
 
-#: src/calls-main-window.c:373
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "연락처"
 
-#: src/calls-main-window.c:381
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "키패드"
 
@@ -381,7 +378,7 @@ msgstr "SMS 보내기(_S)"
 msgid "On hold"
 msgstr "대기 중"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "연락처가 없습니다"
 
@@ -414,11 +411,11 @@ msgstr "인터넷 전화 계정(_V)"
 msgid "_About Calls"
 msgstr "통화 앱 정보(_A)"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "인터넷 전화 주소 입력"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP 계정"
 
@@ -494,7 +491,7 @@ msgid "Normal"
 msgstr "일반"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "초기화 마침"
 
@@ -502,12 +499,12 @@ msgstr "초기화 마침"
 msgid "DBus unavailable"
 msgstr "D버스를 사용할 수 없습니다"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "암호화 없음"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "암호화 강제 사용"
 
@@ -532,16 +529,16 @@ msgid "Server"
 msgstr "서버"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "표시 이름 (선택적)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "사용자 아이디"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "암호"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "표시 이름 (선택적)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -555,34 +552,14 @@ msgstr "전송 수단"
 msgid "Media Encryption"
 msgstr "미디어 암호화"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "프록시 (선택)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "전화 통화에 사용"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "자동으로 연결"
-
-#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-#~ msgstr "전송 수단으로 TLS 없이 SRTP에 대한 SDES 사용을 허용할지 여부"
-
-#~ msgid "Account overview"
-#~ msgstr "계정 개요"
-
-#~ msgid "Call"
-#~ msgstr "전화 걸기"
-
-#~ msgid "_Keyboard shortcuts"
-#~ msgstr "키보드 바로 가기(_K)"
-
-#~ msgid "_Help"
-#~ msgstr "도움말(_H)"
-
-#~ msgid "Add Account"
-#~ msgstr "계정 추가"
-
-#~ msgid "Manage Account"
-#~ msgstr "계정 관리"
-
-#~ msgid "Optional"
-#~ msgstr "옵션"
