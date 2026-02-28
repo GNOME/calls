@@ -1,3 +1,233 @@
+gnome-calls (50~rc.0) unstable; urgency=medium
+
+  [ Guido Günther ]
+  * flatpak: Use newer libfeedback.
+    Let's have the bug fixes
+  * emergency-call-types: Use strv builder
+  * build: Depend on mobile-broadband-provider-info.
+    This will be used for emergency number lookup
+  * build: Add gmobile.
+    We'll use it for the provider info parsing
+  * emergency-call-types: Make hash table static.
+    This is only meant to be used from this compilation unit
+  * emergency-call-types: Make emergency data hash table dynamic.
+    So far we referenced all compiled in data but we want to add
+    entries from the provider info database soon so use allocated
+    memories for all entries.
+  * emergency-call-types: Make data structures public.
+    This allows us to use them in tests
+  * emergency-calls-manager: Init emergency type database.
+    We so far did this on first access. Let's rather do it explicitly
+    so we notice problems early on startup.
+  * service-providers: Add parsing for service provider info.
+    We currently only need the emergency number information
+  * emergency-call-types: Use lower case country codes.
+    The provider info db has it that way.
+  * emergency-call-types: Add emergency numbers from service provider db.
+    This scales better than using a built in array.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/714
+  * emergency-call-types: Test get_numbers_by_country_code
+  * log: Make `G_MESSAGES_DEBUG=something` work out of the box
+    calls wouldn't match the glib docs as setting `G_MESSAGES_DEBUG`
+    also required to pass `-vvv` for things to work. Enable debug logs
+    as soon as that variable is set.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/720
+  * build: Don't use libdir.
+    It contains the arch prefix
+  * packaging: Depend on systemd dev
+  * packaging: Make install recipe more specific.
+    This ensures we don't install files accidentally
+
+  [ Evangelos Ribeiro Tzaras ]
+  * treewide: Reformat meson files.
+    Ran `meson format -e -i -r`.
+  * build: Modernize and deduplicate setting up test targets.
+    Get rid of the duplication by rolling (almost) every test into a loop.
+    We now iterate over an array containing at least the name and list of sources.
+    To account for some differences between individual tests, we allow an
+    optional third array consisting of a dictionary for extra arguments.
+    In particular we ensure that the `test()` target now always depends on
+    the test binary, so that it will get properly rebuilt on changes to
+    the sources.
+    Note, that we're resorting in a separate commit, to ease reviewing.
+  * tests: Depend on .plugin files to exist.
+    When .plugin files are missing, the plugins will not be discoverable.
+    These were only getting built when run with `meson compile`,
+    but not for `meson test`.
+    Helps: https://gitlab.gnome.org/GNOME/calls/-/issues/719
+  * tests: Add dbus server binary to dependencies.
+    Otherwise we `meson test` will not compile the server
+    required for the DBus tests.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/719
+  * ci: Check meson format.
+    Use check-meson from meta-phosh as of
+    eb1c7f3c602f93e50ba0f1b7da31c936c771a75c
+  * ci: Use ci-fairy to check commit messages
+  * build: Bump min glib version to 2.76.
+    This allows us to use e.g. g_set_str() without raising deprecation
+    warnings.
+  * subprojects: Add libcall-ui as meson subproject.
+    Get rid of the git submodule and forward to the latest commit
+    that avoids deprecation warnings while we're at it.
+  * debian: Allow to fetch meson wraps.
+    This is needed since we removed the git submodule and turned
+    libcall-ui into a meson subproject instead.
+  * application: Drop libcallaudio initialization
+    libcallaudio bits live in libcall-ui for a long time
+    (and libcallaudio is going away anyway).
+  * build: Drop (direct) libcallaudio dependency
+  * manpage: Adjust the option for running as a daemon
+  * systemd: Use --gapplication-service to launch
+  * dbus: Add SystemdService entry.
+    This allows to use systemd for dbus service activation.
+  * ci: Ensure build dependencies get installed.
+    This frees us from always having to update the container image
+    whenever build dependencies change.
+  * ringer: Remove unused declarations
+  * tree: Add gsound build dependency.
+    We use gsound for local playback of e.g. ringing sounds.
+  * media: Introduce local media playback.
+    Allows local playback of sounds such as "phone-outgoing-calling",
+    "phone-outgoing-busy".
+    Helps: https://gitlab.gnome.org/GNOME/calls/-/issues/351
+  * sip-origin: Use alerting state once ringing
+  * sip-origin: Use CallsMediaPlayback for local ringback.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/351
+  * network-watch: Avoid crash with fortified sources.
+    This is the minimal change I found that does not lead to a crash with
+    _FORTIFY_SOURCE=3 when calling into the fortified inet_pton().
+    However, I don't think this was a buffer overflow to begin with
+    as the pointers points towards towards the beggining of req->buf
+    which has plenty of space.
+    Adding more debugging shows that dst passed to inet_pton()
+    is exactly the same, both for the new and old way of calculating it:
+      DEBUG: old: 0x555556e35c0c new: 0x555556e35c0c
+      DEBUG: old data: 0x555556e35c10 new data: 0x555556e35c10
+      DEBUG: objsize rta_old 0 objsize rta 18446744073709551615
+      DEBUG: RTA 0x555556e35c0c RTA_DATA 0x555556e35c10 req 0x555556e35bf0 diff 28 diff_buf 0
+    with diff the difference to self->req and diff_buf the difference to self->req->buf.
+    The only difference appears to be the __glibc_objsize for the new and
+    old RTA data, which seems to be at the heart of the trip-up.
+    Closes: https://gitlab.gnome.org/GNOME/calls/-/issues/724
+
+  [ Christian Glombek ]
+  * sip: Add proxy support
+  * sip: Reorder account widget ui
+  * flatpak: Formatting fixes
+  * flatpak: Add libcall-ui dep source
+  * ci: Disable test runs on Flatpak builds.
+    In the absence of a good mechanism to disable specific tests that fail in the flatpak build env, disable all tests.
+  * tests/meson: Fix formatting.
+    Make `check-meson` CI test happy.
+
+  [ Martin ]
+  * Update Slovenian translation
+
+  [ Martin Prejsa ]
+  * ui-call-data: Implement call-type property.
+    Added tests for the newly added property
+    and tests for the newly created helper functions
+
+  [ Sabri Ünal ]
+  * Update Turkish translation
+  * metainfo: Drop categories from metainfo.xml
+    **Categories and keywords**
+    > If there’s a launchable defined for a desktop application, categories and keywords are pulled from the desktop file. Defining them separately in the Metainfo file will override the contents of the desktop file.
+    Source: https://docs.flathub.org/docs/for-app-authors/metainfo-guidelines#categories-and-keywords
+
+  [ Antonio Marin ]
+  * Update Romanian translation
+
+  [ Artur S0 ]
+  * Update Russian translation
+
+  [ Sebastian Krzyszkowiak ]
+  * data: Restart the daemon on failure.
+    If Calls crashes for some reason, the user will be left with no
+    running Calls instance until it's launched manually. Make sure
+    the daemon gets restarted on a failure.
+
+  [ Baurzhan Muftakhidinov ]
+  * Add Kazakh translation
+    (cherry picked from commit 3c2ff567c887e8e8b21f967a9972ea0145ba0156)
+  * Update Kazakh translation
+
+  [ Flynn Peck ]
+  * Add Cornish translation
+
+  [ Yuri Chornoivan ]
+  * Update Ukrainian translation
+
+  [ Ekaterine Papava ]
+  * Update Georgian translation
+
+  [ Juliano de Souza Camargo ]
+  * Update Brazilian Portuguese translation
+
+  [ Abduqadir Abliz ]
+  * Update Uighur translation
+
+  [ Aurimas Aurimas Černius ]
+  * Update Lithuanian translation
+
+  [ twlvnn kraftwerk ]
+  * Update Bulgarian translation
+
+  [ Yaron Shahrabani ]
+  * Update Hebrew translation
+
+  [ Victor Dargallo ]
+  * Update Catalan translation
+
+  [ Anders Jonsson ]
+  * Update Swedish translation
+
+  [ Daniel Rusek ]
+  * Update Czech translation
+
+  [ Guillaume Bernard ]
+  * Update French translation
+
+  [ Efstathios Iosifidis ]
+  * Update Greek translation
+
+  [ Jürgen Benvenuti ]
+  * Update German translation
+
+  [ Daniel Mustieles ]
+  * Updated Spanish translation
+
+  [ luming zh ]
+  * Update Chinese (China) translation
+
+  [ Hugo Carvalho ]
+  * Update Portuguese translation
+
+  [ Emilio Sepúlveda ]
+  * Update Interlingua translation
+
+  [ Asier Saratsua Garmendia ]
+  * Update Basque translation
+
+  [ Fran Diéguez ]
+  * Update Galician translation
+
+  [ Jiri Grönroos ]
+  * Update Finnish translation
+
+  [ Quentin PAGÈS ]
+  * Update Occitan translation
+  * Update Occitan translation
+  * Update Occitan translation
+
+  [ Balázs Úr ]
+  * Update Hungarian translation
+
+  [ Changwoo Ryu ]
+  * Update Korean translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Sat, 28 Feb 2026 13:15:01 +0100
+
 gnome-calls (49.1.1) unstable; urgency=medium
 
   [ Guido Günther ]

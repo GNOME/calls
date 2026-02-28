@@ -65,6 +65,21 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="50~rc.0" date="2026-02-28">
+        <description>
+          <p>
+            Release candidate for the GNOME 50 release cycle.
+          </p>
+          <ul>
+            <li>Lookup emergency numbers in service provider database</li>
+            <li>Local ringback in outgoing SIP calls</li>
+            <li>Add proxy support in SIP</li>
+            <li>Fixes a crash and the systemd daemon to fail starting</li>
+            <li>Updates to 28 translations and two brand new locales</li>
+          </ul>
+        </description>
+      </release>
+
       <release version="49.1.1" date="2025-10-14">
         <description>
           <p>

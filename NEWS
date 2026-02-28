@@ -1,3 +1,60 @@
+gnome-calls 50~rc.0
+-------------------
+Released February 2026
+* Lookup emergency numbers from mobile-broadband-provider-info
+* Local ringback while alerting peer for SIP calls
+  (needs new dependency: gsound)
+* Add proxy support for SIP
+* Fix systemd unit not starting in daemon mode
+  and restart on failure
+* Logging respects G_MESSAGES_DEBUG again
+* Avoid crash with fortified sources in the network watch module
+* Housekeeping (CI, build and metainfo files)
+* Issues fixed:
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/351
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/714
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/718
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/719
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/720
+    * https://gitlab.gnome.org/GNOME/calls/-/issues/724
+* Contributors:
+    * Christian Glombek
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+    * Martin Prejsa
+    * Sabri Ünal
+    * Sebastian Krzyszkowiak
+* UI translations:
+    * Abduqadir Abliz (ug)
+    * Anders Jonsson (sv)
+    * Antonio Marin (ro)
+    * Artur S0 (ru)
+    * Asier Saratsua Garmendia (eu)
+    * Aurimas Aurimas Černius (lt)
+    * Balázs Úr (hu)
+    * Baurzhan Muftakhidinov (kk)
+    * Changwoo Ryu (ko)
+    * Daniel Mustieles (es)
+    * Daniel Rusek (cs)
+    * Efstathios Iosifidis (el)
+    * Ekaterine Papava (ka)
+    * Emilio Sepúlveda (ia)
+    * Flynn Peck (kw)
+    * Fran Diéguez (gl)
+    * Guillaume Bernard (fr)
+    * Hugo Carvalho (pt)
+    * Jiri Grönroos (fi)
+    * Juliano de Souza Camargo (pt_BR)
+    * Jürgen Benvenuti (de)
+    * luming zh (zh_CN)
+    * Martin (sl)
+    * Quentin PAGÈS (oc)
+    * Sabri Ünal (tr)
+    * twlvnn kraftwerk (bg)
+    * Victor Dargallo (ca)
+    * Yaron Shahrabani (he)
+    * Yuri Chornoivan (uk)
+
 gnome-calls 49.1.1
 ------------------
 Released October 2025
