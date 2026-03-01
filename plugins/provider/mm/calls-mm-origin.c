@@ -336,6 +336,10 @@ dial (CallsOrigin *origin,
 
   g_assert (self->voice != NULL);
 
+  /* FIXME: remove once add_call doesn't hang up secondary calls */
+  if (g_hash_table_size (self->calls) >= 1)
+    return;
+
   call_props = mm_call_properties_new ();
   mm_call_properties_set_number (call_props, number);
 
