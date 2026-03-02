@@ -8,39 +8,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-02-10 19:13+0000\n"
-"PO-Revision-Date: 2025-02-27 15:25+0545\n"
+"POT-Creation-Date: 2026-02-28 12:18+0000\n"
+"PO-Revision-Date: 2026-03-02 14:16+0545\n"
 "Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
 "Language-Team: Nepali Language Team <chautari@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "कलहरू"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "फोन"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "एक फोन डायलर र कल ह्यान्डलर"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "टेलिफोन; कल; फोन; डायल; डायलर; PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "कलहरू (डेमन)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "एक फोन डायलर र कल ह्यान्डलर (डेमन मोड)"
 
@@ -53,8 +53,8 @@ msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used with a "
 "cellular modem for plain old telephone calls as well as VoIP calls using the SIP protocol."
 msgstr ""
-"कलहरू जिनोमको लागि एक सरल, सुरुचिपूर्ण फोन डायलर र कल ह्यान्डलर हो। यो सादा पुरानो टेलिफोन कलहरूको "
-"लागि सेलुलर मोडेमको साथ साथै एसआईपी प्रोटोकल प्रयोग गरेर भीओआईपी कलहरूको साथ प्रयोग गर्न सकिन्छ।."
+"कलहरू जिनोमको लागि एक सरल, सुरुचिपूर्ण फोन डायलर र कल ह्यान्डलर हो। यो सादा पुरानो टेलिफोन कलहरूको लागि "
+"सेलुलर मोडेमको साथ साथै एसआईपी प्रोटोकल प्रयोग गरेर भीओआईपी कलहरूको साथ प्रयोग गर्न सकिन्छ।."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
@@ -105,11 +105,11 @@ msgstr "गुप्तिकरण गरिएको मिडियाका 
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
-"Set to true if you want to allow keys to be exchangable in cleartext, otherwise you must "
-"set the TLS transport."
+"Set to true if you want to allow keys to be exchangable in cleartext, otherwise you must set "
+"the TLS transport."
 msgstr ""
-"यदि तपाईँले कुञ्जीहरू स्पष्टपाठमा साटासाट गर्न अनुमति दिन चाहनुहुन्छ भने सत्यमा सेट गर्नुहोस्, अन्यथा तपाईँले "
-"TLS यातायात सेट गर्नुपर्दछ ।."
+"यदि तपाईँले कुञ्जीहरू स्पष्टपाठमा साटासाट गर्न अनुमति दिन चाहनुहुन्छ भने सत्यमा सेट गर्नुहोस्, अन्यथा तपाईँले TLS "
+"यातायात सेट गर्नुपर्दछ ।."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -212,41 +212,37 @@ msgstr "नया खाता थप्नुहोस्"
 msgid "VoIP Accounts"
 msgstr "भिओआईपी खाताहरू"
 
-#: src/calls-application.c:373
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "अवैध टेलिफोन यूआरआई '%s' डायल गर्ने प्रयास गरियो"
 
-#: src/calls-application.c:755
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "'%s' कसरी खोल्ने थाहा छैन"
 
-#: src/calls-application.c:826
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "लोड गर्ने प्लगइनको नाम"
 
-#: src/calls-application.c:827
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "प्लगइन"
 
-#: src/calls-application.c:832
-msgid "Whether to present the main window on startup"
-msgstr "सुरुआतमा मुख्य सञ्झ्याल प्रस्तुत गर्ने या नगर्ने"
-
-#: src/calls-application.c:838
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "टेलिफोन नम्बर डायल गर्नुहोस्"
 
-#: src/calls-application.c:839
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:844
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "भर्बोज डिबग सन्देशहरू सक्षम गर्नुहोस्"
 
-#: src/calls-application.c:850
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "हालको संस्करण मुद्रण गर्नुहोस्"
 
@@ -261,19 +257,19 @@ msgid ""
 "yesterday"
 msgstr "हिजो %s"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "पुलिस"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "एम्बुलेन्स"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "वारुण यन्त्र"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "पहाडबाट  उद्धार"
 
@@ -281,24 +277,24 @@ msgstr "पहाडबाट  उद्धार"
 msgid "translator-credits"
 msgstr "pawan chitrakar < chautari@gmail.com >"
 
-#: src/calls-main-window.c:322
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "कल गर्न सकिँदैन: कुनै मोडेम वा VoIP खाता उपलब्ध छैन"
 
-#: src/calls-main-window.c:324
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "कल हरू राख्न सकिदैन: कुनै प्लगइन लोड गरिएको छैन"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:365
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "हालसालै"
 
-#: src/calls-main-window.c:373
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "सम्पर्कहरू"
 
-#: src/calls-main-window.c:381
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "डायल प्याड"
 
@@ -332,9 +328,9 @@ msgstr "भिओआईपी खाताहरू थप्नुहोस्"
 
 #: src/ui/account-overview.ui:29
 msgid ""
-"You can add VoIP account here. It will allow you to place and receive VoIP calls using the "
-"SIP protocol. This feature is still relatively new and not yet feature complete (i.e. no "
-"encrypted media)."
+"You can add VoIP account here. It will allow you to place and receive VoIP calls using the SIP "
+"protocol. This feature is still relatively new and not yet feature complete (i.e. no encrypted "
+"media)."
 msgstr ""
 "तपाईं यहाँ भीओआईपी खाता थप्न सक्नुहुन्छ। यसले तपाईंलाई एसआईपी प्रोटोकल प्रयोग गरेर भीओआईपी कलहरू राख्न र "
 "प्राप्त गर्न अनुमति दिन्छ। यो सुविधा अझै पनि अपेक्षाकृत नयाँ छ र अझै सुविधा पूर्ण छैन (जस्तै कुनै एन्क्रिप्टेड "
@@ -364,7 +360,7 @@ msgstr "एसएमएस पठाउनुहोस्"
 msgid "On hold"
 msgstr "होल्डमा"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "सम्पर्कहरू छैनन्"
 
@@ -397,11 +393,11 @@ msgstr "भिओआईपी खाताहरू"
 msgid "_About Calls"
 msgstr "कलहरू बारेमा"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "भिओआईपी ठेगाना प्रविष्टि गर्नुहोस्"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "सिप खाता"
 
@@ -464,18 +460,15 @@ msgstr "कल विच्छेदन गरियो (अज्ञात क�
 msgid "ModemManager unavailable"
 msgstr "मोडेम प्रबन्धक उपलब्ध छैन"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
-#: plugins/provider/ofono/calls-ofono-provider.c:96
+#: plugins/provider/mm/calls-mm-provider.c:86 plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "भ्वाइस सक्षम मोडेम उपलब्ध छैन"
 
-#: plugins/provider/mm/calls-mm-provider.c:88
-#: plugins/provider/ofono/calls-ofono-provider.c:98
+#: plugins/provider/mm/calls-mm-provider.c:88 plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "सामान्य"
 
-#: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/mm/calls-mm-provider.c:458 plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "सुरुआत गरियो"
 
@@ -483,12 +476,12 @@ msgstr "सुरुआत गरियो"
 msgid "DBus unavailable"
 msgstr "डीबस उपलब्ध छैन"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "गुप्तीकरण होइन"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "गुप्तिकरण बल गर्नुहोस्"
 
@@ -513,16 +506,16 @@ msgid "Server"
 msgstr "सर्भर"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "नाम प्रदर्शन गर्नुहोस् (वैकल्पिक)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "प्रयोगकर्ता आईडी"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "पासवर्ड"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "नाम प्रदर्शन गर्नुहोस् (वैकल्पिक)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -536,13 +529,20 @@ msgstr "यातायात"
 msgid "Media Encryption"
 msgstr "मिडिया गुप्तीकरण गर्नुहोस्"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "प्रोक्सी (वैकल्पिक)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "फोन कलका लागि प्रयोग गर्नुहोस्"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "स्वतः जडान गर्नुहोस्"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "सुरुआतमा मुख्य सञ्झ्याल प्रस्तुत गर्ने या नगर्ने"
 
 #~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
 #~ msgstr "यातायातको रूपमा टीएलएस बिना एसआरटीपीका लागि एसडीईएस प्रयोग गर्न अनुमति दिने या नगर्ने"
@@ -564,6 +564,3 @@ msgstr "स्वतः जडान गर्नुहोस्"
 
 #~ msgid "Manage Account"
 #~ msgstr "खाता ब्यबस्थापन"
-
-#~ msgid "Optional"
-#~ msgstr "वैकल्पिक"
