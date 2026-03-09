@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2026-01-25 18:22+0000\n"
+"POT-Creation-Date: 2026-02-28 12:18+0000\n"
 "PO-Revision-Date: 2026-01-27 17:03+0100\n"
-"Last-Translator: Jordi Mas i Hernàndez <jmas@sofcatala.org>\n"
+"Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgid ""
 "calls using the SIP protocol."
 msgstr ""
 "Trucades és un gestor de trucades per al GNOME. Es pot usar amb un mòbil per "
-"a les trucades de tota la vida com també per a trucader VoIP usant el "
+"a les trucades de tota la vida com també per a trucades VoIP usant el "
 "protocol SIP."
 
 #. developer_name tag deprecated with Appstream 1.0
@@ -75,11 +75,11 @@ msgstr "Si les trucades ha d'usar l'origen predeterminat automàticament"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
-msgstr "El codi de país tal i com el mostra el módem"
+msgstr "El codi de país tal i com el mostra el mòdem"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr "El codi de país s'usa per a cerca el nom del contacte"
+msgstr "El codi de país s'usa per a cercar el nom del contacte"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -555,26 +555,3 @@ msgstr "Utilitza per a trucades telefòniques"
 msgid "Automatically Connect"
 msgstr "Connecta automàticament"
 
-#~ msgid "Whether to present the main window on startup"
-#~ msgstr "Indica si s'ha de presentar la finestra principal a l'inici"
-
-#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-#~ msgstr "Si es permet usar SDES per a SRTP sense TLS com a transport"
-
-#~ msgid "Account overview"
-#~ msgstr "Resum del compte"
-
-#~ msgid "Call"
-#~ msgstr "Trucada"
-
-#~ msgid "_Keyboard shortcuts"
-#~ msgstr "_Dreceres del teclat"
-
-#~ msgid "_Help"
-#~ msgstr "_Ajuda"
-
-#~ msgid "Add Account"
-#~ msgstr "Afegeix un compte"
-
-#~ msgid "Manage Account"
-#~ msgstr "Administra el compte"
