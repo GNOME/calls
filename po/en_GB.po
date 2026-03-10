@@ -2,54 +2,54 @@
 # Copyright (C) 2020 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Zander Brown <zbrown@gnome.org>, 2020.
-# Bruce Cowan <bruce@bcowan.me.uk>, 2022-2023.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2022-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-21 10:48+0000\n"
-"PO-Revision-Date: 2024-08-22 15:36+0100\n"
-"Last-Translator: Andi Chandler <andi@gowling.com>\n"
-"Language-Team: English - United Kingdom <en@li.org>\n"
+"POT-Creation-Date: 2026-02-28 12:18+0000\n"
+"PO-Revision-Date: 2026-03-09 11:27+0000\n"
+"Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
+"Language-Team: British English <en@li.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Gtranslator 49.0\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Calls"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "Phone"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "A phone dialler and call handler"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telephone;Call;Phone;Dial;Dialler;PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "Calls (daemon)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "A phone dialler and call handler (daemon mode)"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "Make phone and SIP calls"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
 "Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
@@ -60,17 +60,17 @@ msgstr ""
 "calls using the SIP protocol."
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "Placing a call"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "The call history"
 
@@ -107,7 +107,6 @@ msgid "Allow insecure crypto key exchange for encrypted media."
 msgstr "Allow insecure crypto key exchange for encrypted media."
 
 #: data/org.gnome.Calls.gschema.xml:32
-#| msgid "Set to true if you want to allow with keys exchanged in cleartext."
 msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
@@ -216,41 +215,37 @@ msgstr "Add new account"
 msgid "VoIP Accounts"
 msgstr "VoIP Accounts"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Tried dialling invalid tel URI `%s'"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Don't know how to open `%s'"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "The name of the plug-ins to load"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "PLUG-IN"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "Whether to present the main window on startup"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Dial a telephone number"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMBER"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Enable verbose debug messages"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Print current version"
 
@@ -258,7 +253,7 @@ msgstr "Print current version"
 msgid "Anonymous caller"
 msgstr "Anonymous caller"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -267,51 +262,47 @@ msgstr ""
 "%s\n"
 "yesterday"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Police"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulance"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Fire Brigade"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Mountain Rescue"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "Zander Brown <zbrown@gnome.org>\n"
 "Bruce Cowan <bruce@bcowan.me.uk>\n"
 "Andi Chandler <andi@gowling.com>"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Can't place calls: No modem or VoIP account available"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Can't place calls: No plug-in loaded"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Recent"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Contacts"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Dial Pad"
 
@@ -357,19 +348,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "_Add Account"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "_Delete Call"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "_Copy number"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "_Add contact"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "_Send SMS"
 
@@ -377,7 +368,7 @@ msgstr "_Send SMS"
 msgid "On hold"
 msgstr "On hold"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "No Contacts Found"
 
@@ -385,32 +376,36 @@ msgstr "No Contacts Found"
 msgid "No Recent Calls"
 msgstr "No Recent Calls"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "_Cancel"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "_Close"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "_Send"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_VoIP Accounts"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "_About Calls"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Enter a VoIP address"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP Account"
 
@@ -484,7 +479,7 @@ msgid "Normal"
 msgstr "Normal"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "Initialised"
 
@@ -492,12 +487,12 @@ msgstr "Initialised"
 msgid "DBus unavailable"
 msgstr "DBus unavailable"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "No encryption"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Force encryption"
 
@@ -522,17 +517,16 @@ msgid "Server"
 msgstr "Server"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-#| msgid "Display Name"
-msgid "Display Name (Optional)"
-msgstr "Display Name (Optional)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "User ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Password"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Display Name (Optional)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -546,201 +540,14 @@ msgstr "Transport"
 msgid "Media Encryption"
 msgstr "Media Encryption"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Proxy (Optional)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Use for Phone Calls"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Automatically Connect"
-
-#~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
-#~ msgstr "Whether to allow using SDES for SRTP without TLS as the transport"
-
-#~ msgid "Account overview"
-#~ msgstr "Account overview"
-
-#~ msgid "Call"
-#~ msgstr "Call"
-
-#~ msgid "_Keyboard shortcuts"
-#~ msgstr "_Keyboard shortcuts"
-
-#~ msgid "_Help"
-#~ msgstr "_Help"
-
-#~ msgid "Add Account"
-#~ msgstr "Add Account"
-
-#~ msgid "Manage Account"
-#~ msgstr "Manage Account"
-
-#~ msgid "Optional"
-#~ msgstr "Optional"
-
-#~ msgid "Enter a number"
-#~ msgstr "Enter a number"
-
-#~ msgid "Dial"
-#~ msgstr "Dial"
-
-#~ msgid "Delete character in front of cursor"
-#~ msgstr "Delete character in front of cursor"
-
-#~ msgid "View"
-#~ msgstr "View"
-
-#~ msgid "The CallsBestMatchView to monitor"
-#~ msgstr "The CallsBestMatchView to monitor"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "The display name of the best match"
-#~ msgstr "The display name of the best match"
-
-#~ msgid "Inbound"
-#~ msgstr "Inbound"
-
-#~ msgid "Whether the call is inbound"
-#~ msgstr "Whether the call is inbound"
-
-#~ msgid "Number"
-#~ msgstr "Number"
-
-#~ msgid "The number the call is connected to if known"
-#~ msgstr "The number the call is connected to if known"
-
-#~ msgid ""
-#~ "The name of the party the call is connected to, if the network provides it"
-#~ msgstr ""
-#~ "The name of the party the call is connected to, if the network provides it"
-
-#~ msgid "State"
-#~ msgstr "State"
-
-#~ msgid "The current state of the call"
-#~ msgstr "The current state of the call"
-
-#~ msgid "The party participating in the call"
-#~ msgstr "The party participating in the call"
-
-#~ msgid "Calling..."
-#~ msgstr "Calling..."
-
-#~ msgid "Data for the call this display will be associated with"
-#~ msgstr "Data for the call this display will be associated with"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "The row ID"
-#~ msgstr "The row ID"
-
-#~ msgid "Target"
-#~ msgstr "Target"
-
-#~ msgid "The PTSN phone number or other address of the call"
-#~ msgstr "The PTSN phone number or other address of the call"
-
-#~ msgid "Whether the call was an inbound call"
-#~ msgstr "Whether the call was an inbound call"
-
-#~ msgid "Start"
-#~ msgstr "Start"
-
-#~ msgid "Time stamp of the start of the call"
-#~ msgstr "Time stamp of the start of the call"
-
-#~ msgid "Answered"
-#~ msgstr "Answered"
-
-#~ msgid "Time stamp of when the call was answered"
-#~ msgstr "Time stamp of when the call was answered"
-
-#~ msgid "End"
-#~ msgstr "End"
-
-#~ msgid "Time stamp of the end of the call"
-#~ msgstr "Time stamp of the end of the call"
-
-#~ msgid "Record"
-#~ msgstr "Record"
-
-#~ msgid "The call record for this row"
-#~ msgstr "The call record for this row"
-
-#~ msgid "Interface for libfolks"
-#~ msgstr "Interface for libfolks"
-
-#~ msgid "The holder for this call"
-#~ msgstr "The holder for this call"
-
-#~ msgid "Encrypted"
-#~ msgstr "Encrypted"
-
-#~ msgid "model"
-#~ msgstr "model"
-
-#~ msgid "The data store containing call records"
-#~ msgstr "The data store containing call records"
-
-#~ msgid "Can't place calls: No SIM card"
-#~ msgstr "Can't place calls: No SIM card"
-
-#~ msgid "Record store"
-#~ msgstr "Record store"
-
-#~ msgid "The store of call records"
-#~ msgstr "The store of call records"
-
-#~ msgid "The party's name"
-#~ msgstr "The party's name"
-
-#~ msgid "Status"
-#~ msgstr "Status"
-
-#~ msgid "A text string describing the status for display to the user"
-#~ msgstr "A text string describing the status for display to the user"
-
-#~ msgid "Incoming phone call"
-#~ msgstr "Incoming phone call"
-
-#~ msgid "Mute"
-#~ msgstr "Mute"
-
-#~ msgid "Speaker"
-#~ msgstr "Speaker"
-
-#~ msgid "Hold"
-#~ msgstr "Hold"
-
-#~ msgid "Hang up"
-#~ msgstr "Hang up"
-
-#~ msgid "Answer"
-#~ msgstr "Answer"
-
-#~ msgid "Hide the dial pad"
-#~ msgstr "Hide the dial pad"
-
-#~ msgid "Call the party"
-#~ msgstr "Call the party"
-
-#~ msgid "+441234567890"
-#~ msgstr "+441234567890"
-
-#~ msgid "This call is not encrypted"
-#~ msgstr "This call is not encrypted"
-
-#~ msgid "New call…"
-#~ msgstr "New call…"
-
-#~ msgid "Menu"
-#~ msgstr "Menu"
-
-#~ msgid "No modem found"
-#~ msgstr "No modem found"
-
-#~ msgid "Backspace through number"
-#~ msgstr "Backspace through number"
