@@ -1,3 +1,22 @@
+gnome-calls (50.0) unstable; urgency=medium
+
+  [ Pawan Chitrakar ]
+  * Update Nepali translation
+
+  [ Victoria ]
+  * Update Polish translation
+
+  [ Alan Mortensen ]
+  * Update Danish translation
+
+  [ Jordi Mas ]
+  * Update Catalan translation
+
+  [ Bruce Cowan ]
+  * Update British English translation
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Sun, 15 Mar 2026 05:27:12 +0100
+
 gnome-calls (50~rc.0) unstable; urgency=medium
 
   [ Guido Günther ]

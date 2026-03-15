@@ -1,6 +1,6 @@
-gnome-calls 50~rc.0
--------------------
-Released February 2026
+gnome-calls 50.0
+----------------
+Released March 2026
 * Lookup emergency numbers from mobile-broadband-provider-info
 * Local ringback while alerting peer for SIP calls
   (needs new dependency: gsound)
@@ -26,6 +26,7 @@ Released February 2026
     * Sebastian Krzyszkowiak
 * UI translations:
     * Abduqadir Abliz (ug)
+    * Alan Mortensen (da)
     * Anders Jonsson (sv)
     * Antonio Marin (ro)
     * Artur S0 (ru)
@@ -33,6 +34,7 @@ Released February 2026
     * Aurimas Aurimas Černius (lt)
     * Balázs Úr (hu)
     * Baurzhan Muftakhidinov (kk)
+    * Bruce Cowan (en_GB)
     * Changwoo Ryu (ko)
     * Daniel Mustieles (es)
     * Daniel Rusek (cs)
@@ -44,16 +46,19 @@ Released February 2026
     * Guillaume Bernard (fr)
     * Hugo Carvalho (pt)
     * Jiri Grönroos (fi)
+    * Jordi Mas (ca)
     * Juliano de Souza Camargo (pt_BR)
     * Jürgen Benvenuti (de)
-    * luming zh (zh_CN)
     * Martin (sl)
+    * Pawan Chitrakar (ne)
     * Quentin PAGÈS (oc)
     * Sabri Ünal (tr)
-    * twlvnn kraftwerk (bg)
     * Victor Dargallo (ca)
+    * Victoria (pl)
     * Yaron Shahrabani (he)
     * Yuri Chornoivan (uk)
+    * luming zh (zh_CN)
+    * twlvnn kraftwerk (bg)
 
 gnome-calls 49.1.1
 ------------------
