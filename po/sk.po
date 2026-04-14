@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-03-15 04:32+0000\n"
-"PO-Revision-Date: 2026-03-31 00:25+0200\n"
+"PO-Revision-Date: 2026-04-14 23:41+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -55,7 +55,7 @@ msgid ""
 "calls using the SIP protocol."
 msgstr ""
 "Aplikácia Hovory je jednoduchý, elegantný telefónny číselník a správca "
-"hovorov pre GNOME. Je možné ho používať s mobilným modemom pre staré dobré "
+"hovorov pre GNOME. Je možné ju používať s mobilným modemom pre staré dobré "
 "telefónne hovory, no rovnako tak aj pre VoIP hovory s využitím protokolu SIP."
 
 #. developer_name tag deprecated with Appstream 1.0
@@ -75,7 +75,7 @@ msgstr "História hovorov"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
-msgstr "Či majú hovory automaticky používať predvolený pôvod"
+msgstr "Či majú hovory automaticky používať predvolený zdroj"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
@@ -91,8 +91,7 @@ msgstr "Zásuvné moduly, ktoré sa majú automaticky načítať"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr ""
-"Tieto zásuvné moduly budú automaticky načítané pri spustení aplikácie."
+msgstr "Tieto zásuvné moduly budú automaticky načítané pri spustení aplikácie."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -100,7 +99,7 @@ msgstr "Zvukové kodeky v preferovanom poradí na použitie pre hovory VoIP"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr "Preferované zvukové kodeky pre hovory VoIP (ak je k dispozícii)"
+msgstr "Preferované zvukové kodeky pre hovory VoIP (ak sú k dispozícii)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Allow insecure crypto key exchange for encrypted media."
@@ -112,7 +111,7 @@ msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
 msgstr ""
-"Zapnite, ak chcete povoliť výmenu kľúčov v formáte čistého textu. V opačnom "
+"Zapnite, ak chcete povoliť výmenu kľúčov vo formáte čistého textu. V opačnom "
 "prípade budete musieť nastaviť TLS transport."
 
 #: src/calls-account.c:163
@@ -314,7 +313,7 @@ msgstr "Klávesnica"
 
 #: src/calls-notifier.c:53
 msgid "Missed call"
-msgstr "Zmeškané hovory"
+msgstr "Zmeškaný hovor"
 
 #. %s is a name here
 #: src/calls-notifier.c:75
@@ -372,7 +371,7 @@ msgstr "Odo_slať správu SMS"
 
 #: src/ui/call-selector-item.ui:22
 msgid "On hold"
-msgstr "Pozdržaný"
+msgstr "Podržaný"
 
 #: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
@@ -410,7 +409,7 @@ msgstr "_O aplikácii Hovory"
 # placeholder
 #: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
-msgstr "Zadajte adresu protokolu VoIP"
+msgstr "Zadajte adresu VoIP"
 
 #: src/ui/new-call-box.ui:60
 msgid "SIP Account"
@@ -548,10 +547,8 @@ msgid "Media Encryption"
 msgstr "Šifrovanie multimédií"
 
 #: plugins/provider/sip/sip-account-widget.ui:113
-#, fuzzy
-#| msgid "Optional"
 msgid "Proxy (Optional)"
-msgstr "Voliteľné"
+msgstr "Proxy (voliteľné)"
 
 #: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
