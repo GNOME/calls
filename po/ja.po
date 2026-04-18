@@ -2,52 +2,257 @@
 # Copyright (C) 2020 Calls' COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Scott Anecito <noreplygitlab@protonmail.com>, 2020.
+# Ryo Nakano <ryonakaknock3@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://source.puri.sm/Librem5/calls/issues\n"
-"POT-Creation-Date: 2020-05-29 14:30+0200\n"
-"PO-Revision-Date: 2020-05-29 17:31-0700\n"
-"Last-Translator: Scott Anecito <noreplygitlab@protonmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-04-18 10:27+0900\n"
+"Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.04.1\n"
 
-#: src/calls-application.c:308 src/calls-main-window.c:112
-#: src/ui/call-window.ui:11 src/ui/main-window.ui:8
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
-msgstr "通話"
+msgstr "電話"
 
-#: src/calls-application.c:513
-msgid "The name of the plugin to use for the call Provider"
-msgstr "通話のプロバイダーのために使えプラグインの名前"
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Phone"
+msgstr "電話"
 
-#: src/calls-application.c:514
+#: data/org.gnome.Calls.desktop.in:4
+msgid "A phone dialer and call handler"
+msgstr "電話ダイヤラーおよび通話ハンドラー"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;電話;通話;ダイヤル;ダイヤラー;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:2
+msgid "Calls (daemon)"
+msgstr "電話 (デーモン)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:4
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "電話ダイヤラーおよび通話ハンドラー (デーモンモード)"
+
+#: data/org.gnome.Calls.metainfo.xml.in:7
+msgid "Make phone and SIP calls"
+msgstr "電話や SIP 電話をかけます"
+
+#: data/org.gnome.Calls.metainfo.xml.in:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"“電話”は、GNOME 向けのシンプルで洗練された電話ダイヤラー兼通話ハンドラーで"
+"す。携帯電話のモデムと連携する通常の通話に加えて、SIP プロトコルを使用した "
+"VoIP 通話にも対応しています。"
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml.in:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:33
+msgid "Placing a call"
+msgstr "発信中の画面"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:38
+msgid "The call history"
+msgstr "通話履歴"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "Whether calls should automatically use the default origin"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "The country code as reported by the modem"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "The country code is used for contact name lookup"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "The plugins to load automatically"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "These plugins will be automatically loaded on application startup."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Audio codecs to use for VoIP calls in order of preference"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "The preferred audio codecs to use for VoIP calls (if available)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "Allow insecure crypto key exchange for encrypted media."
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "デフォルト (未初期化) の状態"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "アカウントを初期化中…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "アカウントの終了処理中…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "サーバーに接続試行中…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "アカウントはオンライン"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "サーバーから切断中…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "アカウントはオフライン"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "アカウントエラーが発生"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "理由なし"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "初期化を開始しました"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "初期化が完了しました"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "終了処理を開始しました"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "終了処理が完了しました"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "認証情報が未設定です"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "接続を開始中"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "接続がタイムアウトしました"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "ドメイン名を解決できませんでした"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "サーバーがユーザー名またはパスワードを受け付けませんでした"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "接続が完了しました"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "切断処理を開始中"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "切断処理が完了しました"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "内部エラーが発生しました"
+
+#: src/calls-account-overview.c:193
+#, c-format
+msgid "Edit account: %s"
+msgstr "アカウントを編集: %s"
+
+#: src/calls-account-overview.c:200
+msgid "Add new account"
+msgstr "新しいアカウントを追加"
+
+#: src/calls-account-overview.c:441
+msgid "VoIP Accounts"
+msgstr "VoIP アカウント"
+
+#: src/calls-application.c:362
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "不正な tel URI `%s' に発信しようとしました"
+
+#: src/calls-application.c:746
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "`%s' を開く方法は実装されていません"
+
+#: src/calls-application.c:817
+msgid "The name of the plugins to load"
+msgstr "読み込むプラグインの名前"
+
+#: src/calls-application.c:818
 msgid "PLUGIN"
-msgstr "プラグイン"
+msgstr "PLUGIN"
 
-#: src/calls-application.c:519
-msgid "Whether to present the main window on startup"
-msgstr "起動時にメインウィンドウを表示"
+#: src/calls-application.c:823
+msgid "Dial a telephone number"
+msgstr "電話番号に発信する"
 
-#: src/calls-application.c:525
-msgid "Dial a number"
-msgstr "電話番号を入力"
-
-#: src/calls-application.c:526
+#: src/calls-application.c:824
 msgid "NUMBER"
-msgstr "電話番号"
+msgstr "NUMBER"
 
-#: src/calls-call-display.c:246
-msgid "Calling..."
-msgstr "発信中。。。"
+#: src/calls-application.c:829
+msgid "Enable verbose debug messages"
+msgstr "詳細なデバッグメッセージを有効にする"
 
-#: src/calls-call-record-row.c:103
+#: src/calls-application.c:835
+msgid "Print current version"
+msgstr "現在のバージョンを表示する"
+
+#: src/calls-best-match.c:504
+msgid "Anonymous caller"
+msgstr "不明な発信者"
+
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -56,128 +261,292 @@ msgstr ""
 "%s\n"
 "昨日"
 
-#: src/calls-main-window.c:113
+#: src/calls-emergency-call-types.c:337
+msgid "Police"
+msgstr "警察"
+
+#: src/calls-emergency-call-types.c:340
+msgid "Ambulance"
+msgstr "救急"
+
+#: src/calls-emergency-call-types.c:343
+msgid "Fire Brigade"
+msgstr "消防"
+
+#: src/calls-emergency-call-types.c:346
+msgid "Mountain Rescue"
+msgstr "山岳救助"
+
+#: src/calls-main-window.c:121
 msgid "translator-credits"
-msgstr "Scott Anecito <noreplygitlab@protonmail.com>"
+msgstr ""
+"Scott Anecito <noreplygitlab@protonmail.com>\n"
+"Ryo Nakano <ryonakaknock3@gmail.com>"
 
-#: src/calls-main-window.c:176
-msgid "Can't place calls: No SIM card"
-msgstr "電話できない：SIMカードなし"
+#: src/calls-main-window.c:320
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "発信できません: 利用可能なモデムまたは VoIP アカウントがありません"
 
-#: src/calls-main-window.c:181
-msgid "Can't place calls: No backend service"
-msgstr "電話できない：バックエンドサービスなし"
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No plugin loaded"
+msgstr "発信できません: プラグインが読み込まれていません"
 
-#: src/calls-main-window.c:185
-msgid "Can't place calls: No plugin"
-msgstr "電話できない：プラグインなし"
-
-#: src/calls-main-window.c:213 src/ui/call-display.ui:270
-msgid "Dial Pad"
-msgstr "ダイヤルパッド"
-
-#: src/calls-main-window.c:223
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "最近"
 
-#: src/calls-ringer.c:204
-msgid "Incoming call"
-msgstr "着信"
-
-#: src/ui/call-display.ui:33
-msgid "Incoming phone call"
-msgstr "電話の着信"
-
-#: src/ui/call-display.ui:124
-msgid "Mute"
-msgstr "ミュート"
-
-#: src/ui/call-display.ui:159
-msgid "Speaker"
-msgstr "スピーカー"
-
-#: src/ui/call-display.ui:193
-msgid "Add call"
-msgstr "通話を追加"
-
-#: src/ui/call-display.ui:236
-msgid "Hold"
-msgstr "保留"
-
-#: src/ui/call-display.ui:326
-msgid "Hang up"
-msgstr "終了"
-
-#: src/ui/call-display.ui:357
-msgid "Answer"
-msgstr "応答"
-
-#: src/ui/call-display.ui:439
-msgid "Hide the dial pad"
-msgstr "ダイヤルパッドを非表示"
-
-#: src/ui/call-record-row.ui:65
-msgid "Call the party"
-msgstr "人に通話する"
-
-#: src/ui/call-selector-item.ui:31
-msgid "+441234567890"
-msgstr "+441234567890"
-
-#: src/ui/call-selector-item.ui:44
-msgid "On hold"
-msgstr "保留中"
-
-#: src/ui/encryption-indicator.ui:23
-msgid "This call is not encrypted"
-msgstr "この通話は暗号化されていません"
-
-#: src/ui/encryption-indicator.ui:45
-msgid "This call is encrypted"
-msgstr "この通話は暗号化されている"
-
-#: src/ui/history-box.ui:23
-msgid "No Recent Calls"
-msgstr "最近の通話なし"
-
-#: src/ui/history-header-bar.ui:8
-msgid "Recent Calls"
-msgstr "最近の通話"
-
-#: src/ui/history-header-bar.ui:21
-msgid "New call…"
-msgstr "新しい通話。。。"
-
-#. Translators: tooltip for the application menu button
-#: src/ui/history-header-bar.ui:40
-msgid "Menu"
-msgstr "メニュー"
-
-#: src/ui/history-header-bar.ui:71
-msgid "About Calls"
-msgstr "コールズについて"
-
-#: src/ui/main-window.ui:36
-msgid "No modem found"
-msgstr "モデムを見つかりない"
-
-#: src/ui/main-window.ui:56
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "連絡先"
 
-#: src/ui/new-call-box.ui:101
-msgid "Dial"
-msgstr "ダイヤル"
+#: src/calls-main-window.c:379
+msgid "Dial Pad"
+msgstr "ダイヤルパッド"
 
-#: src/ui/new-call-box.ui:129
-msgid "Backspace through number"
-msgstr "番号を削除"
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "不在着信"
 
-#: src/ui/new-call-header-bar.ui:8
+#. %s is a name here
+#: src/calls-notifier.c:75
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "<b>%s</b> からの不在着信"
+
+#. %s is a id here
+#: src/calls-notifier.c:78
+#, c-format
+msgid "Missed call from %s"
+msgstr "%s からの不在着信"
+
+#: src/calls-notifier.c:80
+msgid "Missed call from unknown caller"
+msgstr "不明な発信者からの不在着信"
+
+#: src/calls-notifier.c:86
+msgid "Call back"
+msgstr "折り返す"
+
+#: src/ui/account-overview.ui:27
+msgid "Add VoIP Accounts"
+msgstr "VoIP アカウントを追加"
+
+#: src/ui/account-overview.ui:29
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"ここから VoIP アカウントを追加できます。これにより、SIP プロトコルを使用して "
+"VoIP 電話の発信と着信が可能になります。この機能はまだ比較的新しいため、機能が"
+"完全ではありません (例: 暗号化されたメディアは利用不可)。"
+
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
+msgid "_Add Account"
+msgstr "アカウントを追加(_A)"
+
+#: src/ui/call-record-row.ui:67
+msgid "_Delete Call"
+msgstr "通話を削除(_D)"
+
+#: src/ui/call-record-row.ui:71
+msgid "_Copy number"
+msgstr "電話番号をコピー(_C)"
+
+#: src/ui/call-record-row.ui:76
+#| msgid "Contacts"
+msgid "_Add contact"
+msgstr "連絡先に追加(_A)"
+
+#: src/ui/call-record-row.ui:81
+msgid "_Send SMS"
+msgstr "SMS を送信(_S)"
+
+#: src/ui/call-selector-item.ui:22
+msgid "On hold"
+msgstr "保留中"
+
+#: src/ui/contacts-box.ui:47
+msgid "No Contacts Found"
+msgstr "連絡先なし"
+
+#: src/ui/history-box.ui:13
+msgid "No Recent Calls"
+msgstr "最近の通話なし"
+
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: src/ui/main-window.ui:87
+msgid "_Close"
+msgstr "閉じる(_C)"
+
+#: src/ui/main-window.ui:93
+msgid "_Send"
+msgstr "送信(_S)"
+
+#: src/ui/main-window.ui:155
+msgid "_VoIP Accounts"
+msgstr "VoIP アカウント(_V)"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:169
+msgid "_About Calls"
+msgstr "“電話”について(_A)"
+
+#: src/ui/new-call-box.ui:36
+msgid "Enter a VoIP address"
+msgstr "VoIP アドレスを入力"
+
+#: src/ui/new-call-box.ui:60
+msgid "SIP Account"
+msgstr "SIP アカウント"
+
+#: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
 msgstr "新しい通話"
 
-#: src/ui/new-call-header-bar.ui:21
+#: src/ui/new-call-header-bar.ui:13
 msgid "Back"
 msgstr "戻る"
- 
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "不明な理由"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "通話を開始しました"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "新しい着信"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "通話に出ました"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "通話が終了しました"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "通話が切断されました (取り込み中または着信拒否)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "通話が切断されました (間違った ID またはネットワークの問題)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "通話が切断されました (音声チャネルの設定中にエラー)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "通話を転送しました"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "通話を自動転送しました"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "通話が切断されました (不明な理由コード %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager が利用できません"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "利用可能な音声対応モデムがありません"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "正常"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:544
+msgid "Initialized"
+msgstr "初期化済み"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus が利用できません"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:644
+msgid "No encryption"
+msgstr "暗号化なし"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:651
+msgid "Force encryption"
+msgstr "暗号化を強制"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "暗号化キーの交換が成功しませんでした"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "_Log In"
+msgstr "ログイン(_L)"
+
+#: plugins/provider/sip/sip-account-widget.ui:28
+msgid "_Apply"
+msgstr "適用(_A)"
+
+#: plugins/provider/sip/sip-account-widget.ui:38
+msgid "_Delete"
+msgstr "削除(_D)"
+
+#: plugins/provider/sip/sip-account-widget.ui:56
+msgid "Server"
+msgstr "サーバー"
+
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "User ID"
+msgstr "ユーザー ID"
+
+#: plugins/provider/sip/sip-account-widget.ui:72
+msgid "Password"
+msgstr "パスワード"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "表示名 (任意)"
+
+#: plugins/provider/sip/sip-account-widget.ui:92
+msgid "Port"
+msgstr "ポート"
+
+#: plugins/provider/sip/sip-account-widget.ui:101
+msgid "Transport"
+msgstr "伝送方式"
+
+#: plugins/provider/sip/sip-account-widget.ui:107
+msgid "Media Encryption"
+msgstr "メディアの暗号化"
+
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "プロキシ (任意)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Use for Phone Calls"
+msgstr "発信に使う"
+
+#: plugins/provider/sip/sip-account-widget.ui:129
+msgid "Automatically Connect"
+msgstr "自動的に接続"
