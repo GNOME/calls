@@ -2,15 +2,15 @@
 # Copyright (C) 2021 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Jan Jasper de Kroon <jajadekroon@gmail.com>, 2021-2022.
-# Nathan Follens <nfollens@gnome.org>, 2021-2024.
+# Nathan Follens <nfollens@gnome.org>, 2021-2024, 2026.
 # Philip Goto, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-10-23 08:55+0000\n"
-"PO-Revision-Date: 2024-10-27 22:07+0100\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-04-19 19:36+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -18,33 +18,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.9\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Oproepen"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "Telefoon"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "Een telefoonkiezer en oproepafhandelaar"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
-msgstr ""
-"Telephone;Call;Phone;Dial;Dialer;PSTN;Telefoon;Bellen;Telefoneren;Kiezen;"
-"Kiezer;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;Telefoon;Bellen;Telefoneren;Kiezen;Kiezer;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "Oproepen (daemon)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Een telefoonkiezer en oproepafhandelaar (daemonmodus)"
 
@@ -54,13 +52,13 @@ msgstr "Bellen en SIP-gesprekken voeren"
 
 #: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
-"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
-"be used with a cellular modem for plain old telephone calls as well as VoIP "
-"calls using the SIP protocol."
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used "
+"with a cellular modem for plain old telephone calls as well as VoIP calls using the "
+"SIP protocol."
 msgstr ""
-"Oproepen is een eenvoudige, elegante telefoonkiezer en oproepverwerker voor "
-"GNOME. Oproepen kan gebruikt worden met een mobiele modem voor goede oude "
-"telefoongesprekken, evenals VoIP-oproepen met het SIP-protocol."
+"Oproepen is een eenvoudige, elegante telefoonkiezer en oproepverwerker voor GNOME. "
+"Oproepen kan gebruikt worden met een mobiele modem voor goede oude telefoongesprekken, "
+"evenals VoIP-oproepen met het SIP-protocol."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
@@ -95,8 +93,7 @@ msgstr "De plug-ins om automatisch te laden"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr ""
-"Deze plug-ins worden automatisch geladen bij het opstarten van de toepassing."
+msgstr "Deze plug-ins worden automatisch geladen bij het opstarten van de toepassing."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -104,9 +101,7 @@ msgstr "Audiocodecs voor VoIP-oproepen in volgorde van voorkeur"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
-msgstr ""
-"De audiocodecs voor VoIP-oproepen in volgorde van voorkeur (indien "
-"beschikbaar)"
+msgstr "De audiocodecs voor VoIP-oproepen in volgorde van voorkeur (indien beschikbaar)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Allow insecure crypto key exchange for encrypted media."
@@ -114,11 +109,11 @@ msgstr "Sta onbeveiligde sleuteluitwisseling voor versleutelde media toe."
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
-"Set to true if you want to allow keys to be exchangable in cleartext, "
-"otherwise you must set the TLS transport."
+"Set to true if you want to allow keys to be exchangable in cleartext, otherwise you "
+"must set the TLS transport."
 msgstr ""
-"Zet aan als u wilt toestaan dat sleutels als platte tekst uitgewisseld "
-"kunnen worden; anders moet u het TLS-transportprotocol instellen."
+"Zet aan als u wilt toestaan dat sleutels als platte tekst uitgewisseld kunnen worden; "
+"anders moet u het TLS-transportprotocol instellen."
 
 #: src/calls-account.c:163
 msgid "Default (uninitialized) state"
@@ -221,41 +216,37 @@ msgstr "Nieuwe account toevoegen"
 msgid "VoIP Accounts"
 msgstr "VoIP-accounts"
 
-#: src/calls-application.c:373
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Geprobeerd ongeldige tel-URI `%s' te kiezen"
 
-#: src/calls-application.c:755
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Kan `%s' niet openen"
 
-#: src/calls-application.c:826
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "De naam van de plug-ins die ingeladen moeten worden"
 
-#: src/calls-application.c:827
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "PLUG-IN"
 
-#: src/calls-application.c:832
-msgid "Whether to present the main window on startup"
-msgstr "Of het hoofdvenster bij het opstarten moet worden weergegeven"
-
-#: src/calls-application.c:838
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Bel een telefoonnummer"
 
-#: src/calls-application.c:839
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:844
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Uitgebreide foutopsporingsberichten inschakelen"
 
-#: src/calls-application.c:850
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Huidige versie weergeven"
 
@@ -272,23 +263,23 @@ msgstr ""
 "%s\n"
 "gisteren"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Politie"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulance"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Brandweer"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Bergreddingsdienst"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
 "Jan Jasper de Kroon <jajadekroon@gmail.com>\n"
@@ -296,28 +287,24 @@ msgstr ""
 "Philip Goto\n"
 "Meer info over GNOME-NL https://nl.gnome.org"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan geen oproepen plaatsen: geen modem of VoIP-account beschikbaar"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Kan geen oproepen plaatsen: geen plug-in geladen"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Recent"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Contacten"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Toetsenblok"
 
@@ -351,14 +338,13 @@ msgstr "VoIP-accounts toevoegen"
 
 #: src/ui/account-overview.ui:29
 msgid ""
-"You can add VoIP account here. It will allow you to place and receive VoIP "
-"calls using the SIP protocol. This feature is still relatively new and not "
-"yet feature complete (i.e. no encrypted media)."
+"You can add VoIP account here. It will allow you to place and receive VoIP calls using "
+"the SIP protocol. This feature is still relatively new and not yet feature complete "
+"(i.e. no encrypted media)."
 msgstr ""
-"Hier kunt u een VoIP-account toevoegen. Hiermee kunt u VoIP-gesprekken "
-"plaatsen en ontvangen via het SIP-protocol. Deze functie is nog relatief "
-"nieuw en nog niet afgewerkt (o.a. versleutelde media worden nog niet "
-"ondersteund)."
+"Hier kunt u een VoIP-account toevoegen. Hiermee kunt u VoIP-gesprekken plaatsen en "
+"ontvangen via het SIP-protocol. Deze functie is nog relatief nieuw en nog niet "
+"afgewerkt (o.a. versleutelde media worden nog niet ondersteund)."
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
@@ -384,7 +370,7 @@ msgstr "Sms ver_sturen"
 msgid "On hold"
 msgstr "In de wacht"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Geen contacten gevonden"
 
@@ -392,32 +378,36 @@ msgstr "Geen contacten gevonden"
 msgid "No Recent Calls"
 msgstr "Geen recente oproepen"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "Sl_uiten"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "Ver_zenden"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_VoIP-accounts"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "_Over Oproepen"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Voer een VoIP-adres in"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP-account"
 
@@ -491,7 +481,7 @@ msgid "Normal"
 msgstr "Normaal"
 
 #: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "Geïnitialiseerd"
 
@@ -499,12 +489,12 @@ msgstr "Geïnitialiseerd"
 msgid "DBus unavailable"
 msgstr "DBus niet beschikbaar"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Geen versleuteling"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Altijd versleutelen"
 
@@ -529,16 +519,16 @@ msgid "Server"
 msgstr "Server"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Weergavenaam (optioneel)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Gebruikers-ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Wachtwoord"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Weergavenaam (optioneel)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -552,18 +542,24 @@ msgstr "Transportprotocol"
 msgid "Media Encryption"
 msgstr "Mediaversleuteling"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Proxy (optioneel)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Gebruiken voor telefoongesprekken"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Automatisch verbinden"
 
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "Of het hoofdvenster bij het opstarten moet worden weergegeven"
+
 #~ msgid "Whether to allow using SDES for SRTP without TLS as the transport"
 #~ msgstr ""
-#~ "Of het gebruik van SDES voor SRTP zonder TLS als transport moet worden "
-#~ "toegestaan"
+#~ "Of het gebruik van SDES voor SRTP zonder TLS als transport moet worden toegestaan"
 
 #~ msgid "Account overview"
 #~ msgstr "Accountoverzicht"
@@ -582,9 +578,6 @@ msgstr "Automatisch verbinden"
 
 #~ msgid "Manage Account"
 #~ msgstr "Account beheren"
-
-#~ msgid "Optional"
-#~ msgstr "Optioneel"
 
 #~ msgid "Enter a number"
 #~ msgstr "Voer een nummer in"
