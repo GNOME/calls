@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-03-15 04:32+0000\n"
-"PO-Revision-Date: 2026-04-14 23:41+0200\n"
+"PO-Revision-Date: 2026-04-19 10:53+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -56,7 +56,7 @@ msgid ""
 msgstr ""
 "Aplikácia Hovory je jednoduchý, elegantný telefónny číselník a správca "
 "hovorov pre GNOME. Je možné ju používať s mobilným modemom pre staré dobré "
-"telefónne hovory, no rovnako tak aj pre VoIP hovory s využitím protokolu SIP."
+"telefónne hovory, no rovnako tak aj pre hovory VoIP s využitím protokolu SIP."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
@@ -95,7 +95,7 @@ msgstr "Tieto zásuvné moduly budú automaticky načítané pri spustení aplik
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr "Zvukové kodeky v preferovanom poradí na použitie pre hovory VoIP"
+msgstr "Zvukové kodeky pre hovory VoIP v preferovanom poradí"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
@@ -223,7 +223,7 @@ msgstr "Pokus o vytočenie neplatnej tel URI `%s'"
 #: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
-msgstr "Nie je známe ako otvoriť adresu „%s“"
+msgstr "Neznámy spôsob otvorenia „%s“"
 
 # cmd line desc
 #: src/calls-application.c:817
@@ -276,7 +276,7 @@ msgstr "Záchranná služba"
 
 #: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
-msgstr "Požiarnici"
+msgstr "Hasičský zbor"
 
 #: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
@@ -319,7 +319,7 @@ msgstr "Zmeškaný hovor"
 #: src/calls-notifier.c:75
 #, c-format
 msgid "Missed call from <b>%s</b>"
-msgstr "Zmeškaný hovor od kontaktu <b>%s</b>"
+msgstr "Zmeškaný hovor od <b>%s</b>"
 
 #. %s is a id here
 #: src/calls-notifier.c:78
@@ -441,7 +441,7 @@ msgstr "Hovor bol prijatý"
 
 #: plugins/provider/mm/calls-mm-call.c:77
 msgid "Call ended"
-msgstr "Hovor ukončený"
+msgstr "Hovor bol ukončený"
 
 #: plugins/provider/mm/calls-mm-call.c:78
 msgid "Call disconnected (busy or call refused)"
