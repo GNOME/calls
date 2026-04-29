@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: calls gnome-41\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-03-15 04:32+0000\n"
-"PO-Revision-Date: 2026-04-19 10:53+0200\n"
+"PO-Revision-Date: 2026-04-29 19:27+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -58,6 +58,7 @@ msgstr ""
 "hovorov pre GNOME. Je možné ju používať s mobilným modemom pre staré dobré "
 "telefónne hovory, no rovnako tak aj pre hovory VoIP s využitím protokolu SIP."
 
+# |, no-check-spell
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
@@ -282,6 +283,7 @@ msgstr "Hasičský zbor"
 msgid "Mountain Rescue"
 msgstr "Horská záchranná služba"
 
+# |, no-check-spell
 #: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr ""
@@ -369,6 +371,7 @@ msgstr "Prid_ať kontakt"
 msgid "_Send SMS"
 msgstr "Odo_slať správu SMS"
 
+# well-spelled: Podržaný
 #: src/ui/call-selector-item.ui:22
 msgid "On hold"
 msgstr "Podržaný"
@@ -470,6 +473,7 @@ msgstr "Hovor bol odklonený"
 msgid "Call disconnected (unknown reason code %i)"
 msgstr "Hovor bol odpojený (neznámy kód príčiny %i)"
 
+# well-spelled: ModemManager
 #: plugins/provider/mm/calls-mm-provider.c:84
 msgid "ModemManager unavailable"
 msgstr "ModemManager nie je dostupný"
