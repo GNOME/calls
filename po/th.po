@@ -7,67 +7,66 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls gnome-46\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2024-08-21 10:48+0000\n"
-"PO-Revision-Date: 2024-09-09 15:58+0700\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-05-02 23:58+0700\n"
 "Last-Translator: \n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml:6
-#: src/calls-application.c:490 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "สายโทร"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "โทรศัพท์"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "ตัวเรียกเลขหมายโทรศัพท์และจัดการสายโทร"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "โทรศัพท์;สายโทร;เรียกเลขหมาย;ตัวเรียกเลขหมาย;PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "สายโทร (ดีมอน)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "ตัวเรียกเลขหมายโทรศัพท์และตัวจัดการสายโทร (โหมดดีมอน)"
 
-#: data/org.gnome.Calls.metainfo.xml:7
+#: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
 msgstr "โทรออกผ่านโทรศัพท์และ SIP"
 
-#: data/org.gnome.Calls.metainfo.xml:10
+#: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
-"Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used "
-"with a cellular modem for plain old telephone calls as well as VoIP calls using the "
-"SIP protocol."
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can be used with a "
+"cellular modem for plain old telephone calls as well as VoIP calls using the SIP protocol."
 msgstr ""
 "“สายโทร” เป็นตัวเรียกเลขหมายโทรศัพท์และจัดการสายโทรสำหรับ GNOME ที่เรียบง่ายและสวยงาม "
 "สามารถใช้กับโมเด็มเซลลูลาร์สำหรับการโทรแบบธรรมดา และการโทรผ่าน VoIP โดยใช้โพรโทคอล SIP"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.Calls.metainfo.xml:25
+#: data/org.gnome.Calls.metainfo.xml.in:25
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:33
+#: data/org.gnome.Calls.metainfo.xml.in:33
 msgid "Placing a call"
 msgstr "การโทรออก"
 
 #. Translators: A screenshot description.
-#: data/org.gnome.Calls.metainfo.xml:38
+#: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
 msgstr "ประวัติการโทร"
 
@@ -105,8 +104,8 @@ msgstr "อนุญาตให้มีการแลกเปลี่ยน
 
 #: data/org.gnome.Calls.gschema.xml:32
 msgid ""
-"Set to true if you want to allow keys to be exchangable in cleartext, otherwise you "
-"must set the TLS transport."
+"Set to true if you want to allow keys to be exchangable in cleartext, otherwise you must set "
+"the TLS transport."
 msgstr ""
 "กำหนดเป็น true หากคุณต้องการให้สามารถแลกเปลี่ยนคีย์ในรูปแบบข้อความธรรมดาที่อ่านได้ มิฉะนั้น "
 "คุณจะต้องตั้งค่าการส่งข้อมูลด้วย TLS"
@@ -212,41 +211,37 @@ msgstr "เพิ่มบัญชีใหม่"
 msgid "VoIP Accounts"
 msgstr "บัญชี VoIP"
 
-#: src/calls-application.c:367
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "พยายามเรียก URI โทรศัพท์ “%s” ซึ่งไม่ถูกต้อง"
 
-#: src/calls-application.c:732
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "ไม่ทราบว่าจะเปิด “%s” อย่างไร"
 
-#: src/calls-application.c:796
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "ชื่อของปลั๊กอินที่ต้องการให้โหลด"
 
-#: src/calls-application.c:797
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "ปลั๊กอิน"
 
-#: src/calls-application.c:802
-msgid "Whether to present the main window on startup"
-msgstr "กำหนดว่าจะแสดงหน้าต่างหลักเมื่อเริ่มทำงานหรือไม่"
-
-#: src/calls-application.c:808
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "เรียกเลขหมายโทรศัพท์"
 
-#: src/calls-application.c:809
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "เลขหมาย"
 
-#: src/calls-application.c:814
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "เปิดใช้ข้อความดีบั๊กแบบละเอียด"
 
-#: src/calls-application.c:820
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "แสดงเลขรุ่นปัจจุบัน"
 
@@ -254,7 +249,7 @@ msgstr "แสดงเลขรุ่นปัจจุบัน"
 msgid "Anonymous caller"
 msgstr "ผู้โทรไม่ระบุตัว"
 
-#: src/calls-call-record-row.c:95
+#: src/calls-call-record-row.c:97
 #, c-format
 msgid ""
 "%s\n"
@@ -263,48 +258,44 @@ msgstr ""
 "%s\n"
 "เมื่อวาน"
 
-#: src/calls-emergency-call-types.c:257
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "ตำรวจ"
 
-#: src/calls-emergency-call-types.c:260
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "รถพยาบาล"
 
-#: src/calls-emergency-call-types.c:263
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "หน่วยดับเพลิง"
 
-#: src/calls-emergency-call-types.c:266
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "กู้ภัยบนภูเขา"
 
-#: src/calls-main-window.c:119
+#: src/calls-main-window.c:121
 msgid "translator-credits"
 msgstr "Aefgh Threenine <aefgh39622@gmail.com>"
 
-#: src/calls-main-window.c:174
-msgid "USSD"
-msgstr "USSD"
-
-#: src/calls-main-window.c:312
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "ไม่สามารถโทรได้: ไม่มีโมเด็มหรือบัญชี VoIP"
 
-#: src/calls-main-window.c:314
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "ไม่สามารถโทรได้: ไม่ได้โหลดปลั๊กอินใด"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:356
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "ล่าสุด"
 
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "ผู้ติดต่อ"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "แป้นกดเลข"
 
@@ -338,9 +329,9 @@ msgstr "เพิ่มบัญชี VoIP"
 
 #: src/ui/account-overview.ui:29
 msgid ""
-"You can add VoIP account here. It will allow you to place and receive VoIP calls "
-"using the SIP protocol. This feature is still relatively new and not yet feature "
-"complete (i.e. no encrypted media)."
+"You can add VoIP account here. It will allow you to place and receive VoIP calls using the SIP "
+"protocol. This feature is still relatively new and not yet feature complete (i.e. no encrypted "
+"media)."
 msgstr ""
 "คุณสามารถเพิ่มบัญชี VoIP ได้ที่นี่ ซึ่งจะให้คุณสามารถโทรออกและรับสายผ่าน VoIP โดยใช้โพรโทคอล SIP ได้ "
 "คุณลักษณะนี้ยังคงใหม่อยู่และยังมีความสามารถไม่ครบถ้วน (เช่น ไม่รองรับการเข้ารหัสลับสื่อ)"
@@ -349,19 +340,19 @@ msgstr ""
 msgid "_Add Account"
 msgstr "เ_พิ่มบัญชี"
 
-#: src/ui/call-record-row.ui:64
+#: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
 msgstr "_ลบสายโทร"
 
-#: src/ui/call-record-row.ui:68
+#: src/ui/call-record-row.ui:71
 msgid "_Copy number"
 msgstr "_คัดลอกหมายเลข"
 
-#: src/ui/call-record-row.ui:73
+#: src/ui/call-record-row.ui:76
 msgid "_Add contact"
 msgstr "เ_พิ่มที่อยู่ติดต่อ"
 
-#: src/ui/call-record-row.ui:78
+#: src/ui/call-record-row.ui:81
 msgid "_Send SMS"
 msgstr "_ส่ง SMS"
 
@@ -369,7 +360,7 @@ msgstr "_ส่ง SMS"
 msgid "On hold"
 msgstr "กำลังรอสาย"
 
-#: src/ui/contacts-box.ui:37
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "ไม่พบที่อยู่ติดต่อ"
 
@@ -377,32 +368,36 @@ msgstr "ไม่พบที่อยู่ติดต่อ"
 msgid "No Recent Calls"
 msgstr "ไม่มีการโทรล่าสุด"
 
-#: src/ui/main-window.ui:76
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
 msgid "_Cancel"
 msgstr "_ยกเลิก"
 
-#: src/ui/main-window.ui:84
+#: src/ui/main-window.ui:87
 msgid "_Close"
 msgstr "_ปิด"
 
-#: src/ui/main-window.ui:90
+#: src/ui/main-window.ui:93
 msgid "_Send"
 msgstr "_ส่ง"
 
-#: src/ui/main-window.ui:143
+#: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
 msgstr "_บัญชี VoIP"
 
 #. "Calls" is the application name, do not translate
-#: src/ui/main-window.ui:157
+#: src/ui/main-window.ui:169
 msgid "_About Calls"
 msgstr "เ_กี่ยวกับ “สายโทร”"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "ป้อนที่อยู่ VoIP"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "บัญชี SIP"
 
@@ -465,18 +460,15 @@ msgstr "ถูกตัดสาย (ไม่ทราบสาเหตุ ร
 msgid "ModemManager unavailable"
 msgstr "ไม่มี ModemManager"
 
-#: plugins/provider/mm/calls-mm-provider.c:86
-#: plugins/provider/ofono/calls-ofono-provider.c:96
+#: plugins/provider/mm/calls-mm-provider.c:86 plugins/provider/ofono/calls-ofono-provider.c:96
 msgid "No voice-capable modem available"
 msgstr "ไม่มีโมเด็มที่รองรับความสามารถด้านเสียง"
 
-#: plugins/provider/mm/calls-mm-provider.c:88
-#: plugins/provider/ofono/calls-ofono-provider.c:98
+#: plugins/provider/mm/calls-mm-provider.c:88 plugins/provider/ofono/calls-ofono-provider.c:98
 msgid "Normal"
 msgstr "ปกติ"
 
-#: plugins/provider/mm/calls-mm-provider.c:458
-#: plugins/provider/ofono/calls-ofono-provider.c:546
+#: plugins/provider/mm/calls-mm-provider.c:458 plugins/provider/ofono/calls-ofono-provider.c:544
 msgid "Initialized"
 msgstr "เตรียมใช้งานแล้ว"
 
@@ -484,12 +476,12 @@ msgstr "เตรียมใช้งานแล้ว"
 msgid "DBus unavailable"
 msgstr "ไม่มี DBus"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "ไม่มีการเข้ารหัสลับ"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "บังคับการเข้ารหัสลับ"
 
@@ -514,16 +506,16 @@ msgid "Server"
 msgstr "เซิร์ฟเวอร์"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "ชื่อที่ใช้แสดง (ไม่จำเป็น)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ID ผู้ใช้"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "รหัสผ่าน"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "ชื่อที่ใช้แสดง (ไม่จำเป็น)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -537,10 +529,17 @@ msgstr "การส่งข้อมูล"
 msgid "Media Encryption"
 msgstr "การเข้ารหัสลับสื่อ"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "พร็อกซี (ไม่จำเป็น)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "ใช้สำหรับการคุยโทรศัพท์"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "เชื่อมต่อโดยอัตโนมัติ"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "กำหนดว่าจะแสดงหน้าต่างหลักเมื่อเริ่มทำงานหรือไม่"
