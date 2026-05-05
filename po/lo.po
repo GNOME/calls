@@ -1,0 +1,545 @@
+# Lao translation for calls.
+# Copyright (C) 2026 calls's COPYRIGHT HOLDER
+# This file is distributed under the same license as the calls package.
+# bone NI <bounkirdni@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calls main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-03-15 04:32+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Lao <lo@li.org>\n"
+"Language: lo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+msgid "Calls"
+msgstr "ການໂທ"
+
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
+msgid "Phone"
+msgstr "ໂທລະສັບ"
+
+#: data/org.gnome.Calls.desktop.in:4
+msgid "A phone dialer and call handler"
+msgstr "ຕົວໝາຍເລກໂທລະສັບ ແລະ ຕົວຈັດການການໂທ"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
+msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
+msgstr "Telephone;Call;Phone;Dial;Dialer;PSTN;ໂທລະສັບ;ການໂທ;ໝາຍເລກ;ແປ້ນໂທ;"
+
+#: data/org.gnome.Calls-daemon.desktop.in:2
+msgid "Calls (daemon)"
+msgstr "ການໂທ (ດິມອນ)"
+
+#: data/org.gnome.Calls-daemon.desktop.in:4
+msgid "A phone dialer and call handler (daemon mode)"
+msgstr "ຕົວໝາຍເລກໂທລະສັບ ແລະ ຕົວຈັດການການໂທ (ໂໝດດິມອນ)"
+
+#: data/org.gnome.Calls.metainfo.xml.in:7
+msgid "Make phone and SIP calls"
+msgstr "ໂທອອກຜ່ານໂທລະສັບ ແລະ SIP"
+
+#: data/org.gnome.Calls.metainfo.xml.in:10
+msgid ""
+"Calls is a simple, elegant phone dialer and call handler for GNOME. It can "
+"be used with a cellular modem for plain old telephone calls as well as VoIP "
+"calls using the SIP protocol."
+msgstr ""
+"ການໂທ ເປັນຕົວໝາຍເລກໂທລະສັບ ແລະ ຕົວຈັດການການໂທທີ່ລຽບງ່າຍ ແລະ ສວຍງາມສຳລັບ GNOME. "
+"ມັນສາມາດໃຊ້ຮ່ວມກັບໂມເດັມມືຖືສຳລັບການໂທລະສັບທົ່ວໄປ ລວມທັງການໂທ VoIP ຜ່ານໂປຣໂຕຄໍ SIP."
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.Calls.metainfo.xml.in:25
+msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
+msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:33
+msgid "Placing a call"
+msgstr "ກຳລັງໂທອອກ"
+
+#. Translators: A screenshot description.
+#: data/org.gnome.Calls.metainfo.xml.in:38
+msgid "The call history"
+msgstr "ປະຫວັດການໂທ"
+
+#: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
+msgid "Whether calls should automatically use the default origin"
+msgstr "ກຳນົດວ່າການໂທຄວນໃຊ້ແຫຼ່ງເລີ່ມຕົ້ນໂດຍອັດຕະໂນມັດຫຼືບໍ່"
+
+#: data/org.gnome.Calls.gschema.xml:13
+msgid "The country code as reported by the modem"
+msgstr "ລະຫັດປະເທດຕາມທີ່ໂມເດັມລາຍງານ"
+
+#: data/org.gnome.Calls.gschema.xml:14
+msgid "The country code is used for contact name lookup"
+msgstr "ລະຫັດປະເທດຖືກໃຊ້ເພື່ອຄົ້ນຫາຊື່ຜູ້ຕິດຕໍ່"
+
+#: data/org.gnome.Calls.gschema.xml:19
+msgid "The plugins to load automatically"
+msgstr "ປລັກອິນທີ່ຈະໂຫລດໂດຍອັດຕະໂນມັດ"
+
+#: data/org.gnome.Calls.gschema.xml:20
+msgid "These plugins will be automatically loaded on application startup."
+msgstr "ປລັກອິນເຫຼົ່ານີ້ຈະຖືກໂຫລດໂດຍອັດຕະໂນມັດເມື່ອເລີ່ມຕົ້ນແອັບພລິເຄຊັນ."
+
+#: data/org.gnome.Calls.gschema.xml:25
+msgid "Audio codecs to use for VoIP calls in order of preference"
+msgstr "Audio codecs ທີ່ຈະໃຊ້ສຳລັບການໂທ VoIP ຕາມລຳດັບຄວາມມັກ"
+
+#: data/org.gnome.Calls.gschema.xml:26
+msgid "The preferred audio codecs to use for VoIP calls (if available)"
+msgstr "Audio codecs ທີ່ຕ້ອງການໃຊ້ສຳລັບການໂທ VoIP (ຖ້າມີ)"
+
+#: data/org.gnome.Calls.gschema.xml:31
+msgid "Allow insecure crypto key exchange for encrypted media."
+msgstr "ອະນຸຍາດໃຫ້ແລກປ່ຽນຄີເຂົ້າລະຫັດທີ່ບໍ່ປອດໄພສຳລັບສື່ທີ່ຖືກເຂົ້າລະຫັດ."
+
+#: data/org.gnome.Calls.gschema.xml:32
+msgid ""
+"Set to true if you want to allow keys to be exchangable in cleartext, "
+"otherwise you must set the TLS transport."
+msgstr ""
+"ຕັ້ງເປັນ 'ຈິງ' ຖ້າທ່ານຕ້ອງການໃຫ້ແລກປ່ຽນຄີເປັນຂໍ້ຄວາມທຳມະດາ, "
+"ຖ້າບໍ່ດັ່ງນັ້ນທ່ານຕ້ອງຕັ້ງຄ່າການສົ່ງຜ່ານ TLS."
+
+#: src/calls-account.c:163
+msgid "Default (uninitialized) state"
+msgstr "ສະຖານະເລີ່ມຕົ້ນ (ຍັງບໍ່ທັນໄດ້ຕັ້ງຄ່າ)"
+
+#: src/calls-account.c:166
+msgid "Initializing account…"
+msgstr "ກຳລັງເລີ່ມຕົ້ນບັນຊີ…"
+
+#: src/calls-account.c:169
+msgid "Uninitializing account…"
+msgstr "ກຳລັງຍົກເລີກການເລີ່ມຕົ້ນບັນຊີ…"
+
+#: src/calls-account.c:172
+msgid "Connecting to server…"
+msgstr "ກຳລັງເຊື່ອມຕໍ່ກັບເຊີບເວີ…"
+
+#: src/calls-account.c:175
+msgid "Account is online"
+msgstr "ບັນຊີອອນລາຍແລ້ວ"
+
+#: src/calls-account.c:178
+msgid "Disconnecting from server…"
+msgstr "ກຳລັງຕັດການເຊື່ອມຕໍ່ຈາກເຊີບເວີ…"
+
+#: src/calls-account.c:181
+msgid "Account is offline"
+msgstr "ບັນຊີອອບລາຍ"
+
+#: src/calls-account.c:184
+msgid "Account encountered an error"
+msgstr "ບັນຊີພົບຂໍ້ຜິດພາດ"
+
+#: src/calls-account.c:202
+msgid "No reason given"
+msgstr "ບໍ່ມີເຫດຜົນທີ່ລະບຸ"
+
+#: src/calls-account.c:205
+msgid "Initialization started"
+msgstr "ເລີ່ມຕົ້ນການຕັ້ງຄ່າແລ້ວ"
+
+#: src/calls-account.c:208
+msgid "Initialization complete"
+msgstr "ການຕັ້ງຄ່າສຳເລັດແລ້ວ"
+
+#: src/calls-account.c:211
+msgid "Uninitialization started"
+msgstr "ເລີ່ມຕົ້ນການຍົກເລີກການຕັ້ງຄ່າແລ້ວ"
+
+#: src/calls-account.c:214
+msgid "Uninitialization complete"
+msgstr "ການຍົກເລີກການຕັ້ງຄ່າສຳເລັດແລ້ວ"
+
+#: src/calls-account.c:217
+msgid "No credentials set"
+msgstr "ບໍ່ໄດ້ຕັ້ງຄ່າຂໍ້ມູນການເຂົ້າລະບົບ"
+
+#: src/calls-account.c:220
+msgid "Starting to connect"
+msgstr "ກຳລັງເລີ່ມການເຊື່ອມຕໍ່"
+
+#: src/calls-account.c:223
+msgid "Connection timed out"
+msgstr "ໝົດເວລາການເຊື່ອມຕໍ່"
+
+#: src/calls-account.c:226
+msgid "Domain name could not be resolved"
+msgstr "ບໍ່ສາມາດແປຊື່ໂດເມນໄດ້"
+
+#: src/calls-account.c:229
+msgid "Server did not accept username or password"
+msgstr "ເຊີບເວີບໍ່ຍອມຮັບຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ"
+
+#: src/calls-account.c:232
+msgid "Connecting complete"
+msgstr "ການເຊື່ອມຕໍ່ສຳເລັດແລ້ວ"
+
+#: src/calls-account.c:235
+msgid "Starting to disconnect"
+msgstr "ກຳລັງເລີ່ມຕັດການເຊື່ອມຕໍ່"
+
+#: src/calls-account.c:238
+msgid "Disconnecting complete"
+msgstr "ຕັດການເຊື່ອມຕໍ່ສຳເລັດແລ້ວ"
+
+#: src/calls-account.c:241
+msgid "Internal error occurred"
+msgstr "ເກີດຂໍ້ຜິດພາດພາຍໃນ"
+
+#: src/calls-account-overview.c:193
+#, c-format
+msgid "Edit account: %s"
+msgstr "ແກ້ໄຂບັນຊີ: %s"
+
+#: src/calls-account-overview.c:200
+msgid "Add new account"
+msgstr "ເພີ່ມບັນຊີໃໝ່"
+
+#: src/calls-account-overview.c:441
+msgid "VoIP Accounts"
+msgstr "ບັນຊີ VoIP"
+
+#: src/calls-application.c:362
+#, c-format
+msgid "Tried dialing invalid tel URI `%s'"
+msgstr "ພະຍາຍາມໝາຍເລກ tel URI ທີ່ບໍ່ຖືກຕ້ອງ `%s'"
+
+#: src/calls-application.c:746
+#, c-format
+msgid "Don't know how to open `%s'"
+msgstr "ບໍ່ຮູ້ວິທີເປີດ `%s'"
+
+#: src/calls-application.c:817
+msgid "The name of the plugins to load"
+msgstr "ຊື່ຂອງປລັກອິນທີ່ຈະໂຫລດ"
+
+#: src/calls-application.c:818
+msgid "PLUGIN"
+msgstr "ປລັກອິນ"
+
+#: src/calls-application.c:823
+msgid "Dial a telephone number"
+msgstr "ໝາຍເລກໂທລະສັບ"
+
+#: src/calls-application.c:824
+msgid "NUMBER"
+msgstr "ໝາຍເລກ"
+
+#: src/calls-application.c:829
+msgid "Enable verbose debug messages"
+msgstr "ເປີດໃຊ້ຂໍ້ຄວາມດີບັກແບບລະອຽດ"
+
+#: src/calls-application.c:835
+msgid "Print current version"
+msgstr "ສະແດງເວີຊັນປັດຈຸບັນ"
+
+#: src/calls-best-match.c:504
+msgid "Anonymous caller"
+msgstr "ສາຍທີ່ບໍ່ລະບຸຕົວຕົນ"
+
+#: src/calls-call-record-row.c:97
+#, c-format
+msgid ""
+"%s\n"
+"yesterday"
+msgstr ""
+"%s\n"
+"ມື້ວານນີ້"
+
+#: src/calls-emergency-call-types.c:337
+msgid "Police"
+msgstr "ຕຳຫຼວດ"
+
+#: src/calls-emergency-call-types.c:340
+msgid "Ambulance"
+msgstr "ລົດໂຮງໝໍ"
+
+#: src/calls-emergency-call-types.c:343
+msgid "Fire Brigade"
+msgstr "ໜ່ວຍດັບເພີງ"
+
+#: src/calls-emergency-call-types.c:346
+msgid "Mountain Rescue"
+msgstr "ໜ່ວຍກູ້ໄພພູເຂົາ"
+
+#: src/calls-main-window.c:121
+msgid "translator-credits"
+msgstr "ຄະນະແປພາສາລາວ"
+
+#: src/calls-main-window.c:320
+msgid "Can't place calls: No modem or VoIP account available"
+msgstr "ບໍ່ສາມາດໂທອອກໄດ້: ບໍ່ມີໂມເດັມ ຫຼື ບັນຊີ VoIP"
+
+#: src/calls-main-window.c:322
+msgid "Can't place calls: No plugin loaded"
+msgstr "ບໍ່ສາມາດໂທອອກໄດ້: ບໍ່ໄດ້ໂຫລດປລັກອິນ"
+
+#. Recent as in "Recent calls" (the call history)
+#: src/calls-main-window.c:363
+msgid "Recent"
+msgstr "ລາຍການຫຼ້າສຸດ"
+
+#: src/calls-main-window.c:371
+msgid "Contacts"
+msgstr "ລາຍຊື່ຜູ້ຕິດຕໍ່"
+
+#: src/calls-main-window.c:379
+msgid "Dial Pad"
+msgstr "ແປ້ນໂທ"
+
+#: src/calls-notifier.c:53
+msgid "Missed call"
+msgstr "ສາຍທີ່ບໍ່ໄດ້ຮັບ"
+
+#. %s is a name here
+#: src/calls-notifier.c:75
+#, c-format
+msgid "Missed call from <b>%s</b>"
+msgstr "ສາຍທີ່ບໍ່ໄດ້ຮັບຈາກ <b>%s</b>"
+
+#. %s is a id here
+#: src/calls-notifier.c:78
+#, c-format
+msgid "Missed call from %s"
+msgstr "ສາຍທີ່ບໍ່ໄດ້ຮັບຈາກ %s"
+
+#: src/calls-notifier.c:80
+msgid "Missed call from unknown caller"
+msgstr "ສາຍທີ່ບໍ່ໄດ້ຮັບຈາກເບີທີ່ບໍ່ຮູ້ຈັກ"
+
+#: src/calls-notifier.c:86
+msgid "Call back"
+msgstr "ໂທກັບ"
+
+#: src/ui/account-overview.ui:27
+msgid "Add VoIP Accounts"
+msgstr "ເພີ່ມບັນຊີ VoIP"
+
+#: src/ui/account-overview.ui:29
+msgid ""
+"You can add VoIP account here. It will allow you to place and receive VoIP "
+"calls using the SIP protocol. This feature is still relatively new and not "
+"yet feature complete (i.e. no encrypted media)."
+msgstr ""
+"ທ່ານສາມາດເພີ່ມບັນຊີ VoIP ໄດ້ທີ່ນີ້. ມັນຈະຊ່ວຍໃຫ້ທ່ານສາມາດໂທອອກ ແລະ ຮັບສາຍ VoIP "
+"ຜ່ານໂປຣໂຕຄໍ SIP. ຄຸນສົມບັດນີ້ຍັງໃໝ່ຢູ່ ແລະ ຍັງບໍ່ທັນສົມບູນເທື່ອ (ເຊັ່ນ: ຍັງບໍ່ຮອງຮັບສື່ທີ່ເຂົ້າລະຫັດ)."
+
+#: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
+msgid "_Add Account"
+msgstr "_ເພີ່ມບັນຊີ"
+
+#: src/ui/call-record-row.ui:67
+msgid "_Delete Call"
+msgstr "_ລຶບການໂທ"
+
+#: src/ui/call-record-row.ui:71
+msgid "_Copy number"
+msgstr "_ສຳເນົາເບີ"
+
+#: src/ui/call-record-row.ui:76
+msgid "_Add contact"
+msgstr "_ເພີ່ມລາຍຊື່"
+
+#: src/ui/call-record-row.ui:81
+msgid "_Send SMS"
+msgstr "_ສົ່ງ SMS"
+
+#: src/ui/call-selector-item.ui:22
+msgid "On hold"
+msgstr "ພັກສາຍ"
+
+#: src/ui/contacts-box.ui:47
+msgid "No Contacts Found"
+msgstr "ບໍ່ພົບລາຍຊື່ຜູ້ຕິດຕໍ່"
+
+#: src/ui/history-box.ui:13
+msgid "No Recent Calls"
+msgstr "ບໍ່ມີປະຫວັດການໂທຫຼ້າສຸດ"
+
+#: src/ui/main-window.ui:66
+msgid "USSD"
+msgstr "USSD"
+
+#: src/ui/main-window.ui:78
+msgid "_Cancel"
+msgstr "_ຍົກເລີກ"
+
+#: src/ui/main-window.ui:87
+msgid "_Close"
+msgstr "_ປິດ"
+
+#: src/ui/main-window.ui:93
+msgid "_Send"
+msgstr "_ສົ່ງ"
+
+#: src/ui/main-window.ui:155
+msgid "_VoIP Accounts"
+msgstr "ບັນຊີ _VoIP"
+
+#. "Calls" is the application name, do not translate
+#: src/ui/main-window.ui:169
+msgid "_About Calls"
+msgstr "_ກ່ຽວກັບ ການໂທ"
+
+#: src/ui/new-call-box.ui:36
+msgid "Enter a VoIP address"
+msgstr "ປ້ອນທີ່ຢູ່ VoIP"
+
+#: src/ui/new-call-box.ui:60
+msgid "SIP Account"
+msgstr "ບັນຊີ SIP"
+
+#: src/ui/new-call-header-bar.ui:4
+msgid "New Call"
+msgstr "ການໂທໃໝ່"
+
+#: src/ui/new-call-header-bar.ui:13
+msgid "Back"
+msgstr "ກັບຄືນ"
+
+#: plugins/provider/mm/calls-mm-call.c:73
+msgid "Unknown reason"
+msgstr "ບໍ່ຮູ້ເຫດຜົນ"
+
+#: plugins/provider/mm/calls-mm-call.c:74
+msgid "Outgoing call started"
+msgstr "ເລີ່ມຕົ້ນການໂທອອກ"
+
+#: plugins/provider/mm/calls-mm-call.c:75
+msgid "New incoming call"
+msgstr "ມີສາຍເຂົ້າໃໝ່"
+
+#: plugins/provider/mm/calls-mm-call.c:76
+msgid "Call accepted"
+msgstr "ຮັບສາຍແລ້ວ"
+
+#: plugins/provider/mm/calls-mm-call.c:77
+msgid "Call ended"
+msgstr "ສິ້ນສຸດການໂທ"
+
+#: plugins/provider/mm/calls-mm-call.c:78
+msgid "Call disconnected (busy or call refused)"
+msgstr "ຕັດການເຊື່ອມຕໍ່ (ສາຍບໍ່ຫວ່າງ ຫຼື ຖືກປະຕິເສດ)"
+
+#: plugins/provider/mm/calls-mm-call.c:79
+msgid "Call disconnected (wrong id or network problem)"
+msgstr "ຕັດການເຊື່ອມຕໍ່ (ID ບໍ່ຖືກ ຫຼື ບັນຫາເຄືອຂ່າຍ)"
+
+#: plugins/provider/mm/calls-mm-call.c:80
+msgid "Call disconnected (error setting up audio channel)"
+msgstr "ຕັດການເຊື່ອມຕໍ່ (ເກີດຂໍ້ຜິດພາດໃນການຕັ້ງຄ່າຊ່ອງສັນຍານສຽງ)"
+
+#. Translators: Transfer is for active or held calls
+#: plugins/provider/mm/calls-mm-call.c:82
+msgid "Call transferred"
+msgstr "ໂອນສາຍແລ້ວ"
+
+#. Translators: Deflecting is for incoming or waiting calls
+#: plugins/provider/mm/calls-mm-call.c:84
+msgid "Call deflected"
+msgstr "ປ່ຽນເສັ້ນທາງການໂທແລ້ວ"
+
+#: plugins/provider/mm/calls-mm-call.c:109
+#, c-format
+msgid "Call disconnected (unknown reason code %i)"
+msgstr "ຕັດການເຊື່ອມຕໍ່ (ບໍ່ຮູ້ເຫດຜົນ ລະຫັດ %i)"
+
+#: plugins/provider/mm/calls-mm-provider.c:84
+msgid "ModemManager unavailable"
+msgstr "ModemManager ບໍ່ພ້ອມໃຊ້ງານ"
+
+#: plugins/provider/mm/calls-mm-provider.c:86
+#: plugins/provider/ofono/calls-ofono-provider.c:96
+msgid "No voice-capable modem available"
+msgstr "ບໍ່ມີໂມເດັມທີ່ຮອງຮັບການໂທດ້ວຍສຽງ"
+
+#: plugins/provider/mm/calls-mm-provider.c:88
+#: plugins/provider/ofono/calls-ofono-provider.c:98
+msgid "Normal"
+msgstr "ປົກກະຕິ"
+
+#: plugins/provider/mm/calls-mm-provider.c:458
+#: plugins/provider/ofono/calls-ofono-provider.c:544
+msgid "Initialized"
+msgstr "ຕັ້ງຄ່າແລ້ວ"
+
+#: plugins/provider/ofono/calls-ofono-provider.c:94
+msgid "DBus unavailable"
+msgstr "DBus ບໍ່ພ້ອມໃຊ້ງານ"
+
+#: plugins/provider/sip/calls-sip-account-widget.c:644
+msgid "No encryption"
+msgstr "ບໍ່ມີການເຂົ້າລະຫັດ"
+
+#. TODO Optional encryption
+#: plugins/provider/sip/calls-sip-account-widget.c:651
+msgid "Force encryption"
+msgstr "ບັງຄັບການເຂົ້າລະຫັດ"
+
+#: plugins/provider/sip/calls-sip-call.c:123
+msgid "Cryptographic key exchange unsuccessful"
+msgstr "ການແລກປ່ຽນຄີເຂົ້າລະຫັດບໍ່ສຳເລັດ"
+
+#: plugins/provider/sip/sip-account-widget.ui:11
+msgid "_Log In"
+msgstr "_ເຂົ້າສູ່ລະບົບ"
+
+#: plugins/provider/sip/sip-account-widget.ui:28
+msgid "_Apply"
+msgstr "_ນຳໃຊ້"
+
+#: plugins/provider/sip/sip-account-widget.ui:38
+msgid "_Delete"
+msgstr "_ລຶບ"
+
+#: plugins/provider/sip/sip-account-widget.ui:56
+msgid "Server"
+msgstr "ເຊີບເວີ"
+
+#: plugins/provider/sip/sip-account-widget.ui:66
+msgid "User ID"
+msgstr "ໄອດີຜູ້ໃຊ້"
+
+#: plugins/provider/sip/sip-account-widget.ui:72
+msgid "Password"
+msgstr "ລະຫັດຜ່ານ"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "ຊື່ທີ່ຈະສະແດງ (ຖ້າມີ)"
+
+#: plugins/provider/sip/sip-account-widget.ui:92
+msgid "Port"
+msgstr "ພອດ"
+
+#: plugins/provider/sip/sip-account-widget.ui:101
+msgid "Transport"
+msgstr "ການສົ່ງຜ່ານ"
+
+#: plugins/provider/sip/sip-account-widget.ui:107
+msgid "Media Encryption"
+msgstr "ການເຂົ້າລະຫັດສື່"
+
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "ພຣັອກຊີ (ຖ້າມີ)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
+msgid "Use for Phone Calls"
+msgstr "ໃຊ້ສຳລັບການໂທລະສັບ"
+
+#: plugins/provider/sip/sip-account-widget.ui:129
+msgid "Automatically Connect"
+msgstr "ເຊື່ອມຕໍ່ໂດຍອັດຕະໂນມັດ"
