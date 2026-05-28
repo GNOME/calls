@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
 "POT-Creation-Date: 2026-03-15 04:32+0000\n"
-"PO-Revision-Date: 2026-04-19 11:30+0100\n"
+"PO-Revision-Date: 2026-05-28 13:31+0100\n"
 "Last-Translator: Flynn Peck <cirilla@tuta.io>\n"
 "Language-Team: kw\n"
 "Language: kw\n"
@@ -36,7 +36,7 @@ msgstr "Klapkodh"
 
 #: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
-msgstr "Galowyell klapkodh ha handlell galowyow"
+msgstr "Galowyell glapkodh ha handlell alowyow"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
@@ -49,7 +49,7 @@ msgstr "Galowyow (daemon)"
 
 #: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
-msgstr "Galowyell kellgowser ha handlell galowyow (fordh daemon)"
+msgstr "Galowyell glapkodh ha handlell alowyow (fordh daemon)"
 
 #: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
@@ -61,7 +61,7 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Galowyow yw galowyell klapkodh sempel hag afinys, ha handlell galow rag "
+"Galowyow yw galowyell glapkodh sempel hag afinys, ha handlell alow rag "
 "GNOME. Y hyll ev bos devnydhys gans modem kellgowser rag galowyow sempel ha "
 "galowyow VoIP ow tevnydhya an protokol SIP."
 
@@ -102,7 +102,7 @@ msgstr "An ystynansow ma a vydh kargys yn awtomatek dres dalleth."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr "Kodeks son rag devnydh yn galowyow VoIP yn order a dhewis"
+msgstr "Kodeks son rag devnydh yn galowyow VoIP yn aray a dhewis"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
@@ -150,15 +150,15 @@ msgstr "Akont yw dhywarlinen"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr "Yma error gans akont"
+msgstr "Yth esa kamm gans akont"
 
 #: src/calls-account.c:202
 msgid "No reason given"
-msgstr "Nyns eus reson provys"
+msgstr "Nyns eus acheson provys"
 
 #: src/calls-account.c:205
 msgid "Initialization started"
-msgstr "Dalleth dallethys"
+msgstr "Dalleth re dhallethi"
 
 #: src/calls-account.c:208
 msgid "Initialization complete"
@@ -166,7 +166,7 @@ msgstr "Dalleth deu"
 
 #: src/calls-account.c:211
 msgid "Uninitialization started"
-msgstr "Distalleth dallethys"
+msgstr "Distalleth re dhallethi"
 
 #: src/calls-account.c:214
 msgid "Uninitialization complete"
@@ -186,7 +186,7 @@ msgstr "Junyans yn termyn yn-mes"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
-msgstr "Ny yllir digelmyi hanow gwiasva"
+msgstr "Ny yllir digelmi hanow arlotteth"
 
 #: src/calls-account.c:229
 msgid "Server did not accept username or password"
@@ -206,7 +206,7 @@ msgstr "Disjunyans deu"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
-msgstr "Yma error a-bervedh"
+msgstr "Yth esa kamm a-bervedh"
 
 #: src/calls-account-overview.c:193
 #, c-format
@@ -253,7 +253,7 @@ msgstr "Bywhe messajys prevessans gerennek"
 
 #: src/calls-application.c:835
 msgid "Print current version"
-msgstr "Pryntya versyon a-lemmyn"
+msgstr "Pryntya dyllans a-lemmyn"
 
 #: src/calls-best-match.c:504
 msgid "Anonymous caller"
@@ -422,7 +422,7 @@ msgstr "Dehweles"
 
 #: plugins/provider/mm/calls-mm-call.c:73
 msgid "Unknown reason"
-msgstr "Reson ankoth"
+msgstr "Acheson ankoth"
 
 #: plugins/provider/mm/calls-mm-call.c:74
 msgid "Outgoing call started"
@@ -525,7 +525,7 @@ msgstr "ID Devnydhyer"
 
 #: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
-msgstr "Ger-Tremena"
+msgstr "Ger-tremena"
 
 #: plugins/provider/sip/sip-account-widget.ui:82
 msgid "Display Name (Optional)"
@@ -549,7 +549,7 @@ msgstr "Proksy (Dre Dhewis)"
 
 #: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
-msgstr "Devnydhya rag Galowyow Kl"
+msgstr "Devnydhya rag Galowyow Klapkodh"
 
 #: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
