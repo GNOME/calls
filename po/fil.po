@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-09-25 12:18+0000\n"
-"PO-Revision-Date: 2025-09-27 19:49+0800\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-05-31 14:31+0800\n"
 "Last-Translator: Iverson Briones <ivercoder@proton.me>\n"
 "Language-Team: Filipino\n"
 "Language: fil\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:485 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Tawag"
 
@@ -218,37 +218,37 @@ msgstr "Magdagdag ng bagong account"
 msgid "VoIP Accounts"
 msgstr "VoIP Accounts"
 
-#: src/calls-application.c:363
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Sinubukang tumawag sa 'di-wastong tel URI `%s'"
 
-#: src/calls-application.c:741
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Hindi alam kung paano buksan ang `%s'"
 
-#: src/calls-application.c:812
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "Pangalan ng mga pluging ilo-load"
 
-#: src/calls-application.c:813
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "PLUGIN"
 
-#: src/calls-application.c:818
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Tumawag ng numero sa telepono"
 
-#: src/calls-application.c:819
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMERO"
 
-#: src/calls-application.c:824
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "I-enable ang masinsinang mensahe sa pag-debug"
 
-#: src/calls-application.c:830
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "I-print ang kasalukuyang bersyon"
 
@@ -265,19 +265,19 @@ msgstr ""
 "%s\n"
 "kahapon"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Pulis"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulansya"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Bumbero"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Sagip Bundok"
 
@@ -285,24 +285,24 @@ msgstr "Sagip Bundok"
 msgid "translator-credits"
 msgstr "Iverson Briones"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Hindi makatawag: Walang modem o VoIP account na available"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Hindi makatawag: Walang naka-load na plugin"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Kamakailan"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Mga Kontak"
 
-#: src/calls-main-window.c:380
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Dial Pad"
 
@@ -368,7 +368,7 @@ msgstr "Magpadala ng _text"
 msgid "On hold"
 msgstr "Naka-hold"
 
-#: src/ui/contacts-box.ui:39
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Walang Nakitang Kontak"
 
@@ -401,11 +401,11 @@ msgstr "Mga _VoIP Account"
 msgid "_About Calls"
 msgstr "_Tungkol sa Tawag"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Maglagay ng VoIP address"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP Account"
 
@@ -487,12 +487,12 @@ msgstr "Inisyalisado"
 msgid "DBus unavailable"
 msgstr "Hindi available ang DBus"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Walang encryption"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Sapilitang encryption"
 
@@ -517,16 +517,16 @@ msgid "Server"
 msgstr "Server"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Pangalang Idi-display (Opsyonal)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "ID ng User"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Password"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Pangalang Idi-display (Opsyonal)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -540,10 +540,14 @@ msgstr "Transport"
 msgid "Media Encryption"
 msgstr "Encryption ng Media"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+msgid "Proxy (Optional)"
+msgstr "Proxy (Opsyonal)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Gamitin para sa mga Tawag sa Telepono"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Awtonatikong Kumonekta"
