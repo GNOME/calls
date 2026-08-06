@@ -1,4 +1,5 @@
 /usr/bin
+/usr/lib/*/calls/
 /usr/lib/systemd/user/calls-daemon.service
 /usr/share/applications/org.gnome.Calls.desktop
 /usr/share/dbus-1/services/org.gnome.Calls.service
