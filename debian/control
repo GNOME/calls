@@ -6,7 +6,7 @@ Uploaders:
  Julian Sparber <julian.sparber@puri.sm>,
  Evangelos Ribeiro Tzaras <evangelos.tzaras@puri.sm>,
 Build-Depends:
- debhelper (>= 11),
+ debhelper-compat (= 13),
  desktop-file-utils,
  gstreamer1.0-plugins-bad,
  gstreamer1.0-plugins-good,
