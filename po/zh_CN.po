@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2026-01-25 18:22+0000\n"
-"PO-Revision-Date: 2026-02-14 16:13+0800\n"
+"POT-Creation-Date: 2026-03-15 04:32+0000\n"
+"PO-Revision-Date: 2026-08-15 16:11+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
@@ -60,6 +60,7 @@ msgstr ""
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
+#: data/org.gnome.Calls.metainfo.xml.in:27
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber、Evangelos Ribeiro Tzaras"
 
@@ -117,11 +118,11 @@ msgstr "默认（未初始化）状态"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr "正在初始化帐号…"
+msgstr "正在初始化账户…"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
-msgstr "正在取消初始化帐号…"
+msgstr "正在取消初始化账户…"
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
@@ -129,7 +130,7 @@ msgstr "正在连接到服务器…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
-msgstr "帐号已在线"
+msgstr "账户已在线"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
@@ -137,11 +138,11 @@ msgstr "正在断开与服务器的连接…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr "帐号已离线"
+msgstr "账户已离线"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr "帐号遇到错误"
+msgstr "账户遇到错误"
 
 #: src/calls-account.c:202
 msgid "No reason given"
@@ -202,15 +203,15 @@ msgstr "发生内部错误"
 #: src/calls-account-overview.c:193
 #, c-format
 msgid "Edit account: %s"
-msgstr "编辑帐号：%s"
+msgstr "编辑账户：%s"
 
 #: src/calls-account-overview.c:200
 msgid "Add new account"
-msgstr "添加新帐号"
+msgstr "添加新账户"
 
 #: src/calls-account-overview.c:441
 msgid "VoIP Accounts"
-msgstr "VoIP 帐号"
+msgstr "VoIP 账户"
 
 #: src/calls-application.c:362
 #, c-format
@@ -284,7 +285,7 @@ msgstr ""
 
 #: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
-msgstr "无法拨打电话：没有可用的调制解调器或 VoIP 帐号"
+msgstr "无法拨打电话：没有可用的调制解调器或 VoIP 账户"
 
 #: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
@@ -329,7 +330,7 @@ msgstr "回拨"
 
 #: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
-msgstr "添加 VoIP 帐号"
+msgstr "添加 VoIP 账户"
 
 #: src/ui/account-overview.ui:29
 msgid ""
@@ -337,12 +338,12 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"您可以在此处添加 VoIP 帐号。它将允许您使用 SIP 协议拨打和接收 VoIP 呼叫。此功"
+"您可以在此处添加 VoIP 账户。它将允许您使用 SIP 协议拨打和接收 VoIP 呼叫。此功"
 "能较新，尚不完善（没有加密媒体）。"
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
-msgstr "添加账号(_A)"
+msgstr "添加账户(_A)"
 
 #: src/ui/call-record-row.ui:67
 msgid "_Delete Call"
@@ -390,7 +391,7 @@ msgstr "发送(_S)"
 
 #: src/ui/main-window.ui:155
 msgid "_VoIP Accounts"
-msgstr "_VoIP 帐号"
+msgstr "_VoIP 账户"
 
 #. "Calls" is the application name, do not translate
 #: src/ui/main-window.ui:169
@@ -403,7 +404,7 @@ msgstr "输入 VoIP 地址"
 
 #: src/ui/new-call-box.ui:60
 msgid "SIP Account"
-msgstr "SIP 账号"
+msgstr "SIP 账户"
 
 #: src/ui/new-call-header-bar.ui:4
 msgid "New Call"
