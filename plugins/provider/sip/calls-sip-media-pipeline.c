@@ -641,18 +641,10 @@ pipeline_init (CallsSipMediaPipeline *self,
 
   MAKE_ELEMENT (srtpenc, "srtpenc", "srtpenc");
 
-#if GST_CHECK_VERSION (1, 20, 0)
   tmppad = gst_element_request_pad_simple (self->srtpenc, "rtp_sink_0");
-#else
-  tmppad = gst_element_get_request_pad (self->srtpenc, "rtp_sink_0");
-#endif
   gst_object_unref (tmppad);
 
-#if GST_CHECK_VERSION (1, 20, 0)
   tmppad = gst_element_request_pad_simple (self->srtpenc, "rtcp_sink_0");
-#else
-  tmppad = gst_element_get_request_pad (self->srtpenc, "rtcp_sink_0");
-#endif
   gst_object_unref (tmppad);
 
 
@@ -743,11 +735,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
 
   /* link to payloader */
 
-#if GST_CHECK_VERSION (1, 20, 0)
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "send_rtp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->rtpbin, "send_rtp_sink_0");
-#endif
   srcpad = gst_element_get_static_pad (self->payloader, "src");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     if (error)
@@ -760,11 +748,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   /* Transmitter pads */
 
   srcpad = gst_element_get_static_pad (self->rtp_src, "src");
-#if GST_CHECK_VERSION (1, 20, 0)
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->rtpbin, "recv_rtp_sink_0");
-#endif
   ret = gst_pad_link (srcpad, sinkpad);
   if (ret != GST_PAD_LINK_OK) {
     if (error)
@@ -789,11 +773,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   gst_object_unref (sinkpad);
 
   srcpad = gst_element_get_static_pad (self->rtcp_src, "src");
-#if GST_CHECK_VERSION (1, 20, 0)
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtcp_sink_0");
-#else
-  sinkpad = gst_element_get_request_pad (self->rtpbin, "recv_rtcp_sink_0");
-#endif
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     if (error)
       g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -804,11 +784,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   gst_object_unref (srcpad);
   gst_object_unref (sinkpad);
 
-  #if GST_CHECK_VERSION (1, 20, 0)
   srcpad = gst_element_request_pad_simple (self->rtpbin, "send_rtcp_src_0");
-  #else
-  srcpad = gst_element_get_request_pad (self->rtpbin, "send_rtcp_src_0");
-  #endif
   sinkpad = gst_element_get_static_pad (self->rtcp_sink, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     if (error)
@@ -849,10 +825,10 @@ pipeline_setup_codecs (CallsSipMediaPipeline *self,
   g_assert (codec);
 
   MAKE_ELEMENT (decoder, codec->gst_decoder_name, "decoder");
-  MAKE_ELEMENT (depayloader, codec->gst_depayloader_name, "depayloader");
+  MAKE_ELEMENT (depayloader, codec->gst_depayloader_name, "audio depayloader");
 
   MAKE_ELEMENT (encoder, codec->gst_encoder_name, "encoder");
-  MAKE_ELEMENT (payloader, codec->gst_payloader_name, "payloader");
+  MAKE_ELEMENT (payloader, codec->gst_payloader_name, "audio payloader");
 
   gst_bin_add_many (GST_BIN (self->pipeline),
                     self->depayloader, self->decoder,

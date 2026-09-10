@@ -45,7 +45,7 @@ plugins_test_depends += [i18n_plugin]
 
 sip_deps = [
   dependency('gobject-2.0'),
-  dependency('gstreamer-1.0'),
+  dependency('gstreamer-1.0', version: '>=1.20'),
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
   dependency('libpeas-2'),
