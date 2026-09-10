@@ -918,8 +918,7 @@ calls_sip_media_pipeline_set_property (GObject      *object,
     break;
 
   case PROP_REMOTE:
-    g_free (self->remote);
-    self->remote = g_value_dup_string (value);
+    g_set_str (&self->remote, g_value_get_string (value));
     break;
 
   case PROP_RPORT_RTP:
