@@ -44,17 +44,12 @@ struct _CallsSdpCryptoContext {
   int                     negotiated_tag;
 };
 
-#if GLIB_CHECK_VERSION (2, 70, 0)
 G_DEFINE_FINAL_TYPE (CallsSdpCryptoContext, calls_sdp_crypto_context, G_TYPE_OBJECT)
-#else
-G_DEFINE_TYPE (CallsSdpCryptoContext, calls_sdp_crypto_context, G_TYPE_OBJECT)
-#endif
 
 
 static GStrv
 get_all_crypto_attributes_strv (sdp_media_t *media)
 {
-#if GLIB_CHECK_VERSION (2, 68, 0)
   g_autoptr (GStrvBuilder) builder = NULL;
 
   g_assert (media);
@@ -72,28 +67,6 @@ get_all_crypto_attributes_strv (sdp_media_t *media)
   }
 
   return g_strv_builder_end (builder);
-#else
-  /* implement a poor mans GStrv */
-  g_autofree char *attribute_string = NULL;
-
-  g_assert (media);
-
-  for (sdp_attribute_t *attr = media->m_attributes; attr; attr = attr->a_next) {
-    g_autofree char *crypto_str = NULL;
-
-    if (g_strcmp0 (attr->a_name, "crypto") != 0)
-      continue;
-
-    crypto_str = g_strconcat ("a=crypto:", attr->a_value, NULL);
-    if (!attribute_string) {
-      attribute_string = g_strdup (crypto_str);
-    } else {
-      g_autofree char *tmp = attribute_string;
-      attribute_string = g_strconcat (attribute_string, "\n", crypto_str, NULL);
-    }
-  }
-  return g_strsplit (attribute_string, "\n", -1);
-#endif
 }
 
 

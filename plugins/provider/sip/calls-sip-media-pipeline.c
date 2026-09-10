@@ -167,11 +167,7 @@ struct _CallsSipMediaPipeline {
   guint                        bus_watch_id;
 };
 
-#if GLIB_CHECK_VERSION (2, 70, 0)
 G_DEFINE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
-#else
-G_DEFINE_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
-#endif
 
 
 
