@@ -797,17 +797,10 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   g_signal_connect (self->rtpbin, "pad-added", G_CALLBACK (on_pad_added), self->depayloader);
 
   /* request-encoder and request-decoder signals have been emitted after linking pads from rtpbin */
-  if (self->request_rtpbin_rtp_decoder_id)
-    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtp_decoder_id);
-
-  if (self->request_rtpbin_rtp_encoder_id)
-    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtp_encoder_id);
-
-  if (self->request_rtpbin_rtcp_decoder_id)
-    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtcp_decoder_id);
-
-  if (self->request_rtpbin_rtcp_encoder_id)
-    g_signal_handler_disconnect (self->rtpbin, self->request_rtpbin_rtcp_encoder_id);
+  g_clear_signal_handler (&self->request_rtpbin_rtp_decoder_id, self->rtpbin);
+  g_clear_signal_handler (&self->request_rtpbin_rtp_encoder_id, self->rtpbin);
+  g_clear_signal_handler (&self->request_rtpbin_rtcp_decoder_id, self->rtpbin);
+  g_clear_signal_handler (&self->request_rtpbin_rtcp_encoder_id, self->rtpbin);
 
   return TRUE;
 }
