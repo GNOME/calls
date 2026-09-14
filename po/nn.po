@@ -2,14 +2,15 @@
 # Copyright (C) 2025 calls's COPYRIGHT HOLDER
 # This file is distributed under the same license as the calls package.
 # Bjørn Mørkedal <gnome@morkedal.com>,  2025.
+# Roy-Magne Mo <rmo@sunnmore.net>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calls main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2025-07-19 07:11+0000\n"
-"PO-Revision-Date: 2025-07-25 20:20+0200\n"
-"Last-Translator: Bjørn Mørkedal <gnome@morkedal.com>\n"
+"POT-Creation-Date: 2026-09-11 00:36+0000\n"
+"PO-Revision-Date: 2026-09-12 21:19+0200\n"
+"Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
 "Language-Team: Norwegian Nynorsk <nn@li.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
@@ -17,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls.metainfo.xml.in:6
-#: src/calls-application.c:496 src/ui/call-window.ui:4 src/ui/main-window.ui:4
+#: data/org.gnome.Calls.desktop.in:2 data/org.gnome.Calls.metainfo.xml.in:6
+#: src/calls-application.c:482 src/ui/call-window.ui:4 src/ui/main-window.ui:4
 msgid "Calls"
 msgstr "Samtaler"
 
-#: data/org.gnome.Calls.desktop.in:4 data/org.gnome.Calls-daemon.desktop.in:4
+#: data/org.gnome.Calls.desktop.in:3 data/org.gnome.Calls-daemon.desktop.in:3
 msgid "Phone"
 msgstr "Telefon"
 
-#: data/org.gnome.Calls.desktop.in:5
+#: data/org.gnome.Calls.desktop.in:4
 msgid "A phone dialer and call handler"
 msgstr "Ein telefonoppringar og samtalehandsamar"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.Calls.desktop.in:7 data/org.gnome.Calls-daemon.desktop.in:7
+#: data/org.gnome.Calls.desktop.in:6 data/org.gnome.Calls-daemon.desktop.in:6
 msgid "Telephone;Call;Phone;Dial;Dialer;PSTN;"
 msgstr "Telefon;Samtale;Oppringing;Telefonoppringar;PSTN;"
 
-#: data/org.gnome.Calls-daemon.desktop.in:3
+#: data/org.gnome.Calls-daemon.desktop.in:2
 msgid "Calls (daemon)"
 msgstr "Samtaler (tenestemodus)"
 
-#: data/org.gnome.Calls-daemon.desktop.in:5
+#: data/org.gnome.Calls-daemon.desktop.in:4
 msgid "A phone dialer and call handler (daemon mode)"
 msgstr "Ein telefonoppringar og samtalehandsamar (tenestemodus)"
 
@@ -53,12 +54,13 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"Samtaler er ein enkel og elegant telefonoppringar og samtalehandsamar for GNOME. "
-"Han kan brukast med mobilmodem for vanlege telefonoppringingar samt VoIP-samtaler "
-"via SIP-protokollen."
+"Samtaler er ein enkel og elegant telefonoppringar og samtalehandsamar for "
+"GNOME. Han kan brukast med mobilmodem for vanlege telefonoppringingar samt "
+"VoIP-samtaler via SIP-protokollen."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
+#: data/org.gnome.Calls.metainfo.xml.in:27
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
@@ -82,7 +84,7 @@ msgstr "Landskoden rapportert av modemet"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr "Landskoden blir brukt for å finne kontaktnamn"
+msgstr "Landskoden vert brukt for å finne kontaktnamn"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -90,7 +92,7 @@ msgstr "Programtillegg som skal lastast automatisk"
 
 #: data/org.gnome.Calls.gschema.xml:20
 msgid "These plugins will be automatically loaded on application startup."
-msgstr "Desse programtillegga blir automatisk lasta ved oppstart."
+msgstr "Desse programtillegga vert automatisk lasta ved oppstart."
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
@@ -118,15 +120,15 @@ msgstr "Standardtilstand (ikkje initialisert)"
 
 #: src/calls-account.c:166
 msgid "Initializing account…"
-msgstr "Initialiserer konto …"
+msgstr "Initialiserer konto …"
 
 #: src/calls-account.c:169
 msgid "Uninitializing account…"
-msgstr "Avsluttar initialisering av konto …"
+msgstr "Avsluttar initialisering av konto …"
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr "Koplar til tenar …"
+msgstr "Koplar til tenar …"
 
 #: src/calls-account.c:175
 msgid "Account is online"
@@ -134,11 +136,11 @@ msgstr "Konto er tilkopla"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr "Koplar frå tenar …"
+msgstr "Koplar frå tenar …"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
-msgstr "Konto er frakopla"
+msgstr "Konto er fråkopla"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
@@ -166,7 +168,7 @@ msgstr "Avslutning av initialisering fullført"
 
 #: src/calls-account.c:217
 msgid "No credentials set"
-msgstr "Ingen legitimasjon satt opp"
+msgstr "Ingen legitimasjon sett opp"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
@@ -213,41 +215,37 @@ msgstr "Legg til ny konto"
 msgid "VoIP Accounts"
 msgstr "VoIP-kontoar"
 
-#: src/calls-application.c:373
+#: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
 msgstr "Prøvde å ringe ugyldig telefon-URI «%s»"
 
-#: src/calls-application.c:755
+#: src/calls-application.c:746
 #, c-format
 msgid "Don't know how to open `%s'"
 msgstr "Veit ikkje korleis «%s» skal opnast"
 
-#: src/calls-application.c:826
+#: src/calls-application.c:817
 msgid "The name of the plugins to load"
 msgstr "Namnet på programtillegga som skal lastast"
 
-#: src/calls-application.c:827
+#: src/calls-application.c:818
 msgid "PLUGIN"
 msgstr "PROGRAMTILLEGG"
 
-#: src/calls-application.c:832
-msgid "Whether to present the main window on startup"
-msgstr "Om hovudvindauget skal visast ved oppstart"
-
-#: src/calls-application.c:838
+#: src/calls-application.c:823
 msgid "Dial a telephone number"
 msgstr "Ring eit telefonnummer"
 
-#: src/calls-application.c:839
+#: src/calls-application.c:824
 msgid "NUMBER"
 msgstr "NUMMER"
 
-#: src/calls-application.c:844
+#: src/calls-application.c:829
 msgid "Enable verbose debug messages"
 msgstr "Slå på utførlege feilmeldingar"
 
-#: src/calls-application.c:850
+#: src/calls-application.c:835
 msgid "Print current version"
 msgstr "Vis gjeldande versjon"
 
@@ -260,46 +258,50 @@ msgstr "Anonym oppringjar"
 msgid ""
 "%s\n"
 "yesterday"
-msgstr "%s\ni går"
+msgstr ""
+"%s\n"
+"i går"
 
-#: src/calls-emergency-call-types.c:264
+#: src/calls-emergency-call-types.c:337
 msgid "Police"
 msgstr "Politi"
 
-#: src/calls-emergency-call-types.c:267
+#: src/calls-emergency-call-types.c:340
 msgid "Ambulance"
 msgstr "Ambulanse"
 
-#: src/calls-emergency-call-types.c:270
+#: src/calls-emergency-call-types.c:343
 msgid "Fire Brigade"
 msgstr "Brannvesen"
 
-#: src/calls-emergency-call-types.c:273
+#: src/calls-emergency-call-types.c:346
 msgid "Mountain Rescue"
 msgstr "Fjellredning"
 
 #: src/calls-main-window.c:121
 msgid "translator-credits"
-msgstr "Omsetjing: Bjørn Mørkedal <gnome@morkedal.com>"
+msgstr ""
+"Omsetjing: Bjørn Mørkedal <gnome@morkedal.com>\n"
+"Roy-Magne Mo <rmo@sunnmore.net>"
 
-#: src/calls-main-window.c:321
+#: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
 msgstr "Kan ikkje ringe: Ingen modem eller VoIP-konto tilgjengeleg"
 
-#: src/calls-main-window.c:323
+#: src/calls-main-window.c:322
 msgid "Can't place calls: No plugin loaded"
 msgstr "Kan ikkje ringe: Ingen programtillegg lasta"
 
 #. Recent as in "Recent calls" (the call history)
-#: src/calls-main-window.c:364
+#: src/calls-main-window.c:363
 msgid "Recent"
 msgstr "Nyleg"
 
-#: src/calls-main-window.c:372
+#: src/calls-main-window.c:371
 msgid "Contacts"
 msgstr "Kontaktar"
 
-#: src/calls-main-window.c:380
+#: src/calls-main-window.c:379
 msgid "Dial Pad"
 msgstr "Tastatur"
 
@@ -337,9 +339,9 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Her kan du leggje til VoIP-kontoar. Det vil la deg ringe og motta VoIP-samtaler "
-"via SIP-protokollen. Denne funksjonen er framleis relativt ny og manglar nokre funksjonar "
-"(t.d. ingen kryptert media)"
+"Her kan du leggje til VoIP-kontoar. Det vil la deg ringe og motta VoIP-"
+"samtaler via SIP-protokollen. Denne funksjonen er framleis relativt ny og "
+"manglar nokre funksjonar (t.d. ingen kryptert media)"
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
@@ -365,7 +367,7 @@ msgstr "_Send SMS"
 msgid "On hold"
 msgstr "Sett på vent"
 
-#: src/ui/contacts-box.ui:39
+#: src/ui/contacts-box.ui:47
 msgid "No Contacts Found"
 msgstr "Ingen kontaktar funne"
 
@@ -398,11 +400,11 @@ msgstr "_VoIP-kontoar"
 msgid "_About Calls"
 msgstr "_Om Samtaler"
 
-#: src/ui/new-call-box.ui:32
+#: src/ui/new-call-box.ui:36
 msgid "Enter a VoIP address"
 msgstr "Skriv inn VoIP-adresse"
 
-#: src/ui/new-call-box.ui:56
+#: src/ui/new-call-box.ui:60
 msgid "SIP Account"
 msgstr "SIP-konto"
 
@@ -484,12 +486,12 @@ msgstr "Initialisert"
 msgid "DBus unavailable"
 msgstr "DBus er ikkje tilgjengeleg"
 
-#: plugins/provider/sip/calls-sip-account-widget.c:636
+#: plugins/provider/sip/calls-sip-account-widget.c:644
 msgid "No encryption"
 msgstr "Ingen kryptering"
 
 #. TODO Optional encryption
-#: plugins/provider/sip/calls-sip-account-widget.c:643
+#: plugins/provider/sip/calls-sip-account-widget.c:651
 msgid "Force encryption"
 msgstr "Tving kryptering"
 
@@ -514,16 +516,16 @@ msgid "Server"
 msgstr "Tenar"
 
 #: plugins/provider/sip/sip-account-widget.ui:66
-msgid "Display Name (Optional)"
-msgstr "Visingsnamn (valfritt)"
-
-#: plugins/provider/sip/sip-account-widget.ui:76
 msgid "User ID"
 msgstr "Brukar-ID"
 
-#: plugins/provider/sip/sip-account-widget.ui:82
+#: plugins/provider/sip/sip-account-widget.ui:72
 msgid "Password"
 msgstr "Passord"
+
+#: plugins/provider/sip/sip-account-widget.ui:82
+msgid "Display Name (Optional)"
+msgstr "Visingsnamn (valfritt)"
 
 #: plugins/provider/sip/sip-account-widget.ui:92
 msgid "Port"
@@ -537,10 +539,18 @@ msgstr "Transport"
 msgid "Media Encryption"
 msgstr "Mediakryptering"
 
-#: plugins/provider/sip/sip-account-widget.ui:117
+#: plugins/provider/sip/sip-account-widget.ui:113
+#| msgid "Display Name (Optional)"
+msgid "Proxy (Optional)"
+msgstr "Proxy (valfritt)"
+
+#: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
 msgstr "Bruk til telefonsamtaler"
 
-#: plugins/provider/sip/sip-account-widget.ui:123
+#: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
 msgstr "Kopla til automatisk"
+
+#~ msgid "Whether to present the main window on startup"
+#~ msgstr "Om hovudvindauget skal visast ved oppstart"
