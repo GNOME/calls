@@ -41,6 +41,7 @@
 #include "calls-sip-media-manager.h"
 #include "calls-sip-origin.h"
 #include "calls-sip-util.h"
+#include "calls-util.h"
 
 #include <glib/gi18n.h>
 
@@ -1038,7 +1039,7 @@ setup_nua (CallsSipOrigin *self)
                     NUTAG_USER_AGENT (APP_DATA_NAME),
                     NUTAG_URL (sip_url),
                     TAG_IF (use_sips, NUTAG_SIPS_URL (sips_url)),
-                    TAG_IF (!!self->proxy, NUTAG_PROXY (proxy_url)),
+                    TAG_IF (!STR_IS_NULL_OR_EMPTY (self->proxy), NUTAG_PROXY (proxy_url)),
                     SIPTAG_FROM_STR (from_str),
                     NUTAG_ALLOW ("INVITE, ACK, BYE, CANCEL, OPTIONS, UPDATE"),
                     NUTAG_SUPPORTED ("replaces, gruu, outbound"),

@@ -333,7 +333,7 @@ origin_to_keyfile (CallsSipOrigin *origin,
 
   g_key_file_set_string (key_file, name, "Id", id);
   g_key_file_set_string (key_file, name, "Host", host);
-  g_key_file_set_string (key_file, name, "Proxy", proxy);
+  g_key_file_set_string (key_file, name, "Proxy", proxy ?: "");
   g_key_file_set_string (key_file, name, "User", user);
   g_key_file_set_string (key_file, name, "DisplayName", display_name ?: "");
   g_key_file_set_string (key_file, name, "Protocol", protocol);
