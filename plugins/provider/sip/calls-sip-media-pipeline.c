@@ -247,7 +247,7 @@ on_pad_added (GstElement *rtpbin,
               GstPad     *srcpad,
               GstElement *depayloader)
 {
-  GstPad *sinkpad;
+  g_autoptr (GstPad) sinkpad = NULL;
 
   g_debug ("pad added: %s", GST_PAD_NAME (srcpad));
 
@@ -256,8 +256,6 @@ on_pad_added (GstElement *rtpbin,
 
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK)
     g_warning ("Failed to link rtpbin to depayloader");
-
-  gst_object_unref (sinkpad);
 }
 
 
