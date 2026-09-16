@@ -29,26 +29,27 @@
 #define G_LOG_DOMAIN "CallsSipOrigin"
 
 
+#include "calls-config.h"
+
 #include "calls-account.h"
 #include "calls-media-playback.h"
 #include "calls-message-source.h"
+#include "calls-network-watch.h"
 #include "calls-origin.h"
 #include "calls-sip-call.h"
 #include "calls-sip-enums.h"
+#include "calls-sip-media-manager.h"
 #include "calls-sip-origin.h"
 #include "calls-sip-util.h"
-#include "calls-sip-media-manager.h"
-#include "calls-network-watch.h"
-#include "calls-config.h"
 
 #include <glib/gi18n.h>
 
-#include <sofia-sip/sofia_features.h>
 #include <sofia-sip/nua.h>
+#include <sofia-sip/sdp.h>
+#include <sofia-sip/sip_util.h>
+#include <sofia-sip/sofia_features.h>
 #include <sofia-sip/su_tag.h>
 #include <sofia-sip/su_tag_io.h>
-#include <sofia-sip/sip_util.h>
-#include <sofia-sip/sdp.h>
 
 /**
  * SECTION:sip-origin
