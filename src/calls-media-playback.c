@@ -54,19 +54,6 @@ typedef struct {
 } MediaPlaybackData;
 
 
-static void
-free_playback_data (MediaPlaybackData *data)
-{
-  g_cancellable_cancel (data->cancellable);
-  g_clear_object (&data->cancellable);
-  g_clear_pointer (&data->timer, g_timer_destroy);
-
-  g_free (data);
-}
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (MediaPlaybackData, free_playback_data);
-
-
 struct _CallsMediaPlayback {
   GObject   parent_instance;
 
@@ -78,6 +65,33 @@ struct _CallsMediaPlayback {
 };
 
 G_DEFINE_FINAL_TYPE (CallsMediaPlayback, calls_media_playback, G_TYPE_OBJECT)
+
+
+static void
+free_playback_data (MediaPlaybackData *data)
+{
+  g_cancellable_cancel (data->cancellable);
+  g_clear_object (&data->cancellable);
+  g_clear_pointer (&data->timer, g_timer_destroy);
+
+  switch (data->event) {
+  case PLAYBACK_CALLING:
+    data->self->data_calling = NULL;
+    break;
+
+  case PLAYBACK_BUSY:
+    data->self->data_busy = NULL;
+    break;
+
+  case PLAYBACK_LAST:
+  default:
+    g_warning ("Unknown event %d", data->event);
+  }
+
+  g_free (data);
+}
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (MediaPlaybackData, free_playback_data);
 
 
 static const char *
@@ -156,25 +170,11 @@ on_playing_done (GObject      *object,
       g_warning ("Playing '%s' failed: %s",
                  playback_event_to_string (data->event),
                  error->message);
-  } else {
-    if (g_timer_elapsed (data->timer, NULL) < data->min_playback_time) {
-      playback_data (g_steal_pointer (&data));
-    } else {
-      switch (data->event) {
-      case PLAYBACK_CALLING:
-        data->self->data_calling = NULL;
-        break;
-
-      case PLAYBACK_BUSY:
-        data->self->data_busy = NULL;
-        break;
-
-      case PLAYBACK_LAST:
-      default:
-        g_warning ("Unknown event %d", data->event);
-      }
-    }
+    return;
   }
+
+  if (g_timer_elapsed (data->timer, NULL) < data->min_playback_time)
+    playback_data (g_steal_pointer (&data));
 }
 
 
