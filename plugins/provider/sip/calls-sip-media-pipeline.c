@@ -981,41 +981,29 @@ calls_sip_media_pipeline_class_init (CallsSipMediaPipelineClass *klass)
   object_class->finalize = calls_sip_media_pipeline_finalize;
 
   /* Maybe we want to turn Codec into a GObject later */
-  props[PROP_CODEC] = g_param_spec_pointer ("codec",
-                                            "Codec",
-                                            "Media codec",
-                                            G_PARAM_READWRITE);
+  props[PROP_CODEC] = g_param_spec_pointer ("codec", "", "",
+                                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  props[PROP_REMOTE] = g_param_spec_string ("remote",
-                                            "Remote",
-                                            "Remote host",
+  props[PROP_REMOTE] = g_param_spec_string ("remote", "", "",
                                             NULL,
-                                            G_PARAM_READWRITE);
+                                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  props[PROP_RPORT_RTP] = g_param_spec_uint ("rport-rtp",
-                                             "rport-rtp",
-                                             "remote rtp port",
+  props[PROP_RPORT_RTP] = g_param_spec_uint ("rport-rtp", "", "",
                                              1025, 65535, 5002,
-                                             G_PARAM_READWRITE);
+                                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  props[PROP_RPORT_RTCP] = g_param_spec_uint ("rport-rtcp",
-                                              "rport-rtcp",
-                                              "remote rtcp port",
+  props[PROP_RPORT_RTCP] = g_param_spec_uint ("rport-rtcp", "", "",
                                               1025, 65535, 5003,
-                                              G_PARAM_READWRITE);
+                                              G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  props[PROP_DEBUG] = g_param_spec_boolean ("debug",
-                                            "Debug",
-                                            "Enable debugging information",
+  props[PROP_DEBUG] = g_param_spec_boolean ("debug", "", "",
                                             FALSE,
-                                            G_PARAM_READWRITE);
+                                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  props[PROP_STATE] = g_param_spec_enum ("state",
-                                         "State",
-                                         "The state of the media pipeline",
+  props[PROP_STATE] = g_param_spec_enum ("state", "", "",
                                          CALLS_TYPE_MEDIA_PIPELINE_STATE,
                                          CALLS_MEDIA_PIPELINE_STATE_UNKNOWN,
-                                         G_PARAM_READABLE);
+                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
