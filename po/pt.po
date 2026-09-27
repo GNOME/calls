@@ -4,20 +4,21 @@
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2026.
 # Juliano de Souza Camargo <julianosc@protonmail.com>, 2020-2021.
 #
+# SPDX-FileCopyrightText: 2026 Cátia Silva <catias89@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: calls\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/calls/issues/\n"
-"POT-Creation-Date: 2026-01-25 18:22+0000\n"
-"PO-Revision-Date: 2026-02-07 18:10+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
-"Language-Team: Portuguese < https://l10n.gnome.org/teams/pt/>\n"
+"POT-Creation-Date: 2026-09-11 00:36+0000\n"
+"PO-Revision-Date: 2026-09-26 22:12+0100\n"
+"Last-Translator: Cátia Silva <catias89@gmail.com>\n"
+"Language-Team: Portuguese <li@pt.corg>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-DamnedLies-Scope: partial\n"
 "X-DL-Team: pt\n"
 "X-DL-Module: calls\n"
@@ -53,7 +54,7 @@ msgstr "Um marcador telefónico e um gestor de chamadas (modo daemon)"
 
 #: data/org.gnome.Calls.metainfo.xml.in:7
 msgid "Make phone and SIP calls"
-msgstr "Efetuar chamadas de telefone e SIP"
+msgstr "Efetuar chamadas telefónicas e de SIP"
 
 #: data/org.gnome.Calls.metainfo.xml.in:10
 msgid ""
@@ -61,13 +62,16 @@ msgid ""
 "be used with a cellular modem for plain old telephone calls as well as VoIP "
 "calls using the SIP protocol."
 msgstr ""
-"As Chamadas são um simples e elegante marcador telefónico e manipulador de "
-"chamadas para o GNOME. Pode ser usado com um modem celular para chamadas "
-"telefónicas simples e antigas, bem como para chamadas VoIP usando o "
+"As Chamadas são um marcador telefónico e manipulador de "
+"chamadas para o GNOME simples e elegante. Pode ser utilizado com um modem"
+" celular "
+"para chamadas telefónicas simples e antigas, bem como para chamadas VoIP"
+" através do "
 "protocolo SIP."
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.Calls.metainfo.xml.in:25
+#: data/org.gnome.Calls.metainfo.xml.in:27
 msgid "Julian Sparber, Evangelos Ribeiro Tzaras"
 msgstr "Julian Sparber, Evangelos Ribeiro Tzaras"
 
@@ -79,11 +83,11 @@ msgstr "A efetuar uma chamada"
 #. Translators: A screenshot description.
 #: data/org.gnome.Calls.metainfo.xml.in:38
 msgid "The call history"
-msgstr "O histórico da chamada"
+msgstr "O histórico de chamadas"
 
 #: data/org.gnome.Calls.gschema.xml:7 data/org.gnome.Calls.gschema.xml:8
 msgid "Whether calls should automatically use the default origin"
-msgstr "Se as chamadas devem usar automaticamente a origem predefinida"
+msgstr "Se as chamadas devem utilizar a origem predefinida automaticamente"
 
 #: data/org.gnome.Calls.gschema.xml:13
 msgid "The country code as reported by the modem"
@@ -91,7 +95,7 @@ msgstr "O código do país, conforme reportado pelo modem"
 
 #: data/org.gnome.Calls.gschema.xml:14
 msgid "The country code is used for contact name lookup"
-msgstr "O código do país é usado para procurar nome de contacto"
+msgstr "O código do país é utilizado para procurar nome de contacto"
 
 #: data/org.gnome.Calls.gschema.xml:19
 msgid "The plugins to load automatically"
@@ -104,12 +108,12 @@ msgstr ""
 
 #: data/org.gnome.Calls.gschema.xml:25
 msgid "Audio codecs to use for VoIP calls in order of preference"
-msgstr "Codecs de áudio a usar para chamadas VoIP por ordem de preferência"
+msgstr "Codecs de áudio a utilizar para chamadas VoIP por ordem de preferência"
 
 #: data/org.gnome.Calls.gschema.xml:26
 msgid "The preferred audio codecs to use for VoIP calls (if available)"
 msgstr ""
-"Os codecs de áudio preferidos a usar para chamadas VoIP (se disponível)"
+"Os codecs de áudio preferidos a utilizar para chamadas VoIP (se disponível)"
 
 #: data/org.gnome.Calls.gschema.xml:31
 msgid "Allow insecure crypto key exchange for encrypted media."
@@ -122,7 +126,8 @@ msgid ""
 "Set to true if you want to allow keys to be exchangable in cleartext, "
 "otherwise you must set the TLS transport."
 msgstr ""
-"Defina como verdadeiro se quiser permitir que as chaves possam ser trocadas "
+"Defina como verdadeiro caso pretenda permitir que as chaves possam ser"
+" trocadas "
 "em cleartext; caso contrário, deve definir o transporte TLS."
 
 #: src/calls-account.c:163
@@ -139,15 +144,15 @@ msgstr "Desinicializar a conta…"
 
 #: src/calls-account.c:172
 msgid "Connecting to server…"
-msgstr "A ligar-se ao servidor…"
+msgstr "A ligar ao servidor…"
 
 #: src/calls-account.c:175
 msgid "Account is online"
-msgstr "A conta está online"
+msgstr "A conta está ligada"
 
 #: src/calls-account.c:178
 msgid "Disconnecting from server…"
-msgstr "A desligar-se do servidor…"
+msgstr "A desligar do servidor…"
 
 #: src/calls-account.c:181
 msgid "Account is offline"
@@ -155,7 +160,7 @@ msgstr "A conta está desligada"
 
 #: src/calls-account.c:184
 msgid "Account encountered an error"
-msgstr "Conta encontrou um erro"
+msgstr "A conta encontrou um erro"
 
 #: src/calls-account.c:202
 msgid "No reason given"
@@ -183,11 +188,11 @@ msgstr "Sem credenciais definidas"
 
 #: src/calls-account.c:220
 msgid "Starting to connect"
-msgstr "Começar a ligar"
+msgstr "A iniciar a ligação"
 
 #: src/calls-account.c:223
 msgid "Connection timed out"
-msgstr "O tempo da conexão se esgotou"
+msgstr "O tempo da ligação expirou"
 
 #: src/calls-account.c:226
 msgid "Domain name could not be resolved"
@@ -195,7 +200,7 @@ msgstr "Não foi possível resolver o nome de domínio"
 
 #: src/calls-account.c:229
 msgid "Server did not accept username or password"
-msgstr "O servidor não aceitava o nome de utilizador ou palavra-passe"
+msgstr "O servidor não aceitou o nome de utilizador ou palavra-passe"
 
 #: src/calls-account.c:232
 msgid "Connecting complete"
@@ -203,11 +208,11 @@ msgstr "Ligação concluída"
 
 #: src/calls-account.c:235
 msgid "Starting to disconnect"
-msgstr "Começar a desligar"
+msgstr "A iniciar o desligamento"
 
 #: src/calls-account.c:238
 msgid "Disconnecting complete"
-msgstr "Desligar concluído"
+msgstr "Desligamento concluído"
 
 #: src/calls-account.c:241
 msgid "Internal error occurred"
@@ -229,7 +234,7 @@ msgstr "Contas VoIP"
 #: src/calls-application.c:362
 #, c-format
 msgid "Tried dialing invalid tel URI `%s'"
-msgstr "Tentar marcar URI de tel `%s' inválido"
+msgstr "Tentou marcar um URI de tel `%s' inválido"
 
 #: src/calls-application.c:746
 #, c-format
@@ -294,7 +299,8 @@ msgid "translator-credits"
 msgstr ""
 "Manuela Silva <mmsrs@sky.com>\n"
 "Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Hugo Carvalho <hugokarvalho@hotmail.com>"
+"Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Cátia Silva <catias89@gmail.com>"
 
 #: src/calls-main-window.c:320
 msgid "Can't place calls: No modem or VoIP account available"
@@ -339,7 +345,7 @@ msgstr "Chamada perdida de número desconhecido"
 
 #: src/calls-notifier.c:86
 msgid "Call back"
-msgstr "Chamar de volta"
+msgstr "Voltar a chamar"
 
 #: src/ui/account-overview.ui:27
 msgid "Add VoIP Accounts"
@@ -351,9 +357,10 @@ msgid ""
 "calls using the SIP protocol. This feature is still relatively new and not "
 "yet feature complete (i.e. no encrypted media)."
 msgstr ""
-"Pode adicionar contas VoIP aqui. Permitir-lhe-á marcar e receber chamadas "
-"VoIP com o protocolo SIP. Esta funcionalidade é relativamente nova e não "
-"está completa (i.e. sem meios encriptados)"
+"Pode adicionar contas VoIP aqui. Ser-lhe-á permitido efetuar e receber"
+" chamadas "
+"VoIP através do protocolo SIP. Esta funcionalidade é relativamente nova e não "
+"se encontra completa (i.e. sem meios encriptados)."
 
 #: src/ui/account-overview.ui:38 src/ui/account-overview.ui:77
 msgid "_Add Account"
@@ -454,7 +461,7 @@ msgstr "Chamada desligada (ocupada ou chamada recusada)"
 
 #: plugins/provider/mm/calls-mm-call.c:79
 msgid "Call disconnected (wrong id or network problem)"
-msgstr "Chamada desligada ((id errado ou problema de rede)"
+msgstr "Chamada desligada (identificador errado ou problema de rede)"
 
 #: plugins/provider/mm/calls-mm-call.c:80
 msgid "Call disconnected (error setting up audio channel)"
@@ -557,7 +564,7 @@ msgstr "Proxy (Opcional)"
 
 #: plugins/provider/sip/sip-account-widget.ui:123
 msgid "Use for Phone Calls"
-msgstr "Uso para chamadas telefónicas"
+msgstr "Utilização para chamadas telefónicas"
 
 #: plugins/provider/sip/sip-account-widget.ui:129
 msgid "Automatically Connect"
@@ -659,3 +666,4 @@ msgstr "Ligar automaticamente"
 
 #~ msgid "Call the party"
 #~ msgstr "Ligar para o número"
+
