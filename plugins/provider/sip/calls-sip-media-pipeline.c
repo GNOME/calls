@@ -723,7 +723,6 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
 {
   g_autoptr (GstPad) srcpad = NULL;
   g_autoptr (GstPad) sinkpad = NULL;
-  GstPadLinkReturn ret;
 
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
@@ -741,8 +740,7 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
 
   srcpad = gst_element_get_static_pad (self->rtp_src, "src");
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtp_sink_0");
-  ret = gst_pad_link (srcpad, sinkpad);
-  if (ret != GST_PAD_LINK_OK) {
+  if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
     g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
                          "Failed to link rtpsrc to rtpbin");
     return FALSE;
