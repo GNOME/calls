@@ -121,7 +121,6 @@ char                        *calls_srtp_print_sdp_crypto_attribute     (calls_sr
 calls_srtp_crypto_attribute *calls_srtp_crypto_attribute_new           (guint n_key_params);
 gboolean                     calls_srtp_crypto_attribute_init_keys     (calls_srtp_crypto_attribute *attr);
 void                         calls_srtp_crypto_attribute_free          (calls_srtp_crypto_attribute *attr);
-char                        *calls_srtp_generate_crypto_for_offer      (void);
 gboolean                     calls_srtp_crypto_get_srtpdec_params      (calls_srtp_crypto_attribute *attr,
                                                                         const char                 **srtp_cipher,
                                                                         const char                 **srtp_auth,
