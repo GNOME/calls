@@ -380,14 +380,10 @@ on_srtpdec_request_key (GstElement *srtpdec,
 {
   CallsSipMediaPipeline *self = CALLS_SIP_MEDIA_PIPELINE (user_data);
 
-  GstCaps *caps;
-
   const char *srtp_cipher = "null";
   const char *srtcp_cipher = "null";
   const char *srtp_auth = "null";
   const char *srtcp_auth = "null";
-
-  gboolean need_mki;
 
   if (!calls_srtp_crypto_get_srtpdec_params (self->crypto_theirs,
                                              &srtp_cipher,
@@ -404,10 +400,7 @@ on_srtpdec_request_key (GstElement *srtpdec,
     return NULL;
   }
 
-  need_mki = self->crypto_theirs->n_key_params > 1;
-
   if (self->crypto_theirs->n_key_params == 1) {
-    /* g_autofree guchar *key_salt = NULL; */
     guchar *key_salt = NULL;
     gsize key_salt_length;
     g_autoptr (GstBuffer) key_buffer = NULL;
@@ -435,52 +428,6 @@ on_srtpdec_request_key (GstElement *srtpdec,
   /* TODO Setting up MKI buffer not implemented yet */
   g_warning ("Using MKI is not implemented yet");
   return NULL;
-
-  caps = gst_caps_new_simple ("application/x-srtp",
-                              "srtp-cipher", G_TYPE_STRING, srtp_cipher,
-                              "srtcp-cipher", G_TYPE_STRING, srtcp_cipher,
-                              "srtp-auth", G_TYPE_STRING, srtp_auth,
-                              "srtcp-auth", G_TYPE_STRING, srtcp_auth,
-                              NULL);
-
-
-  for (guint i = 0; i < self->crypto_theirs->n_key_params; i++) {
-    GstStructure *structure;
-
-    g_autofree char *structure_name = g_strdup_printf ("key-%u", i);
-
-    guchar *key_salt = NULL;
-    gsize key_salt_length;
-    g_autoptr (GstBuffer) key_buffer = NULL;
-    g_autoptr (GstBuffer) mki_buffer = NULL;
-
-    key_salt = g_base64_decode (self->crypto_theirs->key_params[0].b64_keysalt,
-                                &key_salt_length);
-    key_buffer = gst_buffer_new_wrapped (key_salt, key_salt_length);
-
-
-    if (i == 0 && need_mki) {
-      structure = gst_structure_new (structure_name,
-                                     "srtp-key", GST_TYPE_BUFFER, key_buffer,
-                                     "mki", GST_TYPE_BUFFER, mki_buffer,
-                                     NULL);
-    } else if (i == 0 && !need_mki) {
-      structure = gst_structure_new (structure_name,
-                                     "srtp-key", GST_TYPE_BUFFER, key_buffer,
-                                     NULL);
-    } else {
-      g_autofree char *key_field_name = g_strdup_printf ("srtp-key%u", i+1);
-      g_autofree char *mki_field_name = g_strdup_printf ("mki%u", i+1);
-
-      structure = gst_structure_new (structure_name,
-                                     key_field_name, GST_TYPE_BUFFER, key_buffer,
-                                     mki_field_name, GST_TYPE_BUFFER, mki_buffer,
-                                     NULL);
-    }
-    gst_caps_append_structure (caps, structure);
-  }
-
-  return caps;
 }
 
 
