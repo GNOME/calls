@@ -38,10 +38,9 @@
 #define MAKE_ELEMENT(var, element, name)                        \
   self->var = gst_element_factory_make (element, name);         \
   if (!self->var) {                                             \
-    if (error)                                                  \
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,        \
-                   "Could not create '%s' element of type %s",  \
-                   name ? : "unnamed", element);                \
+    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,          \
+                 "Could not create '%s' element of type %s",    \
+                 name ? : "unnamed", element);                  \
     return FALSE;                                               \
   }
 
@@ -528,9 +527,8 @@ setup_socket_reuse (CallsSipMediaPipeline *self,
 
   g_object_get (self->rtp_src, "used-socket", &rtp_sock, NULL);
   if (!rtp_sock) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Could not retrieve used socket from RTP udpsrc element");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Could not retrieve used socket from RTP udpsrc element");
     return FALSE;
   }
 
@@ -546,9 +544,8 @@ setup_socket_reuse (CallsSipMediaPipeline *self,
 
   g_object_get (self->rtcp_src, "used-socket", &rtcp_sock, NULL);
   if (!rtcp_sock) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Could not retrieve used socket from RTCP udpsrc element");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Could not retrieve used socket from RTCP udpsrc element");
     return FALSE;
   }
 
@@ -575,9 +572,8 @@ pipeline_init (CallsSipMediaPipeline *self,
   self->pipeline = gst_pipeline_new ("media-pipeline");
 
   if (!self->pipeline) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Could not create media pipeline");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Could not create media pipeline");
     return FALSE;
   }
 
@@ -736,12 +732,10 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "send_rtp_sink_0");
   srcpad = gst_element_get_static_pad (self->payloader, "src");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link payloader to rtpbin");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link payloader to rtpbin");
     return FALSE;
   }
-
 
   /* Transmitter pads */
 
@@ -749,9 +743,8 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtp_sink_0");
   ret = gst_pad_link (srcpad, sinkpad);
   if (ret != GST_PAD_LINK_OK) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link rtpsrc to rtpbin");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link rtpsrc to rtpbin");
     return FALSE;
   }
 
@@ -761,9 +754,8 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   srcpad = gst_element_get_static_pad (self->rtpbin, "send_rtp_src_0");
   sinkpad = gst_element_get_static_pad (self->rtp_sink, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link rtpbin to rtpsink");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link rtpbin to rtpsink");
     return FALSE;
   }
 
@@ -773,9 +765,8 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   srcpad = gst_element_get_static_pad (self->rtcp_src, "src");
   sinkpad = gst_element_request_pad_simple (self->rtpbin, "recv_rtcp_sink_0");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link rtcpsrc to rtpbin");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link rtcpsrc to rtpbin");
     return FALSE;
   }
 
@@ -785,9 +776,8 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
   srcpad = gst_element_request_pad_simple (self->rtpbin, "send_rtcp_src_0");
   sinkpad = gst_element_get_static_pad (self->rtcp_sink, "sink");
   if (gst_pad_link (srcpad, sinkpad) != GST_PAD_LINK_OK) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link rtpbin to rtcpsink");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link rtpbin to rtcpsink");
     return FALSE;
   }
 
@@ -827,16 +817,14 @@ pipeline_setup_codecs (CallsSipMediaPipeline *self,
                     NULL);
 
   if (!gst_element_link_many (self->audio_src, self->encoder, self->payloader, NULL)) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link audiosrc encoder and payloader");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link audiosrc encoder and payloader");
     return FALSE;
   }
 
   if (!gst_element_link_many (self->depayloader, self->decoder, self->audio_sink, NULL)) {
-    if (error)
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Failed to link depayloader decoder and audiosink");
+    g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                         "Failed to link depayloader decoder and audiosink");
     return FALSE;
   }
 
