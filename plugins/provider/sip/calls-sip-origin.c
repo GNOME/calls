@@ -265,8 +265,7 @@ add_call (CallsSipOrigin *self,
           gboolean        inbound,
           nua_handle_t   *handle)
 {
-  CallsSipCall *sip_call;
-  CallsCall *call;
+  CallsSipCall *call;
   CallsSipMediaPipeline *pipeline;
   const char *call_address = address;
   int rtp_port, rtcp_port;
@@ -286,23 +285,22 @@ add_call (CallsSipOrigin *self,
       call_address = address_split[1];
   }
 
-  sip_call = calls_sip_call_new (call_address,
-                                 inbound,
-                                 self->own_ip,
-                                 pipeline,
-                                 self->media_encryption,
-                                 handle);
-  g_assert (sip_call != NULL);
+  call = calls_sip_call_new (call_address,
+                             inbound,
+                             self->own_ip,
+                             pipeline,
+                             self->media_encryption,
+                             handle);
+
+  g_assert (CALLS_IS_SIP_CALL (call));
 
   if (self->oper->call_handle)
     nua_handle_unref (self->oper->call_handle);
 
   self->oper->call_handle = handle;
 
-  self->calls = g_list_append (self->calls, sip_call);
-  g_hash_table_insert (self->call_handles, handle, sip_call);
-
-  call = CALLS_CALL (sip_call);
+  self->calls = g_list_append (self->calls, call);
+  g_hash_table_insert (self->call_handles, handle, call);
 
   g_signal_emit_by_name (CALLS_ORIGIN (self), "call-added", call);
   g_signal_connect (call, "notify::state",
@@ -312,12 +310,12 @@ add_call (CallsSipOrigin *self,
   if (!inbound) {
     g_autoptr (GList) crypto_attributes = NULL;
     g_autoptr (CallsSdpCryptoContext) ctx =
-      calls_sip_call_get_sdp_crypto_context (sip_call);
+      calls_sip_call_get_sdp_crypto_context (call);
 
     if (self->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
       if (!calls_sdp_crypto_context_generate_offer (ctx)) {
         g_warning ("Media encryption must be used, but could not generate offer. Aborting");
-        calls_call_set_state (CALLS_CALL (sip_call), CALLS_CALL_STATE_DISCONNECTED);
+        calls_call_set_state (CALLS_CALL (call), CALLS_CALL_STATE_DISCONNECTED);
         return;
       }
     }
