@@ -25,7 +25,6 @@
 #pragma once
 
 #include "calls-sip-media-pipeline.h"
-#include "gst-rfc3551.h"
 
 #include <sofia-sip/sdp.h>
 #include <glib-object.h>
@@ -49,8 +48,6 @@ gchar                 *calls_sip_media_manager_static_capabilities     (CallsSip
                                                                         gint                  rtp_port,
                                                                         gint                  rtcp_port,
                                                                         GList                *crypto_attributes);
-gboolean               calls_sip_media_manager_supports_media          (CallsSipMediaManager *self,
-                                                                        const char           *media_type);
 GList                 *calls_sip_media_manager_codec_candidates        (CallsSipMediaManager *self);
 GList                 *calls_sip_media_manager_get_codecs_from_sdp     (CallsSipMediaManager *self,
                                                                         sdp_media_t          *sdp_media);
