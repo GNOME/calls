@@ -212,7 +212,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
                                           GList                *crypto_attributes,
                                           GList                *supported_codecs)
 {
-  char *payload_type = crypto_attributes ? "SAVP" : "AVP";
+  const char *rtp_profile = crypto_attributes ? "SAVP" : "AVP";
 
   g_autoptr (GString) media_line = NULL;
   g_autoptr (GString) attribute_lines = NULL;
@@ -232,7 +232,7 @@ calls_sip_media_manager_get_capabilities (CallsSipMediaManager *self,
 
   /* media lines look f.e like "audio 31337 RTP/AVP 9 8 0" */
   g_string_append_printf (media_line,
-                          "m=audio %d RTP/%s", rtp_port, payload_type);
+                          "m=audio %d RTP/%s", rtp_port, rtp_profile);
 
   for (node = supported_codecs; node != NULL; node = node->next) {
     MediaCodecInfo *codec = node->data;
