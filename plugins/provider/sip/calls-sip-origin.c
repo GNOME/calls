@@ -116,7 +116,7 @@ struct _CallsSipOrigin {
   char                 *user;
   char                 *password;
   char                 *display_name;
-  gint                  port;
+  int                   port;
   char                 *transport_protocol;
   gboolean              auto_connect;
   gboolean              direct_mode;
@@ -124,7 +124,7 @@ struct _CallsSipOrigin {
   SipMediaEncryption    media_encryption;
 
   char                 *own_ip;
-  gint                  local_port;
+  int                   local_port;
 
   const char           *protocol_prefix;
   char                 *address;
@@ -269,7 +269,7 @@ add_call (CallsSipOrigin *self,
   CallsCall *call;
   CallsSipMediaPipeline *pipeline;
   const char *call_address = address;
-  gint rtp_port, rtcp_port;
+  int rtp_port, rtcp_port;
 
   g_auto (GStrv) address_split = NULL;
   g_autofree char *local_sdp = NULL;
@@ -1777,7 +1777,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin    *self,
                                   const char        *password,
                                   const char        *display_name,
                                   const char        *transport_protocol,
-                                  gint               port,
+                                  int                port,
                                   SipMediaEncryption media_encryption,
                                   gboolean           can_tel,
                                   gboolean           auto_connect)

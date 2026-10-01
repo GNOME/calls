@@ -41,7 +41,7 @@ void calls_sip_origin_set_credentials          (CallsSipOrigin    *self,
                                                 const char        *password,
                                                 const char        *display_name,
                                                 const char        *transport_protocol,
-                                                gint               port,
+                                                int                port,
                                                 SipMediaEncryption media_encryption,
                                                 gboolean           use_for_tel,
                                                 gboolean           auto_connect);
