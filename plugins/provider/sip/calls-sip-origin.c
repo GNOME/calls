@@ -594,21 +594,23 @@ sip_i_state (int              status,
   int call_state = nua_callstate_init;
   CallsCallState state;
   CallsSipCall *call;
-  int offer_sent = 0;
-  int offer_recv = 0;
-  int answer_sent = 0;
-  int answer_recv = 0;
+  gboolean offer_sent = FALSE;
+  gboolean offer_recv = FALSE;
+  gboolean answer_sent = FALSE;
+  gboolean answer_recv = FALSE;
 
   g_assert (CALLS_IS_SIP_ORIGIN (origin));
 
-  g_debug ("The call state has changed: %03d %s", status, phrase);
+  g_debug ("The call state on handle [%p] has changed: %03d %s", nh, status, phrase);
 
   call = g_hash_table_lookup (origin->call_handles, nh);
 
   if (call == NULL) {
-    g_warning ("No call found for the current handle");
+    g_warning ("No call found for the current handle [%p]", nh);
     return;
   }
+
+  g_assert (CALLS_IS_SIP_CALL (call));
 
   tl_gets (tags,
            SOATAG_LOCAL_SDP_REF (l_sdp),
@@ -620,6 +622,9 @@ sip_i_state (int              status,
            NUTAG_ANSWER_SENT_REF (answer_sent),
            NUTAG_ANSWER_RECV_REF (answer_recv),
            TAG_END ());
+
+  g_debug ("offer sent %d offer recv %d; answer sent %d answer recv %d",
+           offer_sent, offer_recv, answer_sent, answer_recv);
 
   if (status == 503) {
     CALLS_EMIT_MESSAGE (origin, "DNS error", GTK_MESSAGE_ERROR);
