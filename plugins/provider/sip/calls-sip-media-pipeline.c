@@ -163,7 +163,6 @@ struct _CallsSipMediaPipeline {
 
   /* Gstreamer busses */
   GstBus                      *bus;
-  guint                        bus_watch_id;
 };
 
 G_DEFINE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
@@ -655,7 +654,7 @@ pipeline_init (CallsSipMediaPipeline *self,
 
   /* Setup bus watch */
   self->bus = gst_pipeline_get_bus (GST_PIPELINE (self->pipeline));
-  self->bus_watch_id = gst_bus_add_watch (self->bus, on_bus_message, self);
+  gst_bus_add_watch (self->bus, on_bus_message, self);
 
   if (!setup_socket_reuse (self, error))
     return FALSE;
