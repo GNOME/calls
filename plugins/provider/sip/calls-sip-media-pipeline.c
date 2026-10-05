@@ -682,6 +682,9 @@ pipeline_link_elements (CallsSipMediaPipeline *self,
     return FALSE;
   }
 
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
+
   /* Transmitter pads */
 
   srcpad = gst_element_get_static_pad (self->rtp_src, "src");
