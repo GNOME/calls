@@ -225,7 +225,8 @@
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gom.git",
-                    "branch": "master"
+                    "tag": "0.5.6",
+                    "commit": "90412ae4525285bee7812a623386b1c21d8fddb3"
                 }
             ]
         },
