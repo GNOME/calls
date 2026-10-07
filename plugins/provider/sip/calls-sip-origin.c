@@ -999,15 +999,15 @@ setup_nua (CallsSipOrigin *self)
   uuid = nua_generate_instance_identifier (self->ctx->home);
   urn_uuid = g_strdup_printf ("urn:uuid:%s", uuid);
 
-  self->protocol_prefix = get_protocol_prefix (self->transport_protocol);
+  self->protocol_prefix = calls_sip_util_get_protocol_prefix (self->transport_protocol);
 
   self->address = g_strconcat (self->user, "@", self->host, NULL);
   from_str = g_strconcat (self->protocol_prefix, ":", self->address, NULL);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACC_ADDRESS]);
 
-  use_sips = check_sips (from_str);
-  use_ipv6 = check_ipv6 (self->host);
+  use_sips = calls_sip_util_check_sips (from_str);
+  use_ipv6 = calls_sip_util_check_ipv6 (self->host);
 
   if (self->local_port > 0) {
     sip_url = g_strdup_printf ("sip:%s:%d",
@@ -1172,7 +1172,7 @@ setup_account_for_direct_connection (CallsSipOrigin *self)
   g_free (self->transport_protocol);
   self->transport_protocol = g_strdup ("UDP");
 
-  self->protocol_prefix = get_protocol_prefix ("UDP");
+  self->protocol_prefix = calls_sip_util_get_protocol_prefix ("UDP");
 
   g_debug ("Account changed:\nuser: %s\nhost: %s",
            self->user, self->host);
@@ -1797,7 +1797,7 @@ calls_sip_origin_set_credentials (CallsSipOrigin    *self,
   g_return_if_fail (password);
 
   if (transport_protocol)
-    g_return_if_fail (protocol_is_valid (transport_protocol));
+    g_return_if_fail (calls_sip_util_protocol_is_valid (transport_protocol));
 
   g_free (self->host);
   self->host = g_strdup (host);

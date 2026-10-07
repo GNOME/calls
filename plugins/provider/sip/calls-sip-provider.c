@@ -765,7 +765,7 @@ calls_sip_provider_add_origin_full (CallsSipProvider  *self,
   }
 
   if (transport_protocol) {
-    g_return_val_if_fail (protocol_is_valid (transport_protocol), NULL);
+    g_return_val_if_fail (calls_sip_util_protocol_is_valid (transport_protocol), NULL);
 
     protocol = g_ascii_strup (transport_protocol, -1);
   }

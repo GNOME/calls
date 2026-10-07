@@ -67,7 +67,7 @@ typedef enum {
 } SipMediaEncryption;
 
 
-gboolean    check_sips                         (const char *addr);
-gboolean    check_ipv6                         (const char *host);
-const char *get_protocol_prefix                (const char *protocol);
-gboolean    protocol_is_valid                  (const char *protocol);
+gboolean    calls_sip_util_check_sips            (const char *addr);
+gboolean    calls_sip_util_check_ipv6            (const char *host);
+const char *calls_sip_util_get_protocol_prefix   (const char *protocol);
+gboolean    calls_sip_util_protocol_is_valid     (const char *protocol);
