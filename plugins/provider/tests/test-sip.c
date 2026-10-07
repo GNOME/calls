@@ -125,7 +125,7 @@ test_sip_origin_objects (SipFixture   *fixture,
   g_object_get (fixture->origin_offline,
                 "proxy", &proxy_offline,
                 NULL);
-  
+
   g_assert_null (proxy_alice);
   g_assert_null (proxy_bob);
   g_assert_cmpstr (proxy_offline, ==, "proxy.sip.imaginary-host.org");
@@ -390,7 +390,7 @@ setup_sip_origins (SipFixture   *fixture,
                                         SIP_MEDIA_ENCRYPTION_NONE,
                                         FALSE,
                                         TRUE,
-                                        5060,
+                                        5061,
                                         FALSE,
                                         FALSE);
 
@@ -407,7 +407,7 @@ setup_sip_origins (SipFixture   *fixture,
                                         SIP_MEDIA_ENCRYPTION_NONE,
                                         FALSE,
                                         TRUE,
-                                        5061,
+                                        5062,
                                         FALSE,
                                         FALSE);
 
