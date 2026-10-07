@@ -26,6 +26,7 @@
 #pragma once
 
 #include <sofia-sip/nua.h>
+#include <sofia-sip/sdp.h>
 #include <glib-object.h>
 
 typedef struct {
@@ -71,3 +72,10 @@ gboolean    calls_sip_util_check_sips            (const char *addr);
 gboolean    calls_sip_util_check_ipv6            (const char *host);
 const char *calls_sip_util_get_protocol_prefix   (const char *protocol);
 gboolean    calls_sip_util_protocol_is_valid     (const char *protocol);
+
+char       *calls_sip_util_get_sdp               (const char *own_ip,
+                                                  int         rtp_port,
+                                                  int         rtcp_port,
+                                                  GList      *crypto_attributes,
+                                                  GList      *codecs);
+GList      *calls_sip_util_get_codecs_from_sdp   (sdp_media_t *sdp_media);

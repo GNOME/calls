@@ -103,6 +103,20 @@ t = executable(
 )
 test('sip', t, env: test_env)
 
+test_sources = ['test-sip-util.c']
+test_sources += sip_sources
+t = executable(
+  'sip-util',
+  test_sources,
+  c_args: test_cflags,
+  link_args: test_link_args,
+  pie: true,
+  link_with: [calls_vala, libcalls],
+  dependencies: [calls_deps, sip_deps],
+  include_directories: [calls_includes, sip_include],
+)
+test('sip-util', t, env: test_env)
+
 test_sources = ['test-srtp.c']
 test_sources += sip_sources
 t = executable(

@@ -135,12 +135,11 @@ calls_sip_call_answer (CallsCall *call)
     }
   }
 
-  local_sdp = calls_sip_media_manager_get_capabilities (self->manager,
-                                                        self->ip,
-                                                        rtp_port,
-                                                        rtcp_port,
-                                                        local_crypto,
-                                                        self->codecs);
+  local_sdp = calls_sip_util_get_sdp (self->ip,
+                                      rtp_port,
+                                      rtcp_port,
+                                      local_crypto,
+                                      self->codecs);
 
   g_assert (local_sdp);
   g_debug ("Setting local SDP to string:\n%s", local_sdp);

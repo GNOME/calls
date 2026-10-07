@@ -311,6 +311,7 @@ add_call (CallsSipOrigin *self,
     g_autoptr (GList) crypto_attributes = NULL;
     g_autoptr (CallsSdpCryptoContext) ctx =
       calls_sip_call_get_sdp_crypto_context (call);
+    GList *codecs = calls_sip_media_manager_codec_candidates (self->media_manager);
 
     if (self->media_encryption == SIP_MEDIA_ENCRYPTION_FORCED) {
       if (!calls_sdp_crypto_context_generate_offer (ctx)) {
@@ -327,11 +328,11 @@ add_call (CallsSipOrigin *self,
 
     crypto_attributes = calls_sdp_crypto_context_get_crypto_candidates (ctx, FALSE);
 
-    local_sdp = calls_sip_media_manager_static_capabilities (self->media_manager,
-                                                             self->own_ip,
-                                                             rtp_port,
-                                                             rtcp_port,
-                                                             crypto_attributes);
+    local_sdp = calls_sip_util_get_sdp (self->own_ip,
+                                        rtp_port,
+                                        rtcp_port,
+                                        crypto_attributes,
+                                        codecs);
 
     g_assert (local_sdp);
 
@@ -632,9 +633,7 @@ sip_i_state (int              status,
 
   if (r_sdp) {
     g_autoptr (CallsSdpCryptoContext) ctx = NULL;
-    g_autoptr (GList) remote_codecs =
-      calls_sip_media_manager_get_codecs_from_sdp (origin->media_manager,
-                                                   r_sdp->sdp_media);
+    g_autoptr (GList) remote_codecs = calls_sip_util_get_codecs_from_sdp (r_sdp->sdp_media);
     g_autoptr (GList) codecs = NULL;
     GList *node;
     GList *preferred_codecs = calls_sip_media_manager_codec_candidates (origin->media_manager);
