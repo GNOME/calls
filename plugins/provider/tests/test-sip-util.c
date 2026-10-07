@@ -16,7 +16,7 @@ static gboolean
 find_string_in_sdp_message (const char *sdp,
                             const char *string)
 {
-  char **split_string = NULL;
+  g_auto (GStrv) split_string = NULL;
   gboolean found = FALSE;
 
   split_string = g_strsplit (sdp, "\r\n", -1);
@@ -28,7 +28,6 @@ find_string_in_sdp_message (const char *sdp,
     }
   }
 
-  g_strfreev (split_string);
   return found;
 }
 
