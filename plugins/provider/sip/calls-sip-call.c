@@ -166,6 +166,7 @@ calls_sip_call_hang_up (CallsCall *call)
 
   switch (calls_call_get_state (call)) {
   case CALLS_CALL_STATE_DIALING:
+  case CALLS_CALL_STATE_ALERTING:
     nua_cancel (self->nh, TAG_END ());
     g_debug ("Hanging up on outgoing ringing call");
     break;
