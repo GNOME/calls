@@ -1075,7 +1075,7 @@ usr2_handler (CallsSipMediaPipeline *self)
                         on_dump_file_created,
                         dot_data);
    */
-  tmp_dir = g_mkdtemp ("calls-pipeline-XXXXXX");
+  tmp_dir = g_mkdtemp (g_strdup ("calls-pipeline-XXXXXX"));
   file_path = g_strconcat (tmp_dir, G_DIR_SEPARATOR_S, "usr2-debug.dot", NULL);
 
   dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
