@@ -65,6 +65,18 @@
     <content_rating type="oars-1.1"/>
 
     <releases>
+      <release version="51.1" date="2026-10-12">
+        <description>
+          <p>
+            First maintenance release for the GNOME 51 release cycle.
+          </p>
+          <ul>
+            <li>Code cleanup and maintainance</li>
+            <li>Translation updates</li>
+          </ul>
+        </description>
+      </release>
+
       <release version="50.0" date="2026-03-15">
         <description>
           <p>

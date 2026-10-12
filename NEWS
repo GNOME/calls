@@ -1,3 +1,42 @@
+gnome-calls 51.1
+----------------
+Released October 2026
+* Fix segfault when dumping dot graph of GStreamer pipelines
+  (triggered when Calls gets signalled a USR2)
+* Code Cleanups (mostly around the SIP plugin)
+* Debian packaging tweaks
+  - Ensure the plugins get installed
+  - Drop installing xdg-autostart files
+* Contributors:
+    * Christian Glombek
+    * Evangelos Ribeiro Tzaras
+    * Guido Günther
+    * Sebastian Krzyszkowiak
+* UI translations:
+    * Aefgh Threenine (th)
+    * Andika Triwidada (id)
+    * Cátia Silva (pt)
+    * Danial Behzadi (fa)
+    * Davide Ferracin (it)
+    * Flynn Peck (kw)
+    * Iverson Briones (fil)
+    * Jor Teron (mjw)
+    * Jose Riha (sk)
+    * Kjartan Maraas (nb)
+    * luming zh (zh_CN)
+    * Nathan Follens (nl)
+    * Nguyễn Tri Phương (vi)
+    * Quentin PAGÈS (oc)
+    * Ramal Rahimov (az)
+    * Roy-Magne Mo (nn)
+    * Ryo Nakano (ja)
+    * Saikeo Kavhanxay (lo)
+    * Vasil Pupkin (be)
+    * Victoria Niedzielska (pl)
+    * Xavi Ivars (ca)
+    * Xavi Ivars (ca@valencia)
+    * Марко Костић (sr)
+
 gnome-calls 50.0
 ----------------
 Released March 2026

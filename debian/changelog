@@ -1,3 +1,115 @@
+gnome-calls (51.1) unstable; urgency=medium
+
+  [ Марко Костић ]
+  * Update Serbian translation
+
+  [ Kjartan Maraas ]
+  * Update Norwegian Bokmål translation
+
+  [ Jose Riha ]
+  * Update Slovak translation
+  * Update Slovak translation
+  * Update Slovak translation
+  * Update Slovak translation
+
+  [ Ryo Nakano ]
+  * Update Japanese translation
+  * Update Japanese translation
+
+  [ Flynn Peck ]
+  * Update Cornish translation
+  * Update Cornish translation
+
+  [ Nathan Follens ]
+  * Update Dutch translation
+
+  [ Danial Behzadi ]
+  * Update Persian translation
+
+  [ Aefgh Threenine ]
+  * Update Thai translation
+
+  [ Saikeo Kavhanxay ]
+  * Add Lao translation
+
+  [ Vasil Pupkin ]
+  * Update Belarusian translation
+
+  [ Andika Triwidada ]
+  * Update Indonesian translation
+
+  [ Davide Ferracin ]
+  * Update Italian translation
+
+  [ Iverson Briones ]
+  * Update Filipino translation
+
+  [ Nguyễn Tri Phương ]
+  * Update Vietnamese translation
+
+  [ Xavi Ivars ]
+  * Add Catalan (Valencian) translation
+  * Update Catalan (Valencian) translation
+  * Update Catalan translation
+  * Update Catalan (Valencian) translation
+
+  [ Victoria Niedzielska ]
+  * Update Polish translation
+
+  [ Guido Günther ]
+  * packaging: Install plugins
+  * packaging: Switch to dh-compat 13
+  * packging: Don't install xdg-autostart files
+  * calls: End mime type list with a `;`
+
+  [ luming zh ]
+  * Update Chinese (China) translation
+
+  [ Quentin PAGÈS ]
+  * Update Occitan translation
+
+  [ Jor Teron ]
+  * Add Karbi translation
+
+  [ Evangelos Ribeiro Tzaras ]
+  * sip: Drop support code for ancient glib versions
+  * sip: Depend on gstreamer >= 1.20
+  * media-pipeline: Prefer g_set_str()
+  * media-pipeline: Prefer g_clear_signal_handler()
+  * sip: Don't raise warning for empty proxy
+  * media-pipeline: Prefer automatic cleanup
+  * media-playback: Don't leave dangling data pointer
+  * sip-media-pipeline: Drop property nicks and blurbs
+  * sip-media-pipeline: Drop superfluous checking of GError
+  * sip-media-pipeline: Drop unimplemented MKI handling
+  * sip-media-pipeline: Remove unused bus watch source id
+  * srtp-utils: Drop unimplemented function from header
+  * sip-media-manager: Drop unimplemented function from header
+  * sip-media-manager: Rename variable to be in line with RFCs
+  * sip-origin: Make debugging more expressive
+  * sip-media-pipeline: Fix leaking pads
+  * sip-media-pipeline: Fix segfault when dumping dot graph
+
+  [ Roy-Magne Mo ]
+  * Update Norwegian Nynorsk translation
+
+  [ Ramal Rahimov ]
+  * Add Azerbaijani translation
+
+  [ Cátia Silva ]
+  * Update Portuguese translation
+
+  [ Christian Glombek ]
+  * flatpak: Pin gom to 0.5.6
+
+  [ Administrator ]
+  * data: Update bugtracker URL from /issues to /-/work_items
+
+  [ Sebastian Krzyszkowiak ]
+  * calls-mm-origin: Don't allow to create multiple calls
+
+ -- Evangelos Ribeiro Tzaras <devrtz@fortysixandtwo.eu>  Mon, 12 Oct 2026 19:45:21 +0200
+
 gnome-calls (50.0) unstable; urgency=medium
 
   [ Pawan Chitrakar ]
