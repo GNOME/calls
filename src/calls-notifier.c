@@ -72,7 +72,7 @@ notify (CallsNotifier *self, CuiCall *call)
 
   if (got_contact)
     /* %s is a name here */
-    msg = g_strdup_printf (_("Missed call from <b>%s</b>"), name);
+    msg = g_strdup_printf (_("Missed call from %s"), name);
   else if (got_id)
     /* %s is a id here */
     msg = g_strdup_printf (_("Missed call from %s"), id);
