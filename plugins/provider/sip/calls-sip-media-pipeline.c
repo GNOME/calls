@@ -943,7 +943,7 @@ on_dump_data_written  (GObject      *source_object,
   g_autoptr (GError) error = NULL;
   g_autofree char *dot_data = userdata;
   GOutputStream *stream = G_OUTPUT_STREAM (source_object);
-  gsize n_expected = GPOINTER_TO_SIZE (dot_data);
+  gsize n_expected = strlen (dot_data);
   gsize n_written;
 
   n_written = g_output_stream_write_finish (stream, res, &error);
