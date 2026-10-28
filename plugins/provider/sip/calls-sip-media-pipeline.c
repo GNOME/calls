@@ -1017,8 +1017,7 @@ dump_pipeline_graph_to_path (GstBin     *bin,
 
   g_print ("Dumping pipeline graph to '%s'", full_path);
 
-  dot_data = gst_debug_bin_to_dot_data (bin,
-                                        GST_DEBUG_GRAPH_SHOW_VERBOSE);
+  dot_data = gst_debug_bin_to_dot_data (bin, GST_DEBUG_GRAPH_SHOW_ALL);
 
   file = g_file_new_for_path (full_path);
 
