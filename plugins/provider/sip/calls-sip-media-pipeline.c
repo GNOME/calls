@@ -941,7 +941,7 @@ on_dump_data_written  (GObject      *source_object,
                        gpointer      userdata)
 {
   g_autoptr (GError) error = NULL;
-  g_autofree char *dot_data = userdata;
+  char *dot_data = g_object_get_data (source_object, "data");
   GOutputStream *stream = G_OUTPUT_STREAM (source_object);
   gsize n_expected = strlen (dot_data);
   gsize n_written;
@@ -957,10 +957,10 @@ on_dump_data_written  (GObject      *source_object,
                n_expected,
                n_written);
   }
-  if (error) {
+
+  if (error)
     g_warning ("Error while trying to dump dot graph to file: %s",
                error->message);
-  }
 }
 
 
@@ -972,7 +972,8 @@ on_dump_file_created (GObject      *source_object,
   g_autoptr (GError) error = NULL;
   g_autoptr (GFileOutputStream) stream = NULL;
   GFile *file = G_FILE (source_object);
-  char *dot_data = userdata;
+  g_autofree char *dot_data = userdata;
+  gsize len = strlen (dot_data);
 
 
   stream = g_file_create_finish (G_FILE (source_object), res, &error);
@@ -985,18 +986,17 @@ on_dump_file_created (GObject      *source_object,
     }
 
     g_warning ("Cannot create file %s: %s", path, error->message);
-
-    g_free (dot_data);
     return;
   }
 
+  g_object_set_data_full (G_OBJECT (stream), "data", dot_data, g_free);
   g_output_stream_write_async (G_OUTPUT_STREAM (stream),
-                               dot_data,
-                               strlen (dot_data),
+                               g_steal_pointer (&dot_data),
+                               len,
                                G_PRIORITY_DEFAULT,
                                NULL,
                                on_dump_data_written,
-                               dot_data);
+                               NULL);
 }
 
 
