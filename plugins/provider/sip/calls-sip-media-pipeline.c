@@ -944,18 +944,22 @@ on_dump_data_written  (GObject      *source_object,
   char *dot_data = g_object_get_data (source_object, "data");
   GOutputStream *stream = G_OUTPUT_STREAM (source_object);
   gsize n_expected = strlen (dot_data);
+  gsize n_written_total = GPOINTER_TO_SIZE (userdata);
   gsize n_written;
 
   n_written = g_output_stream_write_finish (stream, res, &error);
-  if (n_written != n_expected) {
-    /* this is not an error
-     * TODO write the rest
-     * note: maybe easier with GBytes because of keeping track of
-     * dot_data reference ? */
-    g_warning ("Expected to write %" G_GSIZE_FORMAT
-               " but only wrote %" G_GSIZE_FORMAT " bytes",
-               n_expected,
-               n_written);
+  n_written_total += n_written;
+
+  if (n_written_total != n_expected && !error) {
+    gsize remaining = n_expected - n_written_total;
+    const char *buffer = &dot_data[n_written_total];
+
+    g_output_stream_write_async (stream, buffer, remaining,
+                                 G_PRIORITY_DEFAULT,
+                                 NULL,
+                                 on_dump_data_written,
+                                 GSIZE_TO_POINTER (n_written_total));
+    return;
   }
 
   if (error)
@@ -996,7 +1000,7 @@ on_dump_file_created (GObject      *source_object,
                                G_PRIORITY_DEFAULT,
                                NULL,
                                on_dump_data_written,
-                               NULL);
+                               GSIZE_TO_POINTER (0));
 }
 
 
