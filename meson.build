@@ -86,14 +86,6 @@ config_data.set_quoted(
   mbpi_dep.get_variable('database'),
 )
 
-gst_debug = get_option('gst_debug')
-config_data.set(
-  'CALLS_GST_DEBUG',
-  gst_debug,
-  description: 'Use GStreamer debugging API',
-)
-
-
 run_data = configuration_data()
 run_data.set('ABS_BUILDDIR', meson.current_build_dir())
 run_data.set('ABS_SRCDIR', meson.current_source_dir())
@@ -161,7 +153,6 @@ summary(
     'Build documentation': get_option('gtk_doc'),
     'Build manpages': get_option('manpages'),
     'Build tests': get_option('tests'),
-    'Use gstreamers debug API': get_option('gst_debug'),
     'Directory for systemd user units': systemd_user_unit_dir,
   },
 )

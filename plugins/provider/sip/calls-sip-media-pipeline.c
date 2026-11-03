@@ -1030,7 +1030,6 @@ static void
 dump_pipeline_graph_to_path (GstBin     *bin,
                              const char *full_path)
 {
-  #ifdef CALLS_GST_DEBUG
   g_autoptr (GFile) file = NULL;
   char *dot_data;
 
@@ -1047,7 +1046,6 @@ dump_pipeline_graph_to_path (GstBin     *bin,
                        NULL,
                        on_dump_file_created,
                        dot_data);
-  #endif
 }
 
 
