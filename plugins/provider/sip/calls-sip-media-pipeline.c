@@ -1039,39 +1039,7 @@ dump_pipeline_graph_to_path (GstBin     *bin,
 static gboolean
 usr2_handler (CallsSipMediaPipeline *self)
 {
-  g_autofree char *tmp_dir = NULL;
-  g_autofree char *file_path = NULL;
-  g_autoptr (GError) error = NULL;
-
-  g_print ("playing: %d\n"
-           "paused: %d\n"
-           "stopped: %d\n"
-           "target map: %d\n"
-           "current state: %d\n",
-           self->element_map_playing,
-           self->element_map_paused,
-           self->element_map_stopped,
-           self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
-           self->state);
-
-  /* TODO once we require GLib >= 2.74
-   * we can open a temp file more easily with g_file_new_tmp_async/finish()
-
-     g_file_new_tmp_async ("calls-pipeline-XXXXXX",
-                        G_PRIORITY_DEFAULT,
-                        NULL,
-                        on_dump_file_created,
-                        dot_data);
-   */
-  tmp_dir = g_dir_make_tmp ("calls-pipeline-XXXXXX", &error);
-  if (!tmp_dir) {
-    g_warning ("Could not create temporary directory: %s", error->message);
-    return G_SOURCE_CONTINUE;
-  }
-
-  file_path = g_strconcat (tmp_dir, G_DIR_SEPARATOR_S, "usr2-debug.dot", NULL);
-
-  dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
+  calls_sip_media_pipeline_dump_dot_graph (self, "usr2-debug.dot");
 
   return G_SOURCE_CONTINUE;
 }
@@ -1398,4 +1366,37 @@ calls_sip_media_pipeline_get_state (CallsSipMediaPipeline *self)
                         CALLS_MEDIA_PIPELINE_STATE_UNKNOWN);
 
   return self->state;
+}
+
+
+void
+calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char *file_suffix)
+{
+  g_autoptr (GError) error = NULL;
+  g_autofree char *tmp_dir = NULL;
+  g_autofree char *file_path = NULL;
+  const char *suffix;
+
+  g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
+
+  g_print ("playing: %d\n"
+           "paused: %d\n"
+           "stopped: %d\n"
+           "target map: %d\n"
+           "current state: %d\n",
+           self->element_map_playing,
+           self->element_map_paused,
+           self->element_map_stopped,
+           self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
+           self->state);
+
+  tmp_dir = g_dir_make_tmp ("calls-pipeline-XXXXXX", &error);
+  if (!tmp_dir) {
+    g_warning ("Could not create temporary directory: %s", error->message);
+    return;
+  }
+
+  suffix = STR_IS_NULL_OR_EMPTY (file_suffix) ? "snapshot.dot" : file_suffix;
+  file_path = g_build_filename (tmp_dir, suffix, NULL);
+  dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
 }

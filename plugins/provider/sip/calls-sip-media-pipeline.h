@@ -62,5 +62,7 @@ void                    calls_sip_media_pipeline_pause            (CallsSipMedia
 int                     calls_sip_media_pipeline_get_rtp_port     (CallsSipMediaPipeline *self);
 int                     calls_sip_media_pipeline_get_rtcp_port    (CallsSipMediaPipeline *self);
 CallsMediaPipelineState calls_sip_media_pipeline_get_state        (CallsSipMediaPipeline *self);
+void                    calls_sip_media_pipeline_dump_dot_graph   (CallsSipMediaPipeline *self,
+                                                                   const char            *file_suffix);
 
 G_END_DECLS
