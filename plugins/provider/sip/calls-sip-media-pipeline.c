@@ -113,8 +113,8 @@ struct _CallsSipMediaPipeline {
 
   /* Connection details */
   char                        *remote;
-  gint                         rport_rtp;
-  gint                         rport_rtcp;
+  int                          rport_rtp;
+  int                          rport_rtcp;
 
   GstElement                  *pipeline;
   GstElement                  *rtpbin;
