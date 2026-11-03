@@ -106,9 +106,9 @@ struct _CallsSipMediaPipeline {
   gboolean                     debug;
 
   CallsMediaPipelineState      state;
-  uint                         element_map_playing;
-  uint                         element_map_paused;
-  uint                         element_map_stopped;
+  guint                        element_map_playing;
+  guint                        element_map_paused;
+  guint                        element_map_stopped;
   gboolean                     emitted_sending_signal;
 
   /* Connection details */
@@ -189,7 +189,7 @@ set_state (CallsSipMediaPipeline  *self,
 static void
 check_element_maps (CallsSipMediaPipeline *self)
 {
-  uint all_rtp_elements;
+  guint all_rtp_elements;
 
   g_assert (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
@@ -278,8 +278,8 @@ on_bus_message (GstBus     *bus,
   {
     GstState oldstate;
     GstState newstate;
-    uint element_id = 0;
-    uint unset_element_id;
+    guint element_id = 0;
+    guint unset_element_id;
 
     gst_message_parse_state_changed (message, &oldstate, &newstate, NULL);
 
