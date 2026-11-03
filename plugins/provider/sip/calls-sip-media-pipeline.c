@@ -273,6 +273,7 @@ on_bus_message (GstBus     *bus,
 
     gst_message_parse_error (message, &error, &msg);
     g_warning ("Error on the message bus: %s (%s)", error->message, msg);
+    calls_sip_media_pipeline_dump_dot_graph (self, "snapshot-error");
     break;
   }
 
@@ -283,6 +284,7 @@ on_bus_message (GstBus     *bus,
 
     gst_message_parse_warning (message, &error, &msg);
     g_warning ("Warning on the message bus: %s (%s)", error->message, msg);
+    calls_sip_media_pipeline_dump_dot_graph (self, "snapshot-warning");
     break;
   }
 
