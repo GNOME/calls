@@ -177,8 +177,6 @@ set_state (CallsSipMediaPipeline  *self,
   g_autoptr (GEnumClass) enum_class = NULL;
   GEnumValue *enum_val;
 
-  g_autofree char *fname = NULL;
-
   g_assert (CALLS_SIP_MEDIA_PIPELINE (self));
 
   if (self->state == state)
@@ -195,11 +193,8 @@ set_state (CallsSipMediaPipeline  *self,
   enum_class = g_type_class_ref (CALLS_TYPE_MEDIA_PIPELINE_STATE);
   enum_val = g_enum_get_value (enum_class, state);
 
-  fname = g_strdup_printf ("calls-%s", enum_val->value_nick);
-
-  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (self->pipeline),
-                                     GST_DEBUG_GRAPH_SHOW_ALL,
-                                     fname);
+  if (self->debug)
+    calls_sip_media_pipeline_dump_dot_graph (self, enum_val->value_nick);
 }
 
 
