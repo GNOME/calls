@@ -104,6 +104,7 @@ struct _CallsSipMediaPipeline {
 
   MediaCodecInfo              *codec;
   gboolean                     debug;
+  char                        *dot_data_dump_dir;
 
   CallsMediaPipelineState      state;
   guint                        element_map_playing;
@@ -900,6 +901,7 @@ calls_sip_media_pipeline_finalize (GObject *object)
   gst_object_unref (self->srtpdec);
 
   g_free (self->remote);
+  g_free (self->dot_data_dump_dir);
 
   G_OBJECT_CLASS (calls_sip_media_pipeline_parent_class)->finalize (object);
 }
@@ -1388,8 +1390,6 @@ calls_sip_media_pipeline_get_state (CallsSipMediaPipeline *self)
 void
 calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char *file_suffix)
 {
-  g_autoptr (GError) error = NULL;
-  g_autofree char *tmp_dir = NULL;
   g_autofree char *fname_fragment = NULL;
   g_autofree char *file_path = NULL;
   g_autofree char *state_str = NULL;
@@ -1409,15 +1409,20 @@ calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char
            self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
            state_str);
 
-  tmp_dir = g_dir_make_tmp ("calls-pipeline-XXXXXX", &error);
-  if (!tmp_dir) {
-    g_warning ("Could not create temporary directory: %s", error->message);
-    return;
+  if (STR_IS_NULL_OR_EMPTY (self->dot_data_dump_dir)) {
+    g_autoptr (GError) error = NULL;
+
+    self->dot_data_dump_dir = g_mkdtemp (g_strdup ("/tmp/calls-pipeline-XXXXXX"));
+    self->dot_data_dump_dir = g_dir_make_tmp ("calls-pipeline-XXXXXX", &error);
+    if (!self->dot_data_dump_dir) {
+      g_warning ("Could not create temporary directory: %s", error->message);
+      return;
+    }
   }
 
   suffix = STR_IS_NULL_OR_EMPTY (file_suffix) ? "snapshot" : file_suffix;
   fname_fragment = dot_filename_from_pipeline (GST_PIPELINE (self->pipeline), suffix);
-  file_path = g_build_filename (tmp_dir, fname_fragment, NULL);
+  file_path = g_build_filename (self->dot_data_dump_dir, fname_fragment, NULL);
 
   dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
 }
