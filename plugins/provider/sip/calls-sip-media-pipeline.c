@@ -152,6 +152,22 @@ struct _CallsSipMediaPipeline {
 G_DEFINE_FINAL_TYPE (CallsSipMediaPipeline, calls_sip_media_pipeline, G_TYPE_OBJECT)
 
 
+static char *
+dot_filename_from_pipeline (GstPipeline *pipeline, const char *suffix)
+{
+  g_autoptr (GstClock) clock = NULL;
+  GstClockTime time_ns;
+  guint64 t_secs, t_sub_secs;
+
+  clock = gst_pipeline_get_pipeline_clock (pipeline);
+  time_ns = gst_clock_get_time (clock);
+
+  t_secs =  time_ns / GST_SECOND;
+  t_sub_secs = time_ns % GST_SECOND;
+
+  return g_strdup_printf ("%" G_GUINT64_FORMAT ".%" G_GUINT64_FORMAT "_%s.dot",
+                          t_secs, t_sub_secs, suffix ?: "unknown");
+}
 
 static void
 set_state (CallsSipMediaPipeline  *self,
@@ -1374,6 +1390,7 @@ calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char
 {
   g_autoptr (GError) error = NULL;
   g_autofree char *tmp_dir = NULL;
+  g_autofree char *fname_fragment = NULL;
   g_autofree char *file_path = NULL;
   g_autofree char *state_str = NULL;
   const char *suffix;
@@ -1398,7 +1415,9 @@ calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char
     return;
   }
 
-  suffix = STR_IS_NULL_OR_EMPTY (file_suffix) ? "snapshot.dot" : file_suffix;
-  file_path = g_build_filename (tmp_dir, suffix, NULL);
+  suffix = STR_IS_NULL_OR_EMPTY (file_suffix) ? "snapshot" : file_suffix;
+  fname_fragment = dot_filename_from_pipeline (GST_PIPELINE (self->pipeline), suffix);
+  file_path = g_build_filename (tmp_dir, fname_fragment, NULL);
+
   dump_pipeline_graph_to_path (GST_BIN (self->pipeline), file_path);
 }
