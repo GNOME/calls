@@ -35,6 +35,7 @@
 #include "calls-sip-util.h"
 
 #include <glib/gi18n.h>
+#include <glib-unix.h>
 
 #include <sofia-sip/nua.h>
 
@@ -63,6 +64,7 @@ struct _CallsSipCall {
 
   CallsSipMediaManager  *manager;
   CallsSipMediaPipeline *pipeline;
+  guint                  usr2_source_id;
 
   char                  *ip;
 
@@ -256,6 +258,7 @@ calls_sip_call_finalize (GObject *object)
   g_clear_pointer (&self->codecs, g_list_free);
   g_clear_pointer (&self->remote, g_free);
   g_clear_pointer (&self->ip, g_free);
+  g_clear_handle_id (&self->usr2_source_id, g_source_remove);
 
   G_OBJECT_CLASS (calls_sip_call_parent_class)->finalize (object);
 }
@@ -312,11 +315,28 @@ calls_sip_call_message_source_interface_init (CallsMessageSourceInterface *iface
 }
 
 
+
+static gboolean
+on_usr2_dump_graph (CallsSipCall *self)
+{
+  g_assert (CALLS_IS_SIP_CALL (self));
+
+  calls_sip_media_pipeline_dump_dot_graph (self->pipeline, "snapshot-USR2");
+
+  return G_SOURCE_CONTINUE;
+}
+
+
 static void
 calls_sip_call_init (CallsSipCall *self)
 {
   self->manager = calls_sip_media_manager_default ();
   self->sdp_crypto_context = calls_sdp_crypto_context_new ();
+
+  /* Pipeline debugging */
+  self->usr2_source_id = g_unix_signal_add (SIGUSR2,
+                                            (GSourceFunc) on_usr2_dump_graph,
+                                            self);
 }
 
 

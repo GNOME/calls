@@ -15,7 +15,6 @@
 #include "calls-srtp-utils.h"
 #include "calls-util.h"
 
-#include <glib-unix.h>
 #include <gst/gst.h>
 #include <gio/gio.h>
 
@@ -1042,25 +1041,11 @@ dump_pipeline_graph_to_path (GstBin     *bin,
 }
 
 
-static gboolean
-usr2_handler (CallsSipMediaPipeline *self)
-{
-  calls_sip_media_pipeline_dump_dot_graph (self, "usr2-debug.dot");
-
-  return G_SOURCE_CONTINUE;
-}
-
-
 static void
 calls_sip_media_pipeline_init (CallsSipMediaPipeline *self)
 {
   if (!gst_is_initialized ())
     gst_init (NULL, NULL);
-
-  /* Pipeline debugging */
-  g_unix_signal_add (SIGUSR2,
-                     (GSourceFunc) usr2_handler,
-                     self);
 }
 
 
