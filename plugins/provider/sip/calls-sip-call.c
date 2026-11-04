@@ -68,7 +68,7 @@ struct _CallsSipCall {
 
   guint                  rport_rtp;
   guint                  rport_rtcp;
-  gchar                 *remote;
+  char                  *remote;
 
   nua_handle_t          *nh;
   GList                 *codecs;
@@ -87,7 +87,7 @@ static void
 calls_sip_call_answer (CallsCall *call)
 {
   CallsSipCall *self;
-  g_autofree gchar *local_sdp = NULL;
+  g_autofree char *local_sdp = NULL;
   guint rtp_port, rtcp_port;
   g_autoptr (GList) local_crypto = NULL;
   gboolean got_crypto_offer;
@@ -403,7 +403,7 @@ calls_sip_call_activate_media (CallsSipCall *self,
 
 
 CallsSipCall *
-calls_sip_call_new (const gchar           *id,
+calls_sip_call_new (const char            *id,
                     gboolean               inbound,
                     const char            *own_ip,
                     CallsSipMediaPipeline *pipeline,
