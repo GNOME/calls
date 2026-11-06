@@ -1375,20 +1375,22 @@ calls_sip_media_pipeline_dump_dot_graph (CallsSipMediaPipeline *self, const char
   g_autoptr (GError) error = NULL;
   g_autofree char *tmp_dir = NULL;
   g_autofree char *file_path = NULL;
+  g_autofree char *state_str = NULL;
   const char *suffix;
 
   g_return_if_fail (CALLS_IS_SIP_MEDIA_PIPELINE (self));
 
+  state_str = g_enum_to_string (CALLS_TYPE_MEDIA_PIPELINE_STATE, self->state);
   g_print ("playing: %d\n"
            "paused: %d\n"
            "stopped: %d\n"
            "target map: %d\n"
-           "current state: %d\n",
+           "current state: %s\n",
            self->element_map_playing,
            self->element_map_paused,
            self->element_map_stopped,
            self->use_srtp ? EL_ALL_SRTP : EL_ALL_RTP,
-           self->state);
+           state_str);
 
   tmp_dir = g_dir_make_tmp ("calls-pipeline-XXXXXX", &error);
   if (!tmp_dir) {
