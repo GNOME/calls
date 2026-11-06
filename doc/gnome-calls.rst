@@ -59,8 +59,16 @@ OPTIONS
 
 ``--gapplication-service``
 
-  Whether to present the main window on startup.
+  Whether to present the main window on startup. If given, any other arguments will be discarded.
 
 ``-v, --verbose``
 
   Enable verbose debug messages. Can be passed multiple times.
+
+
+DEBUGGING
+---------
+
+A dot graph of the media pipeline of an ongoing SIP call can be dumped by sending
+a SIGUSR2 signal to the process. The output indicates under which directory the
+graph has been generated.
