@@ -1019,13 +1019,6 @@ on_dump_file_created (GObject      *source_object,
 }
 
 
-
-/* we need dump_pipeline_graph_to_path() because both
- * GST_DEBUG_BIN_TO_DOT_FILE*() and  gst_debug_bin_to_dot_file*()
- * require GStreamer being initialized with environment variable
- * GST_DEBUG_DOT_DIR set.
- */
-
 static void
 dump_pipeline_graph_to_path (GstBin     *bin,
                              const char *full_path)
