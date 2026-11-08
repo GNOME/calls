@@ -124,6 +124,12 @@ on_int_or_term_signal (CallsApplication *self)
 }
 
 static gboolean
+on_sigusr (gpointer unused)
+{
+  return G_SOURCE_CONTINUE;
+}
+
+static gboolean
 cmd_verbose_cb (const char *option_name,
                 const char *value,
                 gpointer    data,
@@ -845,6 +851,9 @@ calls_application_init (CallsApplication *self)
 
   self->id_sigint = g_unix_signal_add (SIGINT, G_SOURCE_FUNC (on_int_or_term_signal), self);
   g_source_set_name_by_id (self->id_sigint, "signal: SIGINT handler");
+
+  g_unix_signal_add (SIGUSR1, G_SOURCE_FUNC (on_sigusr), NULL);
+  g_unix_signal_add (SIGUSR2, G_SOURCE_FUNC (on_sigusr), NULL);
 
   g_application_add_main_option_entries (G_APPLICATION (self), options);
 }
